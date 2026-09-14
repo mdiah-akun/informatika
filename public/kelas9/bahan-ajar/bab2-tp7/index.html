@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modularisasi Program — TP 7</title>
+<style>
+  :root{
+    --navy:#1E2761; --deep:#065A82; --teal:#1C7293; --mint:#02C39A;
+    --coral:#F96167; --gold:#F9E795; --ink:#1A1A2E; --bg:#FBFCFE;
+    --card:#FFFFFF; --line:#E4EAF0; --muted:#5B6774;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Calibri,Arial,sans-serif;
+    line-height:1.6;}
+  h1,h2,h3{font-family:Cambria,Georgia,"Times New Roman",serif;color:var(--navy);margin:0 0 .4em;}
+  .wrap{max-width:900px;margin:0 auto;padding:0 24px;}
+  header.hero{background:linear-gradient(135deg,var(--navy),var(--deep));color:#fff;padding:64px 0 56px;position:relative;overflow:hidden;}
+  header.hero::before{content:"";position:absolute;right:-80px;top:-100px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.06);}
+  header.hero::after{content:"";position:absolute;left:-100px;bottom:-140px;width:280px;height:280px;border-radius:50%;background:rgba(2,195,154,.15);}
+  .kicker{display:inline-block;background:rgba(249,231,149,.18);color:var(--gold);font-weight:700;
+    font-size:13px;letter-spacing:.06em;padding:6px 14px;border-radius:999px;margin-bottom:18px;}
+  header.hero h1{color:#fff;font-size:2.3rem;margin-bottom:.3em;max-width:680px;}
+  header.hero p{color:#CFE3ED;font-size:1.05rem;max-width:620px;margin:0;}
+  nav.toc{position:sticky;top:0;background:rgba(251,252,254,.94);backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);z-index:10;}
+  nav.toc .wrap{display:flex;gap:4px;overflow-x:auto;padding:10px 24px;}
+  nav.toc a{white-space:nowrap;color:var(--teal);text-decoration:none;font-size:.86rem;font-weight:600;
+    padding:8px 12px;border-radius:8px;}
+  nav.toc a:hover{background:#EAF4F8;}
+  main{padding:48px 0 24px;}
+  section{margin-bottom:56px;scroll-margin-top:64px;}
+  .eyebrow{color:var(--coral);font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;}
+  .lead{font-size:1.08rem;color:var(--ink);}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 26px;
+    box-shadow:0 1px 3px rgba(20,30,50,.05);}
+  .story-card{background:linear-gradient(180deg,#fff,#F6FAFC);border-left:5px solid var(--coral);}
+  figure{margin:22px 0;text-align:center;}
+  figure img{max-width:100%;border-radius:10px;border:1px solid var(--line);}
+  figcaption{font-size:.88rem;color:var(--muted);font-style:italic;margin-top:10px;}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;}
+  @media (max-width:720px){.grid3{grid-template-columns:1fr;} .grid2{grid-template-columns:1fr;}}
+  .pill-card{border-radius:14px;padding:20px;color:#fff;}
+  .pill-card h3{color:#fff;font-size:1.15rem;margin-bottom:6px;}
+  .pill-card p{margin:0;font-size:.92rem;opacity:.95;}
+  .c1{background:var(--deep);} .c2{background:var(--teal);} .c3{background:var(--mint);}
+  .callout{background:#FFF6E5;border-left:5px solid var(--coral);border-radius:10px;padding:16px 20px;margin:20px 0;}
+  .callout b{color:var(--coral);}
+  ul.tight li{margin-bottom:8px;}
+  .quiz{background:var(--card);border:2px solid var(--navy);border-radius:14px;padding:24px 26px;margin-top:22px;}
+  .quiz .tag{display:inline-block;background:var(--coral);color:#fff;font-size:.75rem;font-weight:700;
+    padding:4px 12px;border-radius:999px;margin-bottom:14px;letter-spacing:.03em;}
+  .quiz h3{font-size:1.1rem;margin-bottom:16px;}
+  .opt{display:block;width:100%;text-align:left;background:#F4F8FA;border:1px solid var(--line);
+    border-radius:10px;padding:12px 16px;margin-bottom:10px;cursor:pointer;font-size:.98rem;color:var(--ink);
+    transition:.15s;}
+  .opt:hover{border-color:var(--teal);background:#EAF4F8;}
+  .opt.correct{background:#E1F7EF;border-color:var(--mint);font-weight:700;}
+  .opt.wrong{background:#FDEBEA;border-color:var(--coral);}
+  .feedback{margin-top:12px;font-size:.94rem;padding:10px 14px;border-radius:8px;display:none;}
+  .feedback.show{display:block;}
+  .feedback.ok{background:#E1F7EF;color:#0d6b4f;}
+  .feedback.no{background:#FDEBEA;color:#a3282c;}
+  textarea{width:100%;min-height:80px;border-radius:10px;border:1px solid var(--line);padding:12px;
+    font-family:inherit;font-size:.96rem;margin-top:10px;resize:vertical;}
+  .reveal-btn{margin-top:10px;background:var(--navy);color:#fff;border:none;padding:9px 18px;border-radius:8px;
+    font-size:.9rem;font-weight:600;cursor:pointer;}
+  .reveal-btn:hover{background:var(--deep);}
+  .sample-answer{display:none;margin-top:12px;background:#EAF4F8;border-radius:8px;padding:12px 14px;font-size:.92rem;}
+  .sample-answer.show{display:block;}
+  .summary-list{list-style:none;padding:0;margin:20px 0 0;}
+  .summary-list li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 18px;
+    margin-bottom:10px;display:flex;gap:12px;align-items:flex-start;}
+  .summary-list b{color:var(--navy);}
+  .dot{width:10px;height:10px;border-radius:50%;margin-top:6px;flex:none;}
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;}
+  @media (max-width:720px){.compare{grid-template-columns:1fr;}}
+  .compare .side{border-radius:14px;padding:20px;}
+  .compare .side.fn{background:#E1F7EF;border:2px solid var(--mint);}
+  .compare .side.pr{background:#FDECEC;border:2px solid var(--coral);}
+  .compare .side h3{margin-bottom:10px;}
+  .compare .side.fn h3{color:#0D6B4F;}
+  .compare .side.pr h3{color:#A3282C;}
+  footer{background:var(--navy);color:#CFE3ED;padding:32px 0;font-size:.85rem;text-align:center;}
+  footer a{color:var(--gold);}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker">BAB II &middot; BERPIKIR KOMPUTASIONAL DALAM ALGORITMA &amp; PEMROGRAMAN</span>
+    <h1>Yuk, Bongkar Program Jadi Modul-Modul Kecil!</h1>
+    <p>Materi web Informatika Kelas IX — TP 7: Dekomposisi untuk Modularisasi Program dalam Pemrograman Visual Blok. SMP Negeri 14 Tarakan.</p>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#cerita">Cerita Pembuka</a>
+    <a href="#modularisasi">Modularisasi</a>
+    <a href="#fungsiprosedur">Fungsi vs Prosedur</a>
+    <a href="#contoh">Contoh Kode</a>
+    <a href="#manfaat">Manfaat</a>
+    <a href="#studikasus">Studi Kasus</a>
+    <a href="#kuis">Kuis Interaktif</a>
+    <a href="#rangkuman">Rangkuman</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="cerita">
+    <div class="eyebrow">Inget Nggak, Cerita Panitia PKS Kemarin?</div>
+    <div class="card story-card">
+      <p class="lead">Di materi sebelumnya, kita udah kenalan sama dekomposisi dan library lewat cerita panitia Pekan Kreativitas Siswa (PKS) yang bikin "Kalkulator Luas Bangun Datar". Nah, sekarang bayangin programnya udah jadi... tapi semua kodenya ditulis dalam SATU blok super panjang.</p>
+      <p>Baca bentuk, hitung luas, tampilkan hasil — semuanya nyampur jadi satu! Kebayang kan ribetnya kalau mau nyari atau benerin satu bagian doang?</p>
+      <p><b>Nah, di sinilah kita butuh yang namanya MODULARISASI PROGRAM.</b> Yuk, kita bongkar bareng-bareng!</p>
+    </div>
+  </section>
+
+  <section id="modularisasi">
+    <div class="eyebrow">Konsep Kunci #1</div>
+    <h2>Apa Itu Modularisasi?</h2>
+    <p class="lead">Modularisasi itu artinya <b>memecah program menjadi bagian-bagian terpisah yang disebut MODUL</b>. Setiap modul punya tugas sendiri-sendiri, dan nanti bisa "dirakit" lagi jadi satu program yang utuh.</p>
+    <p>Inget konsep dekomposisi yang udah kita pelajari? Nah, modularisasi itu penerapannya langsung ke dalam kode program!</p>
+    <figure>
+      <img src="images/modularisasi.png" alt="Diagram modularisasi program">
+      <figcaption>Program yang tadinya satu blok besar dipecah jadi modul-modul kecil</figcaption>
+    </figure>
+    <div class="callout"><b>Analoginya gini...</b> Modul program itu kayak balok mainan robot. Tiap balok (kepala, badan, tangan, kaki) dibuat terpisah, lalu dirakit jadi robot yang utuh dan rapi!</div>
+    <figure>
+      <img src="images/balok_robot.png" alt="Analogi balok mainan robot">
+      <figcaption>Modul itu seperti balok mainan robot — dibuat terpisah, lalu dirakit</figcaption>
+    </figure>
+  </section>
+
+  <section id="fungsiprosedur">
+    <div class="eyebrow">Konsep Kunci #2</div>
+    <h2>Dua Jenis Modul: Fungsi dan Prosedur</h2>
+    <p class="lead">Modul program biasanya berbentuk salah satu dari dua ini: <b>FUNGSI (function)</b> atau <b>PROSEDUR (procedure)</b>. Bedanya apa? Yuk simak percakapan Ibu dan Anto berikut ini!</p>
+    <figure>
+      <img src="images/fungsi_prosedur.png" alt="Fungsi vs Prosedur lewat percakapan Ibu dan Anto">
+      <figcaption>Fungsi vs Prosedur lewat percakapan Ibu dan Anto</figcaption>
+    </figure>
+    <div class="compare">
+      <div class="side fn"><h3>FUNGSI itu...</h3><p>modul yang selalu ngasih JAWABAN berupa nilai. Kayak pas ibu nanya "berapa 5+3?" terus Anto jawab "8!" — ada nilai yang dikembalikan.</p></div>
+      <div class="side pr"><h3>PROSEDUR itu...</h3><p>modul yang menjalankan PERINTAH tanpa wajib lapor nilai balik. Kayak pas ibu bilang "tolong sapu lantai" — Anto langsung ngerjain, nggak perlu ngasih "jawaban angka".</p></div>
+    </div>
+  </section>
+
+  <section id="contoh">
+    <div class="eyebrow">Contoh Nyata</div>
+    <h2>Program luasLingkaran dengan 3 Modul</h2>
+    <p>Coba lihat contoh program menghitung luas lingkaran ini. Programnya dipecah jadi 3 modul:</p>
+    <ul class="tight">
+      <li><b>Prosedur utama()</b> — mengatur alur keseluruhan program.</li>
+      <li><b>Fungsi luasLingkaran(r)</b> — MENGHITUNG luas dan mengembalikan nilainya.</li>
+      <li><b>Prosedur tampilkanHasil(luas)</b> — MENAMPILKAN hasil ke layar.</li>
+    </ul>
+    <figure>
+      <img src="images/contoh_kode.png" alt="Program luasLingkaran dengan 3 modul">
+      <figcaption>Program luasLingkaran dengan 3 modul: 1 prosedur utama, 1 fungsi, 1 prosedur</figcaption>
+    </figure>
+    <p>Coba perhatikan: fungsi <code>luasLingkaran(r)</code> ngasih BALIKAN berupa angka (nilai luas), sedangkan prosedur <code>tampilkanHasil(luas)</code> cuma NGELAKUIN aksi (menampilkan ke layar) tanpa harus ngembaliin nilai apa pun.</p>
+  </section>
+
+  <section id="manfaat">
+    <div class="eyebrow">Kenapa Penting?</div>
+    <h2>Kenapa Modularisasi Itu Penting Banget?</h2>
+    <div class="grid3">
+      <div class="pill-card c1"><h3>Lebih Mudah Dibaca</h3><p>Program yang dipecah jadi modul-modul kecil jauh lebih gampang dipahami — nggak perlu baca ratusan baris kode sekaligus.</p></div>
+      <div class="pill-card c2"><h3>Lebih Gampang Diperbaiki</h3><p>Ada error di bagian hitung luas? Tinggal cek modul luasLingkaran-nya aja, nggak perlu bongkar semua kode.</p></div>
+      <div class="pill-card c3"><h3>Nyambung ke Library!</h3><p>Modul yang udah jadi dan teruji bisa disimpan jadi bagian dari library, biar bisa dipakai ulang (inget materi sebelumnya, kan?).</p></div>
+    </div>
+    <p style="margin-top:20px;">Di Scratch, kamu bisa bikin modul sendiri lewat fitur <code>My Blocks</code> (Make a Block). Di Blockly, ada kategori khusus <code>Functions</code> yang bahkan bisa bikin fungsi dengan nilai balikan.</p>
+  </section>
+
+  <section id="studikasus">
+    <div class="eyebrow">Yuk, Coba Sendiri!</div>
+    <h2>Studi Kasus: Memodularkan Kalkulator Luas Bangun Datar</h2>
+    <figure>
+      <img src="images/studi_kasus_tp7.png" alt="Studi kasus memodularkan kalkulator luas bangun datar">
+      <figcaption>Dari kode "berantakan" menuju modul-modul yang rapi</figcaption>
+    </figure>
+    <p>Sekarang giliran kamu! Bareng kelompokmu, coba pikirin:</p>
+    <ul class="tight">
+      <li>Kalau program "Kalkulator Luas Bangun Datar" mau dipecah jadi modul-modul, modul apa aja yang perlu dibuat?</li>
+      <li>Dari modul-modul itu, mana yang cocok jadi FUNGSI (ngasih nilai balik) dan mana yang cocok jadi PROSEDUR (cuma jalanin perintah)?</li>
+      <li>Coba tebak dulu (bikin hipotesis) sebelum kamu benar-benar mengecek jawabannya di LKPD!</li>
+    </ul>
+    <p>Tulis jawabanmu di LKPD yang dibagikan gurumu, ya!</p>
+  </section>
+
+  <section id="kuis">
+    <div class="eyebrow">Cek Pemahamanmu</div>
+    <h2>Kuis Interaktif</h2>
+
+    <div class="quiz">
+      <span class="tag">PILIHAN GANDA</span>
+      <h3>1. Proses memecah sebuah program menjadi bagian-bagian terpisah yang masing-masing punya tugas sendiri disebut...</h3>
+      <div class="opts" data-answer="0">
+        <button class="opt" data-idx="0">A. Modularisasi</button>
+        <button class="opt" data-idx="1">B. Duplikasi</button>
+        <button class="opt" data-idx="2">C. Kompilasi</button>
+        <button class="opt" data-idx="3">D. Instalasi</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="quiz">
+      <span class="tag">PILIHAN GANDA</span>
+      <h3>2. Sebuah modul bernama tampilkanHasil(luas) yang hanya menampilkan teks ke layar tanpa mengembalikan nilai apa pun tergolong sebagai...</h3>
+      <div class="opts" data-answer="1">
+        <button class="opt" data-idx="0">A. Fungsi, karena memiliki parameter luas</button>
+        <button class="opt" data-idx="1">B. Prosedur, karena hanya menjalankan perintah tanpa nilai balik</button>
+        <button class="opt" data-idx="2">C. Library, karena bisa dipakai berulang kali</button>
+        <button class="opt" data-idx="3">D. Dekomposisi, karena merupakan bagian dari program besar</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="quiz">
+      <span class="tag">ESAI SINGKAT</span>
+      <h3>3. Dari 3 modul program luasLingkaran (utama, luasLingkaran, tampilkanHasil), modul manakah yang termasuk FUNGSI? Jelaskan alasanmu dalam satu kalimat!</h3>
+      <textarea placeholder="Tulis jawabanmu di sini..."></textarea>
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Lihat Contoh Jawaban</button>
+      <div class="sample-answer">Modul luasLingkaran(r) adalah FUNGSI, karena modul ini menghitung dan MENGEMBALIKAN NILAI luas lingkaran sebagai hasil, yang kemudian dipakai oleh modul tampilkanHasil(). Jawabanmu benar selama menyebut luasLingkaran sebagai fungsi dan memberi alasan terkait nilai kembalian.</div>
+    </div>
+  </section>
+
+  <section id="rangkuman">
+    <div class="eyebrow">Sebelum Lanjut</div>
+    <h2>Rangkuman Kilat</h2>
+    <ul class="summary-list">
+      <li><span class="dot" style="background:var(--deep)"></span><div><b>Modularisasi</b> = memecah program jadi modul-modul kecil yang punya tugas masing-masing.</div></li>
+      <li><span class="dot" style="background:var(--teal)"></span><div><b>Fungsi (function)</b> = modul yang mengembalikan sebuah NILAI sebagai jawaban.</div></li>
+      <li><span class="dot" style="background:var(--mint)"></span><div><b>Prosedur (procedure)</b> = modul yang menjalankan PERINTAH tanpa wajib mengembalikan nilai.</div></li>
+      <li><span class="dot" style="background:var(--coral)"></span><div>Modularisasi bikin program lebih mudah dibaca, diperbaiki, dan berpotensi jadi bagian dari <b>library</b>.</div></li>
+    </ul>
+
+    <div class="card" style="margin-top:28px;">
+      <h3 style="margin-bottom:12px;">Refleksi Diri</h3>
+      <p style="margin-bottom:6px;">Sebelum lanjut ke materi berikutnya, coba jawab dulu:</p>
+      <textarea placeholder="Satu hal baru yang aku pelajari hari ini adalah..."></textarea>
+      <textarea placeholder="Kalau aku bikin program sendiri, modul apa yang bakal aku jadikan FUNGSI, dan apa yang jadi PROSEDUR?"></textarea>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    Informatika Kelas IX &middot; SMP Negeri 14 Tarakan &middot; TP 7 &mdash; Bab II Berpikir Komputasional dalam Algoritma dan Pemrograman<br>
+    Sumber: Buku Siswa &amp; Buku Panduan Guru Informatika Kelas IX (Edisi Revisi), Kemendikbudristek
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.opts').forEach(function(group){
+  var answer = parseInt(group.getAttribute('data-answer'), 10);
+  var feedback = group.nextElementSibling;
+  group.querySelectorAll('.opt').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if (group.classList.contains('answered')) return;
+      group.classList.add('answered');
+      var idx = parseInt(btn.getAttribute('data-idx'), 10);
+      group.querySelectorAll('.opt').forEach(function(b){ b.disabled = true; });
+      if (idx === answer) {
+        btn.classList.add('correct');
+        feedback.textContent = '✓ Benar! Kerja bagus.';
+        feedback.className = 'feedback show ok';
+      } else {
+        btn.classList.add('wrong');
+        group.querySelectorAll('.opt')[answer].classList.add('correct');
+        feedback.textContent = '✗ Belum tepat. Jawaban yang benar sudah ditandai hijau.';
+        feedback.className = 'feedback show no';
+      }
+    });
+  });
+});
+</script>
+
+</body>
+</html>

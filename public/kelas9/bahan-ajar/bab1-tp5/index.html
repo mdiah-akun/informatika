@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proyek Analisis Data — Hemat Energi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Figtree:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ===================== DESIGN TOKENS ===================== */
+  :root{
+    --navy:#1F3864;
+    --blue:#2E6F95;
+    --teal:#2A9D8F;
+    --teal-dark:#175C52;
+    --gold:#E9C46A;
+    --orange:#E76F51;
+    --purple:#6A4C93;
+
+    --ink:#1B2430;
+    --muted:#5B6472;
+    --paper:#F4F8F7;
+    --surface:#FFFFFF;
+    --card:#F4F6F8;
+    --border:#DCE4E2;
+    --focus:#2A9D8F;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --navy:#A9C6ED; --blue:#8FC0DE; --teal:#5FCBBB; --teal-dark:#8FE3D4;
+      --gold:#F0CE84; --orange:#F2977A; --purple:#C1A6E0;
+      --ink:#E9EEF2; --muted:#9FB0BD;
+      --paper:#101820; --surface:#172230; --card:#1C2A38;
+      --border:#2C3C4A;
+    }
+  }
+  :root[data-theme="dark"]{
+    --navy:#A9C6ED; --blue:#8FC0DE; --teal:#5FCBBB; --teal-dark:#8FE3D4;
+    --gold:#F0CE84; --orange:#F2977A; --purple:#C1A6E0;
+    --ink:#E9EEF2; --muted:#9FB0BD;
+    --paper:#101820; --surface:#172230; --card:#1C2A38;
+    --border:#2C3C4A;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; } }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Figtree", ui-sans-serif, system-ui, sans-serif;
+    font-size:16.5px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:"Fraunces", Georgia, serif; text-wrap:balance; margin:0; }
+  a{ color:var(--teal-dark); }
+  ::selection{ background:var(--gold); color:#241C05; }
+  :focus-visible{ outline:2.5px solid var(--focus); outline-offset:2px; border-radius:4px; }
+
+  .mono{ font-family:"IBM Plex Mono", ui-monospace, monospace; }
+  .eyebrow{
+    font-family:"IBM Plex Mono", monospace; font-size:.72rem; font-weight:600;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--teal-dark);
+  }
+
+  img{ max-width:100%; display:block; }
+
+  /* ===================== LAYOUT SHELL ===================== */
+  .shell{
+    display:grid;
+    grid-template-columns: 220px minmax(0,1fr);
+    max-width:1180px;
+    margin:0 auto;
+  }
+  @media (max-width:920px){
+    .shell{ grid-template-columns: 1fr; }
+  }
+
+  /* ---- table of contents rail ---- */
+  .toc{
+    position:sticky; top:0; align-self:start;
+    height:100vh; overflow-y:auto;
+    padding:2.4rem 1rem 2rem 1.6rem;
+    border-right:1px solid var(--border);
+  }
+  .toc-title{ font-size:.7rem; }
+  .toc ol{ list-style:none; margin:1rem 0 0; padding:0; display:flex; flex-direction:column; gap:.15rem; }
+  .toc a{
+    display:flex; align-items:baseline; gap:.55rem;
+    text-decoration:none; color:var(--muted);
+    font-size:.86rem; padding:.4rem .5rem; border-radius:8px;
+    transition:background .15s, color .15s;
+  }
+  .toc a:hover{ background:var(--card); color:var(--ink); }
+  .toc a .n{ font-family:"IBM Plex Mono",monospace; font-size:.72rem; color:var(--teal-dark); min-width:1.3em; }
+  .toc a.active{ background:var(--card); color:var(--ink); font-weight:600; }
+  .toc a.active .n{ color:var(--orange); }
+
+  @media (max-width:920px){
+    .toc{
+      position:sticky; top:0; z-index:20; height:auto;
+      border-right:none; border-bottom:1px solid var(--border);
+      background:var(--paper);
+      padding:.7rem 1rem;
+      overflow-x:auto; overflow-y:hidden;
+    }
+    .toc-title{ display:none; }
+    .toc ol{ flex-direction:row; gap:.3rem; width:max-content; }
+    .toc a{ white-space:nowrap; padding:.45rem .7rem; }
+  }
+
+  main{ min-width:0; }
+
+  .wrap{ max-width:700px; margin:0 auto; padding:0 1.6rem; }
+  @media (max-width:560px){ .wrap{ padding:0 1.15rem; } }
+
+  /* ===================== COVER ===================== */
+  .cover{
+    position:relative;
+    padding:3.6rem 0 2.6rem;
+    border-bottom:1px solid var(--border);
+    overflow:hidden;
+  }
+  .cover::before{
+    content:""; position:absolute; inset:0; z-index:-1;
+    background:
+      radial-gradient(620px 260px at 12% -10%, color-mix(in srgb, var(--teal) 16%, transparent), transparent 70%),
+      radial-gradient(520px 240px at 100% 0%, color-mix(in srgb, var(--gold) 20%, transparent), transparent 70%);
+  }
+  .cover-kicker{ display:flex; align-items:center; gap:.6rem; }
+  .cover-kicker .dot{ width:7px; height:7px; border-radius:50%; background:var(--orange); }
+  .cover h1{
+    margin-top:.9rem;
+    font-size:clamp(2.1rem, 5.4vw, 3rem);
+    font-weight:700; color:var(--navy); line-height:1.08;
+  }
+  .cover .subtitle{
+    margin-top:.7rem; font-size:1.2rem; font-weight:600; color:var(--teal-dark);
+    font-family:"Fraunces", serif;
+  }
+  .cover .tagline{
+    margin-top:.55rem; font-size:1rem; color:var(--orange); font-style:italic; font-weight:600;
+  }
+  .cover .meta{
+    margin-top:1.1rem; font-size:.85rem; color:var(--muted);
+    display:flex; flex-wrap:wrap; gap:.4rem .9rem;
+  }
+  .cover .meta span{ display:flex; align-items:center; gap:.4rem; }
+  .cover .meta span::before{ content:"—"; color:var(--border); }
+  .cover .meta span:first-child::before{ content:""; }
+
+  .cover-figure{ margin-top:2rem; max-width:400px; }
+
+  /* ===================== FIGURES / IMAGES ===================== */
+  figure.plate{ margin:1.9rem 0; }
+  .pic{
+    width:100%;
+    border-radius:14px;
+    border:1px solid var(--border);
+    background:var(--surface);
+    overflow:hidden;
+    box-shadow:0 8px 22px -14px rgba(20,30,40,.35);
+  }
+  .pic img{ width:100%; height:auto; }
+  figcaption{
+    margin-top:.6rem; text-align:center; font-size:.86rem; font-style:italic; color:var(--muted);
+  }
+  .plate.wide .pic{ max-width:560px; margin:0 auto; }
+  .plate.narrow{ max-width:300px; }
+  .plate.narrow.left{ margin-left:0; }
+
+  /* ---- small chart grid ---- */
+  .chart-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:1.1rem; margin:1.3rem 0 0;
+  }
+  @media (max-width:560px){ .chart-grid{ grid-template-columns:1fr; } }
+  .chart-grid figure{ margin:0; }
+
+  /* ===================== ARTICLE / SECTIONS ===================== */
+  article{ padding-bottom:2rem; }
+  section{ padding:2.6rem 0; border-bottom:1px solid var(--border); scroll-margin-top:1.5rem; }
+  section:last-of-type{ border-bottom:none; }
+  #pembuka{ padding-top:2.6rem; }
+
+  .sec-head{ display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.1rem; }
+  .sec-num{
+    font-family:"Fraunces",serif; font-weight:600; font-size:1.6rem; line-height:1;
+    color:var(--sec-color, var(--navy)); opacity:.5;
+    padding-top:.15rem;
+  }
+  h2.sec-title{ font-size:clamp(1.35rem,3vw,1.7rem); font-weight:700; color:var(--sec-color, var(--navy)); }
+
+  h3.sub{
+    font-size:1.08rem; font-weight:600; margin:1.6rem 0 .6rem;
+    color:var(--sub-color, var(--teal-dark));
+  }
+
+  p{ margin:0 0 1rem; text-align:justify; hyphens:auto; }
+  p:last-child{ margin-bottom:0; }
+  strong{ color:var(--ink); }
+
+  ul.list, ol.list{ margin:0 0 1rem; padding:0; list-style:none; display:flex; flex-direction:column; gap:.55rem; }
+  ul.list li{ position:relative; padding-left:1.35rem; }
+  ul.list li::before{
+    content:""; position:absolute; left:0; top:.55em; width:7px; height:7px; border-radius:2px;
+    background:var(--teal); transform:rotate(45deg);
+  }
+  ol.list{ counter-reset:step; }
+  ol.list li{ position:relative; padding-left:2.2rem; }
+  ol.list li::before{
+    counter-increment:step; content:counter(step);
+    position:absolute; left:0; top:-.05em;
+    font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:.82rem;
+    color:#fff; background:var(--navy);
+    width:1.55rem; height:1.55rem; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* ---- quote box ---- */
+  .quote-box{
+    margin:0 0 1.6rem; padding:1.4rem 1.6rem;
+    background:var(--card); border-left:4px solid var(--teal);
+    border-radius:4px 12px 12px 4px;
+    font-family:"Fraunces",serif; font-weight:600; font-style:italic;
+    font-size:1.15rem; color:var(--navy); line-height:1.5;
+  }
+
+  /* ---- info box ---- */
+  .info-box{
+    margin:1.4rem 0; padding:1.1rem 1.3rem;
+    background:color-mix(in srgb, var(--teal) 8%, var(--surface));
+    border:1.5px solid color-mix(in srgb, var(--teal) 45%, transparent);
+    border-radius:12px;
+  }
+  .info-box .info-title{ font-weight:700; font-size:.95rem; margin-bottom:.4rem; color:var(--teal-dark); }
+  .info-box p{ margin:0; font-size:.94rem; }
+
+  /* ---- warm/alert box ---- */
+  .warm-box{
+    margin:1.4rem 0; padding:1.1rem 1.3rem;
+    background:color-mix(in srgb, var(--orange) 10%, var(--surface));
+    border:1.5px solid color-mix(in srgb, var(--orange) 40%, transparent);
+    border-radius:12px;
+  }
+  .warm-box .info-title{ font-weight:700; font-size:.95rem; margin-bottom:.4rem; color:var(--orange); }
+  .warm-box p{ margin:0; font-size:.94rem; }
+
+  /* ---- data table ---- */
+  .tbl-wrap{ overflow-x:auto; margin:1.4rem 0; border-radius:12px; border:1px solid var(--border); }
+  table.grafik{ width:100%; border-collapse:collapse; font-size:.9rem; min-width:420px; }
+  table.grafik th{ background:var(--navy); color:#fff; text-align:left; padding:.7rem .9rem; font-weight:600; }
+  table.grafik td{ padding:.7rem .9rem; border-bottom:1px solid var(--border); }
+  table.grafik tr:last-child td{ border-bottom:none; }
+  table.grafik td:first-child{ font-weight:600; color:var(--navy); white-space:nowrap; }
+
+  /* ---- write-lines (self check) ---- */
+  .question{ font-weight:600; margin:1.5rem 0 .6rem; }
+  .question:first-of-type{ margin-top:0; }
+  .write-lines{ display:flex; flex-direction:column; gap:1.15rem; margin-bottom:.4rem; }
+  .write-lines .line{ border-bottom:1.5px dotted var(--border); height:.2rem; }
+
+  /* ---- glossary ---- */
+  dl.glossary{ margin:0; display:flex; flex-direction:column; gap:1rem; }
+  dl.glossary div{ display:grid; grid-template-columns: 168px 1fr; gap:.3rem 1rem; }
+  @media (max-width:560px){ dl.glossary div{ grid-template-columns:1fr; } }
+  dl.glossary dt{ font-weight:700; color:var(--purple); }
+  dl.glossary dd{ margin:0; color:var(--muted); }
+
+  /* ---- keyword strip ---- */
+  .keywords{
+    display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.3rem;
+  }
+  .keywords span{
+    font-family:"IBM Plex Mono",monospace; font-size:.78rem;
+    background:var(--card); border:1px solid var(--border); color:var(--teal-dark);
+    padding:.3rem .65rem; border-radius:999px;
+  }
+
+  /* ---- timeline (pertemuan 1 / antar / pertemuan 2) ---- */
+  .timeline{
+    display:grid; grid-template-columns:1fr 1fr 1fr; gap:.9rem; margin:1.5rem 0;
+  }
+  @media (max-width:640px){ .timeline{ grid-template-columns:1fr; } }
+  .timeline .tcard{
+    border-radius:12px; border:1px solid var(--border); background:var(--card);
+    padding:1rem 1.1rem;
+  }
+  .timeline .tcard .ttag{
+    display:inline-block; font-size:.72rem; font-weight:700; letter-spacing:.05em;
+    text-transform:uppercase; padding:.25rem .6rem; border-radius:999px; color:#fff;
+    margin-bottom:.6rem;
+  }
+  .timeline .tcard ul{ margin:0; padding-left:1.1rem; font-size:.88rem; color:var(--muted); display:flex; flex-direction:column; gap:.3rem; }
+
+  /* ---- closing signature line ---- */
+  .signoff{ font-weight:700; color:var(--orange); }
+
+  footer.page-footer{
+    max-width:700px; margin:0 auto; padding:2rem 1.6rem 3.5rem;
+    font-size:.8rem; color:var(--muted); text-align:center;
+  }
+
+  @media print{
+    .toc{ display:none; }
+    .shell{ display:block; }
+    .wrap{ max-width:none; }
+    section{ break-inside:avoid-page; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <nav class="toc" aria-label="Daftar isi">
+    <div class="eyebrow toc-title">Daftar Isi</div>
+    <ol id="tocList">
+      <li><a href="#pembuka"><span class="n">00</span>Pembuka</a></li>
+      <li><a href="#s1"><span class="n">01</span>Mengingat Kembali</a></li>
+      <li><a href="#s2"><span class="n">02</span>Kenalan Proyek</a></li>
+      <li><a href="#s3"><span class="n">03</span>Cara Kita Belajar</a></li>
+      <li><a href="#s4"><span class="n">04</span>Langkah 1: Wawancara</a></li>
+      <li><a href="#s5"><span class="n">05</span>Langkah 2: Jurnal Mingguan</a></li>
+      <li><a href="#s6"><span class="n">06</span>Langkah 3: Olah &amp; Visualisasi</a></li>
+      <li><a href="#s7"><span class="n">07</span>Langkah 4: Presentasi</a></li>
+      <li><a href="#s8"><span class="n">08</span>Bocoran Tips</a></li>
+      <li><a href="#s9"><span class="n">09</span>Rangkuman</a></li>
+      <li><a href="#s10"><span class="n">10</span>Cek Pemahaman</a></li>
+      <li><a href="#s11"><span class="n">11</span>Glosarium</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <header class="cover" id="cover">
+      <div class="wrap">
+        <div class="cover-kicker"><span class="dot"></span><span class="eyebrow">Materi Siswa · Informatika · Kelas IX</span></div>
+        <h1>Yuk, Ubah Kebiasaanmu Jadi Data yang Bisa Bicara!</h1>
+        <div class="subtitle">Proyek Analisis Data — Hemat Energi</div>
+        <div class="tagline">Bab I — Berpikir Komputasional dalam Analisis Data</div>
+        <div class="meta">
+          <span>Tujuan Pembelajaran 5</span>
+          <span>Model: Project Based Learning (PjBL)</span>
+          <span>2 Pertemuan &times; 120 Menit</span>
+          <span>SMP Negeri 14 Tarakan</span>
+        </div>
+
+        <figure class="plate cover-figure">
+          <div class="pic"><img src="images/01-sampul-proyek-data.png" alt="Ilustrasi papan klip berisi grafik data yang diperiksa dengan kaca pembesar, di sampingnya bohlam menyala dengan simbol daun hijau, melambangkan proyek analisis data hemat energi"></div>
+        </figure>
+      </div>
+    </header>
+
+    <article class="wrap">
+
+      <!-- ===================== PEMBUKA ===================== -->
+      <section id="pembuka">
+        <div class="quote-box">&ldquo;Selama ini kamu cuma belajar bikin grafik dari data contoh di buku. Gimana kalau sekarang datanya kamu kumpulin sendiri — dari kebiasaanmu, dari teman-temanmu sekelas?&rdquo;</div>
+
+        <h3 class="sub" style="--sub-color:var(--navy)">Yuk, Intip Apa yang Bakal Kamu Kuasai</h3>
+        <p>Setelah menyelesaikan proyek ini, kamu bakal bisa:</p>
+        <ul class="list">
+          <li>mengumpulkan data sungguhan lewat wawancara dan pencatatan mandiri;</li>
+          <li>mengolah dan menganalisis data itu buat nemuin pola, tren, atau masalah utama;</li>
+          <li>menyusun hasil analisis dalam bentuk laporan atau visual (tabel, grafik, diagram);</li>
+          <li>menyusun rekomendasi hemat energi berdasarkan hasil analisismu sendiri, lalu mempresentasikannya.</li>
+        </ul>
+
+        <h3 class="sub" style="--sub-color:var(--navy)">Kata Kunci</h3>
+        <div class="keywords">
+          <span>proyek nyata</span><span>data primer</span><span>wawancara</span>
+          <span>Project Based Learning</span><span>visualisasi data</span><span>rekomendasi berbasis data</span>
+        </div>
+      </section>
+
+      <!-- ===================== 1 ===================== -->
+      <section id="s1">
+        <div class="sec-head" style="--sec-color:var(--navy)">
+          <div class="sec-num">01</div>
+          <h2 class="sec-title">Coba Diingat-Ingat Lagi, Yuk</h2>
+        </div>
+        <p>Sepanjang Bab I ini, kamu udah melewati perjalanan yang lumayan panjang. Di TP 1&ndash;2, kamu belajar menyusun data jadi struktur tree dan graph biar rapi. Di TP 3, kamu belajar milih dan bikin empat jenis grafik (batang, garis, lingkaran, pencar). Di TP 4, kamu belajar menerapkan berpikir komputasional buat masalah sehari-hari &mdash; termasuk kasus konsumsi listrik rumah tangga.</p>
+        <p>Nah, sekarang saatnya menyatukan semua kemampuan itu jadi satu proyek nyata. Kali ini bukan data contoh dari buku lagi &mdash; datanya kamu kumpulkan sendiri, dari dirimu dan teman-teman sekelasmu!</p>
+      </section>
+
+      <!-- ===================== 2 ===================== -->
+      <section id="s2">
+        <div class="sec-head" style="--sec-color:var(--orange)">
+          <div class="sec-num">02</div>
+          <h2 class="sec-title">Kenalan Dulu, Yuk, Sama Proyek Kita</h2>
+        </div>
+        <p>Tema proyek kita: <strong>Hemat Energi</strong>. Kamu pasti udah sadar kalau kebiasaan kecil di rumah &mdash; TV yang nyala terus, charger yang lupa dicabut, lampu yang belum pakai LED &mdash; ternyata bisa berdampak ke tagihan listrik dan pemakaian energi keluarga.</p>
+
+        <figure class="plate">
+          <div class="pic"><img src="images/02-rumah-hemat-energi.png" alt="Ilustrasi rumah dengan meteran listrik, jendela bertanda matahari dan kipas, serta kulkas, dengan keterangan bahwa setiap rumah memiliki data konsumsi listriknya sendiri"></div>
+        </figure>
+
+        <p>Pertanyaannya: kebiasaan hemat energi kayak gimana sih yang sebenarnya dilakukan teman-teman sekelasmu? Daripada cuma menebak-nebak, kita akan cari tahu jawabannya lewat data sungguhan yang kamu kumpulkan sendiri selama dua pertemuan ke depan.</p>
+      </section>
+
+      <!-- ===================== 3 ===================== -->
+      <section id="s3">
+        <div class="sec-head" style="--sec-color:var(--blue)">
+          <div class="sec-num">03</div>
+          <h2 class="sec-title">Gimana Sih Kita Bakal Belajar Kali Ini?</h2>
+        </div>
+        <p>Proyek ini pakai model pembelajaran Project Based Learning (PjBL) &mdash; artinya kamu dan kelompokmu akan benar-benar mengerjakan sebuah proyek dari awal sampai akhir, persis seperti tim peneliti sungguhan. Ini alurnya:</p>
+
+        <figure class="plate wide">
+          <div class="pic"><img src="images/03-sintaks-pjbl.png" alt="Diagram alur enam tahap Project Based Learning: Pertanyaan Mendasar, Desain Perencanaan Proyek, Menyusun Jadwal, Memonitor Kemajuan Proyek, Menguji Hasil, Evaluasi Pengalaman"></div>
+          <figcaption>Gambar 1. Sintaks Project Based Learning (PjBL) yang akan kamu jalani</figcaption>
+        </figure>
+
+        <ol class="list">
+          <li><strong>Pertanyaan Mendasar</strong> &mdash; merumuskan pertanyaan besar yang mau dijawab lewat proyek ini.</li>
+          <li><strong>Mendesain Perencanaan Proyek</strong> &mdash; membentuk kelompok, membagi peran, dan memahami apa yang harus dikerjakan.</li>
+          <li><strong>Menyusun Jadwal</strong> &mdash; menentukan kapan wawancara, kapan mencatat, kapan mengolah data, kapan presentasi.</li>
+          <li><strong>Memonitor Kemajuan Proyek</strong> &mdash; memantau progres pencatatan datamu sendiri selama satu minggu.</li>
+          <li><strong>Menguji Hasil</strong> &mdash; mempresentasikan hasil analisis dan rekomendasimu ke teman sekelas.</li>
+          <li><strong>Evaluasi Pengalaman</strong> &mdash; merefleksikan apa yang sudah kamu pelajari dari keseluruhan proyek.</li>
+        </ol>
+
+        <h3 class="sub" style="--sub-color:var(--teal)">Peta Dua Pertemuan Kita</h3>
+        <div class="timeline">
+          <div class="tcard">
+            <span class="ttag" style="background:var(--teal)">Pertemuan 1</span>
+            <ul>
+              <li>Bentuk kelompok &amp; rumuskan pertanyaan</li>
+              <li>Susun rencana &amp; jadwal kerja</li>
+              <li>Wawancara teman sekelas</li>
+              <li>Mulai mencatat kebiasaan sendiri</li>
+            </ul>
+          </div>
+          <div class="tcard">
+            <span class="ttag" style="background:var(--gold); color:#5A4A12">Antarpertemuan (&plusmn;1 minggu)</span>
+            <ul>
+              <li>Lanjutkan mencatat kebiasaan harian</li>
+              <li>Isi Tabel 1.5 dengan disiplin</li>
+            </ul>
+          </div>
+          <div class="tcard">
+            <span class="ttag" style="background:var(--orange)">Pertemuan 2</span>
+            <ul>
+              <li>Olah &amp; analisis data yang terkumpul</li>
+              <li>Buat visualisasi &amp; susun laporan</li>
+              <li>Presentasi hasil ke kelas</li>
+              <li>Refleksi pengalaman proyek</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== 4 ===================== -->
+      <section id="s4">
+        <div class="sec-head" style="--sec-color:var(--teal)">
+          <div class="sec-num">04</div>
+          <h2 class="sec-title">Langkah 1: Wawancara Teman Sekelas</h2>
+        </div>
+
+        <figure class="plate">
+          <div class="pic"><img src="images/04-wawancara-teman.png" alt="Ilustrasi dua siswa berdiskusi, satu memegang papan klip dan bertanya, satu lagi menjawab sambil menunjuk catatan"></div>
+          <figcaption>Mewawancarai teman untuk mengumpulkan data kebiasaan hemat energi</figcaption>
+        </figure>
+
+        <p>Bareng kelompokmu, kamu akan mewawancarai beberapa teman sekelas (di luar anggota kelompokmu sendiri) untuk mengisi tabel data penggunaan energi listrik di rumah mereka. Yang perlu kamu tanyakan:</p>
+        <ul class="list">
+          <li>rata-rata berapa jam TV dinyalakan setiap hari di rumahnya;</li>
+          <li>berapa jumlah telepon genggam yang ada di rumahnya;</li>
+          <li>berapa jumlah lampu yang rutin menyala setiap hari;</li>
+          <li>apakah rumahnya sudah menggunakan lampu LED (Ya/Tidak);</li>
+          <li>apakah dia biasa mencabut charger ketika tidak digunakan (Ya/Tidak/Kadang-kadang).</li>
+        </ul>
+
+        <div class="info-box">
+          <div class="info-title">💡 Tips Wawancara yang Baik</div>
+          <p>Sapa temanmu dengan sopan sebelum bertanya, jelaskan singkat kalau ini buat tugas proyek Informatika, dan catat jawabannya persis seperti yang dia sampaikan &mdash; jangan menebak atau mengubah jawabannya sendiri.</p>
+        </div>
+      </section>
+
+      <!-- ===================== 5 ===================== -->
+      <section id="s5">
+        <div class="sec-head" style="--sec-color:var(--gold)">
+          <div class="sec-num">05</div>
+          <h2 class="sec-title">Langkah 2: Mencatat Kebiasaanmu Sendiri Selama Seminggu</h2>
+        </div>
+
+        <figure class="plate">
+          <div class="pic"><img src="images/05-jurnal-mingguan.png" alt="Ilustrasi kalender mingguan berjudul Catatan 1 Minggu dengan tujuh lingkaran hari Senin sampai Minggu, masing-masing bertanda centang"></div>
+          <figcaption>Catatan harian kebiasaan penggunaan energi &mdash; dari Senin sampai Minggu</figcaption>
+        </figure>
+
+        <p>Selain wawancara, kamu juga harus mencatat kebiasaanmu SENDIRI setiap hari selama satu minggu penuh, mulai dari hari ini. Tiga hal yang perlu kamu catat setiap hari:</p>
+        <ul class="list">
+          <li>berapa lama TV di rumahmu menyala (jam);</li>
+          <li>berapa kali kamu mengisi ulang daya telepon genggam;</li>
+          <li>berapa lama lampu di kamarmu menyala (jam).</li>
+        </ul>
+
+        <div class="warm-box">
+          <div class="info-title">⚠️ Butuh Kedisiplinan</div>
+          <p>Ini bagian yang butuh kedisiplinan &mdash; nggak ada yang bisa mencatat kebiasaanmu selain kamu sendiri! Simpan catatan ini baik-baik, karena datamu akan digabung dengan data seluruh anggota kelompok pada pertemuan berikutnya.</p>
+        </div>
+      </section>
+
+      <!-- ===================== 6 ===================== -->
+      <section id="s6">
+        <div class="sec-head" style="--sec-color:var(--navy)">
+          <div class="sec-num">06</div>
+          <h2 class="sec-title">Langkah 3: Mengolah Data dan Membuat Visualisasi</h2>
+        </div>
+        <p>Setelah data terkumpul lengkap, kelompokmu akan mengolahnya untuk menjawab empat pertanyaan analisis. Coba diinget-inget lagi empat jenis grafik yang udah kamu kuasai di TP 3:</p>
+
+        <div class="chart-grid">
+          <figure class="plate">
+            <div class="pic"><img src="images/06-diagram-batang.png" alt="Contoh diagram batang"></div>
+            <figcaption>Diagram Batang &mdash; membandingkan data antarkategori</figcaption>
+          </figure>
+          <figure class="plate">
+            <div class="pic"><img src="images/07-diagram-garis.png" alt="Contoh diagram garis"></div>
+            <figcaption>Diagram Garis &mdash; menunjukkan tren dari waktu ke waktu</figcaption>
+          </figure>
+          <figure class="plate">
+            <div class="pic"><img src="images/08-diagram-lingkaran.png" alt="Contoh diagram lingkaran"></div>
+            <figcaption>Diagram Lingkaran &mdash; menunjukkan proporsi keseluruhan</figcaption>
+          </figure>
+          <figure class="plate">
+            <div class="pic"><img src="images/09-diagram-pencar.png" alt="Contoh diagram pencar"></div>
+            <figcaption>Diagram Pencar &mdash; menunjukkan hubungan dua variabel</figcaption>
+          </figure>
+        </div>
+
+        <h3 class="sub" style="--sub-color:var(--teal)">Empat Pertanyaan Analisis yang Harus Dijawab</h3>
+        <ol class="list">
+          <li>Bagaimana hubungan jumlah telepon genggam di rumah dengan durasi televisi menyala?</li>
+          <li>Tunjukkan komposisi kebiasaan siswa dalam menggunakan charger di rumah &mdash; berapa yang biasa mencabut, tidak mencabut, dan kadang-kadang mencabut ketika tidak digunakan?</li>
+          <li>Bandingkan berapa jumlah siswa yang menggunakan lampu LED dan bukan LED!</li>
+          <li>Bandingkan pola penggunaan alat elektronik di rumahmu (TV, telepon genggam, dan lampu) setiap hari selama satu minggu!</li>
+        </ol>
+
+        <div class="info-box">
+          <div class="info-title">🤔 Tantangan Buat Kamu</div>
+          <p>Coba pikirkan dulu sendiri: jenis grafik apa yang paling pas buat menjawab masing-masing dari keempat pertanyaan di atas? Diskusikan dugaanmu dengan kelompok sebelum mulai mengolah data &mdash; inilah yang disebut merumuskan hipotesis dalam proyek ini.</p>
+        </div>
+      </section>
+
+      <!-- ===================== 7 ===================== -->
+      <section id="s7">
+        <div class="sec-head" style="--sec-color:var(--purple)">
+          <div class="sec-num">07</div>
+          <h2 class="sec-title">Langkah 4: Presentasi Hasil</h2>
+        </div>
+
+        <figure class="plate">
+          <div class="pic"><img src="images/10-presentasi-kelompok.png" alt="Ilustrasi siswa mempresentasikan poster berisi diagram lingkaran dan batang di depan papan flip chart kepada dua orang audiens"></div>
+          <figcaption>Menyampaikan hasil analisis dan rekomendasi ke teman sekelas</figcaption>
+        </figure>
+
+        <p>Setelah visualisasi jadi, kelompokmu akan merangkumnya ke dalam poster atau laporan singkat, lengkap dengan minimal satu rekomendasi hemat energi berdasarkan temuanmu. Lalu, kelompokmu akan mempresentasikan semuanya di depan kelas &mdash; inilah tahap &ldquo;Menguji Hasil&rdquo; dalam proyek PjBL.</p>
+        <p><span class="signoff">Nggak perlu grogi &mdash; kamu cuma perlu menceritakan apa yang kamu temukan dari data, sama seperti waktu kamu cerita ke teman soal sesuatu yang menarik!</span></p>
+      </section>
+
+      <!-- ===================== 8 ===================== -->
+      <section id="s8">
+        <div class="sec-head" style="--sec-color:var(--navy)">
+          <div class="sec-num">08</div>
+          <h2 class="sec-title">Bocoran Tips Biar Proyekmu Makin Lancar</h2>
+        </div>
+
+        <h3 class="sub" style="--sub-color:var(--teal)">Supaya Nggak Lupa Mencatat</h3>
+        <ol class="list">
+          <li>Pasang pengingat harian di HP-mu (jam yang sama setiap hari, misalnya sebelum tidur) supaya nggak lupa mengisi catatan.</li>
+          <li>Simpan tabel catatanmu di tempat yang gampang dijangkau &mdash; di meja belajar atau difoto tiap hari sebagai cadangan.</li>
+          <li>Kalau suatu hari lupa mencatat tepat waktu, tetap coba ingat dan isi secepatnya &mdash; data yang mendekati kenyataan tetap lebih baik daripada kosong sama sekali.</li>
+        </ol>
+
+        <h3 class="sub" style="--sub-color:var(--teal)">Supaya Visualisasimu Meyakinkan</h3>
+        <ul class="list">
+          <li>Selalu kasih judul, label sumbu, dan data label di setiap grafik yang kamu buat.</li>
+          <li>Kalau memakai aplikasi pengolah angka, blok data lengkap dengan judul kolomnya sebelum memilih menu Sisipkan Grafik.</li>
+          <li>Kalau digambar manual, pakai kertas berpetak biar skalanya rapi dan mudah dibandingkan.</li>
+        </ul>
+
+        <div class="info-box">
+          <div class="info-title">✅ Inget!</div>
+          <p>Proyek ini bukan cuma soal bikin grafik yang bagus, tapi soal menceritakan sesuatu yang benar-benar kamu temukan dari data nyata. Percaya diri sama hasil kerja kelompokmu sendiri, ya!</p>
+        </div>
+      </section>
+
+      <!-- ===================== 9 ===================== -->
+      <section id="s9">
+        <div class="sec-head" style="--sec-color:var(--teal)">
+          <div class="sec-num">09</div>
+          <h2 class="sec-title">Rangkuman Singkat</h2>
+        </div>
+        <ul class="list">
+          <li>Proyek ini memakai data primer &mdash; data yang kamu kumpulkan sendiri lewat wawancara dan pencatatan mandiri, bukan data contoh dari buku.</li>
+          <li>Model pembelajaran PjBL punya enam tahap: pertanyaan mendasar, mendesain perencanaan, menyusun jadwal, memonitor kemajuan, menguji hasil, dan evaluasi pengalaman.</li>
+          <li>Data yang terkumpul (Tabel 1.4 dari wawancara dan Tabel 1.5 dari catatan mandiri) diolah untuk menjawab empat pertanyaan analisis memakai jenis grafik yang paling tepat.</li>
+          <li>Hasil akhir proyek adalah visualisasi data, rekomendasi hemat energi, dan presentasi kelompok di depan kelas.</li>
+        </ul>
+      </section>
+
+      <!-- ===================== 10 ===================== -->
+      <section id="s10">
+        <div class="sec-head" style="--sec-color:var(--orange)">
+          <div class="sec-num">10</div>
+          <h2 class="sec-title">Cek Dulu, Udah Paham Belum?</h2>
+        </div>
+        <p>Sebelum mulai proyeknya, coba jawab dulu yuk pertanyaan berikut sendirian.</p>
+
+        <div class="question">1. Menurutmu, kenapa data yang dikumpulkan sendiri (lewat wawancara dan pencatatan mandiri) bisa memberikan hasil analisis yang lebih bermakna dibanding data contoh dari buku?</div>
+        <div class="write-lines"><div class="line"></div><div class="line"></div></div>
+
+        <div class="question">2. Sebutkan salah satu tahap dalam sintaks PjBL yang menurutmu paling menantang buat kamu jalani, dan jelaskan alasannya.</div>
+        <div class="write-lines"><div class="line"></div></div>
+
+        <div class="question">3. Kalau kamu diminta membandingkan pola penggunaan TV, HP, dan lampu selama satu minggu, jenis grafik apa yang akan kamu pakai? Jelaskan alasanmu.</div>
+        <div class="write-lines"><div class="line"></div><div class="line"></div></div>
+      </section>
+
+      <!-- ===================== 11 ===================== -->
+      <section id="s11">
+        <div class="sec-head" style="--sec-color:var(--purple)">
+          <div class="sec-num">11</div>
+          <h2 class="sec-title">Kamus Kecil Istilah Penting</h2>
+        </div>
+        <dl class="glossary">
+          <div><dt>Project Based Learning (PjBL)</dt><dd>model pembelajaran berbasis proyek nyata, dari perencanaan sampai presentasi hasil.</dd></div>
+          <div><dt>Data Primer</dt><dd>data yang dikumpulkan langsung oleh peneliti (dalam proyek ini: lewat wawancara dan pencatatan mandiri).</dd></div>
+          <div><dt>Wawancara</dt><dd>cara mengumpulkan data dengan bertanya langsung kepada orang lain.</dd></div>
+          <div><dt>Visualisasi Data</dt><dd>cara menyajikan data dalam bentuk gambar/grafik agar lebih mudah dipahami.</dd></div>
+          <div><dt>Rekomendasi Berbasis Data</dt><dd>saran atau solusi yang dirancang berdasarkan hasil analisis data nyata, bukan sekadar opini.</dd></div>
+          <div><dt>Refleksi</dt><dd>proses memikirkan kembali apa yang sudah dipelajari dan dialami selama sebuah kegiatan.</dd></div>
+        </dl>
+      </section>
+
+    </article>
+
+    <footer class="page-footer">
+      Informatika · Bab I Berpikir Komputasional dalam Analisis Data · Kelas IX · SMP Negeri 14 Tarakan
+    </footer>
+  </main>
+</div>
+
+<script>
+  // Highlight the active section in the table of contents while scrolling.
+  (function(){
+    var links = Array.prototype.slice.call(document.querySelectorAll('#tocList a'));
+    var sections = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+    if (!('IntersectionObserver' in window) || sections.length === 0) return;
+
+    var map = new Map();
+    sections.forEach(function(sec, i){ map.set(sec, links[i]); });
+
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var link = map.get(entry.target);
+        if (!link) return;
+        if (entry.isIntersecting) {
+          links.forEach(function(l){ l.classList.remove('active'); });
+          link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+    sections.forEach(function(sec){ obs.observe(sec); });
+  })();
+</script>
+</body>
+</html>

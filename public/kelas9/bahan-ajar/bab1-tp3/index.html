@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dari Angka Jadi Cerita — Visualisasi Data</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Figtree:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ===================== DESIGN TOKENS ===================== */
+  :root{
+    --navy:#1F3864;
+    --blue:#2E6F95;
+    --teal:#2A9D8F;
+    --teal-dark:#175C52;
+    --gold:#E9C46A;
+    --orange:#E76F51;
+    --purple:#6A4C93;
+
+    --ink:#1B2430;
+    --muted:#5B6472;
+    --paper:#F4F8F7;
+    --surface:#FFFFFF;
+    --card:#F4F6F8;
+    --border:#DCE4E2;
+    --focus:#2A9D8F;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --navy:#A9C6ED; --blue:#8FC0DE; --teal:#5FCBBB; --teal-dark:#8FE3D4;
+      --gold:#F0CE84; --orange:#F2977A; --purple:#C1A6E0;
+      --ink:#E9EEF2; --muted:#9FB0BD;
+      --paper:#101820; --surface:#172230; --card:#1C2A38;
+      --border:#2C3C4A;
+    }
+  }
+  :root[data-theme="dark"]{
+    --navy:#A9C6ED; --blue:#8FC0DE; --teal:#5FCBBB; --teal-dark:#8FE3D4;
+    --gold:#F0CE84; --orange:#F2977A; --purple:#C1A6E0;
+    --ink:#E9EEF2; --muted:#9FB0BD;
+    --paper:#101820; --surface:#172230; --card:#1C2A38;
+    --border:#2C3C4A;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; } }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Figtree", ui-sans-serif, system-ui, sans-serif;
+    font-size:16.5px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:"Fraunces", Georgia, serif; text-wrap:balance; margin:0; }
+  a{ color:var(--teal-dark); }
+  ::selection{ background:var(--gold); color:#241C05; }
+  :focus-visible{ outline:2.5px solid var(--focus); outline-offset:2px; border-radius:4px; }
+
+  .mono{ font-family:"IBM Plex Mono", ui-monospace, monospace; }
+  .eyebrow{
+    font-family:"IBM Plex Mono", monospace; font-size:.72rem; font-weight:600;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--teal-dark);
+  }
+
+  img{ max-width:100%; display:block; }
+
+  /* ===================== LAYOUT SHELL ===================== */
+  .shell{
+    display:grid;
+    grid-template-columns: 220px minmax(0,1fr);
+    max-width:1180px;
+    margin:0 auto;
+  }
+  @media (max-width:920px){
+    .shell{ grid-template-columns: 1fr; }
+  }
+
+  /* ---- table of contents rail ---- */
+  .toc{
+    position:sticky; top:0; align-self:start;
+    height:100vh; overflow-y:auto;
+    padding:2.4rem 1rem 2rem 1.6rem;
+    border-right:1px solid var(--border);
+  }
+  .toc-title{ font-size:.7rem; }
+  .toc ol{ list-style:none; margin:1rem 0 0; padding:0; display:flex; flex-direction:column; gap:.15rem; }
+  .toc a{
+    display:flex; align-items:baseline; gap:.55rem;
+    text-decoration:none; color:var(--muted);
+    font-size:.86rem; padding:.4rem .5rem; border-radius:8px;
+    transition:background .15s, color .15s;
+  }
+  .toc a:hover{ background:var(--card); color:var(--ink); }
+  .toc a .n{ font-family:"IBM Plex Mono",monospace; font-size:.72rem; color:var(--teal-dark); min-width:1.3em; }
+  .toc a.active{ background:var(--card); color:var(--ink); font-weight:600; }
+  .toc a.active .n{ color:var(--orange); }
+
+  @media (max-width:920px){
+    .toc{
+      position:sticky; top:0; z-index:20; height:auto;
+      border-right:none; border-bottom:1px solid var(--border);
+      background:var(--paper);
+      padding:.7rem 1rem;
+      overflow-x:auto; overflow-y:hidden;
+    }
+    .toc-title{ display:none; }
+    .toc ol{ flex-direction:row; gap:.3rem; width:max-content; }
+    .toc a{ white-space:nowrap; padding:.45rem .7rem; }
+  }
+
+  main{ min-width:0; }
+
+  .wrap{ max-width:700px; margin:0 auto; padding:0 1.6rem; }
+  @media (max-width:560px){ .wrap{ padding:0 1.15rem; } }
+
+  /* ===================== COVER ===================== */
+  .cover{
+    position:relative;
+    padding:3.6rem 0 2.6rem;
+    border-bottom:1px solid var(--border);
+    overflow:hidden;
+  }
+  .cover::before{
+    content:""; position:absolute; inset:0; z-index:-1;
+    background:
+      radial-gradient(620px 260px at 12% -10%, color-mix(in srgb, var(--teal) 16%, transparent), transparent 70%),
+      radial-gradient(520px 240px at 100% 0%, color-mix(in srgb, var(--gold) 20%, transparent), transparent 70%);
+  }
+  .cover-kicker{ display:flex; align-items:center; gap:.6rem; }
+  .cover-kicker .dot{ width:7px; height:7px; border-radius:50%; background:var(--orange); }
+  .cover h1{
+    margin-top:.9rem;
+    font-size:clamp(2.1rem, 5.4vw, 3rem);
+    font-weight:700; color:var(--navy); line-height:1.08;
+  }
+  .cover .subtitle{
+    margin-top:.7rem; font-size:1.2rem; font-weight:600; color:var(--teal-dark);
+    font-family:"Fraunces", serif;
+  }
+  .cover .tagline{
+    margin-top:.55rem; font-size:1rem; color:var(--orange); font-style:italic; font-weight:600;
+  }
+  .cover .meta{
+    margin-top:1.1rem; font-size:.85rem; color:var(--muted);
+    display:flex; flex-wrap:wrap; gap:.4rem .9rem;
+  }
+  .cover .meta span{ display:flex; align-items:center; gap:.4rem; }
+  .cover .meta span::before{ content:"—"; color:var(--border); }
+  .cover .meta span:first-child::before{ content:""; }
+
+  .cover-figure{ margin-top:2rem; max-width:400px; }
+
+  /* ===================== FIGURES / IMAGES ===================== */
+  figure.plate{ margin:1.9rem 0; }
+  .pic{
+    width:100%;
+    border-radius:14px;
+    border:1px solid var(--border);
+    background:var(--surface);
+    overflow:hidden;
+    box-shadow:0 8px 22px -14px rgba(20,30,40,.35);
+  }
+  .pic img{ width:100%; height:auto; }
+  figcaption{
+    margin-top:.6rem; text-align:center; font-size:.86rem; font-style:italic; color:var(--muted);
+  }
+  .plate.wide .pic{ max-width:560px; margin:0 auto; }
+  .plate.narrow{ max-width:300px; }
+  .plate.narrow.left{ margin-left:0; }
+
+  /* ---- small chart grid (four senjata) ---- */
+  .chart-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:1.1rem; margin:1.3rem 0 0;
+  }
+  @media (max-width:560px){ .chart-grid{ grid-template-columns:1fr; } }
+  .chart-grid figure{ margin:0; }
+
+  /* ===================== ARTICLE / SECTIONS ===================== */
+  article{ padding-bottom:2rem; }
+  section{ padding:2.6rem 0; border-bottom:1px solid var(--border); scroll-margin-top:1.5rem; }
+  section:last-of-type{ border-bottom:none; }
+  #pembuka{ padding-top:2.6rem; }
+
+  .sec-head{ display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.1rem; }
+  .sec-num{
+    font-family:"Fraunces",serif; font-weight:600; font-size:1.6rem; line-height:1;
+    color:var(--sec-color, var(--navy)); opacity:.5;
+    padding-top:.15rem;
+  }
+  h2.sec-title{ font-size:clamp(1.35rem,3vw,1.7rem); font-weight:700; color:var(--sec-color, var(--navy)); }
+
+  h3.sub{
+    font-size:1.08rem; font-weight:600; margin:1.6rem 0 .6rem;
+    color:var(--sub-color, var(--teal-dark));
+  }
+
+  p{ margin:0 0 1rem; text-align:justify; hyphens:auto; }
+  p:last-child{ margin-bottom:0; }
+  strong{ color:var(--ink); }
+
+  ul.list, ol.list{ margin:0 0 1rem; padding:0; list-style:none; display:flex; flex-direction:column; gap:.55rem; }
+  ul.list li{ position:relative; padding-left:1.35rem; }
+  ul.list li::before{
+    content:""; position:absolute; left:0; top:.55em; width:7px; height:7px; border-radius:2px;
+    background:var(--teal); transform:rotate(45deg);
+  }
+  ol.list{ counter-reset:step; }
+  ol.list li{ position:relative; padding-left:2.2rem; }
+  ol.list li::before{
+    counter-increment:step; content:counter(step);
+    position:absolute; left:0; top:-.05em;
+    font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:.82rem;
+    color:#fff; background:var(--navy);
+    width:1.55rem; height:1.55rem; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* ---- quote box ---- */
+  .quote-box{
+    margin:0 0 1.6rem; padding:1.4rem 1.6rem;
+    background:var(--card); border-left:4px solid var(--teal);
+    border-radius:4px 12px 12px 4px;
+    font-family:"Fraunces",serif; font-weight:600; font-style:italic;
+    font-size:1.15rem; color:var(--navy); line-height:1.5;
+  }
+
+  /* ---- info box ---- */
+  .info-box{
+    margin:1.4rem 0; padding:1.1rem 1.3rem;
+    background:color-mix(in srgb, var(--teal) 8%, var(--surface));
+    border:1.5px solid color-mix(in srgb, var(--teal) 45%, transparent);
+    border-radius:12px;
+  }
+  .info-box .info-title{ font-weight:700; font-size:.95rem; margin-bottom:.4rem; color:var(--teal-dark); }
+  .info-box p{ margin:0; font-size:.94rem; }
+
+  /* ---- data table ---- */
+  .tbl-wrap{ overflow-x:auto; margin:1.4rem 0; border-radius:12px; border:1px solid var(--border); }
+  table.grafik{ width:100%; border-collapse:collapse; font-size:.9rem; min-width:420px; }
+  table.grafik th{ background:var(--navy); color:#fff; text-align:left; padding:.7rem .9rem; font-weight:600; }
+  table.grafik td{ padding:.7rem .9rem; border-bottom:1px solid var(--border); }
+  table.grafik tr:last-child td{ border-bottom:none; }
+  table.grafik td:first-child{ font-weight:600; color:var(--navy); white-space:nowrap; }
+
+  /* ---- write-lines (self check) ---- */
+  .question{ font-weight:600; margin:1.5rem 0 .6rem; }
+  .question:first-of-type{ margin-top:0; }
+  .write-lines{ display:flex; flex-direction:column; gap:1.15rem; margin-bottom:.4rem; }
+  .write-lines .line{ border-bottom:1.5px dotted var(--border); height:.2rem; }
+
+  /* ---- glossary ---- */
+  dl.glossary{ margin:0; display:flex; flex-direction:column; gap:1rem; }
+  dl.glossary div{ display:grid; grid-template-columns: 168px 1fr; gap:.3rem 1rem; }
+  @media (max-width:560px){ dl.glossary div{ grid-template-columns:1fr; } }
+  dl.glossary dt{ font-weight:700; color:var(--purple); }
+  dl.glossary dd{ margin:0; color:var(--muted); }
+
+  /* ---- keyword strip ---- */
+  .keywords{
+    display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.3rem;
+  }
+  .keywords span{
+    font-family:"IBM Plex Mono",monospace; font-size:.78rem;
+    background:var(--card); border:1px solid var(--border); color:var(--teal-dark);
+    padding:.3rem .65rem; border-radius:999px;
+  }
+
+  /* ---- closing signature line ---- */
+  .signoff{ font-weight:700; color:var(--orange); }
+
+  footer.page-footer{
+    max-width:700px; margin:0 auto; padding:2rem 1.6rem 3.5rem;
+    font-size:.8rem; color:var(--muted); text-align:center;
+  }
+
+  @media print{
+    .toc{ display:none; }
+    .shell{ display:block; }
+    .wrap{ max-width:none; }
+    section{ break-inside:avoid-page; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <nav class="toc" aria-label="Daftar isi">
+    <div class="eyebrow toc-title">Daftar Isi</div>
+    <ol id="tocList">
+      <li><a href="#pembuka"><span class="n">00</span>Pembuka</a></li>
+      <li><a href="#s1"><span class="n">01</span>Mengingat Kembali</a></li>
+      <li><a href="#s2"><span class="n">02</span>Kenalan Masalah</a></li>
+      <li><a href="#s3"><span class="n">03</span>Empat Senjata Utama</a></li>
+      <li><a href="#s4"><span class="n">04</span>Membaca Pola</a></li>
+      <li><a href="#s5"><span class="n">05</span>Resep Umum</a></li>
+      <li><a href="#s6"><span class="n">06</span>Sintaks Inquiry</a></li>
+      <li><a href="#s7"><span class="n">07</span>Giliran Kamu</a></li>
+      <li><a href="#s8"><span class="n">08</span>Tips Praktis</a></li>
+      <li><a href="#s9"><span class="n">09</span>Rangkuman</a></li>
+      <li><a href="#s10"><span class="n">10</span>Cek Pemahaman</a></li>
+      <li><a href="#s11"><span class="n">11</span>Glosarium</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <header class="cover" id="cover">
+      <div class="wrap">
+        <div class="cover-kicker"><span class="dot"></span><span class="eyebrow">Materi Siswa · Informatika · Kelas IX</span></div>
+        <h1>Dari Angka Membingungkan Jadi Cerita yang Gampang Dipahami!</h1>
+        <div class="subtitle">Yuk, Kenalan sama Diagram Batang, Garis, Lingkaran, dan Pencar</div>
+        <div class="tagline">Bab I — Berpikir Komputasional dalam Analisis Data</div>
+        <div class="meta">
+          <span>Tujuan Pembelajaran 3</span>
+          <span>Tema: Visualisasi Data Perikanan Tangkap Kota Tarakan</span>
+          <span>SMP Negeri 14 Tarakan</span>
+        </div>
+
+        <figure class="plate cover-figure">
+          <div class="pic"><img src="images/01-sampul-data-grafik.png" alt="Ilustrasi data mentah berubah menjadi grafik yang mudah dipahami"></div>
+        </figure>
+      </div>
+    </header>
+
+    <article class="wrap">
+
+      <!-- ===================== PEMBUKA ===================== -->
+      <section id="pembuka">
+        <div class="quote-box">&ldquo;Pernah nggak sih kamu lihat setumpuk angka di sebuah tabel dan langsung pusing tujuh keliling? Padahal, kalau diubah jadi gambar yang tepat, angka-angka itu bisa &lsquo;ngomong&rsquo; sendiri, lho!&rdquo;</div>
+
+        <h3 class="sub" style="--sub-color:var(--navy)">Yuk, Intip Apa yang Bakal Kamu Kuasai</h3>
+        <p>Setelah baca materi ini sampai habis, kamu bakal bisa:</p>
+        <ul class="list">
+          <li>membedakan empat jenis diagram dasar — batang, garis, lingkaran, dan pencar — dan tahu kapan masing-masing paling pas dipakai;</li>
+          <li>membaca pola, tren, perbandingan, dan hubungan dari sebuah grafik;</li>
+          <li>memilih dan membuat visualisasi data yang paling sesuai buat data tertentu.</li>
+        </ul>
+
+        <h3 class="sub" style="--sub-color:var(--navy)">Kata Kunci</h3>
+        <div class="keywords">
+          <span>visualisasi data</span><span>diagram batang</span><span>diagram garis</span>
+          <span>diagram lingkaran</span><span>diagram pencar</span><span>tren</span>
+          <span>korelasi</span><span>proporsi</span>
+        </div>
+      </section>
+
+      <!-- ===================== 1 ===================== -->
+      <section id="s1">
+        <div class="sec-head" style="--sec-color:var(--navy)">
+          <div class="sec-num">01</div>
+          <h2 class="sec-title">Coba Diingat-Ingat Lagi, Yuk</h2>
+        </div>
+        <p>Di pertemuan-pertemuan sebelumnya, kamu udah belajar cara membaca dan mengolah data terstruktur — mulai dari mengenali bentuk data dalam tabel, sampai menyusun dan membersihkan data biar siap dianalisis lebih lanjut.</p>
+        <p>Nah, sekarang saatnya naik level. Data yang udah rapi itu percuma kalau cuma ditumpuk jadi angka-angka di layar — orang lain bakal susah nangkep maknanya dengan cepat. Makanya, hari ini kita bakal belajar cara &lsquo;menerjemahkan&rsquo; data jadi gambar yang gampang dipahami sekali lihat: visualisasi data alias grafik!</p>
+      </section>
+
+      <!-- ===================== 2 ===================== -->
+      <section id="s2">
+        <div class="sec-head" style="--sec-color:var(--orange)">
+          <div class="sec-num">02</div>
+          <h2 class="sec-title">Kenalan Dulu, Yuk, Sama Masalah Kita Hari Ini</h2>
+        </div>
+        <p>Coba bayangin kamu kerja di Dinas Perikanan Kota Tarakan. Setiap bulan, ratusan nelayan menyetorkan laporan hasil tangkapan mereka — ribuan angka numpuk begitu aja di lembar rekap. Gimana caranya kamu bisa tahu dengan cepat: apakah hasil tangkapan tahun ini cenderung naik atau turun? Kecamatan mana yang hasil tangkapannya paling besar? Jenis ikan apa yang paling banyak didapat nelayan?</p>
+
+        <figure class="plate">
+          <div class="pic"><img src="images/02-nelayan-tarakan.png" alt="Ilustrasi nelayan dan perahu di perairan Tarakan"></div>
+          <figcaption>Data Hasil Tangkapan Ikan Kota Tarakan — menanti untuk &lsquo;diceritakan&rsquo;</figcaption>
+        </figure>
+
+        <p>Kalau cuma mengandalkan tabel angka mentah, bisa-bisa butuh waktu berjam-jam cuma buat &lsquo;membaca&rsquo; data doang — belum lagi risiko salah tangkap pola. Nah, di sinilah visualisasi data berperan penting.</p>
+        <p>Hari ini, kamu dan kelompokmu bakal jadi &ldquo;peneliti kecil&rdquo; yang menyelidiki data Hasil Tangkapan Ikan Kota Tarakan pakai berbagai jenis grafik — biar makna di balik angka-angka itu kelihatan jelas.</p>
+      </section>
+
+      <!-- ===================== 3 ===================== -->
+      <section id="s3">
+        <div class="sec-head" style="--sec-color:var(--navy)">
+          <div class="sec-num">03</div>
+          <h2 class="sec-title">Empat Senjata Utama Visualisasi Data</h2>
+        </div>
+        <p>Ada empat jenis diagram dasar yang wajib kamu kuasai. Masing-masing punya &lsquo;kekuatan&rsquo; sendiri-sendiri — nggak semua data cocok divisualisasikan pakai jenis grafik yang sama, jadi penting buat tahu kapan pakai yang mana.</p>
+
+        <figure class="plate wide">
+          <div class="pic"><img src="images/03-empat-jenis-grafik-strip.png" alt="Strip ilustrasi empat jenis diagram: batang, garis, lingkaran, pencar"></div>
+          <figcaption>Gambar 1. Empat Jenis Diagram Dasar</figcaption>
+        </figure>
+
+        <h3 class="sub" style="--sub-color:var(--blue)">Diagram Batang — Buat Membandingkan</h3>
+        <p>Cocok dipakai kalau kamu mau membandingkan data angka antarkategori. Contohnya: membandingkan nilai rata-rata ulangan dari lima mata pelajaran yang berbeda — tinggi-rendahnya batang langsung kelihatan sekali lihat.</p>
+        <figure class="plate">
+          <div class="pic"><img src="images/04-diagram-batang.png" alt="Contoh diagram batang nilai rata-rata ulangan"></div>
+          <figcaption>Contoh diagram batang — nilai rata-rata ulangan per mata pelajaran</figcaption>
+        </figure>
+
+        <h3 class="sub" style="--sub-color:var(--teal)">Diagram Garis — Buat Menunjukkan Tren</h3>
+        <p>Cocok dipakai kalau kamu mau menunjukkan tren atau perubahan data dari waktu ke waktu — harian, bulanan, atau tahunan. Contohnya: perubahan suhu udara harian selama seminggu, naik-turunnya bisa langsung ketauan dari garis yang terbentuk.</p>
+        <figure class="plate">
+          <div class="pic"><img src="images/05-diagram-garis.png" alt="Contoh diagram garis suhu udara harian"></div>
+          <figcaption>Contoh diagram garis — suhu udara harian selama seminggu</figcaption>
+        </figure>
+
+        <h3 class="sub" style="--sub-color:var(--orange)">Diagram Lingkaran — Buat Menunjukkan Proporsi</h3>
+        <p>Cocok dipakai kalau kamu mau menunjukkan proporsi atau persentase bagian dari keseluruhan. Contohnya: persentase siswa yang ikut berbagai ekstrakurikuler — langsung kelihatan mana yang paling diminati.</p>
+        <figure class="plate">
+          <div class="pic"><img src="images/06-diagram-lingkaran.png" alt="Contoh diagram lingkaran proporsi ekstrakurikuler"></div>
+          <figcaption>Contoh diagram lingkaran — proporsi peserta ekstrakurikuler</figcaption>
+        </figure>
+
+        <h3 class="sub" style="--sub-color:var(--purple)">Diagram Pencar — Buat Menunjukkan Hubungan</h3>
+        <p>Cocok dipakai kalau kamu mau menunjukkan hubungan (korelasi) antara dua variabel numerik. Contohnya: hubungan antara jam belajar dan nilai ujian siswa — dari sebaran titik-titiknya, kamu bisa menduga apakah dua hal itu saling memengaruhi.</p>
+        <figure class="plate">
+          <div class="pic"><img src="images/07-diagram-pencar.png" alt="Contoh diagram pencar hubungan jam belajar dan nilai ujian"></div>
+          <figcaption>Contoh diagram pencar — jam belajar vs. nilai ujian</figcaption>
+        </figure>
+      </section>
+
+      <!-- ===================== 4 ===================== -->
+      <section id="s4">
+        <div class="sec-head" style="--sec-color:var(--gold)">
+          <div class="sec-num">04</div>
+          <h2 class="sec-title">Cara Membaca Pola, Tren, dan Hubungan</h2>
+        </div>
+        <p>Bikin grafik doang belum cukup — kemampuan paling penting justru ada di langkah setelahnya: membaca apa yang sebenarnya &lsquo;dikatakan&rsquo; oleh grafik itu.</p>
+
+        <figure class="plate">
+          <div class="pic"><img src="images/08-membaca-pola.png" alt="Ilustrasi pola tersembunyi di balik titik-titik data"></div>
+          <figcaption>Ada cerita yang tersembunyi di balik titik-titik dan batang-batang data</figcaption>
+        </figure>
+
+        <ul class="list">
+          <li><strong>Tren</strong> — kalau garis grafik cenderung naik atau turun terus dalam jangka waktu tertentu, itu tandanya ada tren. Contoh: hasil tangkapan yang terus meningkat selama beberapa bulan berturut-turut.</li>
+          <li><strong>Pola berulang</strong> — kalau ada bentuk yang muncul lagi dan lagi secara teratur (misalnya naik-turun setiap tahun di musim yang sama), itu disebut pola musiman.</li>
+          <li><strong>Perbandingan</strong> — dari diagram batang, kamu bisa langsung lihat kategori mana yang menonjol jauh dari yang lain.</li>
+          <li><strong>Hubungan (korelasi)</strong> — dari diagram pencar, kamu bisa menduga apakah dua hal saling memengaruhi satu sama lain.</li>
+        </ul>
+      </section>
+
+      <!-- ===================== 5 ===================== -->
+      <section id="s5">
+        <div class="sec-head" style="--sec-color:var(--navy)">
+          <div class="sec-num">05</div>
+          <h2 class="sec-title">Resep Umum: Bikin Grafik yang Tepat</h2>
+        </div>
+        <p>Supaya nggak salah pilih grafik, ikutin lima langkah gampang ini setiap kali kamu mau menyajikan data.</p>
+
+        <figure class="plate wide">
+          <div class="pic"><img src="images/09-resep-lima-langkah.png" alt="Diagram lima langkah memilih dan membuat grafik yang tepat"></div>
+          <figcaption>Gambar 2. Langkah-Langkah Memilih dan Membuat Grafik yang Tepat</figcaption>
+        </figure>
+
+        <ol class="list">
+          <li><strong>Kenali Sifat Datamu</strong> — apakah datamu tentang perbandingan kategori, perubahan waktu, proporsi, atau hubungan dua variabel?</li>
+          <li><strong>Pilih Jenis Grafik yang Pas</strong> — cocokkan sifat data dengan jenis grafik yang paling sesuai (lihat tabel di bawah).</li>
+          <li><strong>Buat &amp; Lengkapi Grafiknya</strong> — jangan lupa tambahkan judul, label sumbu, dan data label biar grafiknya mudah dibaca orang lain.</li>
+          <li><strong>Baca Pola, Tren, atau Hubungan</strong> — amati apa yang ditunjukkan grafik itu.</li>
+          <li><strong>Simpulkan dan Sampaikan Maknanya</strong> — ceritakan temuanmu dengan kalimat yang jelas, jangan cuma tunjukkan gambarnya saja.</li>
+        </ol>
+
+        <h3 class="sub" style="--sub-color:var(--teal)">Tabel Cepat: Grafik Apa buat Data Apa?</h3>
+        <div class="tbl-wrap">
+          <table class="grafik">
+            <thead><tr><th>Jenis Grafik</th><th>Kapan Dipakai</th></tr></thead>
+            <tbody>
+              <tr><td>Diagram Batang</td><td>Membandingkan data angka antarkategori (misalnya antarkecamatan atau antarmata pelajaran)</td></tr>
+              <tr><td>Diagram Garis</td><td>Menunjukkan tren/perubahan data dari waktu ke waktu (harian, bulanan, tahunan)</td></tr>
+              <tr><td>Diagram Lingkaran</td><td>Menunjukkan proporsi/persentase bagian dari keseluruhan</td></tr>
+              <tr><td>Diagram Pencar</td><td>Menunjukkan hubungan antara dua variabel numerik</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ===================== 6 ===================== -->
+      <section id="s6">
+        <div class="sec-head" style="--sec-color:var(--blue)">
+          <div class="sec-num">06</div>
+          <h2 class="sec-title">Gimana Sih Kita Bakal Belajar Hari Ini?</h2>
+        </div>
+        <p>Pertemuan hari ini pakai model pembelajaran Inquiry Learning — artinya kamu dan kelompokmu bakal jadi peneliti sungguhan yang menyelidiki data sendiri, bukan cuma mendengarkan penjelasan guru. Ini alurnya:</p>
+
+        <figure class="plate wide">
+          <div class="pic"><img src="images/10-sintaks-inquiry.png" alt="Sintaks model pembelajaran Inquiry Learning: enam tahap"></div>
+          <figcaption>Gambar 3. Sintaks Model Pembelajaran Inquiry Learning</figcaption>
+        </figure>
+
+        <ol class="list">
+          <li><strong>Orientasi Masalah</strong> — mengamati data mentah dan merasakan sendiri kesulitan membacanya.</li>
+          <li><strong>Merumuskan Pertanyaan</strong> — menentukan apa yang mau diselidiki dari data itu.</li>
+          <li><strong>Merumuskan Hipotesis</strong> — menduga jenis grafik dan pola yang mungkin muncul.</li>
+          <li><strong>Mengumpulkan &amp; Mengolah Data</strong> — memilah data yang relevan dengan pertanyaan kelompok.</li>
+          <li><strong>Menguji Hipotesis</strong> — membuat visualisasi data sungguhan untuk membuktikan dugaan tadi.</li>
+          <li><strong>Merumuskan Kesimpulan</strong> — menuliskan apa makna dari grafik yang sudah dibuat.</li>
+        </ol>
+      </section>
+
+      <!-- ===================== 7 ===================== -->
+      <section id="s7">
+        <div class="sec-head" style="--sec-color:var(--teal)">
+          <div class="sec-num">07</div>
+          <h2 class="sec-title">Sekarang, Giliran Kamu!</h2>
+        </div>
+
+        <figure class="plate narrow left">
+          <div class="pic"><img src="images/11-peneliti-kecil.png" alt="Ilustrasi papan jalan dan kaca pembesar, simbol peneliti kecil: amati, catat, dan gali datanya"></div>
+        </figure>
+
+        <p>Bareng kelompokmu, kamu bakal menyelidiki data &ldquo;Hasil Tangkapan Ikan Kota Tarakan&rdquo;. Setiap kelompok akan mendapat satu sub-tema penyelidikan yang berbeda, misalnya:</p>
+        <ul class="list">
+          <li>bagaimana tren hasil tangkapan ikan dari bulan ke bulan;</li>
+          <li>bagaimana perbandingan hasil tangkapan antarkecamatan;</li>
+          <li>bagaimana proporsi jenis ikan yang paling banyak ditangkap;</li>
+          <li>apakah ada hubungan antara curah hujan dan hasil tangkapan ikan.</li>
+        </ul>
+        <p><span class="signoff">Tugas kelompokmu: rumuskan pertanyaan dan dugaan (hipotesis), olah datanya, buat grafik yang paling tepat, lalu simpulkan apa makna di baliknya. Semua langkah ini bakal kamu kerjain di Lembar Kerja Peserta Didik (LKPD) yang dibagiin gurumu. Selamat menyelidiki, peneliti data!</span></p>
+      </section>
+
+      <!-- ===================== 8 ===================== -->
+      <section id="s8">
+        <div class="sec-head" style="--sec-color:var(--navy)">
+          <div class="sec-num">08</div>
+          <h2 class="sec-title">Bocoran Tips Biar Makin Jago</h2>
+        </div>
+
+        <h3 class="sub" style="--sub-color:var(--teal)">Bikin Grafik Manual di Kertas Berpetak</h3>
+        <p>Kalau kelompokmu belum sempat pakai komputer, grafik tetap bisa dibuat manual: gambar sumbu horizontal dan vertikal, tentukan skala yang rapi (misalnya per 50 atau per 100), lalu plot datanya satu per satu. Jangan lupa kasih judul dan label sumbu, ya!</p>
+
+        <h3 class="sub" style="--sub-color:var(--teal)">Bikin Grafik Digital Lewat Spreadsheet</h3>
+        <p>Kalau ada akses komputer atau HP, kamu bisa pakai aplikasi spreadsheet: masukkan data ke tabel, blok datanya, lalu pilih menu &lsquo;Sisipkan Grafik&rsquo; dan sesuaikan jenisnya dengan tabel &lsquo;Grafik Apa buat Data Apa?&rsquo; di atas.</p>
+
+        <div class="info-box">
+          <div class="info-title">✅ Inget!</div>
+          <p>Grafik yang baik selalu punya judul yang jelas, label sumbu, dan satuan data. Tanpa itu, grafik secakep apa pun bisa disalahartikan pembacanya.</p>
+        </div>
+      </section>
+
+      <!-- ===================== 9 ===================== -->
+      <section id="s9">
+        <div class="sec-head" style="--sec-color:var(--teal)">
+          <div class="sec-num">09</div>
+          <h2 class="sec-title">Rangkuman Singkat</h2>
+        </div>
+        <ul class="list">
+          <li>Data mentah yang ditumpuk jadi tabel angka seringkali sulit dipahami dengan cepat.</li>
+          <li>Visualisasi yang tepat membuat pola, tren, perbandingan, atau hubungan lebih mudah ditemukan dan dikomunikasikan.</li>
+          <li>Diagram batang untuk perbandingan, diagram garis untuk tren, diagram lingkaran untuk proporsi, dan diagram pencar untuk hubungan.</li>
+          <li>Grafik yang baik selalu dilengkapi judul, label sumbu, dan data label.</li>
+          <li>Langkah penting setelah membuat grafik adalah membaca dan menyimpulkan maknanya.</li>
+        </ul>
+      </section>
+
+      <!-- ===================== 10 ===================== -->
+      <section id="s10">
+        <div class="sec-head" style="--sec-color:var(--orange)">
+          <div class="sec-num">10</div>
+          <h2 class="sec-title">Cek Dulu, Udah Paham Belum?</h2>
+        </div>
+        <p>Sebelum masuk ke kegiatan kelompok, coba jawab dulu yuk pertanyaan berikut sendirian.</p>
+
+        <div class="question">1. Sebuah toko ingin menunjukkan tren penjualan produknya selama 12 bulan terakhir. Grafik apa yang paling tepat? Jelaskan alasanmu.</div>
+        <div class="write-lines"><div class="line"></div><div class="line"></div></div>
+
+        <div class="question">2. Seorang peneliti ingin tahu apakah ada hubungan antara jam belajar dan nilai ujian siswa. Grafik apa yang sebaiknya digunakan?</div>
+        <div class="write-lines"><div class="line"></div></div>
+
+        <div class="question">3. Sebutkan satu contoh informasi yang lebih mudah terlihat lewat grafik dibandingkan hanya membaca tabel angka biasa.</div>
+        <div class="write-lines"><div class="line"></div><div class="line"></div></div>
+      </section>
+
+      <!-- ===================== 11 ===================== -->
+      <section id="s11">
+        <div class="sec-head" style="--sec-color:var(--purple)">
+          <div class="sec-num">11</div>
+          <h2 class="sec-title">Kamus Kecil Istilah Penting</h2>
+        </div>
+        <dl class="glossary">
+          <div><dt>Visualisasi Data</dt><dd>cara menyajikan data dalam bentuk gambar (grafik/diagram) agar lebih mudah dipahami.</dd></div>
+          <div><dt>Diagram Batang</dt><dd>grafik berbentuk batang untuk membandingkan data angka antarkategori.</dd></div>
+          <div><dt>Diagram Garis</dt><dd>grafik berbentuk garis untuk menunjukkan tren atau perubahan data dari waktu ke waktu.</dd></div>
+          <div><dt>Diagram Lingkaran</dt><dd>grafik berbentuk lingkaran untuk menunjukkan proporsi atau persentase bagian dari keseluruhan.</dd></div>
+          <div><dt>Diagram Pencar</dt><dd>grafik berupa sebaran titik untuk menunjukkan hubungan antara dua variabel numerik.</dd></div>
+          <div><dt>Tren</dt><dd>kecenderungan data untuk naik atau turun secara konsisten dalam jangka waktu tertentu.</dd></div>
+          <div><dt>Korelasi</dt><dd>hubungan atau keterkaitan antara dua variabel yang saling memengaruhi.</dd></div>
+          <div><dt>Proporsi</dt><dd>besar bagian tertentu dibandingkan dengan keseluruhan, biasanya dalam bentuk persentase.</dd></div>
+        </dl>
+      </section>
+
+    </article>
+
+    <footer class="page-footer">
+      Informatika · Bab I Berpikir Komputasional dalam Analisis Data · Kelas IX · SMP Negeri 14 Tarakan
+    </footer>
+  </main>
+</div>
+
+<script>
+  // Highlight the active section in the table of contents while scrolling.
+  (function(){
+    var links = Array.prototype.slice.call(document.querySelectorAll('#tocList a'));
+    var sections = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+    if (!('IntersectionObserver' in window) || sections.length === 0) return;
+
+    var map = new Map();
+    sections.forEach(function(sec, i){ map.set(sec, links[i]); });
+
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var link = map.get(entry.target);
+        if (!link) return;
+        if (entry.isIntersecting) {
+          links.forEach(function(l){ l.classList.remove('active'); });
+          link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+    sections.forEach(function(sec){ obs.observe(sec); });
+  })();
+</script>
+</body>
+</html>

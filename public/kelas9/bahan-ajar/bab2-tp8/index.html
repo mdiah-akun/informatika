@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Penggunaan Library — TP 8</title>
+<style>
+  :root{
+    --navy:#1E2761; --deep:#065A82; --teal:#1C7293; --mint:#02C39A;
+    --coral:#F96167; --gold:#F9E795; --ink:#1A1A2E; --bg:#FBFCFE;
+    --card:#FFFFFF; --line:#E4EAF0; --muted:#5B6774;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Calibri,Arial,sans-serif;
+    line-height:1.6;}
+  h1,h2,h3{font-family:Cambria,Georgia,"Times New Roman",serif;color:var(--navy);margin:0 0 .4em;}
+  .wrap{max-width:900px;margin:0 auto;padding:0 24px;}
+  header.hero{background:linear-gradient(135deg,var(--navy),var(--deep));color:#fff;padding:64px 0 56px;position:relative;overflow:hidden;}
+  header.hero::before{content:"";position:absolute;right:-80px;top:-100px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.06);}
+  header.hero::after{content:"";position:absolute;left:-100px;bottom:-140px;width:280px;height:280px;border-radius:50%;background:rgba(2,195,154,.15);}
+  .kicker{display:inline-block;background:rgba(249,231,149,.18);color:var(--gold);font-weight:700;
+    font-size:13px;letter-spacing:.06em;padding:6px 14px;border-radius:999px;margin-bottom:18px;}
+  header.hero h1{color:#fff;font-size:2.3rem;margin-bottom:.3em;max-width:680px;}
+  header.hero p{color:#CFE3ED;font-size:1.05rem;max-width:620px;margin:0;}
+  nav.toc{position:sticky;top:0;background:rgba(251,252,254,.94);backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);z-index:10;}
+  nav.toc .wrap{display:flex;gap:4px;overflow-x:auto;padding:10px 24px;}
+  nav.toc a{white-space:nowrap;color:var(--teal);text-decoration:none;font-size:.86rem;font-weight:600;
+    padding:8px 12px;border-radius:8px;}
+  nav.toc a:hover{background:#EAF4F8;}
+  main{padding:48px 0 24px;}
+  section{margin-bottom:56px;scroll-margin-top:64px;}
+  .eyebrow{color:var(--coral);font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;}
+  .lead{font-size:1.08rem;color:var(--ink);}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 26px;
+    box-shadow:0 1px 3px rgba(20,30,50,.05);}
+  .story-card{background:linear-gradient(180deg,#fff,#F6FAFC);border-left:5px solid var(--coral);}
+  figure{margin:22px 0;text-align:center;}
+  figure img{max-width:100%;border-radius:10px;border:1px solid var(--line);}
+  figcaption{font-size:.88rem;color:var(--muted);font-style:italic;margin-top:10px;}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;}
+  @media (max-width:720px){.grid3{grid-template-columns:1fr;} .grid2{grid-template-columns:1fr;}}
+  .pill-card{border-radius:14px;padding:20px;color:#fff;}
+  .pill-card h3{color:#fff;font-size:1.15rem;margin-bottom:6px;}
+  .pill-card p{margin:0;font-size:.92rem;opacity:.95;}
+  .c1{background:var(--deep);} .c2{background:var(--teal);} .c3{background:var(--mint);}
+  .callout{background:#FFF6E5;border-left:5px solid var(--coral);border-radius:10px;padding:16px 20px;margin:20px 0;}
+  .callout b{color:var(--coral);}
+  ul.tight li{margin-bottom:8px;}
+  .quiz{background:var(--card);border:2px solid var(--navy);border-radius:14px;padding:24px 26px;margin-top:22px;}
+  .quiz .tag{display:inline-block;background:var(--coral);color:#fff;font-size:.75rem;font-weight:700;
+    padding:4px 12px;border-radius:999px;margin-bottom:14px;letter-spacing:.03em;}
+  .quiz h3{font-size:1.1rem;margin-bottom:16px;}
+  .opt{display:block;width:100%;text-align:left;background:#F4F8FA;border:1px solid var(--line);
+    border-radius:10px;padding:12px 16px;margin-bottom:10px;cursor:pointer;font-size:.98rem;color:var(--ink);
+    transition:.15s;}
+  .opt:hover{border-color:var(--teal);background:#EAF4F8;}
+  .opt.correct{background:#E1F7EF;border-color:var(--mint);font-weight:700;}
+  .opt.wrong{background:#FDEBEA;border-color:var(--coral);}
+  .feedback{margin-top:12px;font-size:.94rem;padding:10px 14px;border-radius:8px;display:none;}
+  .feedback.show{display:block;}
+  .feedback.ok{background:#E1F7EF;color:#0d6b4f;}
+  .feedback.no{background:#FDEBEA;color:#a3282c;}
+  textarea{width:100%;min-height:80px;border-radius:10px;border:1px solid var(--line);padding:12px;
+    font-family:inherit;font-size:.96rem;margin-top:10px;resize:vertical;}
+  .reveal-btn{margin-top:10px;background:var(--navy);color:#fff;border:none;padding:9px 18px;border-radius:8px;
+    font-size:.9rem;font-weight:600;cursor:pointer;}
+  .reveal-btn:hover{background:var(--deep);}
+  .sample-answer{display:none;margin-top:12px;background:#EAF4F8;border-radius:8px;padding:12px 14px;font-size:.92rem;}
+  .sample-answer.show{display:block;}
+  .summary-list{list-style:none;padding:0;margin:20px 0 0;}
+  .summary-list li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 18px;
+    margin-bottom:10px;display:flex;gap:12px;align-items:flex-start;}
+  .summary-list b{color:var(--navy);}
+  .dot{width:10px;height:10px;border-radius:50%;margin-top:6px;flex:none;}
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;}
+  @media (max-width:720px){.compare{grid-template-columns:1fr;}}
+  .compare .side{border-radius:14px;padding:20px;}
+  .compare .side.fn{background:#E1F7EF;border:2px solid var(--mint);}
+  .compare .side.pr{background:#FDECEC;border:2px solid var(--coral);}
+  .compare .side h3{margin-bottom:10px;}
+  .compare .side.fn h3{color:#0D6B4F;}
+  .compare .side.pr h3{color:#A3282C;}
+  .match-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+  .match-select{flex:1;min-width:220px;padding:10px 12px;border-radius:8px;border:1px solid var(--line);font-size:.92rem;}
+  footer{background:var(--navy);color:#CFE3ED;padding:32px 0;font-size:.85rem;text-align:center;}
+  footer a{color:var(--gold);}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker">BAB II &middot; BERPIKIR KOMPUTASIONAL DALAM ALGORITMA &amp; PEMROGRAMAN</span>
+    <h1>Yuk, Buktikan Manfaat Library dengan Percobaan!</h1>
+    <p>Materi web Informatika Kelas IX — TP 8: Dekomposisi untuk Penggunaan Library dalam Pemrograman Visual Blok. SMP Negeri 14 Tarakan.</p>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#cerita">Cerita Pembuka</a>
+    <a href="#jenislibrary">Jenis Library</a>
+    <a href="#bandingkan">Tanpa vs Dengan</a>
+    <a href="#eksperimen">Eksperimen</a>
+    <a href="#manfaat">Manfaat</a>
+    <a href="#bonus">Bonus</a>
+    <a href="#kuis">Kuis Interaktif</a>
+    <a href="#rangkuman">Rangkuman</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="cerita">
+    <div class="eyebrow">Inget Nggak, Library Bangun_Datar Buatan Kita?</div>
+    <div class="card story-card">
+      <p class="lead">Di dua materi sebelumnya, kita udah belajar dekomposisi, modularisasi, sampai akhirnya berhasil bikin library sendiri namanya "Bangun_Datar" — isinya modul-modul kayak luasPersegi(), luasSegitiga(), luasLingkaran(), dan tampilkanHasil().</p>
+      <p>Nah, sekarang pertanyaannya: SERU nggak sih sebenernya PAKAI library itu? Beneran ngebantu, atau cuma buang-buang waktu bikinnya doang?</p>
+      <p><b>Yuk, kita BUKTIKAN sendiri lewat percobaan!</b></p>
+    </div>
+  </section>
+
+  <section id="jenislibrary">
+    <div class="eyebrow">Konsep Kunci #1</div>
+    <h2>Dua Jenis Library yang Bisa Kamu Pakai</h2>
+    <p class="lead">Sebelum eksperimen, kenalan dulu sama dua jenis library yang ada di pemrograman visual blok:</p>
+    <figure>
+      <img src="images/library_standar_eksternal.png" alt="Dua jenis library: standar dan eksternal">
+      <figcaption>Dua jenis library: standar (bawaan aplikasi) dan eksternal (dikembangkan sendiri)</figcaption>
+    </figure>
+    <div class="compare">
+      <div class="side fn"><h3>Library Standar itu...</h3><p>blok-blok yang UDAH ADA bawaan aplikasi, kayak move steps, repeat, if-then di Scratch, atau kategori Logika/Loop/Matematika di Blockly. Tinggal pakai, nggak perlu bikin sendiri!</p></div>
+      <div class="side pr"><h3>Library Eksternal itu...</h3><p>library yang KAMU BIKIN SENDIRI, kayak library Bangun_Datar hasil kerja keras kita di TP 6-7. Keren, kan?</p></div>
+    </div>
+  </section>
+
+  <section id="bandingkan">
+    <div class="eyebrow">Konsep Kunci #2</div>
+    <h2>Yuk, Bandingkan: Pakai Library vs Nggak Pakai</h2>
+    <p class="lead">Bayangin kamu mau bikin program "Kalkulator Luas Bangun Datar" lagi. Ada dua cara:</p>
+    <ul class="tight">
+      <li>Cara 1: PANGGIL aja modul dari library Bangun_Datar yang udah ada.</li>
+      <li>Cara 2: TULIS ULANG semua rumus dari nol, kayak nggak pernah bikin library sebelumnya.</li>
+    </ul>
+    <figure>
+      <img src="images/tanpa_vs_dengan_library.png" alt="Program tanpa library vs program yang memanggil library">
+      <figcaption>Program tanpa library (ditulis ulang) vs program yang memanggil library</figcaption>
+    </figure>
+    <div class="callout"><b>Coba perhatiin bedanya...</b> Cara mana yang menurutmu lebih singkat? Lebih cepat selesai? Lebih kecil kemungkinan salahnya? Nah, itulah yang bakal kita buktikan sendiri di kelas!</div>
+  </section>
+
+  <section id="eksperimen">
+    <div class="eyebrow">Yuk, Coba Sendiri!</div>
+    <h2>Waktunya Eksperimen!</h2>
+    <figure>
+      <img src="images/studi_kasus_tp8.png" alt="Studi kasus membandingkan program dengan dan tanpa library Bangun_Datar">
+      <figcaption>Studi kasus: membandingkan program dengan dan tanpa library Bangun_Datar</figcaption>
+    </figure>
+    <p>Bareng kelompokmu, kamu bakal coba dua-duanya: bikin program yang MEMANGGIL library, dan bikin program yang DITULIS ULANG tanpa library. Terus, catat datanya:</p>
+    <ul class="tight">
+      <li>Berapa banyak baris/blok kode yang dipakai?</li>
+      <li>Berapa lama waktu yang dibutuhkan buat menyelesaikannya?</li>
+      <li>Berapa kali terjadi kesalahan selama mengerjakan?</li>
+    </ul>
+    <p>Dari data itu, kita bisa BUKTIKAN sendiri — bukan cuma percaya kata guru — apakah library beneran bermanfaat! Tulis jawabanmu di LKPD yang dibagikan gurumu, ya.</p>
+  </section>
+
+  <section id="manfaat">
+    <div class="eyebrow">Kenapa Penting?</div>
+    <h2>Kenapa Sih Library Bikin Beda Banget?</h2>
+    <div class="grid3">
+      <div class="pill-card c1"><h3>Reusability</h3><p>Modul yang udah ada tinggal dipanggil lagi, nggak perlu nulis ulang dari awal.</p></div>
+      <div class="pill-card c2"><h3>Abstraction</h3><p>Kamu cukup manggil modulnya, nggak perlu mikirin detail rumit di baliknya lagi.</p></div>
+      <div class="pill-card c3"><h3>Efficiency</h3><p>Karena pakai kode yang udah teruji, program selesai lebih cepat dan lebih kecil kemungkinan errornya.</p></div>
+    </div>
+  </section>
+
+  <section id="bonus">
+    <div class="eyebrow">Bonus</div>
+    <h2>Nambahin Modul Baru ke Library</h2>
+    <p class="lead">Selain manggil modul yang udah ada, kamu juga bisa lho NAMBAHIN modul baru ke library yang udah kamu punya! Misalnya, mau nambahin modul kelilingPersegi() atau kelilingLingkaran() ke library Bangun_Datar. Makin lama, library kamu bakal makin lengkap dan makin berguna.</p>
+  </section>
+
+  <section id="kuis">
+    <div class="eyebrow">Cek Pemahamanmu</div>
+    <h2>Kuis Interaktif</h2>
+
+    <div class="quiz">
+      <span class="tag">PILIHAN GANDA</span>
+      <h3>1. Blok "repeat 10" dan "if-then" pada Scratch adalah contoh dari...</h3>
+      <div class="opts" data-answer="0">
+        <button class="opt" data-idx="0">A. Library standar</button>
+        <button class="opt" data-idx="1">B. Library eksternal</button>
+        <button class="opt" data-idx="2">C. Modularisasi</button>
+        <button class="opt" data-idx="3">D. Dekomposisi</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="quiz">
+      <span class="tag">PILIHAN GANDA</span>
+      <h3>2. Library "Bangun_Datar" yang kita kembangkan sendiri di TP 6-7 termasuk contoh dari...</h3>
+      <div class="opts" data-answer="1">
+        <button class="opt" data-idx="0">A. Library standar, karena sudah tersedia di aplikasi</button>
+        <button class="opt" data-idx="1">B. Library eksternal, karena dikembangkan sendiri oleh programmer</button>
+        <button class="opt" data-idx="2">C. Prosedur, karena tidak mengembalikan nilai</button>
+        <button class="opt" data-idx="3">D. Fungsi, karena memiliki parameter</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="quiz">
+      <span class="tag">ESAI SINGKAT</span>
+      <h3>3. Menurutmu, kenapa program yang MEMANGGIL library biasanya punya lebih sedikit kesalahan (error) dibandingkan yang ditulis ulang dari nol? Jelaskan alasanmu dalam 1-2 kalimat!</h3>
+      <textarea placeholder="Tulis jawabanmu di sini..."></textarea>
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Lihat Contoh Jawaban</button>
+      <div class="sample-answer">Karena modul dalam library sudah pernah dibuat dan DIUJI sebelumnya, sehingga kemungkinan kesalahannya sudah diperbaiki. Menulis ulang dari nol membuka peluang salah ketik/salah rumus setiap kali dilakukan.</div>
+    </div>
+  </section>
+
+  <section id="rangkuman">
+    <div class="eyebrow">Sebelum Lanjut</div>
+    <h2>Rangkuman Kilat</h2>
+    <ul class="summary-list">
+      <li><span class="dot" style="background:var(--deep)"></span><div><b>Library Standar</b> = blok bawaan aplikasi (Scratch/Blockly), tinggal pakai.</div></li>
+      <li><span class="dot" style="background:var(--teal)"></span><div><b>Library Eksternal</b> = library yang kita kembangkan sendiri, seperti Bangun_Datar.</div></li>
+      <li><span class="dot" style="background:var(--mint)"></span><div>Program yang MEMANGGIL library biasanya lebih singkat, lebih cepat, dan lebih kecil risiko salahnya dibanding menulis ulang dari nol.</div></li>
+      <li><span class="dot" style="background:var(--coral)"></span><div>Manfaat library: <b>reusability, abstraction, dan efficiency</b> — sudah terbukti lewat percobaan kita sendiri!</div></li>
+    </ul>
+
+    <div class="card" style="margin-top:28px;">
+      <h3 style="margin-bottom:12px;">Refleksi Diri</h3>
+      <p style="margin-bottom:6px;">Sebelum lanjut ke materi berikutnya, coba jawab dulu:</p>
+      <textarea placeholder="Satu hal baru yang aku pelajari hari ini adalah..."></textarea>
+      <textarea placeholder="Kalau aku punya library sendiri, modul baru apa yang pengen aku tambahkan?"></textarea>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    Informatika Kelas IX &middot; SMP Negeri 14 Tarakan &middot; TP 8 &mdash; Bab II Berpikir Komputasional dalam Algoritma dan Pemrograman<br>
+    Sumber: Buku Siswa &amp; Buku Panduan Guru Informatika Kelas IX (Edisi Revisi), Kemendikbudristek
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.opts').forEach(function(group){
+  var answer = parseInt(group.getAttribute('data-answer'), 10);
+  var feedback = group.nextElementSibling;
+  group.querySelectorAll('.opt').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if (group.classList.contains('answered')) return;
+      group.classList.add('answered');
+      var idx = parseInt(btn.getAttribute('data-idx'), 10);
+      group.querySelectorAll('.opt').forEach(function(b){ b.disabled = true; });
+      if (idx === answer) {
+        btn.classList.add('correct');
+        feedback.textContent = '✓ Benar! Kerja bagus.';
+        feedback.className = 'feedback show ok';
+      } else {
+        btn.classList.add('wrong');
+        group.querySelectorAll('.opt')[answer].classList.add('correct');
+        feedback.textContent = '✗ Belum tepat. Jawaban yang benar sudah ditandai hijau.';
+        feedback.className = 'feedback show no';
+      }
+    });
+  });
+});
+</script>
+
+</body>
+</html>

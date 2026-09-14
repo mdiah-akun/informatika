@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detektif Data Listrik</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Figtree:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ===================== DESIGN TOKENS ===================== */
+  :root{
+    --navy:#1F3864;
+    --blue:#2E6F95;
+    --teal:#2A9D8F;
+    --teal-dark:#175C52;
+    --gold:#E9C46A;
+    --orange:#E76F51;
+    --purple:#6A4C93;
+
+    --ink:#1B2430;
+    --muted:#5B6472;
+    --paper:#F4F8F7;
+    --surface:#FFFFFF;
+    --card:#F4F6F8;
+    --border:#DCE4E2;
+    --slot-bg:#EDF3F2;
+    --slot-border:#95B6AF;
+    --focus:#2A9D8F;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --navy:#A9C6ED; --blue:#8FC0DE; --teal:#5FCBBB; --teal-dark:#8FE3D4;
+      --gold:#F0CE84; --orange:#F2977A; --purple:#C1A6E0;
+      --ink:#E9EEF2; --muted:#9FB0BD;
+      --paper:#101820; --surface:#172230; --card:#1C2A38;
+      --border:#2C3C4A; --slot-bg:#1B2932; --slot-border:#3D5A56;
+    }
+  }
+  :root[data-theme="dark"]{
+    --navy:#A9C6ED; --blue:#8FC0DE; --teal:#5FCBBB; --teal-dark:#8FE3D4;
+    --gold:#F0CE84; --orange:#F2977A; --purple:#C1A6E0;
+    --ink:#E9EEF2; --muted:#9FB0BD;
+    --paper:#101820; --surface:#172230; --card:#1C2A38;
+    --border:#2C3C4A; --slot-bg:#1B2932; --slot-border:#3D5A56;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; } }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Figtree", ui-sans-serif, system-ui, sans-serif;
+    font-size:16.5px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:"Fraunces", Georgia, serif; text-wrap:balance; margin:0; }
+  a{ color:var(--teal-dark); }
+  ::selection{ background:var(--gold); color:#241C05; }
+  :focus-visible{ outline:2.5px solid var(--focus); outline-offset:2px; border-radius:4px; }
+
+  .mono{ font-family:"IBM Plex Mono", ui-monospace, monospace; }
+  .eyebrow{
+    font-family:"IBM Plex Mono", monospace; font-size:.72rem; font-weight:600;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--teal-dark);
+  }
+
+  img{ max-width:100%; display:block; }
+
+  /* ===================== LAYOUT SHELL ===================== */
+  .shell{
+    display:grid;
+    grid-template-columns: 220px minmax(0,1fr);
+    max-width:1180px;
+    margin:0 auto;
+  }
+  @media (max-width:920px){
+    .shell{ grid-template-columns: 1fr; }
+  }
+
+  /* ---- table of contents rail ---- */
+  .toc{
+    position:sticky; top:0; align-self:start;
+    height:100vh; overflow-y:auto;
+    padding:2.4rem 1rem 2rem 1.6rem;
+    border-right:1px solid var(--border);
+  }
+  .toc-title{ font-size:.7rem; }
+  .toc ol{ list-style:none; margin:1rem 0 0; padding:0; display:flex; flex-direction:column; gap:.15rem; }
+  .toc a{
+    display:flex; align-items:baseline; gap:.55rem;
+    text-decoration:none; color:var(--muted);
+    font-size:.86rem; padding:.4rem .5rem; border-radius:8px;
+    transition:background .15s, color .15s;
+  }
+  .toc a:hover{ background:var(--card); color:var(--ink); }
+  .toc a .n{ font-family:"IBM Plex Mono",monospace; font-size:.72rem; color:var(--teal-dark); min-width:1.3em; }
+  .toc a.active{ background:var(--card); color:var(--ink); font-weight:600; }
+  .toc a.active .n{ color:var(--orange); }
+
+  @media (max-width:920px){
+    .toc{
+      position:sticky; top:0; z-index:20; height:auto;
+      border-right:none; border-bottom:1px solid var(--border);
+      background:var(--paper);
+      padding:.7rem 1rem;
+      overflow-x:auto; overflow-y:hidden;
+    }
+    .toc-title{ display:none; }
+    .toc ol{ flex-direction:row; gap:.3rem; width:max-content; }
+    .toc a{ white-space:nowrap; padding:.45rem .7rem; }
+  }
+
+  main{ min-width:0; }
+
+  .wrap{ max-width:700px; margin:0 auto; padding:0 1.6rem; }
+  @media (max-width:560px){ .wrap{ padding:0 1.15rem; } }
+
+  /* ===================== COVER ===================== */
+  .cover{
+    position:relative;
+    padding:3.6rem 0 2.6rem;
+    border-bottom:1px solid var(--border);
+    overflow:hidden;
+  }
+  .cover::before{
+    content:""; position:absolute; inset:0; z-index:-1;
+    background:
+      radial-gradient(620px 260px at 12% -10%, color-mix(in srgb, var(--teal) 16%, transparent), transparent 70%),
+      radial-gradient(520px 240px at 100% 0%, color-mix(in srgb, var(--gold) 20%, transparent), transparent 70%);
+  }
+  .cover-kicker{ display:flex; align-items:center; gap:.6rem; }
+  .cover-kicker .dot{ width:7px; height:7px; border-radius:50%; background:var(--orange); }
+  .cover h1{
+    margin-top:.9rem;
+    font-size:clamp(2.1rem, 5.4vw, 3rem);
+    font-weight:700; color:var(--navy); line-height:1.08;
+  }
+  .cover .subtitle{
+    margin-top:.7rem; font-size:1.2rem; font-weight:600; color:var(--teal-dark);
+    font-family:"Fraunces", serif;
+  }
+  .cover .tagline{
+    margin-top:.55rem; font-size:1rem; color:var(--orange); font-style:italic; font-weight:600;
+  }
+  .cover .meta{
+    margin-top:1.1rem; font-size:.85rem; color:var(--muted);
+    display:flex; flex-wrap:wrap; gap:.4rem .9rem;
+  }
+  .cover .meta span{ display:flex; align-items:center; gap:.4rem; }
+  .cover .meta span::before{ content:"—"; color:var(--border); }
+  .cover .meta span:first-child::before{ content:""; }
+
+  .cover-figure{ margin-top:2rem; max-width:420px; }
+
+  /* ===================== IMAGE SLOTS (the "canvas") ===================== */
+  figure.plate{ margin:1.9rem 0; }
+  .img-slot{
+    position:relative;
+    width:100%;
+    aspect-ratio:var(--ar, 4/3);
+    background:var(--slot-bg);
+    border:1.5px dashed var(--slot-border);
+    border-radius:14px;
+    overflow:hidden;
+  }
+  .img-slot img{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:contain; background:var(--surface);
+  }
+  .img-slot .fallback{
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.5rem;
+    text-align:center; padding:1rem;
+  }
+  .img-slot .fallback svg{ width:34px; height:34px; opacity:.55; color:var(--teal-dark); }
+  .img-slot .fallback .fname{ font-family:"IBM Plex Mono",monospace; font-size:.82rem; color:var(--ink); opacity:.75; }
+  .img-slot .fallback .fdim{ font-family:"IBM Plex Mono",monospace; font-size:.68rem; color:var(--muted); }
+  .img-slot .tick{ position:absolute; width:16px; height:16px; opacity:.55; }
+  .img-slot .tick.tl{ top:8px; left:8px; border-top:2px solid var(--teal-dark); border-left:2px solid var(--teal-dark); }
+  .img-slot .tick.tr{ top:8px; right:8px; border-top:2px solid var(--teal-dark); border-right:2px solid var(--teal-dark); }
+  .img-slot .tick.bl{ bottom:8px; left:8px; border-bottom:2px solid var(--teal-dark); border-left:2px solid var(--teal-dark); }
+  .img-slot .tick.br{ bottom:8px; right:8px; border-bottom:2px solid var(--teal-dark); border-right:2px solid var(--teal-dark); }
+
+  figcaption{
+    margin-top:.6rem; text-align:center; font-size:.86rem; font-style:italic; color:var(--muted);
+  }
+  .plate.wide .img-slot{ max-width:560px; margin:0 auto; }
+
+  /* ===================== GUIDE NOTE (for the teacher) ===================== */
+  .guide-note{
+    margin:2rem auto 0; max-width:700px; padding:0 1.6rem;
+  }
+  .guide-note details{
+    border:1.5px dashed var(--orange);
+    background:color-mix(in srgb, var(--orange) 7%, var(--surface));
+    border-radius:12px; padding:.9rem 1.1rem;
+  }
+  .guide-note summary{
+    cursor:pointer; font-weight:700; font-size:.92rem;
+    display:flex; align-items:center; gap:.5rem;
+  }
+  .guide-note summary::marker{ content:""; }
+  .guide-note summary .arrow{ transition:transform .18s; font-size:.75rem; color:var(--orange); }
+  .guide-note details[open] summary .arrow{ transform:rotate(90deg); }
+  .guide-note p{ font-size:.88rem; color:var(--muted); margin:.7rem 0; }
+  .guide-note .tbl-wrap{ overflow-x:auto; margin-top:.6rem; }
+  .guide-note table{ width:100%; border-collapse:collapse; font-size:.82rem; }
+  .guide-note th{ text-align:left; font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); padding:.4rem .5rem; border-bottom:1.5px solid var(--border); }
+  .guide-note td{ padding:.5rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  .guide-note td.fn{ font-family:"IBM Plex Mono",monospace; white-space:nowrap; color:var(--teal-dark); }
+  .guide-note td.dim{ font-family:"IBM Plex Mono",monospace; white-space:nowrap; color:var(--muted); }
+
+  /* ===================== ARTICLE / SECTIONS ===================== */
+  article{ padding-bottom:2rem; }
+  section{ padding:2.6rem 0; border-bottom:1px solid var(--border); scroll-margin-top:1.5rem; }
+  section:last-of-type{ border-bottom:none; }
+  #pembuka{ padding-top:2.6rem; }
+
+  .sec-head{ display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.1rem; }
+  .sec-num{
+    font-family:"Fraunces",serif; font-weight:600; font-size:1.6rem; line-height:1;
+    color:var(--sec-color, var(--navy)); opacity:.5;
+    padding-top:.15rem;
+  }
+  h2.sec-title{ font-size:clamp(1.35rem,3vw,1.7rem); font-weight:700; color:var(--sec-color, var(--navy)); }
+
+  h3.sub{
+    font-size:1.08rem; font-weight:600; margin:1.6rem 0 .6rem;
+    color:var(--sub-color, var(--teal-dark));
+  }
+
+  p{ margin:0 0 1rem; text-align:justify; hyphens:auto; }
+  p:last-child{ margin-bottom:0; }
+  strong{ color:var(--ink); }
+
+  ul.list, ol.list{ margin:0 0 1rem; padding:0; list-style:none; display:flex; flex-direction:column; gap:.55rem; }
+  ul.list li{ position:relative; padding-left:1.35rem; }
+  ul.list li::before{
+    content:""; position:absolute; left:0; top:.55em; width:7px; height:7px; border-radius:2px;
+    background:var(--teal); transform:rotate(45deg);
+  }
+  ol.list{ counter-reset:step; }
+  ol.list li{ position:relative; padding-left:2.2rem; }
+  ol.list li::before{
+    counter-increment:step; content:counter(step);
+    position:absolute; left:0; top:-.05em;
+    font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:.82rem;
+    color:#fff; background:var(--navy);
+    width:1.55rem; height:1.55rem; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* ---- quote box ---- */
+  .quote-box{
+    margin:0 0 1.6rem; padding:1.4rem 1.6rem;
+    background:var(--card); border-left:4px solid var(--teal);
+    border-radius:4px 12px 12px 4px;
+    font-family:"Fraunces",serif; font-weight:600; font-style:italic;
+    font-size:1.15rem; color:var(--navy); line-height:1.5;
+  }
+
+  /* ---- info box ---- */
+  .info-box{
+    margin:1.4rem 0; padding:1.1rem 1.3rem;
+    background:color-mix(in srgb, var(--teal) 8%, var(--surface));
+    border:1.5px solid color-mix(in srgb, var(--teal) 45%, transparent);
+    border-radius:12px;
+  }
+  .info-box .info-title{ font-weight:700; font-size:.95rem; margin-bottom:.4rem; color:var(--teal-dark); }
+  .info-box p{ margin:0; font-size:.94rem; }
+
+  /* ---- formula box ---- */
+  .formula-box{
+    margin:1.4rem 0; padding:1.3rem 1rem; text-align:center;
+    background:var(--navy); color:#fff; border-radius:14px;
+  }
+  .formula-box .eq{
+    font-family:"IBM Plex Mono",monospace; font-weight:600;
+    font-size:clamp(.92rem, 2.6vw, 1.15rem); letter-spacing:.01em;
+  }
+
+  /* ---- data table ---- */
+  .tbl-wrap{ overflow-x:auto; margin:1.4rem 0; border-radius:12px; border:1px solid var(--border); }
+  table.grafik{ width:100%; border-collapse:collapse; font-size:.9rem; min-width:420px; }
+  table.grafik th{ background:var(--navy); color:#fff; text-align:left; padding:.7rem .9rem; font-weight:600; }
+  table.grafik td{ padding:.7rem .9rem; border-bottom:1px solid var(--border); }
+  table.grafik tr:last-child td{ border-bottom:none; }
+  table.grafik td:first-child{ font-weight:600; color:var(--navy); white-space:nowrap; }
+
+  /* ---- write-lines (self check) ---- */
+  .question{ font-weight:600; margin:1.5rem 0 .6rem; }
+  .question:first-of-type{ margin-top:0; }
+  .write-lines{ display:flex; flex-direction:column; gap:1.15rem; margin-bottom:.4rem; }
+  .write-lines .line{ border-bottom:1.5px dotted var(--border); height:.2rem; }
+
+  /* ---- glossary ---- */
+  dl.glossary{ margin:0; display:flex; flex-direction:column; gap:1rem; }
+  dl.glossary div{ display:grid; grid-template-columns: 168px 1fr; gap:.3rem 1rem; }
+  @media (max-width:560px){ dl.glossary div{ grid-template-columns:1fr; } }
+  dl.glossary dt{ font-weight:700; color:var(--purple); }
+  dl.glossary dd{ margin:0; color:var(--muted); }
+
+  /* ---- keyword strip ---- */
+  .keywords{
+    display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.3rem;
+  }
+  .keywords span{
+    font-family:"IBM Plex Mono",monospace; font-size:.78rem;
+    background:var(--card); border:1px solid var(--border); color:var(--teal-dark);
+    padding:.3rem .65rem; border-radius:999px;
+  }
+
+  /* ---- closing signature line ---- */
+  .signoff{ font-weight:700; color:var(--orange); }
+
+  footer.page-footer{
+    max-width:700px; margin:0 auto; padding:2rem 1.6rem 3.5rem;
+    font-size:.8rem; color:var(--muted); text-align:center;
+  }
+
+  @media print{
+    .toc, .guide-note{ display:none; }
+    .shell{ display:block; }
+    .wrap{ max-width:none; }
+    section{ break-inside:avoid-page; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <nav class="toc" aria-label="Daftar isi">
+    <div class="eyebrow toc-title">Daftar Isi</div>
+    <ol id="tocList">
+      <li><a href="#pembuka"><span class="n">00</span>Pembuka</a></li>
+      <li><a href="#s1"><span class="n">01</span>Mengingat Kembali</a></li>
+      <li><a href="#s2"><span class="n">02</span>Kenalan Masalah</a></li>
+      <li><a href="#s3"><span class="n">03</span>Empat Jurus BK</a></li>
+      <li><a href="#s4"><span class="n">04</span>Contoh Penerapan</a></li>
+      <li><a href="#s5"><span class="n">05</span>Resep Umum</a></li>
+      <li><a href="#s6"><span class="n">06</span>Giliranmu</a></li>
+      <li><a href="#s7"><span class="n">07</span>Tips Praktis</a></li>
+      <li><a href="#s8"><span class="n">08</span>Rangkuman</a></li>
+      <li><a href="#s9"><span class="n">09</span>Cek Pemahaman</a></li>
+      <li><a href="#s10"><span class="n">10</span>Glosarium</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <header class="cover" id="cover">
+      <div class="wrap">
+        <div class="cover-kicker"><span class="dot"></span><span class="eyebrow">Materi Siswa · Informatika · Kelas IX</span></div>
+        <h1>Berpikir Komputasional Itu Bukan Cuma Buat di Depan Komputer!</h1>
+        <div class="subtitle">Yuk, Menghemat Listrik dengan Data</div>
+        <div class="tagline">Bab I — Berpikir Komputasional dalam Analisis Data</div>
+        <div class="meta">
+          <span>Tujuan Pembelajaran 4</span>
+          <span>Tema: Konsumsi Listrik Rumah Tangga</span>
+          <span>SMP Negeri 14 Tarakan</span>
+        </div>
+
+        <figure class="plate cover-figure">
+          <div class="img-slot" style="--ar:380/302; max-width:380px;">
+            <img src="images/01-rumah-listrik.png" alt="Ilustrasi rumah dengan alat elektronik dan meteran listrik"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+              <span class="fname">01-rumah-listrik.png</span>
+              <span class="fdim">disarankan 380 × 302 px</span>
+            </div>
+            <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+          </div>
+        </figure>
+      </div>
+    </header>
+
+    <!--div class="guide-note">
+      <details>
+        <summary><span class="arrow">▶</span> Catatan untuk guru — cara pasang gambar</summary>
+        <p>Halaman ini sudah menyiapkan 8 “kanvas” bergaris putus-putus di titik yang tepat. Simpan gambar dengan nama file persis seperti di tabel di bawah ke dalam folder bernama <code class="mono">images</code> yang diletakkan sejajar dengan file HTML ini — gambar akan otomatis muncul menggantikan kotak placeholder, tanpa perlu mengedit kode.</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Nama file</th><th>Untuk bagian</th><th>Ukuran disarankan</th></tr></thead>
+            <tbody>
+              <tr><td class="fn">01-rumah-listrik.png</td><td>Sampul — ilustrasi rumah &amp; alat elektronik</td><td class="dim">380 × 302 px</td></tr>
+              <tr><td class="fn">02-pemadaman.png</td><td>Bagian 2 — suasana listrik padam</td><td class="dim">400 × 279 px</td></tr>
+              <tr><td class="fn">03-ikon-alat-elektronik.png</td><td>Bagian 2 — deretan ikon alat elektronik</td><td class="dim">560 × 120 px</td></tr>
+              <tr><td class="fn">04-empat-pilar.png</td><td>Bagian 3 — infografis 4 pilar berpikir komputasional</td><td class="dim">520 × 357 px</td></tr>
+              <tr><td class="fn">05-kios-fotokopi.png</td><td>Bagian 4 — grafik contoh konsumsi kios fotokopi</td><td class="dim">420 × 275 px</td></tr>
+              <tr><td class="fn">06-lima-langkah.png</td><td>Bagian 5 — alur 5 langkah menyelesaikan masalah</td><td class="dim">600 × 154 px</td></tr>
+              <tr><td class="fn">07-peneliti-kecil.png</td><td>Bagian 6 — ilustrasi papan jalan &amp; kaca pembesar</td><td class="dim">300 × 241 px</td></tr>
+              <tr><td class="fn">08-gauge-hemat-energi.png</td><td>Bagian 8 — gauge boros → hemat</td><td class="dim">300 × 200 px</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </div -->
+
+    <article class="wrap">
+
+      <!-- ===================== PEMBUKA ===================== -->
+      <section id="pembuka">
+        <div class="quote-box">&ldquo;Pernah nggak sih, rumahmu tiba-tiba gelap gulita gara-gara listrik padam? Terus kamu mikir&hellip; alat elektronik mana ya yang paling &lsquo;haus&rsquo; listrik di rumahku?&rdquo;</div>
+
+        <h3 class="sub" style="--sub-color:var(--navy)">Yuk, Intip Apa yang Bakal Kamu Kuasai</h3>
+        <p>Setelah baca materi ini sampai habis, kamu bakal bisa:</p>
+        <ul class="list">
+          <li>menemukan masalah sehari-hari yang ternyata bisa diselesaikan pakai data;</li>
+          <li>mengumpulkan dan menyusun data sederhana yang nyambung sama masalah itu;</li>
+          <li>bikin solusi yang didukung data, entah dalam bentuk tabel, diagram, atau grafik sederhana.</li>
+        </ul>
+
+        <h3 class="sub" style="--sub-color:var(--navy)">Kata Kunci</h3>
+        <div class="keywords">
+          <span>berpikir komputasional</span><span>dekomposisi</span><span>pengenalan pola</span>
+          <span>abstraksi</span><span>algoritma</span><span>data</span><span>solusi berbasis data</span>
+        </div>
+      </section>
+
+      <!-- ===================== 1 ===================== -->
+      <section id="s1">
+        <div class="sec-head" style="--sec-color:var(--navy)">
+          <div class="sec-num">01</div>
+          <h2 class="sec-title">Coba Diingat-Ingat Lagi, Yuk</h2>
+        </div>
+        <p>Di pertemuan-pertemuan sebelumnya, kamu udah belajar banyak banget soal data. Mulai dari struktur data tree dan graph buat menyimpan informasi biar rapi, sampai cara bikin visualisasi data — diagram batang, garis, lingkaran, dan pencar — biar angka-angka yang tadinya bikin pusing berubah jadi gambar yang gampang dipahami sekali lihat.</p>
+        <p>Nah, sekarang kita naik level. Bukan cuma bikin grafik doang, tapi bener-bener PAKAI data itu buat menyelesaikan masalah yang kamu temui sehari-hari. Ini nih inti dari berpikir komputasional: bukan sekadar skill di depan komputer, tapi cara mikir yang bisa kamu pakai kapan aja dan di mana aja — bahkan pas kamu lagi nongkrong di rumah!</p>
+      </section>
+
+      <!-- ===================== 2 ===================== -->
+      <section id="s2">
+        <div class="sec-head" style="--sec-color:var(--orange)">
+          <div class="sec-num">02</div>
+          <h2 class="sec-title">Kenalan Dulu, Yuk, Sama Masalah Kita Hari Ini</h2>
+        </div>
+        <p>Coba bayangin: sore-sore santai di rumahmu di Tarakan, tiba-tiba... byar-pet! Lampu padam. Kipas angin berhenti muter, TV mati mendadak, kulkas yang biasanya berdengung jadi sunyi senyap. Pemadaman listrik bergilir kayak gini rasanya udah jadi &lsquo;langganan&rsquo; buat banyak keluarga di kota kita, ya nggak?</p>
+
+        <figure class="plate">
+          <div class="img-slot" style="--ar:400/279;">
+            <img src="images/02-pemadaman.png" alt="Ilustrasi suasana rumah saat listrik padam"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+              <!--span class="fname">02-pemadaman.png</span>
+              <span class="fdim">disarankan 400 × 279 px</span -->
+            </div>
+            <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+          </div>
+          <figcaption>Familiar banget, kan, suasana kayak gini?</figcaption>
+        </figure>
+
+        <p>Terus, apa hubungannya sama pelajaran Informatika? Ternyata banyak, lho! Kalau kita paham pola pemakaian listrik di rumah pakai data, kita bisa nemuin cara buat hemat listrik, bikin tagihan bulanan lebih ringan, bahkan bantu ngurangin beban jaringan listrik kota yang bisa memicu pemadaman.</p>
+        <p>Coba lihat, ini nih beberapa &lsquo;tersangka&rsquo; utama yang biasanya paling banyak makan listrik di rumah:</p>
+
+        <figure class="plate wide">
+          <div class="img-slot" style="--ar:560/120;">
+            <img src="images/03-ikon-alat-elektronik.png" alt="Deretan ikon alat elektronik rumah tangga"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+              <!--span class="fname">03-ikon-alat-elektronik.png</span>
+              <span class="fdim">disarankan 560 × 120 px</span-->
+
+            </div>
+            <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+          </div>
+          <figcaption>Alat-alat elektronik yang bakal kita selidiki hari ini</figcaption>
+        </figure>
+
+        <p>Hari ini, kamu dan kelompokmu bakal jadi &ldquo;peneliti kecil&rdquo; yang menyelidiki: alat elektronik mana yang paling boros listrik di rumah, dan gimana cara menguranginya — semua berdasarkan data beneran, bukan asal nebak.</p>
+      </section>
+
+      <!-- ===================== 3 ===================== -->
+      <section id="s3">
+        <div class="sec-head" style="--sec-color:var(--navy)">
+          <div class="sec-num">03</div>
+          <h2 class="sec-title">Empat Jurus Andalan Berpikir Komputasional</h2>
+        </div>
+        <p>Buat menyelesaikan masalah kayak gini, kita bakal pakai empat cara berpikir yang saling melengkapi. Keempatnya udah pernah kamu kenal sekilas waktu kelas VII dan VIII — sekarang saatnya kita pakai beneran buat masalah nyata!</p>
+
+        <figure class="plate">
+          <div class="img-slot" style="--ar:520/357;">
+            <img src="images/04-empat-pilar.png" alt="Infografis empat pilar berpikir komputasional"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+              <!--span class="fname">04-empat-pilar.png</span>
+              <span class="fdim">disarankan 520 × 357 px</span-->
+
+            </div>
+            <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+          </div>
+          <figcaption>Gambar 1. Empat Pilar Berpikir Komputasional</figcaption>
+        </figure>
+
+        <h3 class="sub" style="--sub-color:var(--blue)">Dekomposisi — Pecah Dulu Masalahnya</h3>
+        <p>&ldquo;Rumahku boros listrik&rdquo; itu masalah yang gede dan susah langsung dianalisis. Nah, lewat dekomposisi, kita pecah jadi bagian-bagian kecil: berapa sih konsumsi listrik lampu? Berapa konsumsi kulkas? Berapa konsumsi AC? Kalau udah dipecah kecil-kecil gini, jadi jauh lebih gampang dihitung satu per satu.</p>
+
+        <h3 class="sub" style="--sub-color:var(--teal)">Pengenalan Pola — Cari Kemiripannya</h3>
+        <p>Setelah datanya kekumpul, kita cari pola: ada nggak alat yang nyala terus sepanjang hari? Ada nggak jam-jam tertentu waktu banyak alat nyala bareng-bareng? Pola kayak gini bakal bantu kita ngerti &lsquo;kebiasaan&rsquo; pemakaian listrik di rumah.</p>
+
+        <h3 class="sub" style="--sub-color:var(--orange)">Abstraksi — Fokus ke yang Penting Aja</h3>
+        <p>Rumah punya puluhan alat elektronik kecil, tapi nggak semuanya ngaruh besar ke tagihan listrik. Abstraksi artinya kita berani &lsquo;cuekin&rsquo; detail yang kurang penting (misalnya charger HP yang dayanya kecil banget) dan fokus ke alat-alat berdaya besar yang bener-bener bikin tagihan membengkak.</p>
+
+        <h3 class="sub" style="--sub-color:var(--purple)">Algoritma — Susun Langkah Solusinya</h3>
+        <p>Terakhir, kita susun langkah-langkah konkret yang bisa dilakukan buat hemat listrik, urut dan masuk akal — inilah yang disebut algoritma. Contohnya: (1) kurangi jam pakai AC, (2) matikan lampu yang nggak dipakai, (3) cabut charger kalau lagi nggak dipakai.</p>
+      </section>
+
+      <!-- ===================== 4 ===================== -->
+      <section id="s4">
+        <div class="sec-head" style="--sec-color:var(--gold)">
+          <div class="sec-num">04</div>
+          <h2 class="sec-title">Nih, Lihat Contohnya Dulu!</h2>
+        </div>
+        <p>Sebelum kamu dan kelompokmu coba sendiri, yuk kita intip dulu gimana keempat jurus tadi dipakai di sebuah contoh: kios fotokopi kecil deket sekolah.</p>
+
+        <figure class="plate">
+          <div class="img-slot" style="--ar:420/275;">
+            <img src="images/05-kios-fotokopi.png" alt="Grafik konsumsi listrik kios fotokopi (contoh)"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+              <!--span class="fname">05-kios-fotokopi.png</span>
+              <span class="fdim">disarankan 420 × 275 px</span--> 
+
+            </div>
+            <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+          </div>
+          <figcaption>Gambar 2. Konsumsi listrik Kios Fotokopi (contoh)</figcaption>
+        </figure>
+
+        <p>Yuk, kita telusuri cara mikirnya, langkah demi langkah:</p>
+        <ul class="list">
+          <li><strong>Dekomposisi:</strong> si pemilik kios pecah masalah &ldquo;tagihan listrik gede&rdquo; jadi konsumsi tiap alat — mesin fotokopi, lampu, kipas angin, dan komputer.</li>
+          <li><strong>Pengenalan Pola:</strong> setelah dihitung, ternyata mesin fotokopi nyala hampir sepanjang jam operasional kios, jauh lebih lama dibanding alat lainnya.</li>
+          <li><strong>Abstraksi:</strong> dari keempat alat itu, mesin fotokopi paling boros dan paling ngaruh — nah, itulah yang perlu difokusin.</li>
+          <li><strong>Algoritma:</strong> solusinya, atur mesin fotokopi ke mode hemat daya (standby) pas nggak lagi melayani pelanggan, jadi listrik yang kepakai berkurang tanpa ganggu operasional kios.</li>
+        </ul>
+
+        <div class="info-box">
+          <div class="info-title">💡 Tahukah Kamu?</div>
+          <p>Konsumsi listrik biasanya diukur pakai satuan kWh (kilowatt-hour). Makin gede daya suatu alat (dalam watt) dan makin lama alat itu nyala, makin gede juga energi listrik yang kepakai.</p>
+        </div>
+      </section>
+
+      <!-- ===================== 5 ===================== -->
+      <section id="s5">
+        <div class="sec-head" style="--sec-color:var(--navy)">
+          <div class="sec-num">05</div>
+          <h2 class="sec-title">Resep Umum: Selesaikan Masalah Pakai Data</h2>
+        </div>
+        <p>Nah, masalah sehari-hari apa pun yang mau kamu selesaikan pakai bantuan data, kamu bisa ikutin lima langkah gampang ini.</p>
+
+        <figure class="plate wide">
+          <div class="img-slot" style="--ar:600/154;">
+            <img src="images/06-lima-langkah.png" alt="Diagram lima langkah menyelesaikan masalah dengan data"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+              <!--span class="fname">06-lima-langkah.png</span>
+              <span class="fdim">disarankan 600 × 154 px</span--> 
+
+            </div>
+            <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+          </div>
+          <figcaption>Gambar 3. Langkah-Langkah Menyelesaikan Masalah dengan Data</figcaption>
+        </figure>
+
+        <ol class="list">
+          <li><strong>Amati Masalah di Sekitarmu</strong> — perhatiin hal-hal yang sering berulang atau bikin &lsquo;gemas&rsquo; dalam kesehariamu.</li>
+          <li><strong>Kumpulkan Data yang Dibutuhkan</strong> — cari atau catat data yang nyambung sama masalah itu.</li>
+          <li><strong>Olah dan Analisis Data</strong> — hitung, kelompokkan, atau urutkan data biar polanya keliatan jelas.</li>
+          <li><strong>Rancang Solusi Berdasarkan Data</strong> — bikin rekomendasi yang bener-bener didukung hasil analisismu, bukan sekadar tebak-tebakan.</li>
+          <li><strong>Sampaikan dan Terapkan Solusimu</strong> — ceritain temuanmu ke orang lain biar solusinya beneran bisa diterapkan.</li>
+        </ol>
+      </section>
+
+      <!-- ===================== 6 ===================== -->
+      <section id="s6">
+        <div class="sec-head" style="--sec-color:var(--teal)">
+          <div class="sec-num">06</div>
+          <h2 class="sec-title">Sekarang, Giliran Kamu!</h2>
+        </div>
+
+        <figure class="plate" style="max-width:300px;margin-left:0;">
+          <div class="img-slot" style="--ar:300/241;">
+            <img src="images/07-peneliti-kecil.png" alt="Ilustrasi papan jalan dan kaca pembesar, simbol peneliti kecil"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+              <!--span class="fname">07-peneliti-kecil.png</span>
+              <span class="fdim">disarankan 300 × 241 px</span --> 
+            </div>
+            <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+          </div>
+        </figure>
+
+        <p>Bareng kelompokmu, kamu bakal nyelidikin data &ldquo;Konsumsi Listrik Rumah Tangga&rdquo; yang isinya daftar alat elektronik, daya listrik (watt), sama rata-rata pemakaiannya tiap hari. Tugas kelompokmu:</p>
+        <ul class="list">
+          <li>hitung konsumsi listrik (kWh/hari) tiap alat pakai rumus yang bakal dijelaskan gurumu;</li>
+          <li>temukan alat-alat mana yang paling boros listrik (pakai abstraksi, kayak di contoh kios fotokopi tadi);</li>
+          <li>bikin diagram batang sederhana dari hasil hitunganmu (inget lagi TP 3, ya!);</li>
+          <li>rancang minimal dua rekomendasi hemat listrik berdasarkan hasil analisismu.</li>
+        </ul>
+        <p><span class="signoff">Semua langkah ini bakal kamu kerjain di Lembar Kerja Peserta Didik (LKPD) yang dibagiin gurumu. Selamat menyelidiki, detektif data!</span></p>
+      </section>
+
+      <!-- ===================== 7 ===================== -->
+      <section id="s7">
+        <div class="sec-head" style="--sec-color:var(--navy)">
+          <div class="sec-num">07</div>
+          <h2 class="sec-title">Bocoran Tips Biar Makin Jago</h2>
+        </div>
+
+        <h3 class="sub" style="--sub-color:var(--teal)">Cara Menghitung Konsumsi Listrik</h3>
+        <p>Pakai rumus simpel ini buat menghitung konsumsi listrik tiap alat elektronik:</p>
+        <div class="formula-box">
+          <div class="eq">Konsumsi (kWh/hari) = (Daya (Watt) × Jam Pemakaian × Jumlah Unit) ÷ 1000</div>
+        </div>
+        <p>Contoh: lampu berdaya 10 watt dipakai 6 jam/hari, dan di rumah ada 5 lampu kayak gitu. Jadi konsumsinya = (10 × 6 × 5) ÷ 1000 = 0,3 kWh/hari. Gampang, kan?</p>
+
+        <h3 class="sub" style="--sub-color:var(--teal)">Inget Lagi: Pilih Grafik yang Pas (TP 3)</h3>
+        <div class="tbl-wrap">
+          <table class="grafik">
+            <thead><tr><th>Jenis Grafik</th><th>Kapan Dipakai</th></tr></thead>
+            <tbody>
+              <tr><td>Diagram Batang</td><td>Buat bandingin data angka antarkategori (misalnya antaralat elektronik)</td></tr>
+              <tr><td>Diagram Garis</td><td>Buat nunjukin tren/perubahan data dari waktu ke waktu</td></tr>
+              <tr><td>Diagram Lingkaran</td><td>Buat nunjukin proporsi/persentase bagian dari keseluruhan</td></tr>
+              <tr><td>Diagram Pencar</td><td>Buat nunjukin hubungan antara dua variabel numerik</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="info-box">
+          <div class="info-title">✅ Inget!</div>
+          <p>Buat bandingin konsumsi listrik antaralat elektronik (kayak tugas hari ini), diagram batang adalah jagoannya.</p>
+        </div>
+      </section>
+
+      <!-- ===================== 8 ===================== -->
+      <section id="s8">
+        <div class="sec-head" style="--sec-color:var(--teal)">
+          <div class="sec-num">08</div>
+          <h2 class="sec-title">Rangkuman Singkat</h2>
+        </div>
+
+        <figure class="plate" style="max-width:300px;margin-left:0;">
+          <div class="img-slot" style="--ar:300/200;">
+            <img src="images/08-gauge-hemat-energi.png" alt="Ilustrasi gauge dari boros menuju hemat energi"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="fallback">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+              <!--span class="fname">08-gauge-hemat-energi.png</span>
+              <span class="fdim">disarankan 300 × 200 px</span --> 
+            </div>
+            <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+          </div>
+        </figure>
+
+        <ul class="list">
+          <li>Berpikir komputasional bisa dipakai buat menyelesaikan masalah nyata sehari-hari, nggak cuma masalah di layar komputer.</li>
+          <li>Empat jurus berpikir komputasional — dekomposisi, pengenalan pola, abstraksi, dan algoritma — kerja bareng buat bantu kita paham masalah dan rancang solusi.</li>
+          <li>Solusi yang oke adalah solusi yang didukung data, bukan sekadar tebak-tebakan atau opini doang.</li>
+          <li>Data konsumsi listrik rumah tangga bisa dianalisis buat nemuin alat-alat paling boros dan rancang cara hemat energi.</li>
+        </ul>
+      </section>
+
+      <!-- ===================== 9 ===================== -->
+      <section id="s9">
+        <div class="sec-head" style="--sec-color:var(--orange)">
+          <div class="sec-num">09</div>
+          <h2 class="sec-title">Cek Dulu, Udah Paham Belum?</h2>
+        </div>
+        <p>Sebelum masuk ke kegiatan kelompok, coba jawab dulu yuk pertanyaan berikut sendirian.</p>
+
+        <div class="question">1. Coba sebutin lagi urutan empat pilar berpikir komputasional yang udah kamu pelajari.</div>
+        <div class="write-lines"><div class="line"></div></div>
+
+        <div class="question">2. Kenapa sih kita perlu &lsquo;abstraksi&rsquo; pas menganalisis data yang jumlahnya banyak?</div>
+        <div class="write-lines"><div class="line"></div><div class="line"></div></div>
+
+        <div class="question">3. Coba sebutin satu masalah sehari-hari di sekitarmu (selain listrik) yang menurutmu bisa diselesaikan pakai bantuan data.</div>
+        <div class="write-lines"><div class="line"></div><div class="line"></div></div>
+      </section>
+
+      <!-- ===================== 10 ===================== -->
+      <section id="s10">
+        <div class="sec-head" style="--sec-color:var(--purple)">
+          <div class="sec-num">10</div>
+          <h2 class="sec-title">Kamus Kecil Istilah Penting</h2>
+        </div>
+        <dl class="glossary">
+          <div><dt>Berpikir Komputasional</dt><dd>cara berpikir logis dan sistematis buat memahami masalah dan merancang solusi.</dd></div>
+          <div><dt>Dekomposisi</dt><dd>memecah masalah besar jadi bagian-bagian kecil yang lebih sederhana.</dd></div>
+          <div><dt>Pengenalan Pola</dt><dd>nemuin kemiripan atau keteraturan yang berulang dalam data.</dd></div>
+          <div><dt>Abstraksi</dt><dd>fokus ke informasi penting dan cuekin detail yang kurang relevan.</dd></div>
+          <div><dt>Algoritma</dt><dd>urutan langkah-langkah logis buat menyelesaikan suatu masalah.</dd></div>
+          <div><dt>kWh (kilowatt-hour)</dt><dd>satuan energi listrik yang dipakai buat menghitung konsumsi dan tagihan listrik.</dd></div>
+          <div><dt>Solusi Berbasis Data</dt><dd>solusi atau keputusan yang dirancang berdasarkan hasil analisis data, bukan tebakan semata.</dd></div>
+        </dl>
+      </section>
+
+    </article>
+
+    <footer class="page-footer">
+      Informatika · Bab I Berpikir Komputasional dalam Analisis Data · Kelas IX · SMP Negeri 14 Tarakan
+    </footer>
+  </main>
+</div>
+
+<script>
+  // Highlight the active section in the table of contents while scrolling.
+  (function(){
+    var links = Array.prototype.slice.call(document.querySelectorAll('#tocList a'));
+    var sections = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+    if (!('IntersectionObserver' in window) || sections.length === 0) return;
+
+    var map = new Map();
+    sections.forEach(function(sec, i){ map.set(sec, links[i]); });
+
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var link = map.get(entry.target);
+        if (!link) return;
+        if (entry.isIntersecting) {
+          links.forEach(function(l){ l.classList.remove('active'); });
+          link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+    sections.forEach(function(sec){ obs.observe(sec); });
+  })();
+</script>
+</body>
+</html>

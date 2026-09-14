@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dekomposisi & Library — TP 6</title>
+<style>
+  :root{
+    --navy:#1E2761; --deep:#065A82; --teal:#1C7293; --mint:#02C39A;
+    --coral:#F96167; --gold:#F9E795; --ink:#1A1A2E; --bg:#FBFCFE;
+    --card:#FFFFFF; --line:#E4EAF0; --muted:#5B6774;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Calibri,Arial,sans-serif;
+    line-height:1.6;}
+  h1,h2,h3{font-family:Cambria,Georgia,"Times New Roman",serif;color:var(--navy);margin:0 0 .4em;}
+  .wrap{max-width:900px;margin:0 auto;padding:0 24px;}
+  header.hero{background:linear-gradient(135deg,var(--navy),var(--deep));color:#fff;padding:64px 0 56px;position:relative;overflow:hidden;}
+  header.hero::before{content:"";position:absolute;right:-80px;top:-100px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.06);}
+  header.hero::after{content:"";position:absolute;left:-100px;bottom:-140px;width:280px;height:280px;border-radius:50%;background:rgba(2,195,154,.15);}
+  .kicker{display:inline-block;background:rgba(249,231,149,.18);color:var(--gold);font-weight:700;
+    font-size:13px;letter-spacing:.06em;padding:6px 14px;border-radius:999px;margin-bottom:18px;}
+  header.hero h1{color:#fff;font-size:2.3rem;margin-bottom:.3em;max-width:680px;}
+  header.hero p{color:#CFE3ED;font-size:1.05rem;max-width:620px;margin:0;}
+  nav.toc{position:sticky;top:0;background:rgba(251,252,254,.94);backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);z-index:10;}
+  nav.toc .wrap{display:flex;gap:4px;overflow-x:auto;padding:10px 24px;}
+  nav.toc a{white-space:nowrap;color:var(--teal);text-decoration:none;font-size:.86rem;font-weight:600;
+    padding:8px 12px;border-radius:8px;}
+  nav.toc a:hover{background:#EAF4F8;}
+  main{padding:48px 0 24px;}
+  section{margin-bottom:56px;scroll-margin-top:64px;}
+  .eyebrow{color:var(--coral);font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;}
+  .lead{font-size:1.08rem;color:var(--ink);}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 26px;
+    box-shadow:0 1px 3px rgba(20,30,50,.05);}
+  .story-card{background:linear-gradient(180deg,#fff,#F6FAFC);border-left:5px solid var(--coral);}
+  figure{margin:22px 0;text-align:center;}
+  figure img{max-width:100%;border-radius:10px;border:1px solid var(--line);}
+  figcaption{font-size:.88rem;color:var(--muted);font-style:italic;margin-top:10px;}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;}
+  @media (max-width:720px){.grid3{grid-template-columns:1fr;} .grid2{grid-template-columns:1fr;}}
+  .pill-card{border-radius:14px;padding:20px;color:#fff;}
+  .pill-card h3{color:#fff;font-size:1.15rem;margin-bottom:6px;}
+  .pill-card p{margin:0;font-size:.92rem;opacity:.95;}
+  .c1{background:var(--deep);} .c2{background:var(--teal);} .c3{background:var(--mint);}
+  .callout{background:#FFF6E5;border-left:5px solid var(--coral);border-radius:10px;padding:16px 20px;margin:20px 0;}
+  .callout b{color:var(--coral);}
+  ul.tight li{margin-bottom:8px;}
+  .quiz{background:var(--card);border:2px solid var(--navy);border-radius:14px;padding:24px 26px;margin-top:22px;}
+  .quiz .tag{display:inline-block;background:var(--coral);color:#fff;font-size:.75rem;font-weight:700;
+    padding:4px 12px;border-radius:999px;margin-bottom:14px;letter-spacing:.03em;}
+  .quiz h3{font-size:1.1rem;margin-bottom:16px;}
+  .opt{display:block;width:100%;text-align:left;background:#F4F8FA;border:1px solid var(--line);
+    border-radius:10px;padding:12px 16px;margin-bottom:10px;cursor:pointer;font-size:.98rem;color:var(--ink);
+    transition:.15s;}
+  .opt:hover{border-color:var(--teal);background:#EAF4F8;}
+  .opt.correct{background:#E1F7EF;border-color:var(--mint);font-weight:700;}
+  .opt.wrong{background:#FDEBEA;border-color:var(--coral);}
+  .feedback{margin-top:12px;font-size:.94rem;padding:10px 14px;border-radius:8px;display:none;}
+  .feedback.show{display:block;}
+  .feedback.ok{background:#E1F7EF;color:#0d6b4f;}
+  .feedback.no{background:#FDEBEA;color:#a3282c;}
+  textarea{width:100%;min-height:80px;border-radius:10px;border:1px solid var(--line);padding:12px;
+    font-family:inherit;font-size:.96rem;margin-top:10px;resize:vertical;}
+  .reveal-btn{margin-top:10px;background:var(--navy);color:#fff;border:none;padding:9px 18px;border-radius:8px;
+    font-size:.9rem;font-weight:600;cursor:pointer;}
+  .reveal-btn:hover{background:var(--deep);}
+  .sample-answer{display:none;margin-top:12px;background:#EAF4F8;border-radius:8px;padding:12px 14px;font-size:.92rem;}
+  .sample-answer.show{display:block;}
+  .summary-list{list-style:none;padding:0;margin:20px 0 0;}
+  .summary-list li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 18px;
+    margin-bottom:10px;display:flex;gap:12px;align-items:flex-start;}
+  .summary-list b{color:var(--navy);}
+  .dot{width:10px;height:10px;border-radius:50%;margin-top:6px;flex:none;}
+  footer{background:var(--navy);color:#CFE3ED;padding:32px 0;font-size:.85rem;text-align:center;}
+  footer a{color:var(--gold);}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker">BAB II &middot; BERPIKIR KOMPUTASIONAL DALAM ALGORITMA &amp; PEMROGRAMAN</span>
+    <h1>Yuk, Kenalan dengan Dekomposisi &amp; Library!</h1>
+    <p>Materi web Informatika Kelas IX — TP 6: Dekomposisi untuk Mengembangkan Library dalam Pemrograman Visual Blok. SMP Negeri 14 Tarakan.</p>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#cerita">Cerita Pembuka</a>
+    <a href="#dekomposisi">Dekomposisi</a>
+    <a href="#library">Library</a>
+    <a href="#fungsi">Fungsi Library</a>
+    <a href="#studikasus">Studi Kasus</a>
+    <a href="#kuis">Kuis Interaktif</a>
+    <a href="#rangkuman">Rangkuman</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="cerita">
+    <div class="eyebrow">Kamu Pernah Ngerasa Ribet Kayak Gini, Nggak?</div>
+    <div class="card story-card">
+      <p class="lead">Bayangin kamu jadi panitia Pekan Kreativitas Siswa (PKS) di sekolah. Setiap tahun, panitia harus menghitung berapa luas kain atau papan yang dibutuhkan untuk bikin banner, pajangan, dan dekorasi — bentuknya macam-macam: ada yang persegi, persegi panjang, segitiga, sampai lingkaran.</p>
+      <p>Masalahnya, setiap kali butuh hitung luas, panitia harus nulis ulang rumusnya dari nol. Capek, kan? Lama-lama jadi berantakan dan gampang salah hitung.</p>
+      <p><b>Nah, di sinilah dua ide keren dalam pemrograman bisa nolongin kita: DEKOMPOSISI dan LIBRARY.</b> Yuk, kita bahas satu-satu!</p>
+    </div>
+  </section>
+
+  <section id="dekomposisi">
+    <div class="eyebrow">Konsep Kunci #1</div>
+    <h2>Apa Itu Dekomposisi?</h2>
+    <p class="lead">Dekomposisi itu sederhana banget: <b>memecah masalah besar dan rumit menjadi bagian-bagian kecil</b> yang lebih gampang dikerjakan satu per satu.</p>
+    <p>Contoh masalah besar tadi — "bikin aplikasi kalkulator luas bangun datar" — bisa dipecah jadi beberapa bagian kecil:</p>
+    <ul class="tight">
+      <li>Bagian yang menghitung luas persegi</li>
+      <li>Bagian yang menghitung luas persegi panjang</li>
+      <li>Bagian yang menghitung luas segitiga</li>
+      <li>Bagian yang menghitung luas lingkaran</li>
+    </ul>
+    <figure>
+      <img src="images/dekomposisi.png" alt="Diagram konsep dekomposisi">
+      <figcaption>Masalah besar dipecah jadi bagian-bagian kecil yang lebih gampang dikerjakan</figcaption>
+    </figure>
+    <div class="callout"><b>Kenapa ini penting?</b> Karena bagian kecil itu lebih gampang dipahami, dikerjakan, DAN dites satu-satu. Kalau ada yang salah, kamu cukup benerin bagian itu aja — nggak perlu bongkar semuanya!</div>
+  </section>
+
+  <section id="library">
+    <div class="eyebrow">Konsep Kunci #2</div>
+    <h2>Terus, Apa Hubungannya sama Library?</h2>
+    <p class="lead">Setiap bagian kecil hasil dekomposisi tadi, kalau kita simpan dengan rapi supaya bisa dipakai lagi kapan pun butuh, kumpulannya itu yang disebut <b>LIBRARY</b> (artinya "pustaka").</p>
+    <p>Coba bayangin gini: kamu nggak perlu nulis ulang "rumus luas segitiga" setiap kali bikin program baru. Kamu tinggal ambil dari library, langsung pakai. Praktis banget, kan?</p>
+    <figure>
+      <img src="images/resep_library.png" alt="Analogi kotak resep masakan">
+      <figcaption>Analogi kotak resep masakan: kartu resep disimpan supaya bisa dipakai berulang kali</figcaption>
+    </figure>
+    <figure>
+      <img src="images/library_rak.png" alt="Analogi library sebagai rak pustaka kode">
+      <figcaption>Library itu ibarat rak yang menyimpan modul-modul program siap pakai</figcaption>
+    </figure>
+  </section>
+
+  <section id="fungsi">
+    <div class="eyebrow">Kenapa Penting?</div>
+    <h2>Tiga Alasan Programmer Suka Library</h2>
+    <div class="grid3">
+      <div class="pill-card c1"><h3>Reusability</h3><p>Kode yang sudah kamu buat bisa dipakai berkali-kali, kapan saja dibutuhkan, tanpa nulis ulang.</p></div>
+      <div class="pill-card c2"><h3>Abstraction</h3><p>Kamu cukup "panggil" bloknya aja, nggak perlu pusing mikirin detail rumit di baliknya.</p></div>
+      <div class="pill-card c3"><h3>Efficiency</h3><p>Karena pakai kode yang udah teruji, program jadi lebih cepat selesai dan lebih kecil kemungkinan errornya.</p></div>
+    </div>
+    <p style="margin-top:20px;">Contohnya di Scratch, blok seperti <code>move 10 steps</code> atau <code>repeat 10</code> itu sebenarnya bagian dari library bawaan Scratch. Di Blockly juga ada kategori logika, loop, matematika, teks, dan variabel yang siap kamu pakai.</p>
+  </section>
+
+  <section id="studikasus">
+    <div class="eyebrow">Yuk, Coba Sendiri!</div>
+    <h2>Studi Kasus: Kalkulator Luas Bangun Datar</h2>
+    <figure>
+      <img src="images/studi_kasus.png" alt="Studi kasus kalkulator luas bangun datar">
+      <figcaption>Dari dekomposisi menuju library "Bangun_Datar"</figcaption>
+    </figure>
+    <p>Sekarang giliran kamu! Bareng kelompokmu, coba pikirin:</p>
+    <ul class="tight">
+      <li>Kalau kamu mau bikin "Kalkulator Luas Bangun Datar" pakai Scratch/Blockly, bagian-bagian kecil apa aja yang perlu kamu buat?</li>
+      <li>Dari bagian-bagian kecil itu, mana yang menurutmu paling sering bakal dipakai ulang di program lain?</li>
+      <li>Kalau semua bagian kecil itu udah jadi, kira-kira kamu bakal kasih nama apa buat "library"-nya?</li>
+    </ul>
+    <p>Tulis jawabanmu di LKPD yang dibagikan gurumu, ya!</p>
+  </section>
+
+  <section id="kuis">
+    <div class="eyebrow">Cek Pemahamanmu</div>
+    <h2>Kuis Interaktif</h2>
+
+    <div class="quiz">
+      <span class="tag">PILIHAN GANDA</span>
+      <h3>1. Manakah dari berikut ini yang BUKAN termasuk 4 fondasi berpikir komputasional?</h3>
+      <div class="opts" data-answer="2">
+        <button class="opt" data-idx="0">A. Abstraksi</button>
+        <button class="opt" data-idx="1">B. Dekomposisi</button>
+        <button class="opt" data-idx="2">C. Duplikasi</button>
+        <button class="opt" data-idx="3">D. Pengenalan Pola</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="quiz">
+      <span class="tag">PILIHAN GANDA</span>
+      <h3>2. Langkah PERTAMA yang paling tepat sebelum membangun sebuah library adalah...</h3>
+      <div class="opts" data-answer="1">
+        <button class="opt" data-idx="0">A. Langsung menulis semua kode dari awal sampai akhir</button>
+        <button class="opt" data-idx="1">B. Mendekomposisi masalah besar menjadi bagian-bagian kecil</button>
+        <button class="opt" data-idx="2">C. Menghapus semua kode yang pernah dibuat</button>
+        <button class="opt" data-idx="3">D. Menunggu library orang lain tanpa memahami masalahnya</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="quiz">
+      <span class="tag">ESAI SINGKAT</span>
+      <h3>3. Kalau kamu ingin membuat aplikasi "Jadwal Pelajaran Digital", sebutkan 2 bagian kecil (hasil dekomposisi) yang perlu kamu buat!</h3>
+      <textarea placeholder="Tulis jawabanmu di sini..."></textarea>
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Lihat Contoh Jawaban</button>
+      <div class="sample-answer">Contoh: (1) bagian menampilkan jadwal per hari, (2) bagian menambah/mengedit jadwal, (3) bagian notifikasi pengingat jam pelajaran, (4) bagian mencari jadwal guru tertentu. Jawabanmu benar selama memecah masalah besar menjadi sub-bagian yang logis dan spesifik.</div>
+    </div>
+  </section>
+
+  <section id="rangkuman">
+    <div class="eyebrow">Sebelum Lanjut</div>
+    <h2>Rangkuman Kilat</h2>
+    <ul class="summary-list">
+      <li><span class="dot" style="background:var(--deep)"></span><div><b>Dekomposisi</b> = memecah masalah besar jadi bagian-bagian kecil yang lebih mudah dikerjakan.</div></li>
+      <li><span class="dot" style="background:var(--teal)"></span><div><b>Library</b> = kumpulan modul/blok program yang sudah jadi dan bisa dipakai ulang.</div></li>
+      <li><span class="dot" style="background:var(--mint)"></span><div>Dekomposisi adalah <b>langkah awal</b> sebelum kita bisa membangun sebuah library.</div></li>
+      <li><span class="dot" style="background:var(--coral)"></span><div>Library itu penting karena <b>reusability, abstraction,</b> dan <b>efficiency</b>.</div></li>
+    </ul>
+
+    <div class="card" style="margin-top:28px;">
+      <h3 style="margin-bottom:12px;">Refleksi Diri</h3>
+      <p style="margin-bottom:6px;">Sebelum lanjut ke materi berikutnya, coba jawab dulu:</p>
+      <textarea placeholder="Satu hal baru yang aku pelajari hari ini adalah..."></textarea>
+      <textarea placeholder="Satu hal yang masih bikin aku bingung adalah..."></textarea>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    Informatika Kelas IX &middot; SMP Negeri 14 Tarakan &middot; TP 6 &mdash; Bab II Berpikir Komputasional dalam Algoritma dan Pemrograman<br>
+    Sumber: Buku Siswa &amp; Buku Panduan Guru Informatika Kelas IX (Edisi Revisi), Kemendikbudristek
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.opts').forEach(function(group){
+  var answer = parseInt(group.getAttribute('data-answer'), 10);
+  var feedback = group.nextElementSibling;
+  group.querySelectorAll('.opt').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if (group.classList.contains('answered')) return;
+      group.classList.add('answered');
+      var idx = parseInt(btn.getAttribute('data-idx'), 10);
+      group.querySelectorAll('.opt').forEach(function(b){ b.disabled = true; });
+      if (idx === answer) {
+        btn.classList.add('correct');
+        feedback.textContent = '✓ Benar! Kerja bagus.';
+        feedback.className = 'feedback show ok';
+      } else {
+        btn.classList.add('wrong');
+        group.querySelectorAll('.opt')[answer].classList.add('correct');
+        feedback.textContent = '✗ Belum tepat. Jawaban yang benar sudah ditandai hijau.';
+        feedback.className = 'feedback show no';
+      }
+    });
+  });
+});
+</script>
+
+</body>
+</html>

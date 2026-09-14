@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dari Data ke Aksi — Pertemuan Lanjutan TP 5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Figtree:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ===================== DESIGN TOKENS ===================== */
+  :root{
+    --navy:#1F3864;
+    --blue:#2E6F95;
+    --teal:#2A9D8F;
+    --teal-dark:#175C52;
+    --gold:#E9C46A;
+    --orange:#E76F51;
+    --purple:#6A4C93;
+
+    --ink:#1B2430;
+    --muted:#5B6472;
+    --paper:#F4F8F7;
+    --surface:#FFFFFF;
+    --card:#F4F6F8;
+    --border:#DCE4E2;
+    --focus:#2A9D8F;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --navy:#A9C6ED; --blue:#8FC0DE; --teal:#5FCBBB; --teal-dark:#8FE3D4;
+      --gold:#F0CE84; --orange:#F2977A; --purple:#C1A6E0;
+      --ink:#E9EEF2; --muted:#9FB0BD;
+      --paper:#101820; --surface:#172230; --card:#1C2A38;
+      --border:#2C3C4A;
+    }
+  }
+  :root[data-theme="dark"]{
+    --navy:#A9C6ED; --blue:#8FC0DE; --teal:#5FCBBB; --teal-dark:#8FE3D4;
+    --gold:#F0CE84; --orange:#F2977A; --purple:#C1A6E0;
+    --ink:#E9EEF2; --muted:#9FB0BD;
+    --paper:#101820; --surface:#172230; --card:#1C2A38;
+    --border:#2C3C4A;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; } }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Figtree", ui-sans-serif, system-ui, sans-serif;
+    font-size:16.5px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:"Fraunces", Georgia, serif; text-wrap:balance; margin:0; }
+  a{ color:var(--teal-dark); }
+  ::selection{ background:var(--gold); color:#241C05; }
+  :focus-visible{ outline:2.5px solid var(--focus); outline-offset:2px; border-radius:4px; }
+
+  .mono{ font-family:"IBM Plex Mono", ui-monospace, monospace; }
+  .eyebrow{
+    font-family:"IBM Plex Mono", monospace; font-size:.72rem; font-weight:600;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--teal-dark);
+  }
+
+  img{ max-width:100%; display:block; }
+
+  /* ===================== LAYOUT SHELL ===================== */
+  .shell{
+    display:grid;
+    grid-template-columns: 220px minmax(0,1fr);
+    max-width:1180px;
+    margin:0 auto;
+  }
+  @media (max-width:920px){
+    .shell{ grid-template-columns: 1fr; }
+  }
+
+  /* ---- table of contents rail ---- */
+  .toc{
+    position:sticky; top:0; align-self:start;
+    height:100vh; overflow-y:auto;
+    padding:2.4rem 1rem 2rem 1.6rem;
+    border-right:1px solid var(--border);
+  }
+  .toc-title{ font-size:.7rem; }
+  .toc ol{ list-style:none; margin:1rem 0 0; padding:0; display:flex; flex-direction:column; gap:.15rem; }
+  .toc a{
+    display:flex; align-items:baseline; gap:.55rem;
+    text-decoration:none; color:var(--muted);
+    font-size:.86rem; padding:.4rem .5rem; border-radius:8px;
+    transition:background .15s, color .15s;
+  }
+  .toc a:hover{ background:var(--card); color:var(--ink); }
+  .toc a .n{ font-family:"IBM Plex Mono",monospace; font-size:.72rem; color:var(--teal-dark); min-width:1.3em; }
+  .toc a.active{ background:var(--card); color:var(--ink); font-weight:600; }
+  .toc a.active .n{ color:var(--orange); }
+
+  @media (max-width:920px){
+    .toc{
+      position:sticky; top:0; z-index:20; height:auto;
+      border-right:none; border-bottom:1px solid var(--border);
+      background:var(--paper);
+      padding:.7rem 1rem;
+      overflow-x:auto; overflow-y:hidden;
+    }
+    .toc-title{ display:none; }
+    .toc ol{ flex-direction:row; gap:.3rem; width:max-content; }
+    .toc a{ white-space:nowrap; padding:.45rem .7rem; }
+  }
+
+  main{ min-width:0; }
+
+  .wrap{ max-width:700px; margin:0 auto; padding:0 1.6rem; }
+  @media (max-width:560px){ .wrap{ padding:0 1.15rem; } }
+
+  /* ===================== COVER ===================== */
+  .cover{
+    position:relative;
+    padding:3.6rem 0 2.6rem;
+    border-bottom:1px solid var(--border);
+    overflow:hidden;
+  }
+  .cover::before{
+    content:""; position:absolute; inset:0; z-index:-1;
+    background:
+      radial-gradient(620px 260px at 12% -10%, color-mix(in srgb, var(--teal) 16%, transparent), transparent 70%),
+      radial-gradient(520px 240px at 100% 0%, color-mix(in srgb, var(--gold) 20%, transparent), transparent 70%);
+  }
+  .cover-kicker{ display:flex; align-items:center; gap:.6rem; }
+  .cover-kicker .dot{ width:7px; height:7px; border-radius:50%; background:var(--orange); }
+  .cover h1{
+    margin-top:.9rem;
+    font-size:clamp(2.1rem, 5.4vw, 3rem);
+    font-weight:700; color:var(--navy); line-height:1.08;
+  }
+  .cover .subtitle{
+    margin-top:.7rem; font-size:1.2rem; font-weight:600; color:var(--teal-dark);
+    font-family:"Fraunces", serif;
+  }
+  .cover .tagline{
+    margin-top:.55rem; font-size:1rem; color:var(--orange); font-style:italic; font-weight:600;
+  }
+  .cover .meta{
+    margin-top:1.1rem; font-size:.85rem; color:var(--muted);
+    display:flex; flex-wrap:wrap; gap:.4rem .9rem;
+  }
+  .cover .meta span{ display:flex; align-items:center; gap:.4rem; }
+  .cover .meta span::before{ content:"—"; color:var(--border); }
+  .cover .meta span:first-child::before{ content:""; }
+
+  .cover-figure{ margin-top:2rem; max-width:400px; }
+
+  /* ===================== FIGURES / IMAGES ===================== */
+  figure.plate{ margin:1.9rem 0; }
+  .pic{
+    width:100%;
+    border-radius:14px;
+    border:1px solid var(--border);
+    background:var(--surface);
+    overflow:hidden;
+    box-shadow:0 8px 22px -14px rgba(20,30,40,.35);
+  }
+  .pic img{ width:100%; height:auto; }
+  figcaption{
+    margin-top:.6rem; text-align:center; font-size:.86rem; font-style:italic; color:var(--muted);
+  }
+  .plate.wide .pic{ max-width:560px; margin:0 auto; }
+  .plate.narrow{ max-width:300px; }
+  .plate.narrow.left{ margin-left:0; }
+
+  /* ===================== ARTICLE / SECTIONS ===================== */
+  article{ padding-bottom:2rem; }
+  section{ padding:2.6rem 0; border-bottom:1px solid var(--border); scroll-margin-top:1.5rem; }
+  section:last-of-type{ border-bottom:none; }
+  #pembuka{ padding-top:2.6rem; }
+
+  .sec-head{ display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.1rem; }
+  .sec-num{
+    font-family:"Fraunces",serif; font-weight:600; font-size:1.6rem; line-height:1;
+    color:var(--sec-color, var(--navy)); opacity:.5;
+    padding-top:.15rem;
+  }
+  h2.sec-title{ font-size:clamp(1.35rem,3vw,1.7rem); font-weight:700; color:var(--sec-color, var(--navy)); }
+
+  h3.sub{
+    font-size:1.08rem; font-weight:600; margin:1.6rem 0 .6rem;
+    color:var(--sub-color, var(--teal-dark));
+  }
+
+  p{ margin:0 0 1rem; text-align:justify; hyphens:auto; }
+  p:last-child{ margin-bottom:0; }
+  strong{ color:var(--ink); }
+
+  ul.list, ol.list{ margin:0 0 1rem; padding:0; list-style:none; display:flex; flex-direction:column; gap:.55rem; }
+  ul.list li{ position:relative; padding-left:1.35rem; }
+  ul.list li::before{
+    content:""; position:absolute; left:0; top:.55em; width:7px; height:7px; border-radius:2px;
+    background:var(--teal); transform:rotate(45deg);
+  }
+  ol.list{ counter-reset:step; }
+  ol.list li{ position:relative; padding-left:2.2rem; }
+  ol.list li::before{
+    counter-increment:step; content:counter(step);
+    position:absolute; left:0; top:-.05em;
+    font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:.82rem;
+    color:#fff; background:var(--navy);
+    width:1.55rem; height:1.55rem; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* ---- quote box ---- */
+  .quote-box{
+    margin:0 0 1.6rem; padding:1.4rem 1.6rem;
+    background:var(--card); border-left:4px solid var(--teal);
+    border-radius:4px 12px 12px 4px;
+    font-family:"Fraunces",serif; font-weight:600; font-style:italic;
+    font-size:1.15rem; color:var(--navy); line-height:1.5;
+  }
+
+  /* ---- info box ---- */
+  .info-box{
+    margin:1.4rem 0; padding:1.1rem 1.3rem;
+    background:color-mix(in srgb, var(--teal) 8%, var(--surface));
+    border:1.5px solid color-mix(in srgb, var(--teal) 45%, transparent);
+    border-radius:12px;
+  }
+  .info-box .info-title{ font-weight:700; font-size:.95rem; margin-bottom:.4rem; color:var(--teal-dark); }
+  .info-box p{ margin:0; font-size:.94rem; }
+
+  /* ---- warm/alert box ---- */
+  .warm-box{
+    margin:1.4rem 0; padding:1.1rem 1.3rem;
+    background:color-mix(in srgb, var(--orange) 10%, var(--surface));
+    border:1.5px solid color-mix(in srgb, var(--orange) 40%, transparent);
+    border-radius:12px;
+  }
+  .warm-box .info-title{ font-weight:700; font-size:.95rem; margin-bottom:.4rem; color:var(--orange); }
+  .warm-box p{ margin:0; font-size:.94rem; }
+
+  /* ---- data table ---- */
+  .tbl-wrap{ overflow-x:auto; margin:1.4rem 0; border-radius:12px; border:1px solid var(--border); }
+  table.grafik{ width:100%; border-collapse:collapse; font-size:.9rem; min-width:420px; }
+  table.grafik th{ background:var(--navy); color:#fff; text-align:left; padding:.7rem .9rem; font-weight:600; }
+  table.grafik td{ padding:.7rem .9rem; border-bottom:1px solid var(--border); }
+  table.grafik tr:last-child td{ border-bottom:none; }
+  table.grafik td:first-child{ font-weight:600; color:var(--navy); white-space:nowrap; }
+
+  /* ---- formula box ---- */
+  .formula-box{
+    margin:1.4rem 0; padding:1.3rem 1.5rem;
+    background:var(--navy); border-radius:14px;
+    text-align:center;
+  }
+  .formula-box .f{
+    font-family:"Fraunces",serif; font-weight:700; font-style:italic;
+    font-size:1.15rem; color:var(--gold);
+  }
+  @media (max-width:560px){ .formula-box .f{ font-size:.98rem; } }
+
+  /* ---- write-lines (self check) ---- */
+  .question{ font-weight:600; margin:1.5rem 0 .6rem; }
+  .question:first-of-type{ margin-top:0; }
+  .write-lines{ display:flex; flex-direction:column; gap:1.15rem; margin-bottom:.4rem; }
+  .write-lines .line{ border-bottom:1.5px dotted var(--border); height:.2rem; }
+
+  /* ---- glossary ---- */
+  dl.glossary{ margin:0; display:flex; flex-direction:column; gap:1rem; }
+  dl.glossary div{ display:grid; grid-template-columns: 168px 1fr; gap:.3rem 1rem; }
+  @media (max-width:560px){ dl.glossary div{ grid-template-columns:1fr; } }
+  dl.glossary dt{ font-weight:700; color:var(--purple); }
+  dl.glossary dd{ margin:0; color:var(--muted); }
+
+  /* ---- keyword strip ---- */
+  .keywords{
+    display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.3rem;
+  }
+  .keywords span{
+    font-family:"IBM Plex Mono",monospace; font-size:.78rem;
+    background:var(--card); border:1px solid var(--border); color:var(--teal-dark);
+    padding:.3rem .65rem; border-radius:999px;
+  }
+
+  /* ---- quadrant legend cards ---- */
+  .quad-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:.8rem; margin:1.4rem 0;
+  }
+  @media (max-width:560px){ .quad-grid{ grid-template-columns:1fr; } }
+  .quad-grid .qcard{
+    border-radius:12px; border:1px solid var(--border); background:var(--card);
+    padding:.9rem 1.05rem;
+  }
+  .quad-grid .qcard.priority{
+    background:color-mix(in srgb, var(--teal) 14%, var(--surface));
+    border-color:color-mix(in srgb, var(--teal) 45%, transparent);
+  }
+  .quad-grid .qcard .qtitle{ font-weight:700; font-size:.92rem; margin-bottom:.3rem; color:var(--ink); }
+  .quad-grid .qcard p{ margin:0; font-size:.85rem; color:var(--muted); text-align:left; }
+
+  /* ---- closing signature line ---- */
+  .signoff{ font-weight:700; color:var(--orange); }
+
+  footer.page-footer{
+    max-width:700px; margin:0 auto; padding:2rem 1.6rem 3.5rem;
+    font-size:.8rem; color:var(--muted); text-align:center;
+  }
+
+  @media print{
+    .toc{ display:none; }
+    .shell{ display:block; }
+    .wrap{ max-width:none; }
+    section{ break-inside:avoid-page; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <nav class="toc" aria-label="Daftar isi">
+    <div class="eyebrow toc-title">Daftar Isi</div>
+    <ol id="tocList">
+      <li><a href="#pembuka"><span class="n">00</span>Pembuka</a></li>
+      <li><a href="#s1"><span class="n">01</span>Sebelum Lanjut</a></li>
+      <li><a href="#s2"><span class="n">02</span>Kenalan Kegiatan</a></li>
+      <li><a href="#s3"><span class="n">03</span>Langkah 1: Estimasi</a></li>
+      <li><a href="#s4"><span class="n">04</span>Langkah 2: Prioritas</a></li>
+      <li><a href="#s5"><span class="n">05</span>Langkah 3: Sempurnakan</a></li>
+      <li><a href="#s6"><span class="n">06</span>Langkah 4: Gallery Walk</a></li>
+      <li><a href="#s7"><span class="n">07</span>Langkah 5: Rencana Aksi</a></li>
+      <li><a href="#s8"><span class="n">08</span>Bocoran Tips</a></li>
+      <li><a href="#s9"><span class="n">09</span>Rangkuman</a></li>
+      <li><a href="#s10"><span class="n">10</span>Cek Pemahaman</a></li>
+      <li><a href="#s11"><span class="n">11</span>Glosarium</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <header class="cover" id="cover">
+      <div class="wrap">
+        <div class="cover-kicker"><span class="dot"></span><span class="eyebrow">Materi Siswa · Informatika · Kelas IX</span></div>
+        <h1>Dari Data ke Aksi: Yuk, Buktikan Rekomendasimu Beneran Berdampak!</h1>
+        <div class="subtitle">Pertemuan Lanjutan — Proyek Analisis Data Hemat Energi</div>
+        <div class="tagline">Bab I — Berpikir Komputasional dalam Analisis Data</div>
+        <div class="meta">
+          <span>Tujuan Pembelajaran 5</span>
+          <span>Model: PjBL — Pertemuan Pendalaman</span>
+          <span>1 &times; 120 Menit</span>
+          <span>SMP Negeri 14 Tarakan</span>
+        </div>
+
+        <figure class="plate cover-figure">
+          <div class="pic"><img src="images/01-sampul-dari-data-ke-aksi.png" alt="Ilustrasi papan klip berisi grafik kWh dengan panah menuju bohlam menyala bertanda centang hijau, melambangkan perjalanan dari data menuju aksi nyata hemat energi"></div>
+        </figure>
+      </div>
+    </header>
+
+    <article class="wrap">
+
+      <!-- ===================== PEMBUKA ===================== -->
+      <section id="pembuka">
+        <div class="quote-box">&ldquo;Grafik keren doang belum cukup. Sekarang saatnya buktiin: rekomendasimu itu beneran bisa bikin perubahan berapa rupiah, dan siapa yang bakal ngejalaninnya minggu ini?&rdquo;</div>
+
+        <h3 class="sub" style="--sub-color:var(--navy)">Yuk, Intip Apa yang Bakal Kamu Kuasai Hari Ini</h3>
+        <p>Setelah pertemuan lanjutan ini, kamu bakal bisa:</p>
+        <ul class="list">
+          <li>menghitung estimasi konsumsi listrik (kWh) dan biayanya (Rupiah) dari data yang udah kamu kumpulkan;</li>
+          <li>memilah rekomendasi hemat energi mana yang paling worth it pakai matriks prioritas;</li>
+          <li>menyempurnakan poster/infografismu berdasarkan umpan balik teman lewat gallery walk;</li>
+          <li>menyusun rencana aksi nyata yang bisa langsung kamu jalani minggu ini juga.</li>
+        </ul>
+
+        <h3 class="sub" style="--sub-color:var(--navy)">Kata Kunci</h3>
+        <div class="keywords">
+          <span>estimasi kWh &amp; Rupiah</span><span>matriks prioritas</span><span>gallery walk</span>
+          <span>umpan balik</span><span>rencana aksi</span><span>komitmen</span>
+        </div>
+      </section>
+
+      <!-- ===================== 1 ===================== -->
+      <section id="s1">
+        <div class="sec-head" style="--sec-color:var(--navy)">
+          <div class="sec-num">01</div>
+          <h2 class="sec-title">Sebelum Lanjut, Coba Diinget-Inget Dulu</h2>
+        </div>
+        <p>Di pertemuan sebelumnya, kelompokmu udah kerja keras banget: mewawancarai teman sekelas, mencatat kebiasaan sendiri selama seminggu, ngolah semua data itu jadi grafik (Tabel 1.4 dan 1.5), terus nuangin hasilnya ke poster lengkap dengan rekomendasi awal, dan udah dipresentasikan juga ke teman-teman.</p>
+        <p><strong>Nah, kalau data dan grafik kemarin itu ibarat &ldquo;ketemu masalahnya&rdquo;, pertemuan hari ini adalah soal &ldquo;ngapain abis itu?&rdquo;.</strong> Kita akan bikin rekomendasimu makin kuat &mdash; nggak cuma sekadar saran, tapi juga ada angka pendukungnya, ada prioritasnya, udah diuji lewat masukan orang lain, dan yang paling penting: ada rencana nyata buat dijalanin.</p>
+
+        <div class="info-box">
+          <div class="info-title">📌 Yang Perlu Kamu Bawa Hari Ini</div>
+          <p>Poster/infografis kelompokmu dari pertemuan sebelumnya, Tabel 1.4 (hasil wawancara) dan Tabel 1.5 (catatan mandiri), alat tulis, dan kalkulator (atau kalkulator di HP juga boleh).</p>
+        </div>
+      </section>
+
+      <!-- ===================== 2 ===================== -->
+      <section id="s2">
+        <div class="sec-head" style="--sec-color:var(--orange)">
+          <div class="sec-num">02</div>
+          <h2 class="sec-title">Kenalan Dulu, Yuk, Sama Kegiatan Hari Ini</h2>
+        </div>
+        <p>Ada lima langkah seru yang bakal kamu lewati bareng kelompok hari ini. Semuanya nyambung satu sama lain &mdash; dari angka, ke prioritas, ke penyempurnaan, ke masukan orang lain, sampai ke aksi nyata.</p>
+
+        <figure class="plate wide">
+          <div class="pic"><img src="images/02-alur-kegiatan.png" alt="Diagram alur lima langkah kegiatan: Hitung Estimasi kWh dan Rupiah, Matriks Prioritas Rekomendasi, Sempurnakan Poster atau Infografis, Gallery Walk dan Umpan Balik, Rencana Aksi 1 Minggu"></div>
+          <figcaption>Gambar 1. Alur kegiatan pertemuan lanjutan &mdash; Dari Data ke Aksi</figcaption>
+        </figure>
+      </section>
+
+      <!-- ===================== 3 ===================== -->
+      <section id="s3">
+        <div class="sec-head" style="--sec-color:var(--teal)">
+          <div class="sec-num">03</div>
+          <h2 class="sec-title">Langkah 1: Menghitung Estimasi kWh dan Rupiah</h2>
+        </div>
+
+        <figure class="plate">
+          <div class="pic"><img src="images/03-hitung-estimasi.png" alt="Ilustrasi siswa duduk di meja dengan kalkulator, buku catatan berisi rumus kWh, dan koin bertuliskan Rp"></div>
+          <figcaption>Mengubah data kebiasaan jadi angka kWh dan estimasi Rupiah</figcaption>
+        </figure>
+
+        <p>Inget rumus yang kamu pelajari di TP 4? Rumus itu bakal kepake lagi di sini buat menghitung berapa sih sebenarnya konsumsi listrik dari kebiasaan yang udah kamu catat:</p>
+
+        <div class="formula-box"><div class="f">kWh/hari = (Daya Alat (Watt) &times; Jam Pemakaian &times; Jumlah Unit) &divide; 1000</div></div>
+
+        <p>Gurumu akan membagikan tabel asumsi daya alat elektronik (misalnya TV, lampu LED, lampu biasa, charger HP). Pakai tabel itu buat menghitung estimasi kWh dari data rata-rata kelompokmu, lalu ubah jadi estimasi Rupiah pakai asumsi tarif yang diberikan gurumu.</p>
+
+        <p>Contoh: kalau rata-rata rumah di kelompokmu nyalain TV 3 jam sehari, dan daya TV-nya 80 Watt, maka:</p>
+
+        <div class="tbl-wrap">
+          <table class="grafik">
+            <thead><tr><th>Langkah</th><th>Perhitungan</th></tr></thead>
+            <tbody>
+              <tr><td>Hitung kWh/hari</td><td>(80 &times; 3 &times; 1) &divide; 1000 = 0,24 kWh/hari</td></tr>
+              <tr><td>Ubah ke estimasi Rupiah/hari</td><td>0,24 kWh &times; tarif per kWh (dari gurumu)</td></tr>
+              <tr><td>Ubah ke estimasi Rupiah/bulan</td><td>hasil Rupiah/hari &times; 30 hari</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Coba hitung juga buat kebiasaan lain di kelompokmu, misalnya lampu atau charger HP. Bandingkan: kebiasaan mana yang ternyata paling boros kalau diubah jadi angka Rupiah?</p>
+
+        <div class="warm-box">
+          <div class="info-title">⚠️ Penting Diinget</div>
+          <p>Angka Rupiah yang kamu hitung itu estimasi/perkiraan ya, bukan tagihan listrik yang pasti &mdash; soalnya tarif listrik asli itu bertingkat dan bisa beda-beda tiap daerah. Tapi estimasi ini tetep berguna banget buat ngebandingin, kebiasaan mana yang paling berdampak.</p>
+        </div>
+      </section>
+
+      <!-- ===================== 4 ===================== -->
+      <section id="s4">
+        <div class="sec-head" style="--sec-color:var(--gold)">
+          <div class="sec-num">04</div>
+          <h2 class="sec-title">Langkah 2: Memilih Prioritas Pakai Matriks</h2>
+        </div>
+        <p>Sekarang kelompokmu pasti punya beberapa ide rekomendasi hemat energi. Tapi nggak semua rekomendasi itu sama pentingnya atau sama gampangnya dilakukan. Makanya, kita pakai alat bantu namanya matriks prioritas buat milih mana yang paling worth it dikerjakan duluan.</p>
+
+        <figure class="plate wide">
+          <div class="pic"><img src="images/04-matriks-prioritas.png" alt="Diagram matriks 2x2 Dampak vs Kemudahan dengan empat kuadran: Dampak Besar Sulit Dilakukan, Dampak Besar Mudah Dilakukan bertanda Prioritas Utama, Dampak Kecil Sulit Dilakukan, dan Dampak Kecil Mudah Dilakukan"></div>
+          <figcaption>Gambar 2. Matriks Prioritas: Dampak vs Kemudahan</figcaption>
+        </figure>
+
+        <p>Caranya gampang: taruh setiap ide rekomendasi kelompokmu di salah satu dari empat kotak (kuadran) berikut, berdasarkan dua pertanyaan:</p>
+        <ol class="list">
+          <li>Seberapa besar dampaknya kalau dilakukan? (Dampak Besar atau Dampak Kecil)</li>
+          <li>Seberapa gampang dilakukan sehari-hari? (Mudah Dilakukan atau Sulit Dilakukan)</li>
+        </ol>
+
+        <div class="quad-grid">
+          <div class="qcard priority"><div class="qtitle">★ Dampak Besar + Mudah Dilakukan</div><p>PRIORITAS UTAMA &mdash; fokus utama rencana aksi kelompokmu.</p></div>
+          <div class="qcard"><div class="qtitle">Dampak Besar + Sulit Dilakukan</div><p>Bisa jadi target jangka panjang.</p></div>
+          <div class="qcard"><div class="qtitle">Dampak Kecil + Mudah Dilakukan</div><p>Boleh jadi kebiasaan tambahan.</p></div>
+          <div class="qcard"><div class="qtitle">Dampak Kecil + Sulit Dilakukan</div><p>Sebaiknya tidak diprioritaskan dulu.</p></div>
+        </div>
+
+        <div class="info-box">
+          <div class="info-title">🤔 Diskusiin Bareng Kelompok</div>
+          <p>Dari semua ide rekomendasi kelompokmu, mana yang paling gampang dilakukan besok pagi juga? Mana yang paling berdampak besar walau butuh usaha lebih? Coba sepakati bareng-bareng sebelum lanjut ke langkah berikutnya.</p>
+        </div>
+      </section>
+
+      <!-- ===================== 5 ===================== -->
+      <section id="s5">
+        <div class="sec-head" style="--sec-color:var(--blue)">
+          <div class="sec-num">05</div>
+          <h2 class="sec-title">Langkah 3: Menyempurnakan Poster/Infografis</h2>
+        </div>
+        <p>Sekarang kelompokmu punya dua senjata baru: angka estimasi Rupiah dan rekomendasi prioritas dari matriks. Waktunya nambahin itu semua ke poster/infografis yang udah kamu buat di pertemuan sebelumnya, biar makin meyakinkan.</p>
+        <ol class="list">
+          <li>Tambahkan angka estimasi kWh dan Rupiah di dekat grafik yang relevan &mdash; angka itu bikin temuanmu jauh lebih konkret dibanding cuma grafik doang.</li>
+          <li>Tandai rekomendasi mana yang jadi PRIORITAS UTAMA hasil matriks tadi, misalnya dengan bintang atau warna mencolok.</li>
+          <li>Rapikan tampilan: pastikan judul, label grafik, dan tulisan gampang dibaca dari jarak sekitar 1-2 meter (karena nanti bakal dipajang untuk gallery walk).</li>
+        </ol>
+      </section>
+
+      <!-- ===================== 6 ===================== -->
+      <section id="s6">
+        <div class="sec-head" style="--sec-color:var(--purple)">
+          <div class="sec-num">06</div>
+          <h2 class="sec-title">Langkah 4: Gallery Walk &mdash; Kunjungi Karya Kelompok Lain</h2>
+        </div>
+
+        <figure class="plate">
+          <div class="pic"><img src="images/05-gallery-walk.png" alt="Ilustrasi tiga poster berwarna dipajang di dinding lengkap sticky note, dengan dua siswa berjalan sambil membawa papan klip untuk memberi umpan balik"></div>
+          <figcaption>Setiap kelompok berkeliling bergiliran, jadi semua poster dikunjungi dan diberi masukan</figcaption>
+        </figure>
+
+        <p>Semua poster kelompok bakal dipajang di kelas, terus kamu dan kelompokmu akan berkeliling &mdash; persis kayak jalan-jalan di pameran seni &mdash; buat melihat hasil kerja kelompok lain dan memberi umpan balik lewat sticky note.</p>
+        <p><strong>Aturan mainnya gampang: di setiap poster yang kamu kunjungi, tulis satu pujian dan satu saran di sticky note, lalu tempelkan di poster itu.</strong></p>
+
+        <div class="tbl-wrap">
+          <table class="grafik">
+            <thead><tr><th>Tulis Ini</th><th>Contoh</th></tr></thead>
+            <tbody>
+              <tr><td>Satu pujian</td><td>&ldquo;Grafiknya jelas banget dan rekomendasinya masuk akal!&rdquo;</td></tr>
+              <tr><td>Satu saran</td><td>&ldquo;Coba tambahin angka Rupiah biar makin meyakinkan.&rdquo;</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-box">
+          <div class="info-title">💬 Cara Kasih Masukan yang Baik</div>
+          <p>Fokus ke karyanya, bukan ke orangnya. Kasih masukan yang spesifik dan bisa langsung ditindaklanjuti &mdash; bukan cuma &ldquo;bagus&rdquo; atau &ldquo;kurang menarik&rdquo;, tapi jelasin bagian mana dan kenapa.</p>
+        </div>
+      </section>
+
+      <!-- ===================== 7 ===================== -->
+      <section id="s7">
+        <div class="sec-head" style="--sec-color:var(--orange)">
+          <div class="sec-num">07</div>
+          <h2 class="sec-title">Langkah 5: Menyusun Rencana Aksi</h2>
+        </div>
+
+        <figure class="plate">
+          <div class="pic"><img src="images/06-rencana-aksi.png" alt="Ilustrasi Kartu Rencana Aksi berisi tiga daftar centang (aksi, penanggung jawab, waktu mulai) dan pelacak tujuh hari dari Senin sampai Minggu"></div>
+          <figcaption>Contoh format Kartu Rencana Aksi yang akan diisi kelompokmu</figcaption>
+        </figure>
+
+        <p>Ini bagian paling seru &mdash; setelah membaca sticky note dari teman-teman, kelompokmu akan merevisi cepat kalau perlu, lalu menyusun satu Kartu Rencana Aksi berdasarkan rekomendasi PRIORITAS UTAMA yang sudah disepakati.</p>
+        <p>Kartu ini isinya tiga hal penting:</p>
+        <ul class="list">
+          <li>Aksi yang akan dilakukan &mdash; apa persisnya yang mau diubah/dilakukan?</li>
+          <li>Siapa yang bertanggung jawab &mdash; anggota kelompok mana yang memastikan ini beneran jalan?</li>
+          <li>Kapan mulai dilakukan &mdash; mulai kapan, dan berapa hari targetnya?</li>
+        </ul>
+        <p><span class="signoff">Kartu Rencana Aksi ini juga dilengkapi pelacak 7 hari (Senin sampai Minggu) — setiap hari kamu bisa mencentang kalau aksinya beneran dijalani. Simpel, tapi ini yang bikin rekomendasimu nggak cuma jadi wacana di atas kertas!</span></p>
+      </section>
+
+      <!-- ===================== 8 ===================== -->
+      <section id="s8">
+        <div class="sec-head" style="--sec-color:var(--navy)">
+          <div class="sec-num">08</div>
+          <h2 class="sec-title">Bocoran Tips Biar Makin Mantap</h2>
+        </div>
+
+        <ol class="list">
+          <li>Pilih rekomendasi yang paling realistis buat kelompokmu jalani, bukan yang paling keren kedengarannya.</li>
+          <li>Kalau hitungan kWh/Rupiah kelompokmu terasa aneh, cek lagi angka daya dan jam yang dipakai &mdash; kesalahan kecil di rumus bisa bikin hasilnya jauh meleset.</li>
+          <li>Waktu gallery walk, jangan cuma baca poster orang lain &mdash; perhatikan juga cara mereka menyajikan angka, siapa tau ada ide bagus yang bisa kamu tiru.</li>
+        </ol>
+
+        <div class="info-box">
+          <div class="info-title">✅ Inget!</div>
+          <p>Analisis data yang keren itu bukan yang berhenti di grafik cantik, tapi yang berujung pada tindakan nyata. Kartu Rencana Aksi kelompokmu adalah bukti bahwa proyek ini beneran mengubah sesuatu, bukan cuma tugas sekolah biasa.</p>
+        </div>
+      </section>
+
+      <!-- ===================== 9 ===================== -->
+      <section id="s9">
+        <div class="sec-head" style="--sec-color:var(--teal)">
+          <div class="sec-num">09</div>
+          <h2 class="sec-title">Rangkuman Singkat</h2>
+        </div>
+        <ul class="list">
+          <li>Data dan grafik yang sudah dikumpulkan diubah jadi estimasi kWh dan Rupiah memakai rumus (Daya &times; Jam &times; Unit) &divide; 1000, supaya dampaknya lebih konkret.</li>
+          <li>Matriks Prioritas (Dampak vs Kemudahan) membantu memilih rekomendasi mana yang paling layak dijadikan prioritas utama.</li>
+          <li>Gallery Walk memberi kesempatan menerima umpan balik dari kelompok lain lewat satu pujian dan satu saran, untuk menyempurnakan poster.</li>
+          <li>Kartu Rencana Aksi menuliskan komitmen konkret (aksi, penanggung jawab, waktu mulai) yang dilacak selama satu minggu, mengubah rekomendasi jadi tindakan nyata.</li>
+        </ul>
+      </section>
+
+      <!-- ===================== 10 ===================== -->
+      <section id="s10">
+        <div class="sec-head" style="--sec-color:var(--orange)">
+          <div class="sec-num">10</div>
+          <h2 class="sec-title">Cek Dulu, Udah Paham Belum?</h2>
+        </div>
+        <p>Sebelum mulai kegiatan, coba jawab dulu pertanyaan berikut sendirian.</p>
+
+        <div class="question">1. Menurutmu, kenapa mengubah data kebiasaan jadi angka Rupiah bisa bikin sebuah rekomendasi hemat energi terasa lebih meyakinkan?</div>
+        <div class="write-lines"><div class="line"></div><div class="line"></div></div>
+
+        <div class="question">2. Kalau ada rekomendasi yang dampaknya besar tapi susah dilakukan, apa yang sebaiknya dilakukan kelompokmu terhadap rekomendasi itu?</div>
+        <div class="write-lines"><div class="line"></div></div>
+
+        <div class="question">3. Kenapa umpan balik dari gallery walk penting dilakukan sebelum menyusun rencana aksi final, bukan setelahnya?</div>
+        <div class="write-lines"><div class="line"></div><div class="line"></div></div>
+      </section>
+
+      <!-- ===================== 11 ===================== -->
+      <section id="s11">
+        <div class="sec-head" style="--sec-color:var(--purple)">
+          <div class="sec-num">11</div>
+          <h2 class="sec-title">Kamus Kecil Istilah Penting</h2>
+        </div>
+        <dl class="glossary">
+          <div><dt>Estimasi</dt><dd>perkiraan angka yang dihitung berdasarkan asumsi dan data yang tersedia, bukan pengukuran langsung yang presisi.</dd></div>
+          <div><dt>Matriks Prioritas</dt><dd>alat bantu visual berbentuk grid 2x2 untuk membandingkan beberapa pilihan berdasarkan dua kriteria sekaligus.</dd></div>
+          <div><dt>Gallery Walk</dt><dd>kegiatan berkeliling melihat dan memberi umpan balik terhadap hasil karya kelompok lain, seperti mengunjungi pameran karya.</dd></div>
+          <div><dt>Rencana Aksi</dt><dd>rencana konkret dan terukur (apa, siapa, kapan) untuk menindaklanjuti hasil analisis menjadi tindakan nyata.</dd></div>
+          <div><dt>Rekomendasi Berbasis Data</dt><dd>solusi atau saran yang dirancang berdasarkan hasil analisis data nyata, bukan sekadar opini atau tebakan.</dd></div>
+        </dl>
+      </section>
+
+    </article>
+
+    <footer class="page-footer">
+      Informatika · Bab I Berpikir Komputasional dalam Analisis Data · Kelas IX · SMP Negeri 14 Tarakan
+    </footer>
+  </main>
+</div>
+
+<script>
+  // Highlight the active section in the table of contents while scrolling.
+  (function(){
+    var links = Array.prototype.slice.call(document.querySelectorAll('#tocList a'));
+    var sections = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+    if (!('IntersectionObserver' in window) || sections.length === 0) return;
+
+    var map = new Map();
+    sections.forEach(function(sec, i){ map.set(sec, links[i]); });
+
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var link = map.get(entry.target);
+        if (!link) return;
+        if (entry.isIntersecting) {
+          links.forEach(function(l){ l.classList.remove('active'); });
+          link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+    sections.forEach(function(sec){ obs.observe(sec); });
+  })();
+</script>
+</body>
+</html>
