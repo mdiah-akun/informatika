@@ -18,7 +18,7 @@ export async function GET() {
 
   const { data: profiles, error: profilesError } = await supabaseAdmin
     .from("profiles")
-    .select("id, nama, role, created_at");
+    .select("id, nama, role, kelas, created_at");
   if (profilesError) {
     return NextResponse.json({ error: profilesError.message }, { status: 500 });
   }
@@ -32,8 +32,10 @@ export async function GET() {
       email: u.email,
       nama: profile?.nama ?? "",
       role: profile?.role ?? "siswa",
+      kelas: profile?.kelas ?? null,
       created_at: u.created_at,
       last_sign_in_at: u.last_sign_in_at,
+      banned: !!u.banned_until && new Date(u.banned_until) > new Date(),
     };
   });
 

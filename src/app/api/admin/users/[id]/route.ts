@@ -27,6 +27,18 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     }
   }
 
+  if (body.banned !== undefined) {
+    if (id === admin.id && body.banned) {
+      return NextResponse.json({ error: "Tidak bisa menonaktifkan akun sendiri." }, { status: 400 });
+    }
+    const { error } = await supabaseAdmin.auth.admin.updateUserById(id, {
+      ban_duration: body.banned ? "876000h" : "none",
+    });
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+  }
+
   if (body.password !== undefined) {
     if (typeof body.password !== "string" || body.password.length < 6) {
       return NextResponse.json({ error: "Password minimal 6 karakter." }, { status: 400 });

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meringkas Data? Gampang Kok! — Materi Siswa TP 3</title>
+<style>
+  :root{
+    --green:#1e7145;
+    --green-dark:#123d28;
+    --green-light:#e7f3ec;
+    --blue:#1f5c8b;
+    --blue-light:#e4eef6;
+    --amber:#c97a00;
+    --amber-light:#fff3cd;
+    --text:#22282a;
+    --muted:#6b7472;
+    --card:#f5f8f6;
+    --card-border:#dbe8e0;
+    --maxw:840px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family: "Segoe UI", "Trebuchet MS", Calibri, Arial, sans-serif;
+    color:var(--text);
+    background:#ffffff;
+    line-height:1.6;
+  }
+  a{color:var(--green);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    background: radial-gradient(1200px 500px at 15% -10%, #1c633c 0%, var(--green-dark) 55%, #0c2116 100%);
+    color:#fff;
+    padding:64px 20px 56px;
+    text-align:center;
+  }
+  .hero .kicker{
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:12.5px;
+    font-weight:700;
+    color:#ffcf8a;
+    margin:0 0 14px;
+  }
+  .hero h1{
+    font-family: Georgia, "Times New Roman", serif;
+    font-size:clamp(28px,5vw,44px);
+    margin:0 0 14px;
+    line-height:1.2;
+  }
+  .hero p{
+    max-width:620px;
+    margin:0 auto;
+    color:#d7e7de;
+    font-size:16.5px;
+  }
+
+  /* ---------- sticky nav ---------- */
+  nav.toc{
+    position:sticky; top:0; z-index:50;
+    background:#ffffffee;
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid #e6ece9;
+    overflow-x:auto;
+    white-space:nowrap;
+    padding:0 12px;
+  }
+  nav.toc .inner{
+    max-width:var(--maxw);
+    margin:0 auto;
+    display:flex;
+    gap:4px;
+    padding:8px 0;
+  }
+  nav.toc a{
+    flex:0 0 auto;
+    text-decoration:none;
+    color:var(--muted);
+    font-size:12.5px;
+    font-weight:600;
+    padding:7px 12px;
+    border-radius:20px;
+  }
+  nav.toc a:hover{ background:var(--green-light); color:var(--green); }
+
+  /* ---------- layout ---------- */
+  main{ max-width:var(--maxw); margin:0 auto; padding:44px 20px 80px; }
+  section{ margin-bottom:56px; scroll-margin-top:56px; }
+  .eyebrow{
+    text-transform:uppercase; letter-spacing:1.5px; font-size:12px; font-weight:700;
+    color:var(--amber); margin:0 0 8px;
+  }
+  h2{
+    font-family: Georgia, "Times New Roman", serif;
+    font-size:26px; margin:0 0 16px; color:var(--green-dark);
+  }
+  h2.blue{ color:var(--blue); }
+  h3{ font-size:18px; margin:26px 0 10px; color:var(--text); }
+  p{ margin:0 0 14px; font-size:15.5px; }
+  .lead{ font-size:16.5px; }
+
+  /* ---------- image placeholder (the "canvas") ---------- */
+  .img-caption{ text-align:center; font-size:12.5px; font-style:italic; color:var(--muted); margin-top:-10px; margin-bottom:24px; }
+
+  /* ---------- figures ---------- */
+  figure.fig{ margin:20px 0 0; }
+  figure.fig.ratio-square, figure.fig.ratio-tall{ max-width:520px; margin-left:auto; margin-right:auto; }
+  figure.fig.ratio-tall{ max-width:420px; }
+  figure.fig img{
+    display:block; width:100%; height:auto; border-radius:14px;
+    border:1px solid var(--card-border); box-shadow:0 2px 12px #00000014;
+  }
+
+  /* ---------- formula box ---------- */
+  .formula{
+    background:var(--green-dark); color:#fff; border-radius:12px; padding:18px 20px;
+    font-family: Consolas, "Courier New", monospace; font-size:14.5px; margin:16px 0;
+    overflow-x:auto;
+  }
+  .formula .arg-a{ color:#8fd9b4; font-weight:700; }
+  .formula .arg-b{ color:#ffd27a; font-weight:700; }
+  .formula .arg-c{ color:#ff9e9e; font-weight:700; }
+  .formula.blue{ background:#0f2d40; }
+
+  .result-box{
+    display:flex; align-items:center; gap:16px;
+    background:var(--green-light); border-radius:12px; padding:16px 20px; margin:14px 0;
+  }
+  .result-box.blue{ background:var(--blue-light); }
+  .result-box .num{ font-family:Georgia, serif; font-weight:700; font-size:30px; color:var(--green); }
+  .result-box.blue .num{ color:var(--blue); }
+  .result-box .txt{ font-size:13.5px; color:var(--text); }
+
+  /* ---------- callouts ---------- */
+  .callout{
+    border-radius:12px; padding:18px 20px; margin:20px 0;
+    border:1px solid transparent;
+  }
+  .callout .title{ font-weight:700; font-size:14.5px; margin-bottom:6px; }
+  .callout.amber{ background:var(--amber-light); border-color:#f0d78a; }
+  .callout.amber .title{ color:var(--amber); }
+  .callout.blue{ background:var(--blue-light); border-color:#c9dfef; }
+  .callout.blue .title{ color:var(--blue); }
+  .callout.green{ background:var(--green-light); border-color:var(--card-border); }
+  .callout.green .title{ color:var(--green); }
+  .callout p{ margin:0; font-size:14.5px; }
+
+  /* ---------- comparison cards ---------- */
+  .cards2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:18px 0; }
+  @media (max-width:600px){ .cards2{ grid-template-columns:1fr; } }
+  .card{ background:var(--card); border:1px solid var(--card-border); border-radius:14px; padding:20px; }
+  .card .circle{
+    width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    color:#fff; font-weight:700; font-size:18px; margin-bottom:10px;
+  }
+  .card.g .circle{ background:var(--green); }
+  .card.b .circle{ background:var(--blue); }
+  .card h4{ margin:0 0 6px; font-size:17px; }
+  .card.g h4{ color:var(--green); }
+  .card.b h4{ color:var(--blue); }
+  .card p{ font-size:13.5px; color:var(--text); margin:0; }
+
+  /* ---------- rangkuman grid ---------- */
+  .grid4{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:18px 0; }
+  @media (max-width:700px){ .grid4{ grid-template-columns:1fr 1fr; } }
+  .mini{ background:var(--card); border:1px solid var(--card-border); border-radius:14px; padding:18px 14px; text-align:center; }
+  .mini .circle{
+    width:46px; height:46px; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center;
+    color:#fff; font-weight:700; font-size:19px;
+  }
+  .mini h5{ margin:0 0 6px; font-size:14px; }
+  .mini p{ font-size:11.5px; color:var(--muted); margin:0; }
+
+  /* ---------- quiz ---------- */
+  .quiz-item{ background:var(--card); border:1px solid var(--card-border); border-radius:12px; padding:16px 18px; margin-bottom:12px; }
+  .quiz-item .q{ font-weight:600; font-size:14.5px; margin-bottom:8px; }
+  .quiz-item details summary{ cursor:pointer; color:var(--green); font-size:13px; font-weight:700; list-style:none; }
+  .quiz-item details summary::-webkit-details-marker{ display:none; }
+  .quiz-item details summary::before{ content:"▸ "; }
+  .quiz-item details[open] summary::before{ content:"▾ "; }
+  .quiz-item details .answer{ margin-top:8px; font-size:13.5px; color:var(--text); background:#fff; border-radius:8px; padding:10px 12px; }
+
+  /* ---------- glossary ---------- */
+  table.glossary{ width:100%; border-collapse:collapse; margin-top:14px; font-size:13.5px; }
+  table.glossary td{ padding:10px 12px; border:1px solid var(--card-border); vertical-align:top; }
+  table.glossary tr:nth-child(even) td{ background:#f7faf8; }
+  table.glossary td.term{ font-weight:700; color:var(--green); width:34%; }
+
+  footer{ text-align:center; padding:30px 20px 50px; color:var(--muted); font-size:12.5px; }
+
+  .back-top{
+    position:fixed; right:18px; bottom:18px; width:42px; height:42px; border-radius:50%;
+    background:var(--green); color:#fff; text-decoration:none; display:flex; align-items:center; justify-content:center;
+    font-size:18px; box-shadow:0 4px 14px #00000030; opacity:0.9;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <p class="kicker">Informatika Kelas VIII · Bab I Analisis Data · TP 3</p>
+  <h1>Meringkas Data? Gampang Kok!</h1>
+  <p>Kenalan sama SUMIFS, COUNTIFS, dan Pivot Table — lewat studi kasus Kunjungan Wisatawan Kalimantan Utara.</p>
+</header>
+
+<nav class="toc">
+  <div class="inner">
+    <a href="#hook">Cerita Pembuka</a>
+    <a href="#kenapa">Kenapa Diringkas</a>
+    <a href="#sumifs">SUMIFS</a>
+    <a href="#countifs">COUNTIFS</a>
+    <a href="#pivot">Pivot Table</a>
+    <a href="#tips">Tips</a>
+    <a href="#rangkuman">Rangkuman</a>
+    <a href="#uji-diri">Uji Diri</a>
+    <a href="#kamus">Kamus Kilat</a>
+  </div>
+</nav>
+
+<main>
+
+  <section id="hook">
+    <p class="eyebrow">Pernah Nggak Sih Kalian Mikir Gini?</p>
+    <h2>Bayangin Jadi Staf Dinas Pariwisata...</h2>
+    <p class="lead">Kalian dikasih data kunjungan wisatawan ke 8 destinasi wisata, di 4 kabupaten/kota, selama 2 tahun. Total ada 16 baris data. Terus atasan kalian nanya: <em>“Kota mana yang jumlah wisatawannya paling banyak tahun 2024?”</em></p>
+    <p>Masa iya kalian harus baca satu-satu, terus jumlahin manual pakai kalkulator? Kebayang kan capeknya kalau datanya bukan 16 baris, tapi 16.000 baris? Nah, di sinilah SUMIFS, COUNTIFS, dan Pivot Table jadi penyelamat kalian. Yuk, kita bahas satu-satu, santai aja!</p>
+
+    <!-- GAMBAR 1: Data mentah vs sudah diringkas (before/after) -->
+    <figure class="fig ratio-wide">
+      <img src="images/gambar-1-before-after.png" alt="Perbandingan data mentah 16 baris di kiri dengan data yang sudah diringkas per Kabupaten/Kota di kanan">
+    </figure>
+    <p class="img-caption">Data mentah 16 baris → diringkas jadi 4 baris pakai SUMIFS / Pivot Table</p>
+  </section>
+
+  <section id="kenapa">
+    <p class="eyebrow">Konsep Dasar</p>
+    <h2>Kenapa Sih Data Perlu Diringkas?</h2>
+    <p>Data mentah itu lengkap, tapi justru karena lengkap, dia jadi susah dibaca sekilas. Coba deh bayangin kalau kalian harus nyari informasi penting dari ratusan baris angka — pasti pusing! Makanya, data itu perlu “disaring” dulu pakai kriteria tertentu, baru deh keluar hasil yang benar-benar penting.</p>
+
+    <!-- GAMBAR 2: Corong / funnel peringkasan data -->
+    <figure class="fig ratio-tall">
+      <img src="images/gambar-2-funnel.png" alt="Corong peringkasan data: 16 baris data mentah, disaring pakai kriteria Kabupaten/Kota dan Tahun, hasilnya 2 baris data dengan total 6.300 wisatawan">
+    </figure>
+    <p class="img-caption">Data mentah → disaring pakai kriteria → hasil ringkas</p>
+
+    <p>Ada tiga cara utama buat meringkas data yang bakal kita pelajari di bab ini:</p>
+    <ul>
+      <li><strong>SUMIFS</strong> — buat menjumlahkan angka dengan lebih dari satu syarat;</li>
+      <li><strong>COUNTIFS</strong> — buat menghitung banyaknya data dengan lebih dari satu syarat;</li>
+      <li><strong>Pivot Table</strong> — fitur ajaib yang bisa meringkas data cuma dengan tarik-tarik field, tanpa nulis formula sama sekali!</li>
+    </ul>
+  </section>
+
+  <section id="sumifs">
+    <p class="eyebrow">Fungsi Pertama</p>
+    <h2>SUMIFS — Si Jago Jumlah Bersyarat</h2>
+    <p>Di kelas VII, kalian udah kenal SUMIF, yang bisa menjumlahkan data berdasarkan satu syarat. Nah, SUMIFS itu “versi lebih kuat” dari SUMIF — dia bisa menjumlahkan data berdasarkan dua syarat atau lebih sekaligus.</p>
+    <p>Analoginya gini: kalau SUMIF itu kayak nyari baju cuma berdasarkan satu syarat (misalnya warna merah aja), SUMIFS itu kayak nyari baju yang warnanya merah <strong>DAN</strong> ukurannya M. Dua syarat harus dipenuhi bareng-bareng, baru dianggap cocok.</p>
+
+    <p>Coba kita praktikkan pakai data wisatawan Kalimantan Utara berikut ini.</p>
+
+    <!-- GAMBAR 3: Dataset kunjungan wisatawan Kalimantan Utara -->
+    <figure class="fig ratio-square">
+      <img src="images/gambar-3-dataset.png" alt="Tabel dataset kunjungan wisatawan Kalimantan Utara, 16 baris: Destinasi Wisata, Kabupaten/Kota, Tahun, Jumlah Wisatawan">
+    </figure>
+    <p class="img-caption">Tabel A1:D17 — Destinasi Wisata, Kabupaten/Kota, Tahun, Jumlah Wisatawan</p>
+
+    <p>Misalnya kita mau tahu: <em>“Berapa total wisatawan yang datang ke Tarakan pada tahun 2024?”</em> Ada dua syarat di sini: kabupaten/kotanya harus Tarakan, DAN tahunnya harus 2024. Formulanya:</p>
+
+    <div class="formula">=SUMIFS(<span class="arg-a">D2:D17</span>, <span class="arg-b">B2:B17</span>, <span class="arg-c">"Tarakan"</span>, <span class="arg-b">C2:C17</span>, <span class="arg-c">2024</span>)</div>
+
+    <!-- GAMBAR 4: Kriteria & hasil SUMIFS/COUNTIFS -->
+    <figure class="fig ratio-wide">
+      <img src="images/gambar-4-hasil-formula.png" alt="Kriteria Kabupaten/Kota = Tarakan dan Tahun = 2024, dengan hasil SUMIFS 6.300 dan hasil COUNTIFS 2">
+    </figure>
+    <p class="img-caption">Kriteria (Tarakan, 2024) dan hasilnya: SUMIFS = 6.300, COUNTIFS = 2</p>
+
+    <div class="result-box">
+      <div class="num">6.300</div>
+      <div class="txt">wisatawan — kolom <strong>D</strong> dijumlahkan, kolom <strong>B</strong> dan <strong>C</strong> tempat syaratnya dicek.</div>
+    </div>
+
+    <p>Gampang, kan? Tinggal sebutkan data yang mau dijumlahkan, terus sebutkan pasangan (kolom syarat, nilai syarat) sebanyak yang kalian butuhkan.</p>
+  </section>
+
+  <section id="countifs">
+    <p class="eyebrow">Fungsi Kedua</p>
+    <h2 class="blue">COUNTIFS — Si Jago Hitung Bersyarat</h2>
+    <p>Kalau SUMIFS itu buat menjumlahkan <strong>ANGKA</strong>, COUNTIFS itu buat menghitung <strong>BANYAKNYA BARIS DATA</strong> yang memenuhi syarat. COUNTIFS nggak peduli angkanya besar atau kecil — dia cuma menghitung, ada berapa baris yang cocok.</p>
+    <p>Masih pakai contoh yang sama: <em>“Ada berapa banyak data yang tercatat untuk Tarakan tahun 2024?”</em> Formulanya:</p>
+
+    <div class="formula blue">=COUNTIFS(<span class="arg-b">B2:B17</span>, <span class="arg-c">"Tarakan"</span>, <span class="arg-b">C2:C17</span>, <span class="arg-c">2024</span>)</div>
+
+    <div class="result-box blue">
+      <div class="num">2</div>
+      <div class="txt">baris data — artinya ada 2 destinasi wisata di Tarakan yang tercatat pada tahun 2024.</div>
+    </div>
+
+    <p>Perhatikan, COUNTIFS nggak butuh <em>sum_range</em> sama sekali, karena dia cuma menghitung baris, bukan menjumlahkan angka.</p>
+
+    <div class="cards2">
+      <div class="card g">
+        <div class="circle">&Sigma;</div>
+        <h4>SUMIFS</h4>
+        <p>Menjumlahkan angka dari data yang cocok kriteria.</p>
+      </div>
+      <div class="card b">
+        <div class="circle">#</div>
+        <h4>COUNTIFS</h4>
+        <p>Menghitung banyaknya baris data yang cocok kriteria.</p>
+      </div>
+    </div>
+
+    <!-- GAMBAR 5: Kartu perbandingan SUMIFS vs COUNTIFS -->
+    <figure class="fig ratio-wide">
+      <img src="images/gambar-5-kartu-perbandingan.png" alt="Kartu perbandingan SUMIFS dan COUNTIFS beserta sintaksnya">
+    </figure>
+    <p class="img-caption">Ringkasan visual: SUMIFS vs COUNTIFS</p>
+  </section>
+
+  <section id="pivot">
+    <p class="eyebrow">Level Up</p>
+    <h2>Kenalan Sama Pivot Table</h2>
+    <p>Sekarang, gimana kalau kalian mau ringkasan buat SEMUA kabupaten/kota sekaligus, bukan cuma satu-satu? Nulis SUMIFS berkali-kali tentu bisa, tapi capek. Nah, di sinilah Pivot Table jadi penyelamat.</p>
+    <p>Pivot Table itu ibarat asisten pribadi yang otomatis ngerangkum data buat kalian — tinggal tarik-tarik field ke tempat yang tepat, dan ringkasannya langsung muncul. Nggak perlu nulis formula sama sekali!</p>
+
+    <!-- GAMBAR 6: Langkah-langkah membuat Pivot Table -->
+    <figure class="fig ratio-wide">
+      <img src="images/gambar-6-langkah-pivot.png" alt="Alur 4 langkah membuat Pivot Table: Klik Data, Insert PivotTable, Tarik Field, Ringkasan Muncul">
+    </figure>
+    <p class="img-caption">Klik data → Insert &gt; PivotTable → Tarik field ke Rows/Values/Filters → Ringkasan muncul</p>
+
+    <h3>Pivot Table Satu Dimensi</h3>
+    <p>Dipakai kalau kalian cuma mau meringkas berdasarkan SATU kategori data, misalnya kabupaten/kota saja. Field Kabupaten/Kota ditarik ke area <strong>Rows</strong>, field Jumlah Wisatawan ditarik ke area <strong>Values</strong>, dan field Tahun ditarik ke area <strong>Filters</strong> (biar bisa difilter per tahun).</p>
+
+    <!-- GAMBAR 7: Hasil Pivot Table satu dimensi -->
+    <figure class="fig ratio-square">
+      <img src="images/gambar-7-pivot-1d.png" alt="Hasil Pivot Table satu dimensi: total wisatawan tiap Kabupaten/Kota dengan filter Tahun 2024">
+    </figure>
+    <p class="img-caption">Total wisatawan tiap kabupaten/kota, filter Tahun = 2024</p>
+
+    <h3>Pivot Table Dua Dimensi</h3>
+    <p>Kalau kalian mau ringkasan yang lebih detail — misalnya per kabupaten/kota SEKALIGUS per tahun — tinggal tambah satu field lagi ke area <strong>Columns</strong>. Field Kabupaten/Kota tetap di Rows, field Tahun dipindah ke Columns, dan field Jumlah Wisatawan tetap di Values.</p>
+
+    <!-- GAMBAR 8: Hasil Pivot Table dua dimensi -->
+    <figure class="fig ratio-square">
+      <img src="images/gambar-8-pivot-2d.png" alt="Hasil Pivot Table dua dimensi: total wisatawan tiap Kabupaten/Kota per tahun 2023 dan 2024, plus Grand Total">
+    </figure>
+    <p class="img-caption">Tiap kabupaten/kota, tiap tahun, plus Grand Total-nya sekaligus</p>
+
+    <p>Enak banget, kan? Dengan sekali lihat, kalian langsung tahu Berau itu naik dari 6.000 ke 7.010, atau Nunukan yang angkanya masih paling kecil di antara semua kabupaten/kota.</p>
+  </section>
+
+  <section id="tips">
+    <p class="eyebrow">Biar Nggak Error</p>
+    <h2>Tips &amp; Fakta Menarik</h2>
+
+    <div class="callout amber">
+      <div class="title">💡 Tips: Kunci Selnya Pakai $ !</div>
+      <p>Kalau formula SUMIFS/COUNTIFS kalian mau di-copy ke sel lain, jangan lupa kasih tanda <strong>$</strong> di depan kolom dan baris pada bagian data utamanya (misalnya <code>$D$2:$D$17</code>). Tanda $ ini disebut <em>absolute reference</em> — fungsinya kayak “mengunci” alamat sel supaya nggak ikut geser saat formula disalin. Kalau lupa dikunci, pas formula di-copy ke baris bawahnya, rentang datanya bisa ikut geser dan hasilnya jadi salah!</p>
+    </div>
+
+    <div class="callout blue">
+      <div class="title">🤔 Tau Nggak?</div>
+      <p>Kata “pivot” artinya “pusat” atau “poros”. Disebut begitu karena data di Pivot Table “berputar” mengelilingi kategori yang kalian pilih sebagai Rows dan Columns — makanya hasilnya bisa langsung berubah bentuk cuma dengan menukar posisi field-nya!</p>
+    </div>
+  </section>
+
+  <section id="rangkuman">
+    <p class="eyebrow">Sebelum Praktik</p>
+    <h2>Rangkuman Kilat</h2>
+    <div class="grid4">
+      <div class="mini">
+        <div class="circle" style="background:var(--green);">&Sigma;</div>
+        <h5>SUMIFS</h5>
+        <p>Menjumlahkan angka dengan lebih dari satu kriteria.</p>
+      </div>
+      <div class="mini">
+        <div class="circle" style="background:var(--blue);">#</div>
+        <h5>COUNTIFS</h5>
+        <p>Menghitung baris data dengan lebih dari satu kriteria.</p>
+      </div>
+      <div class="mini">
+        <div class="circle" style="background:var(--amber);">▦</div>
+        <h5>Pivot Table</h5>
+        <p>Meringkas data besar otomatis, tanpa nulis formula.</p>
+      </div>
+      <div class="mini">
+        <div class="circle" style="background:var(--green-dark);">$</div>
+        <h5>Absolute Reference</h5>
+        <p>Kunci alamat sel supaya formula nggak berantakan.</p>
+      </div>
+    </div>
+
+    <div class="callout green">
+      <div class="title">✏️ Yuk, Coba Sendiri!</div>
+      <p>Sekarang giliran kalian praktik langsung! Buka LKPD “Meringkas Data Kunjungan Wisatawan Kalimantan Utara” dan kerjakan bareng kelompok kalian. Jangan takut salah — itu bagian dari belajar!</p>
+    </div>
+  </section>
+
+  <section id="uji-diri">
+    <p class="eyebrow">Cek Pemahaman</p>
+    <h2>Yuk, Uji Diri Kalian!</h2>
+    <p>Coba jawab dulu tanpa buka catatan. Klik "Lihat Jawaban" kalau sudah yakin dengan jawaban kalian.</p>
+
+    <div class="quiz-item">
+      <div class="q">1. Kalau kalian mau menjumlahkan data dengan DUA syarat sekaligus, fungsi yang tepat dipakai adalah ....</div>
+      <details><summary>Lihat Jawaban</summary><div class="answer">SUMIFS</div></details>
+    </div>
+    <div class="quiz-item">
+      <div class="q">2. Fungsi yang menghitung BANYAKNYA baris data yang memenuhi kriteria disebut ....</div>
+      <details><summary>Lihat Jawaban</summary><div class="answer">COUNTIFS</div></details>
+    </div>
+    <div class="quiz-item">
+      <div class="q">3. Di Pivot Table, field yang ditarik ke area Values itu fungsinya buat ....</div>
+      <details><summary>Lihat Jawaban</summary><div class="answer">Menentukan data yang mau dijumlahkan/dihitung nilainya.</div></details>
+    </div>
+    <div class="quiz-item">
+      <div class="q">4. Tanda $ di depan alamat sel (misalnya $D$2) disebut ...., gunanya supaya ....</div>
+      <details><summary>Lihat Jawaban</summary><div class="answer">Absolute reference — supaya alamat sel tidak ikut berubah/bergeser saat formula disalin ke sel lain.</div></details>
+    </div>
+  </section>
+
+  <section id="kamus">
+    <p class="eyebrow">Referensi Cepat</p>
+    <h2>Kamus Kilat</h2>
+    <table class="glossary">
+      <tr><td class="term">SUMIFS</td><td>Menjumlahkan angka dari data yang memenuhi lebih dari satu kriteria.</td></tr>
+      <tr><td class="term">COUNTIFS</td><td>Menghitung banyaknya baris data yang memenuhi lebih dari satu kriteria.</td></tr>
+      <tr><td class="term">Kriteria</td><td>Syarat yang harus dipenuhi supaya data ikut dihitung.</td></tr>
+      <tr><td class="term">Absolute reference ($)</td><td>"Kunci" alamat sel supaya tidak berubah saat formula disalin ke sel lain.</td></tr>
+      <tr><td class="term">Pivot Table</td><td>Fitur otomatis untuk merangkum data besar jadi ringkasan yang rapi.</td></tr>
+      <tr><td class="term">Rows / Columns / Values / Filters</td><td>Area di panel PivotTable Fields yang menentukan bentuk ringkasan data.</td></tr>
+    </table>
+  </section>
+
+</main>
+
+<footer>
+  Materi Siswa · Informatika Kelas VIII · Bab I Analisis Data · TP 3
+</footer>
+
+<a href="#hook" class="back-top" title="Kembali ke atas">↑</a>
+
+</body>
+</html>

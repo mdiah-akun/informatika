@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naik Level Jadi Tim IT! — Materi Siswa TP 1 Pertemuan 2</title>
+<style>
+  :root{
+    --green:#1e7145; --green-dark:#123d28; --green-light:#e7f3ec;
+    --blue:#1f5c8b; --blue-light:#e4eef6;
+    --amber:#c97a00; --amber-light:#fff3cd;
+    --purple:#7a4fa3; --purple-light:#efe7f5;
+    --red:#b3261e; --red-light:#fbeae9;
+    --text:#222222; --muted:#666666;
+    --card:#f5f8f6; --card-border:#dbe8e0;
+    --bg:#ffffff; --maxw:860px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:Calibri,'Segoe UI',Arial,sans-serif;color:var(--text);background:var(--bg);line-height:1.6;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px;}
+  img{max-width:100%;display:block;}
+
+  .hero{background:radial-gradient(circle at 20% 20%, #1a5c3a, var(--green-dark) 70%);color:#fff;padding:56px 20px 42px;}
+  .hero .inner{max-width:var(--maxw);margin:0 auto;}
+  .kicker{font-size:12px;font-weight:700;letter-spacing:1.5px;color:#a9dcc0;text-transform:uppercase;margin-bottom:10px;}
+  .hero h1{font-family:Cambria,Georgia,serif;font-size:36px;margin:0 0 12px;}
+  .hero p{font-size:16px;color:#d9edd1;margin:0;font-style:italic;}
+
+  nav.toc{position:sticky;top:0;background:#fff;border-bottom:1px solid #e5e5e5;overflow-x:auto;white-space:nowrap;z-index:10;padding:10px 20px;}
+  nav.toc a{color:var(--green-dark);text-decoration:none;font-size:13.5px;font-weight:600;margin-right:20px;}
+  nav.toc a:hover{text-decoration:underline;}
+
+  section{padding:36px 0;}
+  h2.kicker-h{font-size:12px;font-weight:700;letter-spacing:1.5px;color:var(--amber);text-transform:uppercase;margin:0 0 8px;}
+  h2{font-family:Cambria,Georgia,serif;color:var(--green-dark);font-size:26px;margin:0 0 16px;}
+  h3{font-family:Cambria,Georgia,serif;color:var(--green-dark);font-size:19px;margin:22px 0 10px;}
+  p{font-size:15.5px;margin:0 0 14px;}
+
+  figure{margin:22px 0;text-align:center;}
+  figure img{border-radius:10px;margin:0 auto;box-shadow:0 1px 4px rgba(0,0,0,0.08);}
+  figcaption{font-size:13px;color:var(--muted);font-style:italic;margin-top:8px;}
+
+  .formula{background:#1e1e1e;color:#f3f3f3;font-family:Consolas,monospace;font-size:14.5px;padding:16px 20px;border-radius:8px;overflow-x:auto;text-align:center;margin:16px 0;}
+
+  .result{background:var(--green-light);border-radius:10px;padding:18px 20px;text-align:center;margin:16px 0;}
+  .result .val{font-family:Cambria,Georgia,serif;font-size:26px;font-weight:700;color:var(--green-dark);}
+  .result .lbl{font-size:13px;color:var(--muted);margin-top:4px;}
+  .result.red{background:var(--red-light);} .result.red .val{color:var(--red);}
+
+  .callout{border-radius:10px;padding:18px 20px;margin:20px 0;}
+  .callout.amber{background:var(--amber-light);} .callout.blue{background:var(--blue-light);} .callout.green{background:var(--green-light);} .callout.red{background:var(--red-light);}
+  .callout .ttl{font-family:Cambria,Georgia,serif;font-weight:700;font-size:16.5px;color:var(--green-dark);margin-bottom:8px;}
+  .callout p{margin:0;font-size:14.5px;}
+
+  ul.tips{margin:0 0 14px;padding-left:22px;}
+  ul.tips li{font-size:15px;margin-bottom:6px;}
+
+  .grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:20px 0;}
+  .grid4 .card{background:var(--card);border:1px solid var(--card-border);border-radius:10px;padding:16px;text-align:center;}
+  .grid4 .num{width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;margin:0 auto 10px;font-family:Cambria,Georgia,serif;}
+  .grid4 .name{font-family:Cambria,Georgia,serif;font-weight:700;color:var(--green-dark);margin-bottom:6px;}
+  .grid4 .desc{font-size:12.5px;color:var(--muted);}
+
+  .problem-badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:10px;}
+  .problem-badge.red{background:var(--red-light);color:var(--red);}
+  .problem-badge.amber{background:var(--amber-light);color:var(--amber);}
+  .problem-badge.blue{background:var(--blue-light);color:var(--blue);}
+  .problem-badge.purple{background:var(--purple-light);color:var(--purple);}
+
+  details{background:var(--card);border:1px solid var(--card-border);border-radius:10px;padding:14px 18px;margin-bottom:12px;}
+  summary{cursor:pointer;font-weight:600;color:var(--green);font-size:14.5px;}
+  .answer{margin-top:10px;font-size:14.5px;color:var(--text);}
+
+  table.glossary{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;}
+  table.glossary th{background:var(--amber);color:#fff;text-align:left;padding:10px 12px;}
+  table.glossary td{padding:10px 12px;border-bottom:1px solid #eee;}
+  table.glossary tr:nth-child(even) td{background:#fafafa;}
+  table.glossary td:first-child{font-weight:700;color:var(--green-dark);white-space:nowrap;}
+
+  footer{text-align:center;padding:30px 20px 50px;color:var(--muted);font-size:13px;}
+  .back-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--green-dark);color:#fff;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:18px;box-shadow:0 2px 8px rgba(0,0,0,0.25);}
+
+  @media(max-width:600px){ .hero h1{font-size:26px;} h2{font-size:22px;} }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="inner">
+    <div class="kicker">Informatika Kelas VIII &middot; Bab I Analisis Data &middot; TP 1 &middot; Pertemuan 2</div>
+    <h1>Naik Level Jadi Tim IT!</h1>
+    <p>Menangani error, perubahan tabel, 2 kriteria, dan diskon bertingkat — lanjutan studi kasus Koperasi Sekolah.</p>
+  </div>
+</div>
+
+<nav class="toc">
+  <a href="#hook">Cerita Pembuka</a>
+  <a href="#masalah1">Error #N/A</a>
+  <a href="#masalah2">Tabel Berubah</a>
+  <a href="#masalah3">2 Kriteria</a>
+  <a href="#masalah4">Diskon Bertingkat</a>
+  <a href="#proyek">Proyek Kalian</a>
+  <a href="#uji-diri">Uji Diri</a>
+  <a href="#kamus">Kamus Kilat</a>
+</nav>
+
+<div class="wrap">
+
+<section id="hook">
+  <h2 class="kicker-h">Cerita Pembuka</h2>
+  <h2>Dari Kasir Dadakan ke Tim IT Koperasi</h2>
+  <p>Minggu lalu kalian udah belajar VLOOKUP, HLOOKUP, MATCH, INDEX, dan CHOOSE — keren banget, sekarang kalian udah bisa bikin "mesin pencari" sendiri di spreadsheet. Tapi ternyata, jadi kasir dadakan aja belum cukup. Sekarang giliran kalian naik jabatan jadi Tim IT Koperasi Sekolah!</p>
+  <p>Kenapa? Soalnya sistem pencarian yang kemarin dibuat, walaupun udah jalan, ternyata masih rapuh. Ada 4 masalah yang bikin pengurus koperasi pusing:</p>
+  <figure>
+    <img src="images/img1_orientasi_masalah.png" alt="Empat masalah sistem pencarian koperasi">
+    <figcaption>Empat masalah nyata yang harus dibenahi Tim IT Koperasi hari ini</figcaption>
+  </figure>
+  <p>Nah, di materi ini kita bakal bereskan satu-satu masalah itu. Siap-siap, karena kali ini bakal lebih banyak praktik langsung di laptop!</p>
+</section>
+
+<section id="masalah1">
+  <span class="problem-badge red">Masalah 1</span>
+  <h2>Ups, Ada Error! Gimana Dong?</h2>
+  <p>Pernah nggak lihat sel di Excel yang isinya cuma tulisan "#N/A"? Itu bukan bug aneh, itu cara Excel bilang "aduh, aku nggak nemu datanya nih". Biasanya muncul kalau kode yang dicari salah ketik, atau memang belum ada di data.</p>
+  <p>Masalahnya, tampilan #N/A itu bikin bingung orang yang pakai file kita — apalagi kalau yang pakai bukan anak IT. Makanya kita butuh fungsi IFERROR buat "menjinakkan" error itu jadi pesan yang lebih enak dibaca.</p>
+  <figure>
+    <img src="images/img2_iferror.png" alt="IFERROR mengubah #N/A jadi pesan ramah">
+    <figcaption>IFERROR mengubah #N/A jadi pesan yang lebih ramah</figcaption>
+  </figure>
+  <p>Coba bandingkan dua formula ini buat cari kode "K15" (yang emang nggak ada di data kita):</p>
+  <div class="formula">=VLOOKUP("K15",A2:D11,4,FALSE) &nbsp;&rarr;&nbsp; #N/A</div>
+  <div class="formula">=IFERROR(VLOOKUP("K15",A2:D11,4,FALSE),"Kode tidak ditemukan")</div>
+  <div class="result red"><div class="val">"Kode tidak ditemukan"</div><div class="lbl">Jauh lebih jelas daripada #N/A, kan?</div></div>
+  <div class="callout amber">
+    <div class="ttl">💡 Ingat Ya!</div>
+    <p>IFERROR itu cuma "mempercantik" tampilan hasil error — dia nggak memperbaiki penyebabnya. Kalau memang kodenya salah ketik, ya tetap harus dibenerin kodenya, bukan cuma ditutupi errornya.</p>
+  </div>
+</section>
+
+<section id="masalah2">
+  <span class="problem-badge amber">Masalah 2</span>
+  <h2>Awas, Tabelnya Berubah!</h2>
+  <p>Bayangin gini: kalian udah capek-capek bikin formula VLOOKUP yang jalan sempurna. Terus tiba-tiba pengurus koperasi minta ditambahin kolom "Stok" di sebelah kiri kolom Kode. Eh, formula yang tadinya benar, sekarang malah nunjukkin angka yang salah! Kok bisa?</p>
+  <figure>
+    <img src="images/img3_robustness.png" alt="VLOOKUP rusak vs INDEX+MATCH tetap benar">
+    <figcaption>VLOOKUP jadi salah, tapi INDEX+MATCH tetap benar, saat kolom baru disisipkan</figcaption>
+  </figure>
+  <p>Ternyata, VLOOKUP itu "menghitung" kolom hasilnya berdasarkan NOMOR URUT (misalnya angka 4 = kolom keempat). Begitu ada kolom baru nyelip, nomor urutnya ikut geser, jadi hasilnya salah — padahal formulanya nggak diubah sama sekali!</p>
+  <p>Solusinya? Pakai INDEX+MATCH. Bedanya, INDEX+MATCH merujuk kolom secara LANGSUNG (misalnya kolom E), bukan berdasarkan nomor urut. Jadi walaupun ada kolom baru nyelip, hasilnya tetap benar.</p>
+  <div class="formula">=INDEX(E:E, MATCH("K07", B:B, 0))</div>
+  <div class="callout blue">
+    <div class="ttl">🤔 Tau Nggak?</div>
+    <p>Inilah alasan kenapa banyak orang yang kerja dengan spreadsheet besar lebih suka pakai INDEX+MATCH daripada VLOOKUP — bukan cuma soal fleksibel, tapi juga soal AMAN dari perubahan struktur data di masa depan.</p>
+  </div>
+</section>
+
+<section id="masalah3">
+  <span class="problem-badge blue">Masalah 3</span>
+  <h2>Barangnya Sama, Tapi Beda Toko</h2>
+  <p>Ternyata koperasi sekolah kita belanja dari dua supplier: UD Sinar Jaya dan UD Makmur. Masalahnya, ada barang yang namanya SAMA tapi harganya BEDA, tergantung dari supplier mana.</p>
+  <figure>
+    <img src="images/img4a_supplier_raw.png" alt="Data katalog supplier">
+    <figcaption>Data katalog supplier: nama barang yang sama, harga berbeda tergantung supplier</figcaption>
+  </figure>
+  <p>Kalau kita cuma VLOOKUP pakai "Pensil 2B" aja, Excel bakal bingung — mau ambil harga dari UD Sinar Jaya atau UD Makmur? Di sinilah kita butuh pencarian dengan DUA kriteria sekaligus: Nama Barang DAN Supplier.</p>
+  <p>Triknya gampang kok — kita bikin "kolom bantu" yang menggabungkan dua kriteria itu jadi satu kunci pencarian, pakai tanda "&":</p>
+  <figure>
+    <img src="images/img4b_helper_column.png" alt="Teknik kolom bantu">
+    <figcaption>Teknik kolom bantu: menggabungkan dua kriteria jadi satu kunci pencarian</figcaption>
+  </figure>
+  <div class="formula">Kolom Bantu: &nbsp;=B2 &amp; "|" &amp; C2</div>
+  <div class="formula">Cari harga: &nbsp;=VLOOKUP(F2&amp;"|"&amp;G2, KolomBantu:Harga, 2, FALSE)</div>
+  <p>Jadi, kita gabung dulu Nama Barang dan Supplier yang dicari jadi satu teks, baru dicocokkan dengan kolom bantu di tabel data. Simpel, kan?</p>
+</section>
+
+<section id="masalah4">
+  <span class="problem-badge purple">Masalah 4</span>
+  <h2>Diskon Naik Level: Beda-beda Tergantung Belanja</h2>
+  <p>Koperasi mau kasih diskon otomatis, tapi bukan diskon yang sama rata — makin banyak belanja, makin gede diskonnya. Ini yang disebut diskon BERTINGKAT (berjenjang).</p>
+  <figure>
+    <img src="images/img5_tiered_discount.png" alt="VLOOKUP TRUE tabel diskon bertingkat">
+    <figcaption>VLOOKUP TRUE mencari nilai terdekat di tabel diskon bertingkat</figcaption>
+  </figure>
+  <p>Nah, di sinilah argumen terakhir VLOOKUP yang biasanya kita isi FALSE, sekarang kita ganti jadi TRUE. Bedanya:</p>
+  <ul class="tips">
+    <li><strong>FALSE (exact match)</strong> — hasil harus PERSIS sama dengan yang dicari. Cocok buat kode barang.</li>
+    <li><strong>TRUE (approximate match)</strong> — Excel akan cari nilai TERDEKAT DI BAWAH nilai yang kita masukkan. Cocok buat data bertingkat seperti diskon atau nilai grading.</li>
+  </ul>
+  <div class="formula">=VLOOKUP(65000, TabelDiskon, 2, TRUE) &nbsp;&rarr;&nbsp; 10%</div>
+  <div class="callout red">
+    <div class="ttl">⚠️ Syarat Penting!</div>
+    <p>Supaya VLOOKUP TRUE bekerja dengan benar, tabel referensinya WAJIB diurutkan naik (ascending) dari kecil ke besar. Kalau urutannya berantakan, hasilnya bisa salah total.</p>
+  </div>
+</section>
+
+<section id="proyek">
+  <h2 class="kicker-h">Proyek Kalian</h2>
+  <h2>Saatnya Bikin Dashboard Sendiri!</h2>
+  <p>Sekarang kalian udah punya 4 "senjata" baru: IFERROR, INDEX+MATCH yang tahan perubahan tabel, teknik kolom bantu, dan VLOOKUP TRUE. Saatnya gabungin semuanya jadi satu "Dashboard Pencarian" keren buat Koperasi Sekolah!</p>
+  <figure>
+    <img src="images/img6_dashboard_mockup.png" alt="Dashboard Pencarian Koperasi">
+    <figcaption>Contoh Dashboard Pencarian yang jadi target proyek kalian hari ini</figcaption>
+  </figure>
+  <p>Idenya sederhana: cukup ketik kode barang di satu kotak, semua info (nama, kategori, harga) langsung muncul otomatis — dan kalau kodenya salah, muncul pesan yang jelas, bukan #N/A. Plus, ketik total belanja, diskonnya langsung kehitung sendiri!</p>
+  <div class="callout green">
+    <div class="ttl">🚀 Yuk, Coba Sendiri!</div>
+    <p>Buka file kerja LKPD "Dashboard Pencarian Koperasi Sekolah" dan kerjakan bareng kelompok kalian. Kerjakan 4 tantangan dulu, baru gabungkan semuanya di sheet Proyek Akhir. Selamat berkreasi!</p>
+  </div>
+</section>
+
+<section id="uji-diri">
+  <h2 class="kicker-h">Cek Pemahaman</h2>
+  <h2>Yuk, Uji Diri Kalian!</h2>
+  <p style="font-style:italic;color:var(--muted);">Coba jawab dulu tanpa buka catatan. Klik "Lihat Jawaban" kalau sudah yakin dengan jawaban kalian.</p>
+
+  <details><summary>1. Fungsi apa yang dipakai untuk mengganti tampilan error #N/A dengan pesan yang lebih ramah?</summary><div class="answer">IFERROR</div></details>
+  <details><summary>2. Kenapa VLOOKUP bisa jadi salah saat ada kolom baru disisipkan di tabel data?</summary><div class="answer">Karena VLOOKUP mengambil hasil berdasarkan NOMOR URUT kolom, yang ikut berubah saat ada kolom baru.</div></details>
+  <details><summary>3. Teknik apa yang dipakai supaya bisa mencari data berdasarkan DUA kriteria sekaligus?</summary><div class="answer">Teknik kolom bantu (helper column), menggabungkan dua kriteria dengan tanda &amp;</div></details>
+  <details><summary>4. Apa beda VLOOKUP dengan argumen FALSE dan TRUE?</summary><div class="answer">FALSE mencari nilai PERSIS sama (exact match); TRUE mencari nilai TERDEKAT di bawahnya (approximate match)</div></details>
+  <details><summary>5. Syarat apa yang wajib dipenuhi tabel referensi supaya VLOOKUP TRUE bekerja benar?</summary><div class="answer">Tabel harus diurutkan naik (ascending) dari kecil ke besar</div></details>
+</section>
+
+<section id="kamus">
+  <h2 class="kicker-h">Referensi Cepat</h2>
+  <h2>Kamus Kilat</h2>
+  <table class="glossary">
+    <tr><th>Istilah</th><th>Penjelasan</th></tr>
+    <tr><td>IFERROR</td><td>Fungsi yang menampilkan nilai/pesan alternatif kalau formula di dalamnya menghasilkan error.</td></tr>
+    <tr><td>#N/A</td><td>Kode error saat VLOOKUP/HLOOKUP/MATCH tidak menemukan data yang dicari.</td></tr>
+    <tr><td>Robustness</td><td>Ketahanan formula tetap benar walaupun struktur tabel berubah (misalnya ada kolom baru).</td></tr>
+    <tr><td>Kolom Bantu</td><td>Kolom tambahan berisi gabungan beberapa kriteria, dipakai supaya pencarian tetap bisa pakai satu kunci.</td></tr>
+    <tr><td>Approximate Match (TRUE)</td><td>Mode pencarian VLOOKUP yang mengambil nilai terdekat di bawah, dipakai untuk data bertingkat.</td></tr>
+    <tr><td>Exact Match (FALSE)</td><td>Mode pencarian yang hasilnya harus PERSIS sama dengan yang dicari.</td></tr>
+  </table>
+</section>
+
+</div>
+
+<footer>Materi Siswa &middot; Informatika Kelas VIII &middot; Bab I Analisis Data &middot; TP 1 &middot; Pertemuan 2</footer>
+<a class="back-top" href="#">&uarr;</a>
+
+</body>
+</html>

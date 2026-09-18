@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Yuk, Kenalan dengan List! — Materi TP3 Informatika Kelas VII</title>
+<style>
+  :root{
+    --navy:#1B2A4A; --blue:#2E6F9E; --teal:#2FA98C; --orange:#F2994A;
+    --red:#C0392B; --bg:#F7FAFC; --card:#FFFFFF; --text:#28313F; --muted:#5A6B7B;
+    --border:#E3EAF0;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:var(--bg); color:var(--text); line-height:1.65;
+  }
+  header.hero{
+    background:linear-gradient(135deg,var(--navy),#26406b 60%, var(--blue));
+    color:#fff; padding:48px 20px 64px; text-align:center;
+  }
+  header.hero .kicker{
+    text-transform:uppercase; letter-spacing:2px; font-size:13px; font-weight:700;
+    color:var(--orange); margin-bottom:10px;
+  }
+  header.hero h1{ font-size:clamp(28px,5vw,42px); margin:0 0 10px; }
+  header.hero p{ font-size:16px; color:#cfe0f2; max-width:640px; margin:0 auto; }
+
+  nav.tabbar{
+    position:sticky; top:0; z-index:50; background:#fff; border-bottom:1px solid var(--border);
+    box-shadow:0 2px 8px rgba(27,42,74,0.06);
+    display:flex; gap:4px; overflow-x:auto; padding:8px 12px; scrollbar-width:thin;
+  }
+  nav.tabbar a{
+    white-space:nowrap; text-decoration:none; color:var(--navy); font-size:13.5px; font-weight:600;
+    padding:8px 14px; border-radius:999px;
+  }
+  nav.tabbar a:hover{ background:#EEF3F8; }
+
+  main{ max-width:920px; margin:-32px auto 60px; padding:0 20px; }
+
+  section.card{
+    background:var(--card); border:1px solid var(--border); border-radius:16px;
+    padding:28px 30px; margin-bottom:22px; box-shadow:0 4px 18px rgba(27,42,74,0.05);
+  }
+  section.card h2{
+    color:var(--navy); font-size:22px; margin-top:0; padding-bottom:10px;
+    border-bottom:3px solid var(--navy); display:inline-block;
+  }
+  h3.sub{ color:var(--teal); font-size:17px; margin:22px 0 8px; }
+  img.fig{ max-width:100%; display:block; margin:18px auto; border-radius:10px; }
+  p.cap{ text-align:center; color:var(--muted); font-size:13.5px; font-style:italic; margin-top:-10px; }
+
+  .box{
+    background:#F2FAF7; border:1px solid #CDEBE0; border-radius:12px; padding:16px 20px;
+    margin:16px 0;
+  }
+  .box.orange{ background:#FEF5EC; border-color:#F8DDBB; }
+  .box h4{ margin:0 0 8px; color:var(--teal); font-size:15px; }
+  .box.orange h4{ color:var(--orange); }
+  .box ul{ margin:0; padding-left:20px; }
+  .box li{ margin-bottom:6px; }
+
+  ul.tick li{ margin-bottom:6px; }
+
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:680px){ .grid2{ grid-template-columns:1fr; } }
+
+  .stepnum{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:50%; background:var(--blue); color:#fff;
+    font-weight:700; font-size:13px; margin-right:8px; flex-shrink:0;
+  }
+  ol.steps{ list-style:none; padding:0; margin:0; }
+  ol.steps li{ display:flex; align-items:flex-start; margin-bottom:12px; }
+
+  details.quiz{
+    border:1px solid var(--border); border-radius:12px; padding:14px 18px; margin-bottom:14px;
+    background:#FCFDFE;
+  }
+  details.quiz summary{ font-weight:700; cursor:pointer; color:var(--navy); }
+  details.quiz .ans{ margin-top:10px; padding-top:10px; border-top:1px dashed var(--border); color:var(--muted); }
+
+  /* mini interactive quiz */
+  .mcq{ border:1px solid var(--border); border-radius:12px; padding:16px 18px; margin-bottom:16px; }
+  .mcq p.q{ font-weight:700; margin:0 0 10px; color:var(--navy); }
+  .mcq .opt{
+    display:block; width:100%; text-align:left; padding:10px 14px; margin-bottom:8px;
+    border:1.5px solid var(--border); border-radius:9px; background:#fff; cursor:pointer;
+    font-size:14.5px; color:var(--text); transition:all .15s;
+  }
+  .mcq .opt:hover{ border-color:var(--blue); }
+  .mcq .opt.correct{ background:#E7F8F0; border-color:var(--teal); color:#166a4c; font-weight:700; }
+  .mcq .opt.wrong{ background:#FCEBEA; border-color:var(--red); color:#a3271a; }
+  .mcq .fb{ font-size:13.5px; margin-top:6px; min-height:18px; color:var(--muted); }
+
+  .practice-input{
+    display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:12px;
+  }
+  .practice-input input{
+    padding:10px 14px; border:1.5px solid var(--border); border-radius:8px; font-size:15px;
+    flex:1; min-width:180px; text-transform:uppercase;
+  }
+  .practice-input button{
+    padding:10px 18px; border:none; border-radius:8px; background:var(--navy); color:#fff;
+    font-weight:700; cursor:pointer; font-size:14px;
+  }
+  .practice-input button:hover{ background:#28407a; }
+  .fb-result{ font-weight:700; margin-top:8px; min-height:20px; }
+  .fb-result.ok{ color:#166a4c; }
+  .fb-result.no{ color:#a3271a; }
+
+  table{ width:100%; border-collapse:collapse; margin:14px 0; font-size:14.5px; }
+  th, td{ border:1px solid var(--border); padding:9px 12px; text-align:left; }
+  th{ background:var(--navy); color:#fff; }
+  tr:nth-child(even){ background:#F7FAFC; }
+
+  footer{ text-align:center; padding:30px 20px 50px; color:var(--muted); font-size:13px; }
+
+  .badge{
+    display:inline-block; background:var(--orange); color:#fff; font-size:11.5px; font-weight:700;
+    padding:3px 10px; border-radius:999px; margin-left:8px; vertical-align:middle;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="kicker">Materi Belajar · Informatika Kelas VII</div>
+  <h1>Yuk, Kenalan dengan List!</h1>
+  <p>Bab 1 – Berpikir Komputasional untuk Penyelesaian Masalah · TP3 · Struktur Data List</p>
+</header>
+
+<nav class="tabbar">
+  <a href="#ngobrol">Ngobrol Dulu</a>
+  <a href="#struktur-data">Struktur Data</a>
+  <a href="#node">Anatomi Node</a>
+  <a href="#istilah">Istilah Penting</a>
+  <a href="#analogi">Analogi Kereta</a>
+  <a href="#array-list">List vs Array</a>
+  <a href="#praktik">Praktik Kartu</a>
+  <a href="#latihan">Latihan Interaktif</a>
+  <a href="#kuis">Kuis Cepat</a>
+  <a href="#rangkuman">Rangkuman</a>
+</nav>
+
+<main>
+
+  <section class="card" id="ngobrol">
+    <img class="fig" src="images/07_hero_list_rak_buku.png" alt="Ilustrasi rak buku sebagai analogi list" style="max-width:560px;">
+    <h2>Sebelum Mulai, Ngobrol Dulu Yuk</h2>
+    <p>Coba pikirkan sebentar: gimana caranya HP kamu nyimpen daftar kontak, atau gimana caranya aplikasi musik nyusun playlist favoritmu supaya lagu-lagunya muter berurutan? Nah, semua itu ada “dalang”-nya di balik layar: sebuah cara menyusun data yang disebut <strong>struktur data</strong>. Di TP3 ini, kita akan kenalan sama salah satu struktur data paling seru: <strong>LIST</strong> alias daftar berantai (<em>linked list</em>).</p>
+    <div class="box">
+      <h4>Tujuan belajar kita hari ini:</h4>
+      <ul>
+        <li>Paham apa itu struktur data list dan kenapa itu penting.</li>
+        <li>Kenal komponen-komponen list: node, data, pointer, head, tail.</li>
+        <li>Bisa menelusuri (traversal) sebuah list buat nemuin informasi tertentu.</li>
+        <li>Bisa kasih alasan yang masuk akal atas cara kamu menyelesaikan soal list.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card" id="struktur-data">
+    <h2>1. Struktur Data, Sebenarnya Apa Sih?</h2>
+    <p>Struktur data itu sebenarnya nggak seseram namanya, kok. Struktur data cuma cara kita <strong>menyimpan, mengambil, dan menyusun data</strong> supaya gampang dipakai. Ibaratnya, lemari pakaianmu juga punya “struktur”: baju digantung di satu sisi, kaos dilipat di rak lain, kaos kaki di laci khusus. Karena tersusun rapi, kamu bisa cepat nemuin barang yang kamu cari.</p>
+    <p>Komputer juga begitu. Data — angka, huruf, gambar, apa pun — perlu disusun dengan cara tertentu supaya komputer bisa mengakses dan mengolahnya dengan cepat dan tepat. Salah satu cara menyusun data itu namanya <strong>LIST</strong>.</p>
+  </section>
+
+  <section class="card" id="node">
+    <h2>2. Kenalan Sama List (Linked List)</h2>
+    <p>List adalah kumpulan elemen yang disusun berurutan, di mana setiap elemen “tahu” elemen berikutnya. Dalam ilmu komputer, tiap elemen ini disebut <strong>NODE</strong>. Yuk lihat “anatomi” satu node berikut ini:</p>
+    <img class="fig" src="images/01_anatomi_node.png" alt="Anatomi node: data dan pointer" style="max-width:520px;">
+    <p>Coba perhatikan, satu node itu punya dua bagian:</p>
+    <ul class="tick">
+      <li><strong>DATA (nilai)</strong> — isi sebenarnya yang mau disimpan, misalnya sebuah huruf, angka, atau nama.</li>
+      <li><strong>POINTER (penunjuk)</strong> — semacam “panah” yang menunjukkan node mana yang berikutnya dalam daftar.</li>
+    </ul>
+    <p>Nah, karena tiap node cuma nyimpan “alamat” node berikutnya (bukan seluruh isi), node-node ini nggak harus disimpan berdampingan. Mereka bisa tersebar, tapi tetap “nyambung” lewat pointer-nya masing-masing — mirip rantai!</p>
+  </section>
+
+  <section class="card" id="istilah">
+    <h2>3. Istilah-Istilah Penting</h2>
+    <div class="box">
+      <ul>
+        <li><strong>HEAD</strong> — node pertama dalam list. Ini “pintu masuk” kita untuk mulai menelusuri seluruh list.</li>
+        <li><strong>TAIL</strong> — node terakhir dalam list. Pointer-nya biasanya kosong (∅) karena tidak ada node lagi setelahnya.</li>
+        <li><strong>TRAVERSAL</strong> — proses “menelusuri” list, dimulai dari head, mengikuti pointer satu per satu, sampai ke tail.</li>
+      </ul>
+    </div>
+    <img class="fig" src="images/06_traversal_list.png" alt="Traversal list dari head ke tail">
+    <p class="cap">Menelusuri list itu seperti mengikuti jejak — satu langkah demi satu langkah, dari head sampai tail.</p>
+  </section>
+
+  <section class="card" id="analogi">
+    <h2>4. Biar Makin Kebayang: Analogi Gerbong Kereta</h2>
+    <p>Kalau masih agak bingung, coba bayangkan rangkaian gerbong kereta api. Lokomotif ada di depan (ini “head”-nya). Tiap gerbong tersambung ke gerbong berikutnya lewat kopling (nah, ini ibarat “pointer”-nya!). Gerbong paling belakang nggak tersambung ke gerbong lain lagi — itu “tail”-nya.</p>
+    <img class="fig" src="images/03_analogi_gerbong_kereta.png" alt="Analogi linked list sebagai rangkaian gerbong kereta">
+    <p>Kalau kamu penumpang dan mau tahu ada berapa gerbong dalam rangkaian itu, kamu harus jalan dari lokomotif, lewat gerbong 1, gerbong 2, dan seterusnya — satu per satu, nggak bisa loncat-loncat. Itulah kenapa menelusuri list harus dimulai dari head!</p>
+  </section>
+
+  <section class="card" id="array-list">
+    <h2>5. List vs Array, Apa Bedanya?</h2>
+    <p>Ada juga struktur data bernama <strong>ARRAY</strong> (larik). Bedanya apa dong sama list? Yuk bandingkan:</p>
+    <img class="fig" src="images/02_array_vs_linked_list.png" alt="Perbandingan array dan linked list">
+    <p>Singkatnya: array itu seperti kursi bioskop bernomor yang berjejer rapi — gampang dicari lewat nomor kursinya. List itu seperti rantai orang yang saling gandengan tangan — untuk sampai ke orang ke-5, kamu harus lewatin orang ke-1 sampai ke-4 dulu.</p>
+  </section>
+
+  <section class="card" id="praktik">
+    <h2>6. Ayo Praktik! Aktivitas “Kata Rahasia” <span class="badge">Kerja Kelompok</span></h2>
+    <p>Sekarang saatnya kamu buktikan sendiri pemahamanmu lewat permainan seru bareng kelompok. Nama aktivitasnya “Kata Rahasia” — kamu akan diberi satu set kartu yang sudah diacak oleh gurumu. Setiap kartu punya dua bagian: <strong>NILAI</strong> (huruf) dan <strong>PENUNJUK</strong> (huruf kartu berikutnya).</p>
+    <img class="fig" src="images/04_kartu_kata_rahasia_acak.png" alt="Kartu kata rahasia dalam keadaan acak">
+    <h3 class="sub">Langkah-langkahnya:</h3>
+    <ol class="steps">
+      <li><span class="stepnum">1</span> Amati semua kartu di kelompokmu. Jangan disusun dulu — cermati saja.</li>
+      <li><span class="stepnum">2</span> Cari kartu <strong>HEAD</strong>, yaitu kartu yang huruf nilainya TIDAK PERNAH muncul sebagai penunjuk di kartu lain.</li>
+      <li><span class="stepnum">3</span> Setelah ketemu head, cari kartu berikutnya: carilah kartu yang huruf NILAI-nya sama dengan huruf PENUNJUK di kartu head.</li>
+      <li><span class="stepnum">4</span> Ulangi terus langkah itu sampai kamu menemukan kartu dengan penunjuk ∅ (kosong) — itu tandanya kamu sudah sampai di tail!</li>
+      <li><span class="stepnum">5</span> Gabungkan semua huruf NILAI sesuai urutan yang kamu temukan. Itulah kata rahasianya!</li>
+    </ol>
+    <div class="box orange">
+      <h4>Tips dari kakak kelas:</h4>
+      <ul>
+        <li>Coba tandai kartu head dengan jarimu dulu sebelum mulai menelusuri, biar nggak lupa titik awalnya.</li>
+        <li>Kalau nyangkut di tengah jalan, coba cek lagi — mungkin ada kartu yang penunjuknya salah kamu baca.</li>
+        <li>Kerjasama itu kunci! Bagi tugas: ada yang pegang kartu, ada yang mencatat huruf yang sudah ditemukan.</li>
+      </ul>
+    </div>
+    <details class="quiz">
+      <summary>Sudah selesai menyusun? Klik di sini untuk cek jawabannya</summary>
+      <div class="ans">
+        <img class="fig" src="images/05_kartu_kata_rahasia_solusi.png" alt="Solusi kartu kata rahasia: KOMPUTER">
+      </div>
+    </details>
+  </section>
+
+  <section class="card" id="latihan">
+    <h2>7. Latihan Interaktif — Giliran Kamu Sendiri! <span class="badge">Mandiri</span></h2>
+    <p>Sekarang coba sendiri. Berikut satu set kartu kata rahasia baru yang sudah diacak. Telusuri dari head sampai tail, lalu ketik jawabanmu di kotak bawah ini.</p>
+    <img class="fig" src="images/08_kartu_sekolah_acak.png" alt="Kartu kata rahasia SEKOLAH dalam keadaan acak">
+    <div class="practice-input">
+      <input type="text" id="jawabanSekolah" placeholder="Ketik kata rahasia di sini...">
+      <button onclick="cekJawaban()">Cek Jawaban</button>
+    </div>
+    <div id="hasilCek" class="fb-result"></div>
+  </section>
+
+  <section class="card" id="kuis">
+    <h2>8. Kuis Dadakan — Cek Pemahamanmu! <span class="badge">Kuis</span></h2>
+    <p>Pilih salah satu jawaban pada tiap soal untuk melihat apakah jawabanmu tepat.</p>
+
+    <div class="mcq" data-correct="1">
+      <p class="q">1. Node pertama dalam sebuah linked list disebut...</p>
+      <button class="opt">Root</button>
+      <button class="opt">Head</button>
+      <button class="opt">Tail</button>
+      <button class="opt">Index</button>
+      <div class="fb"></div>
+    </div>
+
+    <div class="mcq" data-correct="2">
+      <p class="q">2. Ciri utama node terakhir (tail) dalam sebuah list adalah...</p>
+      <button class="opt">Nilainya paling besar</button>
+      <button class="opt">Selalu berada di awal daftar</button>
+      <button class="opt">Pointer-nya kosong / tidak menunjuk kemana pun</button>
+      <button class="opt">Memiliki dua pointer</button>
+      <div class="fb"></div>
+    </div>
+
+    <div class="mcq" data-correct="1">
+      <p class="q">3. Untuk mengetahui elemen ke-4 dalam sebuah linked list, kita harus...</p>
+      <button class="opt">Langsung meloncat ke elemen ke-4 seperti pada array</button>
+      <button class="opt">Menelusuri dari head, satu per satu, sampai elemen ke-4</button>
+      <button class="opt">Menelusuri dari tail secara terbalik</button>
+      <button class="opt">Menebak posisi elemen secara acak</button>
+      <div class="fb"></div>
+    </div>
+  </section>
+
+  <section class="card" id="rangkuman">
+    <h2>Rangkuman</h2>
+    <table>
+      <tr><th>Istilah</th><th>Penjelasan Singkat</th></tr>
+      <tr><td>Struktur data</td><td>Cara menyimpan, mengambil, dan menyusun data.</td></tr>
+      <tr><td>List (linked list)</td><td>Kumpulan node yang saling terhubung lewat pointer.</td></tr>
+      <tr><td>Node</td><td>Satu elemen dalam list, terdiri dari data (nilai) dan pointer (penunjuk).</td></tr>
+      <tr><td>Head</td><td>Node pertama dalam list.</td></tr>
+      <tr><td>Tail</td><td>Node terakhir dalam list (pointer-nya kosong/∅).</td></tr>
+      <tr><td>Traversal</td><td>Proses menelusuri list dari head sampai tail, satu per satu.</td></tr>
+    </table>
+
+    <h3 class="sub">Yuk, Refleksi Sebentar</h3>
+    <ul class="tick">
+      <li>Menurutmu, bagian mana dari materi hari ini yang paling gampang dipahami?</li>
+      <li>Bagian mana yang masih bikin kamu bingung? Coba tanyakan ke gurumu!</li>
+      <li>Kalau kamu harus menjelaskan apa itu “list” ke adik kelas dalam satu kalimat, kira-kira apa yang akan kamu katakan?</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>
+  Materi Siswa · Informatika Kelas VII · Bab 1 TP3 — Struktur Data List · SMP Negeri 14 Tarakan
+</footer>
+
+<script>
+  function cekJawaban(){
+    const val = document.getElementById('jawabanSekolah').value.trim().toUpperCase();
+    const hasil = document.getElementById('hasilCek');
+    if(val === 'SEKOLAH'){
+      hasil.textContent = '✅ Betul! Kata rahasianya adalah SEKOLAH. Kamu berhasil menelusuri list dengan tepat!';
+      hasil.className = 'fb-result ok';
+    } else if(val === ''){
+      hasil.textContent = 'Ketik dulu jawabanmu ya, baru klik "Cek Jawaban".';
+      hasil.className = 'fb-result no';
+    } else {
+      hasil.textContent = '❌ Belum tepat. Coba telusuri lagi mulai dari kartu HEAD (S), ikuti penunjuknya satu per satu ya!';
+      hasil.className = 'fb-result no';
+    }
+  }
+
+  document.querySelectorAll('.mcq').forEach(function(box){
+    const correctIdx = parseInt(box.dataset.correct, 10);
+    const opts = box.querySelectorAll('.opt');
+    const fb = box.querySelector('.fb');
+    opts.forEach(function(btn, idx){
+      btn.addEventListener('click', function(){
+        if(btn.classList.contains('correct') || btn.classList.contains('wrong')) return; // already answered
+        opts.forEach(function(b, i){
+          if(i === correctIdx) b.classList.add('correct');
+          else if (b === btn) b.classList.add('wrong');
+        });
+        if(idx === correctIdx){
+          fb.textContent = '✅ Tepat sekali!';
+          fb.style.color = '#166a4c';
+        } else {
+          fb.textContent = '❌ Belum tepat — jawaban yang benar sudah ditandai hijau.';
+          fb.style.color = '#a3271a';
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

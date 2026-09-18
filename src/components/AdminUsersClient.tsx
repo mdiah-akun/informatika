@@ -4,8 +4,11 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { compareRombel } from "@/lib/rombel";
 import { buildSiswaEmail } from "@/lib/siswa-account";
+import { getPageNumbers } from "@/lib/pagination";
 import type { Siswa } from "@/types/siswa";
-import { Loader2, Search, Trash2, KeyRound, X, Check, RefreshCw, Copy, UserPlus } from "lucide-react";
+import { Loader2, Search, Trash2, KeyRound, X, Check, RefreshCw, Copy, UserPlus, UserX, UserCheck } from "lucide-react";
+
+const PAGE_SIZE_OPTIONS = [10, 25, 50, 100];
 
 function generatePassword(): string {
   const chars = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789";
@@ -17,8 +20,10 @@ type ManagedUser = {
   email: string | null;
   nama: string;
   role: "admin" | "siswa";
+  kelas: string | null;
   created_at: string;
   last_sign_in_at: string | null;
+  banned: boolean;
 };
 
 type ImportResult = { nisn: string; nama: string; email: string | null; success: boolean; error: string | null };
@@ -257,6 +262,7 @@ export default function AdminUsersClient() {
   const [users, setUsers] = useState<ManagedUser[]>([]);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [search, setSearch] = useState("");
+  const [kelasFilter, setKelasFilter] = useState("semua");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
@@ -267,6 +273,11 @@ export default function AdminUsersClient() {
   const [resetSaving, setResetSaving] = useState(false);
   const [resetDone, setResetDone] = useState(false);
   const [showImportSiswa, setShowImportSiswa] = useState(false);
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [bulkBusy, setBulkBusy] = useState(false);
+  const [bulkDeleteConfirm, setBulkDeleteConfirm] = useState(false);
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(PAGE_SIZE_OPTIONS[0]);
 
   async function fetchUsers() {
     setLoading(true);
@@ -306,6 +317,23 @@ export default function AdminUsersClient() {
       return;
     }
     setUsers((prev) => prev.map((u) => (u.id === user.id ? { ...u, role } : u)));
+  }
+
+  async function handleToggleBanned(user: ManagedUser) {
+    setBusyId(user.id);
+    setError(null);
+    const res = await fetch(`/api/admin/users/${user.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ banned: !user.banned }),
+    });
+    const json = await res.json();
+    setBusyId(null);
+    if (!res.ok) {
+      setError(json.error ?? "Gagal mengubah status akun");
+      return;
+    }
+    setUsers((prev) => prev.map((u) => (u.id === user.id ? { ...u, banned: !user.banned } : u)));
   }
 
   function openResetPassword(user: ManagedUser) {
@@ -352,10 +380,71 @@ export default function AdminUsersClient() {
     setDeleteTarget(null);
   }
 
+  function toggleOne(id: string) {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
+
+  function toggleAll() {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (allSelected) {
+        selectableIds.forEach((id) => next.delete(id));
+      } else {
+        selectableIds.forEach((id) => next.add(id));
+      }
+      return next;
+    });
+  }
+
+  async function handleBulkDisable() {
+    const ids = [...selected];
+    setBulkBusy(true);
+    setError(null);
+    await Promise.all(
+      ids.map((id) =>
+        fetch(`/api/admin/users/${id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ banned: true }),
+        })
+      )
+    );
+    setUsers((prev) => prev.map((u) => (ids.includes(u.id) ? { ...u, banned: true } : u)));
+    setSelected(new Set());
+    setBulkBusy(false);
+  }
+
+  async function handleBulkDelete() {
+    const ids = [...selected];
+    setBulkBusy(true);
+    setError(null);
+    await Promise.all(ids.map((id) => fetch(`/api/admin/users/${id}`, { method: "DELETE" })));
+    setUsers((prev) => prev.filter((u) => !ids.includes(u.id)));
+    setSelected(new Set());
+    setBulkBusy(false);
+    setBulkDeleteConfirm(false);
+  }
+
+  const kelasOptions = [...new Set(users.map((u) => u.kelas).filter((k): k is string => !!k))].sort(compareRombel);
+
   const filtered = users.filter((u) => {
     const q = search.toLowerCase();
-    return (u.email ?? "").toLowerCase().includes(q) || u.nama.toLowerCase().includes(q);
+    const matchSearch = (u.email ?? "").toLowerCase().includes(q) || u.nama.toLowerCase().includes(q);
+    const matchKelas = kelasFilter === "semua" || u.kelas === kelasFilter;
+    return matchSearch && matchKelas;
   });
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+  const currentPage = Math.min(page, totalPages - 1);
+  const paginated = filtered.slice(currentPage * pageSize, currentPage * pageSize + pageSize);
+
+  const selectableIds = paginated.filter((u) => u.id !== currentUserId).map((u) => u.id);
+  const allSelected = selectableIds.length > 0 && selectableIds.every((id) => selected.has(id));
 
   return (
     <div>
@@ -381,24 +470,94 @@ export default function AdminUsersClient() {
         </p>
       )}
 
-      <div className="relative mb-4 max-w-xs">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 dark:text-slate-500" />
-        <input
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Cari nama atau email..."
-          className="w-full rounded-lg border border-slate-300 dark:border-slate-600 pl-9 pr-3 py-2 text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        />
+      <div className="flex items-center gap-3 mb-4">
+        <div className="relative max-w-xs w-full">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 dark:text-slate-500" />
+          <input
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setPage(0);
+            }}
+            placeholder="Cari nama atau email..."
+            className="w-full rounded-lg border border-slate-300 dark:border-slate-600 pl-9 pr-3 py-2 text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+        </div>
+        <select
+          value={kelasFilter}
+          onChange={(e) => {
+            setKelasFilter(e.target.value);
+            setPage(0);
+          }}
+          className="rounded-lg border border-slate-300 dark:border-slate-600 px-3 py-2 text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          <option value="semua">Semua Kelas</option>
+          {kelasOptions.map((k) => (
+            <option key={k} value={k}>
+              {k}
+            </option>
+          ))}
+        </select>
+        <select
+          value={pageSize}
+          onChange={(e) => {
+            setPageSize(Number(e.target.value));
+            setPage(0);
+          }}
+          className="rounded-lg border border-slate-300 dark:border-slate-600 px-3 py-2 text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          {PAGE_SIZE_OPTIONS.map((n) => (
+            <option key={n} value={n}>
+              {n} / halaman
+            </option>
+          ))}
+        </select>
       </div>
+
+      {selected.size > 0 && (
+        <div className="flex items-center justify-between gap-3 mb-4 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 px-4 py-2.5">
+          <span className="text-sm text-indigo-700 dark:text-indigo-400 font-medium">{selected.size} dipilih</span>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleBulkDisable}
+              disabled={bulkBusy}
+              className="inline-flex items-center gap-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 text-sm font-medium px-3 py-1.5 hover:bg-amber-50 dark:hover:bg-amber-500/10 hover:text-amber-600 dark:hover:text-amber-400 disabled:opacity-60"
+            >
+              {bulkBusy ? <Loader2 className="h-4 w-4 animate-spin" /> : <UserX className="h-4 w-4" />}
+              Disable
+            </button>
+            <button
+              onClick={() => setBulkDeleteConfirm(true)}
+              disabled={bulkBusy}
+              className="inline-flex items-center gap-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 text-sm font-medium px-3 py-1.5 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 disabled:opacity-60"
+            >
+              <Trash2 className="h-4 w-4" />
+              Hapus
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700/40 text-left text-slate-500 dark:text-slate-400">
+                <th className="px-4 py-3 w-8">
+                  <input
+                    type="checkbox"
+                    checked={allSelected}
+                    onChange={toggleAll}
+                    disabled={selectableIds.length === 0}
+                    className="accent-indigo-600"
+                  />
+                </th>
+                <th className="px-4 py-3 font-medium w-12">No</th>
                 <th className="px-4 py-3 font-medium">Nama</th>
                 <th className="px-4 py-3 font-medium">Email</th>
+                <th className="px-4 py-3 font-medium">Kelas</th>
                 <th className="px-4 py-3 font-medium">Role</th>
+                <th className="px-4 py-3 font-medium">Status</th>
                 <th className="px-4 py-3 font-medium">Terakhir Login</th>
                 <th className="px-4 py-3 font-medium text-right">Aksi</th>
               </tr>
@@ -406,28 +565,41 @@ export default function AdminUsersClient() {
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan={5} className="px-4 py-10 text-center text-slate-400 dark:text-slate-500">
+                  <td colSpan={9} className="px-4 py-10 text-center text-slate-400 dark:text-slate-500">
                     <Loader2 className="h-5 w-5 animate-spin mx-auto" />
                   </td>
                 </tr>
-              ) : filtered.length === 0 ? (
+              ) : paginated.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-4 py-10 text-center text-slate-400 dark:text-slate-500">
+                  <td colSpan={9} className="px-4 py-10 text-center text-slate-400 dark:text-slate-500">
                     {users.length === 0 ? "Belum ada user." : "Tidak ada user yang cocok."}
                   </td>
                 </tr>
               ) : (
-                filtered.map((u) => {
+                paginated.map((u, idx) => {
                   const isSelf = u.id === currentUserId;
                   return (
                     <tr
                       key={u.id}
                       className="border-b border-slate-100 dark:border-slate-700/60 last:border-0 hover:bg-slate-50/60 dark:hover:bg-slate-700"
                     >
+                      <td className="px-4 py-3">
+                        <input
+                          type="checkbox"
+                          checked={selected.has(u.id)}
+                          disabled={isSelf}
+                          onChange={() => toggleOne(u.id)}
+                          className="accent-indigo-600"
+                        />
+                      </td>
+                      <td className="px-4 py-3 text-slate-500 dark:text-slate-400">
+                        {currentPage * pageSize + idx + 1}
+                      </td>
                       <td className="px-4 py-3 font-medium text-slate-800 dark:text-slate-200">
                         {u.nama || "-"} {isSelf && <span className="text-xs text-slate-400">(Anda)</span>}
                       </td>
                       <td className="px-4 py-3 text-slate-600 dark:text-slate-300">{u.email}</td>
+                      <td className="px-4 py-3 text-slate-600 dark:text-slate-300">{u.kelas || "-"}</td>
                       <td className="px-4 py-3">
                         <select
                           value={u.role}
@@ -439,11 +611,34 @@ export default function AdminUsersClient() {
                           <option value="admin">Admin</option>
                         </select>
                       </td>
+                      <td className="px-4 py-3">
+                        <span
+                          className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${
+                            u.banned
+                              ? "bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400"
+                              : "bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                          }`}
+                        >
+                          {u.banned ? "Nonaktif" : "Aktif"}
+                        </span>
+                      </td>
                       <td className="px-4 py-3 text-slate-500 dark:text-slate-400 text-xs">
                         {u.last_sign_in_at ? new Date(u.last_sign_in_at).toLocaleString("id-ID") : "Belum pernah login"}
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center justify-end gap-1">
+                          <button
+                            onClick={() => handleToggleBanned(u)}
+                            disabled={isSelf || busyId === u.id}
+                            title={u.banned ? "Aktifkan" : "Nonaktifkan"}
+                            className={`p-2 rounded-lg text-slate-500 dark:text-slate-400 disabled:opacity-40 ${
+                              u.banned
+                                ? "hover:bg-emerald-50 dark:hover:bg-emerald-500/10 hover:text-emerald-600 dark:hover:text-emerald-400"
+                                : "hover:bg-amber-50 dark:hover:bg-amber-500/10 hover:text-amber-600 dark:hover:text-amber-400"
+                            }`}
+                          >
+                            {u.banned ? <UserCheck className="h-4 w-4" /> : <UserX className="h-4 w-4" />}
+                          </button>
                           <button
                             onClick={() => openResetPassword(u)}
                             disabled={busyId === u.id}
@@ -473,6 +668,51 @@ export default function AdminUsersClient() {
             </tbody>
           </table>
         </div>
+
+        {filtered.length > 0 && (
+          <div className="flex items-center justify-between px-4 py-3 border-t border-slate-200 dark:border-slate-700">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Halaman {currentPage + 1} dari {totalPages} &middot; {filtered.length} user
+            </p>
+            <nav className="flex items-center gap-1 text-sm">
+              <button
+                onClick={() => setPage((p) => Math.max(0, p - 1))}
+                disabled={currentPage === 0}
+                className="px-2 py-1 font-medium tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 disabled:opacity-40 disabled:hover:text-slate-500 dark:disabled:hover:text-slate-400"
+              >
+                PREVIOUS
+              </button>
+
+              {getPageNumbers(currentPage + 1, totalPages).map((p, i) =>
+                p === "..." ? (
+                  <span key={`ellipsis-${i}`} className="px-1.5 text-slate-400 dark:text-slate-500 select-none">
+                    ...
+                  </span>
+                ) : (
+                  <button
+                    key={p}
+                    onClick={() => setPage(p - 1)}
+                    className={`h-7 w-7 rounded-full text-sm font-medium transition-colors ${
+                      p === currentPage + 1
+                        ? "bg-indigo-600 text-white"
+                        : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
+                    }`}
+                  >
+                    {p}
+                  </button>
+                )
+              )}
+
+              <button
+                onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
+                disabled={currentPage >= totalPages - 1}
+                className="px-2 py-1 font-medium tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 disabled:opacity-40 disabled:hover:text-slate-500 dark:disabled:hover:text-slate-400"
+              >
+                NEXT
+              </button>
+            </nav>
+          </div>
+        )}
       </div>
 
       {showImportSiswa && (
@@ -480,6 +720,34 @@ export default function AdminUsersClient() {
           onCancel={() => setShowImportSiswa(false)}
           onDone={() => fetchUsers()}
         />
+      )}
+
+      {bulkDeleteConfirm && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50">
+          <div className="bg-white dark:bg-slate-800 rounded-xl p-6 max-w-sm w-full shadow-xl">
+            <h3 className="font-semibold text-slate-900 dark:text-slate-100 mb-1.5">Hapus {selected.size} user ini?</h3>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mb-5">
+              {selected.size} akun terpilih akan dihapus permanen dan tidak bisa login lagi.
+            </p>
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setBulkDeleteConfirm(false)}
+                disabled={bulkBusy}
+                className="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-60"
+              >
+                Batal
+              </button>
+              <button
+                onClick={handleBulkDelete}
+                disabled={bulkBusy}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-red-600 text-white hover:bg-red-700 disabled:opacity-60"
+              >
+                {bulkBusy && <Loader2 className="h-4 w-4 animate-spin" />}
+                Hapus
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       {deleteTarget && (

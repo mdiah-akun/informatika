@@ -1,0 +1,400 @@
+<title>Trace Pseudocode SJF</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --bg:#EEF3F8;
+    --surface:#FFFFFF;
+    --surface-2:#F5F8FB;
+    --ink:#15243A;
+    --muted:#5C6E82;
+    --border:#DCE5EE;
+    --accent:#238F86;
+    --accent-soft:#E4F4F2;
+    --amber:#B4720A;
+    --amber-soft:#FBF0DC;
+    --green:#2F8F55;
+    --green-soft:#E5F5EA;
+    --shadow: 0 1px 2px rgba(21,36,58,.06), 0 8px 24px rgba(21,36,58,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0B121C;
+      --surface:#141D2C;
+      --surface-2:#1A2436;
+      --ink:#E8EEF5;
+      --muted:#93A6B9;
+      --border:#243247;
+      --accent:#3FBDB0;
+      --accent-soft:#16332F;
+      --amber:#F2A93B;
+      --amber-soft:#2E2410;
+      --green:#57C081;
+      --green-soft:#153524;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0B121C;
+    --surface:#141D2C;
+    --surface-2:#1A2436;
+    --ink:#E8EEF5;
+    --muted:#93A6B9;
+    --border:#243247;
+    --accent:#3FBDB0;
+    --accent-soft:#16332F;
+    --amber:#F2A93B;
+    --amber-soft:#2E2410;
+    --green:#57C081;
+    --green-soft:#153524;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px rgba(0,0,0,.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ height:100%; }
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'IBM Plex Sans', system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+    padding-bottom:104px; /* room for sticky footer */
+  }
+  .num{ font-family:'IBM Plex Mono', ui-monospace, Menlo, monospace; font-variant-numeric:tabular-nums; }
+
+  header.top{
+    padding:28px clamp(16px,4vw,48px) 8px;
+    display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:14px;
+  }
+  header.top .eyebrow{
+    font-size:.72rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--accent);
+    margin:0 0 6px;
+  }
+  header.top h1{
+    margin:0; font-size:clamp(1.4rem,2.6vw,1.9rem); font-weight:700; letter-spacing:-.01em;
+    text-wrap:balance;
+  }
+  header.top p.sub{ margin:6px 0 0; color:var(--muted); font-size:.95rem; max-width:52ch; }
+  .step-pill{
+    background:var(--surface); border:1px solid var(--border); border-radius:999px;
+    padding:8px 16px; font-size:.85rem; color:var(--muted); box-shadow:var(--shadow);
+    white-space:nowrap;
+  }
+  .step-pill b{ color:var(--ink); font-family:'IBM Plex Mono',monospace; }
+
+  main{
+    padding:10px clamp(16px,4vw,48px) 0;
+    display:grid; grid-template-columns: minmax(0,1.2fr) minmax(0,.8fr); gap:20px;
+    max-width:1180px; margin:0 auto;
+  }
+  @media (max-width:860px){ main{ grid-template-columns:1fr; } }
+
+  section.panel{
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    box-shadow:var(--shadow); overflow:hidden; display:flex; flex-direction:column;
+  }
+  .panel-head{
+    padding:12px 18px; border-bottom:1px solid var(--border);
+    display:flex; align-items:center; gap:8px;
+  }
+  .panel-head .dot{ width:9px; height:9px; border-radius:50%; }
+  .panel-head span{ font-size:.78rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+
+  /* ---- Console (pseudocode) — deliberately fixed-dark, like a real code editor ---- */
+  .console{ background:#1C2534; color:#DCE6F0; }
+  .console .panel-head{ border-bottom:1px solid #2A374C; }
+  .console .panel-head .dot{ background:#4FD1C5; }
+  .console .panel-head span{ color:#8CA0B8; }
+  .console-body{ padding:18px 6px; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:.88rem; line-height:1.95; overflow-x:auto; }
+  .code-line{
+    display:flex; gap:12px; padding:2px 16px; border-left:3px solid transparent; border-radius:4px;
+    white-space:pre-wrap; word-break:break-word; transition:background .25s ease, border-color .25s ease;
+  }
+  .code-line .ln{ color:#5B6C82; width:1.4em; text-align:right; user-select:none; flex:none; }
+  .code-line .kw{ color:#F2A93B; font-weight:600; }
+  .code-line .fn{ color:#4FD1C5; }
+  .code-line .indent{ padding-left:2em; }
+  .code-line.active{ background:#2E3B52; border-left-color:#F2A93B; }
+  .code-line.active .ln{ color:#F2A93B; }
+  .code-line.dim{ opacity:.42; }
+
+  /* ---- State panel ---- */
+  .state-body{ padding:18px; display:flex; flex-direction:column; gap:18px; }
+  .field-label{ font-size:.72rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin:0 0 9px; }
+
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    font-family:'IBM Plex Mono',monospace; font-size:.92rem; font-weight:500;
+    padding:7px 12px; border-radius:9px; border:1.5px solid var(--border); background:var(--surface-2); color:var(--ink);
+    transition: all .3s ease; display:flex; align-items:baseline; gap:5px;
+  }
+  .chip .d{ color:var(--muted); font-size:.82em; }
+  .chip.active{ border-color:var(--amber); background:var(--amber-soft); color:var(--ink); transform:translateY(-2px); box-shadow:0 4px 10px rgba(180,114,10,.18); }
+  .chip.done{ border-color:var(--green); background:var(--green-soft); color:var(--ink); }
+  .chip.done::before{ content:"✓ "; color:var(--green); font-weight:700; }
+
+  .waktu-tile{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:16px 20px;
+  }
+  .waktu-tile .label{ font-size:.85rem; color:var(--muted); }
+  .waktu-tile .label code{ font-family:'IBM Plex Mono',monospace; background:transparent; }
+  .waktu-tile .value{ font-family:'IBM Plex Mono',monospace; font-size:2.1rem; font-weight:600; color:var(--accent); font-variant-numeric:tabular-nums; }
+  .waktu-tile .value .unit{ font-size:1rem; font-weight:500; color:var(--muted); margin-left:3px; }
+
+  table.output{ width:100%; border-collapse:collapse; font-size:.92rem; }
+  table.output th{
+    text-align:left; font-size:.72rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--muted); padding:0 10px 8px; border-bottom:1px solid var(--border);
+  }
+  table.output td{ padding:9px 10px; border-bottom:1px solid var(--border); }
+  table.output td.t{ font-family:'IBM Plex Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-weight:600; }
+  table.output tbody tr:last-child td{ border-bottom:none; }
+  table.output tbody tr{ animation: rowIn .35s ease both; }
+  @media (prefers-reduced-motion: reduce){ table.output tbody tr{ animation:none; } }
+  @keyframes rowIn{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:translateY(0);} }
+  .output-empty{ color:var(--muted); font-size:.88rem; padding:6px 10px; }
+
+  /* ---- Narrative banner ---- */
+  .narrative{
+    max-width:1180px; margin:18px auto 0; padding:0 clamp(16px,4vw,48px);
+  }
+  .narrative-inner{
+    background:var(--accent-soft); border:1px solid var(--border); border-radius:14px;
+    padding:18px 22px; display:flex; gap:14px; align-items:flex-start;
+    box-shadow:var(--shadow);
+  }
+  .narrative-inner .mark{
+    font-family:'IBM Plex Mono',monospace; font-weight:700; color:var(--accent);
+    background:var(--surface); border:1px solid var(--border); border-radius:8px;
+    width:34px; height:34px; display:flex; align-items:center; justify-content:center; flex:none; font-size:.85rem;
+  }
+  .narrative-inner p{ margin:0; font-size:1.02rem; line-height:1.55; color:var(--ink); }
+
+  /* ---- Footer controls ---- */
+  footer.controls{
+    position:sticky; bottom:0; left:0; right:0; z-index:5;
+    background:var(--surface); border-top:1px solid var(--border);
+    box-shadow:0 -8px 24px rgba(21,36,58,.08);
+  }
+  .controls-inner{
+    max-width:1180px; margin:0 auto; padding:14px clamp(16px,4vw,48px);
+    display:flex; align-items:center; gap:12px;
+  }
+  .btn{
+    font-family:inherit; font-size:.95rem; font-weight:600; cursor:pointer;
+    border-radius:10px; padding:11px 20px; border:1.5px solid var(--border); background:var(--surface); color:var(--ink);
+    display:flex; align-items:center; gap:8px; transition: transform .12s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn:hover:not(:disabled){ border-color:var(--accent); }
+  .btn:active:not(:disabled){ transform:scale(.97); }
+  .btn:disabled{ opacity:.4; cursor:not-allowed; }
+  .btn.primary{ background:var(--accent); border-color:var(--accent); color:#fff; }
+  .btn.primary:hover:not(:disabled){ filter:brightness(1.06); }
+  .btn.ghost{ background:transparent; }
+  .btn:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .spacer{ flex:1; }
+  .dots{ display:flex; gap:5px; }
+  .dots span{ width:6px; height:6px; border-radius:50%; background:var(--border); }
+  .dots span.on{ background:var(--accent); }
+  .step-count{ font-family:'IBM Plex Mono',monospace; font-size:.82rem; color:var(--muted); white-space:nowrap; }
+
+  @media (max-width:560px){
+    .controls-inner{ flex-wrap:wrap; }
+    .dots{ display:none; }
+    .waktu-tile .value{ font-size:1.7rem; }
+  }
+</style>
+
+<header class="top">
+  <div>
+    <p class="eyebrow">Bab 1 · Berpikir Komputasional — Alat Bantu Kelas</p>
+    <h1>Trace Pseudocode: Strategi SJF</h1>
+    <p class="sub">Jalankan pseudocode ini baris demi baris di depan kelas. Setiap klik "Langkah Berikutnya" menjalankan satu langkah kecil — sama seperti komputer memprosesnya.</p>
+  </div>
+  <div class="step-pill">Langkah <b id="stepNow">0</b> / <b id="stepMax">0</b></div>
+</header>
+
+<main>
+  <section class="panel console">
+    <div class="panel-head"><span class="dot"></span><span>Pseudocode</span></div>
+    <div class="console-body" id="codeBody"></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><span class="dot" style="background:var(--accent)"></span><span>Keadaan Program</span></div>
+    <div class="state-body">
+      <div>
+        <p class="field-label">daftar_pekerjaan</p>
+        <div class="chips" id="chips"></div>
+      </div>
+      <div class="waktu-tile">
+        <span class="label"><code>waktu</code></span>
+        <span class="value" id="waktuVal">—<span class="unit"></span></span>
+      </div>
+      <div>
+        <p class="field-label">Hasil CETAK (terurut waktu selesai)</p>
+        <table class="output">
+          <thead><tr><th>Pekerjaan</th><th>Selesai pada menit ke-</th></tr></thead>
+          <tbody id="outBody"></tbody>
+        </table>
+        <p class="output-empty" id="outEmpty">Belum ada hasil dicetak.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="narrative">
+  <div class="narrative-inner">
+    <span class="mark">▸</span>
+    <p id="narrativeText"></p>
+  </div>
+</div>
+
+<footer class="controls">
+  <div class="controls-inner">
+    <button class="btn ghost" id="btnReset" title="Ulangi dari awal">↺ Ulangi</button>
+    <button class="btn" id="btnPrev">← Sebelumnya</button>
+    <button class="btn primary" id="btnNext">Langkah Berikutnya →</button>
+    <span class="spacer"></span>
+    <span class="step-count" id="stepCountLabel"></span>
+    <div class="dots" id="dots"></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // ---- Pseudocode source (matches the classroom material) ----
+  var CODE = [
+    { t: [{k:'kw',v:'MULAI'}] },
+    { t: [{k:'fn',v:'INPUT'},{k:'x',v:' daftar_pekerjaan (nama, durasi)'}] },
+    { t: [{k:'fn',v:'URUTKAN'},{k:'x',v:' daftar_pekerjaan berdasarkan durasi (menaik)'}] },
+    { t: [{k:'x',v:'waktu <- 0'}] },
+    { t: [{k:'kw',v:'UNTUK'},{k:'x',v:' setiap pekerjaan '},{k:'kw',v:'DALAM'},{k:'x',v:' daftar_pekerjaan terurut:'}] },
+    { t: [{k:'x',v:'waktu <- waktu + durasi_pekerjaan'}], indent:true },
+    { t: [{k:'fn',v:'CETAK'},{k:'x',v:' nama_pekerjaan, "selesai pada menit ke-", waktu'}], indent:true },
+    { t: [{k:'kw',v:'SELESAI'}] },
+  ];
+
+  // ---- Data: 5 pekerjaan (sama seperti contoh Kegiatan A di kelas) ----
+  var dataAwal = [ {n:'A',d:8}, {n:'B',d:5}, {n:'C',d:12}, {n:'D',d:3}, {n:'E',d:7} ];
+  var dataUrut = dataAwal.slice().sort(function(a,b){ return a.d - b.d; });
+
+  // ---- Build the step list programmatically from the same trace logic ----
+  var steps = [];
+  steps.push({ line:-1, narrative:'Ini pseudocode SJF yang sudah kita bedah bersama. Data awal: 5 pekerjaan dengan durasi masing-masing, belum diurutkan. Klik "Langkah Berikutnya" untuk mulai menjalankannya.', order:dataAwal, waktu:null, output:[], active:-1 });
+  steps.push({ line:0, narrative:'Program dimulai.', order:dataAwal, waktu:null, output:[], active:-1 });
+  steps.push({ line:1, narrative:'Data 5 pekerjaan dimasukkan: A(8\'), B(5\'), C(12\'), D(3\'), E(7\').', order:dataAwal, waktu:null, output:[], active:-1 });
+  steps.push({ line:2, narrative:'Data diurutkan dari durasi TERPENDEK ke terpanjang — inilah yang membuat strategi ini disebut SJF (Shortest Job First).', order:dataUrut, waktu:null, output:[], active:-1 });
+  steps.push({ line:3, narrative:'Variabel "waktu" disiapkan dan diisi 0 — ini penghitung waktu berjalan.', order:dataUrut, waktu:0, output:[], active:-1 });
+
+  var waktu = 0, output = [];
+  dataUrut.forEach(function(job, i){
+    steps.push({ line:4, narrative:(i===0 ? 'Perulangan dimulai — ' : 'Perulangan kembali ke atas — ') + 'program memproses pekerjaan berikutnya: ' + job.n + '.', order:dataUrut, waktu:waktu, output:output.slice(), active:i });
+    var before = waktu;
+    waktu += job.d;
+    steps.push({ line:5, narrative:'Pekerjaan ' + job.n + ': waktu ← ' + before + ' + ' + job.d + ' = ' + waktu + '.', order:dataUrut, waktu:waktu, output:output.slice(), active:i });
+    output.push({ n: job.n, t: waktu });
+    steps.push({ line:6, narrative:'Dicetak: "' + job.n + ' selesai pada menit ke-' + waktu + '".', order:dataUrut, waktu:waktu, output:output.slice(), active:i });
+  });
+  steps.push({ line:4, narrative:'Semua pekerjaan sudah diproses — tidak ada lagi yang tersisa dalam daftar, jadi perulangan berhenti.', order:dataUrut, waktu:waktu, output:output.slice(), active:-1 });
+  steps.push({ line:7, narrative:'Program selesai! Semua 5 pekerjaan sudah dijadwalkan memakai SJF — urutan dan waktunya sama persis dengan perhitungan manual kalian di kelas.', order:dataUrut, waktu:waktu, output:output.slice(), active:-1 });
+
+  // ---- Render ----
+  var codeBody = document.getElementById('codeBody');
+  CODE.forEach(function(row, i){
+    var div = document.createElement('div');
+    div.className = 'code-line' + (row.indent ? ' indent' : '');
+    div.id = 'line-' + i;
+    var ln = document.createElement('span'); ln.className='ln'; ln.textContent = i+1;
+    div.appendChild(ln);
+    var span = document.createElement('span');
+    row.t.forEach(function(part){
+      var s = document.createElement('span');
+      if(part.k==='kw') s.className='kw'; else if(part.k==='fn') s.className='fn';
+      s.textContent = part.v;
+      span.appendChild(s);
+    });
+    div.appendChild(span);
+    codeBody.appendChild(div);
+  });
+
+  var dotsWrap = document.getElementById('dots');
+  steps.forEach(function(_, i){
+    var d = document.createElement('span'); d.id = 'dot-'+i; dotsWrap.appendChild(d);
+  });
+
+  var idx = 0;
+  var elStepNow = document.getElementById('stepNow');
+  var elStepMax = document.getElementById('stepMax');
+  var elStepCount = document.getElementById('stepCountLabel');
+  var elNarrative = document.getElementById('narrativeText');
+  var elChips = document.getElementById('chips');
+  var elWaktu = document.getElementById('waktuVal');
+  var elOutBody = document.getElementById('outBody');
+  var elOutEmpty = document.getElementById('outEmpty');
+  var btnPrev = document.getElementById('btnPrev');
+  var btnNext = document.getElementById('btnNext');
+  var btnReset = document.getElementById('btnReset');
+  elStepMax.textContent = steps.length - 1;
+
+  function render(){
+    var s = steps[idx];
+
+    // pseudocode highlight
+    CODE.forEach(function(_, i){
+      var el = document.getElementById('line-'+i);
+      el.classList.toggle('active', s.line === i);
+    });
+
+    // chips
+    elChips.innerHTML = '';
+    s.order.forEach(function(job, i){
+      var chip = document.createElement('span');
+      var isDone = s.output.some(function(o){ return o.n === job.n; });
+      var isActive = s.active === i;
+      chip.className = 'chip' + (isActive ? ' active' : '') + (isDone ? ' done' : '');
+      chip.innerHTML = job.n + ' <span class="d">' + job.d + "'</span>";
+      elChips.appendChild(chip);
+    });
+
+    // waktu
+    if(s.waktu === null){ elWaktu.innerHTML = '—'; }
+    else { elWaktu.innerHTML = s.waktu + '<span class="unit">menit</span>'; }
+
+    // output table
+    elOutBody.innerHTML = '';
+    if(s.output.length === 0){ elOutEmpty.style.display='block'; }
+    else {
+      elOutEmpty.style.display='none';
+      s.output.forEach(function(row){
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td>' + row.n + '</td><td class="t">' + row.t + '</td>';
+        elOutBody.appendChild(tr);
+      });
+    }
+
+    // narrative + step counters
+    elNarrative.textContent = s.narrative;
+    elStepNow.textContent = idx;
+    elStepCount.textContent = 'Langkah ' + idx + ' dari ' + (steps.length - 1);
+    steps.forEach(function(_, i){ document.getElementById('dot-'+i).classList.toggle('on', i===idx); });
+
+    btnPrev.disabled = idx === 0;
+    btnNext.disabled = idx === steps.length - 1;
+    btnNext.textContent = idx === steps.length - 1 ? 'Selesai ✓' : 'Langkah Berikutnya →';
+  }
+
+  function next(){ if(idx < steps.length-1){ idx++; render(); } }
+  function prev(){ if(idx > 0){ idx--; render(); } }
+  function reset(){ idx = 0; render(); }
+
+  btnNext.addEventListener('click', next);
+  btnPrev.addEventListener('click', prev);
+  btnReset.addEventListener('click', reset);
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'ArrowRight' || e.key === ' '){ e.preventDefault(); next(); }
+    else if(e.key === 'ArrowLeft'){ e.preventDefault(); prev(); }
+    else if(e.key === 'r' || e.key === 'R'){ reset(); }
+  });
+
+  render();
+})();
+</script>

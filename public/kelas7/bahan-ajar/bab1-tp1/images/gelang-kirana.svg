@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="440" viewBox="0 0 440 440" role="img" aria-label="Ilustrasi gelang manik-manik melingkar berisi manik merah, kuning, dan hijau">
+  <defs>
+    <linearGradient id="braceletBand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#EFEBFF"/><stop offset="100%" stop-color="#D9D2FF"/>
+    </linearGradient>
+  </defs>
+  <circle cx="220" cy="220" r="150" fill="none" stroke="url(#braceletBand)" stroke-width="14"/>
+  <circle cx="220.0" cy="70.0" r="21" fill="#E63946" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="281.0" cy="83.0" r="21" fill="#FFC53D" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="331.5" cy="119.6" r="21" fill="#E63946" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="362.7" cy="173.6" r="21" fill="#FFC53D" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="369.2" cy="235.7" r="21" fill="#E63946" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="349.9" cy="295.0" r="21" fill="#2DBE6C" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="308.2" cy="341.4" r="21" fill="#E63946" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="251.2" cy="366.7" r="21" fill="#FFC53D" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="188.8" cy="366.7" r="21" fill="#E63946" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="131.8" cy="341.4" r="21" fill="#2DBE6C" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="90.1" cy="295.0" r="21" fill="#E63946" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="70.8" cy="235.7" r="21" fill="#FFC53D" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="77.3" cy="173.6" r="21" fill="#E63946" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="108.5" cy="119.6" r="21" fill="#2DBE6C" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="159.0" cy="83.0" r="21" fill="#E63946" stroke="#ffffff" stroke-width="3"/>
+</svg>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Optimasi Penjadwalan — Lanjutan (Pertemuan 2) — Materi Siswa Kelas VII</title>
+<style>
+  :root{
+    --navy:#1E3A5F; --blue:#2E86AB; --teal:#3AAFA9; --amber:#F5A623;
+    --coral:#E76F51; --green:#5FAD56; --ink:#22313F; --bg:#F7F9FB; --red:#D64545;
+    --card:#FFFFFF; --muted:#5B6B79; --border:#E3EAF0;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:'Segoe UI', Calibri, Arial, sans-serif; background:var(--bg); color:var(--ink);
+    line-height:1.65;
+  }
+  header.hero{
+    background:linear-gradient(135deg,var(--navy) 0%,#254a73 100%);
+    color:#fff; padding:56px 8vw 64px; position:relative; overflow:hidden;
+  }
+  header.hero::before{
+    content:""; position:absolute; top:-80px; right:-80px; width:260px; height:260px;
+    border-radius:50%; background:rgba(255,255,255,0.06);
+  }
+  .badge{
+    display:inline-block; background:var(--amber); color:var(--navy); font-weight:700;
+    font-size:.8rem; letter-spacing:.04em; padding:6px 16px; border-radius:20px; margin-bottom:18px;
+  }
+  header.hero h1{ font-size:2.4rem; margin:0 0 12px; }
+  header.hero p{ font-size:1.05rem; max-width:640px; color:#CFE8E6; margin:0 0 6px;}
+  nav.toc{
+    max-width:1000px; margin:-32px auto 0; background:var(--card); border-radius:14px;
+    box-shadow:0 10px 30px rgba(20,40,60,0.12); padding:18px 24px; position:relative; z-index:2;
+    display:flex; flex-wrap:wrap; gap:8px 18px; justify-content:center;
+  }
+  nav.toc a{
+    color:var(--blue); text-decoration:none; font-size:.92rem; font-weight:600; padding:6px 4px;
+  }
+  nav.toc a:hover{ text-decoration:underline; }
+  main{ max-width:960px; margin:64px auto 0; padding:0 6vw 40px; }
+  section{ margin-bottom:56px; scroll-margin-top:24px; }
+  h2{ color:var(--navy); font-size:1.7rem; border-bottom:3px solid var(--border); padding-bottom:10px; }
+  h3{ color:var(--blue); font-size:1.2rem; margin-top:28px; }
+  .lead{ font-size:1.08rem; color:var(--ink); }
+  figure{ margin:24px 0; text-align:center; }
+  figure img{ max-width:100%; border-radius:10px; box-shadow:0 6px 18px rgba(20,40,60,.10); }
+  figcaption{ font-size:.88rem; color:var(--muted); font-style:italic; margin-top:8px; }
+  .callout{
+    border-left:6px solid var(--teal); background:#EAF6F5; border-radius:8px; padding:16px 20px;
+    margin:20px 0; font-size:.98rem;
+  }
+  .callout.amber{ border-color:var(--amber); background:#FDF3E3; }
+  .callout.green{ border-color:var(--green); background:#EEF7EE; }
+  .callout.coral{ border-color:var(--coral); background:#FBEBE6; }
+  .grid6{ display:grid; grid-template-columns:repeat(6,1fr); gap:10px; margin:20px 0; }
+  .bucket{
+    background:var(--card); border:2px solid var(--border); border-radius:10px; padding:12px 6px;
+    text-align:center; font-weight:700; position:relative;
+  }
+  .bucket .t{ font-size:1.05rem; display:block; }
+  .bucket .prio{
+    position:absolute; top:-10px; right:-6px; width:22px; height:22px; border-radius:50%;
+    color:#fff; font-size:.72rem; display:flex; align-items:center; justify-content:center;
+  }
+  .bucket.v{border-color:var(--green); color:var(--green);}
+  .bucket.w{border-color:#8E7CC3; color:#8E7CC3;}
+  .bucket.x{border-color:var(--coral); color:var(--coral);}
+  .bucket.y{border-color:var(--teal); color:var(--teal);}
+  .bucket.z{border-color:var(--amber); color:var(--amber);}
+  .bucket.k{border-color:var(--blue); color:var(--blue);}
+  .prio-legend{ display:flex; gap:18px; flex-wrap:wrap; font-size:.85rem; margin:10px 0 0; color:var(--muted); }
+  .prio-legend span{ display:inline-flex; align-items:center; gap:6px; }
+  .dot{ width:16px; height:16px; border-radius:50%; display:inline-block; }
+  .cards4{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin:22px 0; }
+  .card{
+    background:var(--card); border-radius:12px; padding:20px; box-shadow:0 4px 14px rgba(20,40,60,.08);
+    text-align:center;
+  }
+  .card .emoji{ font-size:2.1rem; }
+  .card h4{ margin:10px 0 6px; color:var(--navy); }
+  .card p{ font-size:.88rem; color:var(--muted); margin:0; }
+  details.challenge{
+    background:#FFF9EF; border:2px dashed var(--amber); border-radius:10px; padding:16px 20px; margin:22px 0;
+  }
+  details.challenge summary{ cursor:pointer; font-weight:700; color:var(--navy); font-size:1.02rem; }
+  details.challenge .answer{ margin-top:14px; padding-top:14px; border-top:1px dashed #E0C892; }
+  ol.reflect li, ul.plain li{ margin-bottom:10px; }
+  .quiz-box{
+    background:var(--card); border:2px solid var(--border); border-radius:12px; padding:22px 24px; margin:20px 0;
+  }
+  .quiz-box .opt{
+    display:block; background:#F3F6F9; border-radius:8px; padding:10px 14px; margin:8px 0; cursor:pointer;
+    border:2px solid transparent; transition:.15s;
+  }
+  .quiz-box .opt:hover{ border-color:var(--blue); }
+  .quiz-box .opt.correct{ background:#E3F5E6; border-color:var(--green); font-weight:700; }
+  .quiz-box .opt.wrong{ background:#FBE7E4; border-color:var(--coral); }
+  .quiz-box .feedback{ margin-top:10px; font-weight:600; min-height:1.2em; }
+  .code-box{
+    background:#2B3A55; color:#E8EEF3; border-radius:12px; padding:20px 24px; margin:22px 0;
+    font-family:'Consolas','Courier New',monospace; font-size:.92rem; overflow-x:auto; line-height:1.9;
+  }
+  .code-box .kw{ color:var(--amber); font-weight:700; }
+  .code-box .fn{ color:#8FE3C8; }
+  footer{
+    background:var(--navy); color:#CFE8E6; text-align:center; padding:28px 6vw; font-size:.85rem;
+  }
+  .checklist{ list-style:none; padding:0; }
+  .checklist li{ padding-left:30px; position:relative; margin-bottom:10px; }
+  .checklist li::before{ content:"✓"; position:absolute; left:0; color:var(--green); font-weight:900; }
+  table.rr{ width:100%; border-collapse:collapse; margin:20px 0; font-size:.92rem; }
+  table.rr th, table.rr td{ border:1px solid var(--border); padding:8px 10px; text-align:center; }
+  table.rr th{ background:var(--navy); color:#fff; }
+  table.rr tr:nth-child(even){ background:#F1F5F8; }
+  @media (max-width:640px){
+    .grid6{ grid-template-columns:repeat(3,1fr);}
+    header.hero h1{ font-size:1.7rem; }
+    table.rr{ font-size:.78rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="badge">BAB 1 · BERPIKIR KOMPUTASIONAL · PERTEMUAN 2</span>
+  <h1>Optimasi Penjadwalan — Lanjutan</h1>
+  <p>Materi siswa Kelas VII — SMP Negeri 14 Tarakan</p>
+  <p>Siap naik level? Kali ini kita ketemu ember darurat, 3 keran sekaligus, isu keadilan, dan belajar "ngomong" kayak komputer lewat pseudocode!</p>
+</header>
+
+<nav class="toc">
+  <a href="#recap">🔁 Recap Kilat</a>
+  <a href="#priority">🚨 Priority Scheduling</a>
+  <a href="#tiga-keran">🚰 3 Keran Paralel</a>
+  <a href="#keadilan">⚖️ Round Robin & Keadilan</a>
+  <a href="#pseudocode">💻 Pseudocode</a>
+  <a href="#dunia-nyata">🌍 Dunia Nyata</a>
+  <a href="#kuis">⚡ Kuis Cepat</a>
+  <a href="#rangkuman">📝 Rangkuman</a>
+  <a href="#renungkan">💭 Renungkan</a>
+</nav>
+
+<main>
+
+  <section id="recap">
+    <h2>🔁 Sebelum Lanjut, Ingat Lagi Yuk!</h2>
+    <p class="lead">Pertemuan lalu kita udah jago urusan <strong>FCFS</strong> dan <strong>SJF</strong> buat ngatur ember dengan 1 keran, terus belajar strategi <strong>LPT</strong> buat bagi beban ke 2 keran. Sekarang saatnya level up!</p>
+    <div class="callout">
+      💬 Kali ini kita bakal ketemu tantangan yang lebih "real": gimana kalau ada ember yang harus didahulukan karena darurat? Gimana kalau keran-nya nambah jadi 3? Terus, gimana caranya biar penjadwalan itu ADIL buat semua, bukan cuma cepat?
+    </div>
+  </section>
+
+  <section id="priority">
+    <h2>🚨 Kegiatan A: Kadang Cepat Aja Nggak Cukup</h2>
+    <p>Musim kemarau, air makin susah. Sekolah nambah ember cadangan, tapi kali ini ada 2 ember berstatus <strong>DARURAT</strong> — satu buat isi ulang kotak P3K, satu lagi buat wastafel toilet yang harus segera terisi. Masalahnya, kalau kita cuma pakai SJF, ember darurat ini bisa aja nunggu lama kalau kebetulan ukurannya nggak paling kecil!</p>
+    <div class="callout">
+      💬 Di sinilah kita kenalan sama strategi baru: <strong>Priority Scheduling</strong> — dahulukan yang PALING PENTING, baru soal cepat-lambat jadi pertimbangan kedua (tie-breaker).
+    </div>
+    <div class="grid6">
+      <div class="bucket v">Ember V<span class="t">6'</span><span class="prio" style="background:var(--red)">1</span></div>
+      <div class="bucket w">Ember W<span class="t">10'</span><span class="prio" style="background:var(--teal)">3</span></div>
+      <div class="bucket x">Ember X<span class="t">4'</span><span class="prio" style="background:var(--amber)">2</span></div>
+      <div class="bucket y">Ember Y<span class="t">8'</span><span class="prio" style="background:var(--teal)">3</span></div>
+      <div class="bucket z">Ember Z<span class="t">3'</span><span class="prio" style="background:var(--red)">1</span></div>
+      <div class="bucket k">Ember K<span class="t">5'</span><span class="prio" style="background:var(--amber)">2</span></div>
+    </div>
+    <p class="prio-legend">
+      <span><span class="dot" style="background:var(--red)"></span> 1 = Mendesak</span>
+      <span><span class="dot" style="background:var(--amber)"></span> 2 = Agak mendesak</span>
+      <span><span class="dot" style="background:var(--teal)"></span> 3 = Biasa</span>
+    </p>
+    <figure>
+      <img src="images/01_priority_scheduling.png" alt="6 ember dengan tingkat prioritas berbeda">
+      <figcaption>6 ember dengan tingkat prioritas berbeda: 1 = paling mendesak, 3 = biasa aja.</figcaption>
+    </figure>
+    <p><strong>Aturannya:</strong> dahulukan prioritas angka terkecil. Kalau prioritasnya sama, baru pakai SJF (yang lebih cepat menang).</p>
+    <p>Urutan hasil: <strong>Z(3) → V(6) → X(4) → K(5) → Y(8) → W(10)</strong></p>
+    <figure>
+      <img src="images/02_gantt_priority_vs_sjf.png" alt="Perbandingan Priority Scheduling vs SJF murni">
+      <figcaption>Priority Scheduling vs SJF murni — bedanya di rata-rata waktu tunggu.</figcaption>
+    </figure>
+    <div class="callout amber">
+      ⏱️ Priority Scheduling ngasih rata-rata waktu tunggu <strong>17,5 menit</strong> (dikit lebih lama dari SJF murni yang <strong>17,0 menit</strong>). Tapi ember darurat (Z dan V) selesai jauh lebih awal! Kadang, yang "paling optimal di atas kertas" bukan berarti "paling tepat buat kebutuhan nyata".
+    </div>
+    <details class="challenge">
+      <summary>🧠 Coba sendiri: kalau Ember X (prioritas 2) ternyata prioritasnya diturunkan jadi 3, gimana urutannya berubah? (klik untuk lihat jawaban)</summary>
+      <div class="answer">
+        Urutan prioritas 1 tetap di depan: Z(3), V(6). Lalu K (prioritas 2) sendirian di posisi berikutnya. Sisanya (X, Y, W) semua prioritas 3, jadi diurutkan pakai SJF: X(4), Y(8), W(10).<br>
+        Urutan baru: <strong>Z → V → K → X → Y → W</strong>.
+      </div>
+    </details>
+  </section>
+
+  <section id="tiga-keran">
+    <h2>🚰🚰🚰 Kegiatan B: Sekarang Ada 3 Keran!</h2>
+    <p>Minggu lalu kita udah coba bagi tugas ke 2 keran. Sekarang naik level lagi: <strong>3 keran, 8 ember</strong>! Triknya masih sama kayak sebelumnya (strategi LPT: dahulukan yang paling lama, taruh di keran paling santai), cuma sekarang mikirnya harus lebih cermat karena pilihannya lebih banyak.</p>
+    <figure>
+      <img src="images/03_tiga_keran_paralel.png" alt="8 ember dibagi ke 3 keran paralel">
+      <figcaption>8 ember dibagi ke 3 keran — hasilnya cuma beda 1 menit antar keran!</figcaption>
+    </figure>
+    <div class="callout green">
+      🏆 Hasilnya keren banget: Keran 1 = 15 menit, Keran 2 & 3 = 16 menit. Bedanya cuma 1 menit doang! Dan ternyata ini udah <strong>HASIL PALING OPTIMAL</strong> yang bisa dicapai — nggak ada cara lain yang bisa lebih cepat dari 16 menit (batas bawah teoretisnya juga 16 menit).
+    </div>
+  </section>
+
+  <section id="keadilan">
+    <h2>⚖️ Kegiatan C: Adil itu Penting, Lho!</h2>
+    <p>Nah ini dia tantangan paling seru. Bayangin kalau kamu itu ember yang paling BESAR di antrean. Kalau semua orang pakai SJF terus-terusan, kamu bisa jadi ember yang PALING TERAKHIR diisi terus, karena selalu ada ember yang lebih kecil nyalip duluan. Kasian, kan? Ini namanya <strong>starvation</strong> alias "kelaparan giliran".</p>
+    <p>Makanya, ada strategi namanya <strong>Round Robin</strong>: tiap ember cuma dapat jatah waktu 4 menit per giliran, abis itu gantian ke ember lain, muter terus sampai semua penuh.</p>
+    <table class="rr">
+      <tr><th>Giliran</th><th>Ember</th><th>Sisa Sebelum</th><th>Durasi Jalan</th><th>Sisa Sesudah</th><th>Waktu Sekarang</th></tr>
+      <tr><td>1</td><td>A</td><td>9</td><td>4</td><td>5</td><td>4</td></tr>
+      <tr><td>2</td><td>B</td><td>5</td><td>4</td><td>1</td><td>8</td></tr>
+      <tr><td>3</td><td>C</td><td>3</td><td>3</td><td>0 (selesai)</td><td>11</td></tr>
+      <tr><td>4</td><td>D</td><td>7</td><td>4</td><td>3</td><td>15</td></tr>
+      <tr><td>5</td><td>A</td><td>5</td><td>4</td><td>1</td><td>19</td></tr>
+      <tr><td>6</td><td>B</td><td>1</td><td>1</td><td>0 (selesai)</td><td>20</td></tr>
+      <tr><td>7</td><td>D</td><td>3</td><td>3</td><td>0 (selesai)</td><td>23</td></tr>
+      <tr><td>8</td><td>A</td><td>1</td><td>1</td><td>0 (selesai)</td><td>24</td></tr>
+    </table>
+    <figure>
+      <img src="images/04_gantt_round_robin.png" alt="Round Robin dibanding SJF murni">
+      <figcaption>Round Robin (gantian tiap 4 menit) dibanding SJF murni.</figcaption>
+    </figure>
+    <div class="callout coral">
+      ⚖️ SJF emang menang telak soal rata-rata waktu tunggu (<strong>12,5 menit</strong> vs <strong>19,5 menit</strong>). TAPI coba lihat ember A (yang paling gede) — di SJF dia nggak dapat progres SAMA SEKALI selama 15 menit pertama! Di Round Robin, dia tetap dapat "jatah" tiap beberapa menit. Mana yang lebih adil menurutmu?
+    </div>
+  </section>
+
+  <section id="pseudocode">
+    <h2>💻 Kegiatan D: Nulis Pseudocode, Yuk!</h2>
+    <p>Sekarang saatnya belajar "ngomong" kayak komputer — pakai <strong>pseudocode</strong>! Ini bukan bahasa pemrograman beneran, tapi cara nulis langkah-langkah algoritma pakai kata-kata yang terstruktur dan mudah dipahami.</p>
+    <div class="code-box">
+      <span class="kw">MULAI</span><br>
+      <span class="fn">INPUT</span> daftar_pekerjaan (nama, durasi)<br>
+      <span class="fn">URUTKAN</span> daftar_pekerjaan berdasarkan durasi (menaik)<br>
+      waktu &lt;- 0<br>
+      <span class="kw">UNTUK</span> setiap pekerjaan <span class="kw">DALAM</span> daftar_pekerjaan terurut:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;waktu &lt;- waktu + durasi_pekerjaan<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">CETAK</span> nama_pekerjaan, "selesai pada menit ke-", waktu<br>
+      <span class="kw">SELESAI</span>
+    </div>
+    <p>Coba perhatikan pola di atas: MULAI, lalu INPUT data, URUTKAN, lalu proses tiap pekerjaan satu per satu pakai perulangan (UNTUK ... DALAM ...), sampai SELESAI. Nanti kamu akan diminta bikin pseudocode serupa untuk Priority Scheduling di LKPD!</p>
+  </section>
+
+  <section id="dunia-nyata">
+    <h2>🌍 Konsep Ini Ada di Sekitar Kita</h2>
+    <div class="cards4">
+      <div class="card"><div class="emoji">🚑</div><h4>UGD Rumah Sakit</h4><p>Pasien kondisi kritis didahulukan, bukan yang datang duluan (priority).</p></div>
+      <div class="card"><div class="emoji">📞</div><h4>Call Center</h4><p>Penelepon dilayani bergiliran per beberapa menit agar semua terlayani (round robin).</p></div>
+      <div class="card"><div class="emoji">🖥️</div><h4>Sistem Operasi Komputer</h4><p>CPU membagi giliran proses agar aplikasi tidak macet menunggu.</p></div>
+      <div class="card"><div class="emoji">🚦</div><h4>Lampu Lalu Lintas</h4><p>Tiap arah dapat giliran hijau bergantian dengan durasi tertentu.</p></div>
+    </div>
+  </section>
+
+  <section id="kuis">
+    <h2>⚡ Kuis Cepat: Cek Pemahamanmu</h2>
+    <p>Klik jawaban yang menurutmu paling tepat!</p>
+    <div class="quiz-box">
+      <p><strong>1. Strategi yang mendahulukan pekerjaan PALING PENTING (bukan cuma tercepat) disebut...</strong></p>
+      <div class="opt" data-correct="false">A. FCFS</div>
+      <div class="opt" data-correct="false">B. SJF</div>
+      <div class="opt" data-correct="true">C. Priority Scheduling</div>
+      <div class="opt" data-correct="false">D. LPT</div>
+      <div class="feedback"></div>
+    </div>
+    <div class="quiz-box">
+      <p><strong>2. Kondisi di mana suatu pekerjaan terus-menerus disalip pekerjaan lain sehingga menunggu sangat lama disebut...</strong></p>
+      <div class="opt" data-correct="false">A. Tie-breaker</div>
+      <div class="opt" data-correct="true">B. Starvation</div>
+      <div class="opt" data-correct="false">C. Makespan</div>
+      <div class="opt" data-correct="false">D. Round Robin</div>
+      <div class="feedback"></div>
+    </div>
+    <div class="quiz-box">
+      <p><strong>3. Round Robin membuat penjadwalan lebih adil karena...</strong></p>
+      <div class="opt" data-correct="false">A. Selalu menghasilkan rata-rata waktu tunggu paling kecil</div>
+      <div class="opt" data-correct="true">B. Setiap pekerjaan mendapat jatah waktu secara bergilir</div>
+      <div class="opt" data-correct="false">C. Hanya pekerjaan kecil yang diproses</div>
+      <div class="opt" data-correct="false">D. Prosesnya jadi lebih cepat daripada SJF</div>
+      <div class="feedback"></div>
+    </div>
+    <div class="quiz-box">
+      <p><strong>4. Kata kunci pseudocode yang digunakan untuk melakukan perulangan pada tiap pekerjaan dalam daftar adalah...</strong></p>
+      <div class="opt" data-correct="false">A. INPUT</div>
+      <div class="opt" data-correct="false">B. CETAK</div>
+      <div class="opt" data-correct="true">C. UNTUK ... DALAM ...</div>
+      <div class="opt" data-correct="false">D. SELESAI</div>
+      <div class="feedback"></div>
+    </div>
+  </section>
+
+  <section id="rangkuman">
+    <h2>📝 Rangkuman Kilat</h2>
+    <ul class="checklist">
+      <li>Priority Scheduling = dahulukan yang PALING PENTING, bukan cuma yang tercepat.</li>
+      <li>Strategi LPT tetap berlaku walau sumber dayanya nambah jadi 3 (atau lebih).</li>
+      <li>Round Robin = bergiliran per jatah waktu tertentu, biar nggak ada yang "starvation" alias kelaparan giliran.</li>
+      <li>Nggak ada strategi yang "menang telak" di semua aspek — semua punya trade-off antara efisiensi dan keadilan/kebutuhan.</li>
+      <li>Pseudocode membantu kita menuliskan strategi penjadwalan jadi langkah-langkah yang jelas dan terstruktur.</li>
+    </ul>
+  </section>
+
+  <section id="renungkan">
+    <h2>🤔 Ayo, Renungkan</h2>
+    <p>Setelah mempelajari materi ini, coba jawab pertanyaan berikut di buku catatanmu:</p>
+    <ol class="reflect">
+      <li>Menurutmu, kapan sebaiknya kita pakai Priority Scheduling dibanding SJF murni dalam kehidupan sehari-hari?</li>
+      <li>Pernahkah kamu merasa "starvation" dalam antrean di kehidupan nyata (misalnya nunggu giliran main, nunggu dilayani)? Ceritakan!</li>
+      <li>Kalau kamu jadi perancang sistem antrean sekolah, strategi apa yang akan kamu pilih: efisiensi maksimal atau keadilan maksimal? Kenapa?</li>
+      <li>Coba tulis satu baris pseudocode untuk langkah pertama dari strategi Priority Scheduling!</li>
+    </ol>
+  </section>
+
+</main>
+
+<footer>
+  Materi Siswa · Bab 1 Berpikir Komputasional — TP2 Pertemuan 2 (Pendalaman)<br>
+  Informatika Kelas VII · SMP Negeri 14 Tarakan
+</footer>
+
+<script>
+  document.querySelectorAll('.quiz-box').forEach(box => {
+    const opts = box.querySelectorAll('.opt');
+    const fb = box.querySelector('.feedback');
+    opts.forEach(opt => {
+      opt.addEventListener('click', () => {
+        if (box.dataset.answered) return;
+        box.dataset.answered = "1";
+        opts.forEach(o => {
+          if (o.dataset.correct === "true") o.classList.add('correct');
+        });
+        if (opt.dataset.correct === "true") {
+          fb.textContent = "🎉 Benar sekali!";
+          fb.style.color = "#5FAD56";
+        } else {
+          opt.classList.add('wrong');
+          fb.textContent = "Belum tepat — jawaban yang benar ditandai hijau ya.";
+          fb.style.color = "#E76F51";
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

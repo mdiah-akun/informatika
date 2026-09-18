@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buku Poin Sikap &amp; Format Nilai Rapor</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+  :root{
+    --paper:      #efece3;
+    --ink:        #23261f;
+    --ink-soft:   #5c5f52;
+    --rule:       #c7c2af;
+    --pos:        #2e6b47;
+    --pos-bg:     #dfe9de;
+    --neg:        #9c3a2c;
+    --neg-bg:     #ecdcd4;
+    --cyan-bg:    #dff2f4;
+    --green-bg:   #dcefdc;
+    --green-dk:   #2e7d32;
+    --peach-bg:   #fbe3d3;
+    --red-bg:     #d9463b;
+    --blue-bg:    #33499b;
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .page{
+    max-width:1240px;
+    margin:0 auto;
+    padding:56px 32px 80px;
+  }
+
+  header.masthead{
+    border-bottom:3px double var(--ink);
+    padding-bottom:22px;
+    margin-bottom:0;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+
+  header.masthead .title-block h1{
+    font-family:'Source Serif 4', serif;
+    font-weight:700;
+    font-size:clamp(28px, 4vw, 40px);
+    margin:0 0 6px;
+    letter-spacing:-0.01em;
+  }
+
+  header.masthead .title-block p{
+    margin:0;
+    color:var(--ink-soft);
+    font-size:15px;
+    max-width:52ch;
+    line-height:1.5;
+  }
+
+  header.masthead .school{
+    text-align:right;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    line-height:1.7;
+  }
+
+  /* Tabs */
+  nav.tabs{
+    display:flex;
+    gap:2px;
+    margin:0 0 40px;
+  }
+  nav.tabs button{
+    font-family:'Source Serif 4', serif;
+    font-style:italic;
+    font-size:16px;
+    background:none;
+    border:none;
+    border-bottom:3px solid transparent;
+    color:var(--ink-soft);
+    padding:14px 20px 12px;
+    cursor:pointer;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  nav.tabs button:hover{ color:var(--ink); }
+  nav.tabs button.active{
+    color:var(--ink);
+    border-bottom-color:var(--ink);
+    font-weight:600;
+  }
+
+  .panel{ display:none; }
+  .panel.active{ display:block; }
+
+  /* ---------- TAB 1: Catatan Sikap ---------- */
+  .legend{
+    display:flex;
+    gap:28px;
+    margin:0 0 40px;
+    padding-top:18px;
+    font-size:13px;
+    color:var(--ink-soft);
+    flex-wrap:wrap;
+  }
+  .legend .item{ display:flex; align-items:center; gap:8px; }
+  .legend .swatch{ width:14px; height:14px; border-radius:3px; flex:none; }
+
+  .columns{ display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+
+  .column h2{
+    font-family:'Source Serif 4', serif;
+    font-weight:600;
+    font-style:italic;
+    font-size:22px;
+    margin:0 0 4px;
+  }
+  .column .col-sub{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin:0 0 18px;
+    padding-bottom:14px;
+    border-bottom:1px solid var(--rule);
+  }
+  .column.positive h2{ color:var(--pos); }
+  .column.negative h2{ color:var(--neg); }
+
+  ol.ledger{ list-style:none; margin:0; padding:0; }
+  ol.ledger li{
+    display:grid;
+    grid-template-columns:26px 1fr auto;
+    align-items:center;
+    gap:14px;
+    padding:11px 0;
+    border-bottom:1px solid var(--rule);
+  }
+  ol.ledger li:last-child{ border-bottom:none; }
+  ol.ledger .num{ font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--ink-soft); }
+  ol.ledger .desc{ font-size:14.5px; line-height:1.45; }
+
+  .badge{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:13px;
+    min-width:34px;
+    text-align:center;
+    padding:4px 9px;
+    border-radius:5px;
+    white-space:nowrap;
+  }
+  .column.positive .badge{ background:var(--pos-bg); color:var(--pos); }
+  .column.negative .badge{ background:var(--neg-bg); color:var(--neg); }
+
+  /* ---------- TAB 2: Format Nilai Rapor ---------- */
+  .rapor-intro{
+    font-size:13px;
+    color:var(--ink-soft);
+    margin:0 0 22px;
+    max-width:80ch;
+    line-height:1.6;
+  }
+  .table-wrap{
+    overflow-x:auto;
+    border:1px solid var(--rule);
+    border-radius:6px;
+  }
+  table.rapor{
+    border-collapse:collapse;
+    width:100%;
+    min-width:1080px;
+    font-size:12.5px;
+    background:#fff;
+  }
+  table.rapor th, table.rapor td{
+    border:1px solid var(--rule);
+    padding:9px 10px;
+    text-align:center;
+    vertical-align:middle;
+  }
+  table.rapor thead th{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-weight:600;
+    font-size:11.5px;
+    background:#f4f2ea;
+    letter-spacing:0.01em;
+  }
+  table.rapor thead th.group-sa{ background:#eae7db; }
+  table.rapor thead th.group-nr{ background:#eae7db; }
+  table.rapor thead th.hdr-scaling-all{
+    background:var(--green-dk);
+    color:#fff;
+    font-weight:700;
+  }
+  table.rapor td.nama{ text-align:left; font-weight:500; }
+  table.rapor td.num{ font-family:'IBM Plex Mono', monospace; }
+  table.rapor td.asli{ background:var(--cyan-bg); font-family:'IBM Plex Mono', monospace; }
+  table.rapor td.scaling{ background:var(--green-bg); font-family:'IBM Plex Mono', monospace; }
+  table.rapor td.scaling-all{ background:var(--peach-bg); font-family:'IBM Plex Mono', monospace; }
+  table.rapor td.deskripsi{ background:var(--pos-bg); color:var(--ink-soft); text-align:left; }
+  table.rapor td.pel{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+  }
+  table.rapor td.pel.neutral{ background:var(--cyan-bg); }
+  table.rapor td.pel.warn{ background:var(--red-bg); color:#fff; }
+  table.rapor td.pel.ok{ background:var(--blue-bg); color:#fff; }
+
+  .rapor-legend{
+    display:flex;
+    gap:24px;
+    flex-wrap:wrap;
+    margin-top:18px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+  }
+  .rapor-legend .item{ display:flex; align-items:center; gap:8px; }
+  .rapor-legend .swatch{ width:13px; height:13px; border-radius:3px; flex:none; }
+
+  footer{
+    margin-top:52px;
+    padding-top:18px;
+    border-top:1px solid var(--rule);
+    font-size:12.5px;
+    color:var(--ink-soft);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  @media print{
+    body{ background:#fff; }
+    .page{ padding:20px; max-width:none; }
+    nav.tabs{ display:none; }
+    .panel{ display:block !important; }
+  }
+
+  @media (max-width:820px){
+    .columns{ grid-template-columns:1fr; gap:44px; }
+    header.masthead{ flex-direction:column; align-items:flex-start; }
+    header.masthead .school{ text-align:left; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="masthead">
+    <div class="title-block">
+      <h1>Buku Sikap &amp; Nilai Rapor</h1>
+      <p>Rujukan poin sikap harian dan format perhitungan nilai akhir rapor siswa.</p>
+    </div>
+    <div class="school">
+      SMP NEGERI 14 TARAKAN<br>
+      Tahun Ajaran Berjalan
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="sikap">Catatan Sikap</button>
+    <button class="tab-btn" data-tab="rapor">Format Nilai Akhir Rapor</button>
+  </nav>
+
+  <!-- ===================== TAB 1 ===================== -->
+  <section class="panel active" id="panel-sikap">
+
+    <div class="legend">
+      <div class="item"><span class="swatch" style="background:var(--pos)"></span> Poin bertambah &mdash; sikap positif</div>
+      <div class="item"><span class="swatch" style="background:var(--neg)"></span> Poin berkurang &mdash; sikap negatif</div>
+    </div>
+
+    <div class="columns">
+
+      <section class="column positive">
+        <h2>Catatan Sikap Positif</h2>
+        <p class="col-sub">8 catatan &middot; total poin 1&ndash;10</p>
+        <ol class="ledger">
+          <li><span class="num">01</span><span class="desc">Aktif dalam belajar (menjawab pertanyaan guru tentang materi)</span><span class="badge">+1</span></li>
+          <li><span class="num">02</span><span class="desc">Mengerjakan tugas tepat waktu</span><span class="badge">+1</span></li>
+          <li><span class="num">03</span><span class="desc">Piket kelas dengan sungguh-sungguh (mempunyai kesadaran diri untuk piket)</span><span class="badge">+1</span></li>
+          <li><span class="num">04</span><span class="desc">Bertanya tentang penjelasan materi yang berlangsung</span><span class="badge">+2</span></li>
+          <li><span class="num">05</span><span class="desc">Membantu menjawab pertanyaan dari siswa lain sebelum guru menjawab</span><span class="badge">+3</span></li>
+          <li><span class="num">06</span><span class="desc">Merangkum materi dari rumah sebelum materi tersebut diajarkan</span><span class="badge">+4</span></li>
+          <li><span class="num">07</span><span class="desc">Menjelaskan (membaca) rangkuman materi sebelum materi tersebut disampaikan</span><span class="badge">+5</span></li>
+          <li><span class="num">08</span><span class="desc">Menjelaskan (tanpa membaca) rangkuman materi sebelum materi tersebut disampaikan</span><span class="badge">+10</span></li>
+        </ol>
+      </section>
+
+      <section class="column negative">
+        <h2>Catatan Sikap Negatif</h2>
+        <p class="col-sub">26 catatan &middot; total poin 1&ndash;10</p>
+        <ol class="ledger">
+          <li><span class="num">01</span><span class="desc">Membuang sampah tidak pada tempatnya</span><span class="badge">-1</span></li>
+          <li><span class="num">02</span><span class="desc">Pakaian tidak rapi (baju dikeluarkan)</span><span class="badge">-1</span></li>
+          <li><span class="num">03</span><span class="desc">Menumpahkan makanan/minuman dalam kelas</span><span class="badge">-1</span></li>
+          <li><span class="num">04</span><span class="desc">Datang terlambat lebih 10 menit</span><span class="badge">-1</span></li>
+          <li><span class="num">05</span><span class="desc">Mengumpat berkata kasar</span><span class="badge">-1</span></li>
+          <li><span class="num">06</span><span class="desc">Membuat kebisingan dalam kelas (bergendang, bersiul, ngerumpi, melempar benda-benda)</span><span class="badge">-1</span></li>
+          <li><span class="num">07</span><span class="desc">Mengangkat meja / kursi kaki sebelah</span><span class="badge">-1</span></li>
+          <li><span class="num">08</span><span class="desc">Tidak membawa buku tulis mata pelajaran, pulpen/pensil</span><span class="badge">-1</span></li>
+          <li><span class="num">09</span><span class="desc">Laptop digunakan untuk (game, nonton, berfoto/video) saat sedang belajar dengan guru</span><span class="badge">-1</span></li>
+          <li><span class="num">10</span><span class="desc">Mengerjakan tugas mapel lain saat sedang belajar dengan guru</span><span class="badge">-1</span></li>
+          <li><span class="num">11</span><span class="desc">Tidak mampu bekerjasama dalam tim (tidak kompak, hanya 1&ndash;2 orang saja bekerja)</span><span class="badge">-1</span></li>
+          <li><span class="num">12</span><span class="desc">Keluar kelas, tidur tanpa izin saat pelajaran berlangsung</span><span class="badge">-1</span></li>
+          <li><span class="num">13</span><span class="desc">Piket terpaksa (piket setengah hati, hampir tidak ada kesadaran untuk piket)</span><span class="badge">-1</span></li>
+          <li><span class="num">14</span><span class="desc">Kipas angin dikuasai sendiri (tidak swing)</span><span class="badge">-1</span></li>
+          <li><span class="num">15</span><span class="desc">Mewarnai bibir</span><span class="badge">-1</span></li>
+          <li><span class="num">16</span><span class="desc">Bolos piket (melarikan diri saat waktunya piket dengan banyak alasan)</span><span class="badge">-2</span></li>
+          <li><span class="num">17</span><span class="desc">Bolos (tidak masuk dalam kelas padahal ada di luar)</span><span class="badge">-2</span></li>
+          <li><span class="num">18</span><span class="desc">Merusak ornamen kelas</span><span class="badge">-2</span></li>
+          <li><span class="num">19</span><span class="desc">Tidak mengindahkan pesan guru yang sebelumnya sudah diinformasikan 2x</span><span class="badge">-2</span></li>
+          <li><span class="num">20</span><span class="desc">Tidak mencatat materi pelajaran yang sedang diajarkan</span><span class="badge">-3</span></li>
+          <li><span class="num">21</span><span class="desc">Merusak pintu, jendela, meja, kursi, lemari, kipas angin, komputer, dll</span><span class="badge">-4</span></li>
+          <li><span class="num">22</span><span class="desc">Membuli orang lain (mengatai, panggil nama ortu, nama hewan, dll)</span><span class="badge">-5</span></li>
+          <li><span class="num">23</span><span class="desc">Berkelahi, merokok</span><span class="badge">-5</span></li>
+          <li><span class="num">24</span><span class="desc">Mengatai/mengumpat guru</span><span class="badge">-5</span></li>
+          <li><span class="num">25</span><span class="desc">Membohongi / menipu guru</span><span class="badge">-6</span></li>
+          <li><span class="num">26</span><span class="desc">Menantang guru berkelahi</span><span class="badge">-10</span></li>
+        </ol>
+      </section>
+
+    </div>
+  </section>
+
+  <!-- ===================== TAB 2 ===================== -->
+  <section class="panel" id="panel-rapor">
+
+    <p class="rapor-intro">
+      Format perhitungan nilai akhir rapor: kehadiran, rata-rata sumatif &amp; formatif, sumatif akhir (SA), hingga nilai rapor setelah scaling dan peringkat kelas. Baris di bawah adalah contoh pengisian.
+    </p>
+
+    <div class="table-wrap">
+      <table class="rapor">
+        <thead>
+          <tr>
+            <th rowspan="2">NO</th>
+            <th rowspan="2">NAMA SISWA</th>
+            <th rowspan="2">KEHADIRAN</th>
+            <th rowspan="2">RATA<br>SUMATIF</th>
+            <th rowspan="2">RATA<br>FORMATIF</th>
+            <th class="group-sa" colspan="4">SUMATIF AKHIR (SA)</th>
+            <th class="group-nr" colspan="5">NILAI RAPOT</th>
+            <th rowspan="2">Rank</th>
+            <th rowspan="2">DESKRIPSI TP RAPOT<br>MAKSIMAL &ndash; MINIMAL</th>
+          </tr>
+          <tr>
+            <th class="group-sa">STS</th>
+            <th class="group-sa">SAS</th>
+            <th class="group-sa">NON TES</th>
+            <th class="group-sa">RATA S.A</th>
+            <th class="group-nr">ASLI +</th>
+            <th class="group-nr">Nil+ | Pelanggaran</th>
+            <th class="group-nr">+Hadir+(Sikap&minus;Pelanggaran)</th>
+            <th class="group-nr">SCALING</th>
+            <th class="hdr-scaling-all">SCALING ALL KELAS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td class="nama">SISWA1</td>
+            <td class="num">10 (91%) = 9</td>
+            <td></td><td></td>
+            <td></td><td></td><td></td><td></td>
+            <td class="asli">0</td>
+            <td class="pel warn">0 | 1</td>
+            <td class="num">9</td>
+            <td class="scaling">0</td>
+            <td class="scaling-all">0</td>
+            <td>1</td>
+            <td class="deskripsi">&ndash;&ndash;</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td class="nama">SISWA2</td>
+            <td class="num">9 (82%) = 8</td>
+            <td></td><td></td>
+            <td></td><td></td><td></td><td></td>
+            <td class="asli">0</td>
+            <td class="pel neutral">0 | 0</td>
+            <td class="num">8</td>
+            <td class="scaling">0</td>
+            <td class="scaling-all">0</td>
+            <td>1</td>
+            <td class="deskripsi">&ndash;&ndash;</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td class="nama">SISWA3</td>
+            <td class="num">11 (100%) = 10</td>
+            <td></td><td></td>
+            <td></td><td></td><td></td><td></td>
+            <td class="asli">0</td>
+            <td class="pel warn">0 | 8</td>
+            <td class="num">7</td>
+            <td class="scaling">0</td>
+            <td class="scaling-all">0</td>
+            <td>1</td>
+            <td class="deskripsi">&ndash;&ndash;</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td class="nama">SISWA4</td>
+            <td class="num">11 (100%) = 10</td>
+            <td></td><td></td>
+            <td></td><td></td><td></td><td></td>
+            <td class="asli">0</td>
+            <td class="pel ok">1 | 0</td>
+            <td class="num">11</td>
+            <td class="scaling">0</td>
+            <td class="scaling-all">0</td>
+            <td>1</td>
+            <td class="deskripsi">&ndash;&ndash;</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="rapor-legend">
+      <div class="item"><span class="swatch" style="background:var(--red-bg)"></span> Pelanggaran &gt; nilai plus</div>
+      <div class="item"><span class="swatch" style="background:var(--blue-bg)"></span> Nilai plus &gt; pelanggaran</div>
+      <div class="item"><span class="swatch" style="background:var(--cyan-bg)"></span> Plus &amp; pelanggaran seimbang / nol</div>
+    </div>
+
+  </section>
+
+  <footer>
+    <span>Buku Sikap &amp; Nilai Rapor &mdash; dokumen internal kelas</span>
+    <span>Diperbarui setiap semester</span>
+  </footer>
+
+</div>
+
+<script>
+  document.querySelectorAll('.tab-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

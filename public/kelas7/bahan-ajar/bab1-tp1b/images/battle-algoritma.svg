@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 460" font-family="Nunito, sans-serif" role="img" aria-label="Grafik batang perbandingan jumlah perbandingan Algoritma A 21 kali dan Algoritma B 6 kali">
+<defs>
+  <linearGradient id="gA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF9A6C"/><stop offset="1" stop-color="#E5484D"/></linearGradient>
+  <linearGradient id="gB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5FE0B7"/><stop offset="1" stop-color="#17B890"/></linearGradient>
+</defs>
+<text x="350.0" y="30" text-anchor="middle" font-size="18" font-weight="800" fill="#2C2A3D" font-family="Poppins, sans-serif">Jumlah Perbandingan yang Dibutuhkan</text>
+<line x1="70" y1="380.0" x2="660" y2="380.0" stroke="#E8E5F5" stroke-width="1.5" stroke-dasharray="4,5"/><text x="55" y="384.0" text-anchor="end" font-size="12" fill="#9b97b5">0</text><line x1="70" y1="300.0" x2="660" y2="300.0" stroke="#E8E5F5" stroke-width="1.5" stroke-dasharray="4,5"/><text x="55" y="304.0" text-anchor="end" font-size="12" fill="#9b97b5">6</text><line x1="70" y1="220.0" x2="660" y2="220.0" stroke="#E8E5F5" stroke-width="1.5" stroke-dasharray="4,5"/><text x="55" y="224.0" text-anchor="end" font-size="12" fill="#9b97b5">12</text><line x1="70" y1="140.0" x2="660" y2="140.0" stroke="#E8E5F5" stroke-width="1.5" stroke-dasharray="4,5"/><text x="55" y="144.0" text-anchor="end" font-size="12" fill="#9b97b5">18</text><line x1="70" y1="60.0" x2="660" y2="60.0" stroke="#E8E5F5" stroke-width="1.5" stroke-dasharray="4,5"/><text x="55" y="64.0" text-anchor="end" font-size="12" fill="#9b97b5">24</text>
+<line x1="70" y1="380" x2="660" y2="380" stroke="#B9B4DD" stroke-width="2.5"/>
+
+<rect x="125.0" y="100.0" width="170" height="280.0" rx="16" fill="url(#gA)"/>
+<text x="210" y="82.0" text-anchor="middle" font-size="30" font-weight="800" fill="#2C2A3D" font-family="Poppins, sans-serif">21&#215;</text>
+<text x="210" y="410" text-anchor="middle" font-size="16" font-weight="800" fill="#2C2A3D" font-family="Poppins, sans-serif">Algoritma A</text>
+<text x="210" y="430" text-anchor="middle" font-size="12.5" fill="#6A6785">Bandingkan Semua Pasangan</text>
+<rect x="405.0" y="300.0" width="170" height="80.0" rx="16" fill="url(#gB)"/>
+<text x="490" y="282.0" text-anchor="middle" font-size="30" font-weight="800" fill="#2C2A3D" font-family="Poppins, sans-serif">6&#215;</text>
+<text x="490" y="410" text-anchor="middle" font-size="16" font-weight="800" fill="#2C2A3D" font-family="Poppins, sans-serif">Algoritma B</text>
+<text x="490" y="430" text-anchor="middle" font-size="12.5" fill="#6A6785">Simpan Kandidat Sambil Jalan</text>
+</svg>

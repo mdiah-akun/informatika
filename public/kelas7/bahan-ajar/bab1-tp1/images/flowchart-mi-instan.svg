@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="370" height="940" viewBox="0 0 370 940" role="img" aria-label="Diagram alur algoritma memasak mi instan">
+  <defs>
+    <linearGradient id="gStart" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3FD98F"/><stop offset="100%" stop-color="#17B890"/>
+    </linearGradient>
+    <linearGradient id="gEnd" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF7CA3"/><stop offset="100%" stop-color="#F4568C"/>
+    </linearGradient>
+    <linearGradient id="gProc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8E7CF2"/><stop offset="100%" stop-color="#6C5CE7"/>
+    </linearGradient>
+    <linearGradient id="gDecision" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFC96B"/><stop offset="100%" stop-color="#FFB443"/>
+    </linearGradient>
+    <marker id="arrowHead" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#B3AECF"/>
+    </marker>
+  </defs>
+
+  <path d="M185,84 V124" stroke="#B3AECF" stroke-width="3" marker-end="url(#arrowHead)"/>
+  <path d="M185,188 V228" stroke="#B3AECF" stroke-width="3" marker-end="url(#arrowHead)"/>
+  <path d="M185,292 V332" stroke="#B3AECF" stroke-width="3" marker-end="url(#arrowHead)"/>
+  <path d="M185,472 V512" stroke="#B3AECF" stroke-width="3" marker-end="url(#arrowHead)"/>
+  <text x="198" y="497" font-size="13" fill="#1EA672" font-family="Poppins,sans-serif" font-weight="700">Ya</text>
+  <path d="M185,576 V616" stroke="#B3AECF" stroke-width="3" marker-end="url(#arrowHead)"/>
+  <path d="M185,680 V720" stroke="#B3AECF" stroke-width="3" marker-end="url(#arrowHead)"/>
+  <path d="M185,784 V824" stroke="#B3AECF" stroke-width="3" marker-end="url(#arrowHead)"/>
+  <path d="M335,402 C 386,402 386,260 316,260" stroke="#E5484D" stroke-width="3" fill="none" stroke-dasharray="5 4" marker-end="url(#arrowHead)"/>
+  <text x="336" y="330" font-size="13" fill="#E5484D" font-family="Poppins,sans-serif" font-weight="700">Belum</text>
+
+  <g>
+    <ellipse cx="185" cy="52" rx="82" ry="32" fill="url(#gStart)"/>
+    <text x="185" y="58" text-anchor="middle" fill="#fff" font-size="17" font-family="Poppins,sans-serif">Mulai</text>
+  </g>
+
+  <g>
+    <rect x="55" y="124" width="260" height="64" rx="14" fill="url(#gProc)"/>
+    <text x="185" y="150" text-anchor="middle" fill="#fff" font-size="14" font-family="Poppins,sans-serif">Siapkan panci</text>
+    <text x="185" y="170" text-anchor="middle" fill="#fff" font-size="14" font-family="Poppins,sans-serif">&amp; isi air</text>
+  </g>
+
+  <g>
+    <rect x="55" y="228" width="260" height="64" rx="14" fill="url(#gProc)"/>
+    <text x="185" y="266" text-anchor="middle" fill="#fff" font-size="14" font-family="Poppins,sans-serif">Didihkan air di kompor</text>
+  </g>
+
+  <g>
+    <polygon points="185,332 335,402 185,472 35,402" fill="url(#gDecision)"/>
+    <text x="185" y="396" text-anchor="middle" fill="#5A3B00" font-size="13" font-weight="700" font-family="Poppins,sans-serif">Sudah</text>
+    <text x="185" y="414" text-anchor="middle" fill="#5A3B00" font-size="13" font-weight="700" font-family="Poppins,sans-serif">mendidih?</text>
+  </g>
+
+  <g>
+    <rect x="55" y="512" width="260" height="64" rx="14" fill="url(#gProc)"/>
+    <text x="185" y="538" text-anchor="middle" fill="#fff" font-size="14" font-family="Poppins,sans-serif">Masukkan mi</text>
+    <text x="185" y="558" text-anchor="middle" fill="#fff" font-size="14" font-family="Poppins,sans-serif">&amp; bumbu</text>
+  </g>
+
+  <g>
+    <rect x="55" y="616" width="260" height="64" rx="14" fill="url(#gProc)"/>
+    <text x="185" y="654" text-anchor="middle" fill="#fff" font-size="14" font-family="Poppins,sans-serif">Tunggu &#177; 3 menit</text>
+  </g>
+
+  <g>
+    <rect x="55" y="720" width="260" height="64" rx="14" fill="url(#gProc)"/>
+    <text x="185" y="746" text-anchor="middle" fill="#fff" font-size="14" font-family="Poppins,sans-serif">Tiriskan</text>
+    <text x="185" y="766" text-anchor="middle" fill="#fff" font-size="14" font-family="Poppins,sans-serif">&amp; sajikan</text>
+  </g>
+
+  <g>
+    <ellipse cx="185" cy="856" rx="82" ry="32" fill="url(#gEnd)"/>
+    <text x="185" y="862" text-anchor="middle" fill="#fff" font-size="17" font-family="Poppins,sans-serif">Selesai</text>
+  </g>
+</svg>

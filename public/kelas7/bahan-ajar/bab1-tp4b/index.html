@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Main Logika dengan Bit — Materi Siswa Pertemuan 2</title>
+<style>
+  :root{
+    --navy:#1B3A5C;
+    --navy-dark:#122A44;
+    --blue:#2E6FB0;
+    --ice:#EAF3FB;
+    --orange:#F2994A;
+    --peach:#FFF3E4;
+    --green:#1E8E5A;
+    --green-bg:#E8F6EF;
+    --purple:#8E5FD9;
+    --lilac:#F1EAFB;
+    --gray:#5B6B7C;
+    --line:#E1E8F0;
+    --bg:#FCFDFF;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:'Segoe UI', Calibri, Arial, sans-serif;
+    background:var(--bg); color:#20303F; line-height:1.65;
+  }
+  img{max-width:100%; display:block;}
+
+  /* ---- top nav ---- */
+  .topbar{
+    position:sticky; top:0; z-index:50; background:var(--navy-dark);
+    color:#fff; padding:0.7rem 1.2rem; display:flex; align-items:center;
+    justify-content:space-between; box-shadow:0 2px 10px rgba(0,0,0,.15);
+  }
+  .topbar .brand{font-weight:700; font-size:0.95rem; letter-spacing:.02em;}
+  .topbar .brand small{display:block; font-weight:400; color:#AFC4DC; font-size:0.72rem;}
+  .topbar nav{display:none; gap:1.0rem; font-size:0.83rem;}
+  .topbar nav a{color:#CFE0F2; text-decoration:none;}
+  .topbar nav a:hover{color:#fff;}
+  @media(min-width:900px){ .topbar nav{display:flex;} }
+
+  /* ---- hero ---- */
+  .hero{
+    background:linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+    color:#fff; padding:3.2rem 1.5rem 3rem; text-align:center; position:relative; overflow:hidden;
+  }
+  .hero::before{
+    content:""; position:absolute; width:340px; height:340px; border-radius:50%;
+    background:rgba(142,95,217,.12); top:-140px; right:-100px;
+  }
+  .hero .eyebrow{color:var(--orange); font-weight:700; letter-spacing:.08em; font-size:0.85rem; text-transform:uppercase;}
+  .hero h1{font-size:2.2rem; margin:.5rem 0 .3rem; font-weight:800;}
+  .hero p.sub{color:#CADCFC; font-size:1.05rem; max-width:680px; margin:0 auto;}
+  .bitrow{display:flex; justify-content:center; gap:.4rem; margin-top:1.6rem; position:relative; z-index:1;}
+  .bitrow span{
+    width:2.4rem; height:2.4rem; border-radius:8px; display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:1.1rem; border:1px solid rgba(255,255,255,.35);
+  }
+  .bitrow span.on{background:var(--purple); color:#fff;}
+  .bitrow span.off{background:#2A4A6B; color:#cfe0f2;}
+
+  main{max-width:900px; margin:0 auto; padding:0 1.4rem;}
+
+  section{padding:3rem 0; border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .eyebrow-sm{color:var(--blue); font-weight:700; font-size:0.8rem; letter-spacing:.08em; text-transform:uppercase;}
+  h2{font-size:1.7rem; color:var(--navy); margin:.35rem 0 1rem; font-weight:800;}
+  h3{font-size:1.15rem; color:var(--blue); margin:1.5rem 0 .6rem;}
+  p{margin:0 0 1rem; font-size:1.02rem; color:#33465A;}
+  figure{margin:1.6rem 0; text-align:center;}
+  figure img{
+    border-radius:12px; border:1px solid var(--line); background:#F7FAFD;
+    padding:0.6rem; margin:0 auto;
+  }
+  figcaption{font-size:0.85rem; color:var(--gray); font-style:italic; margin-top:.6rem;}
+
+  .callout{
+    background:var(--peach); border:1px solid var(--orange); border-radius:12px;
+    padding:1.1rem 1.3rem; margin:1.4rem 0;
+  }
+  .callout.blue{background:var(--ice); border-color:var(--blue);}
+  .callout.green{background:var(--green-bg); border-color:var(--green);}
+  .callout.purple{background:var(--lilac); border-color:var(--purple);}
+  .callout .tag{font-weight:700; color:var(--navy); display:block; margin-bottom:.4rem;}
+
+  ul.tick, ul.plain{padding-left:1.3rem; margin:0 0 1rem;}
+  ul.tick li{margin-bottom:.5rem;}
+  ul.plain li{margin-bottom:.4rem;}
+
+  .grid2{display:grid; grid-template-columns:1fr; gap:1.4rem;}
+  @media(min-width:680px){ .grid2{grid-template-columns:1fr 1fr;} }
+  .imgcard{text-align:center;}
+
+  .glossary{width:100%; border-collapse:collapse; margin:1rem 0;}
+  .glossary th, .glossary td{ text-align:left; padding:.7rem .9rem; border-bottom:1px solid var(--line); font-size:0.96rem;}
+  .glossary th{background:var(--ice); color:var(--navy);}
+  .glossary td:first-child{font-weight:700; color:var(--navy); white-space:nowrap;}
+
+  /* logic table */
+  .logic-tables{display:flex; flex-wrap:wrap; gap:1.2rem; justify-content:center; margin:1rem 0 1.6rem;}
+  .logic-tables table{border-collapse:collapse; font-size:.92rem;}
+  .logic-tables caption{font-weight:700; color:var(--navy); margin-bottom:.4rem; caption-side:top;}
+  .logic-tables th, .logic-tables td{border:1px solid var(--line); padding:.4rem .7rem; text-align:center;}
+  .logic-tables th{background:var(--navy); color:#fff;}
+  .logic-tables td.r1{background:var(--green-bg); font-weight:700; color:var(--green);}
+  .logic-tables td.r0{background:#FBEAEA; font-weight:700; color:#B23B3B;}
+
+  /* interactive check */
+  .quiz-box{
+    background:#fff; border:1px solid var(--line); border-radius:14px; padding:1.2rem 1.3rem;
+    margin:1rem 0; box-shadow:0 2px 10px rgba(20,50,80,.05);
+  }
+  .quiz-box .q{font-weight:700; color:var(--navy); margin-bottom:.7rem;}
+  .quiz-box button.reveal{
+    background:var(--blue); color:#fff; border:none; padding:.5rem 1rem; border-radius:8px;
+    font-size:.88rem; cursor:pointer; font-weight:600;
+  }
+  .quiz-box button.reveal:hover{background:var(--navy);}
+  .quiz-box .ans{
+    display:none; margin-top:.8rem; background:var(--green-bg); border-left:4px solid var(--green);
+    padding:.7rem .9rem; border-radius:6px; font-size:.94rem;
+  }
+  .quiz-box .ans.show{display:block;}
+
+  .bitline{display:flex; flex-wrap:wrap; gap:.35rem; margin:.6rem 0 1rem;}
+  .bitline span{
+    width:2.1rem; height:2.1rem; border-radius:6px; display:flex; align-items:center; justify-content:center;
+    font-weight:700; border:1.5px solid var(--navy); font-size:.95rem;
+  }
+  .bitline span.b1{background:var(--blue); color:#fff;}
+  .bitline span.b0{background:#E5E9EF; color:var(--navy);}
+  .bitline span.g1{background:var(--green); color:#fff;}
+  .bitline span.g0{background:#F7B2AC; color:#7A1F1A;}
+  .bitline span.o1{background:#F5A623; color:#fff;}
+  .bitline span.o0{background:#E5E9EF; color:var(--navy);}
+
+  .stepper{padding-left:1.3rem; margin:0 0 1.2rem;}
+  .stepper li{margin-bottom:.5rem;}
+  .stepper code{background:var(--ice); padding:.1rem .4rem; border-radius:4px; font-weight:700; color:var(--navy);}
+
+  footer{
+    background:var(--navy-dark); color:#AFC4DC; text-align:center; padding:2rem 1rem; font-size:0.85rem;
+  }
+  footer strong{color:#fff;}
+
+  .toc{display:flex; flex-wrap:wrap; gap:.5rem; margin:1.4rem 0 0; justify-content:center;}
+  .toc a{
+    background:var(--ice); color:var(--navy); text-decoration:none; font-size:.8rem; font-weight:600;
+    padding:.4rem .8rem; border-radius:20px; border:1px solid var(--line);
+  }
+  .toc a:hover{background:var(--purple); color:#fff;}
+
+  .backtotop{ text-align:center; margin-top:1rem;}
+  .backtotop a{ color:var(--blue); font-size:.85rem; text-decoration:none;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">Main Logika dengan Bit<small>Pertemuan 2 · Informatika Kelas VII · SMPN 14 Tarakan</small></div>
+  <nav>
+    <a href="#pangkat">2ⁿ</a>
+    <a href="#konversi">Konversi</a>
+    <a href="#logika">AND/OR/NOT</a>
+    <a href="#studi-kasus">3 Hari</a>
+    <a href="#teks-gambar">Teks & Gambar</a>
+    <a href="#rangkuman">Rangkuman</a>
+    <a href="#cek">Cek Pemahaman</a>
+  </nav>
+</div>
+
+<header class="hero">
+  <div class="eyebrow">BAB 1 · Tujuan Pembelajaran 4 · Pertemuan 2</div>
+  <h1>Level Up! Main Logika dengan Bit</h1>
+  <p class="sub">Materi siswa — Representasi Data (Biner), Pendalaman — Berpikir Komputasional untuk Menyelesaikan Masalah</p>
+  <div class="bitrow" id="bitAnim">
+    <span class="on">1</span><span class="off">0</span><span class="on">1</span><span class="on">1</span><span class="off">0</span><span class="on">1</span>
+  </div>
+  <div class="toc">
+    <a href="#pangkat">1. Aturan 2ⁿ</a>
+    <a href="#konversi">2. Konversi Biner</a>
+    <a href="#logika">3. AND, OR, NOT</a>
+    <a href="#studi-kasus">4. Studi Kasus 3 Hari</a>
+    <a href="#teks-gambar">5. Teks & Gambar</a>
+    <a href="#rangkuman">6. Rangkuman</a>
+    <a href="#cek">7. Cek Pemahaman</a>
+  </div>
+</header>
+
+<main>
+
+  <section id="intro">
+    <div class="eyebrow-sm">Sebelumnya Kita Sampai Mana?</div>
+    <h2>Yuk, Naik Level!</h2>
+    <p>Di pertemuan lalu, kamu sudah kenalan sama <strong>bit</strong> (si 0 dan 1), belajar mengubah kondisi sehari-hari jadi kode biner, dan berhasil jadi "detektif data" pakai operasi <strong>OR</strong> untuk menemukan ruang yang nggak pernah dipinjam. Keren banget!</p>
+    <p>Sekarang saatnya naik level. Kita akan belajar kenapa 1 bit itu terbatas, cara mengubah angka desimal biasa jadi biner, dua "alat berpikir" baru selain OR (namanya <strong>AND</strong> dan <strong>NOT</strong>), sampai fakta mengejutkan bahwa <strong>huruf</strong> dan <strong>gambar</strong> di HP kamu ternyata cuma kumpulan angka 0 dan 1 juga!</p>
+    <div class="callout">
+      <span class="tag">Coba Pikirkan Dulu</span>
+      Kalau 1 bit cuma bisa mewakili 2 kemungkinan (0 atau 1), gimana caranya komputer menyimpan angka besar seperti 100, atau huruf A sampai Z yang jumlahnya puluhan?
+    </div>
+  </section>
+
+  <section id="pangkat">
+    <div class="eyebrow-sm">Konsep Dasar</div>
+    <h2>Semakin Banyak Bit, Semakin Banyak Kemungkinan</h2>
+    <p>Ingat, 1 bit cuma punya 2 kemungkinan: 0 atau 1. Tapi kalau kita pakai 2 bit sekaligus, kombinasinya jadi lebih banyak: 00, 01, 10, 11 — ada 4 kemungkinan! Kalau kita tambah lagi jadi 3 bit, kombinasinya melonjak jadi 8 kemungkinan.</p>
+    <figure>
+      <img src="images/01_aturan_2n_kemungkinan.png" alt="Pola aturan 2 pangkat n">
+      <figcaption>Pola aturan 2ⁿ: makin banyak bit, makin banyak kombinasi yang bisa dibuat.</figcaption>
+    </figure>
+    <p>Polanya ternyata gampang ditebak: kalau kita punya <strong>n bit</strong>, banyaknya kombinasi yang bisa dibuat adalah <strong>2 pangkat n (2ⁿ)</strong>. Makanya, kalau kita mau merepresentasikan sesuatu yang punya banyak kemungkinan (bukan cuma ya/tidak), kita tinggal tambah jumlah bit-nya.</p>
+    <div class="callout blue">
+      <span class="tag">Yuk Coba Sendiri!</span>
+      Kalau kamu ingin membuat kode untuk 5 warna berbeda (merah, biru, hijau, kuning, ungu), minimal berapa bit yang kamu butuhkan? (Petunjuk: cek pangkat 2 mana yang cukup untuk menampung 5 kemungkinan.)
+    </div>
+  </section>
+
+  <section id="konversi">
+    <div class="eyebrow-sm">Keterampilan Baru</div>
+    <h2>Mengubah Angka Biasa (Desimal) Jadi Biner</h2>
+    <p>Angka yang biasa kita pakai sehari-hari (0, 1, 2, 3, ... 9, 10, dst.) disebut <strong>bilangan desimal</strong>. Ternyata, angka desimal ini juga bisa diubah jadi kode biner, lho! Caranya gampang: bagi angkanya dengan 2 secara berulang-ulang, lalu catat sisa baginya.</p>
+    <figure>
+      <img src="images/02_konversi_desimal_biner.png" alt="Cara mengubah angka 25 menjadi biner">
+      <figcaption>Cara mengubah angka 25 menjadi kode biner: bagi 2 terus-menerus, catat sisanya, lalu baca dari bawah ke atas.</figcaption>
+    </figure>
+    <ol class="stepper">
+      <li>Bagi angkanya dengan 2, catat hasil bagi dan sisanya (<code>0</code> atau <code>1</code>).</li>
+      <li>Ulangi pembagian itu pada hasil baginya, sampai hasil baginya menjadi 0.</li>
+      <li>Susun semua sisa pembagian itu dari <strong>BAWAH ke ATAS</strong> — itulah kode binernya!</li>
+    </ol>
+    <p>Contoh: nomor absen 25 kalau diubah ke biner jadi <strong>11001</strong>. Coba cek gambar di atas untuk melihat prosesnya langkah demi langkah.</p>
+    <div class="callout purple">
+      <span class="tag">Yuk Coba Sendiri!</span>
+      Coba ubah nomor absenmu sendiri (atau umurmu) menjadi kode biner menggunakan cara pembagian berulang dengan 2 di atas!
+    </div>
+  </section>
+
+  <section id="logika">
+    <div class="eyebrow-sm">Alat Berpikir Baru</div>
+    <h2>Kenalan Sama AND dan NOT</h2>
+    <p>Pertemuan lalu kamu sudah jago pakai operasi OR. Sekarang, waktunya nambah koleksi "alat berpikir" biner kamu dengan dua operasi baru: <strong>AND</strong> dan <strong>NOT</strong>.</p>
+    <figure>
+      <img src="images/03_tabel_logika_and_or_not.png" alt="Tabel kebenaran AND, OR, NOT">
+      <figcaption>Tabel kebenaran AND, OR, dan NOT — tiga operasi logika dasar untuk mengolah data biner.</figcaption>
+    </figure>
+    <h3>Operasi AND — "Harus Dua-duanya!"</h3>
+    <p>Operasi AND hasilnya bernilai 1 <strong>HANYA JIKA</strong> kedua data yang dibandingkan sama-sama bernilai 1. Kalau salah satu saja bernilai 0, hasil AND-nya langsung 0. AND cocok dipakai kalau kamu ingin mencari sesuatu yang berlaku di SEMUA kondisi sekaligus (disebut <em>irisan</em>).</p>
+    <h3>Operasi NOT — "Kebalikannya!"</h3>
+    <p>Operasi NOT cuma butuh satu data saja, dan tugasnya sederhana: membalik nilainya. Kalau awalnya 1, NOT mengubahnya jadi 0. Kalau awalnya 0, NOT mengubahnya jadi 1. NOT berguna kalau kita ingin mencari kebalikan dari suatu kondisi.</p>
+  </section>
+
+  <section id="studi-kasus">
+    <div class="eyebrow-sm">Studi Kasus Level Lanjut</div>
+    <h2>Peminjaman Ruang Selama 3 Hari!</h2>
+    <p>Kalau pertemuan lalu kita cuma membandingkan data 2 hari (Senin dan Selasa), sekarang datanya nambah jadi 3 hari: Senin, Selasa, dan Rabu. Yuk kita gunakan OR dan AND sekaligus untuk membongkar dua misteri baru!</p>
+
+    <p><strong>Kode hari Senin:</strong></p>
+    <div class="bitline">
+      <span class="b1">1</span><span class="b0">0</span><span class="b1">1</span><span class="b0">0</span><span class="b0">0</span><span class="b1">1</span><span class="b0">0</span><span class="b0">0</span><span class="b1">1</span><span class="b0">0</span><span class="b1">1</span><span class="b0">0</span>
+    </div>
+    <p><strong>Kode hari Selasa:</strong></p>
+    <div class="bitline">
+      <span class="b1">1</span><span class="b0">0</span><span class="b0">0</span><span class="b1">1</span><span class="b0">0</span><span class="b0">0</span><span class="b0">0</span><span class="b0">0</span><span class="b0">0</span><span class="b1">1</span><span class="b1">1</span><span class="b1">1</span>
+    </div>
+    <p><strong>Kode hari Rabu:</strong></p>
+    <div class="bitline">
+      <span class="b1">1</span><span class="b0">0</span><span class="b1">1</span><span class="b1">1</span><span class="b0">0</span><span class="b1">1</span><span class="b0">0</span><span class="b0">0</span><span class="b1">1</span><span class="b1">1</span><span class="b1">1</span><span class="b0">0</span>
+    </div>
+
+    <figure>
+      <img src="images/04_studi_kasus_3hari_and_or.png" alt="Studi kasus peminjaman ruang 3 hari dengan OR dan AND">
+      <figcaption>Menggabungkan operasi OR dan AND untuk data peminjaman ruang selama 3 hari.</figcaption>
+    </figure>
+
+    <h3>Misteri 1 — Ruang yang TIDAK PERNAH dipinjam (pakai OR)</h3>
+    <p>Sama seperti sebelumnya, kita gabungkan ketiga data hari itu dengan OR. Hasilnya, angka 0 yang tersisa menunjukkan ruang yang benar-benar nggak pernah dipakai sama sekali selama 3 hari:</p>
+    <div class="bitline">
+      <span class="g1">1</span><span class="g0">0</span><span class="g1">1</span><span class="g1">1</span><span class="g0">0</span><span class="g1">1</span><span class="g0">0</span><span class="g0">0</span><span class="g1">1</span><span class="g1">1</span><span class="g1">1</span><span class="g1">1</span>
+    </div>
+    <p>Jawabannya <strong>4 ruang: B, E, G, dan H</strong> tidak pernah dipinjam.</p>
+
+    <h3>Misteri 2 — Ruang yang dipinjam SETIAP hari (pakai AND)</h3>
+    <p>Ini pertanyaan baru yang nggak bisa dijawab pakai OR. Kita perlu operasi AND supaya hasilnya bernilai 1 hanya kalau ruang itu dipinjam di KETIGA hari sekaligus:</p>
+    <div class="bitline">
+      <span class="o1">1</span><span class="o0">0</span><span class="o0">0</span><span class="o0">0</span><span class="o0">0</span><span class="o0">0</span><span class="o0">0</span><span class="o0">0</span><span class="o0">0</span><span class="o0">0</span><span class="o1">1</span><span class="o0">0</span>
+    </div>
+    <p>Hasilnya: cuma <strong>2 ruang yang dipinjam setiap hari, yaitu Ruang A dan Ruang K</strong>!</p>
+
+    <div class="callout green">
+      <span class="tag">Kenapa Ini Keren?</span>
+      OR dan AND itu seperti dua kacamata berbeda untuk melihat data yang sama. OR menjawab "apakah PERNAH terjadi?", sedangkan AND menjawab "apakah SELALU terjadi?". Menggabungkan keduanya membuat kita bisa menjawab pertanyaan yang jauh lebih rumit dari sekadar satu kondisi.
+    </div>
+  </section>
+
+  <section id="teks-gambar">
+    <div class="eyebrow-sm">Perluasan Konsep</div>
+    <h2>Ternyata, Huruf dan Gambar Juga Cuma Bit!</h2>
+    <p>Sekarang bagian paling seru: ternyata prinsip bit yang sama dipakai buat menyimpan HURUF dan GAMBAR di komputer atau HP kamu, bukan cuma angka atau status ruang.</p>
+
+    <h3>Kode Biner untuk Huruf</h3>
+    <p>Karena alfabet punya 26 huruf, kita butuh cukup banyak bit supaya semua huruf punya kode uniknya sendiri. Dengan 5 bit, kita bisa membuat 2⁵ = 32 kombinasi — lebih dari cukup untuk 26 huruf!</p>
+    <figure>
+      <img src="images/05_kode_biner_alfabet.png" alt="Kode biner 5 bit untuk huruf alfabet">
+      <figcaption>Contoh kode biner 5-bit untuk beberapa huruf alfabet. Kata "KIA" menjadi rangkaian tiga kode biner.</figcaption>
+    </figure>
+    <p>Coba lihat contoh kata "KIA" pada gambar — setiap hurufnya diubah jadi kode biner 5-bit masing-masing, lalu digabung berurutan. Begitulah cara komputer menyimpan teks: sebenarnya semua tulisan yang kamu ketik disimpan sebagai deretan panjang angka 0 dan 1!</p>
+
+    <h3>Kode Biner untuk Gambar</h3>
+    <p>Gambar digital paling sederhana (hitam-putih) juga bisa direpresentasikan dengan bit: 1 untuk piksel yang berwarna, dan 0 untuk piksel yang kosong/putih.</p>
+    <figure>
+      <img src="images/06_pixel_art_biner.png" alt="Pixel art gambar hati direpresentasikan dengan kode biner">
+      <figcaption>Gambar hati sederhana yang disusun dari kotak-kotak (piksel) hitam-putih, masing-masing baris diwakili satu kode biner.</figcaption>
+    </figure>
+    <p>Setiap baris pada gambar itu punya kode binernya sendiri. Kalau kode-kode itu digabungkan lalu "digambar ulang" sesuai polanya, jadilah gambar hati yang kamu lihat. Gambar-gambar di HP kamu yang jauh lebih detail dan berwarna sebenarnya memakai prinsip yang sama, hanya dengan jauh lebih banyak piksel dan bit per piksel.</p>
+
+    <div class="callout">
+      <span class="tag">Yuk Coba Sendiri!</span>
+      Coba gambar pola sederhana (misalnya huruf awal namamu) di kertas berpetak ukuran 5x5, lalu ubah setiap barisnya menjadi kode biner (1 = diwarnai, 0 = kosong)!
+    </div>
+  </section>
+
+  <section id="rangkuman">
+    <div class="eyebrow-sm">Inti Materi</div>
+    <h2>Rangkuman — Yang Perlu Kamu Ingat</h2>
+    <ul class="tick">
+      <li><strong>Aturan 2ⁿ</strong> menentukan banyaknya kemungkinan yang bisa dibuat dari n bit — semakin banyak bit, semakin banyak kombinasi.</li>
+      <li>Bilangan desimal dapat diubah menjadi biner dengan cara membagi berulang-ulang dengan 2, lalu membaca sisa baginya dari bawah ke atas.</li>
+      <li>Operasi <strong>AND</strong> hasilnya 1 hanya jika KEDUA data bernilai 1 (mencari irisan/kesamaan).</li>
+      <li>Operasi <strong>NOT</strong> membalik nilai suatu data: 1 menjadi 0, dan 0 menjadi 1.</li>
+      <li>OR dan AND bisa digabungkan untuk menganalisis lebih dari dua himpunan data sekaligus, misalnya data 3 hari.</li>
+      <li>Prinsip bit yang sama dipakai untuk merepresentasikan angka, huruf/teks, maupun gambar sederhana di dalam komputer.</li>
+    </ul>
+
+    <h3>Kata Kunci</h3>
+    <table class="glossary">
+      <tr><th>Istilah</th><th>Penjelasan</th></tr>
+      <tr><td>Aturan 2ⁿ</td><td>Rumus untuk menghitung banyaknya kombinasi yang dapat dibuat dari n bit.</td></tr>
+      <tr><td>Konversi Biner</td><td>Proses mengubah bilangan desimal menjadi kode biner, misalnya dengan pembagian berulang dengan 2.</td></tr>
+      <tr><td>Operasi AND</td><td>Operasi logika yang hasilnya 1 hanya jika kedua data yang dibandingkan bernilai 1.</td></tr>
+      <tr><td>Operasi NOT</td><td>Operasi logika yang membalik nilai satu data: 1 menjadi 0, dan sebaliknya.</td></tr>
+      <tr><td>Piksel</td><td>Kotak kecil terkecil penyusun sebuah gambar digital.</td></tr>
+    </table>
+  </section>
+
+  <section id="cek">
+    <div class="eyebrow-sm">Latihan Mandiri</div>
+    <h2>Yuk, Cek Pemahamanmu!</h2>
+    <p>Coba jawab dulu di kepalamu atau di buku catatan, baru klik tombol untuk melihat kunci jawabannya.</p>
+
+    <div class="quiz-box">
+      <div class="q">1. Dengan 4 bit, ada berapa banyak kombinasi kode berbeda yang bisa dibuat? Tunjukkan cara menghitungnya menggunakan aturan 2ⁿ.</div>
+      <button class="reveal" onclick="toggleAns(this)">Lihat Kunci Jawaban</button>
+      <div class="ans">Dengan n = 4 bit, banyaknya kombinasi = 2⁴ = <strong>16 kombinasi</strong> berbeda.</div>
+    </div>
+
+    <div class="quiz-box">
+      <div class="q">2. Ubahlah angka 13 (desimal) menjadi kode biner menggunakan cara pembagian berulang dengan 2!</div>
+      <button class="reveal" onclick="toggleAns(this)">Lihat Kunci Jawaban</button>
+      <div class="ans">13÷2=6 sisa 1; 6÷2=3 sisa 0; 3÷2=1 sisa 1; 1÷2=0 sisa 1. Dibaca dari bawah ke atas: <strong>1101</strong>.</div>
+    </div>
+
+    <div class="quiz-box">
+      <div class="q">3. Jika kode biner P = 1 1 0 1 dan kode biner Q = 1 0 0 1, berapa hasil operasi AND dari kedua kode tersebut? Berapa pula hasil NOT dari kode P saja?</div>
+      <button class="reveal" onclick="toggleAns(this)">Lihat Kunci Jawaban</button>
+      <div class="ans">Hasil AND (P,Q) = <strong>1 0 0 1</strong> (bandingkan tiap posisi: 1&amp;1=1, 1&amp;0=0, 0&amp;0=0, 1&amp;1=1). Hasil NOT dari P = <strong>0 0 1 0</strong> (setiap bit P dibalik).</div>
+    </div>
+
+    <div class="quiz-box">
+      <div class="q">4. Jelaskan dengan kata-katamu sendiri, apa perbedaan antara "hasil OR" dan "hasil AND" ketika digunakan pada data peminjaman ruang selama beberapa hari.</div>
+      <button class="reveal" onclick="toggleAns(this)">Lihat Kunci Jawaban</button>
+      <div class="ans">Hasil <strong>OR</strong> menunjukkan ruang yang <em>pernah</em> dipinjam pada salah satu atau lebih hari (jika hasilnya 0, berarti ruang itu tidak pernah dipinjam sama sekali). Hasil <strong>AND</strong> menunjukkan ruang yang dipinjam pada <em>setiap</em> hari tanpa terlewat — jika hasilnya 1, ruang itu selalu dipakai di semua hari yang dibandingkan.</div>
+    </div>
+
+    <p style="margin-top:1.5rem; font-size:.92rem; color:var(--gray);">Setelah ini, lanjutkan diskusi bersama kelompokmu lewat LKPD "Investigasi Peminjaman Ruang 3 Hari & Kode Rahasia" yang diberikan gurumu.</p>
+  </section>
+
+  <div class="backtotop"><a href="#top">↑ Kembali ke atas</a></div>
+
+</main>
+
+<footer>
+  <strong>Main Logika dengan Bit</strong> · BAB 1 Berpikir Komputasional untuk Menyelesaikan Masalah — Pertemuan 2<br>
+  Informatika Kelas VII · SMP Negeri 14 Tarakan · Kurikulum Merdeka
+</footer>
+
+<script>
+  function toggleAns(btn){
+    const ans = btn.nextElementSibling;
+    ans.classList.toggle('show');
+    btn.textContent = ans.classList.contains('show') ? 'Sembunyikan Jawaban' : 'Lihat Kunci Jawaban';
+  }
+</script>
+
+</body>
+</html>

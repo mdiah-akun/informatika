@@ -37,7 +37,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         <div className="flex flex-col items-center mb-8">
           <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100 text-center">
-            Materi Informatika Kelas 9
+            Materi Informatika SMP 14 TARAKAN
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1 text-center">
             Masuk untuk membaca materi pelajaran
@@ -102,11 +102,12 @@ export default function LoginPage() {
         </form>
 
         <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-4">
-          Belum punya akun?{" "}
+          Belum punya akun? {" "}
           <Link href="/signup" className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline">
             Daftar di sini
           </Link>
         </p>
+		
       </div>
     </div>
   );

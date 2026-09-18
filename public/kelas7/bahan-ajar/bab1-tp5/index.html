@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disposisi Berpikir Komputasional — Materi Siswa</title>
+<style>
+  :root{
+    --navy:#1B3A5C;
+    --navy-dark:#122A44;
+    --blue:#2E6FB0;
+    --ice:#EAF3FB;
+    --orange:#F2994A;
+    --peach:#FFF3E4;
+    --green:#1E8E5A;
+    --green-bg:#E8F6EF;
+    --gray:#5B6B7C;
+    --line:#E1E8F0;
+    --bg:#FCFDFF;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:'Segoe UI', Calibri, Arial, sans-serif;
+    background:var(--bg); color:#20303F; line-height:1.65;
+  }
+  img{max-width:100%; display:block;}
+
+  .topbar{
+    position:sticky; top:0; z-index:50; background:var(--navy-dark);
+    color:#fff; padding:0.7rem 1.2rem; display:flex; align-items:center;
+    justify-content:space-between; box-shadow:0 2px 10px rgba(0,0,0,.15);
+  }
+  .topbar .brand{font-weight:700; font-size:0.95rem; letter-spacing:.02em;}
+  .topbar .brand small{display:block; font-weight:400; color:#AFC4DC; font-size:0.72rem;}
+  .topbar nav{display:none; gap:1.1rem; font-size:0.85rem;}
+  .topbar nav a{color:#CFE0F2; text-decoration:none;}
+  .topbar nav a:hover{color:#fff;}
+  @media(min-width:820px){ .topbar nav{display:flex;} }
+
+  .hero{
+    background:linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+    color:#fff; padding:3.2rem 1.5rem 3rem; text-align:center; position:relative; overflow:hidden;
+  }
+  .hero::before{
+    content:""; position:absolute; width:340px; height:340px; border-radius:50%;
+    background:rgba(255,255,255,.05); top:-140px; right:-100px;
+  }
+  .hero .eyebrow{color:var(--orange); font-weight:700; letter-spacing:.08em; font-size:0.85rem; text-transform:uppercase;}
+  .hero h1{font-size:2.2rem; margin:.5rem 0 .3rem; font-weight:800;}
+  .hero p.sub{color:#CADCFC; font-size:1.05rem; max-width:640px; margin:0 auto;}
+
+  .fieldrow{display:flex; justify-content:center; flex-wrap:wrap; gap:.5rem; margin-top:1.6rem; position:relative; z-index:1;}
+  .fieldrow span{
+    background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.3); color:#EAF3FB;
+    padding:.35rem .8rem; border-radius:20px; font-size:.82rem; font-weight:600;
+  }
+
+  main{max-width:900px; margin:0 auto; padding:0 1.4rem;}
+
+  section{padding:3rem 0; border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .eyebrow-sm{color:var(--blue); font-weight:700; font-size:0.8rem; letter-spacing:.08em; text-transform:uppercase;}
+  h2{font-size:1.7rem; color:var(--navy); margin:.35rem 0 1rem; font-weight:800;}
+  h3{font-size:1.15rem; color:var(--blue); margin:1.5rem 0 .6rem;}
+  p{margin:0 0 1rem; font-size:1.02rem; color:#33465A;}
+  figure{margin:1.6rem 0; text-align:center;}
+  figure img{
+    border-radius:12px; border:1px solid var(--line); background:#F7FAFD;
+    padding:0.6rem; margin:0 auto;
+  }
+  figcaption{font-size:0.85rem; color:var(--gray); font-style:italic; margin-top:.6rem;}
+
+  .callout{
+    background:var(--peach); border:1px solid var(--orange); border-radius:12px;
+    padding:1.1rem 1.3rem; margin:1.4rem 0;
+  }
+  .callout.blue{background:var(--ice); border-color:var(--blue);}
+  .callout.green{background:var(--green-bg); border-color:var(--green);}
+  .callout .tag{font-weight:700; color:var(--navy); display:block; margin-bottom:.4rem;}
+
+  ul.tick, ul.plain{padding-left:1.3rem; margin:0 0 1rem;}
+  ul.tick li{margin-bottom:.5rem;}
+  ul.plain li{margin-bottom:.4rem;}
+
+  .grid2{display:grid; grid-template-columns:1fr; gap:1.4rem;}
+  @media(min-width:680px){ .grid2{grid-template-columns:1fr 1fr;} }
+
+  .fieldcard{
+    background:#fff; border:1.5px solid var(--line); border-radius:12px; padding:1rem 1.1rem;
+    margin-bottom:.9rem; display:flex; gap:.8rem; align-items:flex-start;
+  }
+  .fieldcard .dot{width:.7rem; height:.7rem; border-radius:50%; margin-top:.4rem; flex:none;}
+  .fieldcard b{color:var(--navy); display:block; margin-bottom:.2rem;}
+  .fieldcard span{color:var(--gray); font-size:.94rem;}
+
+  table.compare{width:100%; border-collapse:collapse; margin:1rem 0; font-size:.95rem;}
+  table.compare th, table.compare td{ text-align:left; padding:.7rem .9rem; border-bottom:1px solid var(--line);}
+  table.compare th{color:#fff;}
+  table.compare th:nth-child(1){background:var(--navy);}
+  table.compare th:nth-child(2){background:var(--blue);}
+  table.compare th:nth-child(3){background:var(--orange);}
+  table.compare td:first-child{font-weight:700; color:var(--navy); white-space:nowrap;}
+  table.compare tr:nth-child(even){background:#F7FAFD;}
+
+  .glossary{width:100%; border-collapse:collapse; margin:1rem 0;}
+  .glossary th, .glossary td{ text-align:left; padding:.7rem .9rem; border-bottom:1px solid var(--line); font-size:0.96rem;}
+  .glossary th{background:var(--ice); color:var(--navy);}
+  .glossary td:first-child{font-weight:700; color:var(--navy); white-space:nowrap;}
+
+  .quiz-box{
+    background:#fff; border:1px solid var(--line); border-radius:14px; padding:1.2rem 1.3rem;
+    margin:1rem 0; box-shadow:0 2px 10px rgba(20,50,80,.05);
+  }
+  .quiz-box .q{font-weight:700; color:var(--navy); margin-bottom:.7rem;}
+  .quiz-box button.reveal{
+    background:var(--blue); color:#fff; border:none; padding:.5rem 1rem; border-radius:8px;
+    font-size:.88rem; cursor:pointer; font-weight:600;
+  }
+  .quiz-box button.reveal:hover{background:var(--navy);}
+  .quiz-box .ans{
+    display:none; margin-top:.8rem; background:var(--green-bg); border-left:4px solid var(--green);
+    padding:.7rem .9rem; border-radius:6px; font-size:.94rem;
+  }
+  .quiz-box .ans.show{display:block;}
+
+  footer{
+    background:var(--navy-dark); color:#AFC4DC; text-align:center; padding:2rem 1rem; font-size:0.85rem;
+  }
+  footer strong{color:#fff;}
+
+  .toc{display:flex; flex-wrap:wrap; justify-content:center; gap:.5rem; margin:1.4rem 0 0;}
+  .toc a{
+    background:rgba(255,255,255,.08); color:#EAF3FB; text-decoration:none; font-size:.82rem; font-weight:600;
+    padding:.4rem .8rem; border-radius:20px; border:1px solid rgba(255,255,255,.25);
+  }
+  .toc a:hover{background:var(--blue); color:#fff;}
+
+  .backtotop{ text-align:center; margin-top:1rem;}
+  .backtotop a{ color:var(--blue); font-size:.85rem; text-decoration:none;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">Disposisi Berpikir Komputasional<small>Informatika Kelas VII · SMP Negeri 14 Tarakan</small></div>
+  <nav>
+    <a href="#fondasi">Fondasi</a>
+    <a href="#bidang">Berbagai Bidang</a>
+    <a href="#surat">Surat Resmi/Pribadi</a>
+    <a href="#tarakan">Cerita Tarakan</a>
+    <a href="#rangkuman">Rangkuman</a>
+    <a href="#cek">Cek Pemahaman</a>
+  </nav>
+</div>
+
+<header class="hero">
+  <div class="eyebrow">BAB 1 · Tujuan Pembelajaran 5</div>
+  <h1>Ternyata, Cara Berpikirmu Bisa Dipakai di Mana-Mana!</h1>
+  <p class="sub">Materi siswa — Disposisi Berpikir Komputasional pada Berbagai Bidang</p>
+  <div class="fieldrow">
+    <span>🩺 Kesehatan</span><span>🎣 Perikanan</span><span>🛍️ UMKM</span>
+    <span>⚽ Olahraga</span><span>🍳 Memasak</span><span>✉️ Bahasa</span>
+  </div>
+  <div class="toc">
+    <a href="#fondasi">1. Balikin Ingatan</a>
+    <a href="#bidang">2. BK di Mana-Mana</a>
+    <a href="#surat">3. Surat Resmi vs Pribadi</a>
+    <a href="#tarakan">4. Cerita Tarakan</a>
+    <a href="#rangkuman">5. Rangkuman</a>
+    <a href="#cek">6. Cek Pemahaman</a>
+  </div>
+</header>
+
+<main>
+
+  <section id="intro">
+    <div class="eyebrow-sm">Pembuka</div>
+    <h2>Ngapain Belajar Informatika Kalau Bukan Mau Jadi Programmer?</h2>
+    <p>Pernah nggak sih kamu mikir gitu? Tenang, wajar banget. Tapi coba deh baca materi ini sampai habis — kamu bakal kaget, soalnya cara berpikir yang kamu latih di pelajaran Informatika ini ternyata dipakai di HAMPIR SEMUA BIDANG, mulai dari dokter, nelayan, sampai pedagang kaki lima.</p>
+    <div class="callout">
+      <span class="tag">Coba Pikirkan Dulu</span>
+      Sebutkan satu cita-citamu. Menurutmu, apakah cita-cita itu butuh kemampuan memecah masalah, fokus ke hal penting, menyusun langkah, atau mengenali pola?
+    </div>
+  </section>
+
+  <section id="fondasi">
+    <div class="eyebrow-sm">Konsep Dasar</div>
+    <h2>Balikin Ingatan: 4 Jurus Berpikir Komputasional</h2>
+    <p>Berpikir komputasional (BK) itu punya 4 "jurus" dasar yang sudah kamu pelajari di pertemuan-pertemuan sebelumnya:</p>
+    <figure>
+      <img src="images/01_empat_fondasi_bk.png" alt="Empat fondasi berpikir komputasional: dekomposisi, abstraksi, algoritma, pengenalan pola">
+      <figcaption>Dasar yang sama, dipakai di semua bidang kehidupan.</figcaption>
+    </figure>
+    <ul class="tick">
+      <li><strong>Dekomposisi</strong> — mecah masalah gede jadi bagian-bagian kecil biar nggak pusing.</li>
+      <li><strong>Abstraksi</strong> — fokus ke hal penting aja, yang nggak penting di-skip dulu.</li>
+      <li><strong>Algoritma</strong> — nyusun langkah-langkah biar tujuan tercapai, urut dan jelas.</li>
+      <li><strong>Pengenalan pola</strong> — nemuin kemiripan biar masalah yang mirip bisa diselesaikan dengan cara yang sama.</li>
+    </ul>
+    <div class="callout blue">
+      <span class="tag">Tau Nggak?</span>
+      Empat jurus ini bukan cuma buat programmer atau anak IT. Siapa pun — termasuk kamu — sebenarnya udah sering pakai jurus-jurus ini tanpa sadar!
+    </div>
+  </section>
+
+  <section id="bidang">
+    <div class="eyebrow-sm">Koneksi Lintas Bidang</div>
+    <h2>BK Ternyata Ada di Mana-Mana</h2>
+    <p>Coba deh perhatikan orang-orang di sekitarmu. Banyak banget profesi yang sebenarnya "diam-diam" pakai berpikir komputasional:</p>
+    <figure>
+      <img src="images/02_bk_berbagai_bidang.png" alt="Satu cara berpikir dipakai di banyak bidang: bahasa, kesehatan, perikanan, UMKM, olahraga, memasak">
+    </figure>
+    <div class="fieldcard"><div class="dot" style="background:var(--blue)"></div><div><b>Dokter</b><span>Mengumpulkan gejala pasien (dekomposisi), lalu mengenali pola penyakit yang mirip untuk menentukan diagnosis.</span></div></div>
+    <div class="fieldcard"><div class="dot" style="background:var(--green)"></div><div><b>Nelayan</b><span>Menyusun langkah-langkah (algoritma) sebelum melaut: cek cuaca, siapkan perahu, tentukan lokasi.</span></div></div>
+    <div class="fieldcard"><div class="dot" style="background:var(--orange)"></div><div><b>Pedagang UMKM</b><span>Mencatat semua barang, lalu fokus (abstraksi) ke barang yang paling laku untuk distok ulang.</span></div></div>
+    <div class="fieldcard"><div class="dot" style="background:var(--navy)"></div><div><b>Pelatih olahraga</b><span>Mengenali pola permainan lawan, lalu menyusun strategi bertahap.</span></div></div>
+    <div class="fieldcard"><div class="dot" style="background:var(--blue)"></div><div><b>Kamu yang lagi masak mi instan</b><span>Itu juga algoritma, lho! Langkah-langkahnya harus urut biar hasilnya enak.</span></div></div>
+  </section>
+
+  <section id="surat">
+    <div class="eyebrow-sm">Studi Kasus Seru</div>
+    <h2>Surat Resmi vs Surat Pribadi</h2>
+    <p>Sekarang kita buktikan sendiri lewat bidang yang kelihatannya "nggak nyambung" sama Informatika: Bahasa Indonesia! Coba deh, kamu tulis pesan buat sahabatmu, terus tulis juga surat izin ke sekolah. Pasti gaya bahasanya beda banget, kan?</p>
+    <figure>
+      <img src="images/03_surat_resmi_vs_pribadi.png" alt="Perbandingan surat resmi dan surat pribadi">
+      <figcaption>Dua kelompok surat dengan pola yang berbeda.</figcaption>
+    </figure>
+    <p>Nah, di sinilah BK bekerja. Dengan mengamati banyak contoh surat resmi dan surat pribadi, kamu bisa mengenali <strong>POLA</strong> masing-masing kelompok, lalu meng-<strong>ABSTRAKSI</strong> pola itu jadi sebuah <strong>TEMPLATE</strong> (format baku) yang bisa dipakai berulang kali.</p>
+    <table class="compare">
+      <tr><th>Komponen</th><th>Surat Resmi</th><th>Surat Pribadi</th></tr>
+      <tr><td>Bahasa</td><td>Baku / formal</td><td>Sehari-hari, tapi tetap sopan</td></tr>
+      <tr><td>Pengirim</td><td>Lembaga / instansi</td><td>Perorangan</td></tr>
+      <tr><td>Kop surat</td><td>Ada</td><td>Tidak ada</td></tr>
+      <tr><td>Header (no/hal/lampiran)</td><td>Ada</td><td>Tidak ada</td></tr>
+      <tr><td>Salam pembuka</td><td>Sapaan resmi</td><td>Bebas, akrab</td></tr>
+      <tr><td>Tanda tangan</td><td>Ada jabatan + cap</td><td>Cukup nama</td></tr>
+    </table>
+    <figure>
+      <img src="images/04_alur_kegiatan_ctl.png" alt="Alur aktivitas: amati, analisis, abstraksi, terapkan">
+      <figcaption>Alur aktivitas VII-BK-06-U yang akan kamu lakukan bersama kelompok.</figcaption>
+    </figure>
+    <div class="callout">
+      <span class="tag">Yuk Coba!</span>
+      Sebelum lanjut ke LKPD, coba tebak dulu: kira-kira di bagian mana surat elektronik (e-mail) mirip surat resmi, dan di bagian mana mirip surat pribadi?
+    </div>
+  </section>
+
+  <section id="tarakan">
+    <div class="eyebrow-sm">Koneksi ke Kehidupan Nyata</div>
+    <h2>Cerita dari Tarakan: BK di Kehidupan Sehari-hari Kita</h2>
+    <h3>Nelayan dan Algoritma Melaut</h3>
+    <p>Buat kamu yang tinggal di Tarakan, pasti familiar sama suasana pesisir. Sebelum berangkat melaut, nelayan nggak asal berangkat aja — mereka mengikuti langkah-langkah tertentu supaya aman dan hasil tangkapannya maksimal. Itu namanya algoritma!</p>
+    <figure>
+      <img src="images/05_konteks_nelayan_tarakan.png" alt="Ilustrasi nelayan Tarakan dan algoritma jadwal melaut">
+    </figure>
+    <h3>Pedagang UMKM dan Seni Fokus ke Data</h3>
+    <p>Pernah lihat ibu-ibu jualan kerupuk amplang atau kue bingka di pasar? Supaya dagangannya nggak rugi, mereka mencatat stok dan penjualan setiap hari, lalu fokus ke barang yang paling laku. Itulah abstraksi — memilih yang penting dari banyak data.</p>
+    <figure>
+      <img src="images/06_konteks_umkm.png" alt="Ilustrasi pedagang UMKM mencatat stok dan penjualan">
+    </figure>
+  </section>
+
+  <section id="rangkuman">
+    <div class="eyebrow-sm">Inti Materi</div>
+    <h2>Rangkuman — Yang Perlu Kamu Ingat</h2>
+    <ul class="tick">
+      <li>Berpikir komputasional (BK) bukan cuma buat anak IT — semua bidang membutuhkannya.</li>
+      <li>Empat fondasi BK: <strong>dekomposisi, abstraksi, algoritma,</strong> dan <strong>pengenalan pola</strong>.</li>
+      <li>Lewat aktivitas surat resmi vs surat pribadi, kamu berlatih mengenali pola dan membuat abstraksi (template).</li>
+      <li>Semakin sering kamu "mendisposisikan" (membiasakan) BK, semakin siap kamu menghadapi masalah apa pun — di bidang apa pun yang kamu pilih nanti.</li>
+    </ul>
+    <h3>Kata Kunci</h3>
+    <table class="glossary">
+      <tr><th>Istilah</th><th>Penjelasan</th></tr>
+      <tr><td>Disposisi</td><td>Kebiasaan atau kecenderungan bersikap/berpikir dengan cara tertentu secara konsisten.</td></tr>
+      <tr><td>Dekomposisi</td><td>Memecah persoalan kompleks menjadi bagian-bagian kecil yang lebih mudah diselesaikan.</td></tr>
+      <tr><td>Abstraksi</td><td>Menyarikan bagian penting dari suatu persoalan dan mengabaikan yang tidak penting.</td></tr>
+      <tr><td>Template</td><td>Format/pola umum hasil abstraksi yang dapat dipakai berulang kali.</td></tr>
+    </table>
+  </section>
+
+  <section id="cek">
+    <div class="eyebrow-sm">Latihan Mandiri</div>
+    <h2>Yuk, Cek Pemahamanmu!</h2>
+    <p>Coba jawab dulu di kepalamu atau di buku catatan, baru klik tombol untuk melihat kunci jawabannya.</p>
+
+    <div class="quiz-box">
+      <div class="q">1. Sebutkan satu profesi (selain yang dibahas di materi ini) dan jelaskan fondasi BK apa yang mungkin dipakainya!</div>
+      <button class="reveal" onclick="toggleAns(this)">Lihat Contoh Jawaban</button>
+      <div class="ans">Jawaban bisa bervariasi. Contoh: seorang <strong>arsitek</strong> memakai dekomposisi (memecah desain bangunan menjadi bagian-bagian seperti pondasi, dinding, atap) dan algoritma (menyusun tahapan pembangunan secara berurutan).</div>
+    </div>
+
+    <div class="quiz-box">
+      <div class="q">2. Apa perbedaan utama antara surat resmi dan surat pribadi dari segi bahasa dan tanda tangan?</div>
+      <button class="reveal" onclick="toggleAns(this)">Lihat Kunci Jawaban</button>
+      <div class="ans">Surat resmi memakai bahasa baku serta tanda tangan dengan jabatan dan cap lembaga. Surat pribadi memakai bahasa sehari-hari yang tetap sopan, dan tanda tangannya cukup nama saja.</div>
+    </div>
+
+    <div class="quiz-box">
+      <div class="q">3. Mengapa proses menyusun template surat resmi termasuk kegiatan "abstraksi"?</div>
+      <button class="reveal" onclick="toggleAns(this)">Lihat Kunci Jawaban</button>
+      <div class="ans">Karena kita mengambil pola/format yang penting dan sama dari banyak contoh surat resmi (kop surat, header, salam resmi, tanda tangan + jabatan), lalu mengabaikan detail isi yang berbeda-beda di tiap surat.</div>
+    </div>
+
+    <div class="quiz-box">
+      <div class="q">4. Menurutmu, apakah berpikir komputasional hanya berguna untuk mata pelajaran Informatika? Jelaskan alasanmu!</div>
+      <button class="reveal" onclick="toggleAns(this)">Lihat Kunci Jawaban</button>
+      <div class="ans">Tidak. BK adalah keterampilan generik (problem solving) yang berguna di semua bidang — bahasa, kesehatan, bisnis, olahraga, dan lainnya — karena semua bidang membutuhkan cara berpikir yang efektif, efisien, dan terstruktur untuk menyelesaikan masalah.</div>
+    </div>
+
+    <p style="margin-top:1.5rem; font-size:.92rem; color:var(--gray);">Setelah ini, lanjutkan kegiatan bersama kelompokmu lewat LKPD "Surat Pribadi vs Surat Resmi" yang diberikan gurumu.</p>
+  </section>
+
+  <div class="backtotop"><a href="#top">↑ Kembali ke atas</a></div>
+
+</main>
+
+<footer>
+  <strong>Disposisi Berpikir Komputasional pada Berbagai Bidang</strong> · BAB 1 Berpikir Komputasional untuk Menyelesaikan Masalah<br>
+  Informatika Kelas VII · SMP Negeri 14 Tarakan · Kurikulum Merdeka
+</footer>
+
+<script>
+  function toggleAns(btn){
+    const ans = btn.nextElementSibling;
+    ans.classList.toggle('show');
+    btn.textContent = ans.classList.contains('show') ? 'Sembunyikan Jawaban' : 'Lihat Kunci Jawaban';
+  }
+</script>
+
+</body>
+</html>

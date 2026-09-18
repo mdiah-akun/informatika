@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" viewBox="0 0 46 46" role="img" aria-label="Ikon jam/waktu">
+  <rect width="46" height="46" rx="14" fill="#F4568C"/>
+  <circle cx="23" cy="23" r="11" fill="none" stroke="#fff" stroke-width="3.5"/>
+  <path d="M23 17 v6 l4 4" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>
+</svg>

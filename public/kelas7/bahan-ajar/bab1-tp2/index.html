@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Optimasi Penjadwalan — Materi Siswa Kelas VII</title>
+<style>
+  :root{
+    --navy:#1E3A5F; --blue:#2E86AB; --teal:#3AAFA9; --amber:#F5A623;
+    --coral:#E76F51; --green:#5FAD56; --ink:#22313F; --bg:#F7F9FB;
+    --card:#FFFFFF; --muted:#5B6B79; --border:#E3EAF0;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:'Segoe UI', Calibri, Arial, sans-serif; background:var(--bg); color:var(--ink);
+    line-height:1.65;
+  }
+  header.hero{
+    background:linear-gradient(135deg,var(--navy) 0%,#254a73 100%);
+    color:#fff; padding:56px 8vw 64px; position:relative; overflow:hidden;
+  }
+  header.hero::before{
+    content:""; position:absolute; top:-80px; right:-80px; width:260px; height:260px;
+    border-radius:50%; background:rgba(255,255,255,0.06);
+  }
+  .badge{
+    display:inline-block; background:var(--amber); color:var(--navy); font-weight:700;
+    font-size:.8rem; letter-spacing:.04em; padding:6px 16px; border-radius:20px; margin-bottom:18px;
+  }
+  header.hero h1{ font-size:2.6rem; margin:0 0 12px; }
+  header.hero p{ font-size:1.05rem; max-width:640px; color:#CFE8E6; margin:0 0 6px;}
+  nav.toc{
+    max-width:1000px; margin:-32px auto 0; background:var(--card); border-radius:14px;
+    box-shadow:0 10px 30px rgba(20,40,60,0.12); padding:18px 24px; position:relative; z-index:2;
+    display:flex; flex-wrap:wrap; gap:8px 18px; justify-content:center;
+  }
+  nav.toc a{
+    color:var(--blue); text-decoration:none; font-size:.92rem; font-weight:600; padding:6px 4px;
+  }
+  nav.toc a:hover{ text-decoration:underline; }
+  main{ max-width:960px; margin:64px auto 0; padding:0 6vw 40px; }
+  section{ margin-bottom:56px; scroll-margin-top:24px; }
+  h2{ color:var(--navy); font-size:1.7rem; border-bottom:3px solid var(--border); padding-bottom:10px; }
+  h3{ color:var(--blue); font-size:1.2rem; margin-top:28px; }
+  .lead{ font-size:1.08rem; color:var(--ink); }
+  figure{ margin:24px 0; text-align:center; }
+  figure img{ max-width:100%; border-radius:10px; box-shadow:0 6px 18px rgba(20,40,60,.10); }
+  figcaption{ font-size:.88rem; color:var(--muted); font-style:italic; margin-top:8px; }
+  .callout{
+    border-left:6px solid var(--teal); background:#EAF6F5; border-radius:8px; padding:16px 20px;
+    margin:20px 0; font-size:.98rem;
+  }
+  .callout.amber{ border-color:var(--amber); background:#FDF3E3; }
+  .callout.green{ border-color:var(--green); background:#EEF7EE; }
+  .callout.coral{ border-color:var(--coral); background:#FBEBE6; }
+  .grid5{ display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin:20px 0; }
+  .bucket{
+    background:var(--card); border:2px solid var(--border); border-radius:10px; padding:14px 8px;
+    text-align:center; font-weight:700;
+  }
+  .bucket .t{ font-size:1.15rem; }
+  .bucket.a{border-color:var(--blue); color:var(--blue);}
+  .bucket.b{border-color:var(--teal); color:var(--teal);}
+  .bucket.c{border-color:var(--coral); color:var(--coral);}
+  .bucket.d{border-color:var(--amber); color:var(--amber);}
+  .bucket.e{border-color:var(--green); color:var(--green);}
+  .cards4{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin:22px 0; }
+  .card{
+    background:var(--card); border-radius:12px; padding:20px; box-shadow:0 4px 14px rgba(20,40,60,.08);
+    text-align:center;
+  }
+  .card .emoji{ font-size:2.1rem; }
+  .card h4{ margin:10px 0 6px; color:var(--navy); }
+  .card p{ font-size:.88rem; color:var(--muted); margin:0; }
+  details.challenge{
+    background:#FFF9EF; border:2px dashed var(--amber); border-radius:10px; padding:16px 20px; margin:22px 0;
+  }
+  details.challenge summary{ cursor:pointer; font-weight:700; color:var(--navy); font-size:1.02rem; }
+  details.challenge .answer{ margin-top:14px; padding-top:14px; border-top:1px dashed #E0C892; }
+  ol.reflect li, ul.plain li{ margin-bottom:10px; }
+  .quiz-box{
+    background:var(--card); border:2px solid var(--border); border-radius:12px; padding:22px 24px; margin:20px 0;
+  }
+  .quiz-box .opt{
+    display:block; background:#F3F6F9; border-radius:8px; padding:10px 14px; margin:8px 0; cursor:pointer;
+    border:2px solid transparent; transition:.15s;
+  }
+  .quiz-box .opt:hover{ border-color:var(--blue); }
+  .quiz-box .opt.correct{ background:#E3F5E6; border-color:var(--green); font-weight:700; }
+  .quiz-box .opt.wrong{ background:#FBE7E4; border-color:var(--coral); }
+  .quiz-box .feedback{ margin-top:10px; font-weight:600; min-height:1.2em; }
+  footer{
+    background:var(--navy); color:#CFE8E6; text-align:center; padding:28px 6vw; font-size:.85rem;
+  }
+  .checklist{ list-style:none; padding:0; }
+  .checklist li{ padding-left:30px; position:relative; margin-bottom:10px; }
+  .checklist li::before{ content:"✓"; position:absolute; left:0; color:var(--green); font-weight:900; }
+  @media (max-width:640px){
+    .grid5{ grid-template-columns:repeat(3,1fr);}
+    header.hero h1{ font-size:2rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="badge">BAB 1 · BERPIKIR KOMPUTASIONAL</span>
+  <h1>Optimasi Penjadwalan</h1>
+  <p>Materi siswa Kelas VII — SMP Negeri 14 Tarakan</p>
+  <p>Yuk belajar cara mengatur pekerjaan supaya selesai lebih cepat, lewat cerita seru soal ember air!</p>
+</header>
+
+<nav class="toc">
+  <a href="#apa-itu">🤔 Apa Itu Optimasi?</a>
+  <a href="#cerita">🪣 Cerita Ember</a>
+  <a href="#level-up">🚰 Tantangan 2 Keran</a>
+  <a href="#dunia-nyata">🌍 Dunia Nyata</a>
+  <a href="#kuis">⚡ Kuis Cepat</a>
+  <a href="#rangkuman">📝 Rangkuman</a>
+  <a href="#renungkan">💭 Renungkan</a>
+</nav>
+
+<main>
+
+  <section id="apa-itu">
+    <h2>Emang Apa Sih Optimasi Penjadwalan?</h2>
+    <p class="lead">Coba bayangin gini: kamu dan teman-temanmu piket kelas, terus ada 5 tugas yang harus diselesaikan satu per satu karena cuma ada 1 orang yang ngerjain. Kalau asal urut aja, kadang hasilnya nggak efisien.</p>
+    <div class="callout">
+      💬 <strong>Optimasi penjadwalan</strong> itu artinya kita mengatur urutan atau pembagian tugas supaya semuanya selesai secepat dan seefisien mungkin, tanpa ada yang bentrok. Optimasi itu bukan cuma soal "selesai", tapi soal selesai dengan cara paling cerdas!
+    </div>
+    <p>Di dunia komputer, konsep ini kepake banget lho! Komputer punya banyak "pekerjaan" (disebut <em>job</em> atau proses) yang harus dikerjakan prosesor (CPU). Komputer juga harus mikirin: proses mana yang dikerjain duluan, biar komputer nggak lemot.</p>
+    <figure>
+      <img src="images/04_analogi_cpu_scheduling.png" alt="Analogi ember dan keran dengan job dan CPU">
+      <figcaption>Ember dan keran itu mirip banget sama job dan CPU di komputer, lho!</figcaption>
+    </figure>
+  </section>
+
+  <section id="cerita">
+    <h2>🪣 Cerita: Piket Isi Ember Air Kelas</h2>
+    <p>Kadang aliran air di sekolah suka nggak stabil di jam-jam tertentu. Nah, regu piket kelas VII kebagian tugas ngisi beberapa ember cadangan — buat nyiram tanaman toga sekolah dan cadangan air di wastafel. Masalahnya, ember-embernya beda ukuran, jadi lama ngisinya juga beda-beda!</p>
+    <figure>
+      <img src="images/01_ilustrasi_ember_keran_tunggal.png" alt="Lima ember dengan satu keran">
+      <figcaption>Cuma ada 1 keran aktif. Lima ember menunggu giliran diisi.</figcaption>
+    </figure>
+    <div class="grid5">
+      <div class="bucket a">Ember A<br><span class="t">8'</span></div>
+      <div class="bucket b">Ember B<br><span class="t">5'</span></div>
+      <div class="bucket c">Ember C<br><span class="t">12'</span></div>
+      <div class="bucket d">Ember D<br><span class="t">3'</span></div>
+      <div class="bucket e">Ember E<br><span class="t">7'</span></div>
+    </div>
+    <p><strong>Pertanyaannya:</strong> kalau kamu jadi petugas piket dan cuma ada 1 keran, ember mana yang kamu isi duluan supaya rata-rata semua orang nggak nunggu lama?</p>
+
+    <h3>Cara 1 — FCFS (First Come First Served)</h3>
+    <p>Asal urut aja sesuai nomornya: A → B → C → D → E.</p>
+    <h3>Cara 2 — SJF (Shortest Job First)</h3>
+    <p>Dahulukan yang paling cepat kelar dulu: D → B → E → A → C.</p>
+    <figure>
+      <img src="images/02_gantt_fcfs_vs_sjf.png" alt="Perbandingan Gantt chart FCFS vs SJF">
+      <figcaption>Total waktu sama-sama 35 menit, tapi rata-rata waktu tunggunya beda jauh!</figcaption>
+    </figure>
+    <div class="callout amber">
+      ⏱️ Rata-rata waktu tunggu Cara 1 (FCFS) = <strong>21,8 menit</strong>. Rata-rata waktu tunggu Cara 2 (SJF) = cuma <strong>16,8 menit</strong>! Padahal jumlah kerjaannya sama persis.
+    </div>
+
+    <details class="challenge">
+      <summary>🧠 Coba sendiri: kalau urutannya C, A, E, B, D — berapa rata-rata waktu tunggunya? (klik untuk lihat jawaban)</summary>
+      <div class="answer">
+        Waktu selesai: C=12, A=20, E=27, B=32, D=35 → total = 126 → rata-rata = 126 ÷ 5 = <strong>25,2 menit</strong>.<br>
+        Ternyata lebih buruk dibanding Cara 2 (16,8 menit)! Ini membuktikan strategi SJF memang paling efisien untuk kasus 1 sumber daya.
+      </div>
+    </details>
+  </section>
+
+  <section id="level-up">
+    <h2>🚰 Tantangan Level Up: 2 Keran, 6 Ember</h2>
+    <p>Setelah jago dengan 1 keran, sekarang naik level! Kali ini ada 2 keran yang bisa dipakai bersamaan (paralel), dan 6 ember yang harus dibagi habis ke kedua keran itu. Tantangannya: bagi tugas supaya SEMUA ember selesai secepat mungkin.</p>
+    <figure>
+      <img src="images/03_dua_keran_paralel.png" alt="Dua keran paralel dengan enam ember">
+      <figcaption>Salah satu cara membagi tugas: Keran 1 selesai di menit ke-22, Keran 2 di menit ke-23.</figcaption>
+    </figure>
+    <div class="callout green">
+      🏆 Triknya: dahulukan ember yang paling lama isinya, taruh di keran yang "bebannya" paling ringan saat itu. Nggak ada satu jawaban "paling benar" — yang penting pembagiannya seimbang dan kamu bisa jelasin alasannya!
+    </div>
+  </section>
+
+  <section id="dunia-nyata">
+    <h2>🌍 Di Mana Lagi Kita Ketemu Optimasi Penjadwalan?</h2>
+    <div class="cards4">
+      <div class="card"><div class="emoji">📅</div><h4>Jadwal Pelajaran</h4><p>Supaya guru dan ruang kelas nggak bentrok jadwalnya.</p></div>
+      <div class="card"><div class="emoji">🛒</div><h4>Antrean Kasir</h4><p>Kasir mana yang lebih cepat melayani pelanggan?</p></div>
+      <div class="card"><div class="emoji">🏍️</div><h4>Ojek Online</h4><p>Mengatur driver mana yang paling pas jemput penumpang.</p></div>
+      <div class="card"><div class="emoji">💻</div><h4>Komputer & HP</h4><p>Mengatur aplikasi mana diproses duluan supaya nggak lemot.</p></div>
+    </div>
+  </section>
+
+  <section id="kuis">
+    <h2>⚡ Kuis Cepat: Cek Pemahamanmu</h2>
+    <p>Klik jawaban yang menurutmu paling tepat!</p>
+    <div class="quiz-box">
+      <p><strong>1. Strategi apa yang mendahulukan pekerjaan tercepat agar rata-rata waktu tunggu paling kecil?</strong></p>
+      <div class="opt" data-correct="false">A. FCFS (First Come First Served)</div>
+      <div class="opt" data-correct="true">B. SJF (Shortest Job First)</div>
+      <div class="opt" data-correct="false">C. Menunggu semua ember kosong dulu</div>
+      <div class="opt" data-correct="false">D. Mengisi ember paling besar dulu</div>
+      <div class="feedback"></div>
+    </div>
+    <div class="quiz-box">
+      <p><strong>2. Kalau ada 2 sumber daya (misalnya 2 keran), strategi pembagian tugas yang baik adalah...</strong></p>
+      <div class="opt" data-correct="false">A. Semua tugas ditumpuk ke satu keran saja</div>
+      <div class="opt" data-correct="true">B. Membagi beban seimbang antar keran</div>
+      <div class="opt" data-correct="false">C. Mengabaikan lama waktu tiap ember</div>
+      <div class="opt" data-correct="false">D. Mengisi ember secara acak tanpa strategi</div>
+      <div class="feedback"></div>
+    </div>
+  </section>
+
+  <section id="rangkuman">
+    <h2>📝 Rangkuman Kilat</h2>
+    <ul class="checklist">
+      <li>Optimasi penjadwalan = mengatur urutan/pembagian pekerjaan supaya paling efisien, bukan cuma "selesai".</li>
+      <li>FCFS = dikerjakan sesuai urutan datang. Sederhana, tapi belum tentu paling efisien.</li>
+      <li>SJF = kerjakan yang paling cepat dulu → rata-rata waktu tunggu jadi lebih kecil.</li>
+      <li>Kalau sumber dayanya lebih dari satu, tugas dibagi supaya beban tiap sumber daya seimbang.</li>
+      <li>Konsep ini dipakai di banyak hal di sekitar kita, termasuk cara kerja komputer!</li>
+    </ul>
+  </section>
+
+  <section id="renungkan">
+    <h2>🤔 Ayo, Renungkan</h2>
+    <p>Setelah mempelajari materi ini, coba jawab pertanyaan berikut di buku catatanmu:</p>
+    <ol class="reflect">
+      <li>Menurutmu, kenapa penting belajar mengatur urutan pekerjaan, bukan cuma sekadar menyelesaikannya?</li>
+      <li>Ceritakan satu pengalamanmu yang mirip dengan kegiatan mengisi ember — misalnya mengerjakan PR, membantu orang tua, atau tugas kelompok.</li>
+      <li>Kalau kamu jadi "komputer" yang harus mengatur banyak tugas sekaligus, strategi apa yang akan kamu pakai?</li>
+      <li>Bagian mana dari materi ini yang menurutmu paling menantang? Ceritakan alasannya.</li>
+    </ol>
+  </section>
+
+</main>
+
+<footer>
+  Materi Siswa · Bab 1 Berpikir Komputasional — TP2 Optimasi Penjadwalan<br>
+  Informatika Kelas VII · SMP Negeri 14 Tarakan
+</footer>
+
+<script>
+  document.querySelectorAll('.quiz-box').forEach(box => {
+    const opts = box.querySelectorAll('.opt');
+    const fb = box.querySelector('.feedback');
+    opts.forEach(opt => {
+      opt.addEventListener('click', () => {
+        if (box.dataset.answered) return;
+        box.dataset.answered = "1";
+        opts.forEach(o => {
+          if (o.dataset.correct === "true") o.classList.add('correct');
+        });
+        if (opt.dataset.correct === "true") {
+          fb.textContent = "🎉 Benar sekali!";
+          fb.style.color = "#5FAD56";
+        } else {
+          opt.classList.add('wrong');
+          fb.textContent = "Belum tepat — jawaban yang benar ditandai hijau ya.";
+          fb.style.color = "#E76F51";
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

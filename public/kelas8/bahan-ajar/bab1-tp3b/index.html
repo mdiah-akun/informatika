@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Level Up: Tabel Otomatis & Pivot Table Lanjutan — Materi Siswa TP 3 Pertemuan 2</title>
+<style>
+  :root{
+    --green:#1e7145;
+    --green-dark:#123d28;
+    --green-light:#e7f3ec;
+    --blue:#1f5c8b;
+    --blue-light:#e4eef6;
+    --amber:#c97a00;
+    --amber-light:#fff3cd;
+    --text:#22282a;
+    --muted:#6b7472;
+    --card:#f5f8f6;
+    --card-border:#dbe8e0;
+    --maxw:840px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family: "Segoe UI", "Trebuchet MS", Calibri, Arial, sans-serif;
+    color:var(--text);
+    background:#ffffff;
+    line-height:1.6;
+  }
+  a{color:var(--green);}
+
+  .hero{
+    background: radial-gradient(1200px 500px at 15% -10%, #1c633c 0%, var(--green-dark) 55%, #0c2116 100%);
+    color:#fff;
+    padding:64px 20px 56px;
+    text-align:center;
+  }
+  .hero .kicker{
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:12.5px;
+    font-weight:700;
+    color:#ffcf8a;
+    margin:0 0 14px;
+  }
+  .hero h1{
+    font-family: Georgia, "Times New Roman", serif;
+    font-size:clamp(26px,4.6vw,42px);
+    margin:0 0 14px;
+    line-height:1.2;
+  }
+  .hero p{
+    max-width:620px;
+    margin:0 auto;
+    color:#d7e7de;
+    font-size:16.5px;
+  }
+
+  nav.toc{
+    position:sticky; top:0; z-index:50;
+    background:#ffffffee;
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid #e6ece9;
+    overflow-x:auto;
+    white-space:nowrap;
+    padding:0 12px;
+  }
+  nav.toc .inner{
+    max-width:var(--maxw);
+    margin:0 auto;
+    display:flex;
+    gap:4px;
+    padding:8px 0;
+  }
+  nav.toc a{
+    flex:0 0 auto;
+    text-decoration:none;
+    color:var(--muted);
+    font-size:12.5px;
+    font-weight:600;
+    padding:7px 12px;
+    border-radius:20px;
+  }
+  nav.toc a:hover{ background:var(--green-light); color:var(--green); }
+
+  main{ max-width:var(--maxw); margin:0 auto; padding:44px 20px 80px; }
+  section{ margin-bottom:56px; scroll-margin-top:56px; }
+  .eyebrow{
+    text-transform:uppercase; letter-spacing:1.5px; font-size:12px; font-weight:700;
+    color:var(--amber); margin:0 0 8px;
+  }
+  h2{
+    font-family: Georgia, "Times New Roman", serif;
+    font-size:26px; margin:0 0 16px; color:var(--green-dark);
+  }
+  h2.blue{ color:var(--blue); }
+  h3{ font-size:18px; margin:26px 0 10px; color:var(--text); }
+  p{ margin:0 0 14px; font-size:15.5px; }
+  .lead{ font-size:16.5px; }
+
+  figure.fig{ margin:20px 0 0; }
+  figure.fig.ratio-square{ max-width:520px; margin-left:auto; margin-right:auto; }
+  figure.fig img{
+    display:block; width:100%; height:auto; border-radius:14px;
+    border:1px solid var(--card-border); box-shadow:0 2px 12px #00000014;
+  }
+  .img-caption{ text-align:center; font-size:12.5px; font-style:italic; color:var(--muted); margin-top:8px; margin-bottom:24px; }
+
+  .formula{
+    background:var(--green-dark); color:#fff; border-radius:12px; padding:18px 20px;
+    font-family: Consolas, "Courier New", monospace; font-size:13.5px; margin:16px 0;
+    overflow-x:auto;
+  }
+  .formula .arg-a{ color:#8fd9b4; font-weight:700; }
+  .formula .arg-b{ color:#ffd27a; font-weight:700; }
+  .formula .arg-c{ color:#ff9e9e; font-weight:700; }
+  .formula.blue{ background:#0f2d40; }
+
+  .result-box{
+    display:flex; align-items:center; gap:16px;
+    background:var(--green-light); border-radius:12px; padding:16px 20px; margin:14px 0;
+  }
+  .result-box.blue{ background:var(--blue-light); }
+  .result-box .num{ font-family:Georgia, serif; font-weight:700; font-size:30px; color:var(--green); }
+  .result-box.blue .num{ color:var(--blue); }
+  .result-box .txt{ font-size:13.5px; color:var(--text); }
+
+  .callout{
+    border-radius:12px; padding:18px 20px; margin:20px 0;
+    border:1px solid transparent;
+  }
+  .callout .title{ font-weight:700; font-size:14.5px; margin-bottom:6px; }
+  .callout.amber{ background:var(--amber-light); border-color:#f0d78a; }
+  .callout.amber .title{ color:var(--amber); }
+  .callout.blue{ background:var(--blue-light); border-color:#c9dfef; }
+  .callout.blue .title{ color:var(--blue); }
+  .callout.green{ background:var(--green-light); border-color:var(--card-border); }
+  .callout.green .title{ color:var(--green); }
+  .callout p{ margin:0; font-size:14.5px; }
+
+  table.data{ width:100%; border-collapse:collapse; margin:16px 0; font-size:13.5px; }
+  table.data th{ background:var(--green); color:#fff; padding:10px 12px; text-align:left; }
+  table.data td{ padding:9px 12px; border-bottom:1px solid var(--card-border); }
+  table.data tr:nth-child(even) td{ background:#f7faf8; }
+  table.data td.num, table.data th.num{ text-align:center; }
+  table.data tr.highlight td{ background:var(--green-light); font-weight:700; color:var(--green-dark); }
+
+  .grid4{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:18px 0; }
+  @media (max-width:700px){ .grid4{ grid-template-columns:1fr 1fr; } }
+  .mini{ background:var(--card); border:1px solid var(--card-border); border-radius:14px; padding:18px 14px; text-align:center; }
+  .mini .circle{
+    width:46px; height:46px; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center;
+    color:#fff; font-weight:700; font-size:19px;
+  }
+  .mini h5{ margin:0 0 6px; font-size:14px; }
+  .mini p{ font-size:11.5px; color:var(--muted); margin:0; }
+
+  .quiz-item{ background:var(--card); border:1px solid var(--card-border); border-radius:12px; padding:16px 18px; margin-bottom:12px; }
+  .quiz-item .q{ font-weight:600; font-size:14.5px; margin-bottom:8px; }
+  .quiz-item details summary{ cursor:pointer; color:var(--green); font-size:13px; font-weight:700; list-style:none; }
+  .quiz-item details summary::-webkit-details-marker{ display:none; }
+  .quiz-item details summary::before{ content:"▸ "; }
+  .quiz-item details[open] summary::before{ content:"▾ "; }
+  .quiz-item details .answer{ margin-top:8px; font-size:13.5px; color:var(--text); background:#fff; border-radius:8px; padding:10px 12px; }
+
+  table.glossary{ width:100%; border-collapse:collapse; margin-top:14px; font-size:13.5px; }
+  table.glossary td{ padding:10px 12px; border:1px solid var(--card-border); vertical-align:top; }
+  table.glossary tr:nth-child(even) td{ background:#f7faf8; }
+  table.glossary td.term{ font-weight:700; color:var(--green); width:34%; }
+
+  footer{ text-align:center; padding:30px 20px 50px; color:var(--muted); font-size:12.5px; }
+
+  .back-top{
+    position:fixed; right:18px; bottom:18px; width:42px; height:42px; border-radius:50%;
+    background:var(--green); color:#fff; text-decoration:none; display:flex; align-items:center; justify-content:center;
+    font-size:18px; box-shadow:0 4px 14px #00000030; opacity:0.9;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <p class="kicker">Informatika Kelas VIII · Bab I Analisis Data · TP 3 Pertemuan 2</p>
+  <h1>Level Up: Tabel Otomatis &amp; Pivot Table Lanjutan</h1>
+  <p>Lanjutan studi kasus Kunjungan Wisatawan Kalimantan Utara — sekarang dengan Tabel Otomatis, SUMIFS/COUNTIFS 3 kriteria, dan Pivot Table yang lebih pintar.</p>
+</header>
+
+<nav class="toc">
+  <div class="inner">
+    <a href="#hook">Naik Level</a>
+    <a href="#data">Data Baru</a>
+    <a href="#tabel">Tabel Otomatis</a>
+    <a href="#sumifs3">SUMIFS 3 Kriteria</a>
+    <a href="#pivot">Pivot Lanjutan</a>
+    <a href="#kasus">Studi Kasus</a>
+    <a href="#tips">Tips</a>
+    <a href="#rangkuman">Rangkuman</a>
+    <a href="#uji-diri">Uji Diri</a>
+    <a href="#kamus">Kamus Kilat</a>
+  </div>
+</nav>
+
+<main>
+
+  <section id="hook">
+    <p class="eyebrow">Masih Ingat Pertemuan Lalu?</p>
+    <h2>Yuk, Naik Level Sedikit!</h2>
+    <p class="lead">Di pertemuan sebelumnya, kalian sudah kenalan sama SUMIFS, COUNTIFS, dan Pivot Table buat meringkas data kunjungan wisatawan Kalimantan Utara. Sekarang, Dinas Pariwisata datang lagi dengan pertanyaan yang lebih menantang:</p>
+    <div class="callout amber">
+      <p style="font-style:italic;">“Kami mau promosi wisata ke wisatawan MANCANEGARA tahun depan, tapi anggarannya cuma cukup untuk SATU kabupaten/kota. Kabupaten/kota mana yang paling tepat dipromosikan, dan kenapa?”</p>
+    </div>
+    <p>Buat jawab pertanyaan ini, data lama kita perlu “ditingkatkan” dulu — ditambah satu kolom baru: Jenis Wisatawan (Domestik atau Mancanegara). Terus, kita juga butuh tiga kemampuan baru: <strong>Fitur Tabel Otomatis</strong>, <strong>SUMIFS/COUNTIFS dengan TIGA kriteria</strong>, dan <strong>Pivot Table yang lebih canggih</strong>. Yuk, kita bahas satu-satu!</p>
+  </section>
+
+  <section id="data">
+    <p class="eyebrow">Data yang Diperluas</p>
+    <h2>Kenalan Sama Kolom Baru: Jenis Wisatawan</h2>
+    <p>Dataset kunjungan wisatawan yang dulu cuma punya 16 baris (Destinasi, Kabupaten/Kota, Tahun, Jumlah Wisatawan), sekarang “dipecah” lagi berdasarkan jenis wisatawannya, jadi 32 baris. Total jumlah wisatawan tiap destinasi-tahun tetap sama persis seperti sebelumnya, cuma sekarang kita tahu berapa yang Domestik dan berapa yang Mancanegara.</p>
+
+    <figure class="fig ratio-wide">
+      <img src="images/gambar-2-kolom-baru.png" alt="Ilustrasi menambah kolom baru Jenis Wisatawan ke dataset lama">
+    </figure>
+    <p class="img-caption">Data lama (4 kolom) + 1 kolom baru Jenis Wisatawan = data baru (5 kolom)</p>
+
+    <figure class="fig ratio-square">
+      <img src="images/gambar-3-dataset-ringkas.png" alt="Tabel dataset ringkas 8 destinasi wisata dengan pemisahan Domestik dan Mancanegara untuk tahun 2023 dan 2024">
+    </figure>
+    <p class="img-caption">Dataset ringkas: 8 destinasi × Domestik/Mancanegara, tahun 2023 &amp; 2024</p>
+  </section>
+
+  <section id="tabel">
+    <p class="eyebrow">Kemampuan Baru #1</p>
+    <h2>Fitur Tabel Otomatis</h2>
+    <p>Selama ini kita menulis data di rentang sel biasa (misalnya A1:E33). Masalahnya, kalau kita nambah baris data baru di bawah, rumus SUMIFS/COUNTIFS atau Pivot Table yang sudah dibuat sebelumnya <strong>TIDAK otomatis</strong> ikut memperhitungkan baris baru itu — harus diedit manual. Solusinya: ubah rentang data jadi Tabel Otomatis!</p>
+
+    <figure class="fig ratio-wide">
+      <img src="images/gambar-1-tabel-otomatis.png" alt="Perbandingan rentang sel biasa di kiri dengan Tabel Otomatis yang punya filter, baris zebra, dan Total Row di kanan">
+    </figure>
+    <p class="img-caption">Rentang sel biasa vs Tabel Otomatis — tekan Ctrl + T untuk mengubahnya</p>
+
+    <h3>Caranya:</h3>
+    <ol>
+      <li>Klik di mana saja di dalam rentang data.</li>
+      <li>Tekan <strong>Ctrl + T</strong> (atau menu <em>Insert &gt; Table</em>), lalu klik OK.</li>
+      <li>Beri nama tabel yang mudah diingat lewat menu <em>Table Design &gt; Table Name</em>, misalnya “TabelWisata”.</li>
+    </ol>
+    <p>Begitu jadi Tabel, kita otomatis dapat beberapa “hadiah”:</p>
+    <ul>
+      <li><strong>Filter otomatis</strong> — tiap header kolom punya tombol dropdown buat menyaring data.</li>
+      <li><strong>Baris zebra</strong> — warna baris berselang-seling, jadi lebih gampang dibaca.</li>
+      <li><strong>Total Row</strong> — baris khusus di bawah tabel yang bisa menghitung Sum, Average, Count, Max, Min tinggal pilih dari dropdown, tanpa nulis formula.</li>
+      <li><strong>Auto-expand</strong> — begitu kita ketik data baru tepat di bawah tabel, tabel otomatis membesar, dan semua formula yang memakai nama tabel ikut memperhitungkan baris baru itu secara otomatis!</li>
+    </ul>
+    <p>Yang paling keren: begitu data jadi Tabel, formula bisa memakai <strong>Referensi Terstruktur</strong> — nama tabel dan kolom, bukan alamat sel yang kaku:</p>
+    <div class="formula">=SUM(<span class="arg-a">TabelWisata[Jumlah Wisatawan]</span>)</div>
+    <p>Bandingkan dengan cara lama yang harus menyebut alamat sel persis seperti <code>=SUM(E2:E33)</code> — kalau datanya nambah, alamat E33 itu harus diubah manual. Dengan referensi terstruktur, kita nggak perlu mikirin itu lagi!</p>
+  </section>
+
+  <section id="sumifs3">
+    <p class="eyebrow">Kemampuan Baru #2</p>
+    <h2>SUMIFS &amp; COUNTIFS dengan TIGA Kriteria</h2>
+    <p>Di pertemuan lalu, SUMIFS/COUNTIFS kita pakai dua syarat (Kabupaten/Kota dan Tahun). Sekarang, karena ada kolom baru Jenis Wisatawan, kita bisa menambahkan syarat KETIGA. Caranya sama persis — tinggal tambah satu pasangan (kolom syarat, nilai syarat) lagi di akhir formula.</p>
+    <p>Misalnya kita mau tahu: <em>“Berapa wisatawan MANCANEGARA yang datang ke Berau pada tahun 2024?”</em> Ada TIGA syarat: Kabupaten/Kota = Berau, Tahun = 2024, DAN Jenis Wisatawan = Mancanegara.</p>
+
+    <figure class="fig ratio-wide">
+      <img src="images/gambar-4-sumifs-3kriteria.png" alt="Tiga kriteria SUMIFS: Kabupaten/Kota Berau, Tahun 2024, Jenis Wisatawan Mancanegara, dengan hasil 1.650">
+    </figure>
+    <p class="img-caption">Tiga kriteria diperiksa sekaligus — hasil SUMIFS: 1.650 wisatawan mancanegara</p>
+
+    <div class="formula">=SUMIFS(<span class="arg-a">TabelWisata[Jumlah Wisatawan]</span>, <span class="arg-b">TabelWisata[Kabupaten/Kota]</span>, <span class="arg-c">"Berau"</span>, <span class="arg-b">TabelWisata[Tahun]</span>, <span class="arg-c">2024</span>, <span class="arg-b">TabelWisata[Jenis Wisatawan]</span>, <span class="arg-c">"Mancanegara"</span>)</div>
+
+    <div class="result-box">
+      <div class="num">1.650</div>
+      <div class="txt">wisatawan mancanegara — hasil SUMIFS dengan tiga kriteria sekaligus.</div>
+    </div>
+
+    <p>Kalau mau tahu ADA BERAPA BARIS datanya (bukan jumlah wisatawannya), tinggal ganti SUMIFS jadi COUNTIFS dan buang bagian sum_range-nya:</p>
+    <div class="formula blue">=COUNTIFS(<span class="arg-b">TabelWisata[Kabupaten/Kota]</span>, <span class="arg-c">"Berau"</span>, <span class="arg-b">TabelWisata[Tahun]</span>, <span class="arg-c">2024</span>, <span class="arg-b">TabelWisata[Jenis Wisatawan]</span>, <span class="arg-c">"Mancanegara"</span>)</div>
+    <div class="result-box blue">
+      <div class="num">2</div>
+      <div class="txt">baris data — ada 2 destinasi di Berau yang punya catatan wisatawan mancanegara tahun 2024.</div>
+    </div>
+  </section>
+
+  <section id="pivot">
+    <p class="eyebrow">Kemampuan Baru #3</p>
+    <h2>Pivot Table Lanjutan</h2>
+    <p>Pivot Table dasar yang kita pelajari kemarin cuma menjumlahkan data (Sum). Padahal, Pivot Table bisa jauh lebih pintar dari itu!</p>
+
+    <h3>1. Value Field Settings — Ganti Cara Meringkas</h3>
+    <p>Klik kanan pada angka di area Values pada Pivot Table, pilih <em>Value Field Settings</em>, lalu ganti “Sum of...” jadi salah satu dari: <strong>Average</strong> (rata-rata), <strong>Max</strong> (tertinggi), <strong>Min</strong> (terendah), atau <strong>Count</strong> (banyak data).</p>
+
+    <figure class="fig ratio-wide">
+      <img src="images/gambar-5-value-field-settings.png" alt="Menu Value Field Settings dengan pilihan Sum, Average, Max, Min, Count, beserta contoh hasil Average 294 dan Max 1.600">
+    </figure>
+    <p class="img-caption">Value Field Settings — ganti cara meringkas sesuai kebutuhan</p>
+
+    <h3>2. Show Values As → % of Grand Total</h3>
+    <p>Ini fitur yang paling membantu buat menjawab pertanyaan Dinas Pariwisata! Klik kanan pada angka di Pivot Table, pilih <em>Show Values As</em>, lalu pilih <strong>% of Grand Total</strong>. Setiap angka akan berubah jadi persentase KONTRIBUSInya terhadap total keseluruhan.</p>
+
+    <figure class="fig ratio-square">
+      <img src="images/gambar-6-pivot-persen.png" alt="Tabel wisatawan mancanegara per kabupaten/kota dengan kolom % of Grand Total, Berau 63,9%">
+    </figure>
+    <p class="img-caption">Show Values As % of Grand Total — kontribusi tiap kabupaten/kota</p>
+
+    <div class="callout green">
+      <div class="title">Perhatikan</div>
+      <p>Dari SELURUH wisatawan mancanegara yang datang ke Kalimantan Utara (4.705 orang), <strong>63,9%</strong> di antaranya memilih Berau. Artinya lebih dari separuh wisatawan mancanegara se-Kalimantan Utara terpusat di satu kabupaten/kota saja!</p>
+    </div>
+
+    <h3>3. Dua Field Sekaligus di Rows/Columns</h3>
+    <p>Pivot Table juga bisa menampung lebih dari satu field di area Rows atau Columns. Misalnya: field Kabupaten/Kota ditarik ke Rows, field Jenis Wisatawan ditarik ke Columns, dan field Jumlah Wisatawan ditarik ke Values — hasilnya adalah tabel silang yang langsung membandingkan Domestik vs Mancanegara untuk tiap kabupaten/kota sekaligus.</p>
+
+    <figure class="fig ratio-square">
+      <img src="images/gambar-7-pivot-2d-jenis.png" alt="Pivot Table dua field: Kabupaten/Kota sebagai baris, Domestik dan Mancanegara sebagai kolom, filter tahun 2024">
+    </figure>
+    <p class="img-caption">Pivot Table 2 field: Kabupaten/Kota × Jenis Wisatawan, filter Tahun = 2024</p>
+  </section>
+
+  <section id="kasus">
+    <p class="eyebrow">Studi Kasus</p>
+    <h2>Jadi, Kabupaten/Kota Mana yang Dipilih?</h2>
+    <p>Sekarang kita punya semua alat buat menjawab pertanyaan Dinas Pariwisata di awal tadi. Mari kita lihat datanya sekali lagi:</p>
+
+    <figure class="fig ratio-wide">
+      <img src="images/gambar-8-rekomendasi.png" alt="Grafik batang % of Grand Total wisatawan mancanegara per kabupaten/kota, Berau tertinggi dengan 63,9%, direkomendasikan">
+    </figure>
+    <p class="img-caption">Berau menyumbang 63,9% dari seluruh wisatawan mancanegara Kalimantan Utara</p>
+
+    <ul>
+      <li><strong>Berau</strong>: 3.005 wisatawan mancanegara (2023–2024) — tertinggi dari semua kabupaten/kota, menyumbang 63,9% dari SELURUH wisatawan mancanegara Kalimantan Utara.</li>
+      <li><strong>Tarakan</strong>: 970 wisatawan mancanegara, kontribusi 20,6% dari total se-Kalimantan Utara.</li>
+      <li><strong>Bulungan</strong>: 390 wisatawan mancanegara, kontribusi 8,3%.</li>
+      <li><strong>Nunukan</strong>: 340 wisatawan mancanegara, kontribusi paling kecil, 7,2%.</li>
+    </ul>
+
+    <div class="callout green">
+      <div class="title">Kesimpulan</div>
+      <p>Berau — khususnya destinasi Pulau Derawan yang menyumbang mayoritas wisatawan mancanegaranya — adalah kabupaten/kota paling tepat untuk dipromosikan ke wisatawan mancanegara tahun depan, karena menyumbang lebih dari separuh (63,9%) seluruh wisatawan mancanegara Kalimantan Utara.</p>
+    </div>
+
+    <p>Perhatikan bagaimana kita sampai ke kesimpulan ini: bukan cuma dengan menebak, tapi dengan mengolah data pakai Tabel Otomatis, SUMIFS/COUNTIFS 3 kriteria, dan Pivot Table dengan % of Grand Total. Inilah yang disebut <strong>pengambilan keputusan berbasis data</strong> (data-driven decision making) — kemampuan yang sangat berguna di banyak bidang pekerjaan, bukan cuma pariwisata!</p>
+  </section>
+
+  <section id="tips">
+    <p class="eyebrow">Biar Nggak Error</p>
+    <h2>Tips &amp; Fakta Menarik</h2>
+
+    <div class="callout amber">
+      <div class="title">💡 Tips: Ganti Data ke Tabel SEBELUM Bikin Pivot Table</div>
+      <p>Kalau data sumbernya sudah berbentuk Tabel Otomatis, Pivot Table yang dibuat darinya akan otomatis ikut membesar saat ada data baru — kita tinggal klik Refresh, tidak perlu mengubah ulang rentang sumber data secara manual.</p>
+    </div>
+
+    <div class="callout blue">
+      <div class="title">🤔 Tau Nggak?</div>
+      <p>Fitur Tabel Otomatis dan Pivot Table sama-sama membaca <em>nama kolom</em> sebagai penanda, bukan hanya posisi kolomnya. Karena itu, kalau kita menyisipkan kolom baru di TENGAH Tabel Otomatis, semua formula yang memakai referensi terstruktur tetap benar — beda dengan rentang sel biasa yang gampang “berantakan” kalau ada kolom baru disisipkan.</p>
+    </div>
+  </section>
+
+  <section id="rangkuman">
+    <p class="eyebrow">Sebelum Praktik</p>
+    <h2>Rangkuman Kilat</h2>
+    <div class="grid4">
+      <div class="mini">
+        <div class="circle" style="background:var(--green);">▦</div>
+        <h5>Tabel Otomatis</h5>
+        <p>Ctrl+T — filter, Total Row, referensi terstruktur, auto-expand.</p>
+      </div>
+      <div class="mini">
+        <div class="circle" style="background:var(--blue);">3</div>
+        <h5>SUMIFS/COUNTIFS</h5>
+        <p>Tinggal tambah 1 pasangan kriteria lagi buat kriteria ke-3.</p>
+      </div>
+      <div class="mini">
+        <div class="circle" style="background:var(--amber);">⚙</div>
+        <h5>Value Field Settings</h5>
+        <p>Ganti Sum jadi Average/Max/Min/Count.</p>
+      </div>
+      <div class="mini">
+        <div class="circle" style="background:var(--green-dark);">%</div>
+        <h5>% of Grand Total</h5>
+        <p>Menampilkan kontribusi, bukan cuma angka mentah.</p>
+      </div>
+    </div>
+
+    <div class="callout green">
+      <div class="title">✏️ Yuk, Coba Sendiri!</div>
+      <p>Sekarang giliran kalian praktik langsung! Buka LKPD “Meringkas Data Kunjungan Wisatawan Kalimantan Utara — Level Lanjutan” dan kerjakan bareng kelompok kalian.</p>
+    </div>
+  </section>
+
+  <section id="uji-diri">
+    <p class="eyebrow">Cek Pemahaman</p>
+    <h2>Yuk, Uji Diri Kalian!</h2>
+    <p>Coba jawab dulu tanpa buka catatan. Klik "Lihat Jawaban" kalau sudah yakin dengan jawaban kalian.</p>
+
+    <div class="quiz-item">
+      <div class="q">1. Apa manfaat mengubah rentang data menjadi Tabel Otomatis, dibandingkan tetap memakai rentang sel biasa?</div>
+      <details><summary>Lihat Jawaban</summary><div class="answer">Tabel Otomatis memberi filter otomatis, Total Row siap pakai, referensi terstruktur pada formula, dan yang paling penting: otomatis membesar (auto-expand) saat ada data baru ditambahkan, sehingga formula dan Pivot Table yang sudah dibuat tidak perlu diedit ulang.</div></details>
+    </div>
+    <div class="quiz-item">
+      <div class="q">2. Tulis formula SUMIFS untuk mencari total wisatawan Domestik yang datang ke Tarakan pada tahun 2023.</div>
+      <details><summary>Lihat Jawaban</summary><div class="answer">=SUMIFS(TabelWisata[Jumlah Wisatawan], TabelWisata[Kabupaten/Kota], "Tarakan", TabelWisata[Tahun], 2023, TabelWisata[Jenis Wisatawan], "Domestik") — hasilnya 3.010.</div></details>
+    </div>
+    <div class="quiz-item">
+      <div class="q">3. Pada Pivot Table, pengaturan apa yang dipakai untuk mengubah “Sum of Jumlah Wisatawan” menjadi “Average of Jumlah Wisatawan”?</div>
+      <details><summary>Lihat Jawaban</summary><div class="answer">Klik kanan pada angka di area Values, pilih Value Field Settings, lalu pilih Average pada daftar “Summarize value field by”.</div></details>
+    </div>
+    <div class="quiz-item">
+      <div class="q">4. Kenapa Show Values As % of Grand Total bisa memberi kesimpulan yang berbeda dibandingkan hanya melihat angka Sum biasa? Jelaskan memakai contoh Berau vs Tarakan.</div>
+      <details><summary>Lihat Jawaban</summary><div class="answer">Kalau cuma lihat angka Sum biasa, kita cuma tahu Berau punya 3.005 wisatawan mancanegara — angkanya besar, tapi tidak jelas seberapa besar dibanding kabupaten/kota lain. Dengan Show Values As % of Grand Total, angka itu diubah jadi 63,9% dari SELURUH wisatawan mancanegara Kalimantan Utara (4.705 orang) — langsung terlihat bahwa Berau menyumbang lebih dari separuhnya sendirian, jauh mengungguli Tarakan yang cuma menyumbang 20,6%.</div></details>
+    </div>
+  </section>
+
+  <section id="kamus">
+    <p class="eyebrow">Referensi Cepat</p>
+    <h2>Kamus Kilat</h2>
+    <table class="glossary">
+      <tr><td class="term">Tabel Otomatis (Table)</td><td>Rentang data yang diubah menjadi objek Tabel di pengolah lembar kerja, punya filter, Total Row, dan bisa membesar otomatis saat data baru ditambahkan.</td></tr>
+      <tr><td class="term">Referensi Terstruktur</td><td>Cara menulis rentang data dalam formula memakai nama tabel &amp; kolom, misalnya TabelWisata[Jumlah Wisatawan], bukan alamat sel biasa seperti D2:D33.</td></tr>
+      <tr><td class="term">Total Row</td><td>Baris khusus di bagian bawah Tabel Otomatis yang bisa menghitung Sum, Average, Count, dan sebagainya secara otomatis.</td></tr>
+      <tr><td class="term">Value Field Settings</td><td>Pengaturan pada Pivot Table untuk mengganti cara meringkas nilai — misalnya dari Sum menjadi Average, Max, Min, atau Count.</td></tr>
+      <tr><td class="term">Show Values As % of Grand Total</td><td>Pengaturan Pivot Table yang menampilkan setiap angka sebagai persentase dari total keseluruhan, bukan angka mentah.</td></tr>
+      <tr><td class="term">SUMIFS/COUNTIFS 3 kriteria</td><td>Formula SUMIFS/COUNTIFS yang memeriksa TIGA syarat sekaligus sebelum menjumlahkan/menghitung data.</td></tr>
+    </table>
+  </section>
+
+</main>
+
+<footer>
+  Materi Siswa · Informatika Kelas VIII · Bab I Analisis Data · TP 3 Pertemuan 2
+</footer>
+
+<a href="#hook" class="back-top" title="Kembali ke atas">↑</a>
+
+</body>
+</html>

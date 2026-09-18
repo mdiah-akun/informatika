@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" font-family="Nunito, sans-serif" role="img" aria-label="Diagram generalisasi dari kasus spesifik gelang Baim menjadi algoritma umum">
+<defs>
+  <linearGradient id="gg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE7EF"/><stop offset="1" stop-color="#fff"/></linearGradient>
+  <linearGradient id="gg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#DFF7EE"/><stop offset="1" stop-color="#fff"/></linearGradient>
+  <linearGradient id="arrowGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F4568C"/><stop offset="1" stop-color="#17B890"/></linearGradient>
+</defs>
+
+<rect x="40" y="90" width="320" height="220" rx="26" fill="url(#gg1)" stroke="#F4568C" stroke-width="2.5"/>
+<text x="200.0" y="130" text-anchor="middle" font-size="13" font-weight="800" fill="#c23b6b" letter-spacing="1" font-family="Poppins, sans-serif">KASUS SPESIFIK</text>
+<!-- mini bracelet icon -->
+<g transform="translate(154.0,154)">
+  <circle cx="46" cy="46" r="44" fill="none" stroke="#F4568C" stroke-width="6" stroke-dasharray="10,8" opacity="0.5"/>
+  <circle cx="46" cy="4" r="11" fill="#E63946"/>
+  <circle cx="77" cy="15" r="11" fill="#2DBE6C"/>
+  <circle cx="88" cy="46" r="11" fill="#E63946"/>
+  <circle cx="77" cy="77" r="11" fill="#FFC53D"/>
+  <circle cx="46" cy="88" r="11" fill="#457B9D"/>
+  <circle cx="15" cy="77" r="11" fill="#E63946"/>
+  <circle cx="4" cy="46" r="11" fill="#2DBE6C"/>
+  <circle cx="15" cy="15" r="11" fill="#FFC53D"/>
+</g>
+<text x="200.0" y="272" text-anchor="middle" font-size="16" font-weight="800" fill="#2C2A3D" font-family="Poppins, sans-serif">Gelang Baim</text>
+<text x="200.0" y="294" text-anchor="middle" font-size="12.5" fill="#6A6785">16 manik, 4 warna, aturan khusus</text>
+
+<rect x="540" y="90" width="320" height="220" rx="26" fill="url(#gg2)" stroke="#17B890" stroke-width="2.5"/>
+<text x="700.0" y="130" text-anchor="middle" font-size="13" font-weight="800" fill="#0e7a5c" letter-spacing="1" font-family="Poppins, sans-serif">ALGORITMA UMUM</text>
+<!-- gear/lightbulb icon -->
+<g transform="translate(670.0,152)">
+  <circle cx="30" cy="30" r="30" fill="#FFF3DE" stroke="#FFB443" stroke-width="4"/>
+  <path d="M30 12 a18 18 0 1 0 0.01 0 Z" fill="none" stroke="#FFB443" stroke-width="0"/>
+  <path d="M18 30 a12 12 0 1 1 24 0 c0 6 -4 8 -6 12 h-12 c-2 -4 -6 -6 -6 -12 Z" fill="#FFD98A"/>
+  <rect x="24" y="46" width="12" height="6" rx="2" fill="#8a5a12"/>
+</g>
+<text x="700.0" y="272" text-anchor="middle" font-size="16" font-weight="800" fill="#2C2A3D" font-family="Poppins, sans-serif">Berlaku Umum</text>
+<text x="700.0" y="294" text-anchor="middle" font-size="12.5" fill="#6A6785">Bisa dipakai untuk kasus manapun</text>
+
+<line x1="378" y1="200.0" x2="518" y2="200.0" stroke="url(#arrowGrad)" stroke-width="8" stroke-linecap="round"/>
+<polygon points="534,200.0 510,184.0 510,216.0" fill="#17B890"/>
+<text x="450.0" y="178.0" text-anchor="middle" font-size="13" font-weight="800" fill="#6A6785" font-family="Poppins, sans-serif">GENERALISASI</text>
+</svg>

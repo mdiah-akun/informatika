@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Representasi Data (Biner) — Materi Siswa</title>
+<style>
+  :root{
+    --navy:#1B3A5C;
+    --navy-dark:#122A44;
+    --blue:#2E6FB0;
+    --ice:#EAF3FB;
+    --orange:#F2994A;
+    --peach:#FFF3E4;
+    --green:#1E8E5A;
+    --green-bg:#E8F6EF;
+    --gray:#5B6B7C;
+    --line:#E1E8F0;
+    --bg:#FCFDFF;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:'Segoe UI', Calibri, Arial, sans-serif;
+    background:var(--bg); color:#20303F; line-height:1.65;
+  }
+  img{max-width:100%; display:block;}
+
+  /* ---- top nav ---- */
+  .topbar{
+    position:sticky; top:0; z-index:50; background:var(--navy-dark);
+    color:#fff; padding:0.7rem 1.2rem; display:flex; align-items:center;
+    justify-content:space-between; box-shadow:0 2px 10px rgba(0,0,0,.15);
+  }
+  .topbar .brand{font-weight:700; font-size:0.95rem; letter-spacing:.02em;}
+  .topbar .brand small{display:block; font-weight:400; color:#AFC4DC; font-size:0.72rem;}
+  .topbar nav{display:none; gap:1.1rem; font-size:0.85rem;}
+  .topbar nav a{color:#CFE0F2; text-decoration:none;}
+  .topbar nav a:hover{color:#fff;}
+  @media(min-width:820px){ .topbar nav{display:flex;} }
+
+  /* ---- hero ---- */
+  .hero{
+    background:linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+    color:#fff; padding:3.2rem 1.5rem 3rem; text-align:center; position:relative; overflow:hidden;
+  }
+  .hero::before{
+    content:""; position:absolute; width:340px; height:340px; border-radius:50%;
+    background:rgba(255,255,255,.05); top:-140px; right:-100px;
+  }
+  .hero .eyebrow{color:var(--orange); font-weight:700; letter-spacing:.08em; font-size:0.85rem; text-transform:uppercase;}
+  .hero h1{font-size:2.3rem; margin:.5rem 0 .3rem; font-weight:800;}
+  .hero p.sub{color:#CADCFC; font-size:1.05rem; max-width:640px; margin:0 auto;}
+  .bitrow{display:flex; justify-content:center; gap:.4rem; margin-top:1.6rem; position:relative; z-index:1;}
+  .bitrow span{
+    width:2.4rem; height:2.4rem; border-radius:8px; display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:1.1rem; border:1px solid rgba(255,255,255,.35);
+  }
+  .bitrow span.on{background:var(--blue); color:#fff;}
+  .bitrow span.off{background:#2A4A6B; color:#cfe0f2;}
+
+  main{max-width:900px; margin:0 auto; padding:0 1.4rem;}
+
+  section{padding:3rem 0; border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .eyebrow-sm{color:var(--blue); font-weight:700; font-size:0.8rem; letter-spacing:.08em; text-transform:uppercase;}
+  h2{font-size:1.7rem; color:var(--navy); margin:.35rem 0 1rem; font-weight:800;}
+  h3{font-size:1.15rem; color:var(--blue); margin:1.5rem 0 .6rem;}
+  p{margin:0 0 1rem; font-size:1.02rem; color:#33465A;}
+  figure{margin:1.6rem 0; text-align:center;}
+  figure img{
+    border-radius:12px; border:1px solid var(--line); background:#F7FAFD;
+    padding:0.6rem; margin:0 auto;
+  }
+  figcaption{font-size:0.85rem; color:var(--gray); font-style:italic; margin-top:.6rem;}
+
+  .callout{
+    background:var(--peach); border:1px solid var(--orange); border-radius:12px;
+    padding:1.1rem 1.3rem; margin:1.4rem 0;
+  }
+  .callout.blue{background:var(--ice); border-color:var(--blue);}
+  .callout.green{background:var(--green-bg); border-color:var(--green);}
+  .callout .tag{font-weight:700; color:var(--navy); display:block; margin-bottom:.4rem;}
+
+  ul.tick, ul.plain{padding-left:1.3rem; margin:0 0 1rem;}
+  ul.tick li{margin-bottom:.5rem;}
+  ul.plain li{margin-bottom:.4rem;}
+
+  .grid2{display:grid; grid-template-columns:1fr; gap:1.4rem;}
+  @media(min-width:680px){ .grid2{grid-template-columns:1fr 1fr;} }
+  .imgcard{text-align:center;}
+
+  .glossary{width:100%; border-collapse:collapse; margin:1rem 0;}
+  .glossary th, .glossary td{ text-align:left; padding:.7rem .9rem; border-bottom:1px solid var(--line); font-size:0.96rem;}
+  .glossary th{background:var(--ice); color:var(--navy);}
+  .glossary td:first-child{font-weight:700; color:var(--navy); white-space:nowrap;}
+
+  /* interactive check */
+  .quiz-box{
+    background:#fff; border:1px solid var(--line); border-radius:14px; padding:1.2rem 1.3rem;
+    margin:1rem 0; box-shadow:0 2px 10px rgba(20,50,80,.05);
+  }
+  .quiz-box .q{font-weight:700; color:var(--navy); margin-bottom:.7rem;}
+  .quiz-box button.reveal{
+    background:var(--blue); color:#fff; border:none; padding:.5rem 1rem; border-radius:8px;
+    font-size:.88rem; cursor:pointer; font-weight:600;
+  }
+  .quiz-box button.reveal:hover{background:var(--navy);}
+  .quiz-box .ans{
+    display:none; margin-top:.8rem; background:var(--green-bg); border-left:4px solid var(--green);
+    padding:.7rem .9rem; border-radius:6px; font-size:.94rem;
+  }
+  .quiz-box .ans.show{display:block;}
+
+  .bitline{display:flex; flex-wrap:wrap; gap:.35rem; margin:.6rem 0 1rem;}
+  .bitline span{
+    width:2.1rem; height:2.1rem; border-radius:6px; display:flex; align-items:center; justify-content:center;
+    font-weight:700; border:1.5px solid var(--navy); font-size:.95rem;
+  }
+  .bitline span.b1{background:var(--blue); color:#fff;}
+  .bitline span.b0{background:#E5E9EF; color:var(--navy);}
+
+  footer{
+    background:var(--navy-dark); color:#AFC4DC; text-align:center; padding:2rem 1rem; font-size:0.85rem;
+  }
+  footer strong{color:#fff;}
+
+  .toc{display:flex; flex-wrap:wrap; gap:.5rem; margin:1.4rem 0 0;}
+  .toc a{
+    background:var(--ice); color:var(--navy); text-decoration:none; font-size:.82rem; font-weight:600;
+    padding:.4rem .8rem; border-radius:20px; border:1px solid var(--line);
+  }
+  .toc a:hover{background:var(--blue); color:#fff;}
+
+  .backtotop{ text-align:center; margin-top:1rem;}
+  .backtotop a{ color:var(--blue); font-size:.85rem; text-decoration:none;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">Representasi Data (Biner)<small>Informatika Kelas VII · SMP Negeri 14 Tarakan</small></div>
+  <nav>
+    <a href="#bit">Bit</a>
+    <a href="#pertanyaan">Pertanyaan Biner</a>
+    <a href="#studi-kasus">Studi Kasus</a>
+    <a href="#or">Operasi OR</a>
+    <a href="#sekitar">Di Sekitar Kita</a>
+    <a href="#rangkuman">Rangkuman</a>
+    <a href="#cek">Cek Pemahaman</a>
+  </nav>
+</div>
+
+<header class="hero">
+  <div class="eyebrow">BAB 1 · Tujuan Pembelajaran 4</div>
+  <h1>Yuk, Kenalan dengan Bahasa Rahasia Komputer!</h1>
+  <p class="sub">Materi siswa — Representasi Data (Biner) — Berpikir Komputasional untuk Menyelesaikan Masalah</p>
+  <div class="bitrow" id="bitAnim">
+    <span class="on">1</span><span class="off">0</span><span class="on">1</span><span class="on">1</span><span class="off">0</span><span class="off">0</span>
+  </div>
+  <div class="toc">
+    <a href="#bit">1. Kenalan Bit</a>
+    <a href="#pertanyaan">2. Pertanyaan Biner</a>
+    <a href="#studi-kasus">3. Misteri Ruangan</a>
+    <a href="#or">4. Operasi OR</a>
+    <a href="#sekitar">5. Di Sekitar Kita</a>
+    <a href="#rangkuman">6. Rangkuman</a>
+    <a href="#cek">7. Cek Pemahaman</a>
+  </div>
+</header>
+
+<main>
+
+  <section id="intro">
+    <div class="eyebrow-sm">Pembuka</div>
+    <h2>Komputer Itu Sebenarnya “Mikir” Pakai Apa, Sih?</h2>
+    <p>Coba deh perhatikan HP atau laptop kamu. Ia bisa mainin lagu, nampilin foto, bahkan membalas chat kamu secepat kilat. Tapi tahu nggak, di dalam “otak”-nya, komputer itu sebenarnya cuma kenal dua hal doang: <strong>0 dan 1</strong>. Cuma itu, nggak lebih!</p>
+    <p>Kedengarannya aneh, ya? Gimana caranya cuma dengan dua angka, komputer bisa melakukan hal serumit itu? Nah, di halaman ini kamu bakal ketemu jawabannya: konsep yang namanya <strong>representasi data biner</strong>.</p>
+    <div class="callout">
+      <span class="tag">Coba Pikirkan Dulu</span>
+      Kalau kamu cuma boleh menjawab “YA” atau “TIDAK” untuk semua pertanyaan tentang dirimu hari ini, kira-kira pertanyaan apa saja yang masih bisa terjawab dengan jelas?
+    </div>
+  </section>
+
+  <section id="bit">
+    <div class="eyebrow-sm">Konsep Dasar</div>
+    <h2>Kenalan Sama “Bit” — Si Kembar 0 dan 1</h2>
+    <p>Satuan data paling kecil di dunia komputer disebut <strong>bit</strong>. Satu bit itu ibarat saklar lampu: cuma ada dua kondisi, menyala atau padam. Kalau menyala, kita sebut nilainya <strong>1</strong>. Kalau padam, nilainya <strong>0</strong>. Nggak ada kondisi setengah menyala — ya menyala, ya padam.</p>
+    <figure>
+      <img src="images/01_konsep_bit_biner.png" alt="Ilustrasi konsep bit sebagai dua kemungkinan, 0 dan 1">
+      <figcaption>Satu bit = dua kemungkinan. Beberapa bit yang disusun berjajar disebut kode biner.</figcaption>
+    </figure>
+    <p>Kalau beberapa bit ini digabungkan berjajar, jadilah yang namanya <strong>kode biner</strong> atau bilangan biner. Semakin banyak bit yang dipakai, semakin banyak juga informasi yang bisa “diceritakan” oleh deretan angka itu.</p>
+  </section>
+
+  <section id="pertanyaan">
+    <div class="eyebrow-sm">Mengenali Data</div>
+    <h2>Pertanyaan Mana yang “Cocok” Buat Bahasa Komputer?</h2>
+    <p>Nggak semua data bisa langsung diwakili satu bit saja. Triknya gampang: cek dulu, ada berapa kemungkinan jawabannya?</p>
+    <figure>
+      <img src="images/05_pertanyaan_biner_vs_bukan.png" alt="Perbandingan pertanyaan biner dan bukan biner">
+      <figcaption>Pertanyaan dengan 2 kemungkinan jawaban = biner. Lebih dari itu, butuh cara lain.</figcaption>
+    </figure>
+    <p>Pertanyaan seperti “Apakah hari ini kamu sarapan roti?” itu cuma punya dua kemungkinan jawaban: Ya atau Tidak. Nah, ini pas banget diwakili satu bit — misalnya Ya = 1 dan Tidak = 0.</p>
+    <p>Tapi coba lihat pertanyaan “Apa warna kesukaanmu?” — jawabannya bisa macam-macam: merah, biru, hijau, kuning, dan seterusnya. Karena kemungkinannya lebih dari dua, satu bit saja nggak cukup untuk mewakilinya.</p>
+    <div class="callout blue">
+      <span class="tag">Yuk Coba Sendiri!</span>
+      Tuliskan (di buku catatanmu) 3 pertanyaan yang jawabannya cuma “Ya” atau “Tidak”, lalu ubah masing-masing jadi kode bit (1 atau 0) sesuai keadaanmu hari ini!
+    </div>
+  </section>
+
+  <section id="studi-kasus">
+    <div class="eyebrow-sm">Studi Kasus Seru</div>
+    <h2>Misteri Ruang yang Nggak Pernah Dipinjam</h2>
+    <p>Sekarang, waktunya praktik! Bayangkan sekolahmu punya 12 ruang kegiatan ekstrakurikuler, dari Ruang A sampai Ruang L. Setiap hari, panitia mencatat ruang mana saja yang dipinjam. Berikut catatan untuk hari Senin dan Selasa:</p>
+
+    <div class="grid2">
+      <div class="imgcard">
+        <img src="images/02_denah_peminjaman_senin.png" alt="Denah peminjaman ruang hari Senin">
+      </div>
+      <div class="imgcard">
+        <img src="images/03_denah_peminjaman_selasa.png" alt="Denah peminjaman ruang hari Selasa">
+      </div>
+    </div>
+    <p style="text-align:center; color:var(--gray); font-size:.9rem; font-style:italic; margin-top:-.6rem;">Denah peminjaman ruang hari Senin (kiri) dan hari Selasa (kanan). Warna merah = dipinjam.</p>
+
+    <p>Pertanyaannya: berapa banyak ruang yang <strong>TIDAK PERNAH</strong> dipinjam sama sekali, baik hari Senin maupun Selasa? Kamu bisa saja mengecek satu-satu, tapi itu lama, kan? Yuk, kita pakai cara berpikir komputasional!</p>
+
+    <h3>Langkah 1 — Ubah jadi kode biner</h3>
+    <p>Karena setiap ruang cuma punya dua kemungkinan (dipinjam atau kosong), kita bisa tuliskan sebagai bit: 1 = dipinjam, 0 = kosong. Urutannya dari Ruang A sampai Ruang L.</p>
+    <p><strong>Kode hari Senin:</strong></p>
+    <div class="bitline">
+      <span class="b1">1</span><span class="b0">0</span><span class="b1">1</span><span class="b0">0</span><span class="b0">0</span><span class="b1">1</span><span class="b0">0</span><span class="b0">0</span><span class="b1">1</span><span class="b0">0</span><span class="b1">1</span><span class="b0">0</span>
+    </div>
+    <p><strong>Kode hari Selasa:</strong></p>
+    <div class="bitline">
+      <span class="b1">1</span><span class="b0">0</span><span class="b0">0</span><span class="b1">1</span><span class="b0">0</span><span class="b0">0</span><span class="b0">0</span><span class="b0">0</span><span class="b0">0</span><span class="b1">1</span><span class="b1">1</span><span class="b1">1</span>
+    </div>
+  </section>
+
+  <section id="or">
+    <div class="eyebrow-sm">Cara Menyelesaikan</div>
+    <h2>Gabungin Data Pakai Operasi OR — Kayak Detektif!</h2>
+    <p>Untuk tahu ruang mana saja yang PERNAH dipakai (baik di hari Senin saja, Selasa saja, atau dua-duanya), kita pakai operasi logika <strong>OR</strong>. Aturannya simpel banget:</p>
+    <ul class="tick">
+      <li>Kalau salah satu bit (atau dua-duanya) bernilai 1, hasil OR-nya = <strong>1</strong>.</li>
+      <li>Hasil OR cuma bernilai <strong>0</strong> kalau KEDUA bit yang dibandingkan sama-sama 0.</li>
+    </ul>
+    <figure>
+      <img src="images/04_operasi_or.png" alt="Operasi OR bit per bit antara data Senin dan Selasa">
+      <figcaption>Operasi OR bit-per-bit antara data Senin dan Selasa.</figcaption>
+    </figure>
+    <p>Setelah semua bit digabung dengan OR, kita tinggal menghitung ada berapa banyak angka 0 yang tersisa. Itulah jumlah ruang yang benar-benar nggak pernah dipakai sama sekali selama dua hari itu — jawabannya ada <strong>4 ruang, yaitu Ruang B, E, G, dan H</strong>!</p>
+    <div class="callout green">
+      <span class="tag">Kenapa Ini Keren?</span>
+      Dengan cara berpikir seperti ini, kita nggak perlu mengecek satu per satu berulang-ulang. Cukup ubah data jadi bit, lalu olah dengan operasi logika — beres! Ini persis cara komputer bekerja mengolah data dalam jumlah besar, hanya dalam hitungan detik.
+    </div>
+  </section>
+
+  <section id="sekitar">
+    <div class="eyebrow-sm">Koneksi ke Kehidupan Nyata</div>
+    <h2>Biner Itu Ada di Mana-Mana, Lho!</h2>
+    <p>Setelah paham konsepnya, coba perhatikan sekelilingmu. Banyak banget hal di sekitar kita yang sebenarnya cuma punya dua kemungkinan kondisi — persis seperti bit!</p>
+    <figure>
+      <img src="images/06_ilustrasi_kontekstual.png" alt="Contoh representasi biner di lingkungan sekolah">
+      <figcaption>Representasi biner ada di mana-mana, bahkan di lingkungan sekolahmu sendiri.</figcaption>
+    </figure>
+    <p>Lampu kelas menyala atau padam, pintu ruang terbuka atau tertutup, kamu hadir atau tidak hadir di kelas, Wi-Fi sekolah terhubung atau terputus — semuanya bisa direpresentasikan dengan satu bit saja. Sekarang, coba pikirkan tiga contoh lain di sekitarmu yang juga punya sifat serupa!</p>
+  </section>
+
+  <section id="rangkuman">
+    <div class="eyebrow-sm">Inti Materi</div>
+    <h2>Rangkuman — Yang Perlu Kamu Ingat</h2>
+    <ul class="tick">
+      <li><strong>Bit</strong> adalah satuan data terkecil pada komputer, hanya bernilai 0 atau 1.</li>
+      <li>Data dengan tepat dua kemungkinan (ya/tidak, ada/tidak ada) bisa direpresentasikan dengan satu bit.</li>
+      <li>Beberapa bit yang disusun berjajar disebut <strong>kode biner</strong>, dan digunakan untuk mewakili kumpulan data sekaligus.</li>
+      <li>Operasi logika <strong>OR</strong> berguna untuk menggabungkan dua himpunan data biner: hasilnya 1 jika salah satu (atau kedua) datanya bernilai 1.</li>
+      <li>Cara berpikir ini membantu kita menyelesaikan masalah data secara efisien, seperti yang dilakukan komputer sehari-hari.</li>
+    </ul>
+
+    <h3>Kata Kunci</h3>
+    <table class="glossary">
+      <tr><th>Istilah</th><th>Penjelasan</th></tr>
+      <tr><td>Bit</td><td>Satuan data terkecil pada komputer, bernilai 0 atau 1.</td></tr>
+      <tr><td>Biner</td><td>Sistem bilangan yang hanya terdiri atas dua angka: 0 dan 1.</td></tr>
+      <tr><td>Representasi Data</td><td>Cara data dari dunia nyata disimpan/ditampilkan dalam bentuk yang bisa diproses komputer.</td></tr>
+      <tr><td>Operasi OR</td><td>Operasi logika yang hasilnya 1 jika salah satu atau kedua data bernilai 1, dan 0 hanya jika keduanya bernilai 0.</td></tr>
+    </table>
+  </section>
+
+  <section id="cek">
+    <div class="eyebrow-sm">Latihan Mandiri</div>
+    <h2>Yuk, Cek Pemahamanmu!</h2>
+    <p>Coba jawab dulu di kepalamu atau di buku catatan, baru klik tombol untuk melihat kunci jawabannya.</p>
+
+    <div class="quiz-box">
+      <div class="q">1. Apa perbedaan pertanyaan yang bisa direpresentasikan dengan bit dan yang tidak bisa? Beri satu contoh masing-masing.</div>
+      <button class="reveal" onclick="toggleAns(this)">Lihat Kunci Jawaban</button>
+      <div class="ans">Pertanyaan yang bisa direpresentasikan 1 bit hanya punya <strong>tepat dua</strong> kemungkinan jawaban (contoh: "Apakah kamu membawa payung?" → Ya/Tidak). Pertanyaan yang tidak bisa punya <strong>lebih dari dua</strong> kemungkinan jawaban (contoh: "Apa warna favoritmu?" → banyak pilihan warna).</div>
+    </div>
+
+    <div class="quiz-box">
+      <div class="q">2. Ubahlah kondisi berikut menjadi kode biner: "Hari ini kamu masuk sekolah (Ya), membawa buku PR (Tidak), dan sarapan pagi (Ya)."</div>
+      <button class="reveal" onclick="toggleAns(this)">Lihat Kunci Jawaban</button>
+      <div class="ans">Kode biner: <strong>1 0 1</strong> (Ya = 1, Tidak = 0, urut sesuai pernyataan).</div>
+    </div>
+
+    <div class="quiz-box">
+      <div class="q">3. Jika kode biner A = 1 0 1 0 dan kode biner B = 0 0 1 1, berapa hasil operasi OR dari kedua kode tersebut?</div>
+      <button class="reveal" onclick="toggleAns(this)">Lihat Kunci Jawaban</button>
+      <div class="ans">Hasil OR = <strong>1 0 1 1</strong> (bandingkan tiap posisi: 1|0=1, 0|0=0, 1|1=1, 0|1=1).</div>
+    </div>
+
+    <div class="quiz-box">
+      <div class="q">4. Sebutkan dua contoh kondisi di lingkungan sekolahmu yang bisa direpresentasikan dengan satu bit!</div>
+      <button class="reveal" onclick="toggleAns(this)">Lihat Kunci Jawaban</button>
+      <div class="ans">Jawaban bisa bervariasi, misalnya: lampu kelas (menyala/padam), pintu kelas (terbuka/tertutup), kehadiran siswa (hadir/tidak hadir), atau bel sekolah (berbunyi/tidak).</div>
+    </div>
+
+    <p style="margin-top:1.5rem; font-size:.92rem; color:var(--gray);">Setelah ini, lanjutkan diskusi bersama kelompokmu lewat LKPD “Aktivitas Peminjaman Ruangan” yang diberikan gurumu.</p>
+  </section>
+
+  <div class="backtotop"><a href="#top">↑ Kembali ke atas</a></div>
+
+</main>
+
+<footer>
+  <strong>Representasi Data (Biner)</strong> · BAB 1 Berpikir Komputasional untuk Menyelesaikan Masalah<br>
+  Informatika Kelas VII · SMP Negeri 14 Tarakan · Kurikulum Merdeka
+</footer>
+
+<script>
+  function toggleAns(btn){
+    const ans = btn.nextElementSibling;
+    ans.classList.toggle('show');
+    btn.textContent = ans.classList.contains('show') ? 'Sembunyikan Jawaban' : 'Lihat Kunci Jawaban';
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yuk, Kenalan dengan Fungsi! — Materi Siswa TP4</title>
+<style>
+  :root{
+    --navy:#0F2A47; --navy-d:#0A1C31; --teal:#1B98A6; --teal-l:#E0F5F7;
+    --amber:#FF8C42; --amber-d:#C2570A; --purple:#6D28D9; --purple-l:#EDE9FE;
+    --green:#16A34A; --green-l:#DCFCE7; --slate:#1E293B; --muted:#64748B;
+    --bg:#F7FAFC; --card:#FFFFFF; --border:#E2E8F0;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; font-family:'Segoe UI', Calibri, Arial, sans-serif; color:var(--slate);
+    background:var(--bg); line-height:1.6;
+  }
+  img{max-width:100%; display:block; border-radius:12px;}
+  h1,h2,h3{font-family:Georgia,'Cambria',serif; color:var(--navy); margin-top:0;}
+  a{color:var(--teal);}
+  .wrap{max-width:920px; margin:0 auto; padding:0 20px;}
+
+  /* NAV */
+  nav{
+    position:sticky; top:0; z-index:50; background:rgba(15,42,71,0.97);
+    backdrop-filter:blur(6px); color:#fff; padding:10px 0;
+    box-shadow:0 2px 10px rgba(0,0,0,0.15);
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;}
+  nav .brand{font-weight:bold; font-size:15px; color:#fff; letter-spacing:0.3px;}
+  nav .links{display:flex; gap:4px; flex-wrap:wrap;}
+  nav .links a{
+    color:#CBD5E1; text-decoration:none; font-size:12.5px; padding:6px 10px;
+    border-radius:20px; transition:all .2s;
+  }
+  nav .links a:hover{background:var(--teal); color:#fff;}
+
+  /* HERO */
+  .hero{
+    background:linear-gradient(135deg, var(--navy) 0%, #163a5e 100%);
+    color:#fff; padding:56px 0 64px; position:relative; overflow:hidden;
+  }
+  .hero::before{
+    content:""; position:absolute; right:-80px; top:-80px; width:280px; height:280px;
+    border-radius:50%; background:rgba(255,255,255,0.05);
+  }
+  .hero::after{
+    content:""; position:absolute; left:-60px; bottom:-100px; width:220px; height:220px;
+    border-radius:50%; background:rgba(255,255,255,0.05);
+  }
+  .hero .kicker{color:var(--teal); font-weight:bold; letter-spacing:2px; font-size:13px; text-transform:uppercase;}
+  .hero h1{color:#fff; font-size:2.3rem; margin:10px 0; position:relative;}
+  .hero p{color:#CBD5E1; font-size:1.05rem; max-width:640px; position:relative;}
+  .pill{
+    display:inline-block; background:var(--teal); color:var(--navy-d); font-weight:bold;
+    padding:8px 18px; border-radius:30px; font-size:13.5px; margin-top:14px;
+  }
+
+  section{padding:52px 0;}
+  section:nth-of-type(even){background:#fff;}
+  .eyebrow{color:var(--amber-d); font-weight:bold; letter-spacing:1.5px; font-size:12.5px; text-transform:uppercase; margin-bottom:6px;}
+
+  .card{
+    background:var(--card); border:1px solid var(--border); border-radius:14px;
+    padding:22px 24px; margin:18px 0; box-shadow:0 2px 10px rgba(15,42,71,0.05);
+  }
+  .card img{margin:14px auto;}
+  .caption{text-align:center; color:var(--muted); font-size:13px; font-style:italic; margin-top:-6px;}
+
+  .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:20px 0;}
+  @media (max-width:720px){ .grid3{grid-template-columns:1fr;} }
+  .bubble{
+    background:#fff; border:1px solid var(--border); border-radius:14px; padding:18px;
+    text-align:center;
+  }
+  .bubble .emoji{font-size:32px;}
+  .bubble b{display:block; margin-top:8px; font-size:14px;}
+
+  .infobox{
+    background:var(--teal-l); border-left:5px solid var(--teal); border-radius:10px;
+    padding:16px 20px; margin:18px 0;
+  }
+  .infobox.amber{background:#FFF3E8; border-left-color:var(--amber);}
+  .infobox.purple{background:var(--purple-l); border-left-color:var(--purple);}
+
+  .steps{list-style:none; padding:0; margin:18px 0;}
+  .steps li{
+    display:flex; gap:14px; margin-bottom:14px; align-items:flex-start;
+  }
+  .steps .num{
+    flex:0 0 32px; height:32px; width:32px; background:var(--amber); color:var(--navy-d);
+    border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold;
+  }
+
+  table{border-collapse:collapse; width:100%; margin:14px 0; font-size:14px;}
+  th,td{border:1px solid var(--border); padding:8px 10px; text-align:center;}
+  th{background:var(--navy); color:#fff;}
+  tr:nth-child(even) td{background:#F1F5F9;}
+
+  .calc{
+    background:var(--navy); color:#fff; border-radius:16px; padding:26px; margin:20px 0;
+  }
+  .calc h3{color:#fff;}
+  .calc-row{display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-top:14px;}
+  .calc input{
+    font-size:20px; padding:8px 12px; width:100px; border-radius:8px; border:none; text-align:center;
+  }
+  .calc button{
+    background:var(--teal); color:var(--navy-d); border:none; padding:10px 20px; font-weight:bold;
+    border-radius:8px; cursor:pointer; font-size:15px;
+  }
+  .calc button:hover{background:#23b4c4;}
+  .calc-result{font-size:22px; font-weight:bold; color:#6EE7B7; margin-top:10px; min-height:30px;}
+
+  .quiz-opt{
+    display:block; width:100%; text-align:left; background:#fff; border:2px solid var(--border);
+    border-radius:10px; padding:12px 16px; margin:8px 0; cursor:pointer; font-size:15px;
+    transition:all .15s; color:var(--slate);
+  }
+  .quiz-opt:hover{border-color:var(--teal);}
+  .quiz-opt.correct{background:var(--green-l); border-color:var(--green); font-weight:bold;}
+  .quiz-opt.wrong{background:#FEE2E2; border-color:#DC2626;}
+  #kue-feedback{margin-top:14px; font-weight:bold; min-height:24px;}
+
+  .reflect{list-style:none; padding:0;}
+  .reflect li{
+    background:#fff; border:1px solid var(--border); border-radius:10px; padding:14px 18px; margin-bottom:12px;
+  }
+
+  footer{
+    background:var(--navy-d); color:#94A3B8; text-align:center; padding:30px 20px; font-size:13px;
+  }
+  footer b{color:#fff;}
+
+  .badge{display:inline-block; background:var(--amber); color:var(--navy-d); font-weight:bold; padding:4px 12px; border-radius:20px; font-size:12px; margin-bottom:8px;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">📘 Informatika Kelas VIII</div>
+    <div class="links">
+      <a href="#mesin-ajaib">Mesin Ajaib</a>
+      <a href="#matematika">Matematika</a>
+      <a href="#sehari-hari">Sehari-hari</a>
+      <a href="#rumus">Rumus</a>
+      <a href="#tantangan">Tantangan</a>
+      <a href="#coba-sendiri">Coba Sendiri</a>
+      <a href="#rangkuman">Rangkuman</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Bab II · Berpikir Komputasional · TP4</div>
+    <h1>Yuk, Kenalan dengan FUNGSI! 🎉</h1>
+    <p>Materi belajar mandiri — mengenal fungsi sebagai mesin input, proses, dan output. Baca santai, coba tantangannya, dan buktikan sendiri kerennya berpikir komputasional!</p>
+    <span class="pill">Kelas VIII • SMP Negeri 14 Tarakan</span>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Pembuka</div>
+    <h2>Halo, Sobat Informatika!</h2>
+    <p>Pernah nggak sih kalian mikir, kok bisa ya kalkulator langsung tahu jawaban 2 × 3 + 3? Atau kok mesin ATM tahu persis berapa uang yang harus keluar setelah kalian pencet-pencet tombol? Nah, di balik semua itu ada satu konsep keren yang namanya <b>FUNGSI</b>. Yuk, kita bongkar rahasianya bareng-bareng!</p>
+  </div>
+</section>
+
+<section id="mesin-ajaib">
+  <div class="wrap">
+    <div class="eyebrow">1. Konsep Dasar</div>
+    <h2>Fungsi Itu Kayak Mesin Ajaib</h2>
+    <p>Bayangin kalian punya mesin ajaib. Kalian masukkan sesuatu ke mesin itu (namanya <b>INPUT</b>), mesin itu ngapa-ngapain di dalam (namanya <b>PROSES</b>), terus keluar deh hasilnya (namanya <b>OUTPUT</b>). Itulah yang disebut FUNGSI: sebuah "mesin" yang selalu mengubah masukan menjadi keluaran dengan aturan yang sama, setiap saat.</p>
+    <div class="card">
+      <img src="images/01_konsep_input_proses_output.png" alt="Diagram Input Proses Output">
+      <p class="caption">Input → Proses → Output: rumus rahasia di balik banyak hal di sekitar kita</p>
+    </div>
+    <p>Contoh paling gampang: <b>BLENDER</b>. Kalian masukin buah (input), tekan tombol nyala (proses = diputar pisau blender), keluar deh jus buah (output). Simpel, kan?</p>
+    <div class="card">
+      <img src="images/02_analogi_memasak.png" alt="Analogi memasak">
+      <p class="caption">Analogi memasak: bahan mentah → dimasak → jadi makanan enak</p>
+    </div>
+  </div>
+</section>
+
+<section id="matematika">
+  <div class="wrap">
+    <div class="eyebrow">2. Fungsi di Matematika</div>
+    <h2>Fungsi di Pelajaran Matematika</h2>
+    <p>Di Matematika, fungsi biasanya ditulis begini: <b>f(x) = 2x + 3</b>. Artinya, berapa pun angka yang kalian masukkan sebagai x, mesin ini akan mengalikannya dengan 2 lalu menambah 3.</p>
+    <p>Contoh: kalau x = 3, maka f(3) = 2×3 + 3 = <b>9</b>. Gampang banget kan tinggal ikutin aturannya!</p>
+    <div class="card">
+      <img src="images/03_mesin_fungsi_matematika.png" alt="Mesin fungsi matematika">
+      <p class="caption">Berapa pun x yang masuk, mesin fungsi akan mengolahnya dengan aturan yang sama</p>
+    </div>
+  </div>
+</section>
+
+<section id="sehari-hari">
+  <div class="wrap">
+    <div class="eyebrow">3. Fungsi di Sekitar Kita</div>
+    <h2>Fungsi Nggak Cuma Ada di Matematika, lho!</h2>
+    <p>Coba deh perhatiin hal-hal ini, ternyata mereka pakai "logika fungsi" juga:</p>
+    <div class="grid3">
+      <div class="bubble"><div class="emoji">🎵</div><b>Lirik Lagu</b><p style="font-size:13.5px;color:var(--muted)">Kata "Reff" = perintah mengulang bagian tertentu tanpa nulis ulang liriknya.</p></div>
+      <div class="bubble"><div class="emoji">🏫</div><b>Rutinitas Pagi</b><p style="font-size:13.5px;color:var(--muted)">"Persiapan masuk kelas" = baris, periksa kuku, masuk sesuai urutan — satu perintah, tiga aksi.</p></div>
+      <div class="bubble"><div class="emoji">🛒</div><b>Titip Beli ke Warung</b><p style="font-size:13.5px;color:var(--muted)">Bawa uang (input) → jalan ke warung (proses) → pulang bawa gula & kembalian (output).</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="rumus">
+  <div class="wrap">
+    <div class="eyebrow">4. Fungsi Linear</div>
+    <h2>Rahasia Menemukan Rumus Fungsi</h2>
+    <p>Kadang kita nggak dikasih rumusnya langsung, tapi cuma dikasih data. Nah, gimana caranya nemuin rumus fungsinya? Yuk simak contoh serunya!</p>
+    <div class="infobox amber">
+      <b>🌱 Cerita: Bibit Tanaman Super</b>
+      <p style="margin-bottom:0">Hari ke-1, tinggi tanaman 5 cm. Hari ke-2, tinggi tanaman jadi 12 cm. Kira-kira, rumus apa yang bisa memprediksi tinggi tanaman di hari-hari berikutnya?</p>
+    </div>
+    <ul class="steps">
+      <li><span class="num">1</span><div><b>Cari laju perubahan (m):</b> dari hari 1 ke hari 2 tanaman bertambah 12 – 5 = 7 cm. Jadi m = 7.</div></li>
+      <li><span class="num">2</span><div><b>Cari konstanta (c):</b> pakai rumus f(x) = mx + c. Kita tahu f(1) = 5, jadi 5 = 7(1) + c → c = –2.</div></li>
+      <li><span class="num">3</span><div><b>Rumus lengkap:</b> f(x) = 7x – 2. Coba cek hari ke-3: f(3) = 7(3) – 2 = 19 cm. Cocok banget sama polanya!</div></li>
+    </ul>
+    <table>
+      <tr><th>Hari ke-</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr>
+      <tr><td><b>Tinggi (cm)</b></td><td>5</td><td>12</td><td>19</td><td>26</td><td>33</td><td>40</td></tr>
+    </table>
+    <p>Nah, sekarang giliran kalian coba sendiri bareng teman kelompok di kelas — seru banget nemuin pola tersembunyi seperti detektif angka!</p>
+  </div>
+</section>
+
+<section id="tantangan">
+  <div class="wrap">
+    <div class="eyebrow">5. Yuk, Coba!</div>
+    <h2>Tantangan: Mesin Pembentuk Kue 🍪</h2>
+    <p>Bobo lagi main ke pabrik kue. Di sana ada mesin ajaib yang bisa mengubah bentuk adonan kue! Mesin ini punya 3 pintu masuk (nomor 1, 2, dan 3), dan satu pintu keluar diberi label K.</p>
+    <div class="card">
+      <img src="images/04_mesin_pembentuk_adonan.png" alt="Mesin pembentuk adonan">
+      <p class="caption">Setiap adonan yang lewat "alat pengubah bentuk" (garis merah) bisa berubah wujud, sesuai aturan A → B</p>
+    </div>
+    <p>Aturannya: kalau ada tanda garis dengan keterangan A → B, artinya "kalau adonan berbentuk A melewati alat itu, bentuknya berubah jadi B". Tapi kalau bentuknya bukan A, adonan nggak berubah sama sekali!</p>
+    <div class="card">
+      <span class="badge">SOAL</span>
+      <p><b>Jika Bobo ingin mendapatkan kue berbentuk PERSEGI ketika keluar dari pintu K, bentuk adonan awal apa yang harus dimasukkan, dan lewat pintu nomor berapa?</b></p>
+      <div id="kue-quiz">
+        <button class="quiz-opt" data-correct="false">A. Input adonan berbentuk lingkaran ke lubang input nomor 1</button>
+        <button class="quiz-opt" data-correct="true">B. Input adonan berbentuk lingkaran ke lubang input nomor 2</button>
+        <button class="quiz-opt" data-correct="false">C. Input adonan berbentuk segitiga ke lubang input nomor 2</button>
+        <button class="quiz-opt" data-correct="false">D. Input adonan berbentuk segitiga ke lubang input nomor 3</button>
+      </div>
+      <div id="kue-feedback"></div>
+    </div>
+    <p style="font-size:13.5px;color:var(--muted)">💬 Setelah menjawab, diskusikan alasan kalian dengan kelompok dan tuliskan di LKPD ya!</p>
+  </div>
+</section>
+
+<section id="coba-sendiri">
+  <div class="wrap">
+    <div class="eyebrow">6. Praktik Langsung</div>
+    <h2>Coba Sendiri: Mesin Fungsimu!</h2>
+    <p>Masukkan sembarang angka ke mesin fungsi f(x) = 2x + 3 di bawah ini, lalu lihat apa yang terjadi!</p>
+    <div class="calc">
+      <h3>🔧 Mesin Fungsi: f(x) = 2x + 3</h3>
+      <div class="calc-row">
+        <label>Masukkan nilai x =</label>
+        <input type="number" id="calc-x" placeholder="contoh: 4">
+        <button onclick="hitungFungsi()">Jalankan Mesin ⚙️</button>
+      </div>
+      <div class="calc-result" id="calc-result"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">7. Kaitan dengan Komputer</div>
+    <h2>Kenapa Sih Kita Perlu Belajar Ini?</h2>
+    <p>Karena komputer sebenarnya juga bekerja dengan logika yang sama: menerima masukan lewat keyboard/mouse (input), mengolahnya di CPU dan memori (proses), lalu menampilkan hasilnya di layar atau lewat speaker (output).</p>
+    <div class="card">
+      <img src="images/05_komponen_komputer.png" alt="Komponen komputer sebagai sistem IPO">
+      <p class="caption">Komputer = contoh nyata dari sistem input - proses - output</p>
+    </div>
+    <p>Kalau kalian sudah paham logika "input-proses-output" ini, kalian sudah selangkah lebih dekat untuk memahami cara berpikir seorang programmer, lho!</p>
+  </div>
+</section>
+
+<section id="rangkuman">
+  <div class="wrap">
+    <div class="eyebrow">Rangkuman Kilat ⚡</div>
+    <h2>Yang Perlu Kalian Ingat</h2>
+    <div class="infobox">
+      <ul style="margin:0; padding-left:20px;">
+        <li>Fungsi = mesin yang selalu mengubah input menjadi output dengan aturan tetap.</li>
+        <li>Fungsi linear ditulis f(x) = mx + c, di mana m = laju perubahan dan c = konstanta.</li>
+        <li>Untuk menemukan rumus, cari dulu m (selisih output ÷ selisih input), baru cari c.</li>
+        <li>Konsep input-proses-output ada di mana-mana: matematika, musik, rutinitas harian, sampai cara kerja komputer.</li>
+      </ul>
+    </div>
+
+    <div class="eyebrow" style="margin-top:30px;">Refleksi 💭</div>
+    <ul class="reflect">
+      <li>Menurut kalian, bagian mana dari materi ini yang paling seru?</li>
+      <li>Adakah contoh fungsi lain di sekitar kalian yang belum disebutkan di atas?</li>
+      <li>Coba ceritakan ke teman sebangku, apa itu fungsi, pakai bahasa kalian sendiri!</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p><b>Bab II Berpikir Komputasional — TP4: Fungsi (Input, Proses, Output)</b></p>
+  <p>Informatika Kelas VIII · SMP Negeri 14 Tarakan</p>
+</footer>
+
+<script>
+function hitungFungsi(){
+  const xVal = document.getElementById('calc-x').value;
+  const resultEl = document.getElementById('calc-result');
+  if(xVal === ''){
+    resultEl.textContent = "Masukkan angka dulu ya! 😉";
+    return;
+  }
+  const x = parseFloat(xVal);
+  const y = 2*x + 3;
+  resultEl.textContent = `f(${x}) = 2(${x}) + 3 = ${y}  →  Output-nya adalah ${y}!`;
+}
+
+document.querySelectorAll('#kue-quiz .quiz-opt').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#kue-quiz .quiz-opt').forEach(b => {
+      b.disabled = true;
+      if(b.dataset.correct === 'true'){ b.classList.add('correct'); }
+    });
+    if(btn.dataset.correct === 'true'){
+      document.getElementById('kue-feedback').innerHTML = '✅ Betul! Jawabannya B — lingkaran masuk ke pintu nomor 2.';
+      document.getElementById('kue-feedback').style.color = '#16A34A';
+    } else {
+      btn.classList.add('wrong');
+      document.getElementById('kue-feedback').innerHTML = '❌ Belum tepat. Jawaban yang benar sudah ditandai hijau — coba pikirkan lagi alasannya ya!';
+      document.getElementById('kue-feedback').style.color = '#DC2626';
+    }
+  });
+});
+</script>
+
+</body>
+</html>

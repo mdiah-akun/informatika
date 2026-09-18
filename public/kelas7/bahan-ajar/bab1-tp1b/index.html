@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algoritma Level 2: Sistematis &amp; Bisa Digeneralisasi!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #FBFAF6;
+    --bg-soft: #F3F1FF;
+    --card: #FFFFFF;
+    --ink: #2C2A3D;
+    --ink-soft: #6A6785;
+    --line: #E8E5F5;
+    --primary: #6C5CE7;
+    --primary-dark: #4C3AC9;
+    --primary-light: #EFEBFF;
+    --pink: #F4568C;
+    --pink-light: #FFE7EF;
+    --amber: #FFB443;
+    --amber-light: #FFF3DE;
+    --teal: #17B890;
+    --teal-light: #DFF7EE;
+    --blue: #4EA8DE;
+    --blue-light: #E6F4FD;
+    --danger: #E5484D;
+    --danger-light: #FDE7E7;
+    --success: #1EA672;
+    --success-light: #E3F7EC;
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --radius-sm: 10px;
+    --shadow: 0 10px 30px -12px rgba(76, 58, 201, 0.18);
+    --shadow-sm: 0 4px 14px -6px rgba(76, 58, 201, 0.14);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Poppins','Segoe UI', system-ui, sans-serif;
+    line-height:1.25;
+    margin:0 0 .5em 0;
+    color: var(--ink);
+  }
+  p{ margin:0 0 1em 0; }
+  a{ color: var(--primary-dark); }
+  img,svg{ max-width:100%; display:block; }
+  ul{ margin:0; padding:0; }
+  .container{ max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+  section{ scroll-margin-top: 96px; }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:'Poppins',sans-serif; font-weight:700; font-size:.75rem;
+    letter-spacing:.08em; text-transform:uppercase;
+    color: var(--primary-dark);
+    background: var(--primary-light);
+    padding:6px 14px; border-radius:999px;
+    margin-bottom:14px;
+  }
+  .section-title{ font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.15rem); }
+  .section-lead{ color: var(--ink-soft); max-width:660px; font-size:1.02rem; }
+
+  /* ===== Progress bar ===== */
+  #progress-bar-track{ position:fixed; top:0; left:0; right:0; height:4px; background: transparent; z-index:1001; }
+  #progress-bar{ height:100%; width:0%; background: linear-gradient(90deg, var(--amber), var(--pink), var(--primary)); transition: width .08s linear; }
+
+  /* ===== Nav ===== */
+  header.topnav{ position:sticky; top:4px; z-index:1000; background: rgba(251,250,246,0.86); backdrop-filter: blur(10px); border-bottom:1px solid var(--line); }
+  .nav-inner{ max-width:1080px; margin:0 auto; padding:12px 20px; display:flex; align-items:center; gap:18px; }
+  .brand{ display:flex; align-items:center; gap:8px; font-family:'Poppins',sans-serif; font-weight:700; font-size:.95rem; color: var(--primary-dark); white-space:nowrap; }
+  .brand-dot{ width:10px; height:10px; border-radius:50%; background: linear-gradient(135deg, var(--amber), var(--pink)); flex-shrink:0; }
+  nav.navlinks{ display:flex; gap:4px; overflow-x:auto; scrollbar-width:none; -ms-overflow-style:none; }
+  nav.navlinks::-webkit-scrollbar{ display:none; }
+  .nav-link{ flex-shrink:0; font-family:'Poppins',sans-serif; font-weight:600; font-size:.82rem; color: var(--ink-soft); text-decoration:none; padding:8px 12px; border-radius:999px; white-space:nowrap; transition: background .15s, color .15s; }
+  .nav-link:hover{ background: var(--primary-light); color:var(--primary-dark); }
+  .nav-link.active{ background: var(--primary); color:#fff; }
+
+  /* ===== Hero ===== */
+  .hero{ position:relative; overflow:hidden; padding: 56px 0 60px; background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%); }
+  .hero-inner{ display:grid; grid-template-columns: 1.15fr .85fr; gap:40px; align-items:center; }
+  .hero h1{ font-size: clamp(1.9rem, 1.2rem + 2.6vw, 3rem); font-weight:800; background: linear-gradient(100deg, var(--primary-dark), var(--pink) 55%, var(--amber)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .hero-sub{ font-size:1.08rem; color: var(--ink-soft); max-width:540px; }
+  .hero-meta{ display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
+  .pill{ font-family:'Poppins',sans-serif; font-size:.78rem; font-weight:600; padding:8px 14px; border-radius:999px; background: var(--card); border:1px solid var(--line); color: var(--ink-soft); display:flex; align-items:center; gap:6px; }
+  .level-badge{
+    display:inline-flex; align-items:center; gap:8px; font-family:'Poppins',sans-serif; font-weight:800;
+    font-size:.85rem; color:#fff; background: linear-gradient(120deg, var(--amber), var(--pink));
+    padding:9px 18px; border-radius:999px; box-shadow: var(--shadow-sm); margin-bottom:16px;
+  }
+  .hero-art{ position:relative; display:flex; align-items:center; justify-content:center; min-height:260px; }
+  .blob{ position:absolute; border-radius:50%; filter: blur(2px); opacity:.55; }
+  .recap-card{
+    position:relative; background:#fff; border:1px solid var(--line); border-radius: var(--radius-lg);
+    padding:26px; box-shadow: var(--shadow); max-width:320px;
+  }
+  .recap-card .eyebrow{ margin-bottom:10px; }
+  .recap-card p{ font-size:.92rem; color:var(--ink-soft); margin-bottom:0; }
+  .recap-card strong{ color:var(--ink); }
+
+  /* ===== Cards / generic ===== */
+  .card{ background: var(--card); border:1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; box-shadow: var(--shadow-sm); }
+  main section{ padding: 58px 0; }
+  main section.alt{ background: var(--bg-soft); }
+  .two-col{ display:grid; grid-template-columns: 1fr 1fr; gap:28px; align-items:start; margin-top:28px; }
+  .stack{ display:flex; flex-direction:column; gap:16px; }
+  .badge-num{ width:34px; height:34px; border-radius:10px; background: var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; font-family:'Poppins',sans-serif; font-weight:700; font-size:.95rem; flex-shrink:0; }
+
+  .def-box{ display:flex; gap:16px; align-items:flex-start; background: linear-gradient(135deg, var(--primary-light), #fff); border:1px solid var(--line); border-radius: var(--radius-md); padding: 22px; margin-top: 24px; }
+  .def-box p{ margin:0; }
+  .def-box strong{ color: var(--primary-dark); }
+
+  /* ===== Notasi illustration ===== */
+  .illus-holder{ background:#fff; border:1px solid var(--line); border-radius: var(--radius-lg); padding: 18px; box-shadow: var(--shadow-sm); margin-top:28px; }
+
+  .algo-block{
+    background:#1E1B33; color:#E6E4FF; border-radius: var(--radius-md);
+    padding: 22px 24px; margin-top:24px; overflow-x:auto;
+    box-shadow: var(--shadow-sm);
+  }
+  .algo-block .algo-title{ font-family:'Poppins',sans-serif; font-weight:700; font-size:.82rem; color:#B9B4DD; text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px; }
+  .algo-block pre{ margin:0; font-family:'JetBrains Mono','Courier New',monospace; font-size:.92rem; line-height:1.75; white-space:pre-wrap; }
+  .algo-block .kw{ color:#FFC66D; font-weight:700; }
+  .algo-block .cond{ color:#7FE0C9; font-weight:700; }
+  .algo-block .num{ color:#82C7FF; font-weight:700; }
+
+  /* ===== Tracing ===== */
+  .trace-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); gap:16px; margin-top:28px; }
+  .trace-card{ background:#fff; border:1px solid var(--line); border-radius: var(--radius-md); padding:20px; box-shadow: var(--shadow-sm); }
+  .trace-card .badge-num{ margin-bottom:12px; background: var(--blue); }
+  .callout{ background: linear-gradient(135deg, var(--pink-light), #fff); border:1px solid var(--line); border-radius: var(--radius-md); padding:22px; margin-top:24px; }
+  .callout h4{ color: var(--pink); display:flex; align-items:center; gap:8px; }
+
+  /* ===== Stepper (Cari Tertinggi) ===== */
+  .stepper-wrap{ margin-top:28px; }
+  .step-diagram{ position:relative; background:#fff; border:1px solid var(--line); border-radius: var(--radius-lg); padding:18px 18px 26px; box-shadow: var(--shadow-sm); }
+  .step-box{
+    position:absolute; margin:0; padding:0; box-sizing:border-box;
+    background: transparent; border:4px solid transparent; border-radius:18px;
+    cursor:pointer; outline:none; transition: border-color .18s, background-color .18s, transform .15s;
+  }
+  .step-box:hover{ border-color: rgba(108,92,231,.3); }
+  .step-box:focus-visible{ border-color: var(--primary); box-shadow: 0 0 0 3px rgba(108,92,231,.25); }
+  .step-box.st-comparing{ border-color: var(--amber); background-color: rgba(255,180,67,.14); transform: translateY(-4px); }
+  .step-box.st-candidate{ border-color: var(--teal); background-color: rgba(23,184,144,.14); transform: translateY(-4px); }
+  .step-box.st-candidate.st-comparing{ border-color: var(--teal); background: linear-gradient(135deg, rgba(23,184,144,.16), rgba(255,180,67,.16)); }
+
+  .step-panel{
+    margin-top:18px; padding:18px 20px; border-radius: var(--radius-md);
+    background: var(--primary-light); font-size:.98rem; color:var(--ink); font-weight:700;
+    min-height:52px; display:flex; align-items:center; font-family:'Nunito',sans-serif;
+  }
+  .step-controls{ display:flex; flex-wrap:wrap; gap:12px; margin-top:16px; align-items:center; }
+  .step-btn{
+    font-family:'Poppins',sans-serif; font-weight:700; font-size:.85rem; border:none; border-radius:999px;
+    padding:11px 20px; cursor:pointer; transition: background .15s, opacity .15s;
+  }
+  .step-btn.primary{ background: var(--primary); color:#fff; }
+  .step-btn.primary:hover:not(:disabled){ background: var(--primary-dark); }
+  .step-btn.primary:disabled{ opacity:.45; cursor:default; }
+  .step-btn.ghost{ background:#fff; color: var(--ink-soft); border:1px solid var(--line); }
+  .step-btn.ghost:hover{ background: var(--bg-soft); }
+  .step-counter{ font-family:'Poppins',sans-serif; font-weight:700; font-size:.8rem; color: var(--ink-soft); margin-left:auto; }
+  .think-mini{ margin-top:22px; }
+
+  /* ===== Battle ===== */
+  .compare-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:24px; margin-top:28px; }
+  .compare-card{ border-radius: var(--radius-lg); padding:26px; position:relative; overflow:hidden; border:1px solid var(--line); }
+  .compare-card.algoA{ background: linear-gradient(160deg, var(--danger-light), #fff 60%); }
+  .compare-card.algoB{ background: linear-gradient(160deg, var(--teal-light), #fff 60%); }
+  .compare-tag{ display:inline-block; font-family:'Poppins',sans-serif; font-weight:700; font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; padding:6px 12px; border-radius:999px; margin-bottom:14px; }
+  .compare-card.algoA .compare-tag{ background: var(--danger); color:#fff; }
+  .compare-card.algoB .compare-tag{ background: var(--teal); color:#fff; }
+  .vs-badge{ display:flex; align-items:center; justify-content:center; font-family:'Poppins',sans-serif; font-weight:800; color:var(--ink-soft); font-size:.85rem; margin: 4px 0; }
+  .battle-btn{ font-family:'Poppins',sans-serif; font-weight:700; font-size:.9rem; background: linear-gradient(120deg, var(--amber), var(--pink)); color:#fff; border:none; border-radius:999px; padding:13px 26px; cursor:pointer; margin-top:26px; box-shadow: var(--shadow-sm); }
+  .battle-btn:hover{ filter:brightness(1.05); }
+  .battle-result{ margin-top:24px; }
+  .battle-result-inner{ background:#fff; border:1px solid var(--line); border-radius: var(--radius-lg); padding:24px; box-shadow: var(--shadow-sm); }
+  .battle-note{ display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:16px; margin-top:20px; }
+  .battle-note div{ background: var(--bg-soft); border-radius: var(--radius-sm); padding:16px; font-size:.92rem; }
+  .battle-note strong{ color: var(--primary-dark); }
+
+  /* ===== Gelang Baim ===== */
+  .gelang-wrap{ display:grid; grid-template-columns: .9fr 1.1fr; gap:34px; align-items:center; margin-top:28px; }
+  .bead-legend{ display:flex; gap:14px; flex-wrap:wrap; margin-top:16px; }
+  .legend-item{ display:flex; align-items:center; gap:8px; font-size:.88rem; font-weight:700; }
+  .legend-dot{ width:16px; height:16px; border-radius:50%; display:inline-block; box-shadow: inset 0 0 0 2px rgba(255,255,255,.6); }
+  .rules-list{ display:flex; flex-direction:column; gap:12px; margin-top:16px; }
+  .rule-item{ display:flex; gap:12px; align-items:flex-start; background:#fff; border:1px solid var(--line); border-radius: var(--radius-sm); padding:14px 16px; }
+  .rule-item .rule-num{ width:26px; height:26px; border-radius:50%; background: var(--pink); color:#fff; font-family:'Poppins',sans-serif; font-weight:800; font-size:.78rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .rule-item p{ margin:0; font-size:.92rem; }
+  .think-box{ background: linear-gradient(135deg, var(--pink-light), #fff); border:1px solid var(--line); border-radius: var(--radius-md); padding:22px; margin-top:20px; }
+  .think-box h4{ color: var(--pink); display:flex; align-items:center; gap:8px; }
+  .reveal-btn{ font-family:'Poppins',sans-serif; font-weight:700; font-size:.85rem; background: var(--pink); color:#fff; border:none; border-radius:999px; padding:10px 18px; cursor:pointer; margin-top:12px; }
+  .reveal-btn:hover:not(:disabled){ background:#d63e75; }
+  .reveal-btn:disabled{ opacity:.55; cursor:default; }
+  .reveal-text{ margin-top:14px; padding-top:14px; border-top:1px dashed var(--line); font-size:.92rem; color: var(--ink-soft); }
+  .reveal-text + .reveal-text{ margin-top:10px; padding-top:10px; }
+
+  /* ===== Generalisasi ===== */
+  .gen-holder{ background:#fff; border:1px solid var(--line); border-radius: var(--radius-lg); padding: 18px; box-shadow: var(--shadow-sm); margin-top:28px; }
+  .gen-steps{ display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:16px; margin-top:24px; }
+  .gen-step{ background:#fff; border:1px solid var(--line); border-radius: var(--radius-md); padding:20px; box-shadow: var(--shadow-sm); }
+  .gen-step .badge-num{ margin-bottom:12px; background: var(--amber); }
+
+  /* ===== Kuis ===== */
+  #score-badge{ font-family:'Poppins',sans-serif; font-weight:700; font-size:.85rem; background: var(--primary); color:#fff; padding:8px 16px; border-radius:999px; display:inline-block; }
+  .quiz-card{ background:#fff; border:1px solid var(--line); border-radius: var(--radius-md); padding:22px; margin-bottom:18px; box-shadow: var(--shadow-sm); }
+  .quiz-question{ font-weight:800; font-family:'Poppins',sans-serif; font-size:1rem; margin-bottom:14px; }
+  .quiz-options{ display:grid; gap:10px; }
+  .quiz-option{ text-align:left; font-family:'Nunito',sans-serif; font-size:.96rem; font-weight:700; padding:12px 16px; border-radius: var(--radius-sm); border:2px solid var(--line); background:#fff; color: var(--ink); cursor:pointer; transition: border-color .15s, background .15s, transform .1s; }
+  .quiz-option:hover:not(:disabled){ border-color: var(--primary); background: var(--primary-light); }
+  .quiz-option:disabled{ cursor:default; opacity:.85; }
+  .quiz-option.correct{ border-color: var(--success); background: var(--success-light); color:#116b47; }
+  .quiz-option.incorrect{ border-color: var(--danger); background: var(--danger-light); color:#9c2b2e; }
+  .quiz-feedback{ display:none; margin-top:14px; padding:14px 16px; border-radius: var(--radius-sm); font-size:.92rem; }
+  .quiz-feedback.fb-correct{ display:block; background: var(--success-light); color:#116b47; }
+  .quiz-feedback.fb-incorrect{ display:block; background: var(--danger-light); color:#9c2b2e; }
+  #quiz-summary{ text-align:center; padding:28px; border-radius: var(--radius-lg); background: linear-gradient(135deg, var(--primary), var(--pink)); color:#fff; margin-top:10px; }
+  #quiz-summary h3{ color:#fff; }
+  #quiz-reset{ font-family:'Poppins',sans-serif; font-weight:700; font-size:.88rem; background:#fff; color: var(--primary-dark); border:none; border-radius:999px; padding:11px 22px; cursor:pointer; margin-top:14px; }
+
+  /* ===== Footer ===== */
+  footer{ background: var(--ink); color: #cfcbe8; padding: 36px 0; text-align:center; font-size:.88rem; }
+  footer strong{ color:#fff; }
+  footer .foot-brand{ font-family:'Poppins',sans-serif; font-weight:700; color:#fff; margin-bottom:6px; }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 860px){
+    .hero-inner{ grid-template-columns: 1fr; }
+    .hero-art{ order:-1; }
+    .two-col{ grid-template-columns: 1fr; }
+    .compare-grid{ grid-template-columns: 1fr; }
+    .gelang-wrap{ grid-template-columns: 1fr; }
+    .nav-inner{ gap:10px; }
+    main section{ padding:42px 0; }
+    .step-counter{ margin-left:0; width:100%; }
+  }
+  @media (max-width: 480px){
+    .card, .compare-card, .trace-card{ padding:18px; }
+    .hero{ padding:36px 0 40px; }
+    .algo-block{ padding:18px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar-track"><div id="progress-bar"></div></div>
+
+<header class="topnav">
+  <div class="nav-inner">
+    <div class="brand"><span class="brand-dot"></span>Bab 1 · Algoritma · P2</div>
+    <nav class="navlinks" id="navlinks">
+      <a class="nav-link" href="#notasi">Notasi</a>
+      <a class="nav-link" href="#tracing">Tracing</a>
+      <a class="nav-link" href="#cari-tertinggi">Cari Tertinggi</a>
+      <a class="nav-link" href="#battle">Battle Algoritma</a>
+      <a class="nav-link" href="#gelang-baim">Gelang Baim</a>
+      <a class="nav-link" href="#generalisasi">Generalisasi</a>
+      <a class="nav-link" href="#kuis">Kuis</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="beranda">
+  <div class="container hero-inner">
+    <div>
+      <span class="level-badge">⚡ Pertemuan 2 · Naik Level!</span>
+      <h1>Algoritma Level 2: Sistematis &amp; Bisa Digeneralisasi!</h1>
+      <p class="hero-sub">Di pertemuan sebelumnya, kamu udah bantu Kirana mikirin gelang manik-maniknya — dan nemu insight penting: jawaban yang kelihatan gampang ("15 manik!") belum tentu benar kalau belum dicek betul-betul. Sekarang, kita naikin levelnya: belajar menulis algoritma yang lebih rapi, membandingkan algoritma mana yang lebih jempolan, dan mencoba menyusun aturan yang berlaku umum, bukan cuma buat satu kasus doang.</p>
+      <div class="hero-meta">
+        <span class="pill">🎯 Tujuan Pembelajaran 1</span>
+        <span class="pill">🏫 SMP Negeri 14 Tarakan</span>
+        <span class="pill">📘 Bab 1 · Berpikir Komputasional</span>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="blob" style="width:180px;height:180px;background:var(--amber);top:-20px;right:10px;"></div>
+      <div class="blob" style="width:140px;height:140px;background:var(--pink);bottom:0;left:0;"></div>
+      <div class="recap-card">
+        <span class="eyebrow" style="background:var(--amber-light); color:#8a5a12;">Recap Pertemuan 1</span>
+        <p>Kasus Kirana: gelang <strong>8 merah, 4 kuning, 3 hijau</strong>. Jawaban naif "15 manik" ternyata cuma <strong>14 yang kepakai</strong> kalau mau susunannya valid melingkar. Sekarang giliran kita mikir lebih sistematis lagi!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NOTASI ALGORITMA TERSTRUKTUR ============ -->
+<section id="notasi">
+  <div class="container">
+    <span class="eyebrow">01 · Notasi Terstruktur</span>
+    <h2 class="section-title">Nulis Algoritma Pakai "Kode Rahasia" Biar Makin Rapi</h2>
+    <p class="section-lead">Supaya algoritma nggak cuma jadi cerita panjang yang bertele-tele, ada beberapa notasi (cara penulisan) yang biasa dipakai. Yuk kenalan sama 4 notasi dasar ini.</p>
+
+    <div class="illus-holder">
+      <img src="images/notasi-algoritma.svg" alt="Empat kartu notasi algoritma: MULAI/SELESAI, Langkah Bernomor, JIKA...MAKA..., dan ULANGI...SELAMA..." style="width:100%;height:auto;">
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <h3>MULAI / SELESAI &amp; Langkah Bernomor</h3>
+        <p><strong>MULAI</strong> dan <strong>SELESAI</strong> menandai batas awal dan akhir algoritma — di luar itu, nggak ada proses lagi. Di antaranya, langkah-langkah ditulis <strong>bernomor urut</strong> (1, 2, 3, ...) supaya jelas mana yang duluan dan mana yang belakangan.</p>
+      </div>
+      <div class="card">
+        <h3>JIKA...MAKA... &amp; ULANGI...SELAMA...</h3>
+        <p><strong>JIKA (syarat) MAKA (aksi)</strong> dipakai kalau ada langkah yang cuma dijalankan kalau kondisi tertentu terpenuhi. <strong>ULANGI...SELAMA (syarat)</strong> dipakai buat mengulang satu atau beberapa langkah terus-menerus, selama syaratnya masih benar.</p>
+      </div>
+    </div>
+
+    <div class="algo-block">
+      <div class="algo-title">Contoh: Algoritma Mengecas HP, Ditulis Pakai Notasi Terstruktur</div>
+      <pre><span class="kw">MULAI</span>
+1. Sambungkan kabel charger ke HP
+2. Sambungkan charger ke stop kontak
+3. <span class="cond">ULANGI SELAMA</span> persentase baterai <span class="num">&lt; 100%</span>:
+   a. Tunggu beberapa menit
+   b. Cek persentase baterai
+4. <span class="cond">JIKA</span> persentase baterai <span class="num">= 100%</span> <span class="cond">MAKA</span> cabut charger dari HP
+<span class="kw">SELESAI</span></pre>
+    </div>
+    <p class="section-lead" style="margin-top:18px;">Perhatikan, langkah 3 itu perulangan (dia balik lagi ke "tunggu" dan "cek" selama baterainya belum penuh), sedangkan langkah 4 itu percabangan (baru dijalankan kalau syaratnya — baterai 100% — sudah benar).</p>
+  </div>
+</section>
+
+<!-- ============ TRACING ============ -->
+<section id="tracing" class="alt">
+  <div class="container">
+    <span class="eyebrow">02 · Tracing</span>
+    <h2 class="section-title">Sebelum Bilang "Beres!" — Coba Tracing Dulu</h2>
+    <p class="section-lead">Ingat kasus Kirana di pertemuan lalu? Jawaban "15 manik" kelihatannya masuk akal di kepala, tapi begitu ditelusuri satu-satu ketahuan ada yang meleset. Itulah gunanya <strong>tracing</strong> — menelusuri algoritma langkah demi langkah pakai data nyata, buat mengecek apakah hasilnya benar-benar sesuai yang diharapkan.</p>
+
+    <div class="trace-grid">
+      <div class="trace-card">
+        <div class="badge-num">1</div>
+        <h4>Siapkan data contoh</h4>
+        <p>Pilih satu contoh data yang konkret (bukan cuma dibayangkan), lalu catat nilai awalnya.</p>
+      </div>
+      <div class="trace-card">
+        <div class="badge-num">2</div>
+        <h4>Jalankan tiap langkah satu-satu</h4>
+        <p>Jangan loncat. Kerjakan algoritmanya persis seperti yang tertulis, langkah demi langkah, sambil dicatat.</p>
+      </div>
+      <div class="trace-card">
+        <div class="badge-num">3</div>
+        <h4>Catat perubahan nilainya</h4>
+        <p>Setiap ada nilai yang berubah (misalnya "kandidat tertinggi"), tulis nilainya supaya kelihatan prosesnya.</p>
+      </div>
+      <div class="trace-card">
+        <div class="badge-num">4</div>
+        <h4>Bandingkan hasil akhir</h4>
+        <p>Cek, apakah hasil akhirnya memang sesuai tujuan? Kalau enggak, berarti algoritmanya masih perlu diperbaiki.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <h4>💡 Kenapa ini penting?</h4>
+      <p>Algoritma yang "kelihatan benar" di kepala kita belum tentu benar kalau dijalankan sungguhan. Tracing itu semacam simulasi manual — dan justru dengan begitu, kesalahan atau kasus aneh (seperti insight "14 dari 15" di pertemuan lalu) bisa ketahuan lebih awal, sebelum algoritmanya benar-benar dipakai.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STUDI KASUS A: CARI TERTINGGI ============ -->
+<section id="cari-tertinggi">
+  <div class="container">
+    <span class="eyebrow">03 · Studi Kasus A</span>
+    <h2 class="section-title">Cari Nilai Tertinggi &amp; Terendah</h2>
+    <p class="section-lead">Ada 7 nilai ulangan: <strong>78, 85, 92, 67, 88, 95, 73</strong>. Gimana caranya nemuin nilai yang paling tinggi tanpa mengurutkan semuanya dulu? Ada algoritma jempolan namanya <strong>"Simpan Kandidat Sambil Jalan"</strong>: anggap dulu data pertama sebagai kandidat tertinggi, lalu telusuri data berikutnya satu per satu — tiap ketemu data yang lebih besar dari kandidat, ganti kandidatnya.</p>
+
+    <div class="stepper-wrap">
+      <div class="step-diagram" id="stepDiagram">
+        <img src="images/cari-tertinggi.svg" alt="Tujuh kotak data nilai 78, 85, 92, 67, 88, 95, 73 berjajar" style="width:100%;height:auto;display:block;" id="stepImg">
+        <button type="button" class="step-box" data-index="0" style="left:5.7778%;top:26.9231%;width:11.1111%;height:46.1538%;" aria-label="Data ke-1: 78"></button>
+        <button type="button" class="step-box" data-index="1" style="left:18.6667%;top:26.9231%;width:11.1111%;height:46.1538%;" aria-label="Data ke-2: 85"></button>
+        <button type="button" class="step-box" data-index="2" style="left:31.5556%;top:26.9231%;width:11.1111%;height:46.1538%;" aria-label="Data ke-3: 92"></button>
+        <button type="button" class="step-box" data-index="3" style="left:44.4444%;top:26.9231%;width:11.1111%;height:46.1538%;" aria-label="Data ke-4: 67"></button>
+        <button type="button" class="step-box" data-index="4" style="left:57.3333%;top:26.9231%;width:11.1111%;height:46.1538%;" aria-label="Data ke-5: 88"></button>
+        <button type="button" class="step-box" data-index="5" style="left:70.2222%;top:26.9231%;width:11.1111%;height:46.1538%;" aria-label="Data ke-6: 95"></button>
+        <button type="button" class="step-box" data-index="6" style="left:83.1111%;top:26.9231%;width:11.1111%;height:46.1538%;" aria-label="Data ke-7: 73"></button>
+      </div>
+
+      <div class="step-panel" id="stepPanel">👆 Klik "Langkah Berikutnya" atau klik salah satu kotak buat mulai menelusuri algoritmanya.</div>
+
+      <div class="step-controls">
+        <button class="step-btn primary" id="stepNextBtn" type="button">Langkah Berikutnya ▶</button>
+        <button class="step-btn ghost" id="stepResetBtn" type="button">↺ Ulangi</button>
+        <span class="step-counter" id="stepCounter">Langkah 0 dari 7</span>
+      </div>
+    </div>
+
+    <div class="callout think-mini">
+      <h4>🤔 Gimana Kalau yang Dicari Nilai Terendah?</h4>
+      <p>Coba pikirkan: apakah algoritma "Simpan Kandidat Sambil Jalan" ini bisa dipakai buat cari nilai <strong>terendah</strong> juga? Kalau iya, bagian mana dari algoritmanya yang perlu diubah? (Hint kecil: ada satu kata yang nentuin arah perbandingannya. Jawaban lengkapnya boleh kamu diskusikan bareng LKPD, ya!)</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BATTLE ALGORITMA ============ -->
+<section id="battle" class="alt">
+  <div class="container">
+    <span class="eyebrow">04 · Battle Algoritma</span>
+    <h2 class="section-title">Battle Algoritma: A vs B</h2>
+    <p class="section-lead">Ternyata, ada lebih dari satu cara buat menyelesaikan soal yang sama. Kita punya dua kandidat algoritma buat cari nilai tertinggi dari 7 data di atas. Siapa yang lebih jempolan?</p>
+
+    <div class="compare-grid">
+      <div class="compare-card algoA">
+        <span class="compare-tag">Algoritma A</span>
+        <h3>Bandingkan Semua Pasangan</h3>
+        <p>Setiap data dibandingkan dengan <strong>semua data lain</strong>, satu per satu, sampai ketemu yang paling besar. Cara ini gampang dipikirkan, tapi jumlah perbandingannya jadi banyak banget — apalagi kalau datanya makin banyak.</p>
+      </div>
+      <div class="compare-card algoB">
+        <span class="compare-tag">Algoritma B</span>
+        <h3>Simpan Kandidat Sambil Jalan</h3>
+        <p>Ini algoritma yang barusan kita pakai di studi kasus sebelumnya: cukup simpan satu kandidat, lalu bandingkan kandidat itu dengan data berikutnya, satu per satu sampai data terakhir.</p>
+      </div>
+    </div>
+
+    <div style="text-align:center;">
+      <button class="battle-btn" id="battleRevealBtn" type="button" aria-expanded="false">🥊 Lihat Hasil Battle</button>
+    </div>
+
+    <div class="battle-result" id="battleResult" hidden>
+      <div class="battle-result-inner">
+        <img src="images/battle-algoritma.svg" alt="Grafik batang: Algoritma A butuh 21 kali perbandingan, Algoritma B butuh 6 kali perbandingan" style="width:100%;height:auto;max-width:560px;margin:0 auto;">
+        <div class="battle-note">
+          <div><strong>Algoritma A: 21 kali</strong><br>Untuk 7 data, tiap data dibandingkan ke semua data lain — totalnya 21 kali perbandingan yang harus dilakukan.</div>
+          <div><strong>Algoritma B: 6 kali</strong><br>Cukup 6 kali perbandingan (satu perbandingan untuk setiap data baru yang ditelusuri setelah data pertama).</div>
+          <div><strong>Efisien vs Efektif</strong><br>Keduanya sama-sama <em>efektif</em> — dua-duanya berhasil menemukan 95 sebagai jawaban yang benar. Tapi Algoritma B jauh lebih <em>efisien</em> karena kerjanya lebih hemat, tanpa mengorbankan hasil.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STUDI KASUS B: GELANG BAIM ============ -->
+<section id="gelang-baim">
+  <div class="container">
+    <span class="eyebrow">05 · Studi Kasus B</span>
+    <h2 class="section-title">Gelang Baim, Naik Level!</h2>
+    <p class="section-lead">Baim juga mau bikin gelang manik-manik melingkar, tapi levelnya lebih tinggi dari punya Kirana — ada <strong>16 manik, 4 warna</strong>, dan berlaku <strong>dua aturan sekaligus</strong>.</p>
+
+    <div class="gelang-wrap">
+      <div>
+        <img src="images/gelang-baim.svg" alt="Ilustrasi gelang manik-manik melingkar 16 manik milik Baim dengan 4 warna" style="width:100%;height:auto;max-width:420px;margin:0 auto;">
+        <div class="bead-legend">
+          <span class="legend-item"><span class="legend-dot" style="background:#E63946"></span>Merah × 5</span>
+          <span class="legend-item"><span class="legend-dot" style="background:#2DBE6C"></span>Hijau × 5</span>
+          <span class="legend-item"><span class="legend-dot" style="background:#FFC53D"></span>Kuning × 3</span>
+          <span class="legend-item"><span class="legend-dot" style="background:#457B9D"></span>Biru × 3</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="rules-list">
+          <div class="rule-item">
+            <span class="rule-num">1</span>
+            <p><strong>Warna sama nggak boleh bersebelahan.</strong> Sama seperti aturan Kirana — dan karena gelangnya melingkar, manik pertama dan terakhir juga dianggap bersebelahan.</p>
+          </div>
+          <div class="rule-item">
+            <span class="rule-num">2</span>
+            <p><strong>Merah dan Kuning juga nggak boleh bersebelahan satu sama lain.</strong> Ini aturan tambahan yang bikin levelnya naik — jadi Merah harus "menghindar" dari sesama Merah <em>dan</em> dari Kuning sekaligus!</p>
+          </div>
+        </div>
+
+        <div class="think-box">
+          <h4>🤔 Sebelum Coba-Coba, Yuk Hitung Dulu</h4>
+          <p>Jangan buru-buru langsung menyusun manik secara acak. Coba pikirkan dulu: apa hubungan antara jumlah manik dan dua aturan di atas, sebelum kamu benar-benar mulai menyusun?</p>
+          <button class="reveal-btn" id="hintBtn1" type="button" aria-expanded="false">Kasih Aku Petunjuk</button>
+          <div class="reveal-text" id="hintText1" hidden>
+            <strong>Petunjuk 1:</strong> Coba hitung: Merah + Kuning = 5 + 3 = <strong>8</strong>, sedangkan Hijau + Biru = 5 + 3 = <strong>8</strong> juga. Kebetulan? Coba ingat lagi aturan nomor 2 — kalau Merah dan Kuning saling "musuhan" juga, apa artinya buat cara mereka disebar di antara 16 posisi melingkar?
+          </div>
+          <button class="reveal-btn" id="hintBtn2" type="button" style="display:none;">Kasih Petunjuk Lagi</button>
+          <div class="reveal-text" id="hintText2" hidden>
+            <strong>Petunjuk 2:</strong> Karena Merah tidak boleh nempel ke Merah lain <em>maupun</em> ke Kuning, coba bayangkan: di antara dua manik Merah (atau Merah &amp; Kuning) yang berdekatan posisinya, wajib ada "penyekat" dari warna lain (Hijau atau Biru). Coba gambar 16 lingkaran kosong di kertas dulu, tandai pola penyekatnya — susunan lengkapnya boleh kamu eksplorasi bareng teman lewat LKPD, ya!
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GENERALISASI ============ -->
+<section id="generalisasi" class="alt">
+  <div class="container">
+    <span class="eyebrow">06 · Level Tertinggi</span>
+    <h2 class="section-title">Level Tertinggi: Bikin Algoritma Umum!</h2>
+    <p class="section-lead">Kita udah menyelesaikan kasus Kirana dan mikirin kasus Baim. Tapi gimana kalau besok ada kasus gelang lain lagi, dengan jumlah manik dan warna yang beda? Masa kita harus mikir dari nol tiap kali?</p>
+
+    <div class="gen-holder">
+      <img src="images/generalisasi.svg" alt="Diagram panah dari kotak Kasus Spesifik Gelang Baim menuju kotak Algoritma Umum yang berlaku untuk kasus manapun" style="width:100%;height:auto;">
+    </div>
+
+    <div class="def-box">
+      <p>Inilah yang disebut <strong>generalisasi</strong> (kadang juga disebut abstraksi): proses mengambil "pola inti" dari satu kasus spesifik, lalu menuliskannya jadi aturan atau algoritma yang <strong>berlaku umum</strong> — bisa dipakai lagi buat kasus lain yang mirip, tanpa harus mikir dari nol.</p>
+    </div>
+
+    <div class="gen-steps">
+      <div class="gen-step">
+        <div class="badge-num">1</div>
+        <h4>Kumpulkan pola dari kasus spesifik</h4>
+        <p>Dari kasus Kirana &amp; Baim, kita lihat pola: "hitung jumlah tiap warna dulu, bandingkan dengan aturan pelarangannya, baru simpulkan mungkin/enggak."</p>
+      </div>
+      <div class="gen-step">
+        <div class="badge-num">2</div>
+        <h4>Ganti angka spesifik jadi variabel</h4>
+        <p>Alih-alih "8 merah, 4 kuning, 3 hijau", kita tulis jadi "jumlah warna ke-1, jumlah warna ke-2, dst" — supaya bisa dipakai untuk jumlah berapa pun.</p>
+      </div>
+      <div class="gen-step">
+        <div class="badge-num">3</div>
+        <h4>Uji algoritma umum ke kasus baru</h4>
+        <p>Coba pakai algoritma umum itu ke kasus gelang yang berbeda — kalau tetap berhasil, berarti algoritmanya sudah benar-benar general, bukan cuma "kebetulan cocok" di satu kasus saja.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KUIS ============ -->
+<section id="kuis">
+  <div class="container">
+    <span class="eyebrow">Yuk Cek Paham Kamu</span>
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+      <h2 class="section-title" style="margin-bottom:0;">Kuis Level 2: Algoritma</h2>
+      <span id="score-badge">Skor: 0/5</span>
+    </div>
+    <p class="section-lead" style="margin-top:10px;">Soal-soal ini sedikit lebih menantang dari pertemuan sebelumnya. Klik salah satu jawaban, nanti langsung kelihatan benar atau salahnya beserta penjelasan singkat.</p>
+
+    <div id="quiz-list" style="margin-top:26px;"></div>
+
+    <div id="quiz-summary" hidden>
+      <h3 id="quiz-summary-title">Hasil Kuismu</h3>
+      <p id="quiz-summary-text"></p>
+      <button id="quiz-reset" type="button">Ulangi Kuis</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="foot-brand">Algoritma Level 2: Sistematis &amp; Bisa Digeneralisasi!</div>
+    <p>Materi Belajar Informatika · Bab 1 · Tujuan Pembelajaran 1 (TP1) · Pertemuan 2<br>
+    Kelas VII · SMP Negeri 14 Tarakan</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ===== Scroll progress bar ===== */
+  var progressBar = document.getElementById('progress-bar');
+  function updateProgress(){
+    var doc = document.documentElement;
+    var scrollTop = window.scrollY || doc.scrollTop || document.body.scrollTop;
+    var scrollHeight = (doc.scrollHeight || document.body.scrollHeight) - doc.clientHeight;
+    var pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress);
+  updateProgress();
+
+  /* ===== Nav active-link highlighting ===== */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-link'));
+  var trackedSections = Array.prototype.slice.call(
+    document.querySelectorAll('#notasi, #tracing, #cari-tertinggi, #battle, #gelang-baim, #generalisasi, #kuis')
+  );
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          var id = entry.target.id;
+          navLinks.forEach(function(l){
+            l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, { rootMargin: '-35% 0px -55% 0px', threshold: 0 });
+    trackedSections.forEach(function(s){ observer.observe(s); });
+  }
+
+  /* ===== Stepper: Cari Nilai Tertinggi ===== */
+  var data = [78, 85, 92, 67, 88, 95, 73];
+  var steps = [
+    { cand: 0, cmp: null, text: "Langkah awal: kita anggap dulu data ke-1 (78) sebagai kandidat tertinggi sementara." },
+    { cand: 1, cmp: 1, text: "78 vs 85 → 85 lebih besar, kandidat baru = 85" },
+    { cand: 2, cmp: 2, text: "85 vs 92 → 92 lebih besar, kandidat baru = 92" },
+    { cand: 2, cmp: 3, text: "92 vs 67 → 67 tidak lebih besar, kandidat tetap 92" },
+    { cand: 2, cmp: 4, text: "92 vs 88 → 88 tidak lebih besar, kandidat tetap 92" },
+    { cand: 5, cmp: 5, text: "92 vs 95 → 95 lebih besar, kandidat baru = 95" },
+    { cand: 5, cmp: 6, text: "95 vs 73 → 73 tidak lebih besar, kandidat tetap 95" },
+    { cand: 5, cmp: null, text: "Selesai! Semua data sudah ditelusuri. Nilai tertinggi = 95, cuma butuh 6 kali perbandingan.", final: true }
+  ];
+  var curStep = 0;
+  var stepBoxes = Array.prototype.slice.call(document.querySelectorAll('.step-box'));
+  var stepPanel = document.getElementById('stepPanel');
+  var stepNextBtn = document.getElementById('stepNextBtn');
+  var stepResetBtn = document.getElementById('stepResetBtn');
+  var stepCounter = document.getElementById('stepCounter');
+
+  function renderStep(){
+    var s = steps[curStep];
+    stepBoxes.forEach(function(box){
+      var idx = parseInt(box.getAttribute('data-index'), 10);
+      box.classList.remove('st-candidate', 'st-comparing');
+      if (idx === s.cand) box.classList.add('st-candidate');
+      if (idx === s.cmp) box.classList.add('st-comparing');
+    });
+    stepPanel.textContent = (s.final ? '\u{1F3C1} ' : '\u{1F449} ') + s.text;
+    stepCounter.textContent = 'Langkah ' + curStep + ' dari ' + (steps.length - 1);
+    stepNextBtn.disabled = (curStep === steps.length - 1);
+    stepNextBtn.textContent = (curStep === steps.length - 1) ? 'Sudah Selesai ✓' : 'Langkah Berikutnya ▶';
+  }
+
+  stepNextBtn.addEventListener('click', function(){
+    if (curStep < steps.length - 1) { curStep++; renderStep(); }
+  });
+  stepResetBtn.addEventListener('click', function(){ curStep = 0; renderStep(); });
+  stepBoxes.forEach(function(box){
+    box.addEventListener('click', function(){
+      var idx = parseInt(box.getAttribute('data-index'), 10);
+      curStep = idx; // steps[0..6] align 1:1 with box index
+      renderStep();
+    });
+  });
+  renderStep();
+
+  /* ===== Battle Algoritma reveal ===== */
+  var battleBtn = document.getElementById('battleRevealBtn');
+  var battleResult = document.getElementById('battleResult');
+  battleBtn.addEventListener('click', function(){
+    var willShow = battleResult.hidden;
+    battleResult.hidden = !willShow;
+    battleBtn.setAttribute('aria-expanded', String(willShow));
+    battleBtn.textContent = willShow ? '\u{1F649} Sembunyikan Hasil Battle' : '\u{1F94A} Lihat Hasil Battle';
+    if (willShow) { battleResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+  });
+
+  /* ===== Gelang Baim progressive hints ===== */
+  var hintBtn1 = document.getElementById('hintBtn1');
+  var hintText1 = document.getElementById('hintText1');
+  var hintBtn2 = document.getElementById('hintBtn2');
+  var hintText2 = document.getElementById('hintText2');
+
+  hintBtn1.addEventListener('click', function(){
+    hintText1.hidden = false;
+    hintBtn1.style.display = 'none';
+    hintBtn2.style.display = 'inline-block';
+    hintBtn1.setAttribute('aria-expanded', 'true');
+  });
+  hintBtn2.addEventListener('click', function(){
+    hintText2.hidden = false;
+    hintBtn2.disabled = true;
+    hintBtn2.textContent = 'Sudah 2 Petunjuk — Lanjut di LKPD, ya!';
+  });
+
+  /* ===== Quiz ===== */
+  var quizData = [
+    {
+      q: "Dalam notasi algoritma terstruktur, kapan sebuah langkah yang ditulis setelah 'ULANGI SELAMA (syarat)' akan berhenti diulang?",
+      options: [
+        "Setelah diulang tepat 10 kali, berapapun syaratnya",
+        "Begitu syaratnya menjadi salah / tidak terpenuhi lagi",
+        "Tidak akan pernah berhenti, itu tujuannya perulangan",
+        "Begitu ada langkah bernomor di bawahnya"
+      ],
+      correct: 1,
+      explain: "Betul! Perulangan 'ULANGI SELAMA (syarat)' akan terus jalan selama syaratnya masih benar, dan berhenti begitu syarat itu jadi tidak terpenuhi lagi — contohnya mengecas HP berhenti begitu baterai sudah 100%."
+    },
+    {
+      q: "Kalau ada 10 data dan kita pakai Algoritma A (Bandingkan Semua Pasangan) untuk mencari nilai tertinggi, berapa kali perbandingan yang dibutuhkan?",
+      options: [
+        "10 kali",
+        "9 kali",
+        "45 kali",
+        "100 kali"
+      ],
+      correct: 2,
+      explain: "Tepat! Untuk 10 data, semua pasangan yang mungkin dibandingkan ada 45 (pola yang sama seperti 7 data butuh 21 kali perbandingan). Semakin banyak data, jumlah perbandingannya naik jauh lebih cepat dibanding jumlah datanya."
+    },
+    {
+      q: "Untuk 10 data yang sama, kalau kita pakai Algoritma B (Simpan Kandidat Sambil Jalan), berapa kali perbandingan yang dibutuhkan?",
+      options: [
+        "9 kali",
+        "10 kali",
+        "45 kali",
+        "90 kali"
+      ],
+      correct: 0,
+      explain: "Betul! Algoritma B cuma butuh (jumlah data - 1) kali perbandingan, jadi untuk 10 data hanya perlu 9 kali — jauh lebih hemat dibanding 45 kali punya Algoritma A, walau hasil akhirnya sama-sama benar."
+    },
+    {
+      q: "Pada gelang Baim (16 manik: 5 merah, 5 hijau, 3 kuning, 3 biru), kenapa perlu menghitung jumlah tiap warna dulu sebelum coba-coba menyusun manik secara acak?",
+      options: [
+        "Supaya gelangnya kelihatan lebih berat saat dipakai",
+        "Karena kalau salah satu warna (atau gabungan warna yang saling dilarang bersebelahan) jumlahnya terlalu banyak, susunan yang memenuhi semua aturan bisa jadi mustahil dibuat",
+        "Karena warna manik akan berubah kalau tidak dihitung dulu",
+        "Sebenarnya tidak perlu dihitung, tinggal coba-coba saja pasti berhasil"
+      ],
+      correct: 1,
+      explain: "Persis seperti insight dari kasus Kirana! Sebelum coba-coba menyusun, kita harus mengecek dulu apakah jumlah manik yang saling 'terlarang bersebelahan' itu masih memungkinkan untuk disusun sesuai aturan — bukan cuma soal jumlah totalnya saja."
+    },
+    {
+      q: "Apa inti dari 'generalisasi' yang dibahas di bagian 'Level Tertinggi' pada materi ini?",
+      options: [
+        "Mengubah algoritma menjadi lebih rumit agar terlihat pintar",
+        "Mengambil pola inti dari satu kasus spesifik, lalu menuliskannya jadi aturan yang bisa dipakai lagi untuk kasus lain yang mirip",
+        "Menghapus semua syarat supaya algoritmanya lebih cepat",
+        "Menghafal jawaban dari satu kasus untuk dipakai di kasus yang sama saja"
+      ],
+      correct: 1,
+      explain: "Tepat sekali. Generalisasi berarti kita tidak berhenti di satu kasus (misalnya cuma gelang Baim), tapi menuliskan pola penyelesaiannya secara umum, sehingga bisa dipakai lagi untuk kasus gelang lain dengan jumlah manik atau warna yang berbeda."
+    }
+  ];
+
+  var score = 0;
+  var answeredCount = 0;
+  var quizListEl = document.getElementById('quiz-list');
+  var scoreBadgeEl = document.getElementById('score-badge');
+  var summaryEl = document.getElementById('quiz-summary');
+  var summaryTextEl = document.getElementById('quiz-summary-text');
+
+  function updateScoreBadge(){
+    scoreBadgeEl.textContent = 'Skor: ' + score + '/' + quizData.length;
+  }
+
+  function showSummary(){
+    summaryEl.hidden = false;
+    var pct = score / quizData.length;
+    var msg;
+    if (pct >= 0.8) {
+      msg = "Mantap banget! Kamu udah paham notasi algoritma, efisiensi kuantitatif, dan cara berpikir generalisasi. 🎉";
+    } else if (pct >= 0.5) {
+      msg = "Lumayan! Coba baca ulang bagian Battle Algoritma dan Gelang Baim, lalu coba lagi ya.";
+    } else {
+      msg = "Yuk scroll ke atas dulu, baca ulang materinya pelan-pelan, terus coba kuisnya sekali lagi!";
+    }
+    summaryTextEl.textContent = 'Kamu jawab benar ' + score + ' dari ' + quizData.length + ' soal. ' + msg;
+  }
+
+  function handleAnswer(qi, oi, card){
+    if (card.getAttribute('data-answered') === 'true') return;
+    card.setAttribute('data-answered', 'true');
+
+    var item = quizData[qi];
+    var buttons = card.querySelectorAll('.quiz-option');
+    buttons.forEach(function(b, i){
+      b.disabled = true;
+      if (i === item.correct) b.classList.add('correct');
+      else if (i === oi) b.classList.add('incorrect');
+    });
+
+    var fb = card.querySelector('.quiz-feedback');
+    var isCorrect = (oi === item.correct);
+    if (isCorrect) {
+      score++;
+      fb.classList.add('fb-correct');
+      fb.innerHTML = '<strong>Betul!</strong> ' + item.explain;
+    } else {
+      fb.classList.add('fb-incorrect');
+      fb.innerHTML = '<strong>Belum tepat.</strong> ' + item.explain;
+    }
+
+    answeredCount++;
+    updateScoreBadge();
+    if (answeredCount === quizData.length) showSummary();
+  }
+
+  function renderQuiz(){
+    score = 0;
+    answeredCount = 0;
+    quizListEl.innerHTML = '';
+    summaryEl.hidden = true;
+
+    quizData.forEach(function(item, qi){
+      var card = document.createElement('div');
+      card.className = 'quiz-card';
+      card.setAttribute('data-answered', 'false');
+
+      var qEl = document.createElement('p');
+      qEl.className = 'quiz-question';
+      qEl.textContent = (qi + 1) + '. ' + item.q;
+      card.appendChild(qEl);
+
+      var optWrap = document.createElement('div');
+      optWrap.className = 'quiz-options';
+      item.options.forEach(function(opt, oi){
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'quiz-option';
+        btn.textContent = opt;
+        btn.addEventListener('click', function(){ handleAnswer(qi, oi, card); });
+        optWrap.appendChild(btn);
+      });
+      card.appendChild(optWrap);
+
+      var fb = document.createElement('div');
+      fb.className = 'quiz-feedback';
+      card.appendChild(fb);
+
+      quizListEl.appendChild(card);
+    });
+
+    updateScoreBadge();
+  }
+
+  var resetBtn = document.getElementById('quiz-reset');
+  if (resetBtn) resetBtn.addEventListener('click', renderQuiz);
+
+  renderQuiz();
+
+})();
+</script>
+
+</body>
+</html>

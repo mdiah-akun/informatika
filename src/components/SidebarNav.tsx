@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { GraduationCap, BookOpen, Library, Users, IdCard, CalendarDays, BookText } from "lucide-react";
+import { GraduationCap, BookOpen, Library, Users, IdCard, CalendarDays, BookText, Home, ListChecks, ClipboardList, Target, Link2 } from "lucide-react";
 
 export default function SidebarNav({
   role,
@@ -12,6 +12,7 @@ export default function SidebarNav({
   collapsed?: boolean;
 }) {
   const pathname = usePathname();
+  const isActiveHome = pathname === "/";
   const isActiveMateri = pathname.startsWith("/materi");
   const isActiveAdminMateri = pathname.startsWith("/admin/materi");
   const isActiveAdminUsers = pathname.startsWith("/admin/users");
@@ -19,7 +20,13 @@ export default function SidebarNav({
   const isActiveAdminJadwal = pathname.startsWith("/admin/jadwal");
   const isActiveJadwal = pathname.startsWith("/jadwal");
   const isActiveAdminEbook = pathname.startsWith("/admin/ebook");
+  const isActiveAdminMateriGuru = pathname.startsWith("/admin/materi-guru");
   const isActiveEbook = pathname.startsWith("/ebook");
+  const isActiveAdminSoal = pathname.startsWith("/admin/soal");
+  const isActiveAdminLaporan = pathname.startsWith("/admin/laporan");
+  const isActiveAdminTp = pathname.startsWith("/admin/tp");
+  const isActiveSoal = pathname.startsWith("/soal");
+  const isActiveTp = pathname.startsWith("/tp");
 
   const linkClass = (active: boolean) =>
     `flex items-center rounded-lg text-sm font-medium transition-colors ${
@@ -54,9 +61,17 @@ export default function SidebarNav({
       <nav className={`flex-1 py-4 space-y-1 ${collapsed ? "px-2" : "px-3"}`}>
         {role === "admin" ? (
           <>
+            <Link href="/" title="Home" className={linkClass(isActiveHome)}>
+              <Home className="h-4 w-4 shrink-0" />
+              {!collapsed && "Home"}
+            </Link>
             <Link href="/admin/materi" title="Kelola Materi" className={linkClass(isActiveAdminMateri)}>
               <Library className="h-4 w-4 shrink-0" />
               {!collapsed && "Kelola Materi"}
+            </Link>
+            <Link href="/admin/tp" title="Tujuan Pembelajaran" className={linkClass(isActiveAdminTp)}>
+              <Target className="h-4 w-4 shrink-0" />
+              {!collapsed && "TP"}
             </Link>
             <Link href="/admin/siswa" title="Data Siswa" className={linkClass(isActiveAdminSiswa)}>
               <IdCard className="h-4 w-4 shrink-0" />
@@ -74,12 +89,32 @@ export default function SidebarNav({
               <BookText className="h-4 w-4 shrink-0" />
               {!collapsed && "E-book"}
             </Link>
+            <Link href="/admin/materi-guru" title="Materi Guru" className={linkClass(isActiveAdminMateriGuru)}>
+              <Link2 className="h-4 w-4 shrink-0" />
+              {!collapsed && "Materi Guru"}
+            </Link>
+            <Link href="/admin/soal" title="Bank Soal" className={linkClass(isActiveAdminSoal)}>
+              <ListChecks className="h-4 w-4 shrink-0" />
+              {!collapsed && "Bank Soal"}
+            </Link>
+            <Link href="/admin/laporan" title="Laporan Ujian" className={linkClass(isActiveAdminLaporan)}>
+              <ClipboardList className="h-4 w-4 shrink-0" />
+              {!collapsed && "Laporan Ujian"}
+            </Link>
           </>
         ) : (
           <>
+            <Link href="/" title="Home" className={linkClass(isActiveHome)}>
+              <Home className="h-4 w-4 shrink-0" />
+              {!collapsed && "Home"}
+            </Link>
             <Link href="/materi" title="Daftar Materi" className={linkClass(isActiveMateri)}>
               <BookOpen className="h-4 w-4 shrink-0" />
               {!collapsed && "Daftar Materi"}
+            </Link>
+            <Link href="/tp" title="Tujuan Pembelajaran" className={linkClass(isActiveTp)}>
+              <Target className="h-4 w-4 shrink-0" />
+              {!collapsed && "TP"}
             </Link>
             <Link href="/jadwal" title="Jadwal Pelajaran" className={linkClass(isActiveJadwal)}>
               <CalendarDays className="h-4 w-4 shrink-0" />
@@ -88,6 +123,10 @@ export default function SidebarNav({
             <Link href="/ebook" title="E-book" className={linkClass(isActiveEbook)}>
               <BookText className="h-4 w-4 shrink-0" />
               {!collapsed && "E-book"}
+            </Link>
+            <Link href="/soal" title="Soal" className={linkClass(isActiveSoal)}>
+              <ListChecks className="h-4 w-4 shrink-0" />
+              {!collapsed && "Soal"}
             </Link>
           </>
         )}

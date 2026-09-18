@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="150" viewBox="0 0 200 150" role="img" aria-label="Ilustrasi memotong biskuit dengan tangan secara cepat">
+  <defs>
+    <radialGradient id="cookieG" cx="35%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#E8B96B"/><stop offset="100%" stop-color="#C4934A"/>
+    </radialGradient>
+  </defs>
+  <circle cx="55" cy="82" r="40" fill="#fff" stroke="#17B890" stroke-width="6"/>
+  <rect x="47" y="30" width="16" height="10" rx="3" fill="#17B890"/>
+  <rect x="70" y="18" width="14" height="8" rx="3" fill="#17B890" transform="rotate(35 77 22)"/>
+  <line x1="55" y1="82" x2="55" y2="58" stroke="#17B890" stroke-width="4" stroke-linecap="round"/>
+  <line x1="55" y1="82" x2="72" y2="88" stroke="#17B890" stroke-width="4" stroke-linecap="round"/>
+  <g>
+    <circle cx="148" cy="80" r="33" fill="url(#cookieG)"/>
+    <path d="M148,47 L160,63 L142,72 L156,90 L138,95 L148,113" stroke="#fff" stroke-width="5" fill="none" stroke-linejoin="round"/>
+    <circle cx="132" cy="66" r="3" fill="#8A5A26"/>
+    <circle cx="160" cy="72" r="3" fill="#8A5A26"/>
+    <circle cx="140" cy="94" r="3" fill="#8A5A26"/>
+    <circle cx="163" cy="98" r="3" fill="#8A5A26"/>
+    <circle cx="184" cy="112" r="4" fill="#C4934A"/>
+    <circle cx="192" cy="120" r="2.5" fill="#C4934A"/>
+  </g>
+</svg>

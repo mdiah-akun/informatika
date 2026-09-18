@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320" role="img" aria-label="Ilustrasi gelang manik-manik warna-warni melingkar">
+  <defs>
+    <radialGradient id="heroGlow" cx="50%" cy="45%" r="60%">
+      <stop offset="0%" stop-color="#EFEBFF"/>
+      <stop offset="100%" stop-color="#FBFAF6" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFE29A"/>
+      <stop offset="100%" stop-color="#F4C468"/>
+    </linearGradient>
+  </defs>
+  <circle cx="160" cy="160" r="150" fill="url(#heroGlow)"/>
+  <circle cx="160" cy="160" r="118" fill="none" stroke="url(#ringGrad)" stroke-width="10"/>
+  <circle cx="160.0" cy="42.0" r="15" fill="#F4568C" stroke="#ffffff" stroke-width="2.5"/>
+  <circle cx="229.4" cy="64.5" r="15" fill="#FFB443" stroke="#ffffff" stroke-width="2.5"/>
+  <circle cx="272.2" cy="123.5" r="15" fill="#FFE066" stroke="#ffffff" stroke-width="2.5"/>
+  <circle cx="272.2" cy="196.5" r="15" fill="#3FD98F" stroke="#ffffff" stroke-width="2.5"/>
+  <circle cx="229.4" cy="255.5" r="15" fill="#4EA8DE" stroke="#ffffff" stroke-width="2.5"/>
+  <circle cx="160.0" cy="278.0" r="15" fill="#8E7CF2" stroke="#ffffff" stroke-width="2.5"/>
+  <circle cx="90.6" cy="255.5" r="15" fill="#F4568C" stroke="#ffffff" stroke-width="2.5"/>
+  <circle cx="47.8" cy="196.5" r="15" fill="#FFB443" stroke="#ffffff" stroke-width="2.5"/>
+  <circle cx="47.8" cy="123.5" r="15" fill="#3FD98F" stroke="#ffffff" stroke-width="2.5"/>
+  <circle cx="90.6" cy="64.5" r="15" fill="#4EA8DE" stroke="#ffffff" stroke-width="2.5"/>
+</svg>

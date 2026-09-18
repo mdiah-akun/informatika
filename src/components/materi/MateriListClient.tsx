@@ -23,8 +23,12 @@ export default function MateriListClient({
   lockKelas?: boolean;
 }) {
   const [selectedKelas, setSelectedKelas] = useState<Kelas>(initialKelas ?? KELAS_LIST[0]);
+  const [selectedBabId, setSelectedBabId] = useState<string | null>(null);
 
-  const bab = babList.filter((b) => b.kelas === selectedKelas);
+  const bab = babList.filter((b) => b.kelas === selectedKelas).sort((a, b) => a.urutan - b.urutan);
+  const activeBabId = selectedBabId ?? bab[0]?.id ?? null;
+  const activeBab = bab.find((b) => b.id === activeBabId);
+  const items = activeBab ? materiList.filter((m) => m.bab_id === activeBab.id) : [];
 
   return (
     <div>
@@ -38,7 +42,10 @@ export default function MateriListClient({
           {KELAS_LIST.map((k) => (
             <button
               key={k}
-              onClick={() => setSelectedKelas(k)}
+              onClick={() => {
+                setSelectedKelas(k);
+                setSelectedBabId(null);
+              }}
               className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px transition-colors ${
                 selectedKelas === k
                   ? "border-indigo-600 text-indigo-600 dark:text-indigo-400"
@@ -57,15 +64,32 @@ export default function MateriListClient({
         </p>
       )}
 
-      <div className="space-y-8">
-        {bab.map((b) => {
-          const items = materiList.filter((m) => m.bab_id === b.id);
-          if (items.length === 0) return null;
-          return (
-            <div key={b.id}>
-              <h2 className="font-semibold text-slate-800 dark:text-slate-200 mb-3">{b.judul}</h2>
-              <div>
-                {items.map((m, idx) => {
+      {bab.length > 0 && (
+        <div className="flex items-center gap-2 mb-6 flex-wrap">
+          {bab.map((b, idx) => (
+            <button
+              key={b.id}
+              onClick={() => setSelectedBabId(b.id)}
+              className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+                activeBabId === b.id
+                  ? "bg-indigo-600 text-white"
+                  : "bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600"
+              }`}
+            >
+              Bab {idx + 1}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {activeBab && (
+        <div>
+          <h2 className="font-semibold text-slate-800 dark:text-slate-200 mb-3">{activeBab.judul}</h2>
+          {items.length === 0 ? (
+            <p className="text-sm text-slate-500 dark:text-slate-400">Belum ada materi untuk bab ini.</p>
+          ) : (
+            <div>
+              {items.map((m, idx) => {
                   const subItems = lampiranList.filter((l) => l.materi_id === m.id);
                   const isLast = idx === items.length - 1;
                   return (
@@ -74,7 +98,7 @@ export default function MateriListClient({
                         href={`/materi/${m.slug}`}
                         className="flex gap-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden hover:border-indigo-300 dark:hover:border-indigo-500 hover:shadow-sm transition-all"
                       >
-                        <div className="w-28 sm:w-40 shrink-0 bg-slate-100 dark:bg-slate-700 flex items-center justify-center">
+                        <div className="w-20 sm:w-28 shrink-0 bg-slate-100 dark:bg-slate-700 flex items-center justify-center">
                           {m.gambar_url ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img src={m.gambar_url} alt="" className="w-full h-full object-cover" />
@@ -113,11 +137,10 @@ export default function MateriListClient({
                     </div>
                   );
                 })}
-              </div>
             </div>
-          );
-        })}
-      </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

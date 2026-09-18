@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Misi RAKA 2.0: Proyek Perpustakaan — Informatika Kelas VII</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#2F3C7E; --navy-d:#232C61; --coral:#F96167; --gold:#F9E795;
+    --teal:#028090; --mint:#02C39A; --purple:#6C4AB6; --dark:#1B1F3B;
+    --paper:#F6F7FC; --ink:#232746; --muted:#5B6178; --line:#E1E5F5;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:'Nunito Sans', system-ui, sans-serif; line-height:1.65; font-size:17px;}
+  h1,h2,h3{font-family:'Fraunces', Georgia, serif; color:var(--navy); margin:0 0 .4em; line-height:1.2;}
+  p{margin:0 0 1em;}
+  a{color:var(--teal);}
+  .wrap{max-width:760px; margin:0 auto; padding:0 24px;}
+
+  nav{position:sticky; top:0; z-index:50; background:rgba(246,247,252,.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--line);}
+  .navbar{max-width:960px; margin:0 auto; padding:14px 24px; display:flex; align-items:center; justify-content:space-between; gap:12px;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Fraunces',serif; font-weight:700; color:var(--navy); font-size:1.05rem; white-space:nowrap;}
+  .brand .dot{width:12px;height:12px;border-radius:3px;background:var(--mint); display:inline-block;}
+  .navlinks{display:flex; gap:16px; flex-wrap:wrap; font-size:.9rem; font-weight:600;}
+  .navlinks a{color:var(--ink); text-decoration:none; opacity:.75;}
+  .navlinks a:hover{opacity:1; color:var(--mint);}
+
+  .hero{background:var(--dark); color:#fff; position:relative; overflow:hidden; padding:64px 0 56px;}
+  .hero-grid{position:absolute; inset:0; opacity:.5;
+    background-image:linear-gradient(45deg, #262b52 25%, transparent 25%), linear-gradient(-45deg, #262b52 25%, transparent 25%);
+    background-size:90px 90px;}
+  .hero-inner{position:relative; max-width:960px; margin:0 auto; padding:0 24px; display:flex; gap:36px; align-items:center; flex-wrap:wrap;}
+  .hero-inner > div{flex:1 1 380px;}
+  .hero-inner > img{flex:1 1 320px; max-width:420px; width:100%; border-radius:16px; box-shadow:0 20px 40px rgba(0,0,0,.35);}
+  .eyebrow{display:inline-block; background:var(--mint); color:var(--dark); font-weight:800; font-size:.8rem; padding:6px 14px; border-radius:20px; margin-bottom:18px;}
+  .hero h1{color:#fff; font-size:2.3rem; margin-bottom:.3em;}
+  .hero p.lead{color:#CADCFC; font-size:1.05rem; max-width:46ch;}
+  .meta-row{display:flex; gap:22px; margin-top:22px; font-size:.9rem; color:#CADCFC; flex-wrap:wrap;}
+  .meta-row b{color:#fff;}
+  @media(max-width:760px){ .hero h1{font-size:1.8rem;} .navlinks{display:none;} }
+
+  section{padding:56px 0;}
+  section.alt{background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .kicker{font-weight:800; color:var(--coral); font-size:.85rem; margin-bottom:.5em;}
+  .sec-title{font-size:1.8rem; margin-bottom:.35em;}
+  .sec-lead{color:var(--muted); max-width:60ch; margin-bottom:1.6em;}
+  figure{margin:1.6em 0; text-align:center;}
+  figure img{max-width:100%; border-radius:14px; border:1px solid var(--line); background:#fff;}
+  figcaption{color:var(--muted); font-size:.88rem; margin-top:.6em; font-style:italic;}
+
+  .callout{background:#EEF1FB; border:1.5px solid var(--navy); border-radius:14px; padding:20px 24px; margin:1.4em 0;}
+  .callout.gold{background:#FFFBEA; border-color:var(--gold);}
+  .callout.mint{background:#E6FBF5; border-color:var(--mint);}
+  .callout h4{margin:0 0 .5em; color:var(--navy); font-family:'Nunito Sans',sans-serif; font-weight:800; font-size:1rem;}
+  .callout ul{margin:0; padding-left:1.2em;}
+  .callout li{margin-bottom:.4em;}
+
+  .code{background:var(--dark); color:var(--gold); border-radius:12px; padding:18px 22px; font-family:'JetBrains Mono', monospace; font-size:.9rem; overflow-x:auto; margin:1.2em 0; line-height:1.75;}
+
+  .toolgrid{display:flex; flex-wrap:wrap; gap:16px; margin:1.6em 0;}
+  .tool-card{flex:1 1 280px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px 20px; box-shadow:0 2px 10px rgba(47,60,126,.05);}
+  .tool-card .num{display:inline-block; background:var(--mint); color:#fff; font-weight:800; border-radius:8px; padding:2px 10px; font-size:.78rem; margin-bottom:10px;}
+  .tool-card h5{margin:0 0 6px; font-family:'Nunito Sans'; font-weight:800; color:var(--navy); font-size:1rem;}
+
+  .quiz-card{background:var(--dark); color:#fff; border-radius:16px; padding:26px 28px; margin:1.6em 0; border:1px solid #333a63;}
+  .quiz-card .qnum{display:inline-block; background:var(--purple); color:#fff; font-weight:800; border-radius:8px; padding:3px 10px; font-size:.8rem; margin-bottom:12px;}
+  .quiz-card p{color:#E7E9F7;}
+  .quiz-card .code{background:#12152A;}
+  details.answer{margin-top:14px;}
+  details.answer summary{cursor:pointer; color:var(--gold); font-weight:700; list-style:none; display:inline-flex; align-items:center; gap:8px; padding:8px 14px; border:1.5px solid var(--gold); border-radius:24px; font-size:.9rem;}
+  details.answer summary::-webkit-details-marker{display:none;}
+  details.answer[open] summary{background:var(--gold); color:var(--dark);}
+  .answer-body{margin-top:14px; background:rgba(255,255,255,.06); border-radius:10px; padding:16px 18px; font-size:.95rem; color:#DCE0F5;}
+
+  .checklist{list-style:none; margin:0; padding:0;}
+  .checklist li{display:flex; gap:10px; align-items:flex-start; padding:8px 0; border-bottom:1px dashed var(--line);}
+  .checklist li:last-child{border-bottom:none;}
+  .checklist input{margin-top:4px; width:18px; height:18px; accent-color:var(--mint);}
+
+  .chips{display:flex; gap:14px; flex-wrap:wrap; margin:1.6em 0;}
+  .chip{flex:1 1 220px; border-radius:14px; padding:18px 20px; color:#fff;}
+  .chip h5{margin:0 0 6px; font-family:'Nunito Sans'; font-weight:800; font-size:.95rem;}
+  .chip p{margin:0; font-size:.85rem; opacity:.92;}
+  .chip.c1{background:var(--coral);}
+  .chip.c2{background:var(--mint);}
+  .chip.c3{background:var(--purple);}
+
+  footer{background:var(--dark); color:#9AA3C0; padding:40px 0; text-align:center; font-size:.9rem;}
+  footer b{color:#fff;}
+  ::selection{background:var(--gold); color:var(--dark);}
+
+  .btn-top{position:fixed; right:20px; bottom:20px; background:var(--mint); color:#fff; border:none; width:46px; height:46px; border-radius:50%; font-size:1.1rem; cursor:pointer; box-shadow:0 6px 18px rgba(0,0,0,.25); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .25s;}
+  .btn-top.show{opacity:1; pointer-events:auto;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="navbar">
+    <div class="brand"><span class="dot"></span> RAKA 2.0</div>
+    <div class="navlinks">
+      <a href="#ifelse">If-Else</a>
+      <a href="#nested">Nested Loop</a>
+      <a href="#operator">DAN/ATAU</a>
+      <a href="#gabung">Gabungan</a>
+      <a href="#project">Mini Project</a>
+      <a href="#cek">Cek Diri</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div>
+      <span class="eyebrow">Informatika Kelas VII &middot; TP6 Pertemuan 2</span>
+      <h1>Misi RAKA 2.0: Proyek Perpustakaan!</h1>
+      <p class="lead">RAKA naik level — sekarang harus mengambil beberapa buku sekaligus di perpustakaan yang lebih rumit. Yuk pelajari 3 alat baru dan rancang mini project kelompokmu sendiri!</p>
+      <div class="meta-row">
+        <span><b>120 menit</b> &middot; sekali pertemuan</span>
+        <span><b>Project Based Learning</b></span>
+      </div>
+    </div>
+    <img src="images/hero_pertemuan2.png" alt="Ilustrasi robot RAKA 2.0 di perpustakaan dengan buku-buku">
+  </div>
+</header>
+
+<section id="recap">
+  <div class="wrap">
+    <p class="kicker">Sebelum Lanjut</p>
+    <h2 class="sec-title">Ingat-Ingat Pertemuan 1</h2>
+    <p>Di pertemuan sebelumnya kita sudah belajar kosakata dasar pseudocode: <b>urutan</b> (instruksi satu-satu), <b>pengulangan</b> (ULANGI), dan <b>kondisional</b> sederhana (JIKA-MAKA). Nah, sekarang misi RAKA jauh lebih rumit — dia harus mengunjungi beberapa rak buku sekaligus, dan cuma boleh ambil buku yang benar-benar dipesan. Kosakata lama kita belum cukup untuk ini!</p>
+    <div class="callout mint">
+      <h4>🎯 Misi Hari Ini (Mini Project!)</h4>
+      <p style="margin:0">Kelompokmu akan merancang <b>denah perpustakaan sendiri</b>, menyusun <b>pseudocode lengkap</b>, lalu <b>mempresentasikan &amp; mendemonstrasikan</b> hasilnya ke teman sekelas.</p>
+    </div>
+  </div>
+</section>
+
+<section id="ifelse" class="alt">
+  <div class="wrap">
+    <p class="kicker">Alat Baru #1</p>
+    <h2 class="sec-title">Kondisional Bercabang Dua (If-Else)</h2>
+    <p>Kartu JIKA-MAKA yang lama cuma punya SATU rencana: kalau syaratnya benar, baru bertindak. Kalau salah? RAKA cuma diam, lanjut ke instruksi berikutnya tanpa rencana khusus. Sekarang kita kenalan sama versi lengkapnya:</p>
+    <figure>
+      <img src="images/kartu_ifelse.png" alt="Kartu kondisional if-else: JIKA-MAKA-JIKA TIDAK">
+    </figure>
+    <div class="code">JIKA (buku sesuai pesanan)<br>MAKA (AMBIL BUKU)<br>JIKA TIDAK<br>MAKA (MAJU SATU LANGKAH)</div>
+    <p>Dengan if-else, RAKA <b>SELALU</b> tahu harus berbuat apa — baik syaratnya benar maupun salah.</p>
+  </div>
+</section>
+
+<section id="nested">
+  <div class="wrap">
+    <p class="kicker">Alat Baru #2</p>
+    <h2 class="sec-title">Pengulangan Bersarang (Nested Loop)</h2>
+    <p>Perpustakaan yang besar biasanya punya pola lorong berulang. Misalnya "maju 3 langkah, lalu putar" yang sendirinya harus diulang 2 kali biar membentuk pola zig-zag. Ini namanya pengulangan di dalam pengulangan.</p>
+    <figure>
+      <img src="images/nested_loop_diagram.png" alt="Diagram pengulangan bersarang: loop luar membungkus loop dalam">
+    </figure>
+    <div class="code">ULANGI 2 KALI<br>&nbsp;&nbsp;ULANGI 3 KALI<br>&nbsp;&nbsp;&nbsp;&nbsp;MAJU SATU LANGKAH<br>&nbsp;&nbsp;PUTAR 90&deg; SEARAH JARUM JAM</div>
+    <p>Loop dalam (ULANGI 3 KALI) membuat RAKA maju 3 langkah, lalu putar sekali. Semua itu diulang 2 kali oleh loop luar — hasilnya pola zig-zag!</p>
+  </div>
+</section>
+
+<section id="operator" class="alt">
+  <div class="wrap">
+    <p class="kicker">Alat Baru #3</p>
+    <h2 class="sec-title">Operator Logika DAN / ATAU</h2>
+    <p>Kadang suatu tindakan bergantung pada LEBIH DARI SATU syarat. RAKA cuma boleh ambil buku kalau: (1) memang ada buku, DAN (2) buku itu sesuai pesanan.</p>
+    <figure>
+      <img src="images/kartu_operator_logika.png" alt="Kartu operator logika DAN dan ATAU">
+    </figure>
+    <div class="toolgrid">
+      <div class="tool-card"><span class="num">DAN</span><h5>Keduanya harus benar</h5><p style="margin:0; color:var(--muted); font-size:.9rem">JIKA (ada buku) DAN (sesuai pesanan) MAKA (AMBIL BUKU)</p></div>
+      <div class="tool-card"><span class="num">ATAU</span><h5>Salah satu cukup</h5><p style="margin:0; color:var(--muted); font-size:.9rem">JIKA (rak kosong) ATAU (sudah diambil) MAKA (lewati rak)</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="gabung">
+  <div class="wrap">
+    <p class="kicker">Gabungkan Semuanya</p>
+    <h2 class="sec-title">Contoh Pseudocode Lengkap</h2>
+    <p>Berikut contoh yang menggabungkan urutan, pengulangan bersarang, if-else, DAN operator logika sekaligus — persis seperti yang akan kalian buat di mini project:</p>
+    <div class="code">MULAI<br>ULANGI 2 KALI<br>&nbsp;&nbsp;ULANGI 3 KALI<br>&nbsp;&nbsp;&nbsp;&nbsp;MAJU SATU LANGKAH<br>&nbsp;&nbsp;PUTAR 90&deg; SEARAH JARUM JAM<br>JIKA (ada buku) DAN (buku sesuai pesanan)<br>MAKA (AMBIL BUKU)<br>JIKA TIDAK<br>MAKA (MAJU SATU LANGKAH)<br>SELESAI</div>
+    <p>Cuma 10 baris, tapi RAKA bisa menyusuri pola zig-zag sekaligus mengecek dua syarat sebelum mengambil buku!</p>
+  </div>
+</section>
+
+<section id="project" class="alt">
+  <div class="wrap">
+    <p class="kicker">Sekarang Giliran Kalian</p>
+    <h2 class="sec-title">Mini Project: Misi RAKA 2.0</h2>
+    <p class="sec-lead">Bersama kelompokmu (4–5 orang), rancang proyek versi kalian sendiri:</p>
+    <div class="chips">
+      <div class="chip c1"><h5>1. Rancang Denah</h5><p>Minimal 6×6 kotak: 1 BASE, 2+ rak buku target, 3+ rintangan.</p></div>
+      <div class="chip c2"><h5>2. Susun Pseudocode</h5><p>Wajib memuat kelima unsur: urutan, pengulangan, nested loop, if-else, operator logika.</p></div>
+      <div class="chip c3"><h5>3. Presentasikan</h5><p>Tunjukkan &amp; jalankan pseudocode-mu di depan kelas (6–8 menit).</p></div>
+    </div>
+    <div class="callout gold">
+      <h4>✅ Checklist Sebelum Presentasi</h4>
+      <ul class="checklist" style="list-style:none; padding:0;">
+        <li><label style="display:flex; gap:10px; align-items:flex-start;"><input type="checkbox"> Denah lengkap: BASE, minimal 2 target buku, minimal 3 rintangan</label></li>
+        <li><label style="display:flex; gap:10px; align-items:flex-start;"><input type="checkbox"> Pseudocode diawali MULAI dan diakhiri SELESAI</label></li>
+        <li><label style="display:flex; gap:10px; align-items:flex-start;"><input type="checkbox"> Ada minimal satu pengulangan bersarang</label></li>
+        <li><label style="display:flex; gap:10px; align-items:flex-start;"><input type="checkbox"> Ada minimal satu if-else (JIKA-MAKA-JIKA TIDAK)</label></li>
+        <li><label style="display:flex; gap:10px; align-items:flex-start;"><input type="checkbox"> Ada minimal satu operator DAN/ATAU</label></li>
+        <li><label style="display:flex; gap:10px; align-items:flex-start;"><input type="checkbox"> Semua anggota tahu perannya saat presentasi</label></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="latihan">
+  <div class="wrap">
+    <p class="kicker">Yuk, Coba Dulu!</p>
+    <h2 class="sec-title">Latihan Sebelum Mulai Proyek</h2>
+
+    <div class="quiz-card">
+      <span class="qnum">LATIHAN 1</span>
+      <p>Hitung dulu: berapa kali total instruksi MAJU SATU LANGKAH dijalankan pada pseudocode berikut?</p>
+      <div class="code">ULANGI 3 KALI<br>&nbsp;&nbsp;ULANGI 2 KALI<br>&nbsp;&nbsp;&nbsp;&nbsp;MAJU SATU LANGKAH</div>
+      <details class="answer">
+        <summary>Lihat Jawaban ▾</summary>
+        <div class="answer-body">3 &times; 2 = <b>6 kali</b>. Loop luar (3&times;) membungkus loop dalam (2&times;), jadi totalnya dikalikan.</div>
+      </details>
+    </div>
+
+    <div class="quiz-card">
+      <span class="qnum">LATIHAN 2</span>
+      <p>Perhatikan pseudocode berikut. Jika di suatu kotak ADA buku, tapi buku itu BUKAN yang dipesan, apa yang akan RAKA lakukan?</p>
+      <div class="code">JIKA (ada buku) DAN (buku sesuai pesanan)<br>MAKA (AMBIL BUKU)<br>JIKA TIDAK<br>MAKA (MAJU SATU LANGKAH)</div>
+      <details class="answer">
+        <summary>Lihat Jawaban ▾</summary>
+        <div class="answer-body">RAKA akan <b>MAJU SATU LANGKAH</b> (bukan mengambil buku), karena operator DAN butuh KEDUA syarat benar. Buku memang ada, tapi tidak sesuai pesanan — jadi syarat gabungannya tetap salah.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="cek" class="alt">
+  <div class="wrap">
+    <p class="kicker">Cek Pemahamanmu</p>
+    <h2 class="sec-title">Tiga Pertanyaan Penutup</h2>
+    <div class="callout">
+      <ul>
+        <li>Apa bedanya kartu JIKA-MAKA (lama) dengan JIKA-MAKA-JIKA TIDAK (baru)?</li>
+        <li>Kenapa kita butuh pengulangan bersarang, padahal sudah ada pengulangan biasa?</li>
+        <li>Buat satu contoh kalimat sehari-hari yang cocok memakai DAN, dan satu lagi yang cocok memakai ATAU!</li>
+      </ul>
+    </div>
+    <p>Selamat mengerjakan mini project bersama kelompokmu — tunjukkan kreativitas dan kerja sama tim kalian! 🚀</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Misi RAKA 2.0: Proyek Perpustakaan</b><br>Materi Belajar Mandiri &middot; Informatika Kelas VII &middot; TP6 Pertemuan 2</p>
+    <p style="margin-top:14px; font-size:.8rem;">SMP Negeri 14 Tarakan</p>
+  </div>
+</footer>
+
+<button class="btn-top" id="toTop" aria-label="Kembali ke atas">↑</button>
+<script>
+  const btn = document.getElementById('toTop');
+  window.addEventListener('scroll', () => { btn.classList.toggle('show', window.scrollY > 500); });
+  btn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+</script>
+
+</body>
+</html>

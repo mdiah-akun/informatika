@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>List, Sekarang Kita Otak-Atik! — Materi TP3 Pertemuan 2 Informatika Kelas VII</title>
+<style>
+  :root{
+    --navy:#1B2A4A; --blue:#2E6F9E; --teal:#2FA98C; --orange:#F2994A;
+    --red:#C0392B; --purple:#8E44AD; --bg:#F7FAFC; --card:#FFFFFF; --text:#28313F; --muted:#5A6B7B;
+    --border:#E3EAF0;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:var(--bg); color:var(--text); line-height:1.65;
+  }
+  header.hero{
+    background:linear-gradient(135deg,var(--navy),#26406b 60%, var(--blue));
+    color:#fff; padding:48px 20px 64px; text-align:center;
+  }
+  header.hero .kicker{
+    text-transform:uppercase; letter-spacing:2px; font-size:13px; font-weight:700;
+    color:var(--orange); margin-bottom:10px;
+  }
+  header.hero h1{ font-size:clamp(28px,5vw,42px); margin:0 0 10px; }
+  header.hero p{ font-size:16px; color:#cfe0f2; max-width:640px; margin:0 auto; }
+
+  nav.tabbar{
+    position:sticky; top:0; z-index:50; background:#fff; border-bottom:1px solid var(--border);
+    box-shadow:0 2px 8px rgba(27,42,74,0.06);
+    display:flex; gap:4px; overflow-x:auto; padding:8px 12px; scrollbar-width:thin;
+  }
+  nav.tabbar a{
+    white-space:nowrap; text-decoration:none; color:var(--navy); font-size:13.5px; font-weight:600;
+    padding:8px 14px; border-radius:999px;
+  }
+  nav.tabbar a:hover{ background:#EEF3F8; }
+
+  main{ max-width:960px; margin:-32px auto 60px; padding:0 20px; }
+
+  section.card{
+    background:var(--card); border:1px solid var(--border); border-radius:16px;
+    padding:28px 30px; margin-bottom:22px; box-shadow:0 4px 18px rgba(27,42,74,0.05);
+  }
+  section.card h2{
+    color:var(--navy); font-size:22px; margin-top:0; padding-bottom:10px;
+    border-bottom:3px solid var(--navy); display:inline-block;
+  }
+  h3.sub{ color:var(--teal); font-size:17px; margin:22px 0 8px; }
+  img.fig{ max-width:100%; display:block; margin:18px auto; border-radius:10px; }
+  p.cap{ text-align:center; color:var(--muted); font-size:13.5px; font-style:italic; margin-top:-10px; }
+
+  .box{
+    background:#F2FAF7; border:1px solid #CDEBE0; border-radius:12px; padding:16px 20px;
+    margin:16px 0;
+  }
+  .box.orange{ background:#FEF5EC; border-color:#F8DDBB; }
+  .box.blue{ background:#EAF2F8; border-color:#C9DEEF; }
+  .box h4{ margin:0 0 8px; color:var(--teal); font-size:15px; }
+  .box.orange h4{ color:var(--orange); }
+  .box.blue h4{ color:var(--blue); }
+  .box ul{ margin:0; padding-left:20px; }
+  .box li{ margin-bottom:6px; }
+
+  ul.tick li{ margin-bottom:6px; }
+
+  .grid3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+  @media (max-width:760px){ .grid3{ grid-template-columns:1fr; } }
+
+  .opcard{ border:1px solid var(--border); border-radius:12px; padding:14px 16px; background:#fcfdfe; }
+  .opcard h5{ margin:0 0 6px; font-size:14.5px; }
+  .opcard p{ margin:0; font-size:13px; color:var(--muted); }
+
+  .stepnum{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:50%; background:var(--blue); color:#fff;
+    font-weight:700; font-size:13px; margin-right:8px; flex-shrink:0;
+  }
+  ol.steps{ list-style:none; padding:0; margin:0; }
+  ol.steps li{ display:flex; align-items:flex-start; margin-bottom:12px; }
+
+  .mcq{ border:1px solid var(--border); border-radius:12px; padding:16px 18px; margin-bottom:16px; }
+  .mcq p.q{ font-weight:700; margin:0 0 10px; color:var(--navy); }
+  .mcq .opt{
+    display:block; width:100%; text-align:left; padding:10px 14px; margin-bottom:8px;
+    border:1.5px solid var(--border); border-radius:9px; background:#fff; cursor:pointer;
+    font-size:14.5px; color:var(--text); transition:all .15s;
+  }
+  .mcq .opt:hover{ border-color:var(--blue); }
+  .mcq .opt.correct{ background:#E7F8F0; border-color:var(--teal); color:#166a4c; font-weight:700; }
+  .mcq .opt.wrong{ background:#FCEBEA; border-color:var(--red); color:#a3271a; }
+  .mcq .fb{ font-size:13.5px; margin-top:6px; min-height:18px; color:var(--muted); }
+
+  .practice-input{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:12px; }
+  .practice-input input{
+    padding:10px 14px; border:1.5px solid var(--border); border-radius:8px; font-size:15px;
+    flex:1; min-width:180px;
+  }
+  .practice-input button, .sim-controls button{
+    padding:10px 18px; border:none; border-radius:8px; background:var(--navy); color:#fff;
+    font-weight:700; cursor:pointer; font-size:14px;
+  }
+  .practice-input button:hover, .sim-controls button:hover{ background:#28407a; }
+  .fb-result{ font-weight:700; margin-top:8px; min-height:20px; }
+  .fb-result.ok{ color:#166a4c; }
+  .fb-result.no{ color:#a3271a; }
+
+  table{ width:100%; border-collapse:collapse; margin:14px 0; font-size:14.5px; }
+  th, td{ border:1px solid var(--border); padding:9px 12px; text-align:left; }
+  th{ background:var(--navy); color:#fff; }
+  tr:nth-child(even){ background:#F7FAFC; }
+
+  footer{ text-align:center; padding:30px 20px 50px; color:var(--muted); font-size:13px; }
+
+  .badge{
+    display:inline-block; background:var(--orange); color:#fff; font-size:11.5px; font-weight:700;
+    padding:3px 10px; border-radius:999px; margin-left:8px; vertical-align:middle;
+  }
+
+  /* ---- list simulator ---- */
+  .sim-wrap{
+    background:#0F1B2E; border-radius:14px; padding:22px 16px 18px; margin:18px 0;
+    overflow-x:auto;
+  }
+  .sim-list{ display:flex; align-items:flex-end; gap:0; min-width:max-content; padding:6px 8px 2px; }
+  .sim-col{ display:flex; flex-direction:column; align-items:center; }
+  .sim-label{ font-size:11px; font-weight:700; color:var(--orange); margin-bottom:4px; letter-spacing:1px; height:14px; }
+  .sim-node{
+    min-width:64px; height:52px; border:2px solid #4E7FB5; border-radius:9px; background:#16233A;
+    color:#DCEBFA; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:15px;
+    transition:all .3s;
+  }
+  .sim-node.sim-active{ border-color:var(--orange); background:#3a2a17; color:#ffd8ac; transform:scale(1.08); }
+  .sim-node.sim-found{ border-color:var(--teal); background:#123a2e; color:#a9f5da; }
+  .sim-arrow{ color:var(--orange); font-size:20px; margin:0 6px; align-self:center; padding-bottom:10px; }
+  .sim-null{ color:#6d7f9a; font-size:16px; align-self:center; padding-bottom:10px; margin-left:2px; }
+  .sim-controls{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:16px; }
+  .sim-controls select, .sim-controls input[type=text]{
+    padding:9px 12px; border:1.5px solid var(--border); border-radius:8px; font-size:14px;
+  }
+  .sim-controls .grp{
+    display:flex; gap:8px; align-items:center; background:#F7FAFC; border:1px solid var(--border);
+    border-radius:10px; padding:8px 10px;
+  }
+  .sim-controls .grp.insert{ border-color:#CDEBE0; }
+  .sim-controls .grp.delete{ border-color:#F5D0CB; }
+  .sim-controls .grp.search{ border-color:#C9DEEF; }
+  .sim-controls button.insert{ background:var(--teal); }
+  .sim-controls button.delete{ background:var(--red); }
+  .sim-controls button.search{ background:var(--blue); }
+  .sim-controls button.reset{ background:var(--muted); }
+  #simLog{
+    margin-top:14px; background:#F7FAFC; border:1px dashed var(--border); border-radius:10px;
+    padding:12px 16px; font-size:13.5px; color:var(--navy); min-height:24px; font-family:Consolas,monospace;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="kicker">Materi Belajar · Pertemuan 2 (Pendalaman)</div>
+  <h1>List, Sekarang Kita Otak-Atik!</h1>
+  <p>Bab 1 – Berpikir Komputasional · TP3 · Operasi INSERT, DELETE, SEARCH pada List · Kelas VII</p>
+</header>
+
+<nav class="tabbar">
+  <a href="#ingat">Ingat-Ingat Dulu</a>
+  <a href="#cerita">Ceritanya Gini</a>
+  <a href="#insert">INSERT</a>
+  <a href="#delete">DELETE</a>
+  <a href="#search">SEARCH</a>
+  <a href="#efisiensi">List vs Array</a>
+  <a href="#pseudocode">Pseudocode</a>
+  <a href="#simulator">Simulator</a>
+  <a href="#kuis">Kuis Cepat</a>
+  <a href="#rangkuman">Rangkuman</a>
+</nav>
+
+<main>
+
+  <section class="card" id="ingat">
+    <img class="fig" src="images/06_konteks_antrian_lomba.png" alt="Antrian pendaftaran regu Class Meeting sebagai list">
+    <h2>Yuk, Ingat-Ingat Dulu</h2>
+    <p>Di pertemuan sebelumnya, kamu udah kenalan sama <strong>LIST</strong> — kumpulan node yang saling terhubung lewat pointer, mulai dari <strong>HEAD</strong> sampai <strong>TAIL</strong>, dan cara menelusurinya (<strong>TRAVERSAL</strong>). Sekarang, saatnya level-up! Kita nggak cuma menelusuri list, tapi juga belajar cara mengubahnya.</p>
+    <div class="box">
+      <h4>Tujuan belajar kita hari ini:</h4>
+      <ul>
+        <li>Bisa nambahin data baru ke list (INSERT) — di depan, di tengah, atau di akhir.</li>
+        <li>Bisa menghapus data dari list (DELETE) — di depan, di tengah, atau di akhir.</li>
+        <li>Bisa mencari data tertentu di list (SEARCH) sambil menghitung langkahnya.</li>
+        <li>Mulai kenalan sama pseudocode — cara menuliskan langkah-langkah secara ringkas.</li>
+        <li>Bisa jelasin kenapa list lebih "gesit" dibanding array buat urusan tambah-hapus data.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card" id="cerita">
+    <h2>1. Ceritanya Gini...</h2>
+    <p>SMPN 14 Tarakan lagi heboh mempersiapkan Class Meeting! Panitia OSIS mencatat pendaftaran regu lomba sebagai sebuah LIST — dimulai dari 7A, lalu 7B, 7C, 8B, sampai 9A (jadi head-nya 7A, tail-nya 9A). Tapi sepanjang hari pendaftaran, banyak hal terjadi: ada regu baru yang mendadak mau ikutan, ada yang tiba-tiba mengundurkan diri, bahkan ada permintaan supaya regu tertentu didahulukan.</p>
+    <p>Gimana caranya panitia mengurus semua perubahan itu tanpa harus menulis ulang seluruh daftar dari awal? Yuk kita bongkar satu-satu triknya!</p>
+  </section>
+
+  <section class="card" id="insert">
+    <h2>2. INSERT: Nambahin Regu Baru</h2>
+    <p>INSERT artinya menyisipkan node (data) baru ke dalam list. Yang keren dari list: kita nggak perlu menggeser semua data lain, cukup mengubah pointer beberapa node saja!</p>
+    <div class="grid3">
+      <div class="opcard"><h5 style="color:var(--blue)">INSERT DEPAN</h5><p>Node baru jadi HEAD baru. Contoh: regu 7D mendaftar dan diberi prioritas paling depan.</p></div>
+      <div class="opcard"><h5 style="color:var(--orange)">INSERT TENGAH</h5><p>Node baru disisipkan di antara dua node. Contoh: regu 8A menyusul, disisip antara 7C dan 8B.</p></div>
+      <div class="opcard"><h5 style="color:var(--teal)">INSERT AKHIR</h5><p>Node baru jadi TAIL baru. Contoh: regu 9B mendaftar paling terakhir.</p></div>
+    </div>
+    <img class="fig" src="images/02_operasi_insert.png" alt="Tiga skenario INSERT: depan, tengah, akhir">
+    <p class="cap">Perhatikan: cuma pointer yang berubah warna (disorot) — node lain nggak perlu digeser sama sekali!</p>
+  </section>
+
+  <section class="card" id="delete">
+    <h2>3. DELETE: Regu yang Mengundurkan Diri</h2>
+    <p>Kebalikan dari INSERT, DELETE artinya menghapus sebuah node dari list. Triknya: node yang mau dihapus cukup "dilompati" — pointer node sebelumnya langsung diarahkan ke node sesudahnya.</p>
+    <div class="grid3">
+      <div class="opcard"><h5 style="color:var(--blue)">DELETE DEPAN</h5><p>Head lama dibuang, node kedua jadi head baru. Contoh: regu 7A mengundurkan diri.</p></div>
+      <div class="opcard"><h5 style="color:var(--orange)">DELETE TENGAH</h5><p>Node sebelumnya "melompati" node yang dihapus. Contoh: regu 7C didiskualifikasi.</p></div>
+      <div class="opcard"><h5 style="color:var(--red)">DELETE AKHIR</h5><p>Node kedua dari belakang jadi tail baru, pointer-nya jadi ∅. Contoh: regu 9A mengundurkan diri.</p></div>
+    </div>
+    <img class="fig" src="images/03_operasi_delete.png" alt="Tiga skenario DELETE: depan, tengah, akhir">
+    <p class="cap">Node yang dihapus cukup "dilewati" — nggak perlu menggeser posisi node lain.</p>
+  </section>
+
+  <section class="card" id="search">
+    <h2>4. SEARCH: Nyari Regu Tertentu</h2>
+    <p>Bayangin wali kelas 8B nanya ke panitia: "regu kelas kami udah terdaftar urutan ke berapa, ya?" Panitia harus SEARCH alias mencari data itu di dalam list. Bedanya sama array: kalau array bisa langsung "loncat" ke nomor urut tertentu, list harus ditelusuri satu-satu dari head sampai ketemu!</p>
+    <img class="fig" src="images/04_operasi_search.png" alt="Operasi SEARCH menelusuri dan menghitung langkah">
+    <p class="cap">Mencari "8B": mulai dari head (7A), lanjut satu-satu, sampai ketemu di langkah ke-4.</p>
+  </section>
+
+  <section class="card" id="efisiensi">
+    <h2>5. List vs Array: Siapa Lebih Gesit?</h2>
+    <p>Coba lihat gambar berikut: mau nyisipin data di TENGAH, apa yang harus dilakukan array vs list?</p>
+    <img class="fig" src="images/05_efisiensi_list_vs_array.png" alt="Perbandingan efisiensi list vs array">
+    <p>Array harus menggeser <strong>SEMUA</strong> elemen setelah posisi sisipan. List cuma perlu mengubah 1–2 pointer aja, beres! Makanya, list jadi pilihan yang oke banget buat data yang sering berubah-ubah.</p>
+  </section>
+
+  <section class="card" id="pseudocode">
+    <h2>6. Kenalan Sama Pseudocode</h2>
+    <p>Gimana caranya kita "nulis" langkah-langkah INSERT, DELETE, SEARCH tadi dengan rapi? Di sinilah <strong>PSEUDOCODE</strong> berperan — cara menuliskan langkah-langkah penyelesaian masalah pakai kata-kata dan simbol yang ringkas, nggak terikat bahasa pemrograman tertentu.</p>
+    <div class="sim-wrap" style="background:#0F1B2E;">
+      <pre style="color:#7FE0C4; font-family:Consolas,monospace; font-size:14px; margin:0; white-space:pre-wrap;">INSERT_DEPAN(list, data_baru):
+   buat node_baru berisi data_baru
+   node_baru.pointer &larr; head
+   head &larr; node_baru
+
+SEARCH(list, target):
+   langkah &larr; 0
+   mulai dari head
+   selama node sekarang tidak kosong:
+      langkah &larr; langkah + 1
+      jika data node sekarang == target:
+         tampilkan "ditemukan" dan langkah
+         berhenti
+      pindah ke node.pointer</pre>
+    </div>
+    <div class="box blue">
+      <h4>Kenapa harus belajar pseudocode?</h4>
+      <ul>
+        <li>Supaya langkah penyelesaian masalah bisa dicatat rapi sebelum ditulis jadi kode program beneran.</li>
+        <li>Pseudocode nggak terikat bahasa pemrograman tertentu — jadi siapa pun bisa membacanya.</li>
+        <li>Ini bekal penting buat materi-materi berikutnya di Bab 1!</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card" id="simulator">
+    <h2>7. Simulator List Interaktif — Coba Sendiri! <span class="badge">Mandiri</span></h2>
+    <p>Yuk praktikkan langsung! Coba INSERT, DELETE, dan SEARCH pada list "Antrian Pendaftaran Regu" di bawah ini. Perhatikan node mana yang berubah setiap kali kamu melakukan sebuah operasi.</p>
+    <div class="sim-wrap">
+      <div class="sim-list" id="simList"></div>
+    </div>
+    <div class="sim-controls">
+      <div class="grp insert">
+        <input type="text" id="insVal" placeholder="Kode regu (mis. 7D)" style="width:140px;">
+        <select id="insPos"></select>
+        <button class="insert" onclick="doInsert()">+ INSERT</button>
+      </div>
+      <div class="grp delete">
+        <select id="delVal"></select>
+        <button class="delete" onclick="doDelete()">&minus; DELETE</button>
+      </div>
+      <div class="grp search">
+        <input type="text" id="searchVal" placeholder="Cari kode regu..." style="width:140px;">
+        <button class="search" onclick="doSearch()">&#128269; SEARCH</button>
+      </div>
+      <button class="reset" onclick="resetSim()">&#8635; Reset</button>
+    </div>
+    <div id="simLog">Silakan coba salah satu operasi di atas. Log langkah akan muncul di sini.</div>
+  </section>
+
+  <section class="card" id="kuis">
+    <h2>8. Kuis Dadakan — Cek Pemahamanmu! <span class="badge">Kuis</span></h2>
+    <p>Pilih salah satu jawaban pada tiap soal untuk melihat apakah jawabanmu tepat.</p>
+
+    <div class="mcq" data-correct="1">
+      <p class="q">1. Saat INSERT DEPAN dilakukan pada sebuah list, apa yang berubah?</p>
+      <button class="opt">Seluruh data pada list ditulis ulang</button>
+      <button class="opt">Pointer head diarahkan ke node baru</button>
+      <button class="opt">Pointer tail diarahkan ke node baru</button>
+      <button class="opt">Tidak ada yang berubah</button>
+      <div class="fb"></div>
+    </div>
+
+    <div class="mcq" data-correct="2">
+      <p class="q">2. Mengapa DELETE di tengah list tidak perlu menggeser node-node lain?</p>
+      <button class="opt">Karena node yang dihapus tetap disimpan di memori</button>
+      <button class="opt">Karena list selalu pendek</button>
+      <button class="opt">Karena node sebelumnya cukup diarahkan langsung ke node sesudahnya</button>
+      <button class="opt">Karena data pada list tidak boleh dihapus</button>
+      <div class="fb"></div>
+    </div>
+
+    <div class="mcq" data-correct="1">
+      <p class="q">3. Kalau kita SEARCH data pada posisi ke-3 dari 5 node, berapa langkah traversal yang dibutuhkan?</p>
+      <button class="opt">1 langkah (langsung akses index)</button>
+      <button class="opt">3 langkah (dari head, satu per satu)</button>
+      <button class="opt">5 langkah (harus telusuri semua node)</button>
+      <button class="opt">Tidak bisa ditentukan</button>
+      <div class="fb"></div>
+    </div>
+  </section>
+
+  <section class="card" id="rangkuman">
+    <h2>Rangkuman</h2>
+    <table>
+      <tr><th>Operasi</th><th>Penjelasan Singkat</th></tr>
+      <tr><td>INSERT</td><td>Menambah node baru — depan/tengah/akhir — cukup dengan mengubah pointer, tanpa menggeser data lain.</td></tr>
+      <tr><td>DELETE</td><td>Menghapus node dari list — node yang dihapus cukup "dilompati" lewat perubahan pointer.</td></tr>
+      <tr><td>SEARCH</td><td>Menelusuri list dari head sampai data yang dicari ditemukan, sambil menghitung langkah.</td></tr>
+      <tr><td>Efisiensi</td><td>List lebih gesit dibanding array untuk operasi tambah/hapus, karena tidak perlu menggeser banyak data.</td></tr>
+      <tr><td>Pseudocode</td><td>Cara menuliskan langkah-langkah penyelesaian masalah secara ringkas, bekal menuju penulisan algoritma yang lebih formal.</td></tr>
+    </table>
+
+    <h3 class="sub">Yuk, Refleksi Sebentar</h3>
+    <ul class="tick">
+      <li>Menurutmu, operasi mana yang paling gampang: INSERT, DELETE, atau SEARCH? Kenapa?</li>
+      <li>Bagian mana yang masih bikin kamu bingung? Coba tanyakan ke gurumu!</li>
+      <li>Coba bayangkan satu situasi sehari-hari yang mirip dengan INSERT atau DELETE pada list — ceritakan singkat!</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>
+  Materi Siswa · Pertemuan 2 (Pendalaman) · Informatika Kelas VII · Bab 1 TP3 — Operasi List · SMP Negeri 14 Tarakan
+</footer>
+
+<script>
+  // ---------------- List Simulator ----------------
+  const INITIAL = ["7A","7B","7C","8B","9A"];
+  let state = INITIAL.slice();
+  let searchTimer = null;
+
+  function renderList(activeIdx, foundIdx){
+    const container = document.getElementById('simList');
+    let html = '';
+    state.forEach((val, i) => {
+      let cls = 'sim-node';
+      if (i === activeIdx) cls += ' sim-active';
+      if (i === foundIdx) cls += ' sim-found';
+      let label = '&nbsp;';
+      if (i === 0) label = 'HEAD';
+      else if (i === state.length - 1) label = 'TAIL';
+      html += `<div class="sim-col"><div class="sim-label">${label}</div><div class="${cls}">${val}</div></div>`;
+      html += `<div class="sim-arrow">&rarr;</div>`;
+    });
+    html += `<div class="sim-null">&empty;</div>`;
+    container.innerHTML = html;
+    refreshSelectors();
+  }
+
+  function refreshSelectors(){
+    const insPos = document.getElementById('insPos');
+    const delVal = document.getElementById('delVal');
+    const curIns = insPos.value;
+    const curDel = delVal.value;
+    let insOpts = `<option value="__DEPAN__">Paling depan (jadi HEAD)</option>`;
+    state.forEach((v) => { insOpts += `<option value="${v}">Sesudah "${v}"</option>`; });
+    insPos.innerHTML = insOpts;
+    if ([...insPos.options].some(o => o.value === curIns)) insPos.value = curIns;
+
+    let delOpts = state.map(v => `<option value="${v}">${v}</option>`).join('');
+    delVal.innerHTML = delOpts || `<option value="">(list kosong)</option>`;
+    if ([...delVal.options].some(o => o.value === curDel)) delVal.value = curDel;
+  }
+
+  function log(msg){
+    document.getElementById('simLog').textContent = msg;
+  }
+
+  function doInsert(){
+    const input = document.getElementById('insVal');
+    const val = input.value.trim().toUpperCase();
+    const pos = document.getElementById('insPos').value;
+    if (!val){ log('Isi dulu kode regu yang mau ditambahkan ya!'); return; }
+    if (state.includes(val)){ log(`Regu "${val}" sudah ada dalam list. Coba kode lain.`); return; }
+    if (pos === '__DEPAN__'){
+      state.unshift(val);
+      log(`INSERT_DEPAN: node baru "${val}" dipasang, pointer diarahkan ke head lama, lalu head dipindah ke "${val}".`);
+    } else {
+      const idx = state.indexOf(pos);
+      const isLast = idx === state.length - 1;
+      state.splice(idx + 1, 0, val);
+      if (isLast) log(`INSERT_AKHIR: pointer tail lama ("${pos}") diarahkan ke "${val}", lalu tail dipindah ke "${val}".`);
+      else log(`INSERT_TENGAH: pointer "${pos}" diarahkan ke "${val}", lalu pointer "${val}" diarahkan ke node yang sebelumnya sesudah "${pos}".`);
+    }
+    input.value = '';
+    renderList(state.indexOf(val));
+  }
+
+  function doDelete(){
+    const val = document.getElementById('delVal').value;
+    if (!val){ log('List sudah kosong, tidak ada yang bisa dihapus.'); return; }
+    const idx = state.indexOf(val);
+    if (idx === -1) return;
+    if (idx === 0){
+      state.shift();
+      log(`DELETE_DEPAN: head lama ("${val}") dibuang, node berikutnya menjadi HEAD baru.`);
+    } else if (idx === state.length - 1){
+      state.pop();
+      log(`DELETE_AKHIR: node sebelum "${val}" pointer-nya diubah menjadi ∅, lalu node itu menjadi TAIL baru.`);
+    } else {
+      const before = state[idx - 1];
+      const after = state[idx + 1];
+      state.splice(idx, 1);
+      log(`DELETE_TENGAH: pointer "${before}" dialihkan langsung ke "${after}", "melompati" node "${val}" yang dihapus.`);
+    }
+    renderList();
+  }
+
+  function doSearch(){
+    clearTimeout(searchTimer);
+    const target = document.getElementById('searchVal').value.trim().toUpperCase();
+    if (!target){ log('Ketik dulu kode regu yang mau dicari ya!'); return; }
+    let i = 0;
+    function step(){
+      if (i >= state.length){
+        renderList();
+        log(`SEARCH: regu "${target}" tidak ditemukan setelah menelusuri seluruh ${state.length} node.`);
+        return;
+      }
+      renderList(i);
+      if (state[i] === target){
+        setTimeout(() => {
+          renderList(-1, i);
+          log(`SEARCH: regu "${target}" ditemukan pada langkah ke-${i + 1} (mulai dari head).`);
+        }, 350);
+        return;
+      }
+      i++;
+      searchTimer = setTimeout(step, 450);
+    }
+    log(`SEARCH: mulai menelusuri dari head, mencari "${target}"...`);
+    step();
+  }
+
+  function resetSim(){
+    clearTimeout(searchTimer);
+    state = INITIAL.slice();
+    renderList();
+    log('List dikembalikan ke data awal: 7A → 7B → 7C → 8B → 9A.');
+  }
+
+  renderList();
+
+  // ---------------- MCQ Kuis ----------------
+  document.querySelectorAll('.mcq').forEach(function(box){
+    const correctIdx = parseInt(box.dataset.correct, 10);
+    const opts = box.querySelectorAll('.opt');
+    const fb = box.querySelector('.fb');
+    opts.forEach(function(btn, idx){
+      btn.addEventListener('click', function(){
+        if(btn.classList.contains('correct') || btn.classList.contains('wrong')) return;
+        opts.forEach(function(b, i){
+          if(i === correctIdx) b.classList.add('correct');
+          else if (b === btn) b.classList.add('wrong');
+        });
+        if(idx === correctIdx){
+          fb.textContent = '✅ Tepat sekali!';
+          fb.style.color = '#166a4c';
+        } else {
+          fb.textContent = '❌ Belum tepat — jawaban yang benar sudah ditandai hijau.';
+          fb.style.color = '#a3271a';
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

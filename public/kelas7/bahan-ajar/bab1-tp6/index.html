@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yuk, Kenalan sama Pseudocode! — Informatika Kelas VII</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#2F3C7E;
+    --navy-d:#232C61;
+    --coral:#F96167;
+    --gold:#F9E795;
+    --teal:#028090;
+    --mint:#02C39A;
+    --dark:#1B1F3B;
+    --paper:#F6F7FC;
+    --card:#FFFFFF;
+    --ink:#232746;
+    --muted:#5B6178;
+    --line:#E1E5F5;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Nunito Sans', system-ui, sans-serif;
+    line-height:1.65; font-size:17px;
+  }
+  h1,h2,h3{ font-family:'Fraunces', Georgia, serif; color:var(--navy); margin:0 0 .4em; line-height:1.2;}
+  p{margin:0 0 1em;}
+  a{color:var(--teal);}
+  .wrap{max-width:760px; margin:0 auto; padding:0 24px;}
+  .wrap-wide{max-width:960px; margin:0 auto; padding:0 24px;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:50; background:rgba(246,247,252,.92);
+    backdrop-filter:blur(6px); border-bottom:1px solid var(--line);
+  }
+  .navbar{max-width:960px; margin:0 auto; padding:14px 24px; display:flex; align-items:center; justify-content:space-between; gap:12px;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Fraunces',serif; font-weight:700; color:var(--navy); font-size:1.05rem; white-space:nowrap;}
+  .brand .dot{width:12px;height:12px;border-radius:3px;background:var(--coral); display:inline-block;}
+  .navlinks{display:flex; gap:18px; flex-wrap:wrap; font-size:.92rem; font-weight:600;}
+  .navlinks a{color:var(--ink); text-decoration:none; opacity:.75;}
+  .navlinks a:hover{opacity:1; color:var(--coral);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:var(--navy); color:#fff; position:relative; overflow:hidden;
+    padding:64px 0 56px;
+  }
+  .hero-grid{
+    position:absolute; inset:0; opacity:.5;
+    background-image:
+      linear-gradient(45deg, var(--navy-d) 25%, transparent 25%),
+      linear-gradient(-45deg, var(--navy-d) 25%, transparent 25%);
+    background-size:90px 90px;
+  }
+  .hero-inner{position:relative; max-width:960px; margin:0 auto; padding:0 24px; display:flex; gap:36px; align-items:center; flex-wrap:wrap;}
+  .hero-inner > div{flex:1 1 380px;}
+  .hero-inner > img{flex:1 1 320px; max-width:420px;}
+  .eyebrow{display:inline-block; background:var(--coral); color:#fff; font-weight:800; font-size:.8rem; padding:6px 14px; border-radius:20px; margin-bottom:18px;}
+  .hero h1{color:#fff; font-size:2.5rem; margin-bottom:.3em;}
+  .hero p.lead{color:#CADCFC; font-size:1.08rem; max-width:46ch;}
+  .hero img{width:100%; border-radius:16px; box-shadow:0 20px 40px rgba(0,0,0,.35);}
+  .meta-row{display:flex; gap:22px; margin-top:22px; font-size:.9rem; color:#CADCFC; flex-wrap:wrap;}
+  .meta-row b{color:#fff;}
+
+  @media(max-width:760px){
+    .hero h1{font-size:1.9rem;}
+    .navlinks{display:none;}
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:56px 0;}
+  section.alt{background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .kicker{font-weight:800; color:var(--coral); font-size:.85rem; letter-spacing:.02em; margin-bottom:.5em;}
+  .sec-title{font-size:1.9rem; margin-bottom:.35em;}
+  .sec-lead{color:var(--muted); max-width:60ch; margin-bottom:1.6em;}
+  figure{margin:1.6em 0; text-align:center;}
+  figure img{max-width:100%; border-radius:14px; border:1px solid var(--line); background:#fff;}
+  figcaption{color:var(--muted); font-size:.88rem; margin-top:.6em; font-style:italic;}
+
+  .callout{
+    background:#EEF1FB; border:1.5px solid var(--navy); border-radius:14px;
+    padding:20px 24px; margin:1.4em 0;
+  }
+  .callout.gold{background:#FFFBEA; border-color:var(--gold); }
+  .callout h4{margin:0 0 .5em; color:var(--navy); font-family:'Nunito Sans',sans-serif; font-weight:800; font-size:1rem;}
+  .callout ul{margin:0; padding-left:1.2em;}
+  .callout li{margin-bottom:.4em;}
+
+  .code{
+    background:var(--dark); color:var(--gold); border-radius:12px; padding:18px 22px;
+    font-family:'JetBrains Mono', monospace; font-size:.92rem; overflow-x:auto; margin:1.2em 0;
+    line-height:1.75;
+  }
+  .code .dim{color:#8892B0;}
+
+  .cardgrid{display:flex; flex-wrap:wrap; gap:16px; margin:1.6em 0;}
+  .cardgrid .mini-card{flex:1 1 200px;}
+  .mini-card{
+    background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px;
+    box-shadow:0 2px 10px rgba(47,60,126,.05);
+  }
+  .mini-card b{display:block; color:var(--teal); font-size:.92rem; margin-bottom:4px;}
+  .mini-card span{color:var(--muted); font-size:.85rem;}
+
+  /* ---------- LATIHAN (interactive) ---------- */
+  .quiz-card{
+    background:var(--dark); color:#fff; border-radius:16px; padding:26px 28px; margin:1.6em 0;
+    border:1px solid #333a63;
+  }
+  .quiz-card .qnum{display:inline-block; background:var(--coral); color:#fff; font-weight:800; border-radius:8px; padding:3px 10px; font-size:.8rem; margin-bottom:12px;}
+  .quiz-card p{color:#E7E9F7;}
+  .quiz-card .code{background:#12152A;}
+  details.answer{margin-top:14px;}
+  details.answer summary{
+    cursor:pointer; color:var(--gold); font-weight:700; list-style:none; display:inline-flex; align-items:center; gap:8px;
+    padding:8px 14px; border:1.5px solid var(--gold); border-radius:24px; font-size:.9rem;
+  }
+  details.answer summary::-webkit-details-marker{display:none;}
+  details.answer[open] summary{background:var(--gold); color:var(--dark);}
+  .answer-body{
+    margin-top:14px; background:rgba(255,255,255,.06); border-radius:10px; padding:16px 18px; font-size:.95rem; color:#DCE0F5;
+  }
+
+  /* ---------- CEK PEMAHAMAN ---------- */
+  .check-item{
+    display:flex; gap:14px; align-items:flex-start; padding:16px 0; border-bottom:1px solid var(--line);
+  }
+  .check-item:last-child{border-bottom:none;}
+  .check-num{
+    flex:0 0 34px; height:34px; border-radius:50%; background:var(--teal); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.95rem;
+  }
+
+  /* ---------- SUMMARY CHIPS ---------- */
+  .chips{display:flex; gap:14px; flex-wrap:wrap; margin:1.6em 0;}
+  .chip{flex:1 1 220px; border-radius:14px; padding:18px 20px; color:#fff;}
+  .chip h5{margin:0 0 6px; font-family:'Nunito Sans'; font-weight:800; font-size:.95rem;}
+  .chip p{margin:0; font-size:.85rem; opacity:.92;}
+  .chip.c1{background:var(--navy);}
+  .chip.c2{background:var(--gold); color:var(--dark);}
+  .chip.c3{background:var(--coral);}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--dark); color:#9AA3C0; padding:40px 0; text-align:center; font-size:.9rem;}
+  footer b{color:#fff;}
+
+  .progress-dot-row{display:flex; gap:8px; margin:26px 0 0;}
+  .progress-dot{width:8px;height:8px;border-radius:50%;background:var(--line);}
+
+  ::selection{background:var(--gold); color:var(--dark);}
+
+  .btn-top{
+    position:fixed; right:20px; bottom:20px; background:var(--coral); color:#fff; border:none;
+    width:46px; height:46px; border-radius:50%; font-size:1.1rem; cursor:pointer; box-shadow:0 6px 18px rgba(0,0,0,.25);
+    display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .25s;
+  }
+  .btn-top.show{opacity:1; pointer-events:auto;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="navbar">
+    <div class="brand"><span class="dot"></span> RAKA &amp; Pseudocode</div>
+    <div class="navlinks">
+      <a href="#apa-itu">Apa Itu</a>
+      <a href="#kosakata">Kosakata</a>
+      <a href="#papan">Contoh</a>
+      <a href="#pengulangan">Pengulangan</a>
+      <a href="#kondisional">Kondisional</a>
+      <a href="#latihan">Latihan</a>
+      <a href="#rangkuman">Rangkuman</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div>
+      <span class="eyebrow">Informatika Kelas VII &middot; TP6</span>
+      <h1>Yuk, Kenalan sama Pseudocode!</h1>
+      <p class="lead">Belajar bareng RAKA — robot antar-buku sekolah yang cuma paham kosakata perintah terbatas. Siap bantu dia sampai ke tujuan tanpa nyasar?</p>
+      <div class="meta-row">
+        <span><b>120 menit</b> &middot; sekali pertemuan</span>
+        <span><b>Discovery Learning</b></span>
+      </div>
+    </div>
+    <img src="images/hero_siswa.png" alt="Ilustrasi robot RAKA di papan permainan menuju apel">
+  </div>
+</header>
+
+<section id="apa-itu">
+  <div class="wrap">
+    <p class="kicker">Sebelum Mulai</p>
+    <h2 class="sec-title">Kenapa sih butuh instruksi yang jelas?</h2>
+    <p>Pernah nggak, kalian kasih arah jalan ke temanmu, terus dia malah nyasar? Padahal menurutmu udah jelas banget, kan? Nah, itu karena instruksi yang kita ucapkan pakai bahasa sehari-hari kadang bisa diartikan macam-macam alias <b>ambigu</b>.</p>
+    <p>Beda cerita kalau yang kita kasih instruksi itu komputer atau robot. Mereka nggak bisa nebak-nebak maksud kita. Makanya, dibutuhkan cara menulis instruksi yang singkat, jelas, dan pasti maksudnya — nah, itulah yang namanya <b>pseudocode</b>.</p>
+
+    <div class="callout">
+      <h4>💡 Definisi Singkat</h4>
+      <p style="margin:0">Pseudocode adalah kumpulan instruksi yang ditulis pakai kosakata atau simbol <b>terbatas</b>, disusun <b>urut</b>, buat menyelesaikan suatu masalah. Bukan bahasa pemrograman resmi (bukan Python, bukan Scratch) — tapi cara kita merancang langkah-langkah dulu.</p>
+    </div>
+
+    <p><b>Misi hari ini:</b> RAKA baru "masuk kerja" di perpustakaan sekolah. Dia cuma paham kosakata perintah yang sangat terbatas. Tugas kita: belajar "bahasa" yang dipahami RAKA, supaya dia bisa jalan-jalan di papan permainan menuju target tanpa nyasar, nabrak, atau bingung.</p>
+  </div>
+</section>
+
+<section id="kosakata" class="alt">
+  <div class="wrap">
+    <p class="kicker">Kosakata Terbatas</p>
+    <h2 class="sec-title">Kartu Perintah Dasar RAKA</h2>
+    <p class="sec-lead">Cuma dengan 4 macam kartu ini aja, RAKA ternyata bisa berkeliling ke mana pun di papan permainan — asal urutannya benar!</p>
+    <figure>
+      <img src="images/kartu_perintah_dasar.png" alt="Kartu perintah dasar: maju satu langkah, putar 90 derajat searah/berlawanan jarum jam, ambil makanan">
+    </figure>
+    <div class="cardgrid">
+      <div class="mini-card"><b>MAJU SATU LANGKAH</b><span>RAKA geser satu kotak searah hadapnya.</span></div>
+      <div class="mini-card"><b>PUTAR 90°</b><span>Posisi tetap, arah hadap berubah (searah / berlawanan jarum jam).</span></div>
+      <div class="mini-card"><b>AMBIL MAKANAN</b><span>RAKA ambil benda di kotak yang lagi ditempati.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="papan">
+  <div class="wrap">
+    <p class="kicker">Contoh Kasus</p>
+    <h2 class="sec-title">Papan Permainan RAKA</h2>
+    <p>RAKA mulai dari kotak nomor 6, dan targetnya adalah apel di kotak nomor 19. Perhatikan jalur kuning berikut ini:</p>
+    <figure>
+      <img src="images/papan_permainan.png" alt="Papan permainan grid 5x5, RAKA bergerak dari kotak 6 menuju apel di kotak 19">
+      <figcaption>RAKA harus sampai ke apel tanpa nabrak batu (bulatan abu-abu)</figcaption>
+    </figure>
+    <p>Kalau ditulis pakai pseudocode, jadinya seperti ini:</p>
+    <div class="code">MULAI<br>MAJU SATU LANGKAH<br>MAJU SATU LANGKAH<br>MAJU SATU LANGKAH<br>PUTAR 90&deg; BERLAWANAN JARUM JAM<br>MAJU SATU LANGKAH<br>MAJU SATU LANGKAH<br>AMBIL MAKANAN<br>SELESAI</div>
+    <p>Instruksi <b>MULAI</b> dan <b>SELESAI</b> selalu ada di awal dan akhir. Di antara keduanya, semua instruksi ditulis urut dari atas ke bawah — ini yang disebut <b>urutan (sequence)</b>.</p>
+  </div>
+</section>
+
+<section id="pengulangan" class="alt">
+  <div class="wrap">
+    <p class="kicker">Jurus Ke-2</p>
+    <h2 class="sec-title">Biar Nggak Kepanjangan: Pengulangan</h2>
+    <p>Coba lihat lagi kode di atas — ada 3 baris "MAJU SATU LANGKAH" berturut-turut, kan? Kebayang nggak kalau RAKA harus maju 20 langkah? Makanya, ada kartu <b>ULANGI</b>.</p>
+    <figure>
+      <img src="images/kartu_kontrol.png" alt="Kartu kontrol ULANGI ... KALI, ULANGI SELALU, dan JIKA-MAKA">
+    </figure>
+    <div class="cardgrid">
+      <div class="mini-card"><b>ULANGI &hellip; KALI</b><span>Kartu di bawahnya diulang sebanyak angka yang kita tentukan.</span></div>
+      <div class="mini-card"><b>ULANGI SELALU</b><span>Diulang terus-menerus sampai suatu batas tercapai.</span></div>
+    </div>
+    <p>Dengan ULANGI, tiga baris "MAJU SATU LANGKAH" tadi bisa diringkas jadi:</p>
+    <div class="code">ULANGI 3 KALI<br>&nbsp;&nbsp;MAJU SATU LANGKAH</div>
+    <p>Lebih pendek, kan? Tapi hasilnya tetap sama persis.</p>
+  </div>
+</section>
+
+<section id="kondisional">
+  <div class="wrap">
+    <p class="kicker">Jurus Ke-3</p>
+    <h2 class="sec-title">Kalau Ada Syarat: Kondisional</h2>
+    <p>Kadang-kadang, suatu tindakan cuma boleh dilakukan KALAU suatu keadaan terpenuhi. Contoh: RAKA cuma boleh "AMBIL MAKANAN" kalau memang di kotak itu ADA makanannya. Ini namanya <b>kondisional</b>, ditulis pakai kartu JIKA &hellip; MAKA &hellip;</p>
+    <div class="code">JIKA (ada makanan)<br>MAKA (AMBIL MAKANAN)</div>
+    <p>Artinya: "Kalau syaratnya benar (ada makanan), baru jalankan perintah AMBIL MAKANAN. Kalau tidak, ya lewati aja, lanjut ke instruksi berikutnya."</p>
+
+    <p class="kicker" style="margin-top:2.2em">Rangkuman Jurus</p>
+    <h2 class="sec-title">Tiga Jurus Dasar Pseudocode</h2>
+    <figure>
+      <img src="images/struktur_pseudocode.png" alt="Diagram tiga struktur dasar pseudocode: urutan, pengulangan, kondisional">
+    </figure>
+    <div class="chips">
+      <div class="chip c1"><h5>URUTAN</h5><p>Instruksi dijalankan satu-satu, dari atas ke bawah.</p></div>
+      <div class="chip c2"><h5>PENGULANGAN</h5><p>Instruksi yang sama dijalankan berkali-kali (ULANGI).</p></div>
+      <div class="chip c3"><h5>KONDISIONAL</h5><p>Instruksi hanya dijalankan kalau syaratnya terpenuhi.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="latihan" class="alt">
+  <div class="wrap">
+    <p class="kicker">Yuk, Berlatih!</p>
+    <h2 class="sec-title">Coba Kerjakan, Baru Buka Jawabannya</h2>
+    <p class="sec-lead">Kerjakan dulu di buku catatanmu, baru klik tombol untuk mencocokkan jawaban.</p>
+
+    <div class="quiz-card">
+      <span class="qnum">LATIHAN 1</span>
+      <p>Tulis ulang pseudocode berikut dengan memakai kartu ULANGI supaya lebih ringkas:</p>
+      <div class="code">MULAI<br>MAJU SATU LANGKAH<br>MAJU SATU LANGKAH<br>MAJU SATU LANGKAH<br>MAJU SATU LANGKAH<br>SELESAI</div>
+      <details class="answer">
+        <summary>Lihat Jawaban ▾</summary>
+        <div class="answer-body">
+          MULAI<br>ULANGI 4 KALI<br>&nbsp;&nbsp;MAJU SATU LANGKAH<br>SELESAI
+        </div>
+      </details>
+    </div>
+
+    <div class="quiz-card">
+      <span class="qnum">LATIHAN 2</span>
+      <p>RAKA berada di kotak start, menghadap ke kanan. Ada batu tepat di depannya (1 kotak), dan makanan ada 2 kotak setelah batu itu (RAKA harus muter menghindar). Susun pseudocode yang memuat: 1 kali putar, 2 langkah maju, dan 1 perintah ambil, memakai kondisional JIKA-MAKA untuk instruksi mengambil makanannya.</p>
+      <details class="answer">
+        <summary>Lihat Salah Satu Jawaban ▾</summary>
+        <div class="answer-body">
+          MULAI<br>PUTAR 90&deg; SEARAH JARUM JAM<br>MAJU SATU LANGKAH<br>PUTAR 90&deg; BERLAWANAN JARUM JAM<br>MAJU SATU LANGKAH<br>JIKA (ada makanan)<br>MAKA (AMBIL MAKANAN)<br>SELESAI
+          <p style="margin:.8em 0 0; font-style:italic; opacity:.8;">Catatan: jawaban bisa berbeda-beda tergantung rute yang dipilih, yang penting logikanya tetap benar dan RAKA sampai ke tujuan.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="quiz-card">
+      <span class="qnum">LATIHAN 3 &middot; Berpikir Kritis</span>
+      <p>Menurutmu, apa yang akan terjadi kalau RAKA diberi pseudocode berikut ini? Ada yang aneh nggak? Kalau ada, perbaiki!</p>
+      <div class="code">MULAI<br>AMBIL MAKANAN<br>MAJU SATU LANGKAH<br>PUTAR<br>SELESAI</div>
+      <details class="answer">
+        <summary>Lihat Pembahasan ▾</summary>
+        <div class="answer-body">
+          Ada dua masalah: (1) RAKA disuruh AMBIL MAKANAN duluan padahal belum tentu ada makanan di kotak start — seharusnya pakai JIKA-MAKA atau dicek dulu. (2) Kartu "PUTAR" saja tidak jelas — harus disebutkan arahnya, PUTAR 90&deg; SEARAH JARUM JAM atau BERLAWANAN JARUM JAM, supaya tidak ambigu.
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="cek">
+  <div class="wrap">
+    <p class="kicker">Cek Pemahamanmu</p>
+    <h2 class="sec-title">Tiga Pertanyaan Penutup</h2>
+    <div class="check-item">
+      <div class="check-num">1</div>
+      <p style="margin:0">Kenapa pseudocode harus memakai kosakata yang terbatas, tidak boleh bebas seperti bahasa sehari-hari?</p>
+    </div>
+    <div class="check-item">
+      <div class="check-num">2</div>
+      <p style="margin:0">Apa bedanya kartu ULANGI &hellip; KALI dengan ULANGI SELALU?</p>
+    </div>
+    <div class="check-item">
+      <div class="check-num">3</div>
+      <p style="margin:0">Buatlah satu contoh situasi sehari-hari (selain robot) yang membutuhkan instruksi kondisional (JIKA &hellip; MAKA &hellip;)!</p>
+    </div>
+  </div>
+</section>
+
+<section id="rangkuman" class="alt">
+  <div class="wrap">
+    <p class="kicker">Rangkuman</p>
+    <h2 class="sec-title">Yang Perlu Kamu Ingat</h2>
+    <div class="callout gold">
+      <ul>
+        <li>Pseudocode adalah cara menulis instruksi memakai kosakata/simbol yang terbatas, urut, dan tidak ambigu.</li>
+        <li>Kosakata terbatas artinya semua orang (dan mesin) mengartikan instruksi dengan cara yang sama persis.</li>
+        <li>Pseudocode diawali kata MULAI dan diakhiri kata SELESAI.</li>
+        <li>Tiga jurus dasar pseudocode: urutan, pengulangan (ULANGI), dan kondisional (JIKA-MAKA).</li>
+        <li>Pengulangan membuat pseudocode lebih ringkas; kondisional membuat instruksi hanya berjalan kalau syaratnya terpenuhi.</li>
+      </ul>
+    </div>
+    <p>Selamat! Kamu sudah paham dasar-dasar pseudocode. Lanjutkan dengan aktivitas kelompok di LKPD untuk latihan lebih banyak bareng teman-temanmu. 🎉</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Yuk, Kenalan sama Pseudocode!</b><br>Materi Belajar Mandiri &middot; Informatika Kelas VII &middot; TP6</p>
+    <p style="margin-top:14px; font-size:.8rem;">SMP Negeri 14 Tarakan</p>
+  </div>
+</footer>
+
+<button class="btn-top" id="toTop" aria-label="Kembali ke atas">↑</button>
+
+<script>
+  const btn = document.getElementById('toTop');
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('show', window.scrollY > 500);
+  });
+  btn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+</script>
+
+</body>
+</html>

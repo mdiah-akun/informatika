@@ -1,0 +1,1011 @@
+<title>Ember Rush — 4 Tim</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+  :root{
+    --navy:#0B2740;
+    --navy-2:#123653;
+    --aqua:#0EA99A;
+    --aqua-bright:#16C2B0;
+    --amber:#D97F06;
+    --amber-bright:#FFB020;
+    --coral:#E85A47;
+    --bg:#EAF7F6;
+    --surface:#FFFFFF;
+    --surface-2:#F2FBFA;
+    --ink:#0B2740;
+    --muted:#4C6478;
+    --border:#D7EAE8;
+    --shadow: 0 1px 2px rgba(11,39,64,.06), 0 10px 26px rgba(11,39,64,.08);
+    --pool-bg:#FFFFFF;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --navy:#081826; --navy-2:#0F2740;
+      --aqua:#1FCBB9; --aqua-bright:#2EE0CC;
+      --amber:#FFB020; --amber-bright:#FFC55C;
+      --coral:#FF7A66;
+      --bg:#08141F; --surface:#0F2131; --surface-2:#132A3D;
+      --ink:#E7F3F2; --muted:#8FA9B8; --border:#1E3A50;
+      --shadow: 0 1px 2px rgba(0,0,0,.35), 0 14px 30px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --navy:#081826; --navy-2:#0F2740;
+    --aqua:#1FCBB9; --aqua-bright:#2EE0CC;
+    --amber:#FFB020; --amber-bright:#FFC55C;
+    --coral:#FF7A66;
+    --bg:#08141F; --surface:#0F2131; --surface-2:#132A3D;
+    --ink:#E7F3F2; --muted:#8FA9B8; --border:#1E3A50;
+    --shadow: 0 1px 2px rgba(0,0,0,.35), 0 14px 30px rgba(0,0,0,.4);
+  }
+
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'Plus Jakarta Sans', system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+    padding-bottom:40px;
+  }
+  h1,h2,h3, .display, .btn, .star-num, .chip .d, .total-num{ font-family:'Baloo 2', 'Plus Jakarta Sans', sans-serif; }
+  .num{ font-variant-numeric:tabular-nums; }
+
+  /* ================= HERO / HEADER ================= */
+  .hero{ position:relative; background:linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%); overflow:hidden; }
+  .hero-inner{ position:relative; z-index:2; max-width:1100px; margin:0 auto; padding:30px clamp(16px,4vw,44px) 46px; }
+  .eyebrow{ font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--amber-bright); margin:0 0 8px; }
+  .hero h1{ margin:0; font-size:clamp(2rem,5vw,3rem); font-weight:800; color:#fff; letter-spacing:.01em; text-wrap:balance; }
+  .hero .tagline{ margin:8px 0 0; color:#CFE9E6; font-size:1rem; max-width:60ch; }
+
+  .waves{ position:absolute; inset:auto 0 0 0; height:60px; z-index:1; opacity:.55; }
+  .waves svg{ width:200%; height:100%; animation: waveScroll 14s linear infinite; }
+  @media (prefers-reduced-motion: reduce){ .waves svg{ animation:none; } }
+  @keyframes waveScroll{ from{ transform:translateX(0);} to{ transform:translateX(-50%);} }
+
+  .scoreboard{
+    margin-top:22px; display:flex; flex-wrap:wrap; align-items:center; gap:10px;
+  }
+  .team{
+    background:rgba(255,255,255,.06); border:1.5px solid rgba(255,255,255,.14); border-radius:14px;
+    padding:10px 18px; display:flex; align-items:center; gap:10px; transition:.25s ease;
+  }
+  .team.active{ background:rgba(255,176,32,.16); border-color:var(--amber-bright); box-shadow:0 0 0 3px rgba(255,176,32,.15); }
+  .team .name{ font-size:.78rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:#CFE9E6; }
+  .team.active .name{ color:var(--amber-bright); }
+  .team .score{ font-size:1.5rem; font-weight:700; color:#fff; }
+  .sb-btn{
+    font-family:'Plus Jakarta Sans',sans-serif; font-size:.82rem; font-weight:600; color:#CFE9E6;
+    background:rgba(255,255,255,.08); border:1.5px solid rgba(255,255,255,.18); border-radius:10px;
+    padding:9px 14px; cursor:pointer; display:flex; align-items:center; gap:6px;
+  }
+  .sb-btn:hover{ background:rgba(255,255,255,.15); }
+  .sb-link{ font-size:.78rem; color:#9FC7C2; background:none; border:none; cursor:pointer; text-decoration:underline; padding:4px; }
+
+  .race-picker{ display:flex; flex-wrap:wrap; gap:14px; align-items:flex-end; }
+  .race-picker label{ font-size:.72rem; color:#CFE9E6; font-weight:700; letter-spacing:.04em; text-transform:uppercase; display:flex; flex-direction:column; gap:5px; }
+  .race-picker select{
+    font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:.85rem;
+    padding:8px 10px; border-radius:9px; border:1.5px solid rgba(255,255,255,.25);
+    background:rgba(255,255,255,.1); color:#fff; cursor:pointer;
+  }
+  .race-picker select option{ color:#0B2740; }
+
+  /* ================= LAYOUT ================= */
+  main{ max-width:1100px; margin:-18px auto 0; padding:0 clamp(16px,4vw,44px); position:relative; z-index:3; }
+
+  .tabs{ display:flex; gap:10px; margin-bottom:16px; }
+  .tab{
+    flex:1; background:var(--surface); border:1.5px solid var(--border); border-radius:14px;
+    padding:14px 18px; cursor:pointer; text-align:left; box-shadow:var(--shadow);
+    display:flex; flex-direction:column; gap:2px; transition:.2s ease;
+  }
+  .tab .t-eyebrow{ font-size:.68rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+  .tab .t-title{ font-size:1.05rem; font-weight:700; color:var(--ink); font-family:'Baloo 2',sans-serif; }
+  .tab.active{ border-color:var(--aqua); background:var(--surface-2); }
+  .tab.active .t-eyebrow{ color:var(--aqua); }
+  .tab.mode.active{ border-color:var(--amber); background:var(--surface-2); }
+  .tab.mode.active .t-eyebrow{ color:var(--amber); }
+
+  .panel{
+    background:var(--surface); border:1.5px solid var(--border); border-radius:18px; box-shadow:var(--shadow);
+    padding:24px clamp(16px,3vw,32px) 28px; margin-bottom:26px;
+  }
+  .panel h2{ margin:0 0 4px; font-size:1.35rem; }
+  .panel .desc{ color:var(--muted); margin:0 0 18px; max-width:70ch; font-size:.96rem; line-height:1.55; }
+
+  .field-label{ font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin:0 0 10px; }
+
+  /* ---- chips ---- */
+  .chip{
+    font-weight:600; font-size:.98rem; padding:12px 16px; border-radius:12px;
+    border:2px solid var(--border); background:var(--pool-bg); color:var(--ink);
+    cursor:pointer; display:inline-flex; align-items:baseline; gap:6px; user-select:none;
+    transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease, opacity .2s ease;
+  }
+  .chip:hover:not(.disabled){ border-color:var(--aqua); transform:translateY(-2px); box-shadow:0 6px 14px rgba(14,169,154,.18); }
+  .chip .d{ color:var(--muted); font-size:.85em; }
+  .chip.disabled{ opacity:.35; cursor:default; }
+  .chip.placed-anim{ animation: chipIn .35s ease; }
+  @keyframes chipIn{ from{ transform:scale(.7); opacity:0;} to{ transform:scale(1); opacity:1;} }
+  @media (prefers-reduced-motion: reduce){ .chip.placed-anim{ animation:none; } }
+
+  .pool{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:22px; min-height:52px; }
+
+  /* ---- level 1 queue ---- */
+  .queue{ display:flex; flex-wrap:wrap; gap:12px; margin-bottom:20px; }
+  .slot{
+    width:104px; min-height:96px; border:2px dashed var(--border); border-radius:14px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+    background:var(--surface-2); position:relative; padding:8px; text-align:center;
+  }
+  .slot .idx{ position:absolute; top:6px; left:9px; font-size:.68rem; color:var(--muted); font-weight:700; }
+  .slot.filled{ border-style:solid; border-color:var(--border); background:var(--surface); cursor:pointer; }
+  .slot.filled:hover{ border-color:var(--coral); }
+  .slot .job{ font-family:'Baloo 2',sans-serif; font-size:1.15rem; font-weight:700; }
+  .slot .dur{ font-size:.78rem; color:var(--muted); }
+  .slot .fillbar{ position:absolute; left:0; bottom:0; height:5px; width:0%; background:var(--aqua); border-radius:0 0 12px 12px; transition:width linear; }
+  .slot.active{ border-color:var(--aqua); box-shadow:0 0 0 3px rgba(14,169,154,.15); }
+  .slot.done{ border-color:var(--aqua); background:var(--surface-2); }
+  .slot .fin{ font-size:.7rem; color:var(--aqua); font-weight:700; }
+
+  /* ---- level 2 bins ---- */
+  .bins{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+  @media (max-width:620px){ .bins{ grid-template-columns:1fr; } }
+  .bin{ border:2px solid var(--border); border-radius:16px; padding:14px; background:var(--surface-2); min-height:150px; }
+  .bin-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .bin-head .name{ font-family:'Baloo 2',sans-serif; font-weight:700; font-size:1rem; display:flex; align-items:center; gap:8px; }
+  .bin-head .total{ font-family:'Baloo 2',sans-serif; font-weight:700; color:var(--aqua); }
+  .bin-list{ display:flex; flex-direction:column; gap:8px; margin-bottom:8px; }
+  .bin-progress{ height:10px; border-radius:6px; background:var(--border); overflow:hidden; }
+  .bin-progress .fill{ height:100%; width:0%; background:linear-gradient(90deg,var(--aqua),var(--aqua-bright)); transition:width linear; }
+  .bin-chip{
+    display:flex; align-items:center; justify-content:space-between; gap:8px;
+    background:var(--surface); border:1.5px solid var(--border); border-radius:10px; padding:8px 12px; font-weight:600;
+  }
+  .bin-chip button{
+    font-family:inherit; font-size:.72rem; font-weight:700; color:var(--coral); background:none; border:none; cursor:pointer;
+  }
+  .assign-row{ display:flex; gap:6px; margin-top:6px; }
+  .assign-btn{
+    flex:1; font-family:'Baloo 2',sans-serif; font-size:.8rem; font-weight:700; padding:6px 4px; border-radius:8px;
+    border:1.5px solid var(--border); background:var(--surface); color:var(--muted); cursor:pointer;
+  }
+  .assign-btn:hover{ border-color:var(--aqua); color:var(--aqua); }
+
+  /* ---- controls ---- */
+  .controls{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:6px; }
+  .btn{
+    font-size:.95rem; font-weight:700; cursor:pointer; border-radius:12px; padding:12px 20px;
+    border:2px solid var(--border); background:var(--surface); color:var(--ink);
+    display:inline-flex; align-items:center; gap:8px; transition:transform .12s ease, filter .15s ease;
+  }
+  .btn:hover:not(:disabled){ border-color:var(--aqua); }
+  .btn:active:not(:disabled){ transform:scale(.97); }
+  .btn:disabled{ opacity:.4; cursor:not-allowed; }
+  .btn.primary{ background:var(--aqua); border-color:var(--aqua); color:#fff; }
+  .btn.primary:hover:not(:disabled){ filter:brightness(1.07); }
+  .btn.ghost{ background:transparent; }
+  .btn:focus-visible{ outline:2px solid var(--aqua); outline-offset:2px; }
+
+  .live-readout{ font-size:.9rem; color:var(--muted); margin:8px 0 0; min-height:1.4em; }
+  .live-readout b{ color:var(--ink); font-family:'Baloo 2',sans-serif; }
+
+  /* ---- result panel ---- */
+  .result{ margin-top:20px; padding-top:20px; border-top:1.5px dashed var(--border); display:none; }
+  .result.show{ display:block; }
+  .stars{ font-size:2.4rem; letter-spacing:.08em; margin-bottom:6px; }
+  .stars span{ display:inline-block; filter:grayscale(1) opacity(.35); }
+  .stars span.lit{ filter:none; animation:starPop .4s ease; }
+  .stars span.lit:nth-child(2){ animation-delay:.1s; }
+  .stars span.lit:nth-child(3){ animation-delay:.2s; }
+  @keyframes starPop{ 0%{ transform:scale(.3) rotate(-20deg); opacity:0;} 60%{ transform:scale(1.2) rotate(6deg); opacity:1;} 100%{ transform:scale(1) rotate(0);} }
+  @media (prefers-reduced-motion: reduce){ .stars span.lit{ animation:none; } }
+  .result-headline{ font-family:'Baloo 2',sans-serif; font-size:1.2rem; font-weight:700; margin:0 0 12px; }
+
+  .gauge{ position:relative; height:34px; margin:10px 0 26px; }
+  .gauge .track{ position:absolute; top:15px; left:0; right:0; height:6px; border-radius:4px; background:var(--border); }
+  .gauge .mark{ position:absolute; top:0; width:2px; height:34px; }
+  .gauge .mark::after{ content:attr(data-label); position:absolute; top:20px; left:50%; transform:translateX(-50%); white-space:nowrap; font-size:.72rem; font-weight:700; }
+  .gauge .mark.best{ background:var(--aqua); } .gauge .mark.best::after{ color:var(--aqua); left:0; transform:none; text-align:left; }
+  .gauge .mark.worst{ background:var(--coral); } .gauge .mark.worst::after{ color:var(--coral); left:auto; right:0; transform:none; text-align:right; }
+  .gauge .mark.you{ background:var(--amber); width:3px; } .gauge .mark.you::after{ color:var(--amber); top:-18px; font-weight:800; max-width:140px; }
+
+  .result-actions{ display:flex; flex-wrap:wrap; gap:10px; }
+
+  details.help{ background:var(--surface); border:1.5px solid var(--border); border-radius:14px; padding:14px 18px; margin-bottom:24px; box-shadow:var(--shadow); }
+  details.help summary{ cursor:pointer; font-weight:700; font-family:'Baloo 2',sans-serif; }
+  details.help p{ margin:10px 0 0; color:var(--muted); font-size:.92rem; line-height:1.6; }
+  details.help ul{ margin:8px 0 0; padding-left:20px; color:var(--muted); font-size:.92rem; line-height:1.7; }
+
+  /* ---- race (mode bersamaan) ---- */
+  .race-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  @media (max-width:760px){ .race-grid{ grid-template-columns:1fr; } }
+  .race-board{ background:var(--surface-2); border:1.5px solid var(--border); border-radius:16px; padding:16px 14px 18px; }
+  .race-board-head{ font-family:'Baloo 2',sans-serif; font-weight:700; font-size:1.05rem; margin-bottom:12px; }
+  .winner-banner{
+    display:none; text-align:center; font-family:'Baloo 2',sans-serif; font-weight:800; font-size:1.15rem;
+    padding:14px 16px; border-radius:14px; margin:18px 0; background:var(--surface-2);
+    border:2px solid var(--amber-bright); color:var(--amber);
+  }
+  .winner-banner.show{ display:block; animation:starPop .35s ease; }
+
+  .hidden{ display:none !important; }
+</style>
+
+<div class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">Bab 1 · Berpikir Komputasional — Optimasi Penjadwalan</p>
+    <h1>💧 Ember Rush</h1>
+    <p class="tagline">Susun jadwal pengisian ember secepat dan seadil mungkin. Main bergiliran satu papan, atau balapan head-to-head dua tim sekaligus — cocok untuk 4 kelompok di kelas!</p>
+
+    <div class="scoreboard">
+      <div class="team active" id="teamCard0"><span class="name">🔵 Tim 1</span><span class="score num" id="score0">0</span></div>
+      <div class="team" id="teamCard1"><span class="name">🟠 Tim 2</span><span class="score num" id="score1">0</span></div>
+      <div class="team" id="teamCard2"><span class="name">🟢 Tim 3</span><span class="score num" id="score2">0</span></div>
+      <div class="team" id="teamCard3"><span class="name">🟣 Tim 4</span><span class="score num" id="score3">0</span></div>
+      <button class="sb-btn" id="btnSwitchTeam">⇄ Ganti Giliran</button>
+      <div class="race-picker hidden" id="racePicker">
+        <label>Papan Kiri <select id="selRaceLeft"></select></label>
+        <label>Papan Kanan <select id="selRaceRight"></select></label>
+      </div>
+      <button class="sb-link" id="btnResetScore">reset skor</button>
+    </div>
+  </div>
+  <div class="waves" aria-hidden="true">
+    <svg viewBox="0 0 2400 120" preserveAspectRatio="none">
+      <path d="M0,60 C200,110 400,10 600,60 C800,110 1000,10 1200,60 C1400,110 1600,10 1800,60 C2000,110 2200,10 2400,60 L2400,120 L0,120 Z" fill="#ffffff" opacity="0.10"/>
+      <path d="M1200,60 C1400,110 1600,10 1800,60 C2000,110 2200,10 2400,60 C2600,110 2800,10 3000,60 C3200,110 3400,10 3600,60 L3600,120 L1200,120 Z" fill="#ffffff" opacity="0.10"/>
+    </svg>
+  </div>
+</div>
+
+<main>
+  <div class="tabs mode-tabs" role="tablist">
+    <button class="tab mode active" id="modeBtnGiliran" role="tab" aria-selected="true">
+      <span class="t-eyebrow">Mode 1</span>
+      <span class="t-title">🔁 Main Bergantian</span>
+    </button>
+    <button class="tab mode" id="modeBtnBersamaan" role="tab" aria-selected="false">
+      <span class="t-eyebrow">Mode 2</span>
+      <span class="t-title">⚡ Main Bersamaan (2 Tim Balapan)</span>
+    </button>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab active" id="tabBtn1" role="tab" aria-selected="true">
+      <span class="t-eyebrow">Level 1 · Kegiatan A</span>
+      <span class="t-title">🚰 Satu Keran, Lima Ember</span>
+    </button>
+    <button class="tab" id="tabBtn2" role="tab" aria-selected="false">
+      <span class="t-eyebrow">Level 2 · Kegiatan B</span>
+      <span class="t-title">🚰🚰 Dua Keran Paralel</span>
+    </button>
+  </div>
+
+  <details class="help">
+    <summary>❓ Cara Main &amp; Cara Menghitung Skor</summary>
+    <p><b>Level 1</b> — Klik ember satu per satu (urutan bebas) untuk menyusunnya ke antrean. Tujuannya: buat <b>rata-rata waktu tunggu</b> semua ember sekecil mungkin. Klik ember di antrean untuk membatalkan pilihan.</p>
+    <p><b>Level 2</b> — Setiap ember punya dua tombol: <b>→ K1</b> dan <b>→ K2</b>. Bagi 6 ember ke dua keran supaya <b>total waktu kedua keran sedekat mungkin</b> (waktu selesai keseluruhan / makespan sekecil mungkin).</p>
+    <ul>
+      <li>⭐⭐⭐ = hasil paling optimal (sama seperti strategi SJF / pembagian terbaik)</li>
+      <li>⭐⭐ = sudah cukup baik, masih ada ruang lebih optimal</li>
+      <li>⭐ = coba pikirkan strateginya lagi</li>
+    </ul>
+    <p><b>🔁 Mode Bergantian</b> — 4 tim main bergiliran satu per satu di satu papan. Tombol "Ganti Giliran" memindahkan giliran; poin otomatis tersedia untuk tim yang sedang aktif.</p>
+    <p><b>⚡ Mode Bersamaan</b> — Pilih 2 dari 4 tim untuk "balapan" head-to-head di papan Kiri &amp; Kanan dengan data ember yang <b>sama persis</b>, supaya adil. Klik <b>Mulai Balapan</b> setelah kedua papan terisi penuh, lalu <b>Catat Hasil</b> untuk menambahkan bintang ke skor kedua tim sekaligus.</p>
+  </details>
+
+  <!-- ===================== MODE: BERGANTIAN ===================== -->
+  <div id="panelGiliran">
+    <!-- ===================== LEVEL 1 (solo) ===================== -->
+    <section class="panel" id="level1">
+      <h2>🚰 Satu Keran, Lima Ember</h2>
+      <p class="desc">Cuma ada 1 keran aktif. Susun kelima ember ke urutan pengisian yang menurutmu membuat <b>rata-rata waktu tunggu</b> paling kecil — persis seperti tantangan Kegiatan A di kelas.</p>
+
+      <p class="field-label">Ember yang harus dijadwalkan (klik untuk menyusun antrean)</p>
+      <div class="pool" id="poolL1"></div>
+
+      <p class="field-label">Antreanmu</p>
+      <div class="queue" id="queueL1"></div>
+
+      <div class="controls">
+        <button class="btn ghost" id="btnResetL1">↺ Ulang Susunan</button>
+        <button class="btn primary" id="btnRunL1" disabled>▶ Jalankan Simulasi</button>
+        <button class="btn ghost" id="btnNewL1">🎲 Data Baru</button>
+      </div>
+      <p class="live-readout" id="readoutL1"></p>
+
+      <div class="result" id="resultL1">
+        <div class="stars" id="starsL1"></div>
+        <p class="result-headline" id="headlineL1"></p>
+        <div class="gauge" id="gaugeL1"></div>
+        <div class="result-actions">
+          <button class="btn primary" id="btnAddPts1">➕ Tambahkan poin ke tim aktif</button>
+          <button class="btn ghost" id="btnReplay1">🎲 Main Lagi (Data Baru)</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== LEVEL 2 (solo) ===================== -->
+    <section class="panel hidden" id="level2">
+      <h2>🚰🚰 Dua Keran Paralel</h2>
+      <p class="desc">Sekarang ada 2 keran yang bisa bekerja bersamaan. Bagi 6 ember ke kedua keran supaya <b>semua ember selesai secepat mungkin</b> — persis seperti tantangan Kegiatan B di kelas.</p>
+
+      <p class="field-label">Ember yang harus dibagi</p>
+      <div class="pool" id="poolL2"></div>
+
+      <div class="bins">
+        <div class="bin">
+          <div class="bin-head"><span class="name">🚰 Keran 1</span><span class="total num" id="totalK1">0'</span></div>
+          <div class="bin-progress"><div class="fill" id="fillK1"></div></div>
+          <div class="bin-list" id="binK1" style="margin-top:10px;"></div>
+        </div>
+        <div class="bin">
+          <div class="bin-head"><span class="name">🚰 Keran 2</span><span class="total num" id="totalK2">0'</span></div>
+          <div class="bin-progress"><div class="fill" id="fillK2"></div></div>
+          <div class="bin-list" id="binK2" style="margin-top:10px;"></div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="btn ghost" id="btnResetL2">↺ Ulang Pembagian</button>
+        <button class="btn primary" id="btnRunL2" disabled>▶ Jalankan Simulasi</button>
+        <button class="btn ghost" id="btnNewL2">🎲 Data Baru</button>
+      </div>
+      <p class="live-readout" id="readoutL2"></p>
+
+      <div class="result" id="resultL2">
+        <div class="stars" id="starsL2"></div>
+        <p class="result-headline" id="headlineL2"></p>
+        <div class="gauge" id="gaugeL2"></div>
+        <div class="result-actions">
+          <button class="btn primary" id="btnAddPts2">➕ Tambahkan poin ke tim aktif</button>
+          <button class="btn ghost" id="btnReplay2">🎲 Main Lagi (Data Baru)</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================== MODE: BERSAMAAN ===================== -->
+  <div id="panelBersamaan" class="hidden">
+    <!-- ===================== LEVEL 1 (pair) ===================== -->
+    <section class="panel" id="level1Pair">
+      <h2>🚰 Satu Keran, Lima Ember — Balapan</h2>
+      <p class="desc">Kedua tim menyusun antrean ember yang <b>sama persis</b> secara bersamaan. Klik <b>Mulai Balapan</b> setelah kedua papan terisi penuh — tim dengan rata-rata waktu tunggu terkecil menang ronde ini!</p>
+
+      <div class="race-grid">
+        <div class="race-board">
+          <div class="race-board-head" id="raceNameL1A">🔵 Tim 1</div>
+          <p class="field-label">Ember (klik untuk menyusun antrean)</p>
+          <div class="pool" id="poolL1A"></div>
+          <p class="field-label">Antrean</p>
+          <div class="queue" id="queueL1A"></div>
+          <div class="controls"><button class="btn ghost" id="btnResetL1A">↺ Ulang</button></div>
+          <p class="live-readout" id="readoutL1A"></p>
+          <div class="result" id="resultL1A">
+            <div class="stars" id="starsL1A"></div>
+            <p class="result-headline" id="headlineL1A"></p>
+            <div class="gauge" id="gaugeL1A"></div>
+          </div>
+        </div>
+        <div class="race-board">
+          <div class="race-board-head" id="raceNameL1B">🟠 Tim 2</div>
+          <p class="field-label">Ember (klik untuk menyusun antrean)</p>
+          <div class="pool" id="poolL1B"></div>
+          <p class="field-label">Antrean</p>
+          <div class="queue" id="queueL1B"></div>
+          <div class="controls"><button class="btn ghost" id="btnResetL1B">↺ Ulang</button></div>
+          <p class="live-readout" id="readoutL1B"></p>
+          <div class="result" id="resultL1B">
+            <div class="stars" id="starsL1B"></div>
+            <p class="result-headline" id="headlineL1B"></p>
+            <div class="gauge" id="gaugeL1B"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls" style="margin-top:18px;">
+        <button class="btn primary" id="btnRaceL1" disabled>🏁 Mulai Balapan</button>
+        <button class="btn ghost" id="btnNewL1Pair">🎲 Data Baru (Kedua Papan)</button>
+      </div>
+
+      <p class="winner-banner" id="winnerBannerL1"></p>
+      <div class="result-actions">
+        <button class="btn primary" id="btnCreditL1" disabled>➕ Catat Hasil ke Kedua Tim</button>
+      </div>
+    </section>
+
+    <!-- ===================== LEVEL 2 (pair) ===================== -->
+    <section class="panel hidden" id="level2Pair">
+      <h2>🚰🚰 Dua Keran Paralel — Balapan</h2>
+      <p class="desc">Kedua tim membagi 6 ember yang <b>sama persis</b> ke dua keran masing-masing secara bersamaan. Tim dengan waktu total (makespan) terkecil menang ronde ini!</p>
+
+      <div class="race-grid">
+        <div class="race-board">
+          <div class="race-board-head" id="raceNameL2A">🔵 Tim 1</div>
+          <p class="field-label">Ember yang harus dibagi</p>
+          <div class="pool" id="poolL2A"></div>
+          <div class="bins">
+            <div class="bin">
+              <div class="bin-head"><span class="name">🚰 Keran 1</span><span class="total num" id="totalK1A">0'</span></div>
+              <div class="bin-progress"><div class="fill" id="fillK1A"></div></div>
+              <div class="bin-list" id="binK1A" style="margin-top:10px;"></div>
+            </div>
+            <div class="bin">
+              <div class="bin-head"><span class="name">🚰 Keran 2</span><span class="total num" id="totalK2A">0'</span></div>
+              <div class="bin-progress"><div class="fill" id="fillK2A"></div></div>
+              <div class="bin-list" id="binK2A" style="margin-top:10px;"></div>
+            </div>
+          </div>
+          <div class="controls"><button class="btn ghost" id="btnResetL2A">↺ Ulang</button></div>
+          <p class="live-readout" id="readoutL2A"></p>
+          <div class="result" id="resultL2A">
+            <div class="stars" id="starsL2A"></div>
+            <p class="result-headline" id="headlineL2A"></p>
+            <div class="gauge" id="gaugeL2A"></div>
+          </div>
+        </div>
+        <div class="race-board">
+          <div class="race-board-head" id="raceNameL2B">🟠 Tim 2</div>
+          <p class="field-label">Ember yang harus dibagi</p>
+          <div class="pool" id="poolL2B"></div>
+          <div class="bins">
+            <div class="bin">
+              <div class="bin-head"><span class="name">🚰 Keran 1</span><span class="total num" id="totalK1B">0'</span></div>
+              <div class="bin-progress"><div class="fill" id="fillK1B"></div></div>
+              <div class="bin-list" id="binK1B" style="margin-top:10px;"></div>
+            </div>
+            <div class="bin">
+              <div class="bin-head"><span class="name">🚰 Keran 2</span><span class="total num" id="totalK2B">0'</span></div>
+              <div class="bin-progress"><div class="fill" id="fillK2B"></div></div>
+              <div class="bin-list" id="binK2B" style="margin-top:10px;"></div>
+            </div>
+          </div>
+          <div class="controls"><button class="btn ghost" id="btnResetL2B">↺ Ulang</button></div>
+          <p class="live-readout" id="readoutL2B"></p>
+          <div class="result" id="resultL2B">
+            <div class="stars" id="starsL2B"></div>
+            <p class="result-headline" id="headlineL2B"></p>
+            <div class="gauge" id="gaugeL2B"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls" style="margin-top:18px;">
+        <button class="btn primary" id="btnRaceL2" disabled>🏁 Mulai Balapan</button>
+        <button class="btn ghost" id="btnNewL2Pair">🎲 Data Baru (Kedua Papan)</button>
+      </div>
+
+      <p class="winner-banner" id="winnerBannerL2"></p>
+      <div class="result-actions">
+        <button class="btn primary" id="btnCreditL2" disabled>➕ Catat Hasil ke Kedua Tim</button>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script>
+(function(){
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function shuffledDurations(n, min, max){
+    var pool = []; for(var v=min; v<=max; v++) pool.push(v);
+    for(var i=pool.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=pool[i]; pool[i]=pool[j]; pool[j]=t; }
+    return pool.slice(0,n);
+  }
+  function starsHTML(n){
+    var out=''; for(var i=1;i<=3;i++) out += '<span class="'+(i<=n?'lit':'')+'">'+(i<=n?'⭐':'☆')+'</span>';
+    return out;
+  }
+  function gaugeHTML(best, you, worst, unit){
+    var lo = Math.min(best, worst), hi = Math.max(best, worst);
+    var range = hi - lo || 1;
+    function pct(v){ return Math.max(2, Math.min(98, ((v - lo) / range) * 100)); }
+    var bestPct = pct(best);
+    var worstPct = pct(worst);
+    var youPct = pct(you);
+    return '<div class="track"></div>' +
+      '<div class="mark best" style="left:'+bestPct+'%" data-label="Terbaik: '+best.toFixed(1)+unit+'"></div>' +
+      '<div class="mark worst" style="left:'+worstPct+'%" data-label="Terburuk: '+worst.toFixed(1)+unit+'"></div>' +
+      '<div class="mark you" style="left:'+youPct+'%" data-label="Kamu: '+you.toFixed(1)+unit+'"></div>';
+  }
+  function starsFromFrac(frac){
+    if(frac <= 0.02) return 3;
+    if(frac <= 0.4) return 2;
+    return 1;
+  }
+  function computeAvg(order){
+    var t=0, total=0; order.forEach(function(j){ t+=j.d; total+=t; }); return total/order.length;
+  }
+  function bestMakespan(jobs){
+    var n = jobs.length, best = Infinity;
+    var total = jobs.reduce(function(a,j){return a+j.d;},0);
+    for(var mask=0; mask < (1<<n); mask++){
+      var s=0;
+      for(var i=0;i<n;i++) if(mask & (1<<i)) s += jobs[i].d;
+      var mk = Math.max(s, total-s);
+      if(mk < best) best = mk;
+    }
+    return best;
+  }
+
+  /* ===================== SCOREBOARD (4 TIM) ===================== */
+  var teams = [
+    { emoji:'🔵', name:'Tim 1', score:0 },
+    { emoji:'🟠', name:'Tim 2', score:0 },
+    { emoji:'🟢', name:'Tim 3', score:0 },
+    { emoji:'🟣', name:'Tim 4', score:0 }
+  ];
+  var mode = 'giliran';
+  var activeIdx = 0;
+  var raceLeftIdx = 0, raceRightIdx = 1;
+  var raceActiveL1 = { left:null, right:null };
+  var raceActiveL2 = { left:null, right:null };
+
+  function renderScoreboard(){
+    teams.forEach(function(t,i){
+      document.getElementById('score'+i).textContent = t.score;
+      var isActive = mode === 'giliran' ? (i===activeIdx) : (i===raceLeftIdx || i===raceRightIdx);
+      document.getElementById('teamCard'+i).classList.toggle('active', isActive);
+    });
+  }
+  function addPoints(n){ teams[activeIdx].score += n; renderScoreboard(); }
+
+  document.getElementById('btnSwitchTeam').addEventListener('click', function(){ activeIdx=(activeIdx+1)%4; renderScoreboard(); });
+  document.getElementById('btnResetScore').addEventListener('click', function(){
+    teams.forEach(function(t){ t.score=0; });
+    activeIdx=0; raceLeftIdx=0; raceRightIdx=1;
+    selLeft.value='0'; selRight.value='1';
+    updateRaceBoardLabels();
+    renderScoreboard();
+  });
+
+  var selLeft = document.getElementById('selRaceLeft');
+  var selRight = document.getElementById('selRaceRight');
+  function populateRaceSelects(){
+    [selLeft, selRight].forEach(function(sel){
+      sel.innerHTML = teams.map(function(t,i){ return '<option value="'+i+'">'+t.emoji+' '+t.name+'</option>'; }).join('');
+    });
+    selLeft.value = String(raceLeftIdx); selRight.value = String(raceRightIdx);
+  }
+  function updateRaceBoardLabels(){
+    var l = teams[raceLeftIdx], r = teams[raceRightIdx];
+    ['L1','L2'].forEach(function(lvl){
+      var a = document.getElementById('raceName'+lvl+'A');
+      var b = document.getElementById('raceName'+lvl+'B');
+      if(a) a.textContent = l.emoji+' '+l.name;
+      if(b) b.textContent = r.emoji+' '+r.name;
+    });
+  }
+  selLeft.addEventListener('change', function(){
+    raceLeftIdx = parseInt(selLeft.value,10);
+    if(raceLeftIdx === raceRightIdx){ raceRightIdx = (raceLeftIdx+1)%4; selRight.value = String(raceRightIdx); }
+    updateRaceBoardLabels(); renderScoreboard();
+  });
+  selRight.addEventListener('change', function(){
+    raceRightIdx = parseInt(selRight.value,10);
+    if(raceRightIdx === raceLeftIdx){ raceLeftIdx = (raceRightIdx+1)%4; selLeft.value = String(raceLeftIdx); }
+    updateRaceBoardLabels(); renderScoreboard();
+  });
+
+  /* ===================== MODE TABS ===================== */
+  var modeBtnGiliran = document.getElementById('modeBtnGiliran');
+  var modeBtnBersamaan = document.getElementById('modeBtnBersamaan');
+  var panelGiliran = document.getElementById('panelGiliran');
+  var panelBersamaan = document.getElementById('panelBersamaan');
+  function setMode(m){
+    mode = m;
+    modeBtnGiliran.classList.toggle('active', m==='giliran'); modeBtnGiliran.setAttribute('aria-selected', m==='giliran');
+    modeBtnBersamaan.classList.toggle('active', m==='bersamaan'); modeBtnBersamaan.setAttribute('aria-selected', m==='bersamaan');
+    panelGiliran.classList.toggle('hidden', m!=='giliran');
+    panelBersamaan.classList.toggle('hidden', m!=='bersamaan');
+    document.getElementById('btnSwitchTeam').classList.toggle('hidden', m!=='giliran');
+    document.getElementById('racePicker').classList.toggle('hidden', m!=='bersamaan');
+    if(m==='bersamaan') updateRaceBoardLabels();
+    renderScoreboard();
+  }
+  modeBtnGiliran.addEventListener('click', function(){ setMode('giliran'); });
+  modeBtnBersamaan.addEventListener('click', function(){ setMode('bersamaan'); });
+
+  /* ===================== LEVEL TABS (shared) ===================== */
+  var tabBtn1=document.getElementById('tabBtn1'), tabBtn2=document.getElementById('tabBtn2');
+  function setLevel(n){
+    tabBtn1.classList.toggle('active', n===1); tabBtn1.setAttribute('aria-selected', n===1);
+    tabBtn2.classList.toggle('active', n===2); tabBtn2.setAttribute('aria-selected', n===2);
+    document.getElementById('level1').classList.toggle('hidden', n!==1);
+    document.getElementById('level2').classList.toggle('hidden', n!==2);
+    document.getElementById('level1Pair').classList.toggle('hidden', n!==1);
+    document.getElementById('level2Pair').classList.toggle('hidden', n!==2);
+  }
+  tabBtn1.addEventListener('click', function(){ setLevel(1); });
+  tabBtn2.addEventListener('click', function(){ setLevel(2); });
+
+  /* ===================== LEVEL 1 ENGINE (shared by solo '' / pair 'A' / pair 'B') ===================== */
+  var L1_LETTERS = ['A','B','C','D','E'];
+  var l1 = {};
+
+  function setupLevel1FromJobs(id, jobs){
+    var order = jobs.slice();
+    for(var i=order.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=order[i]; order[i]=order[j]; order[j]=t; }
+    l1[id] = { jobs: jobs, pool: order, queue: [] };
+    var resEl = document.getElementById('resultL1'+id); if(resEl) resEl.classList.remove('show');
+    var roEl = document.getElementById('readoutL1'+id); if(roEl) roEl.textContent = '';
+    renderL1(id);
+  }
+  function newLevel1(id){
+    var durs = shuffledDurations(5, 2, 16);
+    var jobs = L1_LETTERS.map(function(letter,i){ return { n:letter, d:durs[i] }; });
+    setupLevel1FromJobs(id, jobs);
+  }
+  function newLevel1Pair(){
+    var durs = shuffledDurations(5, 2, 16);
+    var jobsA = L1_LETTERS.map(function(letter,i){ return { n:letter, d:durs[i] }; });
+    var jobsB = L1_LETTERS.map(function(letter,i){ return { n:letter, d:durs[i] }; });
+    setupLevel1FromJobs('A', jobsA);
+    setupLevel1FromJobs('B', jobsB);
+    hideRacePanel('L1');
+    updateRaceReadyL1();
+  }
+
+  function renderL1(id){
+    var state = l1[id];
+    var elPool = document.getElementById('poolL1'+id);
+    var elQueue = document.getElementById('queueL1'+id);
+    var btnRun = document.getElementById('btnRunL1'+id);
+
+    elPool.innerHTML = '';
+    state.pool.forEach(function(job){
+      var inQueue = state.queue.indexOf(job) !== -1;
+      var chip = document.createElement('button');
+      chip.className = 'chip' + (inQueue ? ' disabled' : '');
+      chip.innerHTML = job.n + ' <span class="d">' + job.d + "'</span>";
+      chip.disabled = inQueue;
+      chip.addEventListener('click', function(){
+        if(state.queue.length >= state.jobs.length) return;
+        state.queue.push(job); renderL1(id); afterChangeL1(id);
+      });
+      elPool.appendChild(chip);
+    });
+
+    elQueue.innerHTML = '';
+    for(var i=0;i<state.jobs.length;i++){
+      var job = state.queue[i];
+      var slot = document.createElement('div');
+      slot.className = 'slot' + (job ? ' filled placed-anim' : '');
+      slot.innerHTML = '<span class="idx">'+(i+1)+'</span>';
+      if(job){
+        slot.innerHTML += '<span class="job">'+job.n+'</span><span class="dur">'+job.d+" menit</span><div class='fillbar' id='fillL1"+id+"_"+i+"'></div>";
+        (function(jobRef){
+          slot.addEventListener('click', function(){
+            var idx = state.queue.indexOf(jobRef);
+            if(idx !== -1){ state.queue.splice(idx,1); renderL1(id); afterChangeL1(id); }
+          });
+        })(job);
+      }
+      elQueue.appendChild(slot);
+    }
+    if(btnRun) btnRun.disabled = state.queue.length !== state.jobs.length;
+    state.ready = state.queue.length === state.jobs.length;
+  }
+
+  function afterChangeL1(id){ if(id==='A' || id==='B') updateRaceReadyL1(); }
+  function updateRaceReadyL1(){
+    var ready = l1.A && l1.B && l1.A.ready && l1.B.ready;
+    document.getElementById('btnRaceL1').disabled = !ready;
+  }
+
+  function resetQueueL1(id){
+    var state = l1[id];
+    state.queue = [];
+    var resEl = document.getElementById('resultL1'+id); if(resEl) resEl.classList.remove('show');
+    var roEl = document.getElementById('readoutL1'+id); if(roEl) roEl.textContent='';
+    renderL1(id); afterChangeL1(id);
+  }
+
+  function runLevel1Sim(id, onDone){
+    var state = l1[id];
+    var elQueue = document.getElementById('queueL1'+id);
+    var readout = document.getElementById('readoutL1'+id);
+    var order = state.queue.slice();
+    var totalBudget = reduceMotion ? 30 : 4200;
+    var sumDur = order.reduce(function(a,j){return a+j.d;},0);
+    var scale = totalBudget / sumDur;
+    var t = 0, i = 0;
+    function step(){
+      if(i >= order.length){
+        var finishes = []; var tt = 0; order.forEach(function(j){ tt += j.d; finishes.push(tt); });
+        var playerAvg = finishes.reduce(function(a,b){return a+b;},0) / finishes.length;
+        var sortedAsc = state.jobs.slice().sort(function(a,b){return a.d-b.d;});
+        var sortedDesc = state.jobs.slice().sort(function(a,b){return b.d-a.d;});
+        var best = computeAvg(sortedAsc), worst = computeAvg(sortedDesc);
+        var frac = (playerAvg - Math.min(best,worst)) / (Math.abs(worst-best) || 1);
+        var stars = starsFromFrac(frac);
+        var starsEl = document.getElementById('starsL1'+id); if(starsEl) starsEl.innerHTML = starsHTML(stars);
+        var headEl = document.getElementById('headlineL1'+id); if(headEl) headEl.textContent = 'Rata-rata waktu tunggu: ' + playerAvg.toFixed(1) + ' menit';
+        var gaugeEl = document.getElementById('gaugeL1'+id); if(gaugeEl) gaugeEl.innerHTML = gaugeHTML(best, playerAvg, worst, ' menit');
+        var resEl = document.getElementById('resultL1'+id); if(resEl) resEl.classList.add('show');
+        if(readout) readout.innerHTML = 'Simulasi selesai ✔';
+        if(onDone) onDone(stars, playerAvg);
+        return;
+      }
+      var job = order[i];
+      var slotEl = elQueue.children[i];
+      slotEl.classList.add('active');
+      var bar = document.getElementById('fillL1'+id+'_'+i);
+      var dur = Math.max(job.d*scale, 30);
+      if(bar){ bar.style.transitionDuration = dur+'ms'; requestAnimationFrame(function(){ bar.style.width='100%'; }); }
+      t += job.d;
+      if(readout) readout.innerHTML = 'Memproses ember <b>'+job.n+'</b>… waktu berjalan: <b>'+t+'</b> menit';
+      setTimeout(function(){
+        slotEl.classList.remove('active'); slotEl.classList.add('done');
+        var fin = document.createElement('span'); fin.className='fin'; fin.textContent = 'selesai menit ke-'+t;
+        slotEl.appendChild(fin);
+        i++; step();
+      }, dur);
+    }
+    step();
+  }
+
+  var btnResetL1 = document.getElementById('btnResetL1');
+  var btnNewL1 = document.getElementById('btnNewL1');
+  var btnRunL1 = document.getElementById('btnRunL1');
+  btnResetL1.addEventListener('click', function(){ resetQueueL1(''); });
+  btnNewL1.addEventListener('click', function(){ newLevel1(''); });
+  document.getElementById('btnReplay1').addEventListener('click', function(){ newLevel1(''); });
+  btnRunL1.addEventListener('click', function(){
+    btnRunL1.disabled = true; btnResetL1.disabled = true; btnNewL1.disabled = true;
+    runLevel1Sim('', function(stars){
+      window.__lastStars1 = stars;
+      btnResetL1.disabled = false; btnNewL1.disabled = false;
+    });
+  });
+  document.getElementById('btnAddPts1').addEventListener('click', function(){ addPoints(window.__lastStars1 || 0); });
+
+  document.getElementById('btnResetL1A').addEventListener('click', function(){ resetQueueL1('A'); });
+  document.getElementById('btnResetL1B').addEventListener('click', function(){ resetQueueL1('B'); });
+  document.getElementById('btnNewL1Pair').addEventListener('click', newLevel1Pair);
+  document.getElementById('btnRaceL1').addEventListener('click', function(){
+    raceActiveL1.left = raceLeftIdx; raceActiveL1.right = raceRightIdx;
+    this.disabled = true;
+    document.getElementById('btnResetL1A').disabled = true;
+    document.getElementById('btnResetL1B').disabled = true;
+    document.getElementById('btnNewL1Pair').disabled = true;
+    var doneCount = 0, resA, resB;
+    runLevel1Sim('A', function(stars, raw){ resA = {stars:stars, raw:raw}; doneCount++; if(doneCount===2) finishRace('L1', resA, resB); });
+    runLevel1Sim('B', function(stars, raw){ resB = {stars:stars, raw:raw}; doneCount++; if(doneCount===2) finishRace('L1', resA, resB); });
+  });
+  document.getElementById('btnCreditL1').addEventListener('click', function(){
+    var r = window.__raceResultL1; if(!r) return;
+    teams[raceActiveL1.left].score += r.A.stars;
+    teams[raceActiveL1.right].score += r.B.stars;
+    renderScoreboard();
+    this.disabled = true;
+  });
+
+  /* ===================== LEVEL 2 ENGINE (shared by solo '' / pair 'A' / pair 'B') ===================== */
+  var L2_LETTERS = ['A','B','C','D','E','F'];
+  var l2 = {};
+
+  function setupLevel2FromJobs(id, jobs){
+    var assign = {}; jobs.forEach(function(_,i){ assign[i]=0; });
+    l2[id] = { jobs: jobs, assign: assign };
+    var resEl = document.getElementById('resultL2'+id); if(resEl) resEl.classList.remove('show');
+    var roEl = document.getElementById('readoutL2'+id); if(roEl) roEl.textContent='';
+    renderL2(id);
+  }
+  function newLevel2(id){
+    var durs = shuffledDurations(6, 2, 16);
+    var jobs = L2_LETTERS.map(function(letter,i){ return { n:letter, d:durs[i] }; });
+    setupLevel2FromJobs(id, jobs);
+  }
+  function newLevel2Pair(){
+    var durs = shuffledDurations(6, 2, 16);
+    var jobsA = L2_LETTERS.map(function(letter,i){ return { n:letter, d:durs[i] }; });
+    var jobsB = L2_LETTERS.map(function(letter,i){ return { n:letter, d:durs[i] }; });
+    setupLevel2FromJobs('A', jobsA);
+    setupLevel2FromJobs('B', jobsB);
+    hideRacePanel('L2');
+    updateRaceReadyL2();
+  }
+
+  function binTotal(id, bin){
+    var state = l2[id]; var s=0;
+    state.jobs.forEach(function(j,i){ if(state.assign[i]===bin) s+=j.d; });
+    return s;
+  }
+
+  function renderL2(id){
+    var state = l2[id];
+    var elPool = document.getElementById('poolL2'+id);
+    elPool.innerHTML = '';
+    state.jobs.forEach(function(job,i){
+      if(state.assign[i] !== 0) return;
+      var chip = document.createElement('div');
+      chip.className = 'chip';
+      chip.style.display='flex'; chip.style.flexDirection='column'; chip.style.alignItems='stretch'; chip.style.cursor='default';
+      chip.innerHTML = '<span>'+job.n+' <span class="d">'+job.d+"'</span></span>" +
+        '<div class="assign-row">' +
+          '<button class="assign-btn" data-bin="1">→ K1</button>' +
+          '<button class="assign-btn" data-bin="2">→ K2</button>' +
+        '</div>';
+      chip.querySelectorAll('.assign-btn').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          state.assign[i] = parseInt(btn.getAttribute('data-bin'),10);
+          renderL2(id); afterChangeL2(id);
+        });
+      });
+      elPool.appendChild(chip);
+    });
+
+    function renderBin(bin){
+      var binEl = document.getElementById('binK'+bin+id);
+      var totalEl = document.getElementById('totalK'+bin+id);
+      binEl.innerHTML='';
+      state.jobs.forEach(function(job,i){
+        if(state.assign[i] !== bin) return;
+        var row = document.createElement('div');
+        row.className = 'bin-chip placed-anim';
+        row.innerHTML = '<span>'+job.n+' · '+job.d+"'</span>";
+        var btn = document.createElement('button');
+        btn.textContent = '✕'; btn.title='Kembalikan ke kumpulan';
+        btn.addEventListener('click', function(){ state.assign[i]=0; renderL2(id); afterChangeL2(id); });
+        row.appendChild(btn);
+        binEl.appendChild(row);
+      });
+      totalEl.textContent = binTotal(id,bin) + "'";
+    }
+    renderBin(1); renderBin(2);
+
+    var allAssigned = state.jobs.every(function(_,i){ return state.assign[i] !== 0; });
+    var btnRun = document.getElementById('btnRunL2'+id);
+    if(btnRun) btnRun.disabled = !allAssigned;
+    state.ready = allAssigned;
+  }
+
+  function afterChangeL2(id){ if(id==='A' || id==='B') updateRaceReadyL2(); }
+  function updateRaceReadyL2(){
+    var ready = l2.A && l2.B && l2.A.ready && l2.B.ready;
+    document.getElementById('btnRaceL2').disabled = !ready;
+  }
+
+  function resetAssignL2(id){
+    var state = l2[id];
+    state.jobs.forEach(function(_,i){ state.assign[i]=0; });
+    var resEl = document.getElementById('resultL2'+id); if(resEl) resEl.classList.remove('show');
+    var roEl = document.getElementById('readoutL2'+id); if(roEl) roEl.textContent='';
+    renderL2(id); afterChangeL2(id);
+  }
+
+  function runLevel2Sim(id, onDone){
+    var state = l2[id];
+    var readout = document.getElementById('readoutL2'+id);
+    var bin1 = state.jobs.filter(function(_,i){ return state.assign[i]===1; });
+    var bin2 = state.jobs.filter(function(_,i){ return state.assign[i]===2; });
+    var t1 = bin1.reduce(function(a,j){return a+j.d;},0);
+    var t2 = bin2.reduce(function(a,j){return a+j.d;},0);
+    var makespan = Math.max(t1,t2);
+    var totalBudget = reduceMotion ? 30 : 4200;
+    var scale = totalBudget / (makespan || 1);
+    var doneCount = 0;
+    var fillK1 = document.getElementById('fillK1'+id);
+    var fillK2 = document.getElementById('fillK2'+id);
+    function runBin(binJobs, fillEl){
+      var t=0, i=0;
+      function step(){
+        if(i>=binJobs.length){ doneCount++; if(doneCount===2) finish(); return; }
+        var job = binJobs[i];
+        t += job.d;
+        var pct = (t / (makespan||1)) * 100;
+        fillEl.style.transitionDuration = Math.max(job.d*scale,30)+'ms';
+        requestAnimationFrame(function(){ fillEl.style.width = pct+'%'; });
+        setTimeout(function(){ i++; step(); }, Math.max(job.d*scale,30));
+      }
+      if(binJobs.length===0){ doneCount++; if(doneCount===2) finish(); return; }
+      step();
+    }
+    if(readout) readout.innerHTML = 'Kedua keran sedang mengisi ember secara bersamaan…';
+    runBin(bin1, fillK1);
+    runBin(bin2, fillK2);
+
+    function finish(){
+      var best = bestMakespan(state.jobs);
+      var total = state.jobs.reduce(function(a,j){return a+j.d;},0);
+      var worst = total;
+      var frac = (makespan - best) / ((worst-best) || 1);
+      var stars = starsFromFrac(frac);
+      var starsEl = document.getElementById('starsL2'+id); if(starsEl) starsEl.innerHTML = starsHTML(stars);
+      var headEl = document.getElementById('headlineL2'+id); if(headEl) headEl.textContent = 'Waktu total (makespan): ' + makespan + ' menit';
+      var gaugeEl = document.getElementById('gaugeL2'+id); if(gaugeEl) gaugeEl.innerHTML = gaugeHTML(best, makespan, worst, ' menit');
+      var resEl = document.getElementById('resultL2'+id); if(resEl) resEl.classList.add('show');
+      if(readout) readout.innerHTML = 'Simulasi selesai ✔ — Keran 1: '+t1+"' · Keran 2: "+t2+"'";
+      if(onDone) onDone(stars, makespan);
+    }
+  }
+
+  var btnResetL2 = document.getElementById('btnResetL2');
+  var btnNewL2 = document.getElementById('btnNewL2');
+  var btnRunL2 = document.getElementById('btnRunL2');
+  btnResetL2.addEventListener('click', function(){ resetAssignL2(''); });
+  btnNewL2.addEventListener('click', function(){ newLevel2(''); });
+  document.getElementById('btnReplay2').addEventListener('click', function(){ newLevel2(''); });
+  btnRunL2.addEventListener('click', function(){
+    btnRunL2.disabled = true; btnResetL2.disabled = true; btnNewL2.disabled = true;
+    runLevel2Sim('', function(stars){
+      window.__lastStars2 = stars;
+      btnResetL2.disabled = false; btnNewL2.disabled = false;
+    });
+  });
+  document.getElementById('btnAddPts2').addEventListener('click', function(){ addPoints(window.__lastStars2 || 0); });
+
+  document.getElementById('btnResetL2A').addEventListener('click', function(){ resetAssignL2('A'); });
+  document.getElementById('btnResetL2B').addEventListener('click', function(){ resetAssignL2('B'); });
+  document.getElementById('btnNewL2Pair').addEventListener('click', newLevel2Pair);
+  document.getElementById('btnRaceL2').addEventListener('click', function(){
+    raceActiveL2.left = raceLeftIdx; raceActiveL2.right = raceRightIdx;
+    this.disabled = true;
+    document.getElementById('btnResetL2A').disabled = true;
+    document.getElementById('btnResetL2B').disabled = true;
+    document.getElementById('btnNewL2Pair').disabled = true;
+    var doneCount = 0, resA, resB;
+    runLevel2Sim('A', function(stars, raw){ resA = {stars:stars, raw:raw}; doneCount++; if(doneCount===2) finishRace('L2', resA, resB); });
+    runLevel2Sim('B', function(stars, raw){ resB = {stars:stars, raw:raw}; doneCount++; if(doneCount===2) finishRace('L2', resA, resB); });
+  });
+  document.getElementById('btnCreditL2').addEventListener('click', function(){
+    var r = window.__raceResultL2; if(!r) return;
+    teams[raceActiveL2.left].score += r.A.stars;
+    teams[raceActiveL2.right].score += r.B.stars;
+    renderScoreboard();
+    this.disabled = true;
+  });
+
+  /* ===================== RACE RESULT / WINNER BANNER (shared L1 & L2) ===================== */
+  function hideRacePanel(levelKey){
+    var banner = document.getElementById('winnerBanner'+levelKey);
+    banner.classList.remove('show'); banner.textContent = '';
+    document.getElementById('btnCredit'+levelKey).disabled = true;
+    document.getElementById('btnRace'+levelKey).disabled = true;
+    window['__raceResult'+levelKey] = null;
+  }
+
+  function finishRace(levelKey, resA, resB){
+    var ra = levelKey === 'L1' ? raceActiveL1 : raceActiveL2;
+    var winner;
+    if(resA.stars !== resB.stars){ winner = resA.stars > resB.stars ? 'A' : 'B'; }
+    else if(resA.raw !== resB.raw){ winner = resA.raw < resB.raw ? 'A' : 'B'; }
+    else { winner = 'tie'; }
+
+    var leftName = teams[ra.left].emoji + ' ' + teams[ra.left].name;
+    var rightName = teams[ra.right].emoji + ' ' + teams[ra.right].name;
+    var bannerEl = document.getElementById('winnerBanner'+levelKey);
+    if(winner === 'tie'){
+      bannerEl.textContent = '🤝 Seri! ' + leftName + ' dan ' + rightName + ' sama-sama hebat ronde ini.';
+    } else {
+      bannerEl.textContent = '🏆 ' + (winner==='A' ? leftName : rightName) + ' menang ronde ini!';
+    }
+    bannerEl.classList.add('show');
+
+    window['__raceResult'+levelKey] = { A: resA, B: resB };
+    document.getElementById('btnCredit'+levelKey).disabled = false;
+
+    if(levelKey === 'L1'){
+      document.getElementById('btnResetL1A').disabled = false;
+      document.getElementById('btnResetL1B').disabled = false;
+      document.getElementById('btnNewL1Pair').disabled = false;
+    } else {
+      document.getElementById('btnResetL2A').disabled = false;
+      document.getElementById('btnResetL2B').disabled = false;
+      document.getElementById('btnNewL2Pair').disabled = false;
+    }
+  }
+
+  /* ===================== INIT ===================== */
+  populateRaceSelects();
+  updateRaceBoardLabels();
+  renderScoreboard();
+  setMode('giliran');
+  setLevel(1);
+  newLevel1('');
+  newLevel2('');
+  newLevel1Pair();
+  newLevel2Pair();
+})();
+</script>

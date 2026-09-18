@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 520" font-family="Nunito, sans-serif" role="img" aria-label="Gelang manik-manik melingkar 16 manik milik Baim dengan urutan warna tertentu">
+<circle cx="260" cy="260" r="232" fill="#FBFAF6"/>
+<circle cx="260" cy="260" r="190" fill="none" stroke="#D9D4EF" stroke-width="10" stroke-dasharray="2,14" stroke-linecap="round"/>
+
+<g>
+  <circle cx="260.00" cy="70.00" r="30" fill="#E63946" stroke="#fff" stroke-width="4"/>
+  <circle cx="252.00" cy="61.00" r="8" fill="#ffffff" opacity="0.35"/>
+  <text x="260.00" y="74.00" text-anchor="middle" font-size="12" font-weight="800" fill="rgba(0,0,0,0.35)" font-family="Poppins, sans-serif">1</text>
+</g>
+<g>
+  <circle cx="332.71" cy="84.46" r="30" fill="#2DBE6C" stroke="#fff" stroke-width="4"/>
+  <circle cx="324.71" cy="75.46" r="8" fill="#ffffff" opacity="0.35"/>
+  <text x="332.71" y="88.46" text-anchor="middle" font-size="12" font-weight="800" fill="rgba(0,0,0,0.35)" font-family="Poppins, sans-serif">2</text>
+</g>
+<g>
+  <circle cx="394.35" cy="125.65" r="30" fill="#E63946" stroke="#fff" stroke-width="4"/>
+  <circle cx="386.35" cy="116.65" r="8" fill="#ffffff" opacity="0.35"/>
+  <text x="394.35" y="129.65" text-anchor="middle" font-size="12" font-weight="800" fill="rgba(0,0,0,0.35)" font-family="Poppins, sans-serif">3</text>
+</g>
+<g>
+  <circle cx="435.54" cy="187.29" r="30" fill="#2DBE6C" stroke="#fff" stroke-width="4"/>
+  <circle cx="427.54" cy="178.29" r="8" fill="#ffffff" opacity="0.35"/>
+  <text x="435.54" y="191.29" text-anchor="middle" font-size="12" font-weight="800" fill="rgba(0,0,0,0.35)" font-family="Poppins, sans-serif">4</text>
+</g>
+<g>
+  <circle cx="450.00" cy="260.00" r="30" fill="#E63946" stroke="#fff" stroke-width="4"/>
+  <circle cx="442.00" cy="251.00" r="8" fill="#ffffff" opacity="0.35"/>
+  <text x="450.00" y="264.00" text-anchor="middle" font-size="12" font-weight="800" fill="rgba(0,0,0,0.35)" font-family="Poppins, sans-serif">5</text>
+</g>
+<g>
+  <circle cx="435.54" cy="332.71" r="30" fill="#2DBE6C" stroke="#fff" stroke-width="4"/>
+  <circle cx="427.54" cy="323.71" r="8" fill="#ffffff" opacity="0.35"/>
+  <text x="435.54" y="336.71" text-anchor="middle" font-size="12" font-weight="800" fill="rgba(0,0,0,0.35)" font-family="Poppins, sans-serif">6</text>
+</g>
+<g>
+  <circle cx="394.35" cy="394.35" r="30" fill="#FFC53D" stroke="#fff" stroke-width="4"/>
+  <circle cx="386.35" cy="385.35" r="8" fill="#ffffff" opacity="0.35"/>
+  <text x="394.35" y="398.35" text-anchor="middle" font-size="12" font-weight="800" fill="rgba(0,0,0,0.35)" font-family="Poppins, sans-serif">7</text>
+</g>
+<g>
+  <circle cx="332.71" cy="435.54" r="30" fill="#457B9D" stroke="#fff" stroke-width="4"/>
+  <circle cx="324.71" cy="426.54" r="8" fill="#ffffff" opacity="0.35"/>
+  <text x="332.71" y="439.54" text-anchor="middle" font-size="12" font-weight="800" fill="rgba(0,0,0,0.35)" font-family="Poppins, sans-serif">8</text>
+</g>
+<g>
+  <circle cx="260.00" cy="450.00" r="30" fill="#E63946" stroke="#fff" stroke-width="4"/>
+  <circle cx="252.00" cy="441.00" r="8" fill="#ffffff" opacity="0.35"/>
+  <text x="260.00" y="454.00" text-anchor="middle" font-size="12" font-weight="800" fill="rgba(0,0,0,0.35)" font-family="Poppins, sans-serif">9</text>
+</g>
+<g>
+  <circle cx="187.29" cy="435.54" r="30" fill="#2DBE6C" stroke="#fff" stroke-width="4"/>
+  <circle cx="179.29" cy="426.54" r="8" fill="#ffffff" opacity="0.35"/>
+  <text x="187.29" y="439.54" text-anchor="middle" font-size="12" font-weight="800" fill="rgba(0,0,0,0.35)" font-family="Poppins, sans-serif">10</text>
+</g>
+<g>
+  <circle cx="125.65" cy="394.35" r="30" fill="#FFC53D" stroke="#fff" stroke-width="4"/>
+  <circle cx="117.65" cy="385.35" r="8" fill="#ffffff" opacity="0.35"/>
+  <text x="125.65" y="398.35" text-anchor="middle" font-size="12" font-weight="800" fill="rgba(0,0,0,0.35)" font-family="Poppins, sans-serif">11</text>
+</g>
+<g>
+  <circle cx="84.46" cy="332.71" r="30" fill="#457B9D" stroke="#fff" stroke-width="4"/>
+  <circle cx="76.46" cy="323.71" r="8" fill="#ffffff" opacity="0.35"/>
+  <text x="84.46" y="336.71" text-anchor="middle" font-size="12" font-weight="800" fill="rgba(0,0,0,0.35)" font-family="Poppins, sans-serif">12</text>
+</g>
+<g>
+  <circle cx="70.00" cy="260.00" r="30" fill="#E63946" stroke="#fff" stroke-width="4"/>
+  <circle cx="62.00" cy="251.00" r="8" fill="#ffffff" opacity="0.35"/>
+  <text x="70.00" y="264.00" text-anchor="middle" font-size="12" font-weight="800" fill="rgba(0,0,0,0.35)" font-family="Poppins, sans-serif">13</text>
+</g>
+<g>
+  <circle cx="84.46" cy="187.29" r="30" fill="#2DBE6C" stroke="#fff" stroke-width="4"/>
+  <circle cx="76.46" cy="178.29" r="8" fill="#ffffff" opacity="0.35"/>
+  <text x="84.46" y="191.29" text-anchor="middle" font-size="12" font-weight="800" fill="rgba(0,0,0,0.35)" font-family="Poppins, sans-serif">14</text>
+</g>
+<g>
+  <circle cx="125.65" cy="125.65" r="30" fill="#FFC53D" stroke="#fff" stroke-width="4"/>
+  <circle cx="117.65" cy="116.65" r="8" fill="#ffffff" opacity="0.35"/>
+  <text x="125.65" y="129.65" text-anchor="middle" font-size="12" font-weight="800" fill="rgba(0,0,0,0.35)" font-family="Poppins, sans-serif">15</text>
+</g>
+<g>
+  <circle cx="187.29" cy="84.46" r="30" fill="#457B9D" stroke="#fff" stroke-width="4"/>
+  <circle cx="179.29" cy="75.46" r="8" fill="#ffffff" opacity="0.35"/>
+  <text x="187.29" y="88.46" text-anchor="middle" font-size="12" font-weight="800" fill="rgba(0,0,0,0.35)" font-family="Poppins, sans-serif">16</text>
+</g>
+<circle cx="260" cy="260" r="60" fill="#ffffff" stroke="#E8E5F5" stroke-width="2"/>
+<text x="260" y="254" text-anchor="middle" font-size="15" font-weight="800" fill="#2C2A3D" font-family="Poppins, sans-serif">16 Manik</text>
+<text x="260" y="276" text-anchor="middle" font-size="12" fill="#6A6785">Gelang Baim</text>
+</svg>

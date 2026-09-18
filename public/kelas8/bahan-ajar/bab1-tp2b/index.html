@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visualisasi Data Lanjutan — Materi Siswa TP2 Pertemuan 2</title>
+<style>
+  :root{
+    --teal:#0F6B5C; --teal-dark:#0A4A40; --teal-light:#E3F2EF;
+    --blue:#1F5C8B; --blue-light:#E4EEF6;
+    --amber:#C97A00; --amber-light:#FFF3E0;
+    --coral:#C1462F; --coral-light:#FBEAE9;
+    --purple:#7A4FA3; --purple-light:#EFE7F5;
+    --ink:#1A2430; --gray:#5B6472; --line:#D8DEE6; --bg:#FAFBFC;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; font-family:"Segoe UI", Calibri, Arial, sans-serif; color:var(--ink); background:var(--bg); line-height:1.65;}
+  .wrap{max-width:900px; margin:0 auto; padding:0 24px;}
+  header.hero{background:linear-gradient(135deg, var(--teal-dark), var(--teal)); color:#fff; padding:56px 0 64px;}
+  header.hero .kicker{letter-spacing:2px; font-size:13px; font-weight:700; color:#9FD8CB; text-transform:uppercase;}
+  header.hero h1{font-size:2.3rem; margin:10px 0 6px; font-family:Cambria, Georgia, serif;}
+  header.hero p.sub{font-size:1.1rem; color:#CDEDE4; margin:0 0 22px;}
+  .pill-row{display:flex; gap:10px; flex-wrap:wrap;}
+  .pill{background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); border-radius:999px; padding:7px 16px; font-size:.85rem; font-weight:600;}
+  .hero-img{max-width:420px; width:100%; border-radius:14px; margin-top:26px; box-shadow:0 12px 30px rgba(0,0,0,.25);}
+  main{padding:40px 0 70px;}
+  h2.section{background:var(--teal); color:#fff; padding:12px 18px; border-radius:8px; font-size:1.35rem; margin:44px 0 18px;}
+  h3.sub{color:var(--teal-dark); font-size:1.15rem; border-bottom:2px solid var(--line); padding-bottom:8px; margin:30px 0 12px;}
+  p{font-size:1.02rem;}
+  .card-img{max-width:100%; border-radius:10px; border:1px solid var(--line); display:block; margin:16px auto;}
+  .cap{text-align:center; font-size:.88rem; color:var(--gray); font-style:italic; margin-top:-6px;}
+  .callout{border-radius:10px; padding:16px 20px; margin:20px 0; border:1px solid; }
+  .callout.amber{background:var(--amber-light); border-color:var(--amber); color:#8A5700;}
+  .callout.teal{background:var(--teal-light); border-color:var(--teal); color:var(--teal-dark);}
+  .callout b{display:block; margin-bottom:6px;}
+  ol, ul{padding-left:22px;}
+  li{margin-bottom:8px;}
+  table{width:100%; border-collapse:collapse; margin:18px 0; font-size:.96rem;}
+  th{background:var(--teal); color:#fff; text-align:left; padding:10px 14px;}
+  td{padding:10px 14px; border-bottom:1px solid var(--line);}
+  tr:nth-child(even) td{background:var(--teal-light);}
+  .recap{display:grid; grid-template-columns:repeat(auto-fit, minmax(230px,1fr)); gap:14px; margin:20px 0;}
+  .recap .item{background:#fff; border:1px solid var(--line); border-radius:10px; padding:16px;}
+  .recap .item .dot{width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:8px;}
+  .badge{display:inline-block; background:var(--teal-dark); color:#fff; font-size:.78rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:4px 10px; border-radius:6px; margin-bottom:8px;}
+  footer{background:var(--teal-dark); color:#CDEDE4; text-align:center; padding:26px; font-size:.9rem;}
+  @media (max-width:600px){ header.hero h1{font-size:1.7rem;} h2.section{font-size:1.15rem;} }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Bab I · Analisis Data · TP2 — Pertemuan 2</div>
+    <h1>Level Up! Dashboard-mu Makin Canggih</h1>
+    <p class="sub">Materi Siswa — Visualisasi Data Lanjutan (Combo Chart, Trendline, Sparklines, Conditional Formatting, Dashboard Interaktif)</p>
+    <div class="pill-row">
+      <span class="pill">Kelas VIII</span>
+      <span class="pill">Model: Project Based Learning</span>
+      <span class="pill">Lanjutan: Dashboard Koperasi Siswa</span>
+    </div>
+    <img class="hero-img" src="images/img8_cover.png" alt="Ilustrasi dashboard interaktif lanjutan">
+  </div>
+</header>
+
+<main class="wrap">
+
+  <h2 class="section">Chart Dasar Sudah Oke, Terus Apa Lagi?</h2>
+  <p>Pertemuan lalu kamu sudah jago bikin 5 chart dasar: Pie, Column, Bar, Line, dan Area. Keren! Tapi coba pikirkan dua masalah baru ini:</p>
+  <ul>
+    <li>Bagaimana kalau kamu ingin bandingkan jumlah unit terjual DAN persentase pertumbuhannya dalam satu chart yang sama — padahal satuannya beda banget (unit vs persen)?</li>
+    <li>Bagaimana kalau kepala sekolah maunya lihat data produk yang berbeda-beda setiap kali dia buka file-nya, tanpa kamu harus bikin chart baru tiap kali?</li>
+  </ul>
+  <p>Nah, di pertemuan ini kamu akan belajar <b>5 jurus lanjutan</b> yang menjawab masalah itu. Siap naik level?</p>
+
+  <h2 class="section">Jurus 1: Combo Chart + Sumbu Sekunder</h2>
+  <p>Combo Chart itu gabungan dua jenis chart dalam satu tampilan — misalnya Column untuk jumlah unit dan Line untuk persentase pertumbuhan. Masalahnya, unit terjual bisa ratusan sementara persentase cuma puluhan — kalau dipaksa satu sumbu y, salah satu data bakal "kepenyet" dan susah dibaca.</p>
+  <p>Solusinya: <b>Sumbu Sekunder (Secondary Axis)</b>. Sumbu kiri untuk data pertama (unit), sumbu kanan untuk data kedua (persen) — masing-masing punya skala sendiri, jadi keduanya tetap enak dilihat.</p>
+  <img class="card-img" style="max-width:560px" src="images/img2_combo_chart.png" alt="Combo chart batang Total Unit sumbu kiri dan garis persen Pertumbuhan sumbu kanan">
+  <p class="cap">Combo chart: batang Total Unit (sumbu kiri) + garis % Pertumbuhan (sumbu kanan)</p>
+  <div class="callout teal"><b>Penting: Jangan lupa legend!</b> Karena ada dua sumbu, orang yang lihat chart bisa bingung mana yang pakai sumbu kiri dan mana yang kanan. Selalu kasih legend dan warna yang beda supaya jelas.</div>
+
+  <h2 class="section">Jurus 2: Trendline — Mengintip Masa Depan</h2>
+  <p><b>Trendline</b> adalah garis putus-putus yang "meneruskan" pola data yang sudah ada, buat memperkirakan apa yang mungkin terjadi selanjutnya. Excel menghitungnya otomatis berdasarkan pola data historismu (regresi linear).</p>
+  <img class="card-img" style="max-width:560px" src="images/img3_trendline.png" alt="Trendline memprediksi penjualan Snack bulan Juli berdasarkan pola Januari sampai Juni">
+  <p class="cap">Trendline memprediksi penjualan Snack bulan Juli berdasarkan pola Januari–Juni</p>
+  <div class="callout amber"><b>Ingat: Prediksi bukan kepastian.</b> Trendline cuma memperkirakan berdasarkan pola yang SUDAH terjadi. Kalau ada kejadian tak terduga (promo besar-besaran, musim liburan, dll), hasil sebenarnya bisa meleset dari prediksi.</div>
+
+  <h2 class="section">Jurus 3: Sparklines — Chart Mini di Dalam Sel</h2>
+  <p>Bayangkan kamu punya data 20 produk, dan mau lihat tren tiap produk sekilas pandang tanpa scroll ke 20 chart berbeda. Solusinya: <b>Sparklines</b> — chart super mini yang muncul LANGSUNG di dalam satu sel, di samping angkanya.</p>
+  <img class="card-img" style="max-width:600px" src="images/img4_sparklines.png" alt="Sparklines menampilkan tren tiap produk langsung di samping tabel data">
+  <p class="cap">Sparklines menampilkan tren tiap produk langsung di samping tabel data</p>
+  <div class="callout teal"><b>Catatan:</b> Sparklines cuma bisa dibuat langsung di aplikasi Excel/Google Sheets asli (menu Insert → Sparklines) — bukan lewat file yang dibuat program lain. Jadi latihan Jurus 3 ini akan kamu praktikkan langsung di aplikasi, ya!</div>
+
+  <h2 class="section">Jurus 4: Conditional Formatting — Tabel yang "Ngomong"</h2>
+  <p>Kadang kamu nggak perlu bikin chart sama sekali — cukup buat tabel angkamu "berbicara sendiri" lewat warna. Ini namanya <b>Conditional Formatting</b>, dan ada 3 jenis andalan:</p>
+  <ul>
+    <li><b>Data Bars</b> — batang warna di dalam sel, makin panjang makin besar nilainya.</li>
+    <li><b>Color Scales</b> — warna sel berubah gradasi (misalnya merah ke hijau) sesuai besar-kecilnya angka.</li>
+    <li><b>Icon Sets</b> — ikon kecil (panah naik/turun, dll) muncul otomatis sesuai kondisi data.</li>
+  </ul>
+  <img class="card-img" style="max-width:520px" src="images/img5_conditional_formatting.png" alt="Tiga jenis conditional formatting: Data Bars, Color Scale, Icon Set">
+  <p class="cap">Tiga jenis conditional formatting untuk memperkuat tabel data</p>
+
+  <h2 class="section">Jurus 5: Dashboard Interaktif — Satu Chart, Banyak Cerita</h2>
+  <p>Ini jurus pamungkasnya! Bayangkan satu chart yang bisa berubah tampilannya cuma dengan memilih dari dropdown — nggak perlu bikin chart baru tiap kali mau lihat produk lain.</p>
+  <p>Caranya: gabungkan <b>Data Validation</b> (dropdown pilihan) dengan rumus <b>INDEX + MATCH</b> yang sudah kamu pelajari di TP1. Rumus itu akan "membaca" apa yang dipilih di dropdown, lalu otomatis mengambil data yang sesuai — dan chart yang terhubung ke data itu akan ikut berubah sendiri!</p>
+  <img class="card-img" style="max-width:600px" src="images/img6_dashboard_interaktif.png" alt="Satu chart banyak tampilan cukup ganti pilihan di dropdown">
+  <p class="cap">Satu chart, banyak tampilan — cukup ganti pilihan di dropdown</p>
+  <div class="callout amber"><b>Ingat: Ini gabungan 2 pelajaran!</b> Dashboard interaktif adalah gabungan skill TP1 (pencarian data dengan INDEX+MATCH) dan TP2 (visualisasi data). Kalau kamu sudah kuat di keduanya, jurus ini nggak akan terlalu sulit.</div>
+
+  <h2 class="section">Kapan Pakai Jurus yang Mana?</h2>
+  <p>Supaya nggak bingung, ini tabel cepat buat bantu kamu memilih jurus yang pas sesuai kebutuhan:</p>
+  <table>
+    <tr><th>Kalau kamu mau...</th><th>Pakai jurus</th></tr>
+    <tr><td>Membandingkan dua data dengan satuan berbeda dalam 1 chart</td><td>Combo Chart + Sumbu Sekunder</td></tr>
+    <tr><td>Memperkirakan nilai di masa depan berdasarkan pola data</td><td>Trendline</td></tr>
+    <tr><td>Meringkas tren banyak baris data tanpa memakan ruang</td><td>Sparklines</td></tr>
+    <tr><td>Memperkuat tabel angka tanpa membuat chart terpisah</td><td>Conditional Formatting</td></tr>
+    <tr><td>Satu tampilan yang bisa melayani banyak kebutuhan berbeda</td><td>Dashboard Interaktif (Dropdown)</td></tr>
+  </table>
+
+  <h2 class="section">Aturan Emas yang Tetap Berlaku</h2>
+  <p>Sekeren apa pun jurus lanjutan yang kamu pakai, aturan dasar chart yang baik dari pertemuan lalu TETAP berlaku:</p>
+  <ol>
+    <li>Title, label sumbu, dan legend tetap wajib ada — bahkan lebih penting lagi karena chart-nya lebih kompleks.</li>
+    <li>Jangan menyesatkan — sumbu tetap harus jujur, terutama saat pakai dua sumbu sekaligus.</li>
+    <li>Jangan berlebihan — pakai teknik lanjutan HANYA kalau memang dibutuhkan, bukan sekadar biar terlihat canggih.</li>
+  </ol>
+
+  <h2 class="section">Yuk, Naik Level!</h2>
+  <p>Sekarang buka LKPD "Dashboard Interaktif Lanjutan" dan lanjutkan proyek dashboard koperasi siswa kalian dengan kelima jurus di atas. Kelompok yang sudah presentasi minggu lalu, saatnya kasih kejutan versi upgrade-nya!</p>
+  <ul>
+    <li>Kerjakan berurutan sesuai LKPD — beberapa jurus butuh yang sebelumnya sudah selesai duluan.</li>
+    <li>Kalau ada bagian yang bikin bingung, tanya ke guru atau diskusi dulu dengan kelompok sebelum lanjut.</li>
+    <li>Uji dashboard interaktifmu dengan mengganti-ganti pilihan dropdown sebelum dipresentasikan!</li>
+  </ul>
+
+  <h2 class="section">Rangkuman Singkat</h2>
+  <div class="recap">
+    <div class="item"><span class="dot" style="background:var(--teal)"></span><b>Combo Chart + Sumbu Sekunder</b> → gabung 2 chart beda satuan.</div>
+    <div class="item"><span class="dot" style="background:var(--blue)"></span><b>Trendline</b> → proyeksi tren ke masa depan.</div>
+    <div class="item"><span class="dot" style="background:var(--amber)"></span><b>Sparklines</b> → chart mini di dalam sel.</div>
+    <div class="item"><span class="dot" style="background:var(--coral)"></span><b>Conditional Formatting</b> → tabel yang "berbicara" lewat warna/ikon.</div>
+    <div class="item"><span class="dot" style="background:var(--purple)"></span><b>Dashboard Interaktif</b> → satu chart, banyak tampilan lewat dropdown.</div>
+  </div>
+  <p>Selamat mengerjakan — dashboard koperasi siswa kalian sebentar lagi jadi seperti buatan analis data beneran!</p>
+
+</main>
+
+<footer>Informatika Kelas VIII — Bab I Analisis Data — SMP Negeri 14 Tarakan</footer>
+
+</body>
+</html>

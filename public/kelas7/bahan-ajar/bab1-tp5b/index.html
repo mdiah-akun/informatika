@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Klinik BK — Materi Siswa Pertemuan ke-2</title>
+<style>
+  :root{
+    --navy:#1B3A5C;
+    --navy-dark:#122A44;
+    --blue:#2E6FB0;
+    --ice:#EAF3FB;
+    --orange:#F2994A;
+    --peach:#FFF3E4;
+    --green:#1E8E5A;
+    --green-bg:#E8F6EF;
+    --gray:#5B6B7C;
+    --line:#E1E8F0;
+    --bg:#FCFDFF;
+    --purple:#8E5FD9;
+    --lilac:#F1EAFB;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:'Segoe UI', Calibri, Arial, sans-serif;
+    background:var(--bg); color:#20303F; line-height:1.65;
+  }
+  img{max-width:100%; display:block;}
+
+  .topbar{
+    position:sticky; top:0; z-index:50; background:var(--navy-dark);
+    color:#fff; padding:0.7rem 1.2rem; display:flex; align-items:center;
+    justify-content:space-between; box-shadow:0 2px 10px rgba(0,0,0,.15);
+  }
+  .topbar .brand{font-weight:700; font-size:0.95rem; letter-spacing:.02em;}
+  .topbar .brand small{display:block; font-weight:400; color:#AFC4DC; font-size:0.72rem;}
+  .topbar nav{display:none; gap:1.1rem; font-size:0.85rem;}
+  .topbar nav a{color:#CFE0F2; text-decoration:none;}
+  .topbar nav a:hover{color:#fff;}
+  @media(min-width:820px){ .topbar nav{display:flex;} }
+
+  .hero{
+    background:linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+    color:#fff; padding:3.2rem 1.5rem 3rem; text-align:center; position:relative; overflow:hidden;
+  }
+  .hero::before{
+    content:""; position:absolute; width:340px; height:340px; border-radius:50%;
+    background:rgba(142,95,217,.18); top:-140px; right:-100px;
+  }
+  .hero .eyebrow{color:var(--orange); font-weight:700; letter-spacing:.08em; font-size:0.85rem; text-transform:uppercase;}
+  .hero h1{font-size:2.15rem; margin:.5rem 0 .3rem; font-weight:800;}
+  .hero p.sub{color:#D7C4F5; font-size:1.05rem; max-width:660px; margin:0 auto;}
+
+  .fieldrow{display:flex; justify-content:center; flex-wrap:wrap; gap:.5rem; margin-top:1.6rem; position:relative; z-index:1;}
+  .fieldrow span{
+    background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.3); color:#EAF3FB;
+    padding:.35rem .8rem; border-radius:20px; font-size:.82rem; font-weight:600;
+  }
+
+  main{max-width:900px; margin:0 auto; padding:0 1.4rem;}
+
+  section{padding:3rem 0; border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .eyebrow-sm{color:var(--purple); font-weight:700; font-size:0.8rem; letter-spacing:.08em; text-transform:uppercase;}
+  h2{font-size:1.7rem; color:var(--navy); margin:.35rem 0 1rem; font-weight:800;}
+  h3{font-size:1.15rem; color:var(--purple); margin:1.5rem 0 .6rem;}
+  p{margin:0 0 1rem; font-size:1.02rem; color:#33465A;}
+  figure{margin:1.6rem 0; text-align:center;}
+  figure img{
+    border-radius:12px; border:1px solid var(--line); background:#F7FAFD;
+    padding:0.6rem; margin:0 auto;
+  }
+  figcaption{font-size:0.85rem; color:var(--gray); font-style:italic; margin-top:.6rem;}
+
+  .callout{
+    background:var(--peach); border:1px solid var(--orange); border-radius:12px;
+    padding:1.1rem 1.3rem; margin:1.4rem 0;
+  }
+  .callout.blue{background:var(--ice); border-color:var(--blue);}
+  .callout.green{background:var(--green-bg); border-color:var(--green);}
+  .callout.purple{background:var(--lilac); border-color:var(--purple);}
+  .callout .tag{font-weight:700; color:var(--navy); display:block; margin-bottom:.4rem;}
+
+  ul.tick, ul.plain{padding-left:1.3rem; margin:0 0 1rem;}
+  ul.tick li{margin-bottom:.5rem;}
+  ul.plain li{margin-bottom:.4rem;}
+  ol.steps{padding-left:1.3rem; margin:0 0 1rem;}
+  ol.steps li{margin-bottom:.6rem;}
+
+  .grid2{display:grid; grid-template-columns:1fr; gap:1.4rem;}
+  @media(min-width:680px){ .grid2{grid-template-columns:1fr 1fr;} }
+
+  .fieldcard{
+    background:#fff; border:1.5px solid var(--line); border-radius:12px; padding:1rem 1.1rem;
+    margin-bottom:.9rem; display:flex; gap:.8rem; align-items:flex-start;
+  }
+  .fieldcard .dot{width:.7rem; height:.7rem; border-radius:50%; margin-top:.4rem; flex:none;}
+  .fieldcard b{color:var(--navy); display:block; margin-bottom:.2rem;}
+  .fieldcard span{color:var(--gray); font-size:.94rem;}
+
+  table.compare{width:100%; border-collapse:collapse; margin:1rem 0; font-size:.95rem;}
+  table.compare th, table.compare td{ text-align:left; padding:.7rem .9rem; border-bottom:1px solid var(--line);}
+  table.compare th{color:#fff;}
+  table.compare th:nth-child(1){background:var(--blue);}
+  table.compare th:nth-child(2){background:var(--purple);}
+  table.compare td:first-child{font-weight:700; color:var(--navy); white-space:nowrap;}
+  table.compare tr:nth-child(even){background:#F7FAFD;}
+
+  .glossary{width:100%; border-collapse:collapse; margin:1rem 0;}
+  .glossary th, .glossary td{ text-align:left; padding:.7rem .9rem; border-bottom:1px solid var(--line); font-size:0.96rem;}
+  .glossary th{background:var(--lilac); color:var(--navy);}
+  .glossary td:first-child{font-weight:700; color:var(--navy); white-space:nowrap;}
+
+  .quiz-box{
+    background:#fff; border:1px solid var(--line); border-radius:14px; padding:1.2rem 1.3rem;
+    margin:1rem 0; box-shadow:0 2px 10px rgba(20,50,80,.05);
+  }
+  .quiz-box .q{font-weight:700; color:var(--navy); margin-bottom:.7rem;}
+  .quiz-box button.reveal{
+    background:var(--purple); color:#fff; border:none; padding:.5rem 1rem; border-radius:8px;
+    font-size:.88rem; cursor:pointer; font-weight:600;
+  }
+  .quiz-box button.reveal:hover{background:var(--navy);}
+  .quiz-box .ans{
+    display:none; margin-top:.8rem; background:var(--green-bg); border-left:4px solid var(--green);
+    padding:.7rem .9rem; border-radius:6px; font-size:.94rem;
+  }
+  .quiz-box .ans.show{display:block;}
+
+  .stepcard{
+    background:#fff; border:1.5px solid var(--line); border-radius:12px; padding:1rem 1.1rem;
+    margin-bottom:.8rem; display:flex; gap:.9rem; align-items:flex-start;
+  }
+  .stepcard .num{
+    width:2rem; height:2rem; border-radius:50%; background:var(--purple); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:700; flex:none;
+  }
+  .stepcard b{color:var(--navy); display:block; margin-bottom:.15rem;}
+  .stepcard span{color:var(--gray); font-size:.94rem;}
+
+  footer{
+    background:var(--navy-dark); color:#AFC4DC; text-align:center; padding:2rem 1rem; font-size:0.85rem;
+  }
+  footer strong{color:#fff;}
+
+  .toc{display:flex; flex-wrap:wrap; justify-content:center; gap:.5rem; margin:1.4rem 0 0;}
+  .toc a{
+    background:rgba(255,255,255,.08); color:#EAF3FB; text-decoration:none; font-size:.82rem; font-weight:600;
+    padding:.4rem .8rem; border-radius:20px; border:1px solid rgba(255,255,255,.25);
+  }
+  .toc a:hover{background:var(--purple); color:#fff;}
+
+  .backtotop{ text-align:center; margin-top:1rem;}
+  .backtotop a{ color:var(--purple); font-size:.85rem; text-decoration:none;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">Klinik BK — Konsultan Cilik<small>Informatika Kelas VII · Pertemuan ke-2 · SMP Negeri 14 Tarakan</small></div>
+  <nav>
+    <a href="#recap">Recap</a>
+    <a href="#kasus">Bank Kasus</a>
+    <a href="#kartu">Kartu Konsultasi</a>
+    <a href="#pbl">Sintaks PBL</a>
+    <a href="#gallery">Gallery Walk</a>
+    <a href="#rangkuman">Rangkuman</a>
+    <a href="#cek">Cek Pemahaman</a>
+  </nav>
+</div>
+
+<header class="hero" id="top">
+  <div class="eyebrow">BAB 1 · TP5 · Pertemuan ke-2</div>
+  <h1>Saatnya Jadi Konsultan Cilik Berpikir Komputasional!</h1>
+  <p class="sub">Materi siswa — Studi kasus autentik "Klinik BK" · Model Problem Based Learning & Cooperative Learning</p>
+  <div class="fieldrow">
+    <span>🩺 Kesehatan</span><span>🎣 Perikanan</span><span>🛍️ UMKM</span>
+    <span>🏫 Sekolah/OSIS</span><span>⚽ Olahraga</span><span>🌱 Lingkungan</span>
+  </div>
+  <div class="toc">
+    <a href="#recap">1. Ingat Lagi</a>
+    <a href="#kasus">2. Bank Kasus</a>
+    <a href="#kartu">3. Kartu Konsultasi</a>
+    <a href="#pbl">4. Sintaks PBL</a>
+    <a href="#gallery">5. Gallery Walk</a>
+    <a href="#rangkuman">6. Rangkuman</a>
+    <a href="#cek">7. Cek Pemahaman</a>
+  </div>
+</header>
+
+<main>
+
+  <section id="intro">
+    <div class="eyebrow-sm">Pembuka</div>
+    <h2>Dari Mengamati Pola, Menuju Merancang Solusi</h2>
+    <p>Halo lagi! Minggu lalu kita udah kenalan sama 4 jurus berpikir komputasional (BK): dekomposisi, abstraksi, algoritma, dan pengenalan pola. Kita juga udah buktikan kalau jurus itu dipakai di mana-mana — dari surat resmi sampai nelayan yang mau melaut.</p>
+    <p>Nah, sekarang levelnya naik! Kalau kemarin kita cuma <strong>MENGAMATI</strong> pola yang sudah ada, kali ini kamu akan jadi seorang <strong>KONSULTAN</strong> yang harus <strong>MERANCANG SOLUSI</strong> untuk masalah nyata yang belum ada jawabannya.</p>
+    <figure>
+      <img src="images/06_naik_level.png" alt="Menaikkan level berpikir dari mengenali pola menuju merancang solusi orisinal">
+      <figcaption>Dari mengenali pola (Pertemuan 1) menuju merancang solusi orisinal (Pertemuan 2).</figcaption>
+    </figure>
+    <div class="callout purple">
+      <span class="tag">Coba Pikirkan Dulu</span>
+      Kalau kamu jadi "konsultan cilik" yang diminta membantu memecahkan masalah nyata di sekitarmu, dari mana kira-kira kamu akan mulai?
+    </div>
+  </section>
+
+  <section id="recap" class="grid2" style="display:block;">
+    <div class="eyebrow-sm">Cerita Pembuka</div>
+    <h2>Klinik BK Cilik</h2>
+    <p>Bayangkan sekolahmu baru saja membuka sebuah "Klinik BK Cilik" — tempat curhat khusus buat siapa pun yang punya masalah rumit di bidang apa pun, dan butuh solusi yang runtut dan masuk akal. Kamu dan teman sekelompokmu adalah tim konsultannya!</p>
+    <p>Klien-klien yang datang bukan cuma dari dunia sekolah, lho. Ada dari Puskesmas, ada nelayan, ada pedagang kecil, bahkan ada pelatih futsal. Semuanya punya masalah asli yang terjadi di sekitar kita. Tugas kalian: dengarkan masalahnya, lalu bantu selesaikan pakai 4 jurus BK.</p>
+  </section>
+
+  <section id="kasus">
+    <div class="eyebrow-sm">Orientasi Masalah</div>
+    <h2>Enam Kasus yang Menunggu Solusimu</h2>
+    <p>Ini dia enam masalah nyata dari berbagai bidang yang bisa jadi "pasien" Klinik BK. Kelompokmu nanti akan memilih atau mendapat satu di antaranya untuk dianalisis mendalam.</p>
+    <figure>
+      <img src="images/02_bank_kasus_bk.png" alt="Bank Kasus Klinik BK: enam masalah autentik lintas bidang">
+    </figure>
+    <table class="compare">
+      <tr><th>Bidang</th><th>Masalahnya Apa?</th></tr>
+      <tr><td>Kesehatan</td><td>Puskesmas kewalahan mengatur antrean pasien yang datang bersamaan.</td></tr>
+      <tr><td>Perikanan</td><td>Nelayan sering rugi karena salah menentukan waktu melaut yang tepat.</td></tr>
+      <tr><td>UMKM</td><td>Usaha kerupuk amplang kehabisan stok bahan baku saat permintaan tinggi.</td></tr>
+      <tr><td>Sekolah / OSIS</td><td>Jadwal piket 8 kelas sulit dibuat adil sepanjang semester.</td></tr>
+      <tr><td>Olahraga</td><td>Tim futsal kesulitan menghadapi lawan yang sering ganti strategi.</td></tr>
+      <tr><td>Lingkungan</td><td>Jadwal angkut sampah RT tidak menentu, bak sampah sering meluber.</td></tr>
+    </table>
+    <div class="callout blue">
+      <span class="tag">Perhatikan!</span>
+      Semua kasus di atas kelihatannya beda-beda bidang, tapi kalau kamu perhatikan baik-baik, semuanya punya "benang merah" yang sama: bisa diselesaikan pakai pola pikir BK yang sama. Coba tebak, benang merah itu apa?
+    </div>
+  </section>
+
+  <section id="kartu">
+    <div class="eyebrow-sm">Alat Bantu</div>
+    <h2>Kartu Konsultasi BK</h2>
+    <p>Supaya nggak bingung mulai dari mana, kelompokmu akan memakai "Kartu Konsultasi BK" — semacam formulir yang memandu kalian menyelesaikan masalah selangkah demi selangkah, mengikuti 4 jurus BK plus satu langkah tambahan di awal: merumuskan inti masalah.</p>
+    <figure>
+      <img src="images/03_kartu_konsultasi_bk.png" alt="Format Kartu Konsultasi BK dengan 5 langkah" style="max-width:420px;">
+    </figure>
+    <div class="stepcard"><div class="num">1</div><div><b>Masalah Inti</b><span>Apa sebenarnya masalah yang dihadapi klien? Tuliskan dalam 1-2 kalimat.</span></div></div>
+    <div class="stepcard"><div class="num">2</div><div><b>Dekomposisi</b><span>Pecah masalah itu jadi bagian-bagian kecil yang perlu diselidiki.</span></div></div>
+    <div class="stepcard"><div class="num">3</div><div><b>Abstraksi</b><span>Dari semua bagian tadi, mana yang paling penting dan benar-benar menentukan solusi?</span></div></div>
+    <div class="stepcard"><div class="num">4</div><div><b>Algoritma</b><span>Susun langkah-langkah solusi secara berurutan, minimal 4 langkah.</span></div></div>
+    <div class="stepcard"><div class="num">5</div><div><b>Pengenalan Pola</b><span>Jelaskan bagaimana solusi ini bisa dipakai lagi kalau masalah serupa muncul di masa depan.</span></div></div>
+  </section>
+
+  <section id="pbl">
+    <div class="eyebrow-sm">Model Pembelajaran</div>
+    <h2>Sintaks Belajar Hari Ini: Problem Based Learning</h2>
+    <p>Pertemuan kali ini kita nggak cuma diskusi biasa, tapi mengikuti tahapan Problem Based Learning (PBL) — cara belajar yang dipakai betulan sama mahasiswa kedokteran, calon insinyur, sampai pengusaha, lho! Ini tahapannya:</p>
+    <figure>
+      <img src="images/01_sintaks_pbl.png" alt="Sintaks Problem Based Learning: orientasi masalah, organisasi belajar, bimbingan penyelidikan, pengembangan dan penyajian hasil, analisis dan evaluasi">
+    </figure>
+    <ol class="steps">
+      <li><strong>Orientasi Masalah</strong> — gurumu memaparkan skenario Klinik BK dan bank kasusnya.</li>
+      <li><strong>Organisasi Belajar</strong> — kelompokmu terbentuk dan memilih/mendapat satu kasus, lalu menerima Kartu Konsultasi BK.</li>
+      <li><strong>Bimbingan Penyelidikan</strong> — kelompokmu mengisi Kartu Konsultasi BK bersama, gurumu berkeliling membantu.</li>
+      <li><strong>Pengembangan & Penyajian Hasil</strong> — hasil analisis dipindahkan ke poster, lalu dipresentasikan lewat teknik Gallery Walk.</li>
+      <li><strong>Analisis & Evaluasi</strong> — kelas membahas bersama: apa benang merah dari semua solusi yang berbeda bidang tadi?</li>
+    </ol>
+  </section>
+
+  <section id="gallery">
+    <div class="eyebrow-sm">Cooperative Learning</div>
+    <h2>Teknik Gallery Walk: Belajar dari Karya Kelompok Lain</h2>
+    <p>Setelah poster jadi, kita nggak cuma presentasi di depan kelas seperti biasa. Kali ini kita pakai Gallery Walk — separuh anggota kelompok "berjaga" di poster masing-masing untuk menjelaskan ke pengunjung, separuh lagi berkeliling ke poster kelompok lain untuk melihat dan memberi masukan lewat lembar umpan balik. Lalu, posisinya ditukar!</p>
+    <figure>
+      <img src="images/04_gallery_walk.png" alt="Teknik Gallery Walk untuk penyajian dan umpan balik antar kelompok">
+    </figure>
+    <div class="callout green">
+      <span class="tag">Kenapa Seru?</span>
+      Dengan Gallery Walk, kamu bisa lihat langsung bagaimana kelompok lain menyelesaikan masalah dari bidang yang beda — dan kamu akan sadar, ternyata pola berpikirnya mirip-mirip dengan punya kelompokmu sendiri!
+    </div>
+  </section>
+
+  <section id="bonus">
+    <div class="eyebrow-sm">Bonus</div>
+    <h2>Menutup Pertanyaan Pertemuan Lalu</h2>
+    <p>Di akhir pertemuan sebelumnya, sempat muncul pertanyaan: gimana ya kalau surat itu ditulis lewat e-mail (bukan kertas)? Apakah ikut pola surat resmi atau surat pribadi? Yuk kita lihat perbandingannya:</p>
+    <figure>
+      <img src="images/05_email_vs_surat.png" alt="Perbandingan surat resmi, e-mail dinas, dan surat pribadi">
+    </figure>
+    <p>Ternyata, e-mail dinas itu semacam "perpaduan" — mengikuti struktur formal surat resmi (ada salam pembuka resmi, isi, dan penutup baku), tapi disampaikan lewat media yang lebih praktis. Ini juga contoh BK, lho: mengenali pola dari dua hal yang berbeda, lalu menggabungkannya jadi sesuatu yang baru!</p>
+  </section>
+
+  <section id="rangkuman">
+    <div class="eyebrow-sm">Inti Materi</div>
+    <h2>Rangkuman — Yang Perlu Kamu Ingat</h2>
+    <ul class="tick">
+      <li>Hari ini kita naik level: dari mengenali pola yang sudah ada, menjadi merancang solusi baru untuk masalah nyata.</li>
+      <li>Kartu Konsultasi BK membantu kita menyelesaikan masalah lewat 5 langkah: masalah inti, dekomposisi, abstraksi, algoritma, dan pengenalan pola.</li>
+      <li>Pembelajaran hari ini memakai sintaks <strong>Problem Based Learning</strong>, dipadukan dengan teknik <strong>Cooperative Learning</strong> berupa Gallery Walk.</li>
+      <li>Enam bidang yang berbeda ternyata bisa diselesaikan dengan pola berpikir yang sama — itulah bukti kalau BK benar-benar berlaku di mana-mana.</li>
+    </ul>
+    <h3>Kata Kunci</h3>
+    <table class="glossary">
+      <tr><th>Istilah</th><th>Penjelasan</th></tr>
+      <tr><td>Problem Based Learning</td><td>Model belajar yang dimulai dari masalah nyata untuk dianalisis dan dipecahkan bersama.</td></tr>
+      <tr><td>Gallery Walk</td><td>Teknik penyajian hasil kerja kelompok dengan cara berkeliling melihat dan memberi umpan balik ke karya kelompok lain.</td></tr>
+      <tr><td>Generalisasi</td><td>Kemampuan menerapkan solusi yang sama pada masalah lain yang polanya serupa.</td></tr>
+      <tr><td>Konsultan</td><td>Orang yang membantu menganalisis masalah dan memberi rekomendasi solusi.</td></tr>
+    </table>
+  </section>
+
+  <section id="cek">
+    <div class="eyebrow-sm">Latihan Mandiri</div>
+    <h2>Yuk, Cek Pemahamanmu!</h2>
+    <p>Coba jawab dulu di kepalamu atau di buku catatan, baru klik tombol untuk melihat kunci jawabannya.</p>
+
+    <div class="quiz-box">
+      <div class="q">1. Kasus "Puskesmas Kampung Empat kewalahan mengatur antrean pasien" paling tepat diselesaikan dengan mulai dari langkah BK yang mana? Jelaskan alasanmu!</div>
+      <button class="reveal" onclick="toggleAns(this)">Lihat Contoh Jawaban</button>
+      <div class="ans">Bisa dimulai dari <strong>dekomposisi</strong> — memecah masalah antrean menjadi bagian-bagian kecil, misalnya berdasarkan jenis layanan (umum, gigi, lansia) atau berdasarkan jam kedatangan pasien. Setelah itu baru dilakukan abstraksi untuk menemukan faktor yang paling menentukan (misalnya waktu puncak kedatangan).</div>
+    </div>
+
+    <div class="quiz-box">
+      <div class="q">2. Apa perbedaan utama antara kegiatan pertemuan 1 dan pertemuan 2 dalam hal level berpikir yang dibutuhkan?</div>
+      <button class="reveal" onclick="toggleAns(this)">Lihat Kunci Jawaban</button>
+      <div class="ans">Pertemuan 1 fokus pada <strong>mengenali pola</strong> dari contoh yang sudah ada (surat resmi vs pribadi). Pertemuan 2 menuntut siswa <strong>merancang solusi orisinal</strong> untuk masalah nyata yang belum ada jawabannya — level berpikir yang lebih tinggi karena melibatkan analisis, sintesis, dan kreativitas.</div>
+    </div>
+
+    <div class="quiz-box">
+      <div class="q">3. Mengapa teknik Gallery Walk dianggap sebagai bentuk Cooperative Learning?</div>
+      <button class="reveal" onclick="toggleAns(this)">Lihat Kunci Jawaban</button>
+      <div class="ans">Karena Gallery Walk melibatkan kerja sama antar kelompok — setiap kelompok saling belajar dari hasil kerja kelompok lain, memberi dan menerima umpan balik, sehingga pemahaman dibangun bersama, bukan hanya oleh satu kelompok/individu saja.</div>
+    </div>
+
+    <div class="quiz-box">
+      <div class="q">4. Sebutkan satu masalah lain (di luar 6 kasus di atas) yang menurutmu juga bisa diselesaikan dengan Kartu Konsultasi BK!</div>
+      <button class="reveal" onclick="toggleAns(this)">Lihat Contoh Jawaban</button>
+      <div class="ans">Jawaban bisa bervariasi. Contoh: <strong>mengatur jadwal belajar dan les di rumah</strong> — bisa didekomposisi menjadi mata pelajaran, diabstraksi menjadi prioritas mata pelajaran yang paling sulit, disusun algoritma jadwal harian, dan solusinya bisa digeneralisasi untuk semester berikutnya.</div>
+    </div>
+
+    <p style="margin-top:1.5rem; font-size:.92rem; color:var(--gray);">Setelah ini, lanjutkan kegiatan bersama kelompokmu lewat Kartu Konsultasi BK yang diberikan gurumu.</p>
+  </section>
+
+  <div class="backtotop"><a href="#top">↑ Kembali ke atas</a></div>
+
+</main>
+
+<footer>
+  <strong>Klinik BK — Konsultan Cilik Berpikir Komputasional</strong> · BAB 1 Berpikir Komputasional untuk Menyelesaikan Masalah · Pertemuan ke-2<br>
+  Informatika Kelas VII · SMP Negeri 14 Tarakan · Kurikulum Merdeka
+</footer>
+
+<script>
+  function toggleAns(btn){
+    const ans = btn.nextElementSibling;
+    ans.classList.toggle('show');
+    btn.textContent = ans.classList.contains('show') ? 'Sembunyikan Jawaban' : 'Lihat Kunci Jawaban';
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algoritma: Rahasia di Balik Setiap Langkah!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #FBFAF6;
+    --bg-soft: #F3F1FF;
+    --card: #FFFFFF;
+    --ink: #2C2A3D;
+    --ink-soft: #6A6785;
+    --line: #E8E5F5;
+    --primary: #6C5CE7;
+    --primary-dark: #4C3AC9;
+    --primary-light: #EFEBFF;
+    --pink: #F4568C;
+    --pink-light: #FFE7EF;
+    --amber: #FFB443;
+    --amber-light: #FFF3DE;
+    --teal: #17B890;
+    --teal-light: #DFF7EE;
+    --blue: #4EA8DE;
+    --blue-light: #E6F4FD;
+    --danger: #E5484D;
+    --danger-light: #FDE7E7;
+    --success: #1EA672;
+    --success-light: #E3F7EC;
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --radius-sm: 10px;
+    --shadow: 0 10px 30px -12px rgba(76, 58, 201, 0.18);
+    --shadow-sm: 0 4px 14px -6px rgba(76, 58, 201, 0.14);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Poppins','Segoe UI', system-ui, sans-serif;
+    line-height:1.25;
+    margin:0 0 .5em 0;
+    color: var(--ink);
+  }
+  p{ margin:0 0 1em 0; }
+  a{ color: var(--primary-dark); }
+  img,svg{ max-width:100%; display:block; }
+  ul{ margin:0; padding:0; }
+  .container{
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  section{ scroll-margin-top: 96px; }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:'Poppins',sans-serif; font-weight:700; font-size:.75rem;
+    letter-spacing:.08em; text-transform:uppercase;
+    color: var(--primary-dark);
+    background: var(--primary-light);
+    padding:6px 14px; border-radius:999px;
+    margin-bottom:14px;
+  }
+  .section-title{ font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.15rem); }
+  .section-lead{ color: var(--ink-soft); max-width:640px; font-size:1.02rem; }
+
+  /* ===== Progress bar ===== */
+  #progress-bar-track{
+    position:fixed; top:0; left:0; right:0; height:4px;
+    background: transparent; z-index:1001;
+  }
+  #progress-bar{
+    height:100%; width:0%;
+    background: linear-gradient(90deg, var(--pink), var(--primary), var(--teal));
+    transition: width .08s linear;
+  }
+
+  /* ===== Nav ===== */
+  header.topnav{
+    position:sticky; top:4px; z-index:1000;
+    background: rgba(251,250,246,0.86);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1080px; margin:0 auto; padding:12px 20px;
+    display:flex; align-items:center; gap:18px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:8px;
+    font-family:'Poppins',sans-serif; font-weight:700; font-size:.95rem;
+    color: var(--primary-dark); white-space:nowrap;
+  }
+  .brand-dot{
+    width:10px; height:10px; border-radius:50%;
+    background: linear-gradient(135deg, var(--pink), var(--primary));
+    flex-shrink:0;
+  }
+  nav.navlinks{
+    display:flex; gap:4px; overflow-x:auto; scrollbar-width:none;
+    -ms-overflow-style:none;
+  }
+  nav.navlinks::-webkit-scrollbar{ display:none; }
+  .nav-link{
+    flex-shrink:0;
+    font-family:'Poppins',sans-serif; font-weight:600; font-size:.82rem;
+    color: var(--ink-soft); text-decoration:none;
+    padding:8px 12px; border-radius:999px;
+    white-space:nowrap;
+    transition: background .15s, color .15s;
+  }
+  .nav-link:hover{ background: var(--primary-light); color:var(--primary-dark); }
+  .nav-link.active{ background: var(--primary); color:#fff; }
+
+  /* ===== Hero ===== */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    padding: 56px 0 64px;
+    background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
+  }
+  .hero-inner{
+    display:grid; grid-template-columns: 1.15fr .85fr; gap:40px; align-items:center;
+  }
+  .hero h1{
+    font-size: clamp(1.9rem, 1.2rem + 2.6vw, 3rem);
+    font-weight:800;
+    background: linear-gradient(100deg, var(--primary-dark), var(--pink) 60%, var(--amber));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero-sub{ font-size:1.08rem; color: var(--ink-soft); max-width:520px; }
+  .hero-meta{
+    display:flex; flex-wrap:wrap; gap:10px; margin-top:22px;
+  }
+  .pill{
+    font-family:'Poppins',sans-serif; font-size:.78rem; font-weight:600;
+    padding:8px 14px; border-radius:999px;
+    background: var(--card); border:1px solid var(--line);
+    color: var(--ink-soft);
+    display:flex; align-items:center; gap:6px;
+  }
+  .hero-art{ position:relative; }
+  .blob{
+    position:absolute; border-radius:50%; filter: blur(2px); opacity:.55;
+  }
+
+  /* ===== Cards / generic ===== */
+  .card{
+    background: var(--card);
+    border:1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    box-shadow: var(--shadow-sm);
+  }
+  main section{ padding: 58px 0; }
+  main section.alt{ background: var(--bg-soft); }
+
+  .two-col{
+    display:grid; grid-template-columns: 1fr 1fr; gap:28px; align-items:start;
+    margin-top:28px;
+  }
+  .stack{ display:flex; flex-direction:column; gap:16px; }
+
+  .badge-num{
+    width:34px; height:34px; border-radius:10px;
+    background: var(--primary); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Poppins',sans-serif; font-weight:700; font-size:.95rem;
+    flex-shrink:0;
+  }
+
+  /* ===== Definisi box ===== */
+  .def-box{
+    display:flex; gap:16px; align-items:flex-start;
+    background: linear-gradient(135deg, var(--primary-light), #fff);
+    border:1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 22px;
+    margin-top: 24px;
+  }
+  .def-box p{ margin:0; }
+  .def-box strong{ color: var(--primary-dark); }
+
+  /* ===== Flowchart ===== */
+  .flow-wrap{
+    display:grid; grid-template-columns: 1fr 1.3fr; gap:32px; align-items:start;
+    margin-top:28px;
+  }
+  .flow-svg-holder{
+    background:#fff; border:1px solid var(--line); border-radius: var(--radius-lg);
+    padding: 18px; box-shadow: var(--shadow-sm);
+  }
+  .flow-diagram{ position:relative; }
+  .flow-hotspot{
+    position:absolute; margin:0; padding:0; box-sizing:border-box;
+    background: transparent; border:3px solid transparent; border-radius:14px;
+    cursor:pointer; outline:none;
+    transition: border-color .15s, background-color .15s;
+  }
+  .flow-hotspot-diamond{ border-radius:10%; }
+  .flow-hotspot:hover{ border-color: rgba(108,92,231,.35); background-color: rgba(108,92,231,.08); }
+  .flow-hotspot.active{ border-color: var(--ink); background-color: rgba(108,92,231,.10); }
+  .flow-hotspot:focus-visible{ border-color: var(--primary); box-shadow: 0 0 0 3px rgba(108,92,231,.25); }
+  .flow-caption-box{
+    margin-top:16px; padding:16px 18px;
+    background: var(--primary-light); border-radius: var(--radius-md);
+    font-size:.92rem; color: var(--ink);
+    min-height: 52px;
+    display:flex; align-items:center;
+  }
+  .flow-hint{ font-size:.85rem; color: var(--ink-soft); margin-top:10px; }
+
+  /* ===== Pola & syarat cards ===== */
+  .pattern-card{
+    background:#fff; border:1px solid var(--line); border-radius: var(--radius-md);
+    padding:22px; display:flex; gap:16px; align-items:flex-start;
+    box-shadow: var(--shadow-sm);
+  }
+  .pattern-icon{ flex-shrink:0; }
+
+  /* ===== Efisien vs Efektif ===== */
+  .compare-grid{
+    display:grid; grid-template-columns: 1fr 1fr; gap:24px; margin-top:28px;
+  }
+  .compare-card{
+    border-radius: var(--radius-lg); padding:26px; position:relative; overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .compare-card.efisien{ background: linear-gradient(160deg, var(--teal-light), #fff 60%); }
+  .compare-card.efektif{ background: linear-gradient(160deg, var(--blue-light), #fff 60%); }
+  .compare-tag{
+    display:inline-block; font-family:'Poppins',sans-serif; font-weight:700; font-size:.78rem;
+    letter-spacing:.06em; text-transform:uppercase; padding:6px 12px; border-radius:999px;
+    margin-bottom:14px;
+  }
+  .compare-card.efisien .compare-tag{ background: var(--teal); color:#fff; }
+  .compare-card.efektif .compare-tag{ background: var(--blue); color:#fff; }
+  .compare-card svg, .compare-card img{ margin: 6px 0 14px; }
+  .vs-badge{
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Poppins',sans-serif; font-weight:800; color:var(--ink-soft);
+    font-size:.85rem; margin: 4px 0;
+  }
+
+  /* ===== Studi kasus ===== */
+  .kirana-wrap{
+    display:grid; grid-template-columns: .9fr 1.1fr; gap:34px; align-items:center;
+    margin-top:28px;
+  }
+  .bead-legend{ display:flex; gap:16px; flex-wrap:wrap; margin-top:16px; }
+  .legend-item{ display:flex; align-items:center; gap:8px; font-size:.9rem; font-weight:700; }
+  .legend-dot{ width:16px; height:16px; border-radius:50%; display:inline-block; box-shadow: inset 0 0 0 2px rgba(255,255,255,.6); }
+  .think-box{
+    background: linear-gradient(135deg, var(--pink-light), #fff);
+    border:1px solid var(--line); border-radius: var(--radius-md);
+    padding:22px; margin-top:20px;
+  }
+  .think-box h4{ color: var(--pink); display:flex; align-items:center; gap:8px; }
+  .reveal-btn{
+    font-family:'Poppins',sans-serif; font-weight:700; font-size:.85rem;
+    background: var(--pink); color:#fff; border:none; border-radius:999px;
+    padding:10px 18px; cursor:pointer; margin-top:12px;
+  }
+  .reveal-btn:hover{ background:#d63e75; }
+  .reveal-text{
+    margin-top:14px; padding-top:14px; border-top:1px dashed var(--line);
+    font-size:.92rem; color: var(--ink-soft);
+  }
+
+  /* ===== Tips ===== */
+  .tips-grid{
+    display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+    gap:16px; margin-top:28px;
+  }
+  .tip-card{
+    background:#fff; border:1px solid var(--line); border-radius: var(--radius-md);
+    padding:20px; box-shadow: var(--shadow-sm);
+  }
+  .tip-card .badge-num{ margin-bottom:12px; background: var(--amber); }
+
+  /* ===== Kuis ===== */
+  #score-badge{
+    font-family:'Poppins',sans-serif; font-weight:700; font-size:.85rem;
+    background: var(--primary); color:#fff; padding:8px 16px; border-radius:999px;
+    display:inline-block;
+  }
+  .quiz-card{
+    background:#fff; border:1px solid var(--line); border-radius: var(--radius-md);
+    padding:22px; margin-bottom:18px; box-shadow: var(--shadow-sm);
+  }
+  .quiz-question{ font-weight:800; font-family:'Poppins',sans-serif; font-size:1rem; margin-bottom:14px; }
+  .quiz-options{ display:grid; gap:10px; }
+  .quiz-option{
+    text-align:left; font-family:'Nunito',sans-serif; font-size:.96rem; font-weight:700;
+    padding:12px 16px; border-radius: var(--radius-sm);
+    border:2px solid var(--line); background:#fff; color: var(--ink);
+    cursor:pointer; transition: border-color .15s, background .15s, transform .1s;
+  }
+  .quiz-option:hover:not(:disabled){ border-color: var(--primary); background: var(--primary-light); }
+  .quiz-option:disabled{ cursor:default; opacity:.85; }
+  .quiz-option.correct{ border-color: var(--success); background: var(--success-light); color:#116b47; }
+  .quiz-option.incorrect{ border-color: var(--danger); background: var(--danger-light); color:#9c2b2e; }
+  .quiz-feedback{
+    display:none; margin-top:14px; padding:14px 16px; border-radius: var(--radius-sm);
+    font-size:.92rem;
+  }
+  .quiz-feedback.fb-correct{ display:block; background: var(--success-light); color:#116b47; }
+  .quiz-feedback.fb-incorrect{ display:block; background: var(--danger-light); color:#9c2b2e; }
+  #quiz-summary{
+    text-align:center; padding:28px; border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, var(--primary), var(--pink));
+    color:#fff; margin-top:10px;
+  }
+  #quiz-summary h3{ color:#fff; }
+  #quiz-reset{
+    font-family:'Poppins',sans-serif; font-weight:700; font-size:.88rem;
+    background:#fff; color: var(--primary-dark); border:none; border-radius:999px;
+    padding:11px 22px; cursor:pointer; margin-top:14px;
+  }
+
+  /* ===== Footer ===== */
+  footer{
+    background: var(--ink); color: #cfcbe8;
+    padding: 36px 0; text-align:center; font-size:.88rem;
+  }
+  footer strong{ color:#fff; }
+  footer .foot-brand{ font-family:'Poppins',sans-serif; font-weight:700; color:#fff; margin-bottom:6px; }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 860px){
+    .hero-inner{ grid-template-columns: 1fr; }
+    .hero-art{ order:-1; max-width:280px; margin:0 auto; }
+    .two-col{ grid-template-columns: 1fr; }
+    .flow-wrap{ grid-template-columns: 1fr; }
+    .compare-grid{ grid-template-columns: 1fr; }
+    .kirana-wrap{ grid-template-columns: 1fr; }
+    .nav-inner{ gap:10px; }
+    main section{ padding:42px 0; }
+  }
+  @media (max-width: 480px){
+    .card, .compare-card, .pattern-card{ padding:18px; }
+    .hero{ padding:36px 0 44px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar-track"><div id="progress-bar"></div></div>
+
+<header class="topnav">
+  <div class="nav-inner">
+    <div class="brand"><span class="brand-dot"></span>Bab 1 · Algoritma</div>
+    <nav class="navlinks" id="navlinks">
+      <a class="nav-link" href="#materi-algoritma">Apa itu Algoritma</a>
+      <a class="nav-link" href="#contoh-mie">Contoh Yuk</a>
+      <a class="nav-link" href="#pola-syarat">Pola &amp; Syarat</a>
+      <a class="nav-link" href="#efisien-efektif">Efisien vs Efektif</a>
+      <a class="nav-link" href="#studi-kasus">Studi Kasus</a>
+      <a class="nav-link" href="#tips">Tips</a>
+      <a class="nav-link" href="#kuis">Kuis</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="beranda">
+  <div class="container hero-inner">
+    <div>
+      <span class="eyebrow">Informatika · Kelas VII · TP 1</span>
+      <h1>Algoritma: Rahasia di Balik Setiap Langkah!</h1>
+      <p class="hero-sub">Pernah kepikiran nggak, kenapa mi instan yang kamu masak bisa selalu enak kalau langkahnya kamu ikuti dengan benar? Nah, di balik itu semua ada yang namanya <strong>algoritma</strong>. Yuk kita bongkar bareng-bareng!</p>
+      <div class="hero-meta">
+        <span class="pill">🎯 Tujuan Pembelajaran 1</span>
+        <span class="pill">🏫 SMP Negeri 14 Tarakan</span>
+        <span class="pill">📘 Bab 1 · Berpikir Komputasional</span>
+      </div>
+    </div>
+    <div class="hero-art">
+      <img src="images/hero-bracelet.svg" width="320" height="320" alt="Ilustrasi gelang manik-manik warna-warni melingkar">
+    </div>
+  </div>
+</section>
+
+<!-- ============ APA ITU ALGORITMA ============ -->
+<section id="materi-algoritma">
+  <div class="container">
+    <span class="eyebrow">01 · Konsep Dasar</span>
+    <h2 class="section-title">Sebenarnya, Algoritma itu Apa Sih?</h2>
+    <p class="section-lead">Kata "algoritma" mungkin kedengaran teknis, tapi sebenarnya kamu sudah pakai algoritma hampir setiap hari — cuma nggak sadar aja.</p>
+
+    <div class="def-box">
+      <img src="images/icon-check.svg" width="46" height="46" alt="" aria-hidden="true">
+      <p><strong>Algoritma</strong> adalah kumpulan langkah yang disusun secara urut dan jelas untuk menyelesaikan suatu tugas. Kata kuncinya ada dua: <strong>terstruktur</strong> (nggak asal-asalan, ada urutannya) dan <strong>ada tujuannya</strong>. Kadang, dalam algoritma juga ada <strong>syarat atau ketentuan</strong> yang harus dipatuhi supaya hasilnya sesuai harapan.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <h3>Kenapa harus urut?</h3>
+        <p>Coba bayangin kamu disuruh "pakai kaos kaki" tapi urutannya kebalik jadi "pakai sepatu" duluan baru "pakai kaos kaki". Aneh, kan? Dalam algoritma, urutan langkah itu penting banget — kalau ditukar, hasilnya bisa berantakan atau malah gagal total.</p>
+      </div>
+      <div class="card">
+        <h3>Algoritma itu di mana aja</h3>
+        <p>Resep masakan, petunjuk merakit lemari, cara login ke akun game, sampai cara komputer mengurutkan nilai ujian — semuanya pakai algoritma. Bahkan aplikasi favoritmu di HP jalan karena ada algoritma di baliknya!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTOH: FLOWCHART MI INSTAN ============ -->
+<section id="contoh-mie" class="alt">
+  <div class="container">
+    <span class="eyebrow">02 · Contoh Sehari-hari</span>
+    <h2 class="section-title">Yuk, Bedah Algoritma Masak Mi Instan</h2>
+    <p class="section-lead">Ini contoh algoritma paling relate buat anak kos maupun anak rumahan: masak mi instan. Klik tiap kotak di diagram buat lihat penjelasannya!</p>
+
+    <div class="flow-wrap">
+      <div class="flow-svg-holder">
+        <div class="flow-diagram">
+          <img src="images/flowchart-mi-instan.svg" width="370" height="940" alt="Diagram alur algoritma memasak mi instan" style="width:100%;height:auto;display:block;">
+
+          <button type="button" class="flow-hotspot" style="left:27.84%;top:2.13%;width:44.32%;height:6.81%;" aria-label="Mulai" data-desc="MULAI: titik awal algoritma. Semua proses dimulai dari sini, sebelum ada langkah lain yang dikerjakan."></button>
+
+          <button type="button" class="flow-hotspot" style="left:14.86%;top:13.19%;width:70.27%;height:6.81%;" aria-label="Siapkan panci dan isi air" data-desc="Langkah persiapan: siapkan panci dan tuang air secukupnya. Semua bahan/alat harus siap dulu sebelum proses inti dijalankan."></button>
+
+          <button type="button" class="flow-hotspot" style="left:14.86%;top:24.26%;width:70.27%;height:6.81%;" aria-label="Didihkan air di kompor" data-desc="Proses utama pertama: air dipanaskan di atas kompor sampai benar-benar mendidih."></button>
+
+          <button type="button" class="flow-hotspot flow-hotspot-diamond" style="left:9.46%;top:35.32%;width:81.08%;height:14.89%;" aria-label="Sudah mendidih?" data-desc="PERCABANGAN (kondisi): di sinilah algoritma mengecek syarat dulu sebelum lanjut. Kalau BELUM mendidih, prosesnya balik lagi ke langkah 'didihkan air' — ini disebut PERULANGAN. Kalau SUDAH, baru boleh lanjut."></button>
+
+          <button type="button" class="flow-hotspot" style="left:14.86%;top:54.47%;width:70.27%;height:6.81%;" aria-label="Masukkan mi dan bumbu" data-desc="Karena syaratnya (air sudah mendidih) sudah terpenuhi, sekarang mi dan bumbu boleh dimasukkan."></button>
+
+          <button type="button" class="flow-hotspot" style="left:14.86%;top:65.53%;width:70.27%;height:6.81%;" aria-label="Tunggu 3 menit" data-desc="Ada jeda waktu tertentu (sekitar 3 menit) supaya mi matang sempurna, sesuai petunjuk di kemasan."></button>
+
+          <button type="button" class="flow-hotspot" style="left:14.86%;top:76.60%;width:70.27%;height:6.81%;" aria-label="Tiriskan dan sajikan" data-desc="Langkah penyelesaian: air ditiriskan (atau disisakan sesuai selera), lalu mi disajikan di piring/mangkuk."></button>
+
+          <button type="button" class="flow-hotspot" style="left:27.84%;top:87.66%;width:44.32%;height:6.81%;" aria-label="Selesai" data-desc="SELESAI: titik akhir algoritma. Tujuannya sudah tercapai — mi instan siap dimakan!"></button>
+        </div>
+      </div>
+
+      <div>
+        <div class="flow-caption-box" id="flow-caption">👆 Klik salah satu kotak di diagram untuk lihat penjelasannya di sini.</div>
+        <p class="flow-hint">Perhatikan kotak <strong>"Sudah mendidih?"</strong> — itu contoh <strong>percabangan</strong>. Kalau jawabannya "belum", algoritmanya nggak lanjut, tapi balik lagi mendidihkan air dulu. Ini yang bikin algoritma "pintar": dia bisa mengecek kondisi, bukan cuma jalan lurus terus.</p>
+        <p class="flow-hint">Coba pikirkan: apa yang terjadi kalau langkah <em>"masukkan mi"</em> dan <em>"didihkan air"</em> ditukar urutannya? Mi-nya bakal matang sempurna nggak, ya?</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ POLA & SYARAT ============ -->
+<section id="pola-syarat">
+  <div class="container">
+    <span class="eyebrow">03 · Pola &amp; Syarat</span>
+    <h2 class="section-title">Algoritma Sering Punya "Aturan Main"</h2>
+    <p class="section-lead">Nggak semua algoritma jalan lurus aja. Banyak yang punya syarat atau ketentuan tertentu yang harus dipenuhi dulu sebelum langkah berikutnya boleh dijalankan. Ini beberapa contoh yang mungkin pernah kamu alami.</p>
+
+    <div class="two-col">
+      <div class="pattern-card">
+        <img class="pattern-icon" width="56" height="56" src="images/icon-wahana.svg" alt="" aria-hidden="true">
+        <div>
+          <h3>Syarat Naik Wahana</h3>
+          <p>Beberapa wahana di taman bermain punya papan syarat "tinggi badan minimal 120 cm". Kalau kamu belum memenuhi syarat itu, algoritma "boleh naik wahana"-nya berhenti duluan — nggak lanjut ke "silakan naik".</p>
+        </div>
+      </div>
+      <div class="pattern-card">
+        <img class="pattern-icon" width="56" height="56" src="images/icon-lomba.svg" alt="" aria-hidden="true">
+        <div>
+          <h3>Syarat Ikut Lomba</h3>
+          <p>Panitia lomba futsal antar kelas mungkin bikin syarat "peserta harus kelas VII" dan "daftar sebelum tanggal X". Kalau salah satu syarat nggak terpenuhi, langkah "ikut bertanding" jadi nggak bisa dijalankan.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="def-box" style="margin-top:24px;">
+      <img src="images/icon-timer.svg" width="46" height="46" alt="" aria-hidden="true">
+      <p>Jadi, <strong>pola</strong> dalam algoritma adalah cara langkah-langkah itu tersusun (misalnya berurutan, atau berulang), sedangkan <strong>syarat</strong> adalah kondisi yang menentukan apakah suatu langkah boleh dijalankan atau tidak. Dua hal ini yang bikin algoritma bisa "mikir", bukan cuma jalan lurus.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EFISIEN VS EFEKTIF ============ -->
+<section id="efisien-efektif" class="alt">
+  <div class="container">
+    <span class="eyebrow">04 · Efisien vs Efektif</span>
+    <h2 class="section-title">Algoritma yang Bagus itu Efisien &amp; Efektif</h2>
+    <p class="section-lead">Dua kata ini sering ketuker, padahal beda maknanya lho. Menurut KBBI kurang lebih begini:</p>
+
+    <div class="compare-grid">
+      <div class="compare-card efisien">
+        <span class="compare-tag">Efisien</span>
+        <img src="images/efisien-icon.svg" width="200" height="150" style="width:100%;height:auto;" alt="Ilustrasi memotong biskuit dengan tangan secara cepat">
+        <p><strong>Efisien</strong> = hemat waktu, tenaga, dan biaya. Contohnya motong biskuit pakai tangan: cepat dan nggak butuh alat mahal, tapi hasil potongannya belum tentu rapi dan seragam.</p>
+      </div>
+
+      <div class="compare-card efektif">
+        <span class="compare-tag">Efektif</span>
+        <img src="images/efektif-icon.svg" width="200" height="150" style="width:100%;height:auto;" alt="Ilustrasi mesin pabrik memotong biskuit secara seragam">
+        <p><strong>Efektif</strong> = berhasil mencapai tujuan yang diinginkan. Contohnya mesin pabrik: butuh waktu &amp; biaya lebih besar untuk dibangun, tapi hasilnya seragam dan sesuai standar — tujuannya benar-benar tercapai.</p>
+      </div>
+    </div>
+    <p class="section-lead" style="margin-top:20px;">Algoritma yang paling ideal itu yang <strong>efisien sekaligus efektif</strong> — hemat sumber daya, tapi tetap berhasil mencapai tujuan dengan hasil yang sesuai harapan.</p>
+  </div>
+</section>
+
+<!-- ============ STUDI KASUS: GELANG KIRANA ============ -->
+<section id="studi-kasus">
+  <div class="container">
+    <span class="eyebrow">05 · Studi Kasus</span>
+    <h2 class="section-title">Gelang Warna-Warni Kirana</h2>
+    <p class="section-lead">Kirana lagi bikin gelang manik-manik yang dipakai melingkar di pergelangan tangan. Ini bahan-bahannya:</p>
+
+    <div class="kirana-wrap">
+      <div>
+        <img src="images/gelang-kirana.svg" width="440" height="440" style="width:100%;height:auto;" alt="Ilustrasi gelang manik-manik melingkar berisi manik merah, kuning, dan hijau">
+        <div class="bead-legend">
+          <span class="legend-item"><span class="legend-dot" style="background:#E63946"></span>Merah × 8</span>
+          <span class="legend-item"><span class="legend-dot" style="background:#FFC53D"></span>Kuning × 4</span>
+          <span class="legend-item"><span class="legend-dot" style="background:#2DBE6C"></span>Hijau × 3</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="card">
+          <h3>Aturannya Kirana</h3>
+          <p>Manik dengan warna yang <strong>sama nggak boleh bersebelahan</strong>. Dan karena gelangnya <strong>melingkar</strong> (nggak ada ujung dan pangkal), manik yang paling awal dan paling akhir juga dianggap bersebelahan satu sama lain!</p>
+        </div>
+
+        <div class="think-box">
+          <h4>🤔 Coba Pikir Dulu</h4>
+          <p>Kalau ditanya "berapa banyak manik yang dipakai Kirana untuk membuat satu gelang?", banyak yang langsung jawab <strong>"15"</strong> — soalnya 8 + 4 + 3 = 15.</p>
+          <p>Tapi tunggu dulu... itu jawaban yang agak buru-buru. Pertanyaan sebenarnya bukan cuma soal <em>jumlah total</em>, tapi apakah <strong>15 manik itu bisa disusun melingkar</strong> sesuai aturan Kirana (warna sama nggak boleh nempel, termasuk manik awal &amp; akhir).</p>
+          <button class="reveal-btn" id="revealHintBtn" type="button" aria-expanded="false">Kasih aku petunjuk lagi</button>
+          <div class="reveal-text" id="revealHintText" hidden>
+            Coba bandingkan jumlah manik merah (8) dengan setengah dari total manik (15 ÷ 2 = 7,5). Kalau satu warna jumlahnya lebih dari setengah total manik dalam susunan melingkar, apa yang bakal terjadi ke warna itu di suatu titik pada gelangnya? Diskusikan bareng temanmu, ya — nggak perlu buru-buru jawab sekarang!
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIPS ============ -->
+<section id="tips" class="alt">
+  <div class="container">
+    <span class="eyebrow">06 · Tips</span>
+    <h2 class="section-title">Tips Menyusun Algoritma yang Baik</h2>
+    <p class="section-lead">Mau bikin algoritmamu sendiri? Ini beberapa hal yang bisa kamu ingat.</p>
+
+    <div class="tips-grid">
+      <div class="tip-card"><div class="badge-num">1</div><h4>Tentukan tujuan akhirnya dulu</h4><p>Sebelum nulis langkah, pastikan kamu tahu persis apa hasil akhir yang ingin dicapai.</p></div>
+      <div class="tip-card"><div class="badge-num">2</div><h4>Susun langkah secara urut</h4><p>Jangan loncat-loncat. Satu langkah harus jelas jadi dasar buat langkah berikutnya.</p></div>
+      <div class="tip-card"><div class="badge-num">3</div><h4>Buat langkah yang jelas &amp; nggak ambigu</h4><p>Setiap langkah harus bisa dikerjakan tanpa nebak-nebak maksudnya apa.</p></div>
+      <div class="tip-card"><div class="badge-num">4</div><h4>Pikirkan syarat/kemungkinan lain</h4><p>Kondisi khusus (seperti "kalau belum mendidih") perlu diantisipasi dari awal.</p></div>
+      <div class="tip-card"><div class="badge-num">5</div><h4>Coba jalankan di kepala dulu</h4><p>Sebelum dipakai beneran, bayangkan algoritmamu dijalankan langkah demi langkah — cek apakah hasilnya masuk akal.</p></div>
+      <div class="tip-card"><div class="badge-num">6</div><h4>Sederhana itu lebih baik</h4><p>Kalau ada cara yang lebih singkat tapi tetap mencapai tujuan, itu artinya algoritmamu makin efisien.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KUIS ============ -->
+<section id="kuis">
+  <div class="container">
+    <span class="eyebrow">Yuk Cek Paham Kamu</span>
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+      <h2 class="section-title" style="margin-bottom:0;">Kuis Singkat: Algoritma</h2>
+      <span id="score-badge">Skor: 0/5</span>
+    </div>
+    <p class="section-lead" style="margin-top:10px;">Klik salah satu jawaban di tiap soal, nanti langsung kelihatan benar atau salahnya beserta penjelasan singkat.</p>
+
+    <div id="quiz-list" style="margin-top:26px;"></div>
+
+    <div id="quiz-summary" hidden>
+      <h3 id="quiz-summary-title">Hasil Kuismu</h3>
+      <p id="quiz-summary-text"></p>
+      <button id="quiz-reset" type="button">Ulangi Kuis</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="foot-brand">Algoritma: Rahasia di Balik Setiap Langkah!</div>
+    <p>Materi Belajar Informatika · Bab 1 · Tujuan Pembelajaran 1 (TP1)<br>
+    Kelas VII · SMP Negeri 14 Tarakan</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ===== Scroll progress bar ===== */
+  var progressBar = document.getElementById('progress-bar');
+  function updateProgress(){
+    var doc = document.documentElement;
+    var scrollTop = window.scrollY || doc.scrollTop || document.body.scrollTop;
+    var scrollHeight = (doc.scrollHeight || document.body.scrollHeight) - doc.clientHeight;
+    var pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress);
+  updateProgress();
+
+  /* ===== Nav active-link highlighting ===== */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-link'));
+  var trackedSections = Array.prototype.slice.call(
+    document.querySelectorAll('#materi-algoritma, #contoh-mie, #pola-syarat, #efisien-efektif, #studi-kasus, #tips, #kuis')
+  );
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          var id = entry.target.id;
+          navLinks.forEach(function(l){
+            l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, { rootMargin: '-35% 0px -55% 0px', threshold: 0 });
+    trackedSections.forEach(function(s){ observer.observe(s); });
+  }
+
+  /* ===== Flowchart interactivity (hotspot buttons overlaid on the images/flowchart-mi-instan.svg image) ===== */
+  var flowNodes = Array.prototype.slice.call(document.querySelectorAll('.flow-hotspot'));
+  var flowCaption = document.getElementById('flow-caption');
+  function activateFlowNode(node){
+    flowNodes.forEach(function(n){ n.classList.remove('active'); });
+    node.classList.add('active');
+    flowCaption.textContent = node.getAttribute('data-desc');
+  }
+  flowNodes.forEach(function(node){
+    node.addEventListener('click', function(){ activateFlowNode(node); });
+    node.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        activateFlowNode(node);
+      }
+    });
+  });
+
+  /* ===== Reveal hint button (Kirana case) ===== */
+  var revealBtn = document.getElementById('revealHintBtn');
+  var revealText = document.getElementById('revealHintText');
+  if (revealBtn) {
+    revealBtn.addEventListener('click', function(){
+      var isHidden = revealText.hidden;
+      revealText.hidden = !isHidden;
+      revealBtn.setAttribute('aria-expanded', String(isHidden));
+      revealBtn.textContent = isHidden ? 'Sembunyikan petunjuk' : 'Kasih aku petunjuk lagi';
+    });
+  }
+
+  /* ===== Quiz ===== */
+  var quizData = [
+    {
+      q: "Kenapa urutan langkah dalam sebuah algoritma itu penting?",
+      options: [
+        "Karena kalau urutannya diacak, hasilnya bisa salah atau prosesnya gagal",
+        "Karena algoritma harus terlihat panjang dan rumit",
+        "Sebenarnya urutan nggak terlalu penting, yang penting semua langkah dikerjakan",
+        "Supaya orang lain nggak bisa menirunya"
+      ],
+      correct: 0,
+      explain: "Betul, algoritma itu langkah yang terstruktur. Kalau urutannya ditukar, prosesnya bisa gagal mencapai tujuan yang diinginkan — contohnya masukkan mi sebelum air mendidih."
+    },
+    {
+      q: "Dalam diagram alur mi instan, apa yang terjadi kalau mi dimasukkan SEBELUM air mendidih?",
+      options: [
+        "Mi tetap matang sempurna seperti biasa",
+        "Prosesnya jadi nggak sesuai rencana karena syarat 'air mendidih' belum terpenuhi",
+        "Nggak ada bedanya sama sekali",
+        "Air jadi lebih cepat mendidih"
+      ],
+      correct: 1,
+      explain: "Tepat! Kotak 'sudah mendidih?' adalah syarat yang harus dipenuhi dulu. Kalau dilewati, hasil akhirnya bisa nggak sesuai harapan."
+    },
+    {
+      q: "Taman bermain menuliskan syarat 'tinggi minimal 120 cm' untuk naik wahana tertentu. Ini contoh dari apa dalam algoritma?",
+      options: [
+        "Langkah acak yang nggak penting",
+        "Kondisi/syarat (percabangan) yang menentukan boleh tidaknya lanjut ke langkah berikutnya",
+        "Titik akhir algoritma",
+        "Bagian dekorasi taman bermain saja"
+      ],
+      correct: 1,
+      explain: "Persis! Itu contoh syarat/kondisi — kalau syaratnya belum terpenuhi, langkah 'naik wahana' belum bisa dijalankan."
+    },
+    {
+      q: "Kamu menyelesaikan PR dalam waktu sangat singkat, tapi ternyata banyak jawaban yang salah. Ini contoh dari...",
+      options: [
+        "Efektif tapi tidak efisien",
+        "Efisien tapi tidak efektif",
+        "Efisien sekaligus efektif",
+        "Bukan keduanya"
+      ],
+      correct: 1,
+      explain: "Betul! Kamu hemat waktu (efisien), tapi tujuannya — jawaban yang benar — belum tercapai, jadi belum efektif."
+    },
+    {
+      q: "Kenapa aturan 'warna sama tidak boleh bersebelahan' pada gelang Kirana jadi lebih menantang karena gelangnya melingkar?",
+      options: [
+        "Karena manik pertama dan terakhir juga dianggap bersebelahan, jadi harus dicek dari dua arah",
+        "Karena gelang melingkar otomatis lebih berat",
+        "Karena warna manik jadi berubah kalau melingkar",
+        "Sebenarnya bentuk melingkar atau lurus sama saja, tidak ada bedanya"
+      ],
+      correct: 0,
+      explain: "Tepat sekali. Kalau gelangnya lurus (bukan melingkar), manik ujung kiri dan ujung kanan nggak perlu dicek. Tapi karena melingkar, keduanya jadi 'tetangga' juga — itu yang bikin susunannya lebih menantang."
+    }
+  ];
+
+  var score = 0;
+  var answeredCount = 0;
+  var quizListEl = document.getElementById('quiz-list');
+  var scoreBadgeEl = document.getElementById('score-badge');
+  var summaryEl = document.getElementById('quiz-summary');
+  var summaryTextEl = document.getElementById('quiz-summary-text');
+
+  function updateScoreBadge(){
+    scoreBadgeEl.textContent = 'Skor: ' + score + '/' + quizData.length;
+  }
+
+  function showSummary(){
+    summaryEl.hidden = false;
+    var pct = score / quizData.length;
+    var msg;
+    if (pct >= 0.8) {
+      msg = "Keren banget! Kamu udah paham betul soal algoritma, pola, dan syarat. 🎉";
+    } else if (pct >= 0.5) {
+      msg = "Lumayan! Coba baca ulang bagian yang masih bikin bingung, terus coba lagi.";
+    } else {
+      msg = "Yuk scroll ke atas dulu dan baca lagi materinya, terus coba kuisnya sekali lagi ya!";
+    }
+    summaryTextEl.textContent = 'Kamu jawab benar ' + score + ' dari ' + quizData.length + ' soal. ' + msg;
+  }
+
+  function handleAnswer(qi, oi, card){
+    if (card.getAttribute('data-answered') === 'true') return;
+    card.setAttribute('data-answered', 'true');
+
+    var item = quizData[qi];
+    var buttons = card.querySelectorAll('.quiz-option');
+    buttons.forEach(function(b, i){
+      b.disabled = true;
+      if (i === item.correct) b.classList.add('correct');
+      else if (i === oi) b.classList.add('incorrect');
+    });
+
+    var fb = card.querySelector('.quiz-feedback');
+    var isCorrect = (oi === item.correct);
+    if (isCorrect) {
+      score++;
+      fb.classList.add('fb-correct');
+      fb.innerHTML = '<strong>Betul!</strong> ' + item.explain;
+    } else {
+      fb.classList.add('fb-incorrect');
+      fb.innerHTML = '<strong>Belum tepat.</strong> ' + item.explain;
+    }
+
+    answeredCount++;
+    updateScoreBadge();
+    if (answeredCount === quizData.length) showSummary();
+  }
+
+  function renderQuiz(){
+    score = 0;
+    answeredCount = 0;
+    quizListEl.innerHTML = '';
+    summaryEl.hidden = true;
+
+    quizData.forEach(function(item, qi){
+      var card = document.createElement('div');
+      card.className = 'quiz-card';
+      card.setAttribute('data-answered', 'false');
+
+      var qEl = document.createElement('p');
+      qEl.className = 'quiz-question';
+      qEl.textContent = (qi + 1) + '. ' + item.q;
+      card.appendChild(qEl);
+
+      var optWrap = document.createElement('div');
+      optWrap.className = 'quiz-options';
+      item.options.forEach(function(opt, oi){
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'quiz-option';
+        btn.textContent = opt;
+        btn.addEventListener('click', function(){ handleAnswer(qi, oi, card); });
+        optWrap.appendChild(btn);
+      });
+      card.appendChild(optWrap);
+
+      var fb = document.createElement('div');
+      fb.className = 'quiz-feedback';
+      card.appendChild(fb);
+
+      quizListEl.appendChild(card);
+    });
+
+    updateScoreBadge();
+  }
+
+  var resetBtn = document.getElementById('quiz-reset');
+  if (resetBtn) resetBtn.addEventListener('click', renderQuiz);
+
+  renderQuiz();
+
+})();
+</script>
+
+</body>
+</html>
