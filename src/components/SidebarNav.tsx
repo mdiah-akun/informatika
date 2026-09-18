@@ -14,7 +14,7 @@ export default function SidebarNav({
   const pathname = usePathname();
   const isActiveHome = pathname === "/";
   const isActiveMateri = pathname.startsWith("/materi");
-  const isActiveAdminMateri = pathname.startsWith("/admin/materi");
+  const isActiveAdminMateri = pathname.startsWith("/admin/materi") && !pathname.startsWith("/admin/materi-guru");
   const isActiveAdminUsers = pathname.startsWith("/admin/users");
   const isActiveAdminSiswa = pathname.startsWith("/admin/siswa");
   const isActiveAdminJadwal = pathname.startsWith("/admin/jadwal");
