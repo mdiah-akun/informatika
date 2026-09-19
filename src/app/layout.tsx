@@ -3,8 +3,8 @@ import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Materi Informatika Kelas 9",
-  description: "CMS materi pelajaran Informatika kelas 9",
+  title: "Materi Informatika SMP14TARAKAN,
+  description: "LMS materi pelajaran Informatika",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
