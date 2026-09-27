@@ -4,7 +4,7 @@ import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { KELAS_LIST, kelasLabel } from "@/lib/kelas";
 import type { Bab, Kelas } from "@/types/materi";
-import type { TP } from "@/types/tp";
+import { SEMESTER_LIST, type TP, type TpSemester } from "@/types/tp";
 import { Plus, Pencil, Trash2, Loader2, X, Check } from "lucide-react";
 
 function TpForm({
@@ -21,6 +21,7 @@ function TpForm({
   onSaved: (item: TP) => void;
 }) {
   const [kode, setKode] = useState(initial?.kode ?? "");
+  const [semester, setSemester] = useState<TpSemester>(initial?.semester ?? "Ganjil");
   const [deskripsi, setDeskripsi] = useState(initial?.deskripsi ?? "");
   const [urutan, setUrutan] = useState(initial?.urutan ?? existingCount);
   const [saving, setSaving] = useState(false);
@@ -40,7 +41,7 @@ function TpForm({
     setError(null);
     const supabase = createClient();
 
-    const payload = { bab_id: babId, kode, deskripsi, urutan };
+    const payload = { bab_id: babId, kode, semester, deskripsi, urutan };
 
     const query = initial
       ? supabase.from("tp").update(payload).eq("id", initial.id).select().single()
@@ -70,6 +71,21 @@ function TpForm({
           placeholder="TP1"
           className="w-full max-w-[160px] rounded-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 px-2.5 py-1.5 text-sm"
         />
+      </div>
+
+      <div className="max-w-[160px]">
+        <label className="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">Semester</label>
+        <select
+          value={semester}
+          onChange={(e) => setSemester(e.target.value as TpSemester)}
+          className="w-full rounded-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 px-2.5 py-1.5 text-sm"
+        >
+          {SEMESTER_LIST.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div>
@@ -231,6 +247,15 @@ export default function AdminTpClient({ babList, tpAwal }: { babList: Bab[]; tpA
                           <div className="min-w-0">
                             <span className="inline-flex items-center rounded-full bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 px-2 py-0.5 text-xs font-semibold mb-1">
                               {item.kode}
+                            </span>
+                            <span
+                              className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium mb-1 ml-1.5 ${
+                                item.semester === "Genap"
+                                  ? "bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
+                                  : "bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400"
+                              }`}
+                            >
+                              Semester {item.semester}
                             </span>
                             <p className="text-sm text-slate-700 dark:text-slate-200 whitespace-pre-wrap">
                               {item.deskripsi}

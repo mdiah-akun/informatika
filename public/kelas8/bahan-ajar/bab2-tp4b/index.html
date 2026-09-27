@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Level Up! Merangkai Mesin Fungsi — Materi Siswa Pertemuan 2</title>
+<style>
+  :root{
+    --navy:#0F2A47; --navy-d:#0A1C31; --teal:#1B98A6; --teal-l:#E0F5F7;
+    --amber:#FF8C42; --amber-d:#C2570A; --purple:#6D28D9; --purple-l:#EDE9FE;
+    --green:#16A34A; --green-l:#DCFCE7; --slate:#1E293B; --muted:#64748B;
+    --bg:#F7FAFC; --card:#FFFFFF; --border:#E2E8F0;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; font-family:'Segoe UI', Calibri, Arial, sans-serif; color:var(--slate);
+    background:var(--bg); line-height:1.6;
+  }
+  img{max-width:100%; display:block; border-radius:12px;}
+  h1,h2,h3{font-family:Georgia,'Cambria',serif; color:var(--navy); margin-top:0;}
+  a{color:var(--teal);}
+  .wrap{max-width:920px; margin:0 auto; padding:0 20px;}
+
+  nav{
+    position:sticky; top:0; z-index:50; background:rgba(15,42,71,0.97);
+    backdrop-filter:blur(6px); color:#fff; padding:10px 0;
+    box-shadow:0 2px 10px rgba(0,0,0,0.15);
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;}
+  nav .brand{font-weight:bold; font-size:15px; color:#fff; letter-spacing:0.3px;}
+  nav .links{display:flex; gap:4px; flex-wrap:wrap;}
+  nav .links a{
+    color:#CBD5E1; text-decoration:none; font-size:12.5px; padding:6px 10px;
+    border-radius:20px; transition:all .2s;
+  }
+  nav .links a:hover{background:var(--teal); color:#fff;}
+
+  .hero{
+    background:linear-gradient(135deg, var(--navy) 0%, #163a5e 100%);
+    color:#fff; padding:56px 0 64px; position:relative; overflow:hidden;
+  }
+  .hero::before{
+    content:""; position:absolute; right:-80px; top:-80px; width:280px; height:280px;
+    border-radius:50%; background:rgba(255,255,255,0.05);
+  }
+  .hero::after{
+    content:""; position:absolute; left:-60px; bottom:-100px; width:220px; height:220px;
+    border-radius:50%; background:rgba(255,255,255,0.05);
+  }
+  .hero .kicker{color:var(--teal); font-weight:bold; letter-spacing:2px; font-size:13px; text-transform:uppercase;}
+  .hero h1{color:#fff; font-size:2.3rem; margin:10px 0; position:relative;}
+  .hero p{color:#CBD5E1; font-size:1.05rem; max-width:640px; position:relative;}
+  .pill{
+    display:inline-block; background:var(--teal); color:var(--navy-d); font-weight:bold;
+    padding:8px 18px; border-radius:30px; font-size:13.5px; margin-top:14px;
+  }
+
+  section{padding:52px 0;}
+  section:nth-of-type(even){background:#fff;}
+  .eyebrow{color:var(--amber-d); font-weight:bold; letter-spacing:1.5px; font-size:12.5px; text-transform:uppercase; margin-bottom:6px;}
+
+  .card{
+    background:var(--card); border:1px solid var(--border); border-radius:14px;
+    padding:22px 24px; margin:18px 0; box-shadow:0 2px 10px rgba(15,42,71,0.05);
+  }
+  .card img{margin:14px auto;}
+  .caption{text-align:center; color:var(--muted); font-size:13px; font-style:italic; margin-top:-6px;}
+
+  .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:20px 0;}
+  @media (max-width:720px){ .grid3{grid-template-columns:1fr;} }
+
+  .infobox{
+    background:var(--teal-l); border-left:5px solid var(--teal); border-radius:10px;
+    padding:16px 20px; margin:18px 0;
+  }
+  .infobox.amber{background:#FFF3E8; border-left-color:var(--amber);}
+  .infobox.purple{background:var(--purple-l); border-left-color:var(--purple);}
+  .infobox p{margin:6px 0;}
+
+  .steps{list-style:none; padding:0; margin:18px 0;}
+  .steps li{ display:flex; gap:14px; margin-bottom:14px; align-items:flex-start; }
+  .steps .num{
+    flex:0 0 32px; height:32px; width:32px; background:var(--amber); color:var(--navy-d);
+    border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold;
+  }
+
+  table{border-collapse:collapse; width:100%; margin:14px 0; font-size:14px;}
+  th,td{border:1px solid var(--border); padding:8px 10px; text-align:center;}
+  th{background:var(--navy); color:#fff;}
+  tr:nth-child(even) td{background:#F1F5F9;}
+
+  .mono{
+    background:var(--navy-d); color:#6EE7B7; border-radius:12px; padding:18px 22px;
+    font-family:'Consolas','Courier New',monospace; font-size:13.5px; line-height:1.7;
+    overflow-x:auto; margin:18px 0; white-space:pre;
+  }
+
+  .calc{
+    background:var(--navy); color:#fff; border-radius:16px; padding:26px; margin:20px 0;
+  }
+  .calc h3{color:#fff;}
+  .calc-row{display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-top:14px;}
+  .calc input[type=number]{
+    font-size:20px; padding:8px 12px; width:110px; border-radius:8px; border:none; text-align:center;
+  }
+  .calc label.chk{display:flex; align-items:center; gap:8px; font-size:15px;}
+  .calc label.chk input{width:20px; height:20px;}
+  .calc button{
+    background:var(--teal); color:var(--navy-d); border:none; padding:10px 20px; font-weight:bold;
+    border-radius:8px; cursor:pointer; font-size:15px;
+  }
+  .calc button:hover{background:#23b4c4;}
+  .calc-result{margin-top:16px;}
+  .calc-step{
+    background:rgba(255,255,255,0.07); border-radius:10px; padding:12px 16px; margin-bottom:10px;
+    font-size:14.5px;
+  }
+  .calc-step b{color:#6EE7B7;}
+  .calc-final{font-size:22px; font-weight:bold; color:#6EE7B7; margin-top:6px; min-height:30px;}
+
+  .quiz-opt{
+    display:block; width:100%; text-align:left; background:#fff; border:2px solid var(--border);
+    border-radius:10px; padding:12px 16px; margin:8px 0; cursor:pointer; font-size:15px;
+    transition:all .15s; color:var(--slate);
+  }
+  .quiz-opt:hover{border-color:var(--teal);}
+  .quiz-opt.correct{background:var(--green-l); border-color:var(--green); font-weight:bold;}
+  .quiz-opt.wrong{background:#FEE2E2; border-color:#DC2626;}
+  .quiz-feedback{margin-top:14px; font-weight:bold; min-height:24px;}
+
+  .match-wrap{display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:18px 0;}
+  @media (max-width:720px){ .match-wrap{grid-template-columns:1fr;} }
+  .match-col h4{margin:0 0 10px; font-size:13px; color:var(--muted); text-transform:uppercase; letter-spacing:1px;}
+  .match-term{
+    background:#fff; border:2px solid var(--border); border-radius:10px; padding:10px 14px;
+    margin-bottom:8px; cursor:pointer; font-size:14.5px; transition:all .15s;
+  }
+  .match-term.selected{border-color:var(--purple); background:var(--purple-l);}
+  .match-term.linked{border-color:var(--green); background:var(--green-l); cursor:default;}
+  .match-term.mismatch{border-color:#DC2626; background:#FEE2E2;}
+  #match-feedback{margin-top:10px; font-weight:bold; min-height:24px;}
+
+  .reflect{list-style:none; padding:0;}
+  .reflect li{
+    background:#fff; border:1px solid var(--border); border-radius:10px; padding:14px 18px; margin-bottom:12px;
+  }
+
+  footer{
+    background:var(--navy-d); color:#94A3B8; text-align:center; padding:30px 20px; font-size:13px;
+  }
+  footer b{color:#fff;}
+
+  .badge{display:inline-block; background:var(--amber); color:var(--navy-d); font-weight:bold; padding:4px 12px; border-radius:20px; font-size:12px; margin-bottom:8px;}
+  .badge.purple{background:var(--purple); color:#fff;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">📘 Informatika Kelas VIII · Pertemuan 2</div>
+    <div class="links">
+      <a href="#komposisi">Komposisi</a>
+      <a href="#bersyarat">Bersyarat</a>
+      <a href="#studi-kasus">Studi Kasus</a>
+      <a href="#pseudocode">Pseudocode</a>
+      <a href="#coba-sendiri">Coba Sendiri</a>
+      <a href="#tantangan">Tantangan</a>
+      <a href="#rangkuman">Rangkuman</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Bab II · Berpikir Komputasional · Pertemuan 2 · Pendalaman TP4</div>
+    <h1>Level Up! Merangkai Mesin Fungsi 🚀</h1>
+    <p>Minggu lalu kalian sudah kenalan sama satu mesin fungsi. Sekarang saatnya naik level: merangkai DUA mesin sekaligus, dan bikin mesin yang bisa "mikir" memilih aturan sendiri!</p>
+    <span class="pill">Kelas VIII • SMP Negeri 14 Tarakan • Problem Based Learning</span>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Pembuka</div>
+    <h2>Halo Lagi, Sobat Informatika!</h2>
+    <p>Masih ingat f(x) = mx + c dari pertemuan lalu? Satu mesin, satu aturan tetap, langsung dapat hasil. Nah, di dunia nyata, satu mesin fungsi aja sering nggak cukup. Kadang kita butuh <b>merangkai beberapa mesin sekaligus</b>, dan mesin itu juga harus bisa <b>memilih aturan yang berbeda-beda</b> tergantung situasinya. Yuk kita bongkar triknya!</p>
+  </div>
+</section>
+
+<section id="komposisi">
+  <div class="wrap">
+    <div class="eyebrow">1. Konsep Baru #1</div>
+    <h2>Kalau Satu Mesin Nggak Cukup: Komposisi Fungsi</h2>
+    <p>Bayangin gini: kalian masukin angka ke Mesin 1, keluar suatu hasil. Eh, ternyata hasil itu BUKAN jawaban akhir — dia harus dimasukkan lagi ke Mesin 2 buat diproses sekali lagi, baru deh keluar jawaban final. Nah, itu namanya <b>KOMPOSISI FUNGSI</b>, ditulis g(f(x)).</p>
+    <div class="card">
+      <img src="images/08_komposisi_fungsi.png" alt="Diagram komposisi fungsi: output mesin 1 menjadi input mesin 2">
+      <p class="caption">Output Mesin 1 (f(x)) menjadi input Mesin 2 (g). Jangan berhenti di tengah jalan!</p>
+    </div>
+    <div class="infobox purple">
+      <p style="margin:0"><b>🧺 Analoginya kayak nyuci baju:</b> baju kotor masuk mesin cuci (Mesin 1) → keluar baju basah bersih. Tapi itu belum selesai kan? Baju basah itu harus masuk lagi ke "mesin" jemuran/pengering (Mesin 2) → baru keluar baju kering siap pakai. Dua proses berantai, itulah komposisi!</p>
+    </div>
+  </div>
+</section>
+
+<section id="bersyarat">
+  <div class="wrap">
+    <div class="eyebrow">2. Konsep Baru #2</div>
+    <h2>Mesin yang Bisa "Mikir": Fungsi Bersyarat</h2>
+    <p>Sekarang bayangin mesin yang lebih pintar lagi: dia bisa milih aturan berbeda tergantung kondisi yang dia terima. Ini namanya <b>FUNGSI BERSYARAT</b>, pakai logika JIKA...MAKA (kalau di bahasa pemrograman disebut <i>if-then-else</i>).</p>
+    <div class="infobox">
+      <p style="margin:2px 0"><b>Bentuk umum:</b></p>
+      <p style="margin:2px 0">JIKA (syarat 1) MAKA proses 1</p>
+      <p style="margin:2px 0">LAINNYA JIKA (syarat 2) MAKA proses 2</p>
+      <p style="margin:2px 0">LAINNYA proses 3</p>
+    </div>
+    <p>Contoh gampangnya: tarif parkir motor. Jam pertama Rp2.000, jam berikutnya Rp1.000/jam. Mesin kasir parkir itu "mikir": kalau durasi ≤ 1 jam, pakai tarif A. Kalau lebih, pakai tarif B. Itulah fungsi bersyarat beraksi!</p>
+    <div class="card">
+      <img src="images/09_fungsi_bersyarat_flowchart.png" alt="Flowchart fungsi bersyarat">
+      <p class="caption">Si mesin "memilih" jalur proses sesuai kondisi yang cocok</p>
+    </div>
+  </div>
+</section>
+
+<section id="studi-kasus">
+  <div class="wrap">
+    <div class="eyebrow">3. Tantangan Seru</div>
+    <h2>Tarakan Express! 📦🏍️</h2>
+    <p>Sekarang, waktunya kalian jadi "insinyur" buat jasa kurir lokal bernama Tarakan Express. Tugas kalian: rancang sistem penghitung ongkos kirim yang adil, pakai DUA mesin fungsi sekaligus!</p>
+    <div class="card">
+      <img src="images/10_studi_kasus_tarakan_express.png" alt="Studi kasus tarif berjenjang Tarakan Express">
+      <p class="caption">Semakin jauh jaraknya, semakin curam kenaikan tarifnya — tapi tetap adil dan konsisten</p>
+    </div>
+
+    <h3>Mesin 1: Menghitung Ongkos Dasar (Fungsi Bersyarat)</h3>
+    <div class="infobox amber">
+      <p style="margin:2px 0">Jarak ≤ 3 km &nbsp;→&nbsp; ongkos = Rp10.000 (flat)</p>
+      <p style="margin:2px 0">3 &lt; jarak ≤ 10 km &nbsp;→&nbsp; ongkos = Rp10.000 + Rp2.000 × (jarak − 3)</p>
+      <p style="margin:2px 0">Jarak &gt; 10 km &nbsp;→&nbsp; ongkos = Rp24.000 + Rp1.500 × (jarak − 10)</p>
+    </div>
+    <p>Coba kita hitung bareng buat jarak 6 km: karena 6 km ada di antara 3 dan 10 km, kita pakai rumus kedua → 10.000 + 2.000 × (6−3) = 10.000 + 6.000 = <b>Rp16.000</b>.</p>
+
+    <h3>Mesin 2: Diskon Member (Komposisi Fungsi!)</h3>
+    <div class="infobox">
+      <p style="margin:2px 0">Jika ongkos dasar &gt; Rp20.000 DAN pelanggan adalah member &nbsp;→&nbsp; ongkos akhir = ongkos dasar × 0,9 (diskon 10%)</p>
+      <p style="margin:2px 0">Selain itu &nbsp;→&nbsp; ongkos akhir = ongkos dasar (tidak berubah)</p>
+    </div>
+    <p>Nah di sinilah komposisi fungsi kepakai: HASIL dari Mesin 1 (ongkos dasar) menjadi INPUT buat Mesin 2. Coba kita lanjutkan contoh jarak 10 km untuk pelanggan member:</p>
+    <table>
+      <tr><th>Langkah</th><th>Perhitungan</th><th>Hasil</th></tr>
+      <tr><td>Mesin 1: ongkos dasar</td><td>10.000 + 2.000 × (10−3)</td><td><b>Rp24.000</b></td></tr>
+      <tr><td>Mesin 2: ongkos akhir (member)</td><td>24.000 × 0,9 (karena &gt;20.000 &amp; member)</td><td><b>Rp21.600</b></td></tr>
+    </table>
+    <p>Coba sekarang kalian hitung sendiri: berapa ongkos akhir untuk jarak 15 km kalau pelanggannya BUKAN member? (Petunjuk: hitung dulu Mesin 1, baru cek syarat Mesin 2 — lalu buktikan jawaban kalian di kotak "Coba Sendiri" di bawah!)</p>
+  </div>
+</section>
+
+<section id="pseudocode">
+  <div class="wrap">
+    <div class="eyebrow">4. Nulis "Resep" untuk Komputer</div>
+    <h2>Pseudocode Tarakan Express</h2>
+    <p>Supaya aturan tadi bisa dijalankan komputer, kita tulis dalam bentuk pseudocode — semacam "resep" langkah demi langkah yang mudah dibaca manusia, sebelum diubah jadi kode pemrograman sungguhan.</p>
+    <div class="mono">FUNGSI hitung_ongkos_dasar(jarak):
+  JIKA jarak &lt;= 3 MAKA
+    ongkos_dasar = 10000
+  LAINNYA JIKA jarak &lt;= 10 MAKA
+    ongkos_dasar = 10000 + 2000 * (jarak - 3)
+  LAINNYA
+    ongkos_dasar = 24000 + 1500 * (jarak - 10)
+  KEMBALIKAN ongkos_dasar
+
+FUNGSI hitung_ongkos_akhir(ongkos_dasar, member):
+  JIKA ongkos_dasar &gt; 20000 DAN member = BENAR MAKA
+    ongkos_akhir = ongkos_dasar * 0.9
+  LAINNYA
+    ongkos_akhir = ongkos_dasar
+  KEMBALIKAN ongkos_akhir
+
+ongkos_akhir = hitung_ongkos_akhir( hitung_ongkos_dasar(jarak), member )</div>
+    <p>Keren, kan? Ini persis logika yang dipakai aplikasi ojek online sungguhan buat menghitung ongkos kalian!</p>
+
+    <h3>Hati-hati Jebakan! (Kasus Tepi / Edge Case)</h3>
+    <p>Programmer yang teliti selalu mengecek "kasus tepi" — nilai yang persis di batas syarat. Coba pikirkan:</p>
+    <ul>
+      <li>Kalau jarak PERSIS 3 km, dia masuk aturan mana? (jawaban: aturan pertama, karena syaratnya "≤ 3")</li>
+      <li>Kalau ongkos dasar PERSIS Rp20.000, apakah dapat diskon? (jawaban: TIDAK, karena syaratnya harus "lebih dari" Rp20.000, bukan "sama dengan")</li>
+    </ul>
+    <p>Kalau kalian nggak teliti mengecek kasus-kasus kayak gini, sistemnya bisa jadi nggak adil buat sebagian pelanggan. Makanya, selalu uji rancangan kalian dengan angka-angka "jebakan" di titik batas!</p>
+  </div>
+</section>
+
+<section id="coba-sendiri">
+  <div class="wrap">
+    <div class="eyebrow">5. Praktik Langsung</div>
+    <h2>Coba Sendiri: Simulator Tarakan Express!</h2>
+    <p>Masukkan jarak pengiriman dan centang kalau pelanggannya member, lalu lihat bagaimana KEDUA mesin fungsi bekerja berantai untuk menghasilkan ongkos akhir!</p>
+    <div class="calc">
+      <h3>🚚 Simulator Ongkos Kirim: g(f(jarak))</h3>
+      <div class="calc-row">
+        <label>Jarak (km) =</label>
+        <input type="number" id="calc-jarak" placeholder="contoh: 15" min="0" step="0.1">
+        <label class="chk"><input type="checkbox" id="calc-member"> Pelanggan member</label>
+        <button onclick="hitungOngkos()">Jalankan Kedua Mesin ⚙️⚙️</button>
+      </div>
+      <div class="calc-result" id="calc-result"></div>
+    </div>
+  </div>
+</section>
+
+<section id="tantangan">
+  <div class="wrap">
+    <div class="eyebrow">6. Uji Pemahaman</div>
+    <h2>Tantangan: Jebakan Kasus Tepi</h2>
+    <p>Pelanggan bernama Bu Aisyah adalah <b>member</b> Tarakan Express. Dia mengirim paket dengan ongkos dasar hasil hitungan Mesin 1 sebesar <b>tepat Rp20.000</b>. Berapa ongkos akhir yang harus dibayar Bu Aisyah?</p>
+    <div class="card">
+      <span class="badge">SOAL</span>
+      <div id="tepi-quiz">
+        <button class="quiz-opt" data-correct="false">A. Rp18.000 (dapat diskon 10%, karena dia member)</button>
+        <button class="quiz-opt" data-correct="true">B. Rp20.000 (tetap, karena syaratnya harus "lebih dari" Rp20.000)</button>
+        <button class="quiz-opt" data-correct="false">C. Rp22.000 (ongkos dinaikkan karena member)</button>
+        <button class="quiz-opt" data-correct="false">D. Tidak bisa dihitung, datanya kurang</button>
+      </div>
+      <div class="quiz-feedback" id="tepi-feedback"></div>
+    </div>
+
+    <h3 style="margin-top:34px;">Cocokkan Istilahnya!</h3>
+    <p>Klik satu istilah di kolom kiri, lalu klik pasangannya yang tepat di kolom kanan.</p>
+    <div class="match-wrap">
+      <div class="match-col">
+        <h4>Istilah</h4>
+        <div class="match-term" data-key="a">Komposisi Fungsi</div>
+        <div class="match-term" data-key="b">Fungsi Bersyarat</div>
+        <div class="match-term" data-key="c">Kasus Tepi (Edge Case)</div>
+        <div class="match-term" data-key="d">Trace / Penelusuran</div>
+      </div>
+      <div class="match-col">
+        <h4>Penjelasan</h4>
+        <div class="match-term" data-key="c">Nilai yang persis berada di batas suatu syarat, wajib diuji agar tidak ada celah kesalahan</div>
+        <div class="match-term" data-key="a">Merangkai beberapa mesin fungsi, hasil mesin pertama menjadi input mesin berikutnya: g(f(x))</div>
+        <div class="match-term" data-key="d">Mengikuti alur eksekusi langkah demi langkah untuk mengecek hasil akhir sebuah fungsi</div>
+        <div class="match-term" data-key="b">Mesin yang memilih aturan proses berbeda tergantung kondisi, memakai JIKA...MAKA...LAINNYA</div>
+      </div>
+    </div>
+    <div id="match-feedback"></div>
+    <p style="font-size:13.5px;color:var(--muted)">💬 Setelah menjawab, diskusikan alasan kalian dengan kelompok dan tuliskan di LKPD Pertemuan 2 ya!</p>
+  </div>
+</section>
+
+<section id="rangkuman">
+  <div class="wrap">
+    <div class="eyebrow">Rangkuman Kilat ⚡</div>
+    <h2>Yang Perlu Kalian Ingat</h2>
+    <div class="infobox">
+      <ul style="margin:0; padding-left:20px;">
+        <li>Komposisi fungsi = merangkai beberapa mesin fungsi, hasil mesin pertama jadi input mesin berikutnya: g(f(x)).</li>
+        <li>Fungsi bersyarat = mesin yang memilih aturan proses berbeda tergantung kondisi (JIKA...MAKA...LAINNYA).</li>
+        <li>Pseudocode membantu kita menulis "resep" logika sebelum jadi kode program sungguhan.</li>
+        <li>Selalu uji rancangan kalian dengan kasus tepi (nilai persis di batas syarat) supaya tidak ada celah kesalahan.</li>
+      </ul>
+    </div>
+
+    <div class="eyebrow" style="margin-top:30px;">Refleksi 💭</div>
+    <ul class="reflect">
+      <li>Apa bedanya "merangkai fungsi" (komposisi) dengan "memilih salah satu aturan" (fungsi bersyarat)?</li>
+      <li>Menurut kalian, di aplikasi apa lagi kalian pernah menjumpai sistem tarif berjenjang seperti Tarakan Express?</li>
+      <li>Coba rancang aturan fungsi bersyaratmu sendiri untuk sesuatu di kehidupan sehari-hari!</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p><b>Bab II Berpikir Komputasional — Pertemuan 2: Komposisi Fungsi &amp; Fungsi Bersyarat</b></p>
+  <p>Informatika Kelas VIII · SMP Negeri 14 Tarakan</p>
+</footer>
+
+<script>
+function formatRupiah(n){
+  return "Rp" + Math.round(n).toLocaleString('id-ID');
+}
+
+function hitungOngkos(){
+  const jarakVal = document.getElementById('calc-jarak').value;
+  const member = document.getElementById('calc-member').checked;
+  const resultEl = document.getElementById('calc-result');
+  if(jarakVal === '' || isNaN(jarakVal) || parseFloat(jarakVal) < 0){
+    resultEl.innerHTML = '<div class="calc-step">Masukkan jarak yang valid dulu ya! 😉</div>';
+    return;
+  }
+  const jarak = parseFloat(jarakVal);
+
+  // Mesin 1: fungsi bersyarat ongkos dasar
+  let ongkosDasar, aturan1;
+  if(jarak <= 3){
+    ongkosDasar = 10000;
+    aturan1 = `jarak ≤ 3 km → ongkos_dasar = Rp10.000 (flat)`;
+  } else if(jarak <= 10){
+    ongkosDasar = 10000 + 2000 * (jarak - 3);
+    aturan1 = `3 &lt; jarak ≤ 10 km → ongkos_dasar = 10.000 + 2.000 × (${jarak} − 3) = ${formatRupiah(ongkosDasar)}`;
+  } else {
+    ongkosDasar = 24000 + 1500 * (jarak - 10);
+    aturan1 = `jarak &gt; 10 km → ongkos_dasar = 24.000 + 1.500 × (${jarak} − 10) = ${formatRupiah(ongkosDasar)}`;
+  }
+
+  // Mesin 2: komposisi, diskon member
+  let ongkosAkhir, aturan2;
+  if(ongkosDasar > 20000 && member){
+    ongkosAkhir = ongkosDasar * 0.9;
+    aturan2 = `ongkos_dasar &gt; Rp20.000 DAN member → ongkos_akhir = ${formatRupiah(ongkosDasar)} × 0,9 = ${formatRupiah(ongkosAkhir)}`;
+  } else {
+    ongkosAkhir = ongkosDasar;
+    const alasan = !member ? "pelanggan bukan member" : "ongkos dasar tidak lebih dari Rp20.000";
+    aturan2 = `Tidak memenuhi syarat diskon (${alasan}) → ongkos_akhir = ongkos_dasar = ${formatRupiah(ongkosAkhir)}`;
+  }
+
+  resultEl.innerHTML = `
+    <div class="calc-step"><b>Mesin 1 — hitung_ongkos_dasar(${jarak})</b><br>${aturan1}</div>
+    <div class="calc-step"><b>Mesin 2 — hitung_ongkos_akhir(${formatRupiah(ongkosDasar)}, ${member ? 'member' : 'bukan member'})</b><br>${aturan2}</div>
+    <div class="calc-final">Ongkos Akhir = ${formatRupiah(ongkosAkhir)}</div>
+  `;
+}
+
+document.querySelectorAll('#tepi-quiz .quiz-opt').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#tepi-quiz .quiz-opt').forEach(b => {
+      b.disabled = true;
+      if(b.dataset.correct === 'true'){ b.classList.add('correct'); }
+    });
+    const fb = document.getElementById('tepi-feedback');
+    if(btn.dataset.correct === 'true'){
+      fb.innerHTML = '✅ Betul! Syarat diskonnya "lebih dari Rp20.000", jadi tepat Rp20.000 belum memenuhi syarat — ongkosnya tetap Rp20.000.';
+      fb.style.color = '#16A34A';
+    } else {
+      btn.classList.add('wrong');
+      fb.innerHTML = '❌ Belum tepat. Jawaban yang benar sudah ditandai hijau — perhatikan lagi kata "lebih dari" pada syaratnya!';
+      fb.style.color = '#DC2626';
+    }
+  });
+});
+
+// Matching game
+let selectedTerm = null;
+let matchedCount = 0;
+const totalPairs = 4;
+document.querySelectorAll('.match-term').forEach(el => {
+  el.addEventListener('click', () => {
+    if(el.classList.contains('linked')) return;
+    if(!selectedTerm){
+      selectedTerm = el;
+      el.classList.add('selected');
+      return;
+    }
+    if(selectedTerm === el){
+      selectedTerm.classList.remove('selected');
+      selectedTerm = null;
+      return;
+    }
+    const fb = document.getElementById('match-feedback');
+    if(selectedTerm.dataset.key === el.dataset.key && selectedTerm !== el){
+      selectedTerm.classList.remove('selected');
+      selectedTerm.classList.add('linked');
+      el.classList.add('linked');
+      matchedCount++;
+      fb.textContent = matchedCount === totalPairs ? '🎉 Mantap! Semua pasangan sudah benar.' : `Pasangan benar! (${matchedCount}/${totalPairs})`;
+      fb.style.color = '#16A34A';
+      selectedTerm = null;
+    } else {
+      el.classList.add('mismatch');
+      selectedTerm.classList.add('mismatch');
+      fb.textContent = 'Belum cocok, coba lagi!';
+      fb.style.color = '#DC2626';
+      setTimeout(() => {
+        el.classList.remove('mismatch');
+        selectedTerm.classList.remove('mismatch', 'selected');
+        selectedTerm = null;
+      }, 700);
+    }
+  });
+});
+</script>
+
+</body>
+</html>

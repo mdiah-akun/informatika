@@ -94,7 +94,12 @@ export default function TpClient({
                     <Target className="h-4.5 w-4.5 text-indigo-600 dark:text-indigo-400" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-1">{item.kode}</p>
+                    <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-1">
+                      {item.kode}
+                      <span className="ml-2 text-xs font-medium text-slate-500 dark:text-slate-400">
+                        Semester {item.semester}
+                      </span>
+                    </p>
                     <p className="text-sm text-slate-600 dark:text-slate-300 whitespace-pre-wrap">{item.deskripsi}</p>
                   </div>
                 </div>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mendalami Himpunan Data Terstruktur — Materi Siswa</title>
+<style>
+  :root{
+    --navy:#1E3A5F; --teal:#2E86AB; --orange:#F5A623; --coral:#F26C4F;
+    --green:#1E7A4C; --light:#EAF2F8; --lightTeal:#E7F5F4; --lightYellow:#FFF7DE;
+    --gray:#5A6472; --text:#22303F; --maxw:880px;
+  }
+  *{box-sizing:border-box;}
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; font-family:'Segoe UI', Tahoma, Verdana, sans-serif; color:var(--text);
+    background:#f7fafc; line-height:1.65; padding-top:56px;
+  }
+  /* ===== Top Menu (always visible / sticky) ===== */
+  .topnav{
+    position:fixed; top:0; left:0; right:0; height:56px; z-index:1000;
+    background:var(--navy); box-shadow:0 2px 10px rgba(0,0,0,0.15);
+    display:flex; align-items:center;
+  }
+  .topnav .topnav-inner{
+    max-width:1100px; margin:0 auto; width:100%; display:flex; align-items:center;
+    justify-content:space-between; padding:0 18px; gap:14px;
+  }
+  .topnav .brand{
+    color:#fff; font-weight:700; font-size:0.95rem; white-space:nowrap; text-decoration:none;
+    display:flex; align-items:center; gap:8px; flex:none;
+  }
+  .topnav .brand .dot{ width:9px; height:9px; border-radius:50%; background:var(--orange); flex:none; }
+  .topnav ul{
+    list-style:none; margin:0; padding:0; display:flex; gap:4px; overflow-x:auto;
+    scrollbar-width:none; white-space:nowrap;
+  }
+  .topnav ul::-webkit-scrollbar{ display:none; }
+  .topnav li{ flex:none; }
+  .topnav a.navlink{
+    display:inline-block; color:#CADCFC; text-decoration:none; font-size:0.86rem;
+    padding:8px 12px; border-radius:8px; transition:background 0.15s, color 0.15s;
+  }
+  .topnav a.navlink:hover{ background:rgba(255,255,255,0.1); color:#fff; }
+  .topnav a.navlink.active{ background:var(--orange); color:var(--navy); font-weight:700; }
+  header.hero{
+    background:linear-gradient(135deg,var(--navy) 0%, #274d78 100%);
+    color:#fff; padding:56px 20px 70px; text-align:center; position:relative; overflow:hidden;
+  }
+  header.hero::before{
+    content:""; position:absolute; top:-80px; right:-80px; width:280px; height:280px;
+    border-radius:50%; background:rgba(255,255,255,0.06);
+  }
+  header.hero .kicker{
+    color:var(--orange); letter-spacing:2px; font-weight:700; font-size:0.85rem; margin-bottom:10px;
+  }
+  header.hero h1{ font-size:2.1rem; margin:0 0 8px; }
+  header.hero p{ color:#CADCFC; font-size:1.05rem; margin:0; }
+  nav.toc{
+    max-width:var(--maxw); margin:-40px auto 30px; background:#fff; border-radius:14px;
+    box-shadow:0 6px 24px rgba(30,58,95,0.12); padding:20px 26px; position:relative; z-index:2;
+  }
+  nav.toc h2{ margin:0 0 10px; font-size:1rem; color:var(--navy); }
+  nav.toc ol{ margin:0; padding-left:20px; columns:2; gap:20px; }
+  nav.toc a{ color:var(--teal); text-decoration:none; font-size:0.95rem; }
+  nav.toc a:hover{ text-decoration:underline; }
+  main{ max-width:var(--maxw); margin:0 auto; padding:10px 20px 60px; }
+  section{ background:#fff; border-radius:14px; padding:30px 32px; margin-bottom:24px;
+    box-shadow:0 2px 10px rgba(30,58,95,0.06); scroll-margin-top:72px; }
+  section h2{
+    color:var(--navy); font-size:1.5rem; margin-top:0; display:flex; align-items:center; gap:10px;
+  }
+  section h2 .num{
+    background:var(--teal); color:#fff; width:34px; height:34px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-size:1rem; flex:none;
+  }
+  section h3{ color:var(--teal); font-size:1.15rem; margin-top:26px; }
+  p{ font-size:1.02rem; }
+  figure{ margin:20px 0; text-align:center; }
+  figure img{ max-width:100%; border-radius:10px; box-shadow:0 4px 16px rgba(0,0,0,0.08); }
+  figcaption{ font-size:0.9rem; color:var(--gray); font-style:italic; margin-top:10px; }
+  .callout{
+    border-radius:12px; padding:20px 22px; margin:20px 0; border-left:5px solid var(--teal);
+    background:var(--lightTeal);
+  }
+  .callout.yellow{ border-left-color:#D4A017; background:var(--lightYellow); }
+  .callout.coral{ border-left-color:var(--coral); background:#FFF0ED; }
+  .callout .label{ font-weight:700; color:var(--navy); margin-bottom:8px; display:block; }
+  .callout code, code{
+    background:#eef3f8; padding:2px 7px; border-radius:5px; font-family:'Courier New',monospace;
+    color:var(--navy); font-weight:700;
+  }
+  ul{ padding-left:22px; }
+  li{ margin-bottom:8px; }
+  .intro-box{
+    background:var(--lightYellow); border:1px dashed #D4A017; border-radius:12px;
+    padding:18px 22px; font-style:italic; margin:20px 0;
+  }
+  .badge{
+    display:inline-block; background:var(--coral); color:#fff; font-size:0.75rem; font-weight:700;
+    padding:4px 10px; border-radius:20px; letter-spacing:0.5px; margin-bottom:10px;
+  }
+  .try-box{
+    background:#F4F0FF; border-radius:12px; padding:22px 24px; border:2px dashed #9B7EDE;
+  }
+  .try-box li{ margin-bottom:12px; }
+  .project-box{
+    background:#EAF7EE; border-radius:12px; padding:22px 24px; border:2px dashed var(--green);
+  }
+  .project-box li{ margin-bottom:10px; }
+  footer{
+    text-align:center; padding:30px 20px 50px; color:var(--gray); font-size:0.9rem;
+  }
+  .summary-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px; }
+  @media(max-width:640px){
+    nav.toc ol{ columns:1; }
+    .summary-grid{ grid-template-columns:1fr; }
+    header.hero h1{ font-size:1.6rem; }
+    section{ padding:22px 18px; }
+    .topnav .brand span.brand-text{ display:none; }
+    .topnav a.navlink{ font-size:0.8rem; padding:7px 9px; }
+  }
+  .summary-card{
+    background:#F7FAFC; border-radius:10px; padding:14px 16px; border-left:4px solid var(--orange);
+  }
+  .summary-card b{ color:var(--navy); }
+  a.backtotop{ color:var(--teal); font-size:0.85rem; text-decoration:none; }
+  .scrollwrap{ overflow-x:auto; }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a href="#top" class="brand"><span class="dot"></span><span class="brand-text">Himpunan Data Terstruktur — P2</span></a>
+    <ul>
+      <li><a class="navlink" href="#top">Beranda</a></li>
+      <li><a class="navlink" href="#sec1">1. Jenis Himpunan</a></li>
+      <li><a class="navlink" href="#sec2">2. Himpunan Bagian</a></li>
+      <li><a class="navlink" href="#sec3">3. Data Sekolah</a></li>
+      <li><a class="navlink" href="#sec4">4. Klasifikasi</a></li>
+      <li><a class="navlink" href="#sec5">5. Proyek</a></li>
+      <li><a class="navlink" href="#sec6">6. Latihan</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="kicker">BAB II BERPIKIR KOMPUTASIONAL &bull; TP5 &bull; PERTEMUAN 2 &bull; KELAS VIII</div>
+  <h1>Mendalami Himpunan<br>Data Terstruktur</h1>
+  <p>Materi Belajar Mandiri Siswa — Informatika SMP Negeri 14 Tarakan</p>
+</header>
+
+<nav class="toc">
+  <h2>📑 Daftar Isi</h2>
+  <ol>
+    <li><a href="#sec1">Jenis-Jenis Himpunan</a></li>
+    <li><a href="#sec2">Himpunan Bagian (Subset)</a></li>
+    <li><a href="#sec3">Himpunan di Balik Data Sekolah</a></li>
+    <li><a href="#sec4">Satu Siswa, Banyak Kelompok</a></li>
+    <li><a href="#sec5">Misi: Jadi Perancang Basis Data</a></li>
+    <li><a href="#sec6">Yuk, Coba Sendiri!</a></li>
+  </ol>
+</nav>
+
+<main>
+  <section>
+    <div class="intro-box">
+      Halo lagi, Sobat Informatika! 🚀 Di pertemuan sebelumnya kamu sudah kenalan sama himpunan, notasi,
+      dan diagram Venn dasar. Sekarang saatnya <b>level up</b> — kita akan mendalami jenis-jenis himpunan,
+      kenalan sama konsep himpunan bagian, lihat bagaimana himpunan dipakai untuk menyusun data sekolah
+      yang rapi, dan di akhir kamu akan jadi "arsitek data" sungguhan. Yuk gas!
+    </div>
+  </section>
+
+  <section id="sec1">
+    <h2><span class="num">1</span>Jenis-Jenis Himpunan</h2>
+    <p>Masih ingat kan, himpunan itu kumpulan data dengan ciri yang sama, ditulis pakai notasi
+      <code>{ }</code>? Nah, ternyata himpunan itu punya beberapa jenis, lho!</p>
+    <figure>
+      <img src="images/01_jenis_himpunan.png" alt="Empat jenis himpunan: kosong, semesta, berhingga, tak berhingga">
+      <figcaption>Himpunan kosong, himpunan semesta, himpunan berhingga, dan himpunan tak berhingga</figcaption>
+    </figure>
+    <div class="callout yellow">
+      <span class="label">📖 Definisi Penting</span>
+      <b>Himpunan Kosong (∅)</b> = himpunan yang tidak punya anggota sama sekali.<br>
+      <b>Himpunan Semesta (S)</b> = himpunan besar yang memuat semua objek yang sedang dibahas.<br>
+      <b>Himpunan Berhingga</b> = anggotanya bisa dihitung dan jumlahnya pasti.<br>
+      <b>Himpunan Tak Berhingga</b> = anggotanya tidak terbatas jumlahnya.
+    </div>
+    <p>Yang paling sering kita pakai untuk data sehari-hari adalah himpunan berhingga — misalnya daftar
+      siswa di satu kelas, yang pasti bisa dihitung jumlahnya.</p>
+  </section>
+
+  <section id="sec2">
+    <h2><span class="num">2</span>Konsep Baru: Himpunan Bagian (Subset)</h2>
+    <p>Coba bayangkan: semua anggota ekskul Pramuka di kelasmu itu pasti juga siswa kelas VIII, kan?
+      Nah, dalam bahasa himpunan, kita bilang "himpunan anggota Pramuka" adalah
+      <b>himpunan bagian</b> dari "himpunan siswa kelas VIII".</p>
+    <figure>
+      <img src="images/02_himpunan_bagian.png" alt="Diagram himpunan bagian B subset A">
+      <figcaption>B ⊆ A — setiap anggota ekskul Pramuka (B) pasti anggota siswa kelas VIII (A)</figcaption>
+    </figure>
+    <div class="callout">
+      <span class="label">🧩 Rumus &amp; Notasi</span>
+      <code>B ⊆ A</code> dibaca "B adalah himpunan bagian dari A".<br><br>
+      Syaratnya: <b>SETIAP</b> anggota B juga harus menjadi anggota A. Kalau ada satu saja anggota B
+      yang bukan anggota A, maka B <b>BUKAN</b> himpunan bagian dari A.
+    </div>
+    <h3>Contoh Lain di Sekitarmu</h3>
+    <ul>
+      <li>Himpunan siswa juara kelas ⊆ Himpunan seluruh siswa kelas VIII</li>
+      <li>Himpunan buku fiksi ⊆ Himpunan seluruh buku di perpustakaan sekolah</li>
+      <li>Himpunan hari libur ⊆ Himpunan seluruh hari dalam satu tahun</li>
+    </ul>
+  </section>
+
+  <section id="sec3">
+    <h2><span class="num">3</span>Himpunan di Balik Data Sekolah</h2>
+    <p>Pernah lihat data siswa di komputer Tata Usaha sekolah? Atau katalog buku perpustakaan?
+      Semua itu sebenarnya adalah himpunan data yang disusun rapi dalam bentuk <b>tabel</b>.</p>
+    <figure>
+      <img src="images/03_struktur_data_sekolah.png" alt="Dua tabel data sekolah yang berelasi">
+      <figcaption>Dua tabel data sekolah yang saling berelasi lewat field kunci (NISN)</figcaption>
+    </figure>
+    <div class="callout coral">
+      <span class="label">🗂️ Istilah Penting</span>
+      <b>Field</b> = kolom pada tabel, contohnya Nama, Kelas, NISN.<br>
+      <b>Record</b> = satu baris data, berisi informasi lengkap tentang satu orang/benda.<br>
+      <b>Relasi</b> = hubungan antar-tabel, biasanya lewat satu field kunci yang sama.
+    </div>
+    <p>Kalau dua tabel bisa saling terhubung seperti itu, itulah cikal-bakal <b>basis data</b>
+      (database) — sistem penyimpanan data yang dipakai hampir semua aplikasi, dari e-rapor sekolah
+      sampai aplikasi belanja daring!</p>
+  </section>
+
+  <section id="sec4">
+    <h2><span class="num">4</span>Satu Siswa, Banyak Kelompok</h2>
+    <p>Coba pikirkan: bisa nggak, satu siswa jadi anggota ekskul Pramuka <b>sekaligus</b> anggota PMR?
+      Bisa banget! Nah, ini yang disebut klasifikasi data ke beberapa kategori sekaligus, dan diagram
+      Venn adalah alat yang pas untuk menggambarkannya.</p>
+    <figure>
+      <img src="images/04_klasifikasi_venn_ekskul.png" alt="Klasifikasi siswa ke tiga kelompok ekskul">
+      <figcaption>Klasifikasi siswa ke tiga kelompok ekskul sekaligus — ada yang ikut lebih dari satu!</figcaption>
+    </figure>
+    <p>Lihat posisi nama pada gambar: yang berada di bagian yang saling tumpang tindih artinya ikut
+      lebih dari satu ekskul. Dengan diagram Venn, pengelompokan data yang rumit jadi lebih mudah dilihat!</p>
+  </section>
+
+  <section id="sec5">
+    <h2><span class="num">5</span>Misi: Jadi Perancang Basis Data!</h2>
+    <p>Sekarang giliran kamu dan kelompokmu jadi "arsitek data". Ikuti alur Project Based Learning
+      (PjBL) berikut ini:</p>
+    <figure>
+      <img src="images/05_sintaks_pjbl.png" alt="Enam tahap Project Based Learning">
+      <figcaption>Enam tahap Project Based Learning yang akan kamu jalani</figcaption>
+    </figure>
+    <div class="project-box">
+      <span class="badge">🛠️ Langkah Proyekmu</span>
+      <ul>
+        <li>Pilih tema: <b>Katalog Perpustakaan Sekolah</b> atau <b>Data Anggota Ekskul Sekolah</b>.</li>
+        <li>Tentukan minimal 4 field (atribut) yang mau dicatat.</li>
+        <li>Buat tabel data berisi 5-8 record contoh.</li>
+        <li>Klasifikasikan data ke 2-3 kategori menggunakan diagram Venn.</li>
+        <li>Presentasikan hasil rancanganmu ke teman sekelas!</li>
+      </ul>
+    </div>
+    <p><b>Poin ini penting banget</b> — guru akan menilai langsung hasil rancangan dan presentasi
+      kelompokmu, jadi simak baik-baik penjelasan guru sebelum mulai merancang, ya!</p>
+  </section>
+
+  <section id="sec6">
+    <h2><span class="num">6</span>Yuk, Coba Sendiri!</h2>
+    <p>Sebelum lanjut ke LKPD, coba jawab dulu pertanyaan iseng ini bareng teman sebangkumu:</p>
+    <div class="try-box">
+      <ul>
+        <li>Apakah "himpunan siswa perempuan kelas VIII-A" merupakan himpunan bagian dari "himpunan
+          siswa kelas VIII-A"? Jelaskan!</li>
+        <li>Sebutkan 4 field yang menurutmu penting dicatat dalam tabel data anggota perpustakaan sekolah.</li>
+        <li>Berikan satu contoh himpunan kosong (∅) yang ada di sekitarmu!</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>🌟 Rangkuman Kilat</h2>
+    <div class="summary-grid">
+      <div class="summary-card"><b>Jenis Himpunan</b><br>Kosong (∅), semesta (S), berhingga, dan tak berhingga.</div>
+      <div class="summary-card"><b>Himpunan Bagian</b><br>B ⊆ A jika setiap anggota B juga anggota A.</div>
+      <div class="summary-card"><b>Struktur Data Nyata</b><br>Field (kolom), record (baris), tabel, dan relasi — dasar sebuah basis data.</div>
+      <div class="summary-card"><b>Klasifikasi Data</b><br>Diagram Venn membantu mengelompokkan data ke beberapa kategori sekaligus.</div>
+    </div>
+    <p style="margin-top:22px; font-style:italic; color:var(--gray);">
+      Sampai ketemu di pertemuan berikutnya, ya! Kita bakal belajar memodelkan persoalan logika
+      pakai himpunan — makin seru! 🧠✨
+    </p>
+    <p><a class="backtotop" href="#top">↑ Kembali ke atas</a></p>
+  </section>
+</main>
+
+<footer>
+  Informatika Kelas VIII — Bab II Berpikir Komputasional — TP5 (Pertemuan Kedua)<br>
+  SMP Negeri 14 Tarakan
+</footer>
+
+<script>
+  // Highlight active top-menu link based on which section is in view
+  (function(){
+    var links = Array.prototype.slice.call(document.querySelectorAll('.topnav a.navlink'));
+    var targets = links.map(function(a){
+      var id = a.getAttribute('href').replace('#','');
+      return document.getElementById(id);
+    });
+    function onScroll(){
+      var pos = window.scrollY + 90;
+      var activeIdx = 0;
+      for (var i = 0; i < targets.length; i++){
+        if (targets[i] && targets[i].offsetTop <= pos) activeIdx = i;
+      }
+      links.forEach(function(a, i){ a.classList.toggle('active', i === activeIdx); });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+</script>
+</body>
+</html>

@@ -8,7 +8,7 @@ import { sanitizeRichText } from "@/lib/sanitize-html";
 import type { SoalAttempt, SoalJenis } from "@/types/soal";
 import type { SoalEssai, SoalEssaiAttempt } from "@/types/soal-essai";
 import type { Kelas } from "@/types/materi";
-import { Search, RotateCcw, Loader2, ShieldAlert, CheckCircle2, Clock3, Eye, X, Sparkles } from "lucide-react";
+import { Search, RotateCcw, Loader2, ShieldAlert, CheckCircle2, Clock3, Eye, X, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 
 export type LaporanRow = SoalAttempt & { nama: string; rombel: string | null };
 export type LaporanEssaiRow = SoalEssaiAttempt & { nama: string; rombel: string | null };
@@ -45,15 +45,91 @@ export default function AdminLaporanClient({
   const [mengoreksi, setMengoreksi] = useState(false);
   const [koreksiError, setKoreksiError] = useState<string | null>(null);
 
-  const items = laporan
+  const [rombel, setRombel] = useState("");
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
+  const rowsAktif: { kelas: Kelas; jenis: SoalJenis; rombel: string | null }[] =
+    tipeAktif === "pilihan_ganda" ? laporan : laporanEssai;
+  const rombelOptions = Array.from(
+    new Set(
+      rowsAktif
+        .filter((r) => r.kelas === kelas && r.jenis === jenis)
+        .map((r) => r.rombel)
+        .filter((v): v is string => !!v)
+    )
+  ).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+
+  const semuaItems = laporan
     .filter((r) => r.kelas === kelas && r.jenis === jenis)
+    .filter((r) => !rombel || r.rombel === rombel)
     .filter((r) => r.nama.toLowerCase().includes(search.toLowerCase()))
     .sort((a, b) => new Date(b.mulai_at).getTime() - new Date(a.mulai_at).getTime());
 
-  const itemsEssai = laporanEssai
+  const semuaItemsEssai = laporanEssai
     .filter((r) => r.kelas === kelas && r.jenis === jenis)
+    .filter((r) => !rombel || r.rombel === rombel)
     .filter((r) => r.nama.toLowerCase().includes(search.toLowerCase()))
     .sort((a, b) => new Date(b.mulai_at).getTime() - new Date(a.mulai_at).getTime());
+
+  const totalItems = tipeAktif === "pilihan_ganda" ? semuaItems.length : semuaItemsEssai.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
+  const currentPage = Math.min(page, totalPages);
+  const offset = (currentPage - 1) * pageSize;
+  const items = semuaItems.slice(offset, offset + pageSize);
+  const itemsEssai = semuaItemsEssai.slice(offset, offset + pageSize);
+
+  function resetFilter(fn: () => void) {
+    fn();
+    setPage(1);
+  }
+
+  function renderPagination() {
+    if (totalItems === 0) return null;
+    const dari = offset + 1;
+    const sampai = Math.min(offset + pageSize, totalItems);
+    return (
+      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-t border-slate-100 dark:border-slate-700 text-sm text-slate-500 dark:text-slate-400">
+        <div className="flex items-center gap-3">
+          <span>
+            Menampilkan {dari}-{sampai} dari {totalItems}
+          </span>
+          <select
+            value={pageSize}
+            onChange={(e) => resetFilter(() => setPageSize(Number(e.target.value)))}
+            className="rounded-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 px-2 py-1 text-xs text-slate-700 dark:text-slate-200"
+          >
+            {[10, 25, 50, 100].map((n) => (
+              <option key={n} value={n}>
+                {n} / halaman
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="flex items-center gap-1">
+          <button
+            onClick={() => setPage(currentPage - 1)}
+            disabled={currentPage <= 1}
+            className="inline-flex items-center gap-1 rounded-md border border-slate-300 dark:border-slate-600 px-2.5 py-1.5 text-xs font-medium hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-40 disabled:hover:bg-transparent"
+          >
+            <ChevronLeft className="h-3.5 w-3.5" />
+            Sebelumnya
+          </button>
+          <span className="px-2 text-xs">
+            Halaman {currentPage} / {totalPages}
+          </span>
+          <button
+            onClick={() => setPage(currentPage + 1)}
+            disabled={currentPage >= totalPages}
+            className="inline-flex items-center gap-1 rounded-md border border-slate-300 dark:border-slate-600 px-2.5 py-1.5 text-xs font-medium hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-40 disabled:hover:bg-transparent"
+          >
+            Berikutnya
+            <ChevronRight className="h-3.5 w-3.5" />
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   async function handleReset() {
     if (!resetTarget) return;
@@ -121,7 +197,12 @@ export default function AdminLaporanClient({
         {TIPE_LIST.map((t) => (
           <button
             key={t.value}
-            onClick={() => setTipeAktif(t.value)}
+            onClick={() =>
+              resetFilter(() => {
+                setTipeAktif(t.value);
+                setRombel("");
+              })
+            }
             className={`rounded-lg px-3.5 py-1.5 text-sm font-medium transition-colors ${
               tipeAktif === t.value
                 ? "bg-indigo-600 text-white"
@@ -137,7 +218,12 @@ export default function AdminLaporanClient({
         {JENIS_LIST.map((j) => (
           <button
             key={j.value}
-            onClick={() => setJenis(j.value)}
+            onClick={() =>
+              resetFilter(() => {
+                setJenis(j.value);
+                setRombel("");
+              })
+            }
             className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px transition-colors ${
               jenis === j.value
                 ? "border-indigo-600 text-indigo-600 dark:text-indigo-400"
@@ -154,7 +240,12 @@ export default function AdminLaporanClient({
           {KELAS_LIST.map((k) => (
             <button
               key={k}
-              onClick={() => setKelas(k)}
+              onClick={() =>
+                resetFilter(() => {
+                  setKelas(k);
+                  setRombel("");
+                })
+              }
               className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
                 kelas === k
                   ? "bg-indigo-600 text-white"
@@ -166,11 +257,24 @@ export default function AdminLaporanClient({
           ))}
         </div>
 
+        <select
+          value={rombel}
+          onChange={(e) => resetFilter(() => setRombel(e.target.value))}
+          className="rounded-lg border border-slate-300 dark:border-slate-600 px-3 py-2 text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          <option value="">Semua Kelas {kelasLabel(kelas).replace("Kelas ", "")}</option>
+          {rombelOptions.map((r) => (
+            <option key={r} value={r}>
+              {r}
+            </option>
+          ))}
+        </select>
+
         <div className="relative max-w-xs w-full">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 dark:text-slate-500" />
           <input
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => resetFilter(() => setSearch(e.target.value))}
             placeholder="Cari nama siswa..."
             className="w-full rounded-lg border border-slate-300 dark:border-slate-600 pl-9 pr-3 py-2 text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
@@ -209,7 +313,7 @@ export default function AdminLaporanClient({
                       key={r.id}
                       className="border-b border-slate-100 dark:border-slate-700/60 last:border-0 hover:bg-slate-50/60 dark:hover:bg-slate-700"
                     >
-                      <td className="px-4 py-3 text-slate-500 dark:text-slate-400">{idx + 1}</td>
+                      <td className="px-4 py-3 text-slate-500 dark:text-slate-400">{offset + idx + 1}</td>
                       <td className="px-4 py-3 font-medium text-slate-800 dark:text-slate-200">{r.nama}</td>
                       <td className="px-4 py-3 text-slate-600 dark:text-slate-300">{r.rombel || "-"}</td>
                       <td className="px-4 py-3">
@@ -262,6 +366,7 @@ export default function AdminLaporanClient({
               </tbody>
             </table>
           </div>
+          {renderPagination()}
         </div>
       ) : (
         <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
@@ -294,7 +399,7 @@ export default function AdminLaporanClient({
                       key={r.id}
                       className="border-b border-slate-100 dark:border-slate-700/60 last:border-0 hover:bg-slate-50/60 dark:hover:bg-slate-700"
                     >
-                      <td className="px-4 py-3 text-slate-500 dark:text-slate-400">{idx + 1}</td>
+                      <td className="px-4 py-3 text-slate-500 dark:text-slate-400">{offset + idx + 1}</td>
                       <td className="px-4 py-3 font-medium text-slate-800 dark:text-slate-200">{r.nama}</td>
                       <td className="px-4 py-3 text-slate-600 dark:text-slate-300">{r.rombel || "-"}</td>
                       <td className="px-4 py-3">
@@ -359,6 +464,7 @@ export default function AdminLaporanClient({
               </tbody>
             </table>
           </div>
+          {renderPagination()}
         </div>
       )}
 

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Himpunan Data Terstruktur — Materi Siswa</title>
+<style>
+  :root{
+    --navy:#1E3A5F; --teal:#2E86AB; --orange:#F5A623; --coral:#F26C4F;
+    --green:#1E7A4C; --light:#EAF2F8; --lightTeal:#E7F5F4; --lightYellow:#FFF7DE;
+    --gray:#5A6472; --text:#22303F; --maxw:880px;
+  }
+  *{box-sizing:border-box;}
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; font-family:'Segoe UI', Tahoma, Verdana, sans-serif; color:var(--text);
+    background:#f7fafc; line-height:1.65; padding-top:56px;
+  }
+  /* ===== Top Menu (always visible / sticky) ===== */
+  .topnav{
+    position:fixed; top:0; left:0; right:0; height:56px; z-index:1000;
+    background:var(--navy); box-shadow:0 2px 10px rgba(0,0,0,0.15);
+    display:flex; align-items:center;
+  }
+  .topnav .topnav-inner{
+    max-width:1100px; margin:0 auto; width:100%; display:flex; align-items:center;
+    justify-content:space-between; padding:0 18px; gap:14px;
+  }
+  .topnav .brand{
+    color:#fff; font-weight:700; font-size:0.95rem; white-space:nowrap; text-decoration:none;
+    display:flex; align-items:center; gap:8px; flex:none;
+  }
+  .topnav .brand .dot{ width:9px; height:9px; border-radius:50%; background:var(--orange); flex:none; }
+  .topnav ul{
+    list-style:none; margin:0; padding:0; display:flex; gap:4px; overflow-x:auto;
+    scrollbar-width:none; white-space:nowrap;
+  }
+  .topnav ul::-webkit-scrollbar{ display:none; }
+  .topnav li{ flex:none; }
+  .topnav a.navlink{
+    display:inline-block; color:#CADCFC; text-decoration:none; font-size:0.86rem;
+    padding:8px 12px; border-radius:8px; transition:background 0.15s, color 0.15s;
+  }
+  .topnav a.navlink:hover{ background:rgba(255,255,255,0.1); color:#fff; }
+  .topnav a.navlink.active{ background:var(--orange); color:var(--navy); font-weight:700; }
+  header.hero{
+    background:linear-gradient(135deg,var(--navy) 0%, #274d78 100%);
+    color:#fff; padding:56px 20px 70px; text-align:center; position:relative; overflow:hidden;
+  }
+  header.hero::before{
+    content:""; position:absolute; top:-80px; right:-80px; width:280px; height:280px;
+    border-radius:50%; background:rgba(255,255,255,0.06);
+  }
+  header.hero .kicker{
+    color:var(--orange); letter-spacing:2px; font-weight:700; font-size:0.85rem; margin-bottom:10px;
+  }
+  header.hero h1{ font-size:2.1rem; margin:0 0 8px; }
+  header.hero p{ color:#CADCFC; font-size:1.05rem; margin:0; }
+  nav.toc{
+    max-width:var(--maxw); margin:-40px auto 30px; background:#fff; border-radius:14px;
+    box-shadow:0 6px 24px rgba(30,58,95,0.12); padding:20px 26px; position:relative; z-index:2;
+  }
+  nav.toc h2{ margin:0 0 10px; font-size:1rem; color:var(--navy); }
+  nav.toc ol{ margin:0; padding-left:20px; columns:2; gap:20px; }
+  nav.toc a{ color:var(--teal); text-decoration:none; font-size:0.95rem; }
+  nav.toc a:hover{ text-decoration:underline; }
+  main{ max-width:var(--maxw); margin:0 auto; padding:10px 20px 60px; }
+  section{ background:#fff; border-radius:14px; padding:30px 32px; margin-bottom:24px;
+    box-shadow:0 2px 10px rgba(30,58,95,0.06); scroll-margin-top:72px; }
+  section h2{
+    color:var(--navy); font-size:1.5rem; margin-top:0; display:flex; align-items:center; gap:10px;
+  }
+  section h2 .num{
+    background:var(--teal); color:#fff; width:34px; height:34px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-size:1rem; flex:none;
+  }
+  section h3{ color:var(--teal); font-size:1.15rem; margin-top:26px; }
+  p{ font-size:1.02rem; }
+  figure{ margin:20px 0; text-align:center; }
+  figure img{ max-width:100%; border-radius:10px; box-shadow:0 4px 16px rgba(0,0,0,0.08); }
+  figcaption{ font-size:0.9rem; color:var(--gray); font-style:italic; margin-top:10px; }
+  .callout{
+    border-radius:12px; padding:20px 22px; margin:20px 0; border-left:5px solid var(--teal);
+    background:var(--lightTeal);
+  }
+  .callout.yellow{ border-left-color:#D4A017; background:var(--lightYellow); }
+  .callout.coral{ border-left-color:var(--coral); background:#FFF0ED; }
+  .callout .label{ font-weight:700; color:var(--navy); margin-bottom:8px; display:block; }
+  .callout code, code{
+    background:#eef3f8; padding:2px 7px; border-radius:5px; font-family:'Courier New',monospace;
+    color:var(--navy); font-weight:700;
+  }
+  ul{ padding-left:22px; }
+  li{ margin-bottom:8px; }
+  .intro-box{
+    background:var(--lightYellow); border:1px dashed #D4A017; border-radius:12px;
+    padding:18px 22px; font-style:italic; margin:20px 0;
+  }
+  .badge{
+    display:inline-block; background:var(--coral); color:#fff; font-size:0.75rem; font-weight:700;
+    padding:4px 10px; border-radius:20px; letter-spacing:0.5px; margin-bottom:10px;
+  }
+  .try-box{
+    background:#F4F0FF; border-radius:12px; padding:22px 24px; border:2px dashed #9B7EDE;
+  }
+  .try-box li{ margin-bottom:12px; }
+  footer{
+    text-align:center; padding:30px 20px 50px; color:var(--gray); font-size:0.9rem;
+  }
+  .summary-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px; }
+  @media(max-width:640px){
+    nav.toc ol{ columns:1; }
+    .summary-grid{ grid-template-columns:1fr; }
+    header.hero h1{ font-size:1.6rem; }
+    section{ padding:22px 18px; }
+    .topnav .brand span.brand-text{ display:none; }
+    .topnav a.navlink{ font-size:0.8rem; padding:7px 9px; }
+  }
+  .summary-card{
+    background:#F7FAFC; border-radius:10px; padding:14px 16px; border-left:4px solid var(--orange);
+  }
+  .summary-card b{ color:var(--navy); }
+  a.backtotop{ color:var(--teal); font-size:0.85rem; text-decoration:none; }
+  .scrollwrap{ overflow-x:auto; }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a href="#top" class="brand"><span class="dot"></span><span class="brand-text">Himpunan Data Terstruktur</span></a>
+    <ul>
+      <li><a class="navlink" href="#top">Beranda</a></li>
+      <li><a class="navlink" href="#sec1">1. Data Rapi?</a></li>
+      <li><a class="navlink" href="#sec2">2. Himpunan</a></li>
+      <li><a class="navlink" href="#sec3">3. Diagram Venn</a></li>
+      <li><a class="navlink" href="#sec4">4. Gabungan &amp; Irisan</a></li>
+      <li><a class="navlink" href="#sec5">5. Field &amp; Record</a></li>
+      <li><a class="navlink" href="#sec6">6. Latihan</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="kicker">BAB II BERPIKIR KOMPUTASIONAL &bull; TP 5 &bull; KELAS VIII</div>
+  <h1>Himpunan Data Terstruktur<br>dalam Kehidupan Sehari-hari</h1>
+  <p>Materi Belajar Mandiri Siswa — Informatika SMP Negeri 14 Tarakan</p>
+</header>
+
+<nav class="toc">
+  <h2>📑 Daftar Isi</h2>
+  <ol>
+    <li><a href="#sec1">Kenapa Data Perlu Dirapikan?</a></li>
+    <li><a href="#sec2">Apa Itu Himpunan?</a></li>
+    <li><a href="#sec3">Melihat Himpunan dengan Diagram Venn</a></li>
+    <li><a href="#sec4">Gabungan &amp; Irisan</a></li>
+    <li><a href="#sec5">Bekal Menuju Data yang Lebih Canggih</a></li>
+    <li><a href="#sec6">Yuk, Coba Sendiri!</a></li>
+  </ol>
+</nav>
+
+<main>
+  <section>
+    <div class="intro-box">
+      Halo, Sobat Informatika! 👋 Pernah nggak sih kamu bingung nyari kaos kaki di lemari yang isinya
+      campur aduk sama baju, buku, dan mainan? Nah, di halaman ini kita bakal belajar cara "merapikan"
+      data biar nggak bikin pusing — namanya <b>himpunan</b>. Yuk, simak sampai habis, seru kok!
+    </div>
+  </section>
+
+  <section id="sec1">
+    <h2><span class="num">1</span>Kenapa Sih Data Perlu Dirapikan?</h2>
+    <p>Coba bayangkan gurumu punya setumpuk kertas berisi nama, kelas, dan hobi seluruh siswa — tapi
+      ditulis acak, nggak berurutan, campur aduk. Susah banget kan kalau mau cari "siapa aja yang suka basket"?</p>
+    <p>Nah, kalau data itu disusun rapi berdasarkan kategori tertentu (misalnya dikelompokkan per hobi),
+      kita jadi gampang banget mencarinya. Data yang tersusun rapi seperti ini disebut
+      <b>data terstruktur</b>.</p>
+    <figure>
+      <img src="images/01_data_terstruktur_vs_tidak.png" alt="Perbandingan data tidak terstruktur dan data terstruktur">
+      <figcaption>Kiri: data acak (tidak terstruktur) — Kanan: data rapi dalam tabel (terstruktur)</figcaption>
+    </figure>
+    <div class="callout yellow">
+      <span class="label">💡 Kata Kunci</span>
+      <b>Data Terstruktur</b> = data yang disusun rapi berdasarkan kriteria tertentu, gampang dicari &amp; dianalisis.<br>
+      <b>Data Tidak Terstruktur</b> = data yang acak, belum dikelompokkan.
+    </div>
+  </section>
+
+  <section id="sec2">
+    <h2><span class="num">2</span>Apa Itu Himpunan?</h2>
+    <p>Salah satu cara paling dasar untuk merapikan data adalah dengan membuat <b>himpunan</b>. Simpelnya begini:</p>
+    <div class="callout">
+      <span class="label">📖 Definisi</span>
+      Himpunan adalah kumpulan benda atau data yang punya kesamaan ciri/karakteristik tertentu,
+      dan anggotanya jelas — nggak ambigu.
+    </div>
+    <p>Contoh yang deket banget sama kehidupan kita sehari-hari, nih:</p>
+    <ul>
+      <li>Himpunan siswa kelas VIII-A yang suka sepak bola</li>
+      <li>Himpunan warna favorit teman sekelasmu</li>
+      <li>Himpunan mata pelajaran yang kamu pelajari hari Senin</li>
+      <li>Himpunan anggota ekskul Pramuka di sekolahmu</li>
+    </ul>
+    <figure>
+      <img src="images/03_himpunan_hobi_siswa.png" alt="Contoh himpunan hobi siswa kelas VIII">
+      <figcaption>Contoh: mengelompokkan siswa kelas VIII berdasarkan hobi menjadi tiga himpunan</figcaption>
+    </figure>
+    <h3>Cara Menulis Himpunan</h3>
+    <p>Anggota sebuah himpunan biasanya dituliskan di dalam tanda kurung kurawal <code>{ }</code>,
+      dipisahkan dengan koma. Contoh:</p>
+    <div class="callout">
+      <span class="label">✏️ Contoh Penulisan</span>
+      <code>Hobi Andi = {membaca, sepak bola, menggambar}</code><br><br>
+      <code>Warna Favorit Kelas = {merah, biru, hijau, kuning}</code>
+    </div>
+  </section>
+
+  <section id="sec3">
+    <h2><span class="num">3</span>Melihat Himpunan Lewat Gambar: Diagram Venn</h2>
+    <p>Biar makin gampang dibayangkan, himpunan sering digambar pakai lingkaran-lingkaran yang disebut
+      <b>Diagram Venn</b>. Persegi panjang di luar disebut "semesta" — artinya seluruh anggota yang
+      sedang kita bicarakan.</p>
+    <figure>
+      <img src="images/02_diagram_venn_dasar.png" alt="Diagram Venn dasar himpunan A dan B">
+      <figcaption>Diagram Venn: Himpunan A dan B di dalam Semesta S</figcaption>
+    </figure>
+    <p>Di gambar itu, ada bagian yang saling tumpang tindih (<i>overlap</i>) di tengah. Nah, bagian itu
+      berarti ada anggota yang masuk di <b>kedua</b> himpunan sekaligus. Kece kan?</p>
+  </section>
+
+  <section id="sec4">
+    <h2><span class="num">4</span>Dua Trik Seru dengan Himpunan: Gabungan &amp; Irisan</h2>
+    <p>Yuk kita coba kasus ini: Adik suka buah jeruk, mangga, dan jambu. Kakak suka buah rambutan,
+      mangga, duku, dan buah naga. Ada dua pertanyaan seru nih:</p>
+    <ul>
+      <li>"Buah apa aja yang disukai adik <b>ATAU</b> kakak?" → ini namanya <b>gabungan (∪)</b></li>
+      <li>"Buah apa aja yang disukai adik <b>DAN</b> kakak (dua-duanya)?" → ini namanya <b>irisan (∩)</b></li>
+    </ul>
+    <figure>
+      <img src="images/04_operasi_gabungan_irisan.png" alt="Ilustrasi gabungan dan irisan himpunan">
+      <figcaption>Irisan (kiri) vs Gabungan (kanan) dari himpunan buah kesukaan adik &amp; kakak</figcaption>
+    </figure>
+    <div class="callout coral">
+      <span class="label">🎯 Jawabannya</span>
+      <b>Gabungan</b> = {jeruk, mangga, jambu, rambutan, duku, buah naga} — semua buah, tanpa mangga
+      ditulis dua kali!<br><br>
+      <b>Irisan</b> = {mangga} — cuma buah yang disukai keduanya.
+    </div>
+  </section>
+
+  <section id="sec5">
+    <h2><span class="num">5</span>Himpunan itu Bekal buat Belajar Data yang Lebih Canggih!</h2>
+    <p>Kalau kamu perhatikan, konsep himpunan itu sebenarnya mirip banget sama tabel data yang biasa
+      kita lihat di aplikasi seperti Excel! Kolom itu ibarat kategori (<i>field</i>), dan baris itu satu
+      data lengkap (<i>record</i>).</p>
+    <figure>
+      <img src="images/05_field_record_tabel.png" alt="Field dan record dalam tabel data">
+      <figcaption>FIELD (kolom) dan RECORD (baris) dalam tabel data</figcaption>
+    </figure>
+    <p>Jadi, semakin jago kamu mengelompokkan data pakai konsep himpunan, semakin gampang juga nanti
+      kamu belajar mengolah data yang lebih besar dan kompleks. Keren, kan?</p>
+  </section>
+
+  <section id="sec6">
+    <h2><span class="num">6</span>Yuk, Coba Sendiri!</h2>
+    <p>Sebelum lanjut ke LKPD, coba jawab dulu pertanyaan iseng ini bareng teman sebangkumu:</p>
+    <div class="try-box">
+      <ul>
+        <li>Sebutkan 3 contoh himpunan yang ada di sekitarmu (selain contoh di halaman ini)!</li>
+        <li>Tuliskan anggota himpunan "alat tulis yang ada di tasmu sekarang" menggunakan notasi <code>{ }</code>.</li>
+        <li>Menurutmu, kenapa sih data yang terstruktur itu lebih "enak" dipakai dibanding data yang berantakan?</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>🌟 Rangkuman Kilat</h2>
+    <div class="summary-grid">
+      <div class="summary-card"><b>Data Terstruktur</b><br>Data yang rapi &amp; terorganisasi → gampang dicari, dikelompokkan, dianalisis.</div>
+      <div class="summary-card"><b>Himpunan</b><br>Kumpulan data dengan ciri yang sama, ditulis dengan notasi <code>{ }</code>.</div>
+      <div class="summary-card"><b>Diagram Venn</b><br>Cara visual menggambarkan himpunan.</div>
+      <div class="summary-card"><b>Gabungan &amp; Irisan</b><br>Gabungan (∪) = semua anggota. Irisan (∩) = anggota yang sama-sama dimiliki.</div>
+    </div>
+    <p style="margin-top:22px; font-style:italic; color:var(--gray);">
+      Sampai ketemu di pertemuan berikutnya, ya! Kita bakal belajar cara memakai himpunan buat
+      memecahkan teka-teki logika seru. 🔍✨
+    </p>
+    <p><a class="backtotop" href="#top">↑ Kembali ke atas</a></p>
+  </section>
+</main>
+
+<footer>
+  Informatika Kelas VIII — Bab II Berpikir Komputasional — TP 5<br>
+  SMP Negeri 14 Tarakan
+</footer>
+
+<script>
+  // Highlight active top-menu link based on which section is in view
+  (function(){
+    var links = Array.prototype.slice.call(document.querySelectorAll('.topnav a.navlink'));
+    var targets = links.map(function(a){
+      var id = a.getAttribute('href').replace('#','');
+      return document.getElementById(id);
+    });
+    function onScroll(){
+      var pos = window.scrollY + 90;
+      var activeIdx = 0;
+      for (var i = 0; i < targets.length; i++){
+        if (targets[i] && targets[i].offsetTop <= pos) activeIdx = i;
+      }
+      links.forEach(function(a, i){ a.classList.toggle('active', i === activeIdx); });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+</script>
+</body>
+</html>

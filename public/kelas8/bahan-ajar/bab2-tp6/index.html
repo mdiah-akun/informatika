@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memodelkan Logika dengan Himpunan — Materi Siswa</title>
+<style>
+  :root{
+    --navy:#1E3A5F; --teal:#2E86AB; --orange:#F5A623; --coral:#F26C4F;
+    --green:#1E7A4C; --light:#EAF2F8; --lightTeal:#E7F5F4; --lightYellow:#FFF7DE;
+    --gray:#5A6472; --text:#22303F; --maxw:880px;
+  }
+  *{box-sizing:border-box;}
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; font-family:'Segoe UI', Tahoma, Verdana, sans-serif; color:var(--text);
+    background:#f7fafc; line-height:1.65; padding-top:56px;
+  }
+  /* ===== Top Menu (always visible / sticky) ===== */
+  .topnav{
+    position:fixed; top:0; left:0; right:0; height:56px; z-index:1000;
+    background:var(--navy); box-shadow:0 2px 10px rgba(0,0,0,0.15);
+    display:flex; align-items:center;
+  }
+  .topnav .topnav-inner{
+    max-width:1100px; margin:0 auto; width:100%; display:flex; align-items:center;
+    justify-content:space-between; padding:0 18px; gap:14px;
+  }
+  .topnav .brand{
+    color:#fff; font-weight:700; font-size:0.95rem; white-space:nowrap; text-decoration:none;
+    display:flex; align-items:center; gap:8px; flex:none;
+  }
+  .topnav .brand .dot{ width:9px; height:9px; border-radius:50%; background:var(--orange); flex:none; }
+  .topnav ul{
+    list-style:none; margin:0; padding:0; display:flex; gap:4px; overflow-x:auto;
+    scrollbar-width:none; white-space:nowrap;
+  }
+  .topnav ul::-webkit-scrollbar{ display:none; }
+  .topnav li{ flex:none; }
+  .topnav a.navlink{
+    display:inline-block; color:#CADCFC; text-decoration:none; font-size:0.86rem;
+    padding:8px 12px; border-radius:8px; transition:background 0.15s, color 0.15s;
+  }
+  .topnav a.navlink:hover{ background:rgba(255,255,255,0.1); color:#fff; }
+  .topnav a.navlink.active{ background:var(--orange); color:var(--navy); font-weight:700; }
+  header.hero{
+    background:linear-gradient(135deg,var(--navy) 0%, #274d78 100%);
+    color:#fff; padding:56px 20px 70px; text-align:center; position:relative; overflow:hidden;
+  }
+  header.hero::before{
+    content:""; position:absolute; top:-80px; right:-80px; width:280px; height:280px;
+    border-radius:50%; background:rgba(255,255,255,0.06);
+  }
+  header.hero .kicker{
+    color:var(--orange); letter-spacing:2px; font-weight:700; font-size:0.85rem; margin-bottom:10px;
+  }
+  header.hero h1{ font-size:2.0rem; margin:0 0 8px; }
+  header.hero p{ color:#CADCFC; font-size:1.05rem; margin:0; }
+  nav.toc{
+    max-width:var(--maxw); margin:-40px auto 30px; background:#fff; border-radius:14px;
+    box-shadow:0 6px 24px rgba(30,58,95,0.12); padding:20px 26px; position:relative; z-index:2;
+  }
+  nav.toc h2{ margin:0 0 10px; font-size:1rem; color:var(--navy); }
+  nav.toc ol{ margin:0; padding-left:20px; columns:2; gap:20px; }
+  nav.toc a{ color:var(--teal); text-decoration:none; font-size:0.95rem; }
+  nav.toc a:hover{ text-decoration:underline; }
+  main{ max-width:var(--maxw); margin:0 auto; padding:10px 20px 60px; }
+  section{ background:#fff; border-radius:14px; padding:30px 32px; margin-bottom:24px;
+    box-shadow:0 2px 10px rgba(30,58,95,0.06); scroll-margin-top:72px; }
+  section h2{
+    color:var(--navy); font-size:1.5rem; margin-top:0; display:flex; align-items:center; gap:10px;
+  }
+  section h2 .num{
+    background:var(--teal); color:#fff; width:34px; height:34px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-size:1rem; flex:none;
+  }
+  section h3{ color:var(--teal); font-size:1.15rem; margin-top:26px; }
+  p{ font-size:1.02rem; }
+  figure{ margin:20px 0; text-align:center; }
+  figure img{ max-width:100%; border-radius:10px; box-shadow:0 4px 16px rgba(0,0,0,0.08); }
+  figcaption{ font-size:0.9rem; color:var(--gray); font-style:italic; margin-top:10px; }
+  .callout{
+    border-radius:12px; padding:20px 22px; margin:20px 0; border-left:5px solid var(--teal);
+    background:var(--lightTeal);
+  }
+  .callout.yellow{ border-left-color:#D4A017; background:var(--lightYellow); }
+  .callout.coral{ border-left-color:var(--coral); background:#FFF0ED; }
+  .callout .label{ font-weight:700; color:var(--navy); margin-bottom:8px; display:block; }
+  .callout code, code{
+    background:#eef3f8; padding:2px 7px; border-radius:5px; font-family:'Courier New',monospace;
+    color:var(--navy); font-weight:700;
+  }
+  ul{ padding-left:22px; }
+  li{ margin-bottom:8px; }
+  .intro-box{
+    background:var(--lightYellow); border:1px dashed #D4A017; border-radius:12px;
+    padding:18px 22px; font-style:italic; margin:20px 0;
+  }
+  .try-box{
+    background:#F4F0FF; border-radius:12px; padding:22px 24px; border:2px dashed #9B7EDE;
+  }
+  .try-box li{ margin-bottom:12px; }
+  .steps{ counter-reset:stepnum; padding-left:0; list-style:none; }
+  .steps li{
+    counter-increment:stepnum; margin-bottom:16px; padding-left:48px; position:relative;
+  }
+  .steps li::before{
+    content:counter(stepnum); position:absolute; left:0; top:-2px; width:32px; height:32px;
+    background:var(--orange); color:var(--navy); font-weight:700; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  footer{
+    text-align:center; padding:30px 20px 50px; color:var(--gray); font-size:0.9rem;
+  }
+  .summary-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px; }
+  @media(max-width:640px){
+    nav.toc ol{ columns:1; }
+    .summary-grid{ grid-template-columns:1fr; }
+    header.hero h1{ font-size:1.5rem; }
+    section{ padding:22px 18px; }
+    .topnav .brand span.brand-text{ display:none; }
+    .topnav a.navlink{ font-size:0.8rem; padding:7px 9px; }
+  }
+  .summary-card{
+    background:#F7FAFC; border-radius:10px; padding:14px 16px; border-left:4px solid var(--orange);
+  }
+  .summary-card b{ color:var(--navy); }
+  a.backtotop{ color:var(--teal); font-size:0.85rem; text-decoration:none; }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a href="#top" class="brand"><span class="dot"></span><span class="brand-text">Logika dengan Himpunan</span></a>
+    <ul>
+      <li><a class="navlink" href="#top">Beranda</a></li>
+      <li><a class="navlink" href="#sec1">1. Ingat Lagi</a></li>
+      <li><a class="navlink" href="#sec2">2. Empat Jurus</a></li>
+      <li><a class="navlink" href="#sec3">3. Kardinalitas</a></li>
+      <li><a class="navlink" href="#sec4">4. Hotel Favorit</a></li>
+      <li><a class="navlink" href="#sec5">5. Pupuk Ajaib</a></li>
+      <li><a class="navlink" href="#sec6">6. Kenapa Penting?</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="kicker">BAB II BERPIKIR KOMPUTASIONAL &bull; TP 6 &bull; PERTEMUAN 2 &bull; KELAS VIII</div>
+  <h1>Memodelkan Persoalan Logika<br>dalam Bentuk Himpunan</h1>
+  <p>Materi Belajar Mandiri Siswa — Informatika SMP Negeri 14 Tarakan</p>
+</header>
+
+<nav class="toc">
+  <h2>📑 Daftar Isi</h2>
+  <ol>
+    <li><a href="#sec1">Yuk, Ingat Lagi Sedikit</a></li>
+    <li><a href="#sec2">Empat Jurus Operasi Himpunan</a></li>
+    <li><a href="#sec3">Kardinalitas (Menghitung Anggota)</a></li>
+    <li><a href="#sec4">Misi 1: Memilih Hotel Favorit</a></li>
+    <li><a href="#sec5">Misi 2: Teka-Teki Pupuk Ajaib</a></li>
+    <li><a href="#sec6">Kenapa Ini Penting?</a></li>
+  </ol>
+</nav>
+
+<main>
+  <section>
+    <div class="intro-box">
+      Halo lagi, Sobat Informatika! 🚀 Di pertemuan sebelumnya kamu udah kenalan sama himpunan.
+      Sekarang saatnya <b>level up</b> — kita bakal pakai himpunan buat memecahkan teka-teki dan
+      masalah nyata yang lebih seru dan menantang. Siap? Yuk gas!
+    </div>
+  </section>
+
+  <section id="sec1">
+    <h2><span class="num">1</span>Yuk, Ingat Lagi Sedikit</h2>
+    <p>Masih ingat kan, himpunan itu kumpulan data dengan ciri yang sama, ditulis pakai notasi
+      <code>{ }</code>? Dan diagram Venn itu cara kita menggambarkan himpunan pakai lingkaran-lingkaran?
+      Nah, sekarang kita bakal belajar 4 "jurus" baru yang bisa dilakukan pada himpunan.</p>
+  </section>
+
+  <section id="sec2">
+    <h2><span class="num">2</span>Empat Jurus Operasi Himpunan</h2>
+    <figure>
+      <img src="images/01_operasi_himpunan_lengkap.png" alt="Gabungan, irisan, komplemen, dan selisih">
+      <figcaption>Gabungan, Irisan, Komplemen, dan Selisih</figcaption>
+    </figure>
+    <div class="callout">
+      <span class="label">📖 Definisi Lengkap</span>
+      <b>Gabungan (A ∪ B)</b> = semua anggota dari A atau B (tanpa duplikat).<br>
+      <b>Irisan (A ∩ B)</b> = anggota yang dimiliki A dan B sekaligus.<br>
+      <b>Komplemen (Aᶜ)</b> = semua anggota semesta yang BUKAN anggota A.<br>
+      <b>Selisih (A − B)</b> = anggota A yang TIDAK dimiliki B.
+    </div>
+    <p>Nah, si komplemen dan selisih ini jurus baru yang belum kita bahas di pertemuan lalu.
+      Komplemen itu kayak "lawan" dari suatu himpunan, dan selisih itu "anggota eksklusif" yang
+      cuma dimiliki satu himpunan aja.</p>
+  </section>
+
+  <section id="sec3">
+    <h2><span class="num">3</span>Berapa Banyak Sih Anggotanya? (Kardinalitas)</h2>
+    <p>Kadang kita nggak perlu tahu SIAPA aja anggotanya, tapi cukup tahu BERAPA JUMLAHNYA.
+      Nah, ini yang disebut <b>kardinalitas</b>, ditulis dengan <code>n(...)</code>.</p>
+    <figure>
+      <img src="images/04_rumus_kardinalitas.png" alt="Rumus kardinalitas gabungan">
+      <figcaption>Rumus banyak anggota gabungan dua himpunan</figcaption>
+    </figure>
+    <div class="callout coral">
+      <span class="label">🧮 Rumus Penting</span>
+      <code>n(A ∪ B) = n(A) + n(B) − n(A ∩ B)</code><br><br>
+      Kenapa dikurangi? Karena anggota yang ada di irisan sudah terhitung DUA KALI (sekali di n(A),
+      sekali di n(B)), jadi harus dikurangi supaya pas!
+    </div>
+  </section>
+
+  <section id="sec4">
+    <h2><span class="num">4</span>Misi 1: Memilih Hotel Favorit 🏨</h2>
+    <p>Bayangkan kamu jadi panitia study tour dan harus memilih hotel terbaik. Tapi ada TIGA syarat
+      sekaligus: harganya di bawah Rp500.000, lokasinya kurang dari 10 km dari kota, dan bintangnya
+      4 ke bawah.</p>
+    <figure>
+      <img src="images/02_kasus_hotel_venn.png" alt="Diagram Venn 3 kriteria hotel">
+      <figcaption>Diagram Venn 3 kriteria — hotel idaman ada di irisan ketiganya!</figcaption>
+    </figure>
+    <p>Gimana cara nemuin hotel yang PAS buat ketiga syarat itu? Gampang — gambar tiga lingkaran
+      (satu untuk tiap syarat), lalu cari bagian yang beririsan di ketiganya. Hotel yang ada di
+      situ adalah kandidat terbaik!</p>
+  </section>
+
+  <section id="sec5">
+    <h2><span class="num">5</span>Misi 2: Teka-Teki Pupuk Ajaib 🌱</h2>
+    <p>Ini dia teka-teki serunya. Ada beberapa gelas berisi ramuan pupuk rahasia dan satu gelas
+      berisi air murni. Dari hasil tiga percobaan penyiraman, kamu harus menebak gelas mana yang
+      berisi air murni!</p>
+    <figure>
+      <img src="images/03_kasus_pupuk_ajaib.png" alt="Data percobaan pupuk ajaib">
+      <figcaption>Petunjuk dari tiga percobaan</figcaption>
+    </figure>
+    <div class="callout yellow">
+      <span class="label">🕵️ Strategi Memecahkannya</span>
+      <ul class="steps">
+        <li>Cari tahu gelas mana yang PASTI berisi pupuk (karena selalu menyebabkan perubahan).</li>
+        <li>Gunakan konsep <b>KOMPLEMEN</b>: air murni ada di luar himpunan gelas-gelas berisi pupuk.</li>
+        <li>Gunakan <b>IRISAN</b> dari petunjuk-petunjuk yang ada untuk mempersempit kemungkinan.</li>
+      </ul>
+    </div>
+    <p>Seru kan? Ini namanya <b>penalaran logika</b> (logical reasoning) — kemampuan yang bakal
+      kepake banget di Informatika dan kehidupan sehari-hari!</p>
+  </section>
+
+  <section id="sec6">
+    <h2><span class="num">6</span>Kenapa Ini Penting?</h2>
+    <p>Kemampuan memodelkan masalah pakai himpunan itu bukan cuma buat pelajaran Informatika doang.
+      Beberapa contoh penerapannya di dunia nyata:</p>
+    <div class="try-box">
+      <ul>
+        <li>Aplikasi e-commerce memakai irisan untuk menyaring produk sesuai beberapa filter sekaligus
+          (misalnya: kategori sepatu, warna hitam, harga di bawah 200rb).</li>
+        <li>Media sosial memakai konsep serupa untuk merekomendasikan teman/konten berdasarkan
+          irisan minat.</li>
+        <li>Dokter menggunakan penalaran mirip komplemen dan irisan untuk mendiagnosis penyakit
+          berdasarkan gejala yang cocok/tidak cocok.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>🌟 Rangkuman Kilat</h2>
+    <div class="summary-grid">
+      <div class="summary-card"><b>4 Operasi Himpunan</b><br>Gabungan, irisan, komplemen, dan selisih — masing-masing punya arti berbeda.</div>
+      <div class="summary-card"><b>Kardinalitas</b><br><code>n(A∪B) = n(A) + n(B) − n(A∩B)</code></div>
+      <div class="summary-card"><b>Studi Kasus Hotel</b><br>Diagram Venn 3 lingkaran untuk masalah multi-kriteria.</div>
+      <div class="summary-card"><b>Studi Kasus Pupuk</b><br>Penalaran logika pakai komplemen & irisan.</div>
+    </div>
+    <p style="margin-top:22px; font-style:italic; color:var(--gray);">
+      Keren banget progressmu hari ini! Di pertemuan selanjutnya, kita bakal main-main sama sistem
+      bilangan biner — bahasa rahasia komputer. Sampai jumpa! 🔢✨
+    </p>
+    <p><a class="backtotop" href="#top">↑ Kembali ke atas</a></p>
+  </section>
+</main>
+
+<footer>
+  Informatika Kelas VIII — Bab II Berpikir Komputasional — TP 6 (Pertemuan Kedua)<br>
+  SMP Negeri 14 Tarakan
+</footer>
+
+<script>
+  (function(){
+    var links = Array.prototype.slice.call(document.querySelectorAll('.topnav a.navlink'));
+    var targets = links.map(function(a){
+      var id = a.getAttribute('href').replace('#','');
+      return document.getElementById(id);
+    });
+    function onScroll(){
+      var pos = window.scrollY + 90;
+      var activeIdx = 0;
+      for (var i = 0; i < targets.length; i++){
+        if (targets[i] && targets[i].offsetTop <= pos) activeIdx = i;
+      }
+      links.forEach(function(a, i){ a.classList.toggle('active', i === activeIdx); });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+</script>
+</body>
+</html>
