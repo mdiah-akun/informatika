@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Merakit Program dari Library - TP 8 Pertemuan 2</title>
+<style>
+:root{--navy:#21295C;--deep:#065A82;--teal:#1C7293;--mint:#02C39A;--coral:#F96167;--light:#EAF2F9;--ink:#1A1F36;--grey:#6B7488;--bg:#FFFFFF;--card:#FFFFFF;--line:#D5DFEA;--ok:#0F9D7A;--bad:#D6404A}
+@media (prefers-color-scheme:dark){:root{--bg:#0F1430;--card:#171D42;--light:#1C2450;--ink:#E8EDF8;--grey:#9AA6C0;--line:#2E3768;--navy:#CADCFC;--deep:#7CC4E8}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Segoe UI",Calibri,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65;font-size:17px}
+header.hero{background:linear-gradient(135deg,#21295C,#065A82);color:#fff;padding:48px 20px 40px;text-align:center}
+header.hero small{letter-spacing:.08em;color:#CADCFC;font-weight:600}
+header.hero h1{margin:.3em 0 .2em;font-size:clamp(28px,5vw,44px);line-height:1.15}
+header.hero p{margin:0 auto;max-width:640px;color:#E3EEFA}
+.tag{display:inline-block;background:var(--coral);color:#fff;border-radius:999px;padding:4px 14px;font-weight:700;font-size:14px;margin-top:16px}
+nav{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap;padding:8px 12px}
+nav a{display:inline-block;margin:2px 4px;padding:6px 12px;border-radius:999px;color:var(--deep);text-decoration:none;font-weight:600;font-size:14px}
+nav a:hover{background:var(--light)}
+main{max-width:860px;margin:0 auto;padding:8px 20px 60px}
+section{padding-top:32px}
+h2{color:var(--navy);font-size:26px;margin:0 0 10px;border-bottom:3px solid var(--teal);padding-bottom:6px}
+h3{color:var(--deep);margin:22px 0 6px}
+img{max-width:100%;height:auto;border-radius:12px;display:block;margin:14px auto;background:#fff;border:1px solid var(--line)}
+figcaption{text-align:center;color:var(--grey);font-size:14px;margin:-6px 0 14px;font-style:italic}
+figure{margin:0}
+.box{background:var(--light);border-left:6px solid var(--teal);padding:14px 18px;border-radius:10px;margin:16px 0}
+.box.warn{border-color:#F28C28}.box.ok{border-color:var(--mint)}.box.bad{border-color:var(--coral)}
+.box b.t{display:block;margin-bottom:4px;color:var(--navy)}
+code{font-family:Consolas,"Courier New",monospace;background:var(--light);padding:1px 6px;border-radius:5px;color:var(--deep);font-size:.92em}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:15px;display:block;overflow-x:auto}
+th{background:var(--navy);color:#fff;text-align:left;padding:8px 10px}
+@media (prefers-color-scheme:dark){th{background:#2A3577}}
+td{padding:8px 10px;border:1px solid var(--line)}
+tr:nth-child(even) td{background:var(--light)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:14px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.card h4{margin:0 0 4px;color:var(--deep)}
+button,select,input{font:inherit}
+button{background:var(--deep);color:#fff;border:0;border-radius:10px;padding:9px 16px;cursor:pointer;font-weight:600}
+button:hover{background:var(--teal)}
+button.alt{background:var(--coral)}button.alt:hover{background:#e14a51}
+button.ghost{background:transparent;color:var(--deep);border:2px solid var(--deep)}
+input[type=number],select{padding:8px 10px;border:2px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);width:100%}
+label{font-weight:600;font-size:14px;color:var(--grey);display:block;margin-bottom:2px}
+.out{font-family:Consolas,monospace;background:#0F1430;color:#DDF5EE;border-radius:10px;padding:12px 16px;margin-top:10px;min-height:52px;white-space:pre-wrap}
+.out .e{color:#FF9AA0}.out .g{color:#7DF0C8}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0}
+.opt{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);border:2px solid var(--line);margin:6px 0;border-radius:10px;padding:10px 14px}
+.opt:hover{border-color:var(--teal);background:var(--light)}
+.opt.right{border-color:var(--ok);background:rgba(2,195,154,.16)}
+.opt.wrong{border-color:var(--bad);background:rgba(249,97,102,.14)}
+.fb{margin-top:8px;font-weight:600}
+.chk{display:flex;gap:8px;align-items:flex-start;margin:6px 0}
+.chk input{margin-top:6px;width:auto}
+details{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+summary{cursor:pointer;font-weight:700;color:var(--deep)}
+footer{text-align:center;color:var(--grey);padding:24px;font-size:14px}
+.badge{display:inline-block;background:var(--mint);color:#0B2B25;border-radius:8px;padding:2px 10px;font-weight:700;font-size:13px}
+@media (max-width:520px){body{font-size:16px}h2{font-size:22px}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <small>INFORMATIKA KELAS IX · BAB II · TP 8 · PERTEMUAN 2</small>
+  <h1>Rakit Program dari Library!</h1>
+  <p>Misi Anggaran Dekorasi PKS: pecah masalah, baca kontrak modul, rakit dua library, lalu buru bug-nya.</p>
+  <span class="tag">SMP Negeri 14 Tarakan</span>
+</header>
+<nav>
+  <a href="#misi">Misi</a><a href="#ingat">Ingat Lagi</a><a href="#warung">Analogi</a><a href="#kontrak">Kontrak Modul</a><a href="#langkah">3 Langkah</a><a href="#coba">Coba Modul</a><a href="#dekomposisi">Dekomposisi</a><a href="#program">Program</a><a href="#level">Level</a><a href="#bug">Lab Bug</a><a href="#review">Tinjau Teman</a><a href="#kuis">Kuis</a><a href="#rangkum">Rangkuman</a>
+</nav>
+<main>
+
+<section id="misi">
+  <h2>1. Misimu Hari Ini</h2>
+  <p>Minggu lalu kamu membuktikan bahwa <b>library</b> itu hemat waktu. Sekarang levelnya naik: kamu akan <b>membangun program nyata</b> yang menghitung anggaran kain untuk dekorasi panggung PKS sekolah kita.</p>
+  <figure><img src="images/studi_kasus_tp8b.png" alt="Studi kasus: empat hiasan panggung PKS dengan ukuran, harga kain Rp30.000 per meter persegi, dan dana Rp1.500.000"><figcaption>Berapa total biaya kain, dan apakah dananya cukup?</figcaption></figure>
+  <div class="box"><b class="t">Setelah belajar ini, kamu bisa…</b>
+  • memecah masalah besar lalu mencocokkannya dengan modul library (<b>dekomposisi</b>)<br>
+  • membaca <b>kontrak modul</b> dan memanggil function/procedure dengan benar<br>
+  • menggabungkan <b>dua library + blok standar</b> dalam satu program<br>
+  • menguji, mencari <b>bug</b>, dan memberi masukan ke teman</div>
+</section>
+
+<section id="ingat">
+  <h2>2. Ingat Lagi: Library Itu Apa?</h2>
+  <div class="grid">
+    <div class="card"><h4>Library</h4>Kumpulan modul siap pakai yang bisa dipanggil ulang.</div>
+    <div class="card"><h4>Library standar</h4>Bawaan aplikasi: blok <i>ulangi</i>, <i>jika</i>, operator.</div>
+    <div class="card"><h4>Library eksternal</h4>Buatan sendiri/orang lain, mis. <code>Bangun_Datar</code>.</div>
+  </div>
+  <p>Manfaatnya: <b>reusability</b> (dipakai ulang), <b>abstraction</b> (tak perlu tahu isinya), <b>efficiency</b> (cepat dan minim salah).</p>
+</section>
+
+<section id="warung">
+  <h2>3. Analogi Warung</h2>
+  <p>Di warung bakso kamu <b>membaca menu</b>, <b>memesan</b> dengan menyebut menu dan level pedas, koki <b>meracik di dapur</b> (kamu tak perlu tahu resepnya), lalu <b>pesananmu datang</b> dan kamu taruh di meja. Persis seperti memakai library!</p>
+  <figure><img src="images/warung_analogi.png" alt="Analogi warung: menu, pesan, dapur, pesanan datang dipadankan dengan kontrak modul, memanggil modul, badan modul, dan nilai balik"><figcaption>Menu = kontrak · Pesan = panggil · Dapur = isi modul · Pesanan = nilai balik</figcaption></figure>
+</section>
+
+<section id="kontrak">
+  <h2>4. Kenali “Kontrak” Modul</h2>
+  <p>Kontrak adalah catatan singkat: nama modul, jenis, <b>parameter</b> (data yang harus kamu berikan, <u>urutannya penting</u>), dan <b>nilai balik</b> (hasil yang dikembalikan).</p>
+  <figure><img src="images/anatomi_modul.png" alt="Function luasLingkaran menerima r dan mengembalikan luas; procedure tampilkanHasil menerima judul dan nilai lalu menampilkan ke layar tanpa nilai balik"><figcaption>Function mengembalikan nilai; procedure hanya menjalankan aksi</figcaption></figure>
+  <table>
+    <tr><th>Modul</th><th>Jenis</th><th>Parameter (urutan)</th><th>Nilai balik</th><th>Isi</th></tr>
+    <tr><td><code>luasPersegi</code></td><td>function</td><td>s (sisi, m)</td><td>luas (m²)</td><td>s × s</td></tr>
+    <tr><td><code>luasPersegiPanjang</code></td><td>function</td><td>p, l (m)</td><td>luas (m²)</td><td>p × l</td></tr>
+    <tr><td><code>luasSegitiga</code></td><td>function</td><td>a, t (m)</td><td>luas (m²)</td><td>½ × a × t</td></tr>
+    <tr><td><code>luasLingkaran</code></td><td>function</td><td>r (jari-jari, m)</td><td>luas (m²)</td><td>3,14 × r × r</td></tr>
+    <tr><td><code>tampilkanHasil</code></td><td>procedure</td><td>judul, nilai</td><td>—</td><td>menulis di layar</td></tr>
+    <tr><td><code>hitungBiaya</code> <span class="badge">baru</span></td><td>function</td><td>luas, harga (Rp/m²)</td><td>biaya (Rp)</td><td>luas × harga</td></tr>
+    <tr><td><code>hitungSisa</code> <span class="badge">baru</span></td><td>function</td><td>anggaran, biaya (Rp)</td><td>sisa (Rp)</td><td>anggaran − biaya</td></tr>
+  </table>
+  <div class="box warn"><b class="t">Ingat!</b><b>Function</b> memberi nilai balik → <b>tampung</b> ke variabel. <b>Procedure</b> menjalankan aksi → cukup <b>dipanggil</b>.</div>
+</section>
+
+<section id="langkah">
+  <h2>5. Tiga Langkah Memakai Library</h2>
+  <figure><img src="images/tiga_langkah.png" alt="Tiga langkah: baca kontrak, panggil, pakai dan uji"><figcaption>Baca kontrak → Panggil → Pakai &amp; uji</figcaption></figure>
+  <p>Contoh: papan logo berjari-jari 2 m. Kontrak meminta <b>r</b>, maka panggil <code>luasLingkaran( 2 )</code> dan simpan hasil <b>12,56</b> ke <code>totalLuas</code>.</p>
+</section>
+
+<section id="coba">
+  <h2>6. Coba Panggil Modul</h2>
+  <p>Pilih modul, isi argumen sesuai kontrak, lalu tekan <b>Panggil</b>. Coba juga isi argumen yang salah!</p>
+  <div class="card">
+    <label for="mod">Modul</label>
+    <select id="mod"></select>
+    <div id="contract" class="box" style="margin:10px 0"></div>
+    <div class="row" id="args"></div>
+    <button id="callBtn">Panggil modul</button>
+    <div class="out" id="callOut">Hasil akan tampil di sini…</div>
+  </div>
+</section>
+
+<section id="dekomposisi">
+  <h2>7. Dekomposisi: Pecah Masalahnya</h2>
+  <p>Masalah besar: <i>hitung total biaya kain dan cek apakah dana cukup</i>. Pecah jadi 4 sub-masalah, lalu cocokkan dengan modul yang ada.</p>
+  <figure><img src="images/dekomposisi_anggaran.png" alt="Peta dekomposisi: hitung luas tiap bentuk, jumlahkan total luas, hitung biaya, cek anggaran dan tampilkan, beserta modul yang dipakai"><figcaption>Biru = sudah ada · Merah = modul baru · Hijau = blok standar</figcaption></figure>
+  <figure><img src="images/arsitektur_program.png" alt="Program utama Anggaran_PKS memanggil library Bangun_Datar, Kalkulator_Biaya, dan blok standar"><figcaption>Satu program boleh memanggil banyak library sekaligus</figcaption></figure>
+</section>
+
+<section id="program">
+  <h2>8. Bedah Program Anggaran_PKS</h2>
+  <figure><img src="images/program_blok.png" alt="Contoh program blok Anggaran_PKS berisi atur variabel, pemanggilan modul luas, hitungBiaya, hitungSisa, dan jika selain itu"><figcaption>Mock-up. Tampilan blok asli di Scratch/Blockly bisa berbeda</figcaption></figure>
+  <div class="box ok"><b class="t">Hasil yang benar</b>totalLuas = <b>40,56 m²</b> · biaya = <b>Rp1.216.800</b> · sisa = <b>Rp283.200</b> → “Anggaran cukup”.</div>
+</section>
+
+<section id="level">
+  <h2>9. Tiga Level Tantangan</h2>
+  <figure><img src="images/level_tantangan.png" alt="Level 1 Rakit, Level 2 Kembangkan, Level 3 Perluas"><figcaption>Kerjakan berurutan, jangan loncat!</figcaption></figure>
+  <details><summary>Petunjuk Level 3 (buka bila perlu)</summary>Tambahkan <code>kelilingPersegiPanjang(p, l)</code> ke Bangun_Datar dan <code>hitungBiayaLis(keliling, hargaPerMeter)</code> ke Kalkulator_Biaya. Backdrop 6×3 m → keliling 18 m → lis Rp10.000/m = <b>Rp180.000</b>. Total jadi <b>Rp1.396.800</b>, sisa <b>Rp103.200</b>.</details>
+</section>
+
+<section id="bug">
+  <h2>10. Lab Bug: Jadilah Detektif</h2>
+  <figure><img src="images/bug_hunt.png" alt="Lima bug umum: argumen tertukar, nilai balik tak ditampung, salah arti parameter, nama modul tidak cocok, lupa reset variabel"><figcaption>Lima kesalahan umum saat memakai library</figcaption></figure>
+  <div class="card">
+    <h4>Jalankan program Anggaran_PKS</h4>
+    <p style="margin:.2em 0 .6em">Hasil yang benar: 40,56 m² · Rp1.216.800 · sisa Rp283.200.</p>
+    <b>Mode bebas</b> — aktifkan bug lalu lihat akibatnya:
+    <div class="chk"><input type="checkbox" id="b1"><label for="b1" style="color:inherit;font-weight:400">Bug 1: <code>hitungSisa( biaya , anggaran )</code> (argumen tertukar)</label></div>
+    <div class="chk"><input type="checkbox" id="b2"><label for="b2" style="color:inherit;font-weight:400">Bug 2: hasil <code>luasLingkaran</code> tidak ditampung</label></div>
+    <div class="chk"><input type="checkbox" id="b3"><label for="b3" style="color:inherit;font-weight:400">Bug 3: <code>luasLingkaran( 4 )</code> (memakai diameter)</label></div>
+    <div class="chk"><input type="checkbox" id="b4"><label for="b4" style="color:inherit;font-weight:400">Bug 4: memanggil <code>hitungBiyaya</code> (nama salah)</label></div>
+    <div class="chk"><input type="checkbox" id="b5"><label for="b5" style="color:inherit;font-weight:400">Bug 5: <code>totalLuas</code> tidak diatur ke 0 (tekan Jalankan dua kali)</label></div>
+    <p><button id="runBtn">Jalankan program</button> <button class="ghost" id="resetBtn">Reset</button></p>
+    <div class="out" id="runOut">Tekan “Jalankan program”…</div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h4>Mode detektif</h4>
+    <p style="margin:.2em 0 .6em">Komputer menyembunyikan satu bug. Jalankan program, amati hasil yang janggal, lalu tebak bug-nya.</p>
+    <button class="alt" id="hideBtn">Sembunyikan bug baru</button>
+    <div class="out" id="detOut">Tekan tombol untuk mulai…</div>
+    <div id="guessBox" style="display:none;margin-top:10px">
+      <label for="guess">Tebakanmu</label>
+      <select id="guess"><option value="1">Bug 1: argumen tertukar</option><option value="2">Bug 2: nilai balik tak ditampung</option><option value="3">Bug 3: salah arti parameter</option><option value="4">Bug 4: nama modul tidak cocok</option><option value="5">Bug 5: lupa reset variabel</option></select>
+      <p><button id="guessBtn">Periksa tebakan</button></p>
+      <div class="fb" id="guessFb"></div>
+    </div>
+  </div>
+  <h3>Tabel uji</h3>
+  <figure><img src="images/tabel_uji.png" alt="Tabel uji membandingkan hasil manual dan hasil program; baris hitungSisa tidak sesuai"><figcaption>Baris 5 tidak sesuai → curigai urutan argumen</figcaption></figure>
+</section>
+
+<section id="review">
+  <h2>11. Tinjau Teman: Two Stars &amp; a Wish</h2>
+  <p>Tukar program dengan kelompok lain. Beri <b>dua bintang</b> (hal yang sudah bagus) dan <b>satu harapan</b> (saran perbaikan). Pakai bahasa santun dan spesifik.</p>
+  <figure><img src="images/tinjauan_sejawat.png" alt="Kartu tinjauan sejawat Two Stars and a Wish dan ceklis kode"><figcaption>Kartu tinjauan sejawat dan ceklis kode</figcaption></figure>
+  <details><summary>Tanpa komputer? Pakai Kartu Modul</summary><img src="images/kartu_modul.png" alt="Kartu modul: luasPersegi, luasPersegiPanjang, luasSegitiga, luasLingkaran, hitungBiaya, hitungSisa, tampilkanHasil"></details>
+</section>
+
+<section id="kuis">
+  <h2>12. Kuis Dadakan</h2>
+  <div id="quiz"></div>
+  <div class="box ok" id="score" style="display:none"></div>
+</section>
+
+<section id="rangkum">
+  <h2>13. Rangkuman</h2>
+  <ol>
+    <li>Baca <b>kontrak modul</b> dulu: nama, parameter (urutan!), satuan, nilai balik.</li>
+    <li><b>Function</b> → tampung hasilnya. <b>Procedure</b> → cukup panggil.</li>
+    <li>Satu program boleh memakai <b>banyak library</b> + blok standar.</li>
+    <li>Modul baru boleh ditambahkan <b>tanpa merusak</b> modul lama.</li>
+    <li>Selalu <b>uji</b> dengan tabel uji, lalu cari bug dengan tenang.</li>
+  </ol>
+  <div class="box"><b class="t">Refleksi</b>Bagian mana yang paling sulit? Bug apa yang paling berkesan? Apa yang akan kamu lakukan berbeda? Tulis di jurnalmu.</div>
+</section>
+</main>
+<footer>Informatika Kelas IX · SMP Negeri 14 Tarakan · Bab II TP 8 Pertemuan 2</footer>
+
+<script>
+"use strict";
+const r2=x=>Math.round(x*100)/100;
+const fmt=x=>Number(x).toLocaleString("id-ID",{maximumFractionDigits:2});
+const rp=x=>(x<0?"-":"")+"Rp"+fmt(Math.abs(x));
+/* ---------- Library (simulasi) ---------- */
+const LIB={
+  luasPersegi:{lib:"Bangun_Datar",type:"function",params:[["s","sisi (m)"]],ret:"luas (m²)",fn:s=>r2(s*s),desc:"s × s"},
+  luasPersegiPanjang:{lib:"Bangun_Datar",type:"function",params:[["p","panjang (m)"],["l","lebar (m)"]],ret:"luas (m²)",fn:(p,l)=>r2(p*l),desc:"p × l"},
+  luasSegitiga:{lib:"Bangun_Datar",type:"function",params:[["a","alas (m)"],["t","tinggi (m)"]],ret:"luas (m²)",fn:(a,t)=>r2(a*t/2),desc:"½ × a × t"},
+  luasLingkaran:{lib:"Bangun_Datar",type:"function",params:[["r","jari-jari (m)"]],ret:"luas (m²)",fn:r=>r2(3.14*r*r),desc:"3,14 × r × r"},
+  tampilkanHasil:{lib:"Bangun_Datar",type:"procedure",params:[["judul","teks"],["nilai","angka"]],ret:null,fn:(j,n)=>{},desc:"menulis judul dan nilai di layar"},
+  hitungBiaya:{lib:"Kalkulator_Biaya",type:"function",params:[["luas","luas (m²)"],["harga","harga (Rp/m²)"]],ret:"biaya (Rp)",fn:(l,h)=>r2(l*h),desc:"luas × harga"},
+  hitungSisa:{lib:"Kalkulator_Biaya",type:"function",params:[["anggaran","dana (Rp)"],["biaya","biaya (Rp)"]],ret:"sisa (Rp)",fn:(a,b)=>r2(a-b),desc:"anggaran − biaya"}
+};
+const $=id=>document.getElementById(id);
+function callModule(name,args){
+  const m=LIB[name];
+  if(!m) throw new Error('Modul "'+name+'" tidak ditemukan di library.');
+  if(args.length!==m.params.length) throw new Error(name+" membutuhkan "+m.params.length+" argumen, tetapi diberi "+args.length+".");
+  return m.fn(...args);
+}
+/* ---------- Coba modul ---------- */
+const sel=$("mod");
+Object.keys(LIB).forEach(k=>{const o=document.createElement("option");o.value=k;o.textContent=k+"  ("+LIB[k].lib+")";sel.appendChild(o);});
+function renderContract(){
+  const m=LIB[sel.value];
+  $("contract").innerHTML="<b>"+sel.value+"</b> · "+m.type+" · library "+m.lib+"<br>Parameter: "+m.params.map(p=>"<code>"+p[0]+"</code> "+p[1]).join(", ")+"<br>Nilai balik: "+(m.ret||"— (tidak ada)")+" · Isi: "+m.desc;
+  $("args").innerHTML=m.params.map((p,i)=>'<div><label for="a'+i+'">'+p[0]+" — "+p[1]+'</label><input id="a'+i+'" type="'+(p[0]==="judul"?"text":"number")+'" step="any" value="'+(p[0]==="judul"?"Luas":"")+'"></div>').join("");
+  $("callOut").textContent="Hasil akan tampil di sini…";
+}
+sel.addEventListener("change",renderContract);renderContract();
+$("callBtn").addEventListener("click",()=>{
+  const name=sel.value,m=LIB[name],out=$("callOut");
+  const vals=m.params.map((p,i)=>{const v=$("a"+i).value;return p[0]==="judul"?v:(v===""?NaN:parseFloat(v));});
+  if(vals.some(v=>typeof v==="number"&&isNaN(v))){out.innerHTML='<span class="e">Isi semua argumen dengan angka dulu.</span>';return;}
+  try{
+    const res=callModule(name,vals);
+    if(m.type==="procedure") out.innerHTML='<span class="g">'+vals[0]+": "+fmt(vals[1])+'</span>\n(procedure: tidak ada nilai balik)';
+    else out.innerHTML='<span class="g">'+name+"( "+vals.map(fmt).join(" , ")+" )  =  "+fmt(res)+'</span>\n(function: tampung nilai ini ke variabel)';
+  }catch(e){out.innerHTML='<span class="e">'+e.message+"</span>";}
+});
+/* ---------- Lab bug ---------- */
+let carry=0;
+function runProgram(b){
+  const L=[];
+  let total=b[5]?carry:0;
+  const harga=30000,anggaran=1500000;
+  const pj=callModule("luasPersegiPanjang",[6,3]);
+  const lk=callModule("luasLingkaran",[b[3]?4:2]);
+  const sg=callModule("luasSegitiga",[4,3]);
+  const pg=callModule("luasPersegi",[2]);
+  total=r2(total+pj); if(!b[2]) total=r2(total+lk); total=r2(total+sg); total=r2(total+pg);
+  carry=total;
+  const biaya=callModule(b[4]?"hitungBiyaya":"hitungBiaya",[total,harga]);
+  const sisa=b[1]?callModule("hitungSisa",[biaya,anggaran]):callModule("hitungSisa",[anggaran,biaya]);
+  const pesan=sisa>=0?"Anggaran cukup":"Anggaran kurang";
+  return {total,biaya,sisa,pesan};
+}
+function show(el,b){
+  try{
+    const r=runProgram(b);
+    const ok=r.total===40.56&&r.biaya===1216800&&r.sisa===283200;
+    el.innerHTML='totalLuas = '+fmt(r.total)+' m²\nbiaya     = '+rp(r.biaya)+'\nsisa      = '+rp(r.sisa)+'\npesan     = "'+r.pesan+'"\n\n'+(ok?'<span class="g">Cocok dengan hitungan manual.</span>':'<span class="e">Tidak cocok dengan hitungan manual (40,56 m² · Rp1.216.800 · Rp283.200). Ada bug!</span>');
+  }catch(e){el.innerHTML='<span class="e">Galat: '+e.message+'</span>';}
+}
+$("runBtn").addEventListener("click",()=>{const b={};for(let i=1;i<=5;i++)b[i]=$("b"+i).checked;show($("runOut"),b);});
+$("resetBtn").addEventListener("click",()=>{carry=0;for(let i=1;i<=5;i++)$("b"+i).checked=false;$("runOut").textContent="Tekan “Jalankan program”…";});
+let hidden=0,dcarry=0,druns=0;
+$("hideBtn").addEventListener("click",()=>{
+  hidden=1+Math.floor(Math.random()*5);carry=0;druns=0;
+  $("guessBox").style.display="block";$("guessFb").textContent="";
+  const b={};b[hidden]=true;
+  const first=()=>{carry=0;show($("detOut"),b);if(hidden===5){show($("detOut"),b);}};
+  first();
+});
+$("guessBtn").addEventListener("click",()=>{
+  const g=parseInt($("guess").value,10),fb=$("guessFb");
+  if(g===hidden){fb.style.color="var(--ok)";fb.textContent="Tepat! Bug "+hidden+" adalah penyebabnya. Sekarang tulis perbaikannya di catatan bug LKPD.";}
+  else{fb.style.color="var(--bad)";fb.textContent="Belum tepat. Bandingkan hasil program dengan hitungan manual: bagian mana yang berbeda? Coba lagi!";}
+});
+/* ---------- Kuis ---------- */
+const Q=[
+ {q:"Blok “ulangi 10 kali” di Scratch termasuk …",o:["library eksternal buatan sendiri","library standar bawaan aplikasi","modul baru","prosedur utama program"],a:1,e:"Blok kontrol bawaan aplikasi adalah library standar."},
+ {q:"Kontrak luasLingkaran(r) meminta jari-jari. Papan berdiameter 6 m. Pemanggilan yang benar dan hasilnya?",o:["luasLingkaran( 6 ) = 113,04","luasLingkaran( 3 ) = 28,26","luasLingkaran( 12 ) = 452,16","luasLingkaran( 9 ) = 254,34"],a:1,e:"r = 6 ÷ 2 = 3 → 3,14 × 3 × 3 = 28,26 m²."},
+ {q:"Hasil program menunjukkan sisa = −283.200, padahal seharusnya 283.200. Penyebab yang paling mungkin adalah …",o:["hitungBiaya salah nama","argumen hitungSisa tertukar","totalLuas tidak direset","π salah"],a:1,e:"hitungSisa( anggaran , biaya ): urutan menentukan tanda hasil."},
+ {q:"Manakah yang benar tentang tampilkanHasil( judul , nilai )?",o:["function karena punya dua parameter","function karena mengembalikan judul","procedure karena menjalankan aksi tanpa nilai balik","procedure karena tidak punya parameter"],a:2,e:"Procedure menjalankan aksi (menampilkan) tanpa nilai balik."}
+];
+let done=0,pts=0;
+const qz=$("quiz");
+Q.forEach((it,qi)=>{
+  const d=document.createElement("div");d.className="card";d.style.marginBottom="12px";
+  d.innerHTML="<b>KUDA "+(qi+1)+".</b> "+it.q;
+  const fb=document.createElement("div");fb.className="fb";
+  let answered=false;
+  it.o.forEach((t,oi)=>{
+    const b=document.createElement("button");b.className="opt";b.textContent="ABCD"[oi]+". "+t;
+    b.addEventListener("click",()=>{
+      if(answered)return;answered=true;done++;
+      const ok=oi===it.a; if(ok)pts++;
+      b.classList.add(ok?"right":"wrong");
+      if(!ok)d.querySelectorAll(".opt")[it.a].classList.add("right");
+      fb.style.color=ok?"var(--ok)":"var(--bad)";fb.textContent=(ok?"Benar! ":"Belum tepat. ")+it.e;
+      if(done===Q.length){const s=$("score");s.style.display="block";s.innerHTML="<b>Skormu: "+pts+" / "+Q.length+"</b> — "+(pts===Q.length?"Luar biasa, kamu siap merakit library!":"Ulangi bagian yang masih ragu, lalu coba Lab Bug lagi.");}
+    });
+    d.appendChild(b);
+  });
+  d.appendChild(fb);qz.appendChild(d);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stack (Tumpukan) — Materi Informatika Kelas VIII</title>
+<style>
+  :root{
+    --ink:#1e293b; --sub:#475569; --blue:#2563eb; --blue-l:#dbeafe;
+    --orange:#f59e0b; --orange-l:#fef3c7; --green:#10b981; --green-l:#d1fae5;
+    --purple:#7c3aed; --purple-l:#ede9fe; --card:#f1f5f9; --bg:#ffffff;
+    --red:#ef4444; --red-l:#fee2e2;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:'Segoe UI', Calibri, Arial, sans-serif; color:var(--ink);
+    background:var(--bg); line-height:1.65;
+  }
+  .wrap{max-width:880px; margin:0 auto; padding:0 20px;}
+
+  /* ===== HERO ===== */
+  header.hero{
+    background:linear-gradient(135deg,#0f172a 0%,#1e293b 60%,#1e3a8a 100%);
+    color:#fff; padding:64px 0 56px; position:relative; overflow:hidden;
+  }
+  header.hero::after{
+    content:""; position:absolute; right:-80px; top:-80px; width:320px; height:320px;
+    border-radius:50%; background:rgba(37,99,235,.35);
+  }
+  header.hero .eyebrow{color:var(--orange); font-weight:700; letter-spacing:1.5px; font-size:.85rem; text-transform:uppercase;}
+  header.hero h1{font-size:2.4rem; margin:.5rem 0 .6rem; position:relative; z-index:2;}
+  header.hero p.lead{font-size:1.05rem; color:#cbd5e1; max-width:640px; position:relative; z-index:2;}
+  .badge-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px; position:relative; z-index:2;}
+  .badge{background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.25); color:#e2e8f0;
+    padding:6px 14px; border-radius:999px; font-size:.85rem;}
+
+  /* ===== NAV ===== */
+  nav.toc{
+    background:#f8fafc; border-bottom:1px solid #e2e8f0; position:sticky; top:0; z-index:50;
+  }
+  nav.toc .wrap{display:flex; gap:4px; overflow-x:auto; padding:10px 20px; scrollbar-width:thin;}
+  nav.toc a{
+    white-space:nowrap; text-decoration:none; color:var(--sub); font-size:.85rem; font-weight:600;
+    padding:8px 14px; border-radius:8px;
+  }
+  nav.toc a:hover{background:var(--blue-l); color:var(--blue);}
+
+  main{padding:44px 0 20px;}
+  section{margin-bottom:56px; scroll-margin-top:60px;}
+  h2{font-size:1.7rem; margin-bottom:.3rem; color:var(--ink);}
+  h2 .num{color:var(--blue); font-weight:800; margin-right:8px;}
+  p.section-sub{color:var(--sub); margin-top:0; margin-bottom:22px; font-size:1rem;}
+
+  figure{margin:22px 0; text-align:center;}
+  figure img{max-width:100%; border-radius:12px; border:1px solid #e2e8f0;}
+  figcaption{color:var(--sub); font-size:.85rem; font-style:italic; margin-top:10px; padding:0 10px;}
+
+  .card{
+    background:var(--card); border-radius:14px; padding:22px 24px; margin:18px 0;
+  }
+  .card.blue{background:var(--blue-l);}
+  .card.orange{background:var(--orange-l);}
+  .card.green{background:var(--green-l);}
+  .card.purple{background:var(--purple-l);}
+  .card h3{margin-top:0; font-size:1.05rem;}
+  .card.blue h3{color:var(--blue);}
+  .card.orange h3{color:#92400e;}
+  .card.green h3{color:#047857;}
+  .card.purple h3{color:var(--purple);}
+  .card ul{margin:0; padding-left:20px;}
+  .card li{margin-bottom:6px;}
+
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  @media (max-width:680px){ .grid2{grid-template-columns:1fr;} }
+
+  .pill-steps{display:flex; flex-direction:column; gap:12px; margin:18px 0;}
+  .pill-step{display:flex; gap:14px; align-items:flex-start; background:var(--card); border-radius:12px; padding:14px 18px;}
+  .pill-step .n{
+    flex:none; width:34px; height:34px; border-radius:50%; background:var(--blue); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.95rem;
+  }
+
+  code, .mono{font-family:'Courier New', monospace; background:#eef2ff; padding:2px 8px; border-radius:6px; color:var(--blue); font-weight:700;}
+
+  .quiz-box{
+    background:#0f172a; color:#fff; border-radius:16px; padding:26px 26px; margin:26px 0;
+  }
+  .quiz-box .tag{
+    display:inline-block; background:var(--orange); color:#0f172a; font-weight:800; font-size:.8rem;
+    padding:5px 14px; border-radius:999px; margin-bottom:14px;
+  }
+  .quiz-box p.q{font-size:1.05rem; font-weight:600; margin:8px 0 16px;}
+  .quiz-box .opt{
+    background:#1e293b; border:1px solid #334155; border-radius:10px; padding:12px 16px; margin-bottom:10px;
+    cursor:pointer; transition:.15s; font-size:.95rem;
+  }
+  .quiz-box .opt:hover{border-color:var(--orange);}
+  .quiz-box .opt.correct{background:#064e3b; border-color:var(--green);}
+  .quiz-box .opt.wrong{background:#450a0a; border-color:var(--red);}
+  .quiz-box .reveal-btn{
+    background:var(--orange); color:#0f172a; border:none; padding:10px 20px; border-radius:8px;
+    font-weight:700; cursor:pointer; margin-top:6px;
+  }
+  .quiz-box .explain{display:none; margin-top:14px; background:#1e293b; padding:14px 16px; border-radius:10px; font-size:.9rem; color:#cbd5e1;}
+  .quiz-box .explain.show{display:block;}
+
+  .reflect-list{list-style:none; padding:0; margin:0;}
+  .reflect-list li{
+    background:var(--card); border-radius:12px; padding:16px 18px; margin-bottom:12px; display:flex; gap:14px;
+  }
+  .reflect-list .emoji{font-size:1.3rem;}
+
+  footer{
+    background:#0f172a; color:#94a3b8; text-align:center; padding:34px 20px; margin-top:40px; font-size:.85rem;
+  }
+  footer strong{color:#e2e8f0;}
+
+  a.top-link{position:fixed; bottom:22px; right:22px; background:var(--blue); color:#fff; width:44px; height:44px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:1.2rem;
+    box-shadow:0 4px 14px rgba(0,0,0,.2); z-index:60;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Bab II &bull; Berpikir Komputasional &bull; TP 8</div>
+    <h1>Yuk, Kenalan sama STACK! 📚</h1>
+    <p class="lead">Materi Informatika Kelas VIII tentang struktur data tumpukan (stack) — dari analogi tumpukan piring sampai cara komputer menghitung ekspresi matematika.</p>
+    <div class="badge-row">
+      <span class="badge">⏱️ 120 menit</span>
+      <span class="badge">🔎 Inquiry Learning</span>
+      <span class="badge">🧩 Struktur Data</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#konsep">Konsep Dasar</a>
+    <a href="#operasi">PUSH & POP</a>
+    <a href="#kehidupan">Di Kehidupan Nyata</a>
+    <a href="#cek1">Cek Paham</a>
+    <a href="#ekspresi">Ekspresi Matematika</a>
+    <a href="#hitung">Cara Menghitung</a>
+    <a href="#cek2">Kuis</a>
+    <a href="#rangkuman">Rangkuman</a>
+    <a href="#refleksi">Refleksi</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="konsep">
+    <h2><span class="num">01</span>Coba Bayangin Dulu...</h2>
+    <p class="section-sub">Sebelum masuk istilah teknis, yuk amati kejadian sehari-hari ini.</p>
+    <p>Kalian lagi nyuci 5 piring, terus ditumpuk satu-satu: piring 1 paling bawah, sampai piring 5 paling atas. Nah, pas mau dipakai lagi, piring mana yang paling gampang diambil?</p>
+    <figure>
+      <img src="images/01_analogi_tumpukan_piring.png" alt="Analogi tumpukan piring">
+      <figcaption>Piring paling atas — alias yang PALING TERAKHIR ditaruh — justru yang PALING DULU diambil.</figcaption>
+    </figure>
+    <div class="card blue">
+      <h3>💡 Jadi, Apa Itu Stack?</h3>
+      <p style="margin-bottom:8px;"><strong>Stack (tumpukan)</strong> adalah cara menyimpan data yang disusun bertumpuk, dan hanya bisa diakses dari satu sisi saja, yaitu bagian <strong>paling atas (top)</strong>.</p>
+      <p style="margin-bottom:0;">Aturan mainnya cuma satu: <strong>LIFO — Last In First Out.</strong> Yang terakhir masuk, dia yang pertama keluar.</p>
+    </div>
+    <p>Gampangnya gini: bayangin stack itu kayak tabung yang cuma punya satu lubang di atas. Kalian cuma bisa masukin atau ambil barang dari lubang itu doang. Nggak bisa colek-colek dari tengah atau bawah, ya!</p>
+  </section>
+
+  <section id="operasi">
+    <h2><span class="num">02</span>Dua Gerakan Wajib: PUSH dan POP</h2>
+    <p class="section-sub">Di dunia stack, cuma ada dua "jurus" utama.</p>
+    <div class="grid2">
+      <div class="card green">
+        <h3>⬆️ PUSH</h3>
+        <p style="margin:0;">Masukin data baru ke posisi <strong>paling atas</strong> tumpukan.</p>
+      </div>
+      <div class="card" style="background:var(--red-l);">
+        <h3 style="color:#b91c1c;">⬇️ POP</h3>
+        <p style="margin:0;">Ambil/keluarin data dari posisi <strong>paling atas</strong> tumpukan.</p>
+      </div>
+    </div>
+    <figure>
+      <img src="images/02_push_pop_lifo.png" alt="Operasi PUSH dan POP pada stack">
+      <figcaption>PUSH nambahin dari atas, POP ngambil dari atas juga. Nggak bisa lewat jalan lain!</figcaption>
+    </figure>
+    <p>Coba deh ikutin simulasi berikut ini pelan-pelan:</p>
+    <figure>
+      <img src="images/03_simulasi_langkah_stack.png" alt="Simulasi langkah demi langkah stack">
+      <figcaption>Mulai kosong → PUSH A → PUSH B → PUSH C → lalu di-POP. Yang keluar duluan siapa? Yap, C! Karena C paling terakhir masuk.</figcaption>
+    </figure>
+  </section>
+
+  <section id="kehidupan">
+    <h2><span class="num">03</span>Stack Ternyata Ada di Mana-mana!</h2>
+    <p class="section-sub">Prinsip LIFO banyak dipakai di kehidupan kita sehari-hari, bahkan di aplikasi yang kalian pakai tiap hari.</p>
+    <figure>
+      <img src="images/06_penerapan_stack_sehari_hari.png" alt="Penerapan stack dalam kehidupan sehari-hari">
+      <figcaption>Dari tombol Undo, tumpukan kartu remi, riwayat browser, sampai tumpukan piring — semuanya pakai aturan LIFO!</figcaption>
+    </figure>
+    <div class="card purple">
+      <ul>
+        <li><strong>Tombol Undo</strong> (Ctrl+Z) selalu membatalkan aksi yang paling BARU dilakukan.</li>
+        <li><strong>Riwayat browser</strong> (tombol Back) membawa kalian ke halaman yang paling TERAKHIR dibuka.</li>
+        <li><strong>Tumpukan kartu</strong> dalam permainan — kartu paling atas yang diambil duluan.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="cek1">
+    <h2><span class="num">04</span>Cek Pemahaman Yuk ✅❌</h2>
+    <p class="section-sub">Mana dari dua gambar berikut yang sesuai aturan stack?</p>
+    <figure>
+      <img src="images/07_stack_vs_bukan_stack.png" alt="Perbandingan stack yang benar dan salah">
+      <figcaption>Ingat, di stack kita cuma boleh ambil dari bagian PALING ATAS!</figcaption>
+    </figure>
+
+    <div class="quiz-box">
+      <span class="tag">⚡ Kuis Cepat</span>
+      <p class="q">Jika stack berisi [A, B, C] dengan C di paling atas, lalu dilakukan POP satu kali, apa isi stack sekarang?</p>
+      <div class="opt" onclick="checkAnswer(this,false)">A. [A, B, C] — tidak berubah</div>
+      <div class="opt" onclick="checkAnswer(this,true)">B. [A, B]</div>
+      <div class="opt" onclick="checkAnswer(this,false)">C. [B, C]</div>
+      <div class="opt" onclick="checkAnswer(this,false)">D. [ ] — kosong</div>
+      <div class="explain" id="explain-1">✅ Jawaban: <strong>B — [A, B]</strong>. POP mengeluarkan elemen teratas (C, karena terakhir di-PUSH), sehingga tersisa A dan B.</div>
+    </div>
+  </section>
+
+  <section id="ekspresi">
+    <h2><span class="num">05</span>Stack Buat Hitung-hitungan? Bisa Banget!</h2>
+    <p class="section-sub">Biasanya kita nulis hitungan matematika dengan operator di TENGAH, contohnya 5 + 2 (disebut INFIX). Tapi komputer punya cara lain.</p>
+    <figure>
+      <img src="images/04_infix_prefix_postfix.png" alt="Perbandingan infix prefix postfix">
+      <figcaption>Tiga cara menulis ekspresi matematika yang sama — hasilnya tetap sama juga!</figcaption>
+    </figure>
+    <div class="card orange">
+      <h3>Kenapa Komputer Suka Postfix?</h3>
+      <ul>
+        <li>Tidak perlu tanda kurung sama sekali</li>
+        <li>Bisa dihitung langkah-demi-langkah pakai STACK</li>
+        <li>Urutan operasi jadi jelas dan pasti</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="hitung">
+    <h2><span class="num">06</span>Trik Menghitung Postfix Pakai Stack</h2>
+    <div class="pill-steps">
+      <div class="pill-step"><div class="n">1</div><div>Baca ekspresi dari <strong>KIRI ke KANAN</strong>, satu token setiap langkah.</div></div>
+      <div class="pill-step"><div class="n">2</div><div>Ketemu <strong>ANGKA</strong>? → langsung <span class="mono">PUSH</span> ke stack.</div></div>
+      <div class="pill-step"><div class="n">3</div><div>Ketemu <strong>OPERATOR</strong> (+, −, *, /)? → <span class="mono">POP</span> dua angka teratas, hitung, lalu <span class="mono">PUSH</span> lagi hasilnya.</div></div>
+      <div class="pill-step"><div class="n">4</div><div>Kalau semua sudah dibaca, angka yang tersisa di stack itulah <strong>JAWABANNYA!</strong></div></div>
+    </div>
+    <p>Yuk kita coba bareng-bareng menghitung ekspresi postfix <span class="mono">4 8 3 + * 2 −</span> (sama aja dengan 4 * (8 + 3) − 2 kalau ditulis cara biasa):</p>
+    <figure>
+      <img src="images/05_evaluasi_postfix_stack.png" alt="Evaluasi ekspresi postfix menggunakan stack">
+      <figcaption>PUSH 4, PUSH 8, PUSH 3 → ketemu + jadi 8+3=11 → ketemu * jadi 4*11=44 → PUSH 2 → ketemu − jadi 44−2=42. Jawabannya 42!</figcaption>
+    </figure>
+  </section>
+
+  <section id="cek2">
+    <h2><span class="num">07</span>Sekarang Giliran Kalian!</h2>
+    <div class="quiz-box">
+      <span class="tag">✍️ Latihan Essay</span>
+      <p class="q">Hitunglah ekspresi postfix berikut menggunakan cara kerja stack, tunjukkan langkah-langkahnya: <span class="mono" style="background:#1e293b;color:#fbbf24;">6 2 3 * + 4 −</span></p>
+      <button class="reveal-btn" onclick="document.getElementById('jawab-essay').classList.toggle('show')">Lihat Jawaban</button>
+      <div class="explain" id="jawab-essay">
+        PUSH 6 → [6] &nbsp;|&nbsp; PUSH 2 → [6,2] &nbsp;|&nbsp; PUSH 3 → [6,2,3] &nbsp;|&nbsp; baca * → 2*3=6 → [6,6] &nbsp;|&nbsp; baca + → 6+6=12 → [12] &nbsp;|&nbsp; PUSH 4 → [12,4] &nbsp;|&nbsp; baca − → 12−4=8 → [8]<br><br>
+        <strong>Hasil akhir = 8</strong>
+      </div>
+    </div>
+  </section>
+
+  <section id="rangkuman">
+    <h2><span class="num">08</span>Rangkuman Biar Makin Nempel 📝</h2>
+    <div class="card green">
+      <ul>
+        <li><strong>Stack</strong> = struktur data yang disusun bertumpuk, cuma bisa diakses dari sisi ATAS (top).</li>
+        <li>Aturannya <strong>LIFO</strong>: Last In First Out — yang terakhir masuk, duluan keluar.</li>
+        <li><strong>PUSH</strong> = masukin data ke atas tumpukan. <strong>POP</strong> = keluarin data dari atas tumpukan.</li>
+        <li>Contoh di kehidupan nyata: tumpukan piring, tumpukan kartu, tombol Undo, riwayat browser.</li>
+        <li>Stack bisa dipakai untuk menghitung ekspresi postfix langkah demi langkah.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="refleksi">
+    <h2><span class="num">09</span>Yuk, Refleksi Sebentar 🤔</h2>
+    <ul class="reflect-list">
+      <li><span class="emoji">🙂</span>Menurut kalian, bagian mana dari materi stack ini yang paling gampang dipahami?</li>
+      <li><span class="emoji">🤔</span>Bagian mana yang masih bikin bingung dan pengin ditanyain ke guru?</li>
+      <li><span class="emoji">💭</span>Coba sebutin satu contoh lain di kehidupan kalian yang mirip prinsip LIFO!</li>
+    </ul>
+    <p style="font-style:italic; color:var(--sub);">Semangat belajar, ya! Setelah ini, kalian akan mengerjakan LKPD untuk mempraktikkan langsung konsep stack dengan benda-benda di sekitar kalian. 🚀</p>
+  </section>
+
+</main>
+
+<footer>
+  <strong>Informatika Kelas VIII</strong> &bull; Bab II Berpikir Komputasional &bull; TP 8 — Struktur Data (Stack)<br>
+  SMP Negeri 14 Tarakan
+</footer>
+
+<a href="#" class="top-link" title="Kembali ke atas">↑</a>
+
+<script>
+function checkAnswer(el, isCorrect){
+  const opts = el.parentElement.querySelectorAll('.opt');
+  opts.forEach(o => o.style.pointerEvents = 'none');
+  if(isCorrect){ el.classList.add('correct'); }
+  else{ el.classList.add('wrong');
+    el.parentElement.querySelectorAll('.opt')[1].classList.add('correct');
+  }
+  document.getElementById('explain-1').classList.add('show');
+}
+</script>
+
+</body>
+</html>

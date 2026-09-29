@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sistem Bilangan — Materi Siswa TP 7 (Informatika Kelas VIII)</title>
+<meta name="description" content="Materi belajar sistem bilangan: desimal, biner, oktal, dan heksadesimal. Informatika Kelas VIII, Bab II Berpikir Komputasional.">
+<style>
+:root{--dec:#F97316;--bin:#2563EB;--oct:#16A34A;--hex:#9333EA;--ink:#1E293B;--muted:#64748B;--line:#CBD5E1;--soft:#F1F5F9;--navy:#1E3A8A}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;font-family:"Segoe UI",Calibri,system-ui,-apple-system,Arial,sans-serif;color:var(--ink);background:#F8FAFC;line-height:1.65;font-size:17px}
+.wrap{max-width:900px;margin:0 auto;padding:0 18px 60px}
+nav.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+nav.top .in{max-width:900px;margin:0 auto;display:flex;gap:6px;overflow-x:auto;padding:10px 18px;scrollbar-width:thin}
+nav.top a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:600;font-size:14px;padding:5px 12px;border-radius:999px;background:var(--soft)}
+nav.top a:hover,nav.top a:focus{background:var(--navy);color:#fff;outline:none}
+.hero{margin:18px 0 8px}.hero img{width:100%;height:auto;border-radius:18px;display:block;box-shadow:0 8px 24px rgba(30,58,138,.25)}
+.meta{color:var(--muted);font-size:14px;margin:8px 4px}
+h2.sec{font-size:26px;line-height:1.25;margin:44px 0 12px;padding:10px 16px;border-radius:14px;color:#fff;background:var(--c,var(--navy))}
+h3{font-size:20px;margin:26px 0 8px;color:var(--navy)}
+h4{margin:6px 0;font-size:17px}
+p{margin:0 0 12px}
+b{font-weight:700}
+sub,sup{line-height:0}
+code{font-family:Consolas,"DejaVu Sans Mono",monospace;background:#E8EEF7;border-radius:4px;padding:1px 6px;font-size:.92em}
+figure{margin:18px auto;text-align:center}
+figure img{max-width:100%;height:auto;border-radius:12px;border:1px solid var(--line);background:#fff}
+figcaption{font-size:14px;color:var(--muted);margin-top:6px;font-style:italic}
+.imgtext{display:flex;gap:20px;align-items:center;margin:8px 0 12px}
+.imgtext img{width:150px;height:auto;flex:none}
+.box{border-radius:14px;padding:12px 16px 6px;margin:16px 0;border:2px solid;border-left-width:8px}
+.box p,.box li{margin:0 0 8px}.box ul,.box ol{margin:0 0 8px;padding-left:22px}
+.box-title{font-weight:800;margin-bottom:4px}
+.box.info{background:#DBEAFE;border-color:#2563EB}.box.info .box-title{color:#1D4ED8}
+.box.tip{background:#DCFCE7;border-color:#16A34A}.box.tip .box-title{color:#15803D}
+.box.warn{background:#FFEDD5;border-color:#F97316}.box.warn .box-title{color:#C2410C}
+.box.try{background:#F3E8FF;border-color:#9333EA}.box.try .box-title{color:#7E22CE}
+.box.note{background:#F1F5F9;border-color:#94A3B8}
+details.ans{background:#FEF9C3;border:2px solid #CA8A04;border-radius:14px;padding:4px 16px;margin:14px 0}
+details.ans summary{cursor:pointer;font-weight:800;color:#854D0E;padding:8px 0;list-style:none}
+details.ans summary::before{content:"\25B6  ";font-size:12px}
+details.ans[open] summary::before{content:"\25BC  "}
+details.ans p{margin:0 0 8px}
+.formula{text-align:center;font-size:24px;font-weight:800;color:var(--navy);background:#EEF2FF;border-top:2px solid #C7D2FE;border-bottom:2px solid #C7D2FE;padding:10px;margin:14px 0}
+.tbl{overflow-x:auto;margin:14px 0}
+table{border-collapse:collapse;width:100%;background:#fff;font-size:15.5px}
+th{background:var(--navy);color:#fff;padding:8px 8px;border:1px solid var(--line)}
+td{padding:8px 10px;border:1px solid var(--line);vertical-align:middle}
+table.center td{text-align:center}
+td.fc{font-weight:700}
+tbody tr:nth-child(even){background:#F8FAFC}
+ul,ol{padding-left:24px}li{margin-bottom:6px}
+.widget{background:#fff;border:3px solid var(--navy);border-radius:18px;padding:16px 20px 18px;margin:26px 0;box-shadow:0 6px 0 rgba(30,58,138,.15)}
+.widget h3{margin-top:4px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.btn{font:inherit;font-weight:700;border:0;border-radius:999px;background:var(--navy);color:#fff;padding:9px 20px;cursor:pointer}
+.btn:hover{background:#2563EB}.btn.ghost{background:#E2E8F0;color:var(--ink)}.btn.ghost:hover{background:#CBD5E1}
+.btn:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible,.card:focus-visible{outline:3px solid #F97316;outline-offset:2px}
+.target{font-size:22px;margin:6px 0}.target b{color:var(--bin);font-size:30px}
+.cards{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0 6px}
+.card{width:78px;height:96px;border-radius:12px;border:3px dashed #94A3B8;background:#E2E8F0;color:#64748B;font:inherit;font-weight:800;font-size:26px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 5px 0 #CBD5E1;transition:transform .1s}
+.card small{font-size:12px;font-weight:600}
+.card.on{background:var(--bin);color:#fff;border:3px solid var(--bin);box-shadow:0 5px 0 #1D4ED8;transform:translateY(-3px)}
+.bits{text-align:center;font-size:34px;font-weight:800;color:var(--bin);letter-spacing:6px}
+.mono{font-family:Consolas,"DejaVu Sans Mono",monospace}
+.sum{text-align:center;font-size:19px;min-height:28px}
+.msg{text-align:center;font-weight:800;min-height:28px}.msg.ok{color:#15803D}.msg.no{color:#B45309}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:720px){.two{grid-template-columns:1fr}.imgtext{flex-direction:column;text-align:center}body{font-size:16px}.card{width:64px;height:84px;font-size:22px}}
+label{display:block;margin:8px 0;font-weight:600;font-size:15px}
+input,select{font:inherit;display:block;width:100%;margin-top:4px;padding:8px 10px;border:2px solid var(--line);border-radius:10px;background:#fff}
+.out{margin-top:10px;font-size:15px}.out .res{font-size:22px;font-weight:800;color:var(--navy);margin:8px 0}
+.out table{font-size:14.5px}.out td,.out th{text-align:center;padding:5px 6px}
+.err{color:#B91C1C;font-weight:700}
+.warn-inline{background:#FFEDD5;border-radius:10px;padding:8px 12px;font-size:15px}
+.q{border:2px solid var(--line);border-radius:14px;padding:10px 14px;margin:12px 0;background:#fff}
+.q legend{font-weight:700;padding:0 6px}
+.q label{font-weight:500;display:flex;gap:8px;align-items:flex-start;margin:5px 0;cursor:pointer}
+.q input{width:auto;margin:5px 0 0}
+.q.right{border-color:#16A34A;background:#F0FDF4}.q.wrong{border-color:#DC2626;background:#FEF2F2}
+.fb{margin-top:6px;font-size:15px}
+.score{font-size:22px;font-weight:800;color:var(--navy);margin-top:12px}
+footer{margin-top:50px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:14px;text-align:center}
+@media print{nav.top,.widget{display:none}body{background:#fff}details.ans{break-inside:avoid}}
+</style>
+</head>
+<body>
+<nav class="top" aria-label="Navigasi bagian"><div class="in"><a href="#misi1">Misi 1</a><a href="#misi2">Misi 2</a><a href="#misi3">Misi 3</a><a href="#misi4">Misi 4</a><a href="#misi5">Misi 5</a><a href="#misi6">Misi 6</a><a href="#misi7">Misi 7</a><a href="#misi8">Misi 8</a><a href="#ringkasan">Rangkuman</a><a href="#latihan">Latihan Mandiri</a><a href="#refleksi">Refleksi Detektif</a><a href="#kamus">Kamus Mini</a></div></nav>
+<main class="wrap">
+<header class="hero"><img src="images/15_banner_tp7.png" alt="Banner Sistem Bilangan: desimal, biner, oktal, heksadesimal"><p class="meta">Materi Siswa  •  Informatika Kelas VIII  •  Bab II Berpikir Komputasional  •  TP 7</p></header>
+<h2 class="sec" id="halo">Halo, Detektif Angka!</h2>
+<div class="imgtext"><img src="images/16_maskot_bibi.png" alt="Bibi, robot maskot" loading="lazy"><div><p>Pernah penasaran kenapa komputer hanya mengenal angka <b>0 dan 1</b>, tapi bisa memutar video, main game, sampai mengirim pesan WhatsApp? Rahasianya ada di <b>sistem bilangan</b>.</p><p>Hari ini kamu bukan sekadar murid, tapi <b>detektif angka</b>. Tugasmu: menemukan sendiri pola di balik angka-angka, lalu membuktikannya. Kenalkan, ini <b>Bibi</b>, robot asistenmu. Dia akan muncul setiap kali ada tantangan.</p></div></div>
+<div class="box info"><div class="box-title">Misi kita hari ini</div><ul><li>Menjelaskan apa itu <b>basis</b> dan <b>nilai tempat</b> pada sebuah bilangan.</li><li>Mengenal bilangan <b>desimal, biner, oktal, dan heksadesimal</b>.</li><li>Mengubah bilangan <b>desimal ke biner, oktal, heksadesimal</b> dan sebaliknya.</li><li>Menemukan <b>jalan pintas</b> mengubah biner ke oktal dan heksadesimal.</li><li>Menemukan di mana bilangan-bilangan ini dipakai dalam kehidupan sehari-hari.</li></ul></div>
+<div class="box tip"><div class="box-title">Cara mainnya</div><p>Tebak dulu, baru cek jawaban di <b>Kotak Jawaban</b>. Kalau kamu membaca versi cetak, tutup kotak jawaban dengan kertas sampai selesai menebak. Salah tebak itu wajar. Detektif hebat justru belajar dari tebakan yang meleset.</p></div>
+<h2 class="sec" id="misi1" style="--c:#F97316">Misi 1: Kenapa Setelah 9 Jadi 10?</h2>
+<p>Coba perhatikan timbangan digital di toko atau di dapur rumah. Angka di layarnya berubah dari <b>kanan</b> dulu. Digit paling kanan naik: 0, 1, 2, … sampai 9. Kalau ternyata masih kurang, digit paling kanan kembali ke 0, dan digit di sebelah kirinya naik 1. Jadilah 0010.</p>
+<figure style="max-width:100%"><img src="images/01_timbangan_digital.png" alt="Gambar 1. Timbangan digital berbasis 10" loading="lazy"><figcaption>Gambar 1. Timbangan digital berbasis 10</figcaption></figure>
+<div class="box try"><div class="box-title">Ayo Temukan!</div><ol><li>Kalau timbangan menunjukkan 0099, lalu ditambah 1 gram, angka apa yang muncul?</li><li>Kenapa digit dianggap “penuh” setelah mencapai 9? Apa hubungannya dengan jumlah simbol yang dipakai (0 sampai 9 ada berapa simbol)?</li></ol></div>
+<details class="ans"><summary>Jawabanmu cocok dengan ini?</summary><p>1. <b>0100</b>. Dua digit paling kanan penuh (99), jadi keduanya kembali ke 0 dan digit di kirinya naik 1.</p><p>2. Ada <b>10 simbol</b> (0, 1, 2, …, 9). Setelah simbol terakhir dipakai, digit kembali ke 0 dan “menitip” 1 ke kiri. Angka 10 inilah yang disebut <b>basis</b>. Sistem yang memakai 10 simbol disebut <b>desimal</b> atau <b>basis 10</b>.</p></details>
+<h2 class="sec" id="misi2" style="--c:#F97316">Misi 2: Membongkar Angka 2789</h2>
+<p>Setiap digit punya “harga” sesuai tempatnya. Tempat itu disebut <b>posisi</b>, dihitung dari kanan dan dimulai dari <b>0</b> (bukan 1). Harga tiap posisi adalah <b>basis</b><b><sup>posisi</sup></b>.</p>
+<figure style="max-width:100%"><img src="images/02_nilai_tempat_2789.png" alt="Gambar 2. Bilangan 2789 dibongkar menurut nilai tempatnya" loading="lazy"><figcaption>Gambar 2. Bilangan 2789 dibongkar menurut nilai tempatnya</figcaption></figure>
+<div class="formula">nilai digit = digit × basis<sup>posisi</sup></div>
+<p>Jadi: 2789 = 2×10<sup>3</sup> + 7×10<sup>2</sup> + 8×10<sup>1</sup> + 9×10<sup>0</sup> = 2000 + 700 + 80 + 9.</p>
+<div class="box info"><div class="box-title">Catat!</div><p>Posisi paling kanan adalah posisi ke-<b>0</b>. Bilangan apa pun yang dipangkatkan 0 hasilnya 1, jadi digit paling kanan selalu dikali 1.</p></div>
+<h2 class="sec" id="misi3" style="--c:#16A34A">Misi 3: Kasus Tas dan Logam Mulia</h2>
+<p>Bayangkan kamu diberi kesempatan membawa logam mulia sebanyak mungkin dari sebuah ruangan. Tasmu hanya kuat menampung <b>2707 gram</b>. Kamu harus mengisinya sampai <b>pas penuh</b>.</p>
+<h3>Kasus 1: batang 1000 g, 100 g, 10 g, dan 1 g (tiap jenis ada 9 batang)</h3>
+<div class="box try"><div class="box-title">Ayo Temukan!</div><p>Berapa batang tiap jenis yang kamu masukkan ke tas? Mulailah dari batang yang paling berat.</p></div>
+<details class="ans"><summary>Isi tas kasus 1</summary><p>1000 g × <b>2</b> = 2000 (sisa 707)   →   100 g × <b>7</b> = 700 (sisa 7)   →   10 g × <b>0</b> (sisa 7 tidak cukup untuk 10 g)   →   1 g × <b>7</b> = 7 (sisa 0).</p><p>Jumlah batang tiap jenis: <b>2, 7, 0, 7</b>. Itulah bilangan <b>2707</b>!</p></details>
+<figure style="max-width:100%"><img src="images/03_tas_logam_mulia.png" alt="Gambar 3. Tas berkapasitas 2707 g pada kasus 1" loading="lazy"><figcaption>Gambar 3. Tas berkapasitas 2707 g pada kasus 1</figcaption></figure>
+<h3>Kasus 2: batang 512 g, 64 g, 8 g, dan 1 g (tiap jenis ada 7 batang)</h3>
+<p>Kapasitas tas masih 2707 g. Jenis batangnya berbeda, jadi cara mengisinya juga berbeda.</p>
+<div class="box try"><div class="box-title">Ayo Temukan!</div><p>Isi tasnya sampai penuh. Tulis berapa batang dari tiap jenis, lalu susun jadi satu bilangan.</p></div>
+<details class="ans"><summary>Isi tas kasus 2</summary><p>512 g × <b>5</b> = 2560 (sisa 147)  →  64 g × <b>2</b> = 128 (sisa 19)  →  8 g × <b>2</b> = 16 (sisa 3)  →  1 g × <b>3</b> = 3 (sisa 0).</p><p>Jumlah batang: <b>5, 2, 2, 3</b> → bilangan <b>5223</b>. Berat batang: 8<sup>3</sup>, 8<sup>2</sup>, 8<sup>1</sup>, 8<sup>0</sup>. Jadi ini adalah <b>basis 8</b>.</p></details>
+<h3>Kasus 3: batang 2048, 1024, 512, …, 4, 2, 1 gram (tiap jenis hanya 1 batang)</h3>
+<p>Setiap batang hanya ada satu. Jadi untuk tiap jenis, pilihanmu cuma dua: <b>ambil (1)</b> atau <b>tidak ambil (0)</b>.</p>
+<div class="tbl"><table class="center"><colgroup><col style="width:26.3%"><col style="width:6.7%"><col style="width:7.3%"><col style="width:6.7%"><col style="width:6.7%"><col style="width:6.7%"><col style="width:6.2%"><col style="width:6.2%"><col style="width:6.2%"><col style="width:5.2%"><col style="width:5.2%"><col style="width:5.2%"><col style="width:5.2%"></colgroup><thead><tr><th>Berat batang (g)</th><th>2048</th><th>1024</th><th>512</th><th>256</th><th>128</th><th>64</th><th>32</th><th>16</th><th>8</th><th>4</th><th>2</th><th>1</th></tr></thead><tbody><tr><td class="">Ambil? (1/0)</td><td class="">1</td><td class="">0</td><td class="">1</td><td class="">0</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">1</td></tr><tr><td class="">Sisa kapasitas (g)</td><td class="">659</td><td class="">659</td><td class="">147</td><td class="">147</td><td class="">19</td><td class="">19</td><td class="">19</td><td class="">3</td><td class="">3</td><td class="">3</td><td class="">1</td><td class="">0</td></tr></tbody></table></div>
+<p>Bilangan yang terbentuk: <b>1010 1001 0011</b><sub>2</sub> (angka 2 kecil di kanan bawah menandakan basisnya). Berat batangnya 2<sup>11</sup>, 2<sup>10</sup>, …, 2<sup>0</sup>, jadi ini <b>basis 2</b>.</p>
+<figure style="max-width:100%"><img src="images/04_tiga_kasus_tas.png" alt="Gambar 4. Kapasitas tas sama, isinya beda karena basisnya beda" loading="lazy"><figcaption>Gambar 4. Kapasitas tas sama, isinya beda karena basisnya beda</figcaption></figure>
+<div class="box info"><div class="box-title">Temuanmu</div><ul><li>Isi tasnya berbeda-beda, tapi nilainya tetap <b>2707 gram</b>. Yang berubah hanya <b>basisnya</b>: 10, 8, dan 2.</li><li>Berat batang selalu <b>basis</b><b><sup>posisi</sup></b>: 1, 10, 100, 1000 (basis 10); 1, 8, 64, 512 (basis 8); 1, 2, 4, 8, … (basis 2).</li><li>Jumlah batang terbanyak untuk tiap jenis adalah <b>basis − 1</b>: 9 (desimal), 7 (oktal), 1 (biner).</li><li>Jadi <b>2707</b><sub>10</sub> = <b>5223</b><sub>8</sub> = <b>1010 1001 0011</b><sub>2</sub>.</li></ul></div>
+<h2 class="sec" id="misi4" style="--c:#2563EB">Misi 4: Kenalan dengan Empat Sistem Bilangan</h2>
+<figure style="max-width:100%"><img src="images/05_empat_sistem_bilangan.png" alt="Gambar 5. Empat sistem bilangan yang sering dipakai di dunia komputer" loading="lazy"><figcaption>Gambar 5. Empat sistem bilangan yang sering dipakai di dunia komputer</figcaption></figure>
+<div class="tbl"><table class="center"><colgroup><col style="width:17.6%"><col style="width:9.3%"><col style="width:20.8%"><col style="width:21.1%"><col style="width:31.1%"></colgroup><thead><tr><th>Sistem</th><th>Basis</th><th>Simbol yang dipakai</th><th>Contoh penulisan</th><th>Dipakai untuk</th></tr></thead><tbody><tr><td class="">Desimal</td><td class="">10</td><td class="">0–9</td><td class="">2707<sub>10</sub></td><td class="">Kehidupan sehari-hari</td></tr><tr><td class="">Biner</td><td class="">2</td><td class="">0, 1</td><td class="">1101<sub>2</sub></td><td class="">Bahasa asli komputer (bit)</td></tr><tr><td class="">Oktal</td><td class="">8</td><td class="">0–7</td><td class="">5223<sub>8</sub></td><td class="">Bentuk ringkas biner (3 bit)</td></tr><tr><td class="">Heksadesimal</td><td class="">16</td><td class="">0–9 dan A–F</td><td class="">A93<sub>16</sub></td><td class="">Warna, alamat memori (4 bit)</td></tr></tbody></table></div>
+<p>Angka kecil di kanan bawah (subskrip) menunjukkan basis. <b>1101</b><sub>2</sub> dibaca “satu satu nol satu basis dua”. Kalau basisnya tidak ditulis, anggap saja desimal.</p>
+<h3>Tabel sakti 0 sampai 15</h3>
+<figure style="max-width:100%"><img src="images/06_tabel_0_sampai_15.png" alt="Gambar 6. Angka 0 sampai 15 di empat sistem bilangan" loading="lazy"><figcaption>Gambar 6. Angka 0 sampai 15 di empat sistem bilangan</figcaption></figure>
+<div class="box try"><div class="box-title">Ayo Temukan!</div><ol><li>Setelah <b>1</b> di sistem biner, angka berikutnya ditulis apa? Bagaimana dengan setelah <b>7</b> di sistem oktal?</li><li>Kenapa heksadesimal butuh huruf A sampai F?</li><li>Perhatikan bilangan 8. Bagaimana penulisannya di biner dan oktal? Apa polanya?</li></ol></div>
+<details class="ans"><summary>Temuan detektif</summary><p>1. Setelah 1 di biner adalah <b>10</b> (dibaca “satu nol”, nilainya dua). Setelah 7 di oktal adalah <b>10</b> (nilainya delapan). Sama seperti 9 → 10 di desimal: simbol terakhir habis, digit kembali ke 0 dan geser ke kiri.</p><p>2. Heksadesimal butuh <b>16 simbol</b>, tetapi angka hanya ada 0–9. Sisanya dipinjam dari huruf: A=10, B=11, C=12, D=13, E=14, F=15.</p><p>3. 8 = <b>1000</b><sub>2</sub> = <b>10</b><sub>8</sub>. Di biner, 8 = 2<sup>3</sup> sehingga digit 1 ada di posisi ke-3. Di oktal, 8 adalah satu “kelompok delapan” tanpa sisa.</p></details>
+<h3>Kartu biner (dan lampu ajaib)</h3>
+<p>Siapkan 8 kartu bernilai <b>128, 64, 32, 16, 8, 4, 2, 1</b>. Setiap kartu bernilai dua kali lipat kartu di kanannya. Untuk menunjukkan suatu angka, <b>buka</b> kartu-kartu yang jumlahnya sama dengan angka itu. Kartu terbuka = <b>1</b>, kartu tertutup = <b>0</b>.</p>
+<figure style="max-width:100%"><img src="images/09_kartu_biner.png" alt="Gambar 7. Angka 45 pada kartu biner" loading="lazy"><figcaption>Gambar 7. Angka 45 pada kartu biner</figcaption></figure>
+<figure style="max-width:60%"><img src="images/14_lampu_biner.png" alt="Gambar 8. Lampu ajaib: lampu 8, 2, dan 1 menyala sehingga nilainya 11" loading="lazy"><figcaption>Gambar 8. Lampu ajaib: lampu 8, 2, dan 1 menyala sehingga nilainya 11</figcaption></figure>
+
+<section class="widget" id="w-kartu" aria-label="Kartu biner interaktif">
+  <h3>Coba Sendiri: Kartu Biner</h3>
+  <p>Klik kartu untuk membuka atau menutupnya. Kartu terbuka bernilai <b>1</b>, kartu tertutup bernilai <b>0</b>.</p>
+  <div class="target">Tunjukkan angka: <b id="k-target">45</b></div>
+  <div class="cards" id="k-cards"></div>
+  <div class="bits mono" id="k-bits">00000000</div>
+  <div id="k-sum" class="sum"></div>
+  <div id="k-msg" class="msg" role="status"></div>
+  <div class="btns"><button id="k-new" class="btn">Soal baru</button><button id="k-reset" class="btn ghost">Reset kartu</button></div>
+</section>
+<div class="box try"><div class="box-title">Uji nyali 1</div><p>Tunjukkan angka <b>19</b> dan <b>100</b> dengan 8 kartu binermu. Kartu mana saja yang terbuka?</p></div>
+<details class="ans"><summary>Kotak Jawaban</summary><p>19 = 16 + 2 + 1 → kartu 16, 2, 1 terbuka → <b>0001 0011</b><sub>2</sub>.</p><p>100 = 64 + 32 + 4 → kartu 64, 32, 4 terbuka → <b>0110 0100</b><sub>2</sub>.</p></details>
+<h2 class="sec" id="misi5" style="--c:#9333EA">Misi 5: Dari Desimal ke Biner, Oktal, dan Heksadesimal</h2>
+<p>Di kasus tas tadi kamu mengisi batang satu per satu. Untungnya ada cara yang lebih cepat dan bisa dipakai untuk bilangan sebesar apa pun: <b>bagi terus, catat sisanya</b>. Cara ini sebenarnya sebuah <b>algoritma</b>, yaitu langkah-langkah yang jelas dan berulang.</p>
+<div class="box info"><div class="box-title">Algoritma konversi desimal ke basis lain</div><ol><li>Siapkan tempat hasil yang masih kosong.</li><li>Bagi bilangan <b>N</b> dengan basis tujuan (2, 8, atau 16).</li><li>Catat <b>sisa</b> pembagiannya, tulis di paling <b>kiri</b> hasil.</li><li>Ganti N dengan <b>hasil bagi</b> (bilangan bulat).</li><li>Ulangi langkah 2–4 sampai N menjadi <b>0</b>.</li></ol></div>
+<figure style="max-width:62%"><img src="images/20_flowchart_konversi.png" alt="Gambar 9. Diagram alur algoritma konversi" loading="lazy"><figcaption>Gambar 9. Diagram alur algoritma konversi</figcaption></figure>
+<h3>Contoh 1 dan 2: 50 ke biner dan oktal</h3>
+<figure style="max-width:100%"><img src="images/07_desimal_ke_biner_oktal.png" alt="Gambar 10. 50 diubah ke biner dan oktal" loading="lazy"><figcaption>Gambar 10. 50 diubah ke biner dan oktal</figcaption></figure>
+<p>Jadi <b>50</b><sub>10</sub> = <b>110010</b><sub>2</sub> = <b>62</b><sub>8</sub>. Kalau mau mengecek, ubah kembali: 110010<sub>2</sub> = 32 + 16 + 2 = 50.</p>
+<h3>Contoh 3: 90 ke heksadesimal</h3>
+<div class="tbl"><table class="center"><colgroup><col style="width:14.5%"><col style="width:22.8%"><col style="width:20.8%"><col style="width:18.7%"><col style="width:23.2%"></colgroup><thead><tr><th>N</th><th>Bagi 16</th><th>Hasil bagi</th><th>Sisa</th><th>Ditulis</th></tr></thead><tbody><tr><td class="">90</td><td class="">90 ÷ 16</td><td class="">5</td><td class="">10</td><td class=""><b>A</b></td></tr><tr><td class="">5</td><td class="">5 ÷ 16</td><td class="">0</td><td class="">5</td><td class=""><b>5</b></td></tr></tbody></table></div>
+<p>Sisa dibaca dari bawah ke atas: 5 lalu A, jadi <b>90</b><sub>10</sub> = <b>5A</b><sub>16</sub>. (Sisa 10 ditulis A.)</p>
+<div class="box warn"><div class="box-title">Awas!</div><ul><li>Sisa dibaca dari <b>bawah ke atas</b>, bukan dari atas ke bawah.</li><li>Di heksadesimal, sisa 10 sampai 15 ditulis <b>A sampai F</b>.</li><li>Berhenti bila <b>hasil bagi sudah 0</b>, bukan bila sisanya 0.</li></ul></div>
+<div class="box try"><div class="box-title">Uji nyali 2</div><p>Ubah <b>25</b> ke biner dan oktal, lalu ubah <b>200</b> ke heksadesimal. Cek balik hasilmu!</p></div>
+<details class="ans"><summary>Kotak Jawaban</summary><p>25 → biner: 25÷2=12 sisa 1; 12÷2=6 sisa 0; 6÷2=3 sisa 0; 3÷2=1 sisa 1; 1÷2=0 sisa 1 → <b>11001</b><sub>2</sub>.</p><p>25 → oktal: 25÷8=3 sisa 1; 3÷8=0 sisa 3 → <b>31</b><sub>8</sub>.</p><p>200 → heksa: 200÷16=12 sisa 8; 12÷16=0 sisa 12 (C) → <b>C8</b><sub>16</sub>.</p><p>Cek: 16+8+1 = 25;  3×8+1 = 25;  12×16+8 = 200.</p></details>
+
+<section class="widget" id="w-konv" aria-label="Konverter sakti">
+  <h3>Konverter Sakti (untuk mengecek jawabanmu)</h3>
+  <p class="warn-inline">Kerjakan dulu di bukumu, baru cek di sini. Perhatikan langkah-langkahnya, bukan hanya hasil akhirnya.</p>
+  <div class="two">
+    <div>
+      <h4>Desimal &rarr; basis lain</h4>
+      <label>Bilangan desimal <input id="c1-n" type="number" min="0" max="1000000" value="90"></label>
+      <label>Ubah ke
+        <select id="c1-b"><option value="2">Biner (2)</option><option value="8">Oktal (8)</option><option value="16" selected>Heksadesimal (16)</option></select></label>
+      <button id="c1-go" class="btn">Ubah</button>
+      <div id="c1-out" class="out"></div>
+    </div>
+    <div>
+      <h4>Basis lain &rarr; desimal</h4>
+      <label>Bilangan <input id="c2-n" type="text" value="3A1" autocomplete="off" spellcheck="false"></label>
+      <label>Basisnya
+        <select id="c2-b"><option value="2">Biner (2)</option><option value="8">Oktal (8)</option><option value="16" selected>Heksadesimal (16)</option></select></label>
+      <button id="c2-go" class="btn">Ubah</button>
+      <div id="c2-out" class="out"></div>
+    </div>
+  </div>
+</section>
+<h2 class="sec" id="misi6" style="--c:#F97316">Misi 6: Balik ke Desimal</h2>
+<p>Sekarang arahnya dibalik. Rumusnya masih ingat? Sama seperti saat membongkar 2789: <b>kalikan tiap digit dengan basis</b><b><sup>posisi</sup></b><b>, lalu jumlahkan</b>.</p>
+<figure style="max-width:100%"><img src="images/08_ke_desimal.png" alt="Gambar 11. Mengubah biner, oktal, dan heksadesimal ke desimal" loading="lazy"><figcaption>Gambar 11. Mengubah biner, oktal, dan heksadesimal ke desimal</figcaption></figure>
+<figure style="max-width:100%"><img src="images/19_tabel_pangkat.png" alt="Gambar 12. Contekan pangkat: nilai tiap posisi" loading="lazy"><figcaption>Gambar 12. Contekan pangkat: nilai tiap posisi</figcaption></figure>
+<div class="box try"><div class="box-title">Uji nyali 3</div><p>Ubah ke desimal: <b>10110</b><sub>2</sub>,  <b>74</b><sub>8</sub>,  dan <b>2F</b><sub>16</sub>.</p></div>
+<details class="ans"><summary>Kotak Jawaban</summary><p>10110<sub>2</sub> = 16 + 0 + 4 + 2 + 0 = <b>22</b>.</p><p>74<sub>8</sub> = 7×8 + 4×1 = 56 + 4 = <b>60</b>.</p><p>2F<sub>16</sub> = 2×16 + 15×1 = 32 + 15 = <b>47</b> (F bernilai 15).</p></details>
+<h2 class="sec" id="misi7" style="--c:#9333EA">Misi 7: Jalan Pintas Biner</h2>
+<p>Ternyata kamu bisa <b>loncat langsung</b> dari biner ke oktal atau heksadesimal tanpa lewat desimal. Rahasianya: 8 = 2<sup>3</sup> dan 16 = 2<sup>4</sup>. Artinya <b>satu digit oktal = 3 bit</b> dan <b>satu digit heksadesimal = 4 bit</b>.</p>
+<div class="box info"><div class="box-title">Cara kerja jalan pintas</div><ol><li>Kelompokkan bit biner dari <b>kanan</b> (3 bit untuk oktal, 4 bit untuk heksadesimal).</li><li>Kalau kelompok paling kiri kurang, tambahkan <b>0 di kirinya</b>.</li><li>Ubah tiap kelompok menjadi satu digit (lihat tabel 0–15). Gabungkan.</li></ol></div>
+<figure style="max-width:100%"><img src="images/10_biner_ke_oktal_heksa.png" alt="Gambar 13. Biner 1010 1001 0011 menjadi oktal 5223 dan heksadesimal A93" loading="lazy"><figcaption>Gambar 13. Biner 1010 1001 0011 menjadi oktal 5223 dan heksadesimal A93</figcaption></figure>
+<p>Ingat bilangan 2707 di awal tadi? Ternyata <b>2707</b><sub>10</sub> = <b>1010 1001 0011</b><sub>2</sub> = <b>5223</b><sub>8</sub> = <b>A93</b><sub>16</sub>. Satu bilangan, empat penulisan. Untuk arah sebaliknya, ubah tiap digit oktal/heksa menjadi 3 atau 4 bit, misalnya A93 → 1010 1001 0011.</p>
+<div class="box try"><div class="box-title">Uji nyali 4</div><p>(a) 101110<sub>2</sub> → oktal.   (b) 11010110<sub>2</sub> → heksadesimal.   (c) 257<sub>8</sub> → biner.</p></div>
+<details class="ans"><summary>Kotak Jawaban</summary><p>(a) 101 | 110 → 5 | 6 → <b>56</b><sub>8</sub>.</p><p>(b) 1101 | 0110 → D | 6 → <b>D6</b><sub>16</sub>.</p><p>(c) 2 | 5 | 7 → 010 | 101 | 111 → <b>10101111</b><sub>2</sub> (nol paling kiri boleh dibuang).</p></details>
+<h2 class="sec" id="misi8" style="--c:#16A34A">Misi 8: Dipakai di Mana Sih?</h2>
+<figure style="max-width:100%"><img src="images/11_bilangan_di_kehidupan.png" alt="Gambar 14. Heksadesimal dan oktal di sekitar kita" loading="lazy"><figcaption>Gambar 14. Heksadesimal dan oktal di sekitar kita</figcaption></figure>
+<ul><li><b>Kode warna.</b> #FF5733 berarti Merah = FF (255), Hijau = 57 (87), Biru = 33 (51). Dua digit heksa cukup untuk 0–255, yaitu tepat satu <b>byte</b>.</li><li><b>Alamat memori.</b> Komputer menyimpan data di “rumah” bernomor. Nomor rumahnya ditulis heksadesimal supaya singkat.</li><li><b>Izin file di Linux.</b> <code>chmod 755</code> memakai oktal: tiap digit adalah 3 bit izin (baca, tulis, jalankan). 7 = 111 = rwx, 5 = 101 = r-x.</li><li><b>Komputer sendiri.</b> Semua data (teks, gambar, video) akhirnya disimpan sebagai deretan 0 dan 1.</li></ul>
+<h2 class="sec" id="ringkasan">Rangkuman</h2>
+<figure style="max-width:100%"><img src="images/12_peta_konsep_tp7.png" alt="Gambar 15. Peta konsep sistem bilangan" loading="lazy"><figcaption>Gambar 15. Peta konsep sistem bilangan</figcaption></figure>
+<div class="tbl"><table class=""><colgroup><col style="width:31.1%"><col style="width:68.9%"></colgroup><thead><tr><th>Yang ingin dilakukan</th><th>Caranya</th></tr></thead><tbody><tr><td class="fc">Desimal → basis lain</td><td class="">Bagi terus dengan basis tujuan, catat sisa, <b>baca dari bawah ke atas</b>.</td></tr><tr><td class="fc">Basis lain → desimal</td><td class="">Kalikan tiap digit dengan <b>basis</b><b><sup>posisi</sup></b> (posisi dari kanan mulai 0), lalu jumlahkan.</td></tr><tr><td class="fc">Biner → oktal</td><td class="">Kelompokkan <b>3 bit</b> dari kanan, ubah tiap kelompok.</td></tr><tr><td class="fc">Biner → heksadesimal</td><td class="">Kelompokkan <b>4 bit</b> dari kanan, ubah tiap kelompok (10–15 = A–F).</td></tr><tr><td class="fc">Digit terbesar</td><td class="">Selalu <b>basis − 1</b>: desimal 9, biner 1, oktal 7, heksa F.</td></tr></tbody></table></div>
+<h2 class="sec" id="latihan">Latihan Mandiri</h2>
+<ol><li>Berapa digit terbesar yang dipakai pada bilangan oktal?</li><li>Ubah 1101<sub>2</sub> menjadi bilangan desimal.</li><li>Ubah 37 (desimal) menjadi bilangan biner.</li><li>Ubah 2B<sub>16</sub> menjadi bilangan desimal.</li><li>Ubah 111 010 001<sub>2</sub> menjadi bilangan oktal dengan jalan pintas.</li><li>Andi berkata, “1000<sub>2</sub> lebih besar daripada 999<sub>10</sub>.” Setujukah kamu? Jelaskan.</li></ol>
+<details class="ans"><summary>Kunci latihan (jangan intip sebelum mencoba!)</summary><p>1. <b>7</b>.</p><p>2. 8 + 4 + 0 + 1 = <b>13</b>.</p><p>3. 37÷2=18 sisa 1; 18÷2=9 sisa 0; 9÷2=4 sisa 1; 4÷2=2 sisa 0; 2÷2=1 sisa 0; 1÷2=0 sisa 1 → <b>100101</b><sub>2</sub>.</p><p>4. 2×16 + 11 = <b>43</b>.</p><p>5. 111 | 010 | 001 → 7 | 2 | 1 → <b>721</b><sub>8</sub>.</p><p>6. <b>Tidak setuju.</b> 1000<sub>2</sub> = 1×2<sup>3</sup> = 8, jauh lebih kecil daripada 999.</p></details>
+
+<section class="widget" id="w-kuis" aria-label="Kuis mandiri">
+  <h3>Kuis Mandiri: 10 Soal Pilihan Ganda</h3>
+  <p>Pilih satu jawaban tiap soal, lalu klik <b>Periksa jawabanku</b>.</p>
+  <form id="kuis-form"></form>
+  <div class="btns"><button id="kuis-go" class="btn">Periksa jawabanku</button><button id="kuis-reset" class="btn ghost" type="button">Ulangi</button></div>
+  <div id="kuis-score" class="score" role="status"></div>
+</section>
+<h2 class="sec" id="refleksi">Refleksi Detektif</h2>
+<p>Beri tanda centang (✓) pada kemampuan yang sudah kamu kuasai:</p>
+<div class="tbl"><table class=""><colgroup><col style="width:58.5%"><col style="width:13.8%"><col style="width:13.8%"><col style="width:13.8%"></colgroup><thead><tr><th>Aku sudah bisa …</th><th>Sudah</th><th>Hampir</th><th>Belum</th></tr></thead><tbody><tr><td class="">menjelaskan basis dan nilai tempat</td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">mengubah desimal ke biner, oktal, dan heksadesimal</td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">mengubah biner, oktal, dan heksadesimal ke desimal</td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">mengubah biner ke oktal/heksadesimal dengan jalan pintas</td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">menceritakan contoh pemakaian bilangan ini dalam kehidupan</td><td class=""></td><td class=""></td><td class=""></td></tr></tbody></table></div>
+<p>Bagian yang paling seru menurutku: ______________________________________________</p>
+<p>Bagian yang masih membuatku bingung: ___________________________________________</p>
+<h2 class="sec" id="kamus" style="--c:#2563EB">Kamus Mini</h2>
+<div class="tbl"><table class=""><colgroup><col style="width:20.8%"><col style="width:79.2%"></colgroup><thead><tr><th>Istilah</th><th>Artinya</th></tr></thead><tbody><tr><td class="fc">Basis</td><td class="">Banyaknya simbol yang dipakai dalam sebuah sistem bilangan (10, 2, 8, 16).</td></tr><tr><td class="fc">Digit</td><td class="">Satu simbol penyusun bilangan, misalnya 2, 7, 8, 9 pada 2789.</td></tr><tr><td class="fc">Posisi</td><td class="">Urutan tempat digit dari kanan, dimulai dari 0.</td></tr><tr><td class="fc">Bit</td><td class="">Satu digit biner (0 atau 1). Singkatan dari *binary digit*.</td></tr><tr><td class="fc">Byte</td><td class="">Kumpulan 8 bit. Bisa menyimpan nilai 0 sampai 255.</td></tr><tr><td class="fc">Konversi</td><td class="">Mengubah cara penulisan bilangan dari satu basis ke basis lain tanpa mengubah nilainya.</td></tr></tbody></table></div>
+<footer>Materi Siswa TP 7 &bull; Informatika Kelas VIII &bull; SMP Negeri 14 Tarakan<br>Sumber acuan: Buku Siswa &amp; Buku Guru Informatika SMP/MTs Kelas VIII (Edisi Revisi), Kemendikbudristek 2024.</footer>
+</main>
+<script>
+(function(){
+var D="0123456789ABCDEF";
+/* ---------- kartu biner ---------- */
+var vals=[128,64,32,16,8,4,2,1], on=[0,0,0,0,0,0,0,0], target=45;
+var cw=document.getElementById('k-cards');
+function draw(){
+  var sum=0,bits='';
+  vals.forEach(function(v,i){ if(on[i]) sum+=v; bits+=on[i]; });
+  document.getElementById('k-bits').textContent=bits.slice(0,4)+' '+bits.slice(4);
+  var terms=vals.filter(function(v,i){return on[i]});
+  document.getElementById('k-sum').textContent= terms.length? (terms.join(' + ')+' = '+sum) : 'Belum ada kartu yang terbuka';
+  var m=document.getElementById('k-msg');
+  if(sum===target){m.textContent='Pas! Kamu berhasil menunjukkan '+target+'.';m.className='msg ok'}
+  else{m.textContent=sum>target?'Kelebihan '+(sum-target)+'. Tutup satu kartu.':'Masih kurang '+(target-sum)+'.';m.className='msg no'}
+  Array.prototype.forEach.call(cw.children,function(el,i){el.classList.toggle('on',!!on[i]);el.setAttribute('aria-pressed',on[i]?'true':'false');el.querySelector('small').textContent=on[i]?'terbuka':'tertutup';});
+}
+vals.forEach(function(v,i){
+  var b=document.createElement('button');b.type='button';b.className='card';
+  b.innerHTML=v+'<small>tertutup</small>';
+  b.addEventListener('click',function(){on[i]=on[i]?0:1;draw();});
+  cw.appendChild(b);
+});
+document.getElementById('k-new').addEventListener('click',function(){target=1+Math.floor(Math.random()*255);on=[0,0,0,0,0,0,0,0];document.getElementById('k-target').textContent=target;draw();});
+document.getElementById('k-reset').addEventListener('click',function(){on=[0,0,0,0,0,0,0,0];draw();});
+document.getElementById('k-target').textContent=target;draw();
+
+/* ---------- konverter ---------- */
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+document.getElementById('c1-go').addEventListener('click',function(){
+  var out=document.getElementById('c1-out'), n=Number(document.getElementById('c1-n').value), b=Number(document.getElementById('c1-b').value);
+  if(!Number.isInteger(n)||n<0||n>1000000){out.innerHTML='<p class="err">Masukkan bilangan bulat 0 sampai 1.000.000.</p>';return;}
+  if(n===0){out.innerHTML='<div class="res">0<sub>'+b+'</sub></div>';return;}
+  var rows='',x=n,res='';
+  while(x>0){var q=Math.floor(x/b), r=x%b; res=D[r]+res; rows+='<tr><td>'+x+'</td><td>'+x+' \u00F7 '+b+'</td><td>'+q+'</td><td>'+r+'</td><td><b>'+D[r]+'</b></td></tr>'; x=q;}
+  out.innerHTML='<table><thead><tr><th>N</th><th>Bagi</th><th>Hasil bagi</th><th>Sisa</th><th>Ditulis</th></tr></thead><tbody>'+rows+'</tbody></table><p>Baca kolom <b>Ditulis</b> dari <b>bawah ke atas</b>:</p><div class="res">'+n+'<sub>10</sub> = '+res+'<sub>'+b+'</sub></div>';
+});
+document.getElementById('c2-go').addEventListener('click',function(){
+  var out=document.getElementById('c2-out'), s=document.getElementById('c2-n').value.trim().toUpperCase(), b=Number(document.getElementById('c2-b').value);
+  if(!s){out.innerHTML='<p class="err">Ketik bilangannya dulu.</p>';return;}
+  for(var i=0;i<s.length;i++){var v=D.indexOf(s[i]); if(v<0||v>=b){out.innerHTML='<p class="err">Simbol &ldquo;'+esc(s[i])+'&rdquo; tidak boleh dipakai di basis '+b+'. Digit terbesar basis '+b+' adalah '+D[b-1]+'.</p>';return;}}
+  var n=s.length, sum=0, rows='';
+  for(var j=0;j<n;j++){var d=D.indexOf(s[j]), p=n-1-j, w=Math.pow(b,p); sum+=d*w; rows+='<tr><td>'+esc(s[j])+(d>9?' ('+d+')':'')+'</td><td>'+p+'</td><td>'+b+'<sup>'+p+'</sup> = '+w+'</td><td><b>'+(d*w)+'</b></td></tr>';}
+  out.innerHTML='<table><thead><tr><th>Digit</th><th>Posisi</th><th>Basis<sup>posisi</sup></th><th>Nilai</th></tr></thead><tbody>'+rows+'</tbody></table><div class="res">'+esc(s)+'<sub>'+b+'</sub> = '+sum+'<sub>10</sub></div>';
+});
+document.getElementById('c1-go').click();document.getElementById('c2-go').click();
+
+/* ---------- kuis ---------- */
+var PG=[{"q":"Sistem bilangan yang hanya menggunakan simbol 0 dan 1 disebut ….","o":["Desimal","Biner","Oktal","Heksadesimal"],"key":"B","why":"Biner = basis 2, sehingga simbolnya hanya 0 dan 1 (digit terbesar = basis − 1 = 1)."},{"q":"Digit yang <b>tidak mungkin</b> muncul pada bilangan oktal adalah ….","o":["0","5","7","8"],"key":"D","why":"Oktal = basis 8, digitnya 0 sampai 7. Digit 8 sudah menjadi “penuh” dan berpindah ke posisi di kirinya."},{"q":"Pada bilangan desimal 2789, digit 7 berada pada posisi ke-2. Nilai yang diwakili digit 7 tersebut adalah ….","o":["7","70","700","7000"],"key":"C","why":"Nilai = digit × basis<sup>posisi</sup> = 7 × 10<sup>2</sup> = 700."},{"q":"Bilangan biner 1101<sub>2</sub> jika diubah ke desimal hasilnya ….","o":["13","11","12","15"],"key":"A","why":"1×2<sup>3</sup> + 1×2<sup>2</sup> + 0×2<sup>1</sup> + 1×2<sup>0</sup> = 8 + 4 + 0 + 1 = 13."},{"q":"Bilangan desimal 25 jika diubah ke biner hasilnya ….","o":["10011<sub>2</sub>","11010<sub>2</sub>","11001<sub>2</sub>","10101<sub>2</sub>"],"key":"C","why":"25÷2=12 sisa 1; 12÷2=6 sisa 0; 6÷2=3 sisa 0; 3÷2=1 sisa 1; 1÷2=0 sisa 1. Sisa dibaca dari bawah ke atas: 11001."},{"q":"Pada konversi desimal ke basis lain dengan pembagian berulang, sisa hasil bagi harus dibaca dari ….","o":["atas ke bawah","bawah ke atas","tengah ke pinggir","sisa yang terakhir saja"],"key":"B","why":"Sisa pertama adalah digit paling kanan (posisi ke-0), sisa terakhir adalah digit paling kiri. Jadi dibaca dari bawah ke atas."},{"q":"Simbol <b>C</b> pada bilangan heksadesimal bernilai desimal ….","o":["10","11","13","12"],"key":"D","why":"A=10, B=11, C=12, D=13, E=14, F=15."},{"q":"Bilangan heksadesimal 5A<sub>16</sub> sama dengan bilangan desimal ….","o":["90","80","85","95"],"key":"A","why":"5×16<sup>1</sup> + A×16<sup>0</sup> = 80 + 10 = 90."},{"q":"Bilangan biner 101110<sub>2</sub> diubah ke oktal dengan mengelompokkan 3 bit dari kanan. Hasilnya ….","o":["46<sub>8</sub>","65<sub>8</sub>","56<sub>8</sub>","72<sub>8</sub>"],"key":"C","why":"101 | 110 → 5 | 6, sehingga 56<sub>8</sub>. (Cek: 101110<sub>2</sub> = 46<sub>10</sub> dan 56<sub>8</sub> = 5×8+6 = 46.)"},{"q":"Bilangan biner 11010110<sub>2</sub> diubah ke heksadesimal hasilnya ….","o":["B6<sub>16</sub>","D6<sub>16</sub>","D5<sub>16</sub>","C6<sub>16</sub>"],"key":"B","why":"1101 | 0110 → D | 6, sehingga D6<sub>16</sub>. (Cek: 13×16 + 6 = 214.)"}];
+var form=document.getElementById('kuis-form');
+function build(){
+  form.innerHTML='';
+  PG.forEach(function(p,i){
+    var fs=document.createElement('fieldset');fs.className='q';fs.id='q'+i;
+    var h='<legend>'+(i+1)+'. '+p.q+'</legend>';
+    p.o.forEach(function(o,k){h+='<label><input type="radio" name="q'+i+'" value="'+'ABCD'[k]+'"> <span><b>'+'ABCD'[k]+'.</b> '+o+'</span></label>';});
+    h+='<div class="fb" id="fb'+i+'"></div>';
+    fs.innerHTML=h;form.appendChild(fs);
+  });
+  document.getElementById('kuis-score').textContent='';
+}
+build();
+document.getElementById('kuis-go').addEventListener('click',function(){
+  var ok=0,ans=0;
+  PG.forEach(function(p,i){
+    var sel=form.querySelector('input[name=q'+i+']:checked'), fs=document.getElementById('q'+i), fb=document.getElementById('fb'+i);
+    fs.classList.remove('right','wrong');
+    if(!sel){fb.innerHTML='<b>Belum dijawab.</b>';return;}
+    ans++;
+    if(sel.value===p.key){ok++;fs.classList.add('right');fb.innerHTML='<b>Benar!</b> '+p.why;}
+    else{fs.classList.add('wrong');fb.innerHTML='<b>Belum tepat.</b> Jawaban yang benar: <b>'+p.key+'</b>. '+p.why;}
+  });
+  document.getElementById('kuis-score').textContent='Hasilmu: '+ok+' dari '+PG.length+' soal benar'+(ans<PG.length?' ('+(PG.length-ans)+' soal belum dijawab)':'')+'.';
+});
+document.getElementById('kuis-reset').addEventListener('click',build);
+})();
+</script>
+</body>
+</html>

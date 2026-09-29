@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dari Gambar Jadi Program - TP10</title>
+<meta name="description" content="Materi siswa web: translasi flowchart ke blok Scratch dan Python, kasus Loket Wisata Mangrove Tarakan.">
+<style>
+:root{--green:#1f6f5c;--green2:#2e9e6b;--orange:#f28c28;--navy:#17324d;--mint:#e8f5ee;--sand:#fdf6e3;--bg:#f6f9fb;--card:#fff;--line:#d5dde5;--red:#d64541;--ink:#17324d;--mut:#5b6b7a}
+@media (prefers-color-scheme:dark){:root{--bg:#10171e;--card:#18222c;--line:#2c3a48;--ink:#e8eef4;--mut:#9fb0bf;--mint:#16302a;--sand:#33291a;--navy:#e8eef4}}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Calibri,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:17px}
+img{max-width:100%;height:auto;display:block;margin:0 auto}
+header.hero{background:linear-gradient(135deg,#1f6f5c,#2e9e6b);color:#fff;padding:34px 16px 26px;text-align:center}
+header.hero h1{margin:0 0 6px;font-size:clamp(26px,5vw,42px)}
+header.hero p{margin:4px auto;max-width:760px;opacity:.95}
+header.hero img{width:100%;max-width:760px;border-radius:14px;margin-top:18px;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+nav{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:2px solid var(--orange);display:flex;gap:4px;overflow-x:auto;padding:6px 10px;white-space:nowrap}
+nav a{color:var(--ink);text-decoration:none;padding:6px 12px;border-radius:20px;font-size:15px;font-weight:600}
+nav a:hover,nav a:focus{background:var(--mint)}
+main{max-width:920px;margin:0 auto;padding:10px 16px 60px}
+section{margin:34px 0}
+h2{color:var(--green);border-bottom:3px solid var(--orange);padding-bottom:6px;font-size:28px}
+h3{color:var(--orange);margin-bottom:6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+.tip{background:var(--sand);border-left:6px solid var(--orange);padding:12px 16px;border-radius:8px;margin:14px 0}
+.ok{background:var(--mint);border-left:6px solid var(--green);padding:12px 16px;border-radius:8px;margin:14px 0}
+figure{margin:14px 0;text-align:center}
+figcaption{font-size:14px;color:var(--mut);margin-top:4px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+button{font:inherit;cursor:pointer;border:2px solid var(--green);background:var(--card);color:var(--ink);border-radius:10px;padding:8px 14px;font-weight:600}
+button:hover{background:var(--mint)}
+button.pri{background:var(--green);color:#fff}
+button.sel{background:var(--orange);border-color:var(--orange);color:#fff}
+input[type=number]{font:inherit;padding:8px 10px;border:2px solid var(--line);border-radius:8px;width:120px;background:var(--card);color:var(--ink)}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:15px}
+th{background:var(--green);color:#fff;padding:8px;text-align:center}
+td{border:1px solid var(--line);padding:7px 9px}
+td.c{text-align:center}
+code,pre{font-family:Consolas,"DejaVu Sans Mono",monospace}
+pre{background:#1e222c;color:#e6ebf5;padding:12px 14px;border-radius:10px;overflow-x:auto;font-size:15px;margin:8px 0}
+.pill{display:inline-block;padding:2px 12px;border-radius:20px;font-weight:700;color:#fff}
+.ya{background:var(--green2)}.tdk{background:var(--orange)}
+.res{font-size:20px;font-weight:700;margin-top:10px}
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px 22px}
+.match button{text-align:left;width:100%}
+.match button.done{background:#d5f0df;border-color:var(--green2);color:#0d4a2d}
+.match button.bad{background:#fde4e2;border-color:var(--red)}
+.codeline{display:block;width:100%;text-align:left;font-family:Consolas,"DejaVu Sans Mono",monospace;font-size:15px;background:#1e222c;color:#e6ebf5;border:2px solid #1e222c;border-radius:6px;margin:3px 0;padding:6px 10px}
+.codeline.sus{border-color:var(--orange);background:#3b2d12}
+.codeline.hit{border-color:#2e9e6b;background:#12331f}
+.codeline.miss{border-color:var(--red);background:#3b1616}
+.opt{display:block;width:100%;text-align:left;margin:6px 0}
+.opt.right{background:#d5f0df;border-color:var(--green2);color:#0d4a2d}
+.opt.wrong{background:#fde4e2;border-color:var(--red);color:#7a1d1a}
+.bar{height:12px;background:var(--line);border-radius:8px;overflow:hidden}.bar i{display:block;height:100%;background:var(--green2);width:0;transition:width .3s}
+.small{font-size:14px;color:var(--mut)}
+footer{text-align:center;padding:24px 10px;color:var(--mut);font-size:14px}
+</style>
+</head>
+<body>
+<header class="hero">
+  <h1>Dari Gambar Jadi Program!</h1>
+  <p><strong>Translasi Flowchart ke Blok Scratch dan Kode Python</strong></p>
+  <p>Informatika Kelas IX · Bab II · TP10 (Pertemuan 1) · SMP Negeri 14 Tarakan</p>
+  <img src="images/ilustrasi_loket.png" alt="Ilustrasi Loket Wisata Mangrove Tarakan dengan kasir dan pengunjung">
+</header>
+<nav aria-label="Navigasi bagian">
+  <a href="#misi">Misi</a><a href="#simbol">Simbol</a><a href="#langkah">4 Langkah</a><a href="#padanan">Padanan</a><a href="#l1">Level 1</a><a href="#l2">Level 2</a><a href="#l3">Level 3</a><a href="#l4">Level 4</a><a href="#kuis">Kuis</a>
+</nav>
+<main>
+
+<section id="misi">
+  <h2>Misi: Jadi Programmer Magang</h2>
+  <p>Kamu magang di <strong>Loket Wisata Mangrove Tarakan</strong>. Analis Sistem memberimu <strong>flowchart</strong> (gambar alur). Tugasmu <strong>menerjemahkannya</strong> menjadi program <strong>blok Scratch</strong> dan <strong>kode Python</strong>, lalu mengujinya sampai benar.</p>
+  <figure><img src="images/ilustrasi_analis_programmer.png" alt="Analis sistem menyerahkan flowchart kepada programmer magang"><figcaption>Analis merancang alur, kamu menerjemahkannya.</figcaption></figure>
+  <div class="ok"><strong>Setelah belajar ini kamu bisa:</strong> menyebut arti simbol flowchart dan padanannya · menelusuri jalur flowchart · menerjemahkan urutan, percabangan, dan subprogram · memperbaiki bug translasi.</div>
+  <div class="small">Catatan: harga tiket dan aturan umur adalah karangan untuk latihan, bukan tarif resmi.</div>
+</section>
+
+<section id="simbol">
+  <h2>1. Kenalan dengan Simbol Flowchart</h2>
+  <figure><img src="images/fc_simbol.png" alt="Enam simbol flowchart: terminator, input/output, proses, keputusan, subprogram, garis alir"></figure>
+  <p><strong>Klik simbol</strong> untuk melihat arti dan pasangannya:</p>
+  <div id="symBtns" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))"></div>
+  <div class="card" id="symInfo" aria-live="polite">Pilih salah satu simbol di atas.</div>
+</section>
+
+<section id="langkah">
+  <h2>2. Empat Langkah Jitu Translasi</h2>
+  <figure><img src="images/langkah_translasi.png" alt="Empat langkah: baca alur, daftar data, ganti simbol, uji jejak"></figure>
+  <div class="tip">Satu simbol = satu blok atau satu baris kode, <strong>urut sesuai panah</strong>. Selalu uji dengan data biasa <strong>dan</strong> nilai batas.</div>
+  <h3>Satu logika, tiga wajah</h3>
+  <figure><img src="images/tiga_wajah.png" alt="Kasus tiket dalam flowchart, blok Scratch, dan Python"><figcaption>Tampilan beda, logikanya kembar identik.</figcaption></figure>
+</section>
+
+<section id="padanan">
+  <h2>3. Kamus Padanan</h2>
+  <figure><img src="images/tabel_padanan.png" alt="Tabel padanan simbol flowchart, blok Scratch, Python, dan C"></figure>
+  <h3>Game: Pasangkan!</h3>
+  <p class="small">Klik satu simbol di kiri, lalu pasangannya di Python di kanan.</p>
+  <div class="match" id="match"></div>
+  <div class="res" id="matchRes"></div>
+</section>
+
+<section id="l1">
+  <h2>4. Level 1: Urutan (Luas Persegi)</h2>
+  <div class="grid">
+    <figure><img src="images/fc_persegi.png" alt="Flowchart luas persegi" style="width:100%;max-width:220px"><figcaption>Flowchart</figcaption></figure>
+    <figure><img src="images/blok_persegi.png" alt="Blok Scratch luas persegi"><figcaption>Scratch</figcaption></figure>
+  </div>
+  <figure><img src="images/kode_persegi.png" alt="Kode Python luas persegi" style="width:100%;max-width:520px"></figure>
+  <div class="card">
+    <h3>Coba jalankan!</h3>
+    <label>Panjang sisi: <input type="number" id="sisi" value="3" min="0"></label>
+    <button class="pri" onclick="hitungSisi()">Hitung</button>
+    <div class="res" id="sisiRes"></div>
+  </div>
+  <figure><img src="images/kode_kubus.png" alt="Kode Python luas permukaan kubus" style="width:100%;max-width:520px"><figcaption>Luas permukaan kubus: 6 × sisi × sisi</figcaption></figure>
+  <div class="tip"><strong>Awas jebakan:</strong> kali ditulis <code>*</code>, dan <code>=</code> berarti "simpan ke variabel".</div>
+</section>
+
+<section id="l2">
+  <h2>5. Level 2: Loket Tiket (Percabangan)</h2>
+  <p>Aturan (fiktif): umur <strong>di bawah 12</strong> bayar Rp5.000, selain itu Rp10.000.</p>
+  <div class="grid">
+    <figure><img src="images/fc_tiket.png" alt="Flowchart tiket dengan simbol keputusan umur < 12"><figcaption>Flowchart tiket</figcaption></figure>
+    <figure><img src="images/fc_tiket_jalur8.png" alt="Jalur flowchart tiket untuk umur 8 disorot merah"><figcaption>Jejak untuk umur 8 (garis merah)</figcaption></figure>
+  </div>
+  <div class="card">
+    <h3>Simulator jejak</h3>
+    <label>Umur: <input type="number" id="umur" value="8" min="0" max="120"></label>
+    <label style="margin-left:10px"><input type="checkbox" id="bug"> pakai <code>&lt;=</code> (versi berbug)</label>
+    <button class="pri" onclick="jejak()">Telusuri</button>
+    <table id="jejakTbl" style="display:none"><thead><tr><th>Langkah</th><th>Simbol</th><th>umur</th><th>harga</th></tr></thead><tbody></tbody></table>
+    <div class="res" id="jejakRes"></div>
+  </div>
+  <h3>Jadi blok dan kode</h3>
+  <div class="grid">
+    <figure><img src="images/blok_tiket.png" alt="Blok Scratch if else untuk tiket"><figcaption>Scratch</figcaption></figure>
+    <figure><img src="images/kode_tiket.png" alt="Kode Python tiket dengan if dan else"><figcaption>Python</figcaption></figure>
+  </div>
+  <figure><img src="images/kode_tiket_c.png" alt="Kode bahasa C untuk tiket" style="width:100%;max-width:520px"><figcaption>Pembanding: bahasa C</figcaption></figure>
+  <div class="tip"><strong>Uji nilai batas:</strong> coba umur 11 dan 12. Di sinilah <code>&lt;</code> dan <code>&lt;=</code> berbeda!</div>
+</section>
+
+<section id="l3">
+  <h2>6. Level 3: Subprogram (Luas Kolam Lingkaran)</h2>
+  <figure><img src="images/fc_lingkaran.png" alt="Flowchart program utama memanggil subprogram luasLingkaran"></figure>
+  <figure><img src="images/blok_lingkaran.png" alt="Blok Scratch My Blocks dan program utama"></figure>
+  <figure><img src="images/kode_lingkaran.png" alt="Kode Python def luasLingkaran dengan return" style="width:100%;max-width:520px"></figure>
+  <div class="card">
+    <h3>Coba jalankan!</h3>
+    <label>Jari-jari r: <input type="number" id="jr" value="4" min="0" step="any"></label>
+    <button class="pri" onclick="hitungR()">Panggil luasLingkaran(r)</button>
+    <div class="res" id="rRes"></div>
+  </div>
+  <div class="ok"><code>return</code> mengembalikan hasil ke pemanggil; <code>print</code> hanya menampilkan ke layar.</div>
+</section>
+
+<section id="l4">
+  <h2>7. Level 4: Detektif Translasi</h2>
+  <p>Program ini katanya hasil translasi flowchart tiket, tetapi ada <strong>4 kesalahan</strong>. Klik baris yang menurutmu salah, lalu tekan <em>Periksa</em>.</p>
+  <figure><img src="images/kode_bug.png" alt="Program tiket berbug" style="width:100%;max-width:520px"></figure>
+  <div id="bugLines" class="card"></div>
+  <button class="pri" onclick="periksaBug()">Periksa</button> <button onclick="resetBug()">Ulangi</button>
+  <div id="bugRes" class="card" style="display:none" aria-live="polite"></div>
+  <details class="card"><summary><strong>Hasil perbaikan bertahap</strong> (buka setelah mencoba)</summary>
+    <table><thead><tr><th>Setelah diperbaiki</th><th>umur 8</th><th>umur 12</th><th>umur 30</th></tr></thead><tbody>
+    <tr><td>(belum ada)</td><td class="c">error</td><td class="c">error</td><td class="c">error</td></tr>
+    <tr><td>+ int()</td><td class="c">error (baris 6)</td><td class="c">error</td><td class="c">error</td></tr>
+    <tr><td>+ int() + str()</td><td class="c">10000 (salah)</td><td class="c">10000</td><td class="c">5000 (salah)</td></tr>
+    <tr><td>+ tukar cabang</td><td class="c">5000</td><td class="c">5000 (salah, batas)</td><td class="c">10000</td></tr>
+    <tr><td>+ ganti &lt;= jadi &lt;</td><td class="c">5000</td><td class="c">10000</td><td class="c">10000</td></tr></tbody></table>
+  </details>
+</section>
+
+<section id="kuis">
+  <h2>8. Kuis Mandiri (10 soal)</h2>
+  <div class="bar"><i id="prog"></i></div>
+  <div id="quiz" class="card"></div>
+</section>
+
+<section>
+  <h2>Rangkuman</h2>
+  <ul>
+    <li>Flowchart, blok, dan teks = tiga cara menulis logika yang sama.</li>
+    <li>Translasi: baca alur → daftar data → ganti simbol → uji jejak.</li>
+    <li>BACA/CETAK = input/print · proses = penugasan · keputusan = if/else · subprogram = def.</li>
+    <li>Python: <code>input()</code> menghasilkan teks, ubah dengan <code>int()</code> atau <code>float()</code>.</li>
+    <li>Selalu uji dengan nilai batas.</li>
+  </ul>
+</section>
+</main>
+<footer>SMP Negeri 14 Tarakan · Informatika Kelas IX · TP10 Pertemuan 1</footer>
+
+<script>
+const SYM=[
+ {n:'Terminator',s:'Lonjong hijau',a:'Awal (MULAI) dan akhir (SELESAI) alur.',b:'when green flag clicked / akhir susunan blok',p:'Awal dan akhir program.'},
+ {n:'Input / Output',s:'Jajar genjang',a:'Data masuk (BACA) atau hasil keluar (CETAK).',b:'ask ... and wait, set ... to answer  /  say ...',p:'input() dan print()'},
+ {n:'Proses',s:'Persegi panjang',a:'Menghitung atau mengisi variabel, contoh harga ← 5000.',b:'set [harga] to (5000)',p:'harga = 5000'},
+ {n:'Keputusan',s:'Belah ketupat',a:'Pertanyaan dengan dua jalan: Ya atau Tidak.',b:'if <...> then ... else ...',p:'if kondisi: ... else: ...'},
+ {n:'Subprogram',s:'Persegi panjang bergaris ganda',a:'Memanggil modul yang dibuat terpisah.',b:'define ... (My Blocks)',p:'def nama(param): ... return ...'},
+ {n:'Garis alir',s:'Anak panah',a:'Menunjukkan urutan langkah berikutnya.',b:'Urutan susunan blok dari atas ke bawah',p:'Urutan baris dari atas ke bawah'}
+];
+const sb=document.getElementById('symBtns');
+SYM.forEach((x,i)=>{const b=document.createElement('button');b.textContent=x.n;b.onclick=()=>{[...sb.children].forEach(c=>c.classList.remove('sel'));b.classList.add('sel');document.getElementById('symInfo').innerHTML='<h3>'+x.n+' ('+x.s+')</h3><p>'+x.a+'</p><p><strong>Scratch:</strong> '+x.b+'</p><p><strong>Python:</strong> <code>'+x.p.replace(/</g,'&lt;')+'</code></p>'};sb.appendChild(b)});
+
+// pasangkan
+const PAIRS=[['BACA umur','umur = int(input())'],['harga ← 5000','harga = 5000'],['umur < 12 ? (Ya/Tidak)','if umur < 12: ... else: ...'],['CETAK harga','print(harga)'],['luasLingkaran(r)','def luasLingkaran(r):']];
+let selL=null,okCount=0;
+(function(){const m=document.getElementById('match');const L=PAIRS.map((p,i)=>({t:p[0],i})),R=PAIRS.map((p,i)=>({t:p[1],i})).sort(()=>Math.random()-.5);
+ const colL=document.createElement('div'),colR=document.createElement('div');
+ L.forEach(x=>{const b=document.createElement('button');b.textContent=x.t;b.dataset.i=x.i;b.onclick=()=>{if(b.classList.contains('done'))return;[...colL.children].forEach(c=>c.classList.remove('sel'));b.classList.add('sel');selL=b};colL.appendChild(b)});
+ R.forEach(x=>{const b=document.createElement('button');b.textContent=x.t;b.style.fontFamily='Consolas,monospace';b.dataset.i=x.i;b.onclick=()=>{if(!selL||b.classList.contains('done'))return;if(selL.dataset.i===b.dataset.i){selL.className='done';b.className='done';selL=null;okCount++;if(okCount===PAIRS.length)document.getElementById('matchRes').textContent='Hebat! Semua pasangan benar.'}else{b.classList.add('bad');setTimeout(()=>b.classList.remove('bad'),600);document.getElementById('matchRes').textContent='Belum cocok, coba lagi.'}};colR.appendChild(b)});
+ colL.style.display=colR.style.display='grid';colL.style.gap=colR.style.gap='10px';m.appendChild(colL);m.appendChild(colR)})();
+
+function hitungSisi(){const s=parseFloat(document.getElementById('sisi').value);if(isNaN(s)||s<0){document.getElementById('sisiRes').textContent='Isi sisi dengan bilangan tidak negatif.';return}
+ document.getElementById('sisiRes').innerHTML='Luas persegi = '+(s*s)+'<br>Luas permukaan kubus = '+(6*s*s)}
+
+function jejak(){const u=parseFloat(document.getElementById('umur').value);if(isNaN(u)||u<0){document.getElementById('jejakRes').textContent='Isi umur dengan bilangan tidak negatif.';return}
+ const bug=document.getElementById('bug').checked;const ya=bug?(u<=12):(u<12);const h=ya?5000:10000;const op=bug?'<=':'<';
+ const rows=[['1','MULAI','-','-'],['2','BACA umur',u,'-'],['3','umur '+op.replace('<','&lt;')+' 12 ? '+(ya?'<span class="pill ya">Ya</span>':'<span class="pill tdk">Tidak</span>'),u,'-'],['4','harga ← '+h,u,h],['5','CETAK harga',u,h],['6','SELESAI',u,h]];
+ const tb=document.querySelector('#jejakTbl tbody');tb.innerHTML=rows.map(r=>'<tr><td class="c">'+r[0]+'</td><td>'+r[1]+'</td><td class="c">'+r[2]+'</td><td class="c">'+r[3]+'</td></tr>').join('');
+ document.getElementById('jejakTbl').style.display='table';
+ let msg='Harga tiket: Rp'+h.toLocaleString('id-ID');if(bug&&u===12)msg+=' ← salah! Seharusnya Rp10.000 (12 < 12 salah).';document.getElementById('jejakRes').textContent=msg}
+
+function hitungR(){const r=parseFloat(document.getElementById('jr').value);if(isNaN(r)||r<0){document.getElementById('rRes').textContent='Isi r dengan bilangan tidak negatif.';return}
+ const luas=Math.round(3.14*r*r*1e6)/1e6;document.getElementById('rRes').textContent='luasLingkaran('+r+') = 3.14 × '+r+' × '+r+' = '+luas}
+
+// detektif
+const BUG=['umur = input("Umur pengunjung: ")','if umur <= 12:','    harga = 10000','else:','    harga = 5000','print("Harga tiket: Rp" + harga)'];
+const BUGINFO={0:'Baris 1: input() tanpa int(). umur berupa teks sehingga perbandingan menimbulkan TypeError (error).',1:'Baris 2: memakai <= padahal flowchart <. Umur 12 salah masuk cabang Ya (diam-diam salah).',2:'Baris 3: harga cabang Ya seharusnya 5000, dan baris 5 cabang Tidak seharusnya 10000: nilai tertukar (diam-diam salah).',4:'Baris 5: bagian dari cabang yang tertukar (lihat baris 3).',5:'Baris 6: teks + bilangan tidak boleh; gunakan str(harga) atau koma (error).'};
+const BUGSET=[0,1,2,4,5];let susp=new Set();
+function renderBug(){const d=document.getElementById('bugLines');d.innerHTML='';BUG.forEach((l,i)=>{const b=document.createElement('button');b.className='codeline'+(susp.has(i)?' sus':'');b.textContent=(i+1)+'  '+l;b.setAttribute('aria-pressed',susp.has(i));b.onclick=()=>{susp.has(i)?susp.delete(i):susp.add(i);renderBug()};d.appendChild(b)})}
+function periksaBug(){const d=document.getElementById('bugLines');[...d.children].forEach((b,i)=>{b.classList.remove('sus');if(BUGSET.includes(i))b.classList.add(susp.has(i)?'hit':'miss');else if(susp.has(i))b.classList.add('miss')});
+ const benar=BUGSET.filter(i=>susp.has(i)).length,salah=[...susp].filter(i=>!BUGSET.includes(i)).length;
+ const r=document.getElementById('bugRes');r.style.display='block';
+ r.innerHTML='<strong>Tepat '+benar+' dari '+BUGSET.length+' baris bermasalah'+(salah?', '+salah+' baris tidak bermasalah ikut terpilih':'')+'.</strong><ul>'+BUGSET.map(i=>'<li>'+BUGINFO[i]+'</li>').join('')+'</ul><p>Total ada <strong>4 kesalahan</strong> (baris 3 dan 5 dihitung satu). Dua muncul sebagai error, dua diam-diam salah.</p>'}
+function resetBug(){susp=new Set();document.getElementById('bugRes').style.display='none';renderBug()}
+renderBug();
+
+// kuis
+const Q=[{"q":"Pada flowchart, simbol jajar genjang dipakai untuk menggambarkan ...","o":["awal atau akhir program","input atau output data","proses menghitung","pemanggilan subprogram"],"k":1,"e":"Jajar genjang = masukan/keluaran (BACA/CETAK). Awal/akhir = terminator (lonjong)."},{"q":"Simbol keputusan (belah ketupat) pada flowchart paling sesuai diterjemahkan ke Python menjadi ...","o":["print()","def","if ... else","input()"],"k":2,"e":"Belah ketupat punya dua cabang Ya/Tidak, sama seperti if ... else."},{"q":"Simbol \"BACA sisi\" pada flowchart paling tepat ditranslasikan ke Scratch dengan blok ...","o":["ask ... and wait, lalu set sisi to answer","say sisi","set luas to sisi * sisi","when green flag clicked"],"k":0,"e":"Membaca data dari pengguna = ask and wait, jawabannya (answer) disimpan ke variabel sisi."},{"q":"Flowchart menghitung luas permukaan kubus memakai proses \"luas ← 6 × sisi × sisi\". Baris Python yang benar adalah ...","o":["luas = 6 sisi sisi","luas = 6 x sisi x sisi","luas == 6 * sisi * sisi","luas = 6 * sisi * sisi"],"k":3,"e":"Perkalian memakai *, penyimpanan ke variabel memakai = (bukan ==)."},{"q":"Flowchart tiket: jika umur < 12 maka harga ← 5000, jika tidak harga ← 10000. Untuk umur 12 tahun, harga tiketnya adalah ...","o":["Rp5.000","Rp10.000","Rp15.000","program error"],"k":1,"e":"12 < 12 bernilai salah, jadi cabang Tidak: harga 10000."},{"q":"Langkah PERTAMA yang paling tepat saat menerjemahkan flowchart ke program adalah ...","o":["langsung mengetik kode dari ingatan","menghapus semua tanda panah","membaca alur dari MULAI mengikuti panah dan mencatat variabelnya","menghafal sintaks Python"],"k":2,"e":"Baca alur dan daftar variabel dulu, baru ganti simbol menjadi blok atau kode."},{"q":"Cabang \"Tidak\" dari simbol keputusan pada flowchart ditulis di Python sebagai ...","o":["else:","elif umur:","print:","input:"],"k":0,"e":"Cabang yang bukan \"Ya\" menjadi else."},{"q":"Program: umur = input(\"Umur: \") lalu if umur < 12: menghasilkan TypeError. Perbaikan yang benar adalah ...","o":["menghapus baris if","mengganti < dengan ==","menambah print di akhir","membungkus input dengan int()"],"k":3,"e":"input() menghasilkan teks; harus diubah menjadi bilangan dengan int() sebelum dibandingkan."},{"q":"Simbol subprogram luasLingkaran(r) pada flowchart paling sesuai dengan ... pada Python.","o":["input()","def luasLingkaran(r): lalu dipanggil di program utama","if ... else","print()"],"k":1,"e":"Subprogram = fungsi: didefinisikan dengan def dan dipanggil dari program utama."},{"q":"Untuk umur = 8, jejak flowchart tiket yang benar adalah ...","o":["MULAI - BACA umur - umur<12? Tidak - harga←10000 - CETAK - SELESAI","MULAI - umur<12? Ya - BACA umur - harga←5000 - SELESAI","MULAI - BACA umur - umur<12? Ya - harga←5000 - CETAK harga - SELESAI","MULAI - BACA umur - harga←5000 - harga←10000 - CETAK - SELESAI"],"k":2,"e":"8 < 12 benar, jadi cabang Ya, harga 5000, lalu CETAK."}];
+let qi=0,score=0,locked=false;
+function showQ(){const q=Q[qi];locked=false;document.getElementById('prog').style.width=(qi/Q.length*100)+'%';
+ const box=document.getElementById('quiz');box.innerHTML='<p class="small">Soal '+(qi+1)+' dari '+Q.length+'</p><p><strong>'+q.q.replace(/</g,'&lt;')+'</strong></p>';
+ q.o.forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent='ABCD'[j]+'. '+o;b.onclick=()=>answer(j,b);box.appendChild(b)});
+ const fb=document.createElement('div');fb.id='fb';fb.setAttribute('aria-live','polite');box.appendChild(fb)}
+function answer(j,b){if(locked)return;locked=true;const q=Q[qi];const opts=[...document.querySelectorAll('#quiz .opt')];
+ opts[q.k].classList.add('right');if(j===q.k){score++}else{b.classList.add('wrong')}
+ const fb=document.getElementById('fb');fb.innerHTML='<div class="'+(j===q.k?'ok':'tip')+'"><strong>'+(j===q.k?'Benar! ':'Belum tepat. ')+'</strong>'+q.e.replace(/</g,'&lt;')+'</div>';
+ const n=document.createElement('button');n.className='pri';n.textContent=qi<Q.length-1?'Soal berikutnya':'Lihat skor';n.onclick=()=>{qi++;if(qi<Q.length)showQ();else finish()};fb.appendChild(n)}
+function finish(){document.getElementById('prog').style.width='100%';const p=Math.round(score/Q.length*100);
+ document.getElementById('quiz').innerHTML='<h3>Skormu: '+score+' / '+Q.length+' ('+p+')</h3><p>'+(p>=80?'Mantap! Kamu siap jadi programmer magang.':p>=60?'Bagus! Ulangi bagian yang masih kurang, terutama nilai batas dan tipe data.':'Ayo baca lagi 4 langkah jitu dan kamus padanan, lalu coba lagi.')+'</p><button class="pri" onclick="qi=0;score=0;showQ()">Ulangi kuis</button>'}
+showQ();
+</script>
+</body>
+</html>

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TP11 Pertemuan 2 Proyek Rekap Harian - Informatika IX</title>
+<style>
+:root{--teal:#0f766e;--tealD:#0b3b36;--tealL:#ccede8;--orange:#f59e0b;--orangeD:#b45309;--ink:#12303a;--gray:#64748b;--bg:#f8fafc;--red:#dc2626;--green:#16a34a;--purple:#7c3aed;--card:#fff;--line:#e2e8f0}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{overflow-x:hidden;margin:0;font-family:"Segoe UI",Calibri,Carlito,system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;font-size:17px}
+img{max-width:100%;height:auto;display:block}
+.zoomable{cursor:zoom-in}
+a{color:var(--teal)}
+code,.mono{font-family:"Consolas","DejaVu Sans Mono","Courier New",monospace}
+code{background:#fff3d6;color:#9a3412;padding:1px 6px;border-radius:6px;font-size:.92em}
+#prog{position:fixed;top:0;left:0;height:4px;background:var(--orange);width:0;z-index:60}
+nav{position:sticky;top:0;z-index:50;background:var(--tealD);box-shadow:0 2px 10px #0003}
+nav .in{max-width:1100px;margin:auto;display:flex;gap:4px;overflow-x:auto;padding:8px 12px;scrollbar-width:thin}
+nav a{color:#cdeeea;text-decoration:none;white-space:nowrap;padding:6px 12px;border-radius:999px;font-size:.88rem;font-weight:600}
+nav a:hover,nav a.on{background:var(--orange);color:var(--tealD)}
+header.hero{background:linear-gradient(135deg,var(--tealD),var(--teal));color:#fff;padding:44px 16px 56px}
+.hero .in{max-width:1100px;margin:auto;display:grid;grid-template-columns:1.05fr 1fr;gap:28px;align-items:center}
+.hero h1{font-size:2.6rem;line-height:1.1;margin:0 0 10px}
+.hero p{color:#cdeeea;margin:8px 0}
+.pill{display:inline-block;background:var(--orange);color:var(--tealD);font-weight:700;border-radius:999px;padding:6px 16px;font-size:.9rem;margin-top:8px}
+.hero .pic{background:#fff;border-radius:20px;padding:10px;box-shadow:0 10px 30px #0005}
+main{max-width:1100px;margin:auto;padding:0 16px 60px}
+section{padding-top:44px}
+h2{font-size:1.9rem;color:var(--tealD);margin:0 0 6px}
+h2 .n{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--orange);color:var(--tealD);font-size:1.05rem;margin-right:10px;vertical-align:middle}
+h3{color:var(--teal);margin:24px 0 6px}
+.lead{color:var(--gray);margin:0 0 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px;box-shadow:0 2px 8px #0000000a}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.callout{border-left:6px solid var(--teal);background:#ecfdf5;border-radius:14px;padding:12px 16px;margin:14px 0}
+.callout.warn{border-color:var(--red);background:#fef2f2}
+.callout.tip{border-color:var(--orange);background:#fffbeb}
+.callout b.t{display:block;margin-bottom:2px}
+.imgcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px;text-align:center}
+.imgcard figcaption{font-size:.85rem;color:var(--gray);margin-top:6px}
+figure{margin:12px 0}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.tab{border:2px solid var(--teal);background:#fff;color:var(--teal);font-weight:700;border-radius:999px;padding:6px 16px;cursor:pointer;font-size:.95rem;font-family:inherit}
+.tab.on{background:var(--teal);color:#fff}
+.pane{display:none}.pane.on{display:block}
+button.btn{background:var(--teal);color:#fff;border:0;border-radius:12px;padding:9px 18px;font-weight:700;cursor:pointer;font-size:1rem;font-family:inherit}
+button.btn:hover{background:var(--tealD)}
+button.btn.o{background:var(--orange);color:var(--tealD)}
+button.btn.g{background:#e2e8f0;color:var(--ink)}
+button.btn:disabled{opacity:.45;cursor:not-allowed}
+input[type=number],input[type=text],select{font:inherit;padding:8px 10px;border:2px solid var(--line);border-radius:10px;width:100%}
+label{font-weight:600;font-size:.92rem}
+.pcode{background:#fffbeb;border:2px solid var(--orange);border-radius:14px;padding:10px 6px;font-size:.95rem}
+.pcode .ln{display:block;padding:3px 12px;border-radius:8px;cursor:pointer;white-space:pre;font-family:"Consolas","DejaVu Sans Mono",monospace}
+.pcode .ln:hover{background:#fde68a}
+.pcode .ln.hl{background:#fde68a;outline:2px solid var(--orange)}
+.pcode .ln.done{color:#94a3b8}
+.k{color:var(--orangeD);font-weight:700}
+.dark{background:#0f172a;color:#e2e8f0;border-radius:14px;padding:12px 16px;font-family:"Consolas","DejaVu Sans Mono",monospace;font-size:.93rem;white-space:pre;overflow-x:auto}
+.step{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start;margin:10px 0}
+.bd{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:1.2rem}
+table.t{border-collapse:collapse;width:100%;font-size:.95rem}
+table.t th{background:var(--teal);color:#fff;padding:8px;text-align:center}
+table.t td{border:1px solid var(--line);padding:7px 8px;text-align:center;background:#fff}
+table.t td.l{text-align:left}
+.out{background:#0f172a;color:#86efac;border-radius:12px;padding:10px 14px;min-height:46px;font-family:"Consolas","DejaVu Sans Mono",monospace;white-space:pre-wrap}
+.vars{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.vars span{background:#e0f2f1;border:1px solid #99d6cf;border-radius:10px;padding:4px 10px;font-family:"Consolas",monospace;font-size:.92rem}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;padding:10px 14px;margin:6px 0;cursor:pointer;font:inherit;color:var(--ink)}
+.opt:hover{border-color:var(--teal)}
+.opt.ok{background:#dcfce7;border-color:var(--green)}
+.opt.bad{background:#fee2e2;border-color:var(--red)}
+.opt[disabled]{cursor:default}
+.fb{margin-top:8px;font-weight:600}
+.fb.ok{color:var(--green)}.fb.bad{color:var(--red)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:#fff;border:2px solid var(--teal);color:var(--tealD);border-radius:10px;padding:6px 10px;cursor:pointer;font-family:"Consolas","DejaVu Sans Mono",monospace;font-size:.9rem;white-space:pre;text-align:left}
+.chip:hover{background:var(--tealL)}
+.chip.used{opacity:.3;pointer-events:none}
+.slots{background:#0f172a;border-radius:14px;padding:10px;min-height:120px}
+.slots .row{display:flex;align-items:center;gap:8px;margin:4px 0}
+.slots .row .no{color:#64748b;width:22px;text-align:right;font-family:monospace}
+.slots .row .cd{flex:1;background:#1e293b;color:#e2e8f0;border-radius:8px;padding:5px 10px;font-family:"Consolas","DejaVu Sans Mono",monospace;white-space:pre;font-size:.9rem;cursor:pointer}
+.slots .row .cd.ok{outline:2px solid #22c55e}.slots .row .cd.bad{outline:2px solid #ef4444}
+.pairs{display:grid;grid-template-columns:1fr 1fr;gap:10px 30px}
+.pair{border:2px solid var(--line);background:#fff;border-radius:12px;padding:9px 12px;cursor:pointer;font-family:"Consolas","DejaVu Sans Mono",monospace;font-size:.95rem}
+.pair.sel{border-color:var(--orange);background:#fef3c7}
+.pair.ok{border-color:var(--green);background:#dcfce7;pointer-events:none}
+.pair.shake{animation:sh .3s}
+@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.linebtns{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.linebtns button{border:2px solid var(--line);background:#fff;border-radius:8px;padding:4px 10px;cursor:pointer;font-family:monospace;font-weight:700;color:var(--ink)}
+.linebtns button.on{background:var(--orange);border-color:var(--orange);color:var(--tealD)}
+.bar{height:10px;background:#e2e8f0;border-radius:999px;overflow:hidden}.bar i{display:block;height:100%;background:var(--teal);width:0;transition:width .3s}
+details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+details summary{cursor:pointer;font-weight:700;color:var(--teal)}
+#lb{position:fixed;inset:0;background:#000c;display:none;place-items:center;z-index:100;padding:20px;cursor:zoom-out}
+#lb img{max-width:96vw;max-height:92vh;background:#fff;border-radius:10px}
+footer{background:var(--tealD);color:#9cc9c3;text-align:center;padding:24px 16px;font-size:.9rem}
+.grid2>*,.grid3>*,.grid4>*,.hero .in>*{min-width:0}
+.pcode{overflow-x:auto}
+.card{overflow-wrap:anywhere}
+@media(max-width:800px){.pcode .ln{font-size:.82rem}.hero .in,.grid2,.grid3,.grid4,.pairs{grid-template-columns:1fr}.hero h1{font-size:2rem}body{font-size:16px}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<nav><div class="in">
+<a href="#mulai">Mulai</a><a href="#kamus">Kamus</a><a href="#l7">Level 7</a><a href="#l8">Level 8</a><a href="#l9">Level 9</a><a href="#l10">Level 10</a><a href="#l11">Proyek</a><a href="#game">Game</a><a href="#detektif">Detektif</a><a href="#kuis">Kuis</a><a href="#rangkum">Rangkuman</a>
+</div></nav>
+<header class="hero"><div class="in">
+<div><h1>Naik Level!<br>Proyek Rekap Harian</h1>
+<p>BAB II Berpikir Komputasional dalam Algoritma dan Pemrograman</p>
+<p><b>TP 11 Pertemuan 2:</b> menerjemahkan pseudocode tingkat lanjut ke blok dan Python</p>
+<span class="pill">Informatika Kelas IX &nbsp;|&nbsp; SMPN 14 Tarakan</span></div>
+<div class="pic"><img class="zoomable" src="images/03_proyek_rekap.png" alt="Ilustrasi proyek Rekap Harian"></div>
+</div></header>
+<main>
+<section id="mulai">
+<h2><span class="n">1</span>Kita Naik Level!</h2>
+<p class="lead">Level 1 sampai 6 sudah kamu taklukkan. Sekarang program yang menggabungkan banyak struktur sekaligus.</p>
+<figure class="imgcard"><img class="zoomable" src="images/02_peta_level.png" alt="Peta level"><figcaption>Yang abu-abu sudah selesai. Yang berwarna adalah tantangan hari ini.</figcaption></figure>
+<div class="callout tip"><b class="t">Ingat 4 langkah jitu</b>BACA &rarr; PETAKAN &rarr; GANTI &rarr; UJI. Pseudocodenya makin panjang, jadi tahap UJI (tabel jejak) makin penting.</div>
+<div class="grid2">
+<figure class="imgcard"><img class="zoomable" src="images/07_pair_programming.png" alt="Pair programming"><figcaption>Pair programming: driver dan navigator bertukar peran.</figcaption></figure>
+<figure class="imgcard"><img class="zoomable" src="images/08_stasiun_rotasi.png" alt="Rotasi stasiun"><figcaption>Empat stasiun belajar, 6 menit tiap stasiun.</figcaption></figure>
+</div>
+</section>
+
+<section id="kamus">
+<h2><span class="n">2</span>Kamus Lanjutan</h2>
+<p class="lead">Klik gambar untuk memperbesar.</p>
+<div class="tabs" data-group="kamus">
+<button class="tab on" data-t="k1">V. Sentinel</button><button class="tab" data-t="k2">V. ELSE IF</button><button class="tab" data-t="k3">VI. DIV/MOD</button><button class="tab" data-t="k4">VII. Daftar (1)</button><button class="tab" data-t="k5">VII. Daftar (2)</button>
+</div>
+<div class="pane on" data-group="kamus" id="k1"><img class="zoomable card" src="images/04a_kamus_v_loop.png" alt="Kamus V loop"><div class="callout warn"><b class="t">Awas!</b>Scratch tidak punya <code>&lt;&gt;</code>. <code>WHILE x &lt;&gt; 0</code> menjadi <code>repeat until &lt;x = 0&gt;</code>.</div></div>
+<div class="pane" data-group="kamus" id="k2"><img class="zoomable card" src="images/04b_kamus_v_if.png" alt="Kamus V if" style="width:min(100%,760px)"><div class="callout"><b class="t">ELSE IF</b>Scratch: if di dalam else. Python: <code>elif</code>. Periksa syarat paling sempit dulu.</div></div>
+<div class="pane" data-group="kamus" id="k3"><img class="zoomable card" src="images/05_kamus_vi_aritmetika.png" alt="Kamus VI"><div class="callout tip"><b class="t">DIV dan MOD</b><code>//</code> dan <code>%</code> di Python, <code>floor of</code> dan <code>mod</code> di Scratch. <code>/</code> menghasilkan desimal.</div></div>
+<div class="pane" data-group="kamus" id="k4"><img class="zoomable card" src="images/06a_kamus_vii_daftar1.png" alt="Kamus VII 1"></div>
+<div class="pane" data-group="kamus" id="k5"><img class="zoomable card" src="images/06b_kamus_vii_daftar2.png" alt="Kamus VII 2" style="width:min(100%,800px)"><figure class="imgcard"><img class="zoomable" src="images/09_indeks_daftar.png" alt="Indeks daftar" style="width:min(100%,700px);margin:auto"><figcaption>Pseudocode dan Scratch mulai dari 1, Python mulai dari 0.</figcaption></figure></div>
+</section>
+
+<!-- ============ LEVEL 7 -->
+<section id="l7">
+<h2><span class="n">3</span>Level 7: Sentinel dan Akumulator</h2>
+<p class="lead">Kasir mengetik belanja tiap pembeli sampai mengetik <b>0</b> (penanda selesai). Nilai 0 itu bukan data.</p>
+<div class="grid2"><figure class="imgcard"><img class="zoomable" src="images/10_pseudo_sentinel.png" alt="Pseudocode sentinel" style="max-height:480px;margin:auto"></figure>
+<figure class="imgcard"><img class="zoomable" src="images/30_scratch_sentinel.png" alt="Scratch sentinel" style="max-height:480px;margin:auto"></figure></div>
+<details><summary>Lihat kunci Python dan C, tabel jejak</summary><div class="grid2"><figure class="imgcard"><img class="zoomable" src="images/20_python_sentinel.png" alt="Python sentinel"></figure><figure class="imgcard"><img class="zoomable" src="images/21_c_sentinel.png" alt="C sentinel"></figure></div>
+<figure class="imgcard"><img class="zoomable" src="images/51_tabel_jejak_sentinel.png" alt="Tabel jejak sentinel" style="width:min(100%,560px);margin:auto"></figure></details>
+<h3>Coba sendiri: simulator sentinel</h3>
+<div class="card">
+<label for="s7in">Masukan (pisahkan dengan koma, akhiri dengan 0)</label>
+<input type="text" id="s7in" value="15000, 20000, 8000, 0">
+<label style="display:block;margin-top:8px"><input type="checkbox" id="s7bug"> Bug K6: <code>total = 0</code> ditaruh DI DALAM perulangan</label>
+<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="s7run">Jalankan</button><button class="btn g" data-s7="0">Kosong (0)</button><button class="btn g" data-s7="5000, 0">5000, 0</button><button class="btn g" data-s7="3000, 4000, 0">3000, 4000, 0</button></div>
+<div id="s7out" style="margin-top:10px"></div></div>
+</section>
+
+<!-- ============ LEVEL 8 -->
+<section id="l8">
+<h2><span class="n">4</span>Level 8: IF Bertingkat (ELSE IF)</h2>
+<p class="lead">Kecil (&lt; 10000), Sedang (&lt; 30000), Besar (selebihnya). Perhatikan urutan syaratnya!</p>
+<div class="grid2"><figure class="imgcard"><img class="zoomable" src="images/11_pseudo_kategori.png" alt="Pseudocode kategori" style="max-height:480px;margin:auto"></figure>
+<figure class="imgcard"><img class="zoomable" src="images/31_scratch_kategori.png" alt="Scratch kategori" style="max-height:480px;margin:auto"><figcaption>Di Scratch, ELSE IF = if di dalam else.</figcaption></figure></div>
+<details><summary>Lihat kunci Python dan tabel nilai batas</summary><div class="grid2"><figure class="imgcard"><img class="zoomable" src="images/22_python_kategori.png" alt="Python kategori"></figure><figure class="imgcard"><img class="zoomable" src="images/52_tabel_jejak_kategori.png" alt="Jejak kategori"></figure></div></details>
+<h3>Coba sendiri: pengetes kategori</h3>
+<div class="card">
+<div class="grid3"><div><label for="k8in">Total</label><input type="number" id="k8in" value="10000" min="0"></div>
+<div><label for="k8mode">Urutan syarat</label><select id="k8mode"><option value="ok">Benar: &lt; 10000 dulu</option><option value="bug">Bug K7: &lt; 30000 dulu</option></select></div>
+<div style="align-self:end"><button class="btn" id="k8run">Uji</button></div></div>
+<p style="margin:8px 0 0;font-size:.9rem;color:var(--gray)">Coba: <a href="#l8" data-k8="5000">5000</a> &middot; <a href="#l8" data-k8="9999">9999</a> &middot; <a href="#l8" data-k8="10000">10000 (batas)</a> &middot; <a href="#l8" data-k8="29999">29999</a> &middot; <a href="#l8" data-k8="30000">30000 (batas)</a></p>
+<div id="k8out" style="margin-top:10px"></div></div>
+</section>
+
+<!-- ============ LEVEL 9 -->
+<section id="l9">
+<h2><span class="n">5</span>Level 9: DIV dan MOD</h2>
+<p class="lead">Kembalian dengan pecahan 5000, 2000, 1000. DIV = hasil bagi bulat, MOD = sisa bagi.</p>
+<div class="grid2"><figure class="imgcard"><img class="zoomable" src="images/12_pseudo_pecahan.png" alt="Pseudocode pecahan" style="max-height:440px;margin:auto"></figure>
+<figure class="imgcard"><img class="zoomable" src="images/32_scratch_pecahan.png" alt="Scratch pecahan" style="max-height:440px;margin:auto"></figure></div>
+<details><summary>Lihat kunci Python, C, dan tabel jejak</summary><div class="grid2"><figure class="imgcard"><img class="zoomable" src="images/23_python_pecahan.png" alt="Python pecahan"></figure><figure class="imgcard"><img class="zoomable" src="images/24_c_pecahan.png" alt="C pecahan"></figure></div>
+<figure class="imgcard"><img class="zoomable" src="images/53_tabel_jejak_pecahan.png" alt="Jejak pecahan" style="width:min(100%,640px);margin:auto"></figure></details>
+<h3>Coba sendiri: kalkulator pecahan</h3>
+<div class="card">
+<div class="grid3"><div><label for="p9in">Kembalian (Rp)</label><input type="number" id="p9in" value="12500" min="0"></div>
+<div><label for="p9mode">Operator pembagian</label><select id="p9mode"><option value="ok">// (DIV, benar)</option><option value="bug">/ (Bug K9)</option></select></div>
+<div style="align-self:end"><button class="btn" id="p9run">Hitung</button></div></div>
+<div id="p9out" style="margin-top:10px"></div></div>
+</section>
+
+<!-- ============ LEVEL 10 -->
+<section id="l10">
+<h2><span class="n">6</span>Level 10: Daftar (List)</h2>
+<p class="lead">Menyimpan banyak nilai dalam satu nama. Awas: nomor mulai dari 1 atau 0?</p>
+<div class="grid2"><figure class="imgcard"><img class="zoomable" src="images/13_pseudo_cari.png" alt="Pseudocode cari" style="max-height:440px;margin:auto"><figcaption>10a. Cari pelanggan (terinspirasi Buku Siswa)</figcaption></figure>
+<figure class="imgcard"><img class="zoomable" src="images/14_pseudo_statistik.png" alt="Pseudocode statistik" style="max-height:440px;margin:auto"><figcaption>10b. Statistik transaksi</figcaption></figure></div>
+<details><summary>Lihat kunci Scratch dan Python</summary><div class="grid2"><figure class="imgcard"><img class="zoomable" src="images/25_python_cari.png" alt="Python cari"></figure><figure class="imgcard"><img class="zoomable" src="images/26_python_statistik.png" alt="Python statistik"></figure>
+<figure class="imgcard"><img class="zoomable" src="images/33_scratch_cari.png" alt="Scratch cari"></figure><figure class="imgcard"><img class="zoomable" src="images/35_scratch_statistik.png" alt="Scratch statistik"></figure></div></details>
+<h3>Coba sendiri: penjelajah indeks</h3>
+<div class="card">
+<p style="margin-top:0">Klik salah satu elemen untuk melihat nomornya di pseudocode/Scratch dan di Python.</p>
+<div class="chips" id="idxBoxes"></div>
+<div class="callout tip" id="idxInfo" style="margin-bottom:0"><b class="t">Klik elemen</b>Nomor pseudocode (mulai 1) dan indeks Python (mulai 0) akan muncul di sini.</div></div>
+<h3>Cari pelanggan</h3>
+<div class="card"><div class="grid3"><div><label for="c10in">Nama yang dicari (daftar: ADI, SITI, BUDI)</label><input type="text" id="c10in" value="SITI"></div><div style="align-self:end"><button class="btn" id="c10run">Cari</button></div></div>
+<div id="c10out" style="margin-top:10px"></div></div>
+<h3>Statistik transaksi</h3>
+<div class="card"><div class="grid3"><div style="grid-column:span 2"><label for="t10in">Transaksi (pisahkan dengan koma)</label><input type="text" id="t10in" value="15000, 20000, 8000"></div><div style="align-self:end"><button class="btn" id="t10run">Hitung</button></div></div>
+<div id="t10out" style="margin-top:10px"></div></div>
+</section>
+
+<!-- ============ PROYEK -->
+<section id="l11">
+<h2><span class="n">7</span>Level 11: PROYEK Rekap Harian</h2>
+<p class="lead">Menyatukan fungsi, sentinel, ELSE IF, akumulator, DIV, dan penjaga pembagian nol.</p>
+<div class="callout tip"><b class="t">Misi tim</b>Rekap: banyak pembeli, omzet, transaksi tertinggi, jumlah Kecil/Sedang/Besar, dan rata-rata. Kategori dihitung dari jumlah yang dibayar (setelah potongan).</div>
+<div class="grid2"><figure class="imgcard"><img class="zoomable" src="images/15_pseudo_proyek_fungsi.png" alt="Pseudocode fungsi proyek" style="max-height:520px;margin:auto"></figure>
+<figure class="imgcard"><img class="zoomable" src="images/16_pseudo_proyek_utama.png" alt="Pseudocode program utama" style="max-height:520px;margin:auto"></figure></div>
+<p>Coba terjemahkan sendiri (di LKPD), lalu buka kuncinya.</p>
+<details><summary>Lihat kunci Python dan Scratch</summary><div class="grid2"><figure class="imgcard"><img class="zoomable" src="images/27_python_proyek_fungsi.png" alt="Python fungsi"></figure><figure class="imgcard"><img class="zoomable" src="images/28_python_proyek_utama.png" alt="Python utama"></figure></div>
+<figure class="imgcard"><img class="zoomable" src="images/36_scratch_proyek_utama.png" alt="Scratch proyek"></figure><figure class="imgcard"><img class="zoomable" src="images/37_scratch_proyek_fungsi.png" alt="Scratch fungsi" style="width:min(100%,700px);margin:auto"></figure>
+<figure class="imgcard"><img class="zoomable" src="images/50_tabel_jejak_proyek.png" alt="Jejak proyek"></figure></details>
+<h3>Simulator proyek</h3>
+<div class="card">
+<label for="p11in">Transaksi: satu baris "harga, jumlah". Akhiri dengan baris 0.</label>
+<textarea id="p11in" rows="7" style="width:100%;font-family:Consolas,monospace;padding:8px;border:2px solid var(--line);border-radius:10px">5000, 3
+2500, 2
+7000, 5
+6000, 4
+0</textarea>
+<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="p11run">Jalankan proyek</button>
+<button class="btn g" data-p11="0">Kosong</button><button class="btn g" data-p11="10000, 1&#10;0">Batas 10000</button><button class="btn g" data-p11="20000, 1&#10;0">Batas 20000</button><button class="btn g" data-p11="9000, 1&#10;4000, 5&#10;10000, 3&#10;0">Data 5</button></div>
+<div id="p11out" style="margin-top:12px"></div></div>
+<h3>Tantangan Bintang: pelanggan setia</h3>
+<div class="grid2"><figure class="imgcard"><img class="zoomable" src="images/17_pseudo_langganan.png" alt="Pseudocode langganan"></figure><figure class="imgcard"><img class="zoomable" src="images/29_python_langganan.png" alt="Python langganan"></figure></div>
+</section>
+
+<!-- ============ GAME -->
+<section id="game">
+<h2><span class="n">8</span>Game Translasi</h2>
+<div class="grid2">
+<div class="card"><h3 style="margin-top:0">A. Balik Kondisi</h3><p>Pilih kondisi <code>repeat until</code> yang setara dengan WHILE.</p><div id="gBalik"></div></div>
+<div class="card"><h3 style="margin-top:0">B. Jodohkan</h3><p>Klik pseudocode, lalu padanan Python-nya.</p><div class="pairs" id="gPair"></div><div class="fb" id="gPairFb"></div></div>
+</div>
+<div class="card" style="margin-top:18px"><h3 style="margin-top:0">C. Susun Kode Kategori</h3><p>Susun program Python kategori transaksi (perhatikan urutan syaratnya). Klik baris di programmu untuk membatalkan.</p>
+<div class="grid2"><div><b>Bank baris</b><div class="chips" id="sBank" style="margin-top:8px"></div></div><div><b>Programmu</b><div class="slots" id="sSlots"></div></div></div>
+<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="sCheck">Periksa</button><button class="btn g" id="sClear">Ulangi</button></div><div class="fb" id="sFb"></div></div>
+</section>
+
+<section id="detektif">
+<h2><span class="n">9</span>Detektif Bug: K6 sampai K10</h2>
+<p class="lead">Pilih baris yang keliru dan penyebabnya.</p>
+<figure class="imgcard"><img class="zoomable" src="images/60_jebakan_lanjut.png" alt="Jebakan lanjutan"><figcaption>Empat jebakan lanjutan.</figcaption></figure>
+<div id="bugs"></div>
+</section>
+
+<section id="kuis"><h2><span class="n">10</span>Kuis 10 Soal</h2><p class="lead">Setiap jawaban langsung ada pembahasannya.</p><div class="card" id="quiz"></div></section>
+
+<section id="rangkum">
+<h2><span class="n">11</span>Rangkuman</h2>
+<div class="grid2">
+<div class="card"><ul style="margin:0;padding-left:20px">
+<li><b>Sentinel</b>: penanda selesai, bukan data. <code>WHILE x &lt;&gt; 0</code> &rarr; <code>repeat until &lt;x = 0&gt;</code> / <code>while x != 0:</code>.</li>
+<li><b>Akumulator</b> dan <b>pencacah</b>: nilai awal SEBELUM perulangan.</li>
+<li><b>ELSE IF</b>: Scratch if di dalam else; Python <code>elif</code>. Syarat paling sempit dulu.</li>
+<li><b>DIV</b> &rarr; <code>//</code> / floor of. <b>MOD</b> &rarr; <code>%</code> / mod. <code>/</code> = desimal.</li>
+<li><b>Daftar</b>: pseudocode 1, Python 0. append, len, in.</li>
+<li><b>Dekomposisi</b> proyek menjadi fungsi.</li>
+<li>Uji <b>nilai batas</b> dan <b>kasus kosong</b>.</li></ul></div>
+<div class="card" style="background:#fffbeb;border-color:var(--orange)"><h3 style="margin-top:0;color:var(--orangeD)">Tantangan di rumah</h3><p>Cari berapa transaksi yang di atas rata-rata. Tulis pseudocode (pakai daftar), terjemahkan ke Python, uji dengan 15000, 5000, 33000, 22000 (jawaban 2).</p>
+<details><summary>Lihat kunci</summary><div class="dark">daftar = [15000, 5000, 33000, 22000]
+rata = sum(daftar) / len(daftar)
+banyakAtas = 0
+for x in daftar:
+    if x > rata:
+        banyakAtas = banyakAtas + 1
+print(banyakAtas)   # 2</div></details></div>
+</div>
+</section>
+</main>
+<footer>Materi Siswa TP11 Pertemuan 2 &middot; Informatika Kelas IX &middot; SMP Negeri 14 Tarakan &middot; Semua nama dan harga bersifat fiktif untuk latihan</footer>
+<div id="lb"><img alt=""></div>
+
+<script>
+const PG = [{"q": "Pseudocode  WHILE belanja <> 0  ditranslasikan ke Scratch (yang tidak punya tanda <>) menjadi ....", "o": ["repeat until <belanja = 0>", "repeat until <belanja <> 0>", "repeat until <not <belanja = 0>>", "forever"], "k": 0, "e": "WHILE berjalan selama belanja tidak sama dengan 0, sehingga berhenti saat belanja = 0. repeat until berhenti saat kondisinya benar, jadi kondisi yang dipakai adalah belanja = 0."}, {"q": "Baris Python yang tepat untuk  WHILE x <> 0  adalah ....", "o": ["while x <> 0:", "while x != 0:", "while (x != 0) {", "while x =/= 0:"], "k": 1, "e": "Python memakai != untuk 'tidak sama dengan', diakhiri titik dua. Bentuk dengan kurung kurawal adalah bahasa C."}, {"q": "Pseudocode: total ← 0; banyak ← 0; BACA belanja; WHILE belanja <> 0: total ← total + belanja; banyak ← banyak + 1; BACA belanja. Untuk masukan 15000, 20000, 8000, 0, keluarannya (banyak, total) adalah ....", "o": ["4 dan 43000", "3 dan 8000", "3 dan 35000", "3 dan 43000"], "k": 3, "e": "Tiga nilai pertama diproses (15000 + 20000 + 8000 = 43000, banyak = 3). Nilai 0 hanya penanda selesai dan tidak dihitung."}, {"q": "Pseudocode kategori: IF total < 10000 THEN Kecil, ELSE IF total < 30000 THEN Sedang, ELSE Besar. Untuk total = 10000, kategorinya adalah ....", "o": ["Kecil", "Besar", "Sedang", "Tidak ada kategori"], "k": 2, "e": "10000 < 10000 salah, lalu 10000 < 30000 benar, sehingga hasilnya Sedang. Nilai tepat di batas jatuh ke kategori berikutnya."}, {"q": "Sebuah program menjumlahkan belanja memakai baris  total = 0  DI DALAM perulangan (tepat sebelum  total = total + belanja). Untuk masukan 15000, 20000, 8000, 0, total yang tercetak adalah ....", "o": ["8000", "43000", "0", "Program error"], "k": 0, "e": "Karena total selalu di-nol-kan pada awal tiap putaran, hanya nilai terakhir (8000) yang tersisa. Akumulator harus diberi nilai awal SEBELUM perulangan."}, {"q": "Pseudocode  sisa ← 12500 MOD 5000  menghasilkan nilai ....", "o": ["2", "7500", "2500", "0,4"], "k": 2, "e": "12500 dibagi 5000 bersisa 2500. MOD menghasilkan sisa bagi, sedangkan DIV menghasilkan hasil bagi bulatnya (2)."}, {"q": "Pseudocode  lembar ← kembalian DIV 5000  ditranslasikan ke Python menjadi ....", "o": ["lembar = kembalian / 5000", "lembar = kembalian % 5000", "lembar = kembalian DIV 5000", "lembar = kembalian // 5000"], "k": 3, "e": "// adalah pembagian bulat di Python. Operator / menghasilkan bilangan desimal (mis. 8000 / 5000 = 1.6)."}, {"q": "Scratch tidak punya operator DIV. Pseudocode  kembalian DIV 5000  paling tepat ditranslasikan menjadi ....", "o": ["kembalian mod 5000", "floor of (kembalian / 5000)", "kembalian / 5000", "round of (kembalian / 5000)"], "k": 1, "e": "Pembagian biasa di Scratch menghasilkan desimal. floor membulatkan ke bawah sehingga sama dengan hasil bagi bulat (DIV)."}, {"q": "Program rekap menghitung  rata ← omzet DIV banyak  dan berhenti dengan ZeroDivisionError ketika masukan langsung 0 (tanpa transaksi). Perbaikan yang paling tepat adalah ....", "o": ["menambahkan IF banyak > 0 sebelum melakukan pembagian", "mengganti // dengan /", "menghapus perulangan", "mengganti nilai sentinel 0 dengan 1"], "k": 0, "e": "Pembagian dengan nol tidak boleh dilakukan. Beri penjagaan: hanya bagi bila banyak > 0, selain itu cetak pesan seperti 'Belum ada transaksi'."}, {"q": "Pada pseudocode, daftar ← [\"ADI\", \"SITI\", \"BUDI\"] dan tertinggi ← daftar[1] mengambil elemen pertama. Terjemahan Python yang benar adalah ....", "o": ["daftar(1)", "daftar[1]", "daftar[0]", "daftar.first()"], "k": 2, "e": "Pseudocode dan blok Scratch memberi nomor mulai dari 1, sedangkan daftar Python mulai dari indeks 0. Jadi elemen pertama adalah daftar[0]."}];
+const $ = (s, r=document) => r.querySelector(s), $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const pyf = x => { const r = Math.round(x * 100) / 100; let s = String(r); if (Number.isInteger(r)) s += '.0'; return s; };
+const parseNums = s => s.split(/[,\s]+/).filter(x => x !== '').map(Number);
+const table = (head, rows, hl) => '<div style="overflow-x:auto"><table class="t"><tr>' + head.map(h => '<th>' + esc(h) + '</th>').join('') + '</tr>' + rows.map((r, i) => '<tr' + (hl && hl.includes(i) ? ' style="background:#fef3c7"' : '') + '>' + r.map(c => '<td>' + esc(c) + '</td>').join('') + '</tr>').join('') + '</table></div>';
+const note = (cls, t, body) => `<div class="callout ${cls}" style="margin:10px 0 0"><b class="t">${t}</b>${body}</div>`;
+
+// ---------- progress, nav, lightbox, tab
+addEventListener('scroll', () => { const h = document.documentElement; $('#prog').style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%'; });
+const links = $$('nav a');
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id)); }), {rootMargin: '-40% 0px -55% 0px'});
+$$('main section').forEach(s => io.observe(s));
+document.addEventListener('click', e => {
+  const im = e.target.closest('img.zoomable'); if (im) { $('#lb img').src = im.src; $('#lb').style.display = 'grid'; return; }
+  if (e.target.closest('#lb')) $('#lb').style.display = 'none';
+  const tb = e.target.closest('.tab'); if (tb) { const g = tb.parentElement.dataset.group; $$('.tab', tb.parentElement).forEach(t => t.classList.toggle('on', t === tb)); $$('.pane[data-group="' + g + '"]').forEach(p => p.classList.toggle('on', p.id === tb.dataset.t)); }
+});
+addEventListener('keydown', e => { if (e.key === 'Escape') $('#lb').style.display = 'none'; });
+
+// ---------- Level 7: sentinel
+function run7() {
+  const arr = parseNums($('#s7in').value), bug = $('#s7bug').checked;
+  if (!arr.length || arr.some(isNaN)) { $('#s7out').innerHTML = note('warn', 'Masukan tidak valid', 'Isi angka dipisah koma, mis. 15000, 20000, 8000, 0.'); return; }
+  let total = 0, banyak = 0, def = !bug, stopped = false; const rows = [['awal', '—', bug ? '(belum ada)' : 0, 0, '—']];
+  for (const b of arr) {
+    if (b === 0) { rows.push([0, 0, def ? total : '(belum ada)', banyak, 'ya, berhenti']); stopped = true; break; }
+    if (bug) total = 0; total = total + b; def = true; banyak++;
+    rows.push([b, b, total, banyak, 'tidak']);
+  }
+  let html = table(['Masukan', 'belanja', 'total', 'banyak', 'belanja = 0 ?'], rows, [rows.length - 1]);
+  if (!stopped) html += note('tip', 'Belum ada 0', 'Program masih menunggu masukan berikutnya. Akhiri dengan 0!');
+  else if (!def) html += note('warn', 'Error', 'NameError: total belum pernah dibuat karena perulangan tidak berjalan (bug K6 pada kasus kosong).');
+  else html += note(bug && total !== arr.slice(0, arr.indexOf(0)).reduce((a, x) => a + x, 0) ? 'warn' : '', 'Hasil', `banyak = <b>${banyak}</b>, total = <b>${total}</b>` + (bug ? ' (total salah karena direset tiap putaran!)' : ''));
+  $('#s7out').innerHTML = html;
+}
+$('#s7run').onclick = run7; $$('[data-s7]').forEach(b => b.onclick = () => { $('#s7in').value = b.dataset.s7; run7(); }); run7();
+
+// ---------- Level 8: kategori
+function kat(total, mode) {
+  const ch = [];
+  if (mode === 'ok') { const c1 = total < 10000; ch.push(['total < 10000', c1]); if (c1) return {res: 'Kecil', ch}; const c2 = total < 30000; ch.push(['total < 30000', c2]); return {res: c2 ? 'Sedang' : 'Besar', ch}; }
+  const c1 = total < 30000; ch.push(['total < 30000', c1]); if (c1) return {res: 'Sedang', ch}; const c2 = total < 10000; ch.push(['total < 10000', c2]); return {res: c2 ? 'Kecil' : 'Besar', ch};
+}
+function run8() {
+  const t = parseFloat($('#k8in').value); if (isNaN(t) || t < 0) { $('#k8out').innerHTML = note('warn', 'Masukan tidak valid', 'Isi total >= 0.'); return; }
+  const mode = $('#k8mode').value, r = kat(t, mode), right = kat(t, 'ok').res;
+  const html = table(['Pengecekan', 'Hasil'], r.ch.map(c => [c[0] + ' ?', c[1] ? 'ya (benar)' : 'tidak (salah)'])) +
+    note(r.res === right ? '' : 'warn', 'Kategori: ' + r.res, r.res === right ? 'Sesuai dengan kategori yang benar.' : `Salah! Kategori yang benar adalah <b>${right}</b>. Urutan syarat tertukar membuat syarat yang sempit tidak pernah tercapai.`);
+  $('#k8out').innerHTML = html;
+}
+$('#k8run').onclick = run8; $$('[data-k8]').forEach(a => a.onclick = e => { e.preventDefault(); $('#k8in').value = a.dataset.k8; run8(); }); run8();
+
+// ---------- Level 9: pecahan
+function run9() {
+  const k = parseInt($('#p9in').value); if (isNaN(k) || k < 0) { $('#p9out').innerHTML = note('warn', 'Masukan tidak valid', 'Isi kembalian bilangan bulat >= 0.'); return; }
+  const bug = $('#p9mode').value === 'bug', dens = [5000, 2000, 1000], cols = ['#f59e0b', '#8b5cf6', '#0ea5e9']; let rest = k; const rows = []; let chips = '';
+  dens.forEach((d, i) => {
+    const q = bug ? rest / d : Math.floor(rest / d), s = rest % d;
+    rows.push([d, `${rest} ${bug ? '/' : '//'} ${d} = ${bug ? (Number.isInteger(q) ? q + '.0' : Math.round(q * 1000) / 1000) : q}`, `${rest} % ${d} = ${s}`]);
+    if (!bug) for (let j = 0; j < Math.min(q, 12); j++) chips += `<span class="chip" style="background:${cols[i]};color:#fff;border-color:${cols[i]}">${d}</span> `;
+    rest = s;
+  });
+  let html = table(['Pecahan', 'Hasil bagi', 'Sisa'], rows) + (chips ? `<p style="margin:10px 0 4px"><b>Lembar yang diberikan:</b></p><div class="chips">${chips}</div>` : '') +
+    (bug ? note('warn', 'Bug K9', '/ menghasilkan bilangan desimal. Banyak lembar tidak mungkin 1.6! Gunakan // (DIV).') : note('', 'Sisa uang', `Rp${rest}` + (rest ? ' (tidak bisa dipecah lagi dengan pecahan yang ada)' : ' (habis)')));
+  $('#p9out').innerHTML = html;
+}
+$('#p9run').onclick = run9; run9();
+
+// ---------- Level 10: daftar
+const NAMES = ['ADI', 'SITI', 'BUDI'];
+$('#idxBoxes').innerHTML = NAMES.map((n, i) => `<button class="chip" data-i="${i}" style="font-size:1.05rem;padding:10px 22px">${n}</button>`).join('');
+$('#idxBoxes').addEventListener('click', e => { const b = e.target.closest('.chip'); if (!b) return; const i = +b.dataset.i;
+  $('#idxInfo').innerHTML = `<b class="t">"${NAMES[i]}"</b>Pseudocode: <code>daftar[${i + 1}]</code> &nbsp;|&nbsp; Scratch: <code>item ${i + 1} of daftar</code> &nbsp;|&nbsp; Python: <code>daftar[${i}]</code>`; });
+function run10c() {
+  const nm = $('#c10in').value; const rows = []; let found = false;
+  for (const x of NAMES) { const eq = x === nm; rows.push([x, `"${x}" == "${nm}" ?`, eq ? 'ya' : 'tidak']); if (eq) { found = true; break; } }
+  let html = table(['x', 'Pengecekan', 'Hasil'], rows, found ? [rows.length - 1] : []) + note(found ? '' : 'tip', found ? 'Data ditemukan' : 'Data tidak ditemukan', found ? 'RETURN langsung menghentikan fungsi.' : (NAMES.some(x => x.toLowerCase() === nm.toLowerCase()) && nm !== '' ? 'Ada nama yang sama tetapi huruf besar/kecilnya berbeda. Python membedakannya!' : 'Semua elemen sudah diperiksa.'));
+  $('#c10out').innerHTML = html;
+}
+$('#c10run').onclick = run10c; run10c();
+function run10t() {
+  const a = parseNums($('#t10in').value); if (!a.length || a.some(isNaN)) { $('#t10out').innerHTML = note('warn', 'Daftar kosong / tidak valid', 'Daftar kosong tidak punya elemen pertama: daftar[0] akan memicu IndexError. Isi minimal satu angka.'); return; }
+  const jumlah = a.reduce((x, y) => x + y, 0), tertinggi = Math.max(...a), rata = jumlah / a.length, atas = a.filter(x => x > rata).length;
+  $('#t10out').innerHTML = table(['Pseudocode', 'Python'].concat(['nilai']), a.map((v, i) => ['daftar[' + (i + 1) + ']', 'daftar[' + i + ']', v])) +
+    note('', 'Hasil', `jumlah = <b>${jumlah}</b>, tertinggi = <b>${tertinggi}</b>, rata-rata = <b>${pyf(rata)}</b>, di atas rata-rata = <b>${atas}</b> transaksi`);
+}
+$('#t10run').onclick = run10t; run10t();
+
+// ---------- Proyek
+const hb = t => t >= 20000 ? t - 2000 : t, kg = b => b < 10000 ? 'Kecil' : b < 30000 ? 'Sedang' : 'Besar';
+function run11() {
+  const lines = $('#p11in').value.split('\n').map(l => l.trim()).filter(l => l !== '');
+  let omzet = 0, banyak = 0, tinggi = 0, nk = 0, ns = 0, nb = 0, stopped = false; const rows = [];
+  for (const l of lines) {
+    const p = l.split(/[,\s]+/).map(Number);
+    if (p.some(isNaN)) { $('#p11out').innerHTML = note('warn', 'Baris tidak valid', esc(l)); return; }
+    if (p[0] === 0) { stopped = true; break; }
+    if (p.length < 2) { $('#p11out').innerHTML = note('warn', 'Baris tidak lengkap', 'Format: harga, jumlah'); return; }
+    const total = p[0] * p[1], bayar = hb(total), k = kg(bayar);
+    omzet += bayar; banyak++; if (bayar > tinggi) tinggi = bayar; if (k === 'Kecil') nk++; else if (k === 'Sedang') ns++; else nb++;
+    rows.push([p[0], p[1], total, bayar, k, omzet, banyak, tinggi, nk, ns, nb]);
+  }
+  let html = rows.length ? table(['harga', 'jumlah', 'total', 'bayar', 'kategori', 'omzet', 'banyak', 'tertinggi', 'nKecil', 'nSedang', 'nBesar'], rows) : '';
+  if (!stopped) html += note('tip', 'Belum ada baris 0', 'Program masih menunggu masukan. Akhiri dengan 0.');
+  else if (banyak > 0) html += `<div class="out" style="margin-top:10px">${banyak} ${omzet} ${tinggi}\n${nk} ${ns} ${nb} ${Math.floor(omzet / banyak)}</div>` + note('', 'Baca keluaran', 'Baris 1: banyak, omzet, tertinggi. Baris 2: nKecil, nSedang, nBesar, rata-rata (DIV).');
+  else html += `<div class="out">Belum ada transaksi</div>` + note('', 'Kasus kosong', 'Tidak ada pembagian: penjaga <code>if banyak > 0</code> mencegah ZeroDivisionError.');
+  $('#p11out').innerHTML = html;
+}
+$('#p11run').onclick = run11; $$('[data-p11]').forEach(b => b.onclick = () => { $('#p11in').value = b.dataset.p11.replace(/&#10;/g, '\n'); run11(); }); run11();
+
+// ---------- Game A: balik kondisi
+const BAL = [['WHILE x <> 0', ['<x = 0>', '<x <> 0>', '<not <x = 0>>'], 0], ['WHILE belanja <> 0', ['<belanja > 0>', '<belanja = 0>', '<not <belanja = 0>>'], 1],
+  ['WHILE n <> 5', ['<n = 5>', '<n > 5>', '<n < 5>'], 0], ['WHILE harga > 0', ['<harga < 0>', '<harga > 0>', '<not <harga > 0>>'], 2], ['WHILE total < 20000', ['<total > 20000>', '<not <total < 20000>>', '<total = 20000>'], 1]];
+let bi = 0, bs = 0;
+function balik() {
+  const el = $('#gBalik');
+  if (bi >= BAL.length) { el.innerHTML = `<div class="callout"><b class="t">Selesai!</b>Skor ${bs} / ${BAL.length}. Ingat: repeat until berhenti saat kondisi BENAR.</div><button class="btn g" id="bRe">Main lagi</button>`; $('#bRe').onclick = () => { bi = 0; bs = 0; balik(); }; return; }
+  const [w, o, ok] = BAL[bi];
+  el.innerHTML = `<div class="bar"><i style="width:${bi / BAL.length * 100}%"></i></div><p style="margin:10px 0 2px"><span class="mono"><b>${esc(w)}</b></span> &rarr; <b>repeat until</b> ...?</p>` + o.map((x, i) => `<button class="opt mono" data-i="${i}">${esc(x)}</button>`).join('') + '<div class="fb" id="bFb"></div>';
+  $$('#gBalik .opt').forEach(b => b.onclick = () => { const i = +b.dataset.i; $$('#gBalik .opt').forEach(x => x.disabled = true); $$('#gBalik .opt')[ok].classList.add('ok'); if (i !== ok) b.classList.add('bad'); else bs++;
+    $('#bFb').className = 'fb ' + (i === ok ? 'ok' : 'bad'); $('#bFb').innerHTML = (i === ok ? 'Benar!' : 'Belum tepat.') + ' <button class="btn g" id="bNext" style="padding:4px 12px">Lanjut</button>'; $('#bNext').onclick = () => { bi++; balik(); }; });
+}
+balik();
+// ---------- Game B: jodohkan
+const PAIRS = [['WHILE harga <> 0', 'while harga != 0:'], ['lembar ← k DIV 5000', 'lembar = k // 5000'], ['sisa ← k MOD 5000', 'sisa = k % 5000'], ['TAMBAH x KE daftar', 'daftar.append(x)'], ['PANJANG(daftar)', 'len(daftar)']];
+(function () {
+  const L = PAIRS.map((p, i) => ({t: p[0], i})), R = PAIRS.map((p, i) => ({t: p[1], i})).sort(() => Math.random() - .5);
+  $('#gPair').innerHTML = '<div id="pl">' + L.map(x => `<div class="pair" data-i="${x.i}" data-s="l">${esc(x.t)}</div>`).join('<div style="height:8px"></div>') + '</div><div id="pr">' + R.map(x => `<div class="pair" data-i="${x.i}" data-s="r">${esc(x.t)}</div>`).join('<div style="height:8px"></div>') + '</div>';
+  let sel = null, done = 0;
+  $('#gPair').addEventListener('click', e => { const p = e.target.closest('.pair'); if (!p) return;
+    if (p.dataset.s === 'l') { $$('#pl .pair').forEach(x => x.classList.remove('sel')); if (!p.classList.contains('ok')) { p.classList.add('sel'); sel = p; } return; }
+    if (!sel) { $('#gPairFb').textContent = 'Pilih dulu pseudocode di kiri.'; return; }
+    if (sel.dataset.i === p.dataset.i) { sel.classList.remove('sel'); sel.classList.add('ok'); p.classList.add('ok'); sel = null; done++; $('#gPairFb').className = 'fb ok'; $('#gPairFb').textContent = done === PAIRS.length ? 'Mantap! Semua cocok.' : 'Benar!'; }
+    else { p.classList.add('shake'); setTimeout(() => p.classList.remove('shake'), 350); $('#gPairFb').className = 'fb bad'; $('#gPairFb').textContent = 'Belum cocok, coba lagi.'; } });
+})();
+// ---------- Game C: susun kode
+const ANS = ['total = int(input("Total: "))', 'if total < 10000:', '    kategori = "Kecil"', 'elif total < 30000:', '    kategori = "Sedang"', 'else:', '    kategori = "Besar"', 'print(kategori)'];
+let bank = [], prog = [];
+function susun() {
+  $('#sBank').innerHTML = bank.map((b, i) => `<button class="chip ${b.u ? 'used' : ''}" data-i="${i}">${esc(b.t)}</button>`).join('');
+  $('#sSlots').innerHTML = prog.map((p, i) => `<div class="row"><span class="no">${i + 1}</span><div class="cd ${p.st || ''}" data-i="${i}">${esc(p.t)}</div></div>`).join('') || '<span style="color:#64748b">Klik baris dari bank…</span>';
+}
+function susunReset() { bank = ANS.map(t => ({t, u: false})).sort(() => Math.random() - .5); prog = []; $('#sFb').textContent = ''; susun(); }
+$('#sBank').addEventListener('click', e => { const c = e.target.closest('.chip'); if (!c) return; const b = bank[+c.dataset.i]; b.u = true; prog.push({t: b.t, bi: +c.dataset.i}); susun(); });
+$('#sSlots').addEventListener('click', e => { const c = e.target.closest('.cd'); if (!c) return; const p = prog.splice(+c.dataset.i, 1)[0]; bank[p.bi].u = false; prog.forEach(x => x.st = ''); susun(); });
+$('#sClear').onclick = susunReset;
+$('#sCheck').onclick = () => { if (prog.length < ANS.length) { $('#sFb').className = 'fb bad'; $('#sFb').textContent = `Baru ${prog.length} dari ${ANS.length} baris.`; return; }
+  let ok = 0; prog.forEach((p, i) => { p.st = p.t === ANS[i] ? 'ok' : 'bad'; if (p.st === 'ok') ok++; }); susun();
+  $('#sFb').className = 'fb ' + (ok === ANS.length ? 'ok' : 'bad'); $('#sFb').textContent = ok === ANS.length ? 'Sempurna! Syarat paling sempit diperiksa lebih dulu.' : `${ok} dari ${ANS.length} baris di tempat yang benar. Perhatikan urutan syarat dan indentasi.`; };
+susunReset();
+
+// ---------- detektif
+const BUGS = [
+ {k: 'K6', img: '40_bug_k6', n: 9, ok: [4], data: '15000, 20000, 8000, 0', gejala: 'Total yang tercetak hanya 8000 (seharusnya 43000).', causes: ['total = 0 ada di dalam perulangan sehingga total selalu direset', 'Kondisi while salah tulis', 'input() tidak dibungkus int()'], c: 0, fix: 'pindahkan total = 0 ke luar (sebelum) while'},
+ {k: 'K7', img: '40_bug_k7', n: 8, ok: [2, 4], data: '5000', gejala: '5000 dianggap Sedang (seharusnya Kecil). Tanpa error.', causes: ['Urutan syarat tertukar: < 30000 diperiksa lebih dulu', 'Nama variabel salah', 'print di tempat yang salah'], c: 0, fix: 'periksa bayar < 10000 dulu, baru elif bayar < 30000'},
+ {k: 'K8', img: '40_bug_k8', n: 6, ok: [3, 4], data: 'daftar 3 elemen', gejala: 'Error: list index out of range.', causes: ['range(1, len+1) memakai nomor pseudocode (1..n) untuk indeks Python (0..n-1)', 'tertinggi diberi nilai awal 0', 'print salah tempat'], c: 0, fix: 'for x in daftar:  (atau range(len(daftar)))'},
+ {k: 'K9', img: '40_bug_k9', n: 4, ok: [2], data: '8000', gejala: 'Tercetak 1.6 (seharusnya 1).', causes: ['/ menghasilkan desimal; seharusnya // (hasil bagi bulat)', '% salah dipakai', 'input() salah'], c: 0, fix: 'lembar5000 = kembalian // 5000'},
+ {k: 'K10', img: '40_bug_k10', n: 9, ok: [8], data: '0 (langsung selesai)', gejala: 'Error: ZeroDivisionError.', causes: ['Pembagian dengan banyak = 0 pada kasus kosong; perlu penjagaan if banyak > 0', 'Operator // seharusnya /', 'Sentinel seharusnya 1'], c: 0, fix: 'if banyak > 0:  rata = omzet // banyak  else: cetak pesan'}
+];
+$('#bugs').innerHTML = BUGS.map((b, i) => `<div class="card" style="margin:16px 0" id="bug${i}"><div class="grid2"><div><img class="zoomable" src="images/${b.img}.png" alt="Kartu ${b.k}" style="width:min(100%,460px)"></div><div>
+<h3 style="margin-top:0">Kartu ${b.k}</h3><p><b>Data uji:</b> ${b.data}<br><b>Keluhan:</b> ${b.gejala}</p>
+<b>1. Baris yang keliru:</b><div class="linebtns">${Array.from({length: b.n}, (_, j) => `<button data-l="${j + 1}">${j + 1}</button>`).join('')}</div>
+<b>2. Penyebab:</b>${b.causes.map((c, j) => `<button class="opt" data-c="${j}">${esc(c)}</button>`).join('')}
+<button class="btn" data-check>Periksa</button><div class="fb"></div></div></div></div>`).join('');
+$$('#bugs .card').forEach((card, idx) => { const b = BUGS[idx]; let line = null, cause = null;
+  card.addEventListener('click', e => {
+    const lb = e.target.closest('.linebtns button'); if (lb) { $$('.linebtns button', card).forEach(x => x.classList.toggle('on', x === lb)); line = +lb.dataset.l; }
+    const ob = e.target.closest('.opt'); if (ob) { $$('.opt', card).forEach(x => x.style.borderColor = ''); ob.style.borderColor = 'var(--orange)'; cause = +ob.dataset.c; }
+    if (e.target.closest('[data-check]')) { const fb = $('.fb', card); if (line == null || cause == null) { fb.className = 'fb bad'; fb.textContent = 'Pilih baris dan penyebabnya dulu.'; return; }
+      const okL = b.ok.includes(line), okC = cause === b.c; fb.className = 'fb ' + (okL && okC ? 'ok' : 'bad');
+      fb.innerHTML = okL && okC ? 'Tepat! Perbaikan: <code>' + esc(b.fix) + '</code>' : (okL ? 'Barisnya benar, penyebabnya belum tepat.' : okC ? 'Penyebabnya benar, barisnya belum tepat.' : 'Belum tepat, coba lagi.'); }
+  }); });
+
+// ---------- kuis
+let qi = 0, qs = 0, qa = [];
+function quiz() {
+  const el = $('#quiz');
+  if (qi >= PG.length) { el.innerHTML = `<h3 style="margin-top:0">Skor kamu: ${qs} / ${PG.length}</h3><div class="bar"><i style="width:${qs / PG.length * 100}%"></i></div><p>${qs >= 9 ? 'Luar biasa! Kamu siap jadi programmer.' : qs >= 7 ? 'Bagus! Sedikit lagi.' : 'Ayo baca kamus lanjutan lalu coba lagi.'}</p>` +
+    qa.map((a, i) => `<details><summary>${i + 1}. ${a.ok ? '✅' : '❌'} ${esc(PG[i].q)}</summary><p>Jawabanmu: ${esc(PG[i].o[a.pick])}<br>Jawaban benar: <b>${esc(PG[i].o[PG[i].k])}</b></p><p>${esc(PG[i].e)}</p></details>`).join('') + '<button class="btn" id="qre">Ulangi kuis</button>';
+    $('#qre').onclick = () => { qi = 0; qs = 0; qa = []; quiz(); }; return; }
+  const q = PG[qi];
+  el.innerHTML = `<div class="bar"><i style="width:${qi / PG.length * 100}%"></i></div><p style="color:var(--gray);margin:8px 0">Soal ${qi + 1} dari ${PG.length}</p><p style="font-weight:700;font-size:1.05rem">${esc(q.q)}</p>` + q.o.map((o, i) => `<button class="opt" data-i="${i}"><b>${'ABCD'[i]}.</b> ${esc(o)}</button>`).join('') + '<div id="qfb"></div>';
+  $$('#quiz .opt').forEach(b => b.onclick = () => { const i = +b.dataset.i; $$('#quiz .opt').forEach(x => x.disabled = true); $$('#quiz .opt')[q.k].classList.add('ok'); if (i !== q.k) b.classList.add('bad'); else qs++; qa.push({pick: i, ok: i === q.k});
+    $('#qfb').innerHTML = `<div class="callout ${i === q.k ? '' : 'warn'}"><b class="t">${i === q.k ? 'Benar!' : 'Belum tepat.'}</b>${esc(q.e)}</div><button class="btn" id="qn">${qi + 1 === PG.length ? 'Lihat skor' : 'Lanjut'}</button>`; $('#qn').onclick = () => { qi++; quiz(); }; });
+}
+quiz();
+
+</script>
+</body>
+</html>

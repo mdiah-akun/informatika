@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dari Blok ke Kode - TP 9 Informatika Kelas IX</title>
+<style>
+:root{--navy:#0B3C5D;--teal:#1D7874;--sky:#328CC1;--coral:#F2545B;--sand:#FFF4D6;--gold:#F2C94C;--light:#E8F1F8;--ink:#1F2937;--bg:#F8FAFC;--dark:#1E293B;--green:#2E9E6B;--orange:#E88A1A}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Segoe UI",Calibri,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;font-size:17px}
+nav{position:sticky;top:0;z-index:20;background:var(--navy);display:flex;gap:4px;overflow-x:auto;padding:8px 12px;box-shadow:0 2px 8px #0003}
+nav a{color:#E8F1F8;text-decoration:none;padding:7px 13px;border-radius:20px;font-size:14px;white-space:nowrap;font-weight:600}
+nav a:hover{background:#ffffff26}
+header{background:linear-gradient(160deg,var(--navy),var(--teal));color:#fff;text-align:center;padding:0 0 26px}
+header img{width:100%;max-width:1100px;display:block;margin:0 auto}
+header p{margin:14px 16px 0;font-size:18px;color:#E8F1F8}
+main{max-width:1000px;margin:0 auto;padding:10px 18px 60px}
+section{padding-top:34px}
+h2{color:var(--navy);font-size:28px;margin:0 0 8px;border-left:8px solid var(--coral);padding-left:12px}
+h3{color:var(--teal);margin:22px 0 6px}
+.card{background:#fff;border:1px solid #D5E0EA;border-radius:16px;padding:16px 20px;margin:14px 0;box-shadow:0 2px 6px #0B3C5D10}
+.tip{background:var(--sand);border:2px solid var(--gold);border-radius:14px;padding:12px 18px;margin:14px 0}
+.warn{background:#FDECEE;border:2px solid #F2A5AB;border-radius:14px;padding:12px 18px;margin:14px 0}
+.ok{background:#E6F4EF;border:2px solid #8FD0BC;border-radius:14px;padding:12px 18px;margin:14px 0}
+figure{margin:14px 0;text-align:center}
+figure img{max-width:100%;height:auto;border-radius:12px;border:1px solid #D5E0EA;background:#fff}
+figcaption{font-size:14px;color:#556070;margin-top:4px;font-style:italic}
+code{font-family:Consolas,"DejaVu Sans Mono",monospace;background:#E3EEF5;padding:1px 6px;border-radius:6px;color:#0F766E;font-size:.95em}
+pre{background:var(--dark);color:#E2E8F0;padding:14px 16px;border-radius:12px;overflow-x:auto;font-family:Consolas,"DejaVu Sans Mono",monospace;font-size:15.5px;line-height:1.55;margin:10px 0}
+table{border-collapse:collapse;width:100%;font-size:15.5px;margin:10px 0}
+th{background:var(--navy);color:#fff;text-align:left;padding:8px 10px}
+td{padding:8px 10px;border-bottom:1px solid #DDE6EE}
+tr:nth-child(even) td{background:#F1F6FA}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.tab{border:2px solid var(--sky);background:#fff;color:var(--sky);border-radius:22px;padding:7px 16px;font-weight:700;cursor:pointer;font-size:15px}
+.tab.on{background:var(--sky);color:#fff}
+.pane{display:none}.pane.on{display:block}
+input[type=text],input[type=number]{font-size:17px;padding:8px 12px;border:2px solid #B8C7D6;border-radius:10px;width:100%;max-width:340px}
+button{font-family:inherit;font-size:16px;font-weight:700;border:0;border-radius:24px;padding:9px 20px;cursor:pointer;background:var(--coral);color:#fff}
+button.sec{background:var(--sky)}button.gray{background:#8A97A6}
+button:hover{filter:brightness(1.08)}
+.row{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start}
+.col{flex:1 1 300px;min-width:0}
+.codebox{background:var(--dark);border-radius:12px;padding:10px 0;font-family:Consolas,"DejaVu Sans Mono",monospace;font-size:15px}
+.codebox div{padding:2px 14px;color:#E2E8F0;white-space:pre;border-left:5px solid transparent}
+.codebox div.hl{background:#334155;border-left-color:var(--gold);color:#fff}
+.codebox div.skip{opacity:.4}
+.vars{background:#fff;border:1px solid #D5E0EA;border-radius:12px;padding:8px 14px;min-height:80px}
+.vars span{display:inline-block;background:var(--light);border-radius:8px;padding:2px 10px;margin:3px;font-family:Consolas,monospace;font-size:15px}
+.out{background:#0F172A;color:#86EFAC;border-radius:12px;padding:10px 14px;font-family:Consolas,monospace;min-height:48px}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px 30px}
+.mitem{padding:11px 14px;border-radius:12px;border:2px solid #B8C7D6;background:#fff;cursor:pointer;font-weight:600;user-select:none}
+.mitem.code{font-family:Consolas,"DejaVu Sans Mono",monospace;background:var(--dark);color:#7DD3FC;border-color:var(--dark)}
+.mitem.sel{outline:4px solid var(--gold)}
+.mitem.done{background:#D8F3E6;color:#14683F;border-color:var(--green);cursor:default}
+.mitem.code.done{background:#14532D;color:#BBF7D0}
+.mitem.bad{animation:sh .4s;border-color:var(--coral)}
+@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.bugline{display:block;width:100%;text-align:left;background:var(--dark);color:#E2E8F0;font-family:Consolas,"DejaVu Sans Mono",monospace;font-size:15.5px;border-radius:0;padding:6px 14px;white-space:pre;font-weight:400}
+.bugline:hover{background:#334155}
+.bugline.right{background:#14532D}.bugline.wrong{background:#7F1D1D}
+.q{margin:18px 0;padding-bottom:12px;border-bottom:1px dashed #C7D3DF}
+.opt{display:block;margin:6px 0;padding:9px 14px;border:2px solid #C7D3DF;border-radius:12px;cursor:pointer;background:#fff}
+.opt:hover{border-color:var(--sky)}
+.opt.good{background:#D8F3E6;border-color:var(--green)}.opt.no{background:#FDECEE;border-color:var(--coral)}
+.fb{font-size:15px;margin-top:6px;color:#334155}
+.score{font-size:22px;font-weight:800;color:var(--navy)}
+.gold4{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.gold4 div{background:#fff;border-radius:14px;padding:14px;border-top:6px solid var(--sky);box-shadow:0 2px 6px #0B3C5D14}
+.gold4 b{display:block;font-size:19px;margin-bottom:4px}
+footer{text-align:center;padding:24px;background:var(--navy);color:#BFD9EA;font-size:14px}
+@media(max-width:640px){body{font-size:16px}h2{font-size:23px}.mgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+<a href="#misi">Misi</a><a href="#translasi">Apa itu Translasi</a><a href="#kamus">Kamus</a><a href="#pasangan">5 Pasangan</a><a href="#sintaks">Sintaks</a><a href="#kasus">Kasus Kepiting</a><a href="#latihan">Latihan</a><a href="#rangkuman">Rangkuman</a>
+</nav>
+<header>
+<img src="images/00_cover.png" alt="Sampul: Dari Blok ke Kode">
+<p>Materi Siswa Informatika Kelas IX &nbsp;|&nbsp; Bab II TP 9 &nbsp;|&nbsp; SMP Negeri 14 Tarakan</p>
+</header>
+<main>
+
+<section id="misi">
+<h2>Misi Hari Ini</h2>
+<div class="card">Hai, programmer muda Tarakan! Hari ini kamu jadi <b>detektif kode</b>. Kamu akan menyelidiki bagaimana program dari <b>blok</b> (Scratch/Blockly) bisa ditulis dengan <b>teks</b> seperti Python, lalu menemukan sendiri aturannya.</div>
+<ul>
+<li>Menjelaskan apa itu <b>translasi</b>.</li>
+<li>Mencocokkan <b>blok</b> dengan <b>kode Python</b>.</li>
+<li>Menerjemahkan program sederhana dari blok ke Python.</li>
+<li>Memperbaiki kesalahan penulisan (<i>debug</i>).</li>
+</ul>
+</section>
+
+<section id="translasi">
+<h2>1. Apa itu Translasi?</h2>
+<p>Pernah nonton film Korea pakai subtitle? Ceritanya sama, bahasanya berbeda. Program komputer juga bisa begitu! <b>Translasi</b> = menerjemahkan program ke bentuk penulisan lain <b>tanpa mengubah logikanya</b>.</p>
+<figure><img src="images/02_alur_translasi.png" alt="Alur translasi"><figcaption>Translasi: dari program blok menjadi kode teks.</figcaption></figure>
+<figure><img src="images/01_blok_vs_teks.png" alt="Halo Tarakan dalam tiga bentuk"><figcaption>Satu program, tiga bentuk penulisan. Hasilnya sama!</figcaption></figure>
+<h3>Blok vs Teks</h3>
+<table><tr><th></th><th>Blok (Scratch/Blockly)</th><th>Teks (Python/C)</th></tr>
+<tr><td><b>Cara menulis</b></td><td>Seret dan sambung blok</td><td>Ketik sendiri</td></tr>
+<tr><td><b>Aturan</b></td><td>Bentuk blok mencegah salah susun</td><td>Harus tepat: kurung, kutip, titik dua, indentasi</td></tr>
+<tr><td><b>Salah ketik</b></td><td>Nyaris tidak mungkin</td><td>Gampang banget!</td></tr>
+<tr><td><b>Cocok untuk</b></td><td>Belajar konsep, game sederhana</td><td>Aplikasi web, AI, program besar</td></tr></table>
+<div class="tip">Blok itu seperti <b>roda bantu sepeda</b>. Bahasa teks itu sepeda tanpa roda bantu: lebih bebas, tapi kamu harus lebih teliti.</div>
+<figure><img src="images/11_langkah_translasi.png" alt="Empat langkah translasi"><figcaption>Empat langkah menerjemahkan blok ke kode.</figcaption></figure>
+</section>
+
+<section id="kamus">
+<h2>2. Kamus Translasi</h2>
+<p>Alat utama detektif kode. Ketik kata di kotak untuk mencari pasangan.</p>
+<input type="text" id="cari" placeholder="Cari: katakan, jika, ulangi, ..." oninput="filterKamus()">
+<table id="kamus"><thead><tr><th>Blok</th><th>Python</th><th>Bahasa C</th></tr></thead><tbody>
+<tr><td>katakan 'teks'</td><td><code>print("teks")</code></td><td><code>printf("teks\n");</code></td></tr>
+<tr><td>tanya ... dan tunggu</td><td><code>x = input("...")</code></td><td><code>scanf("%d", &amp;x);</code></td></tr>
+<tr><td>atur x menjadi 5</td><td><code>x = 5</code></td><td><code>int x = 5;</code></td></tr>
+<tr><td>ubah x sebesar 1</td><td><code>x = x + 1</code></td><td><code>x = x + 1;</code></td></tr>
+<tr><td>gabungkan 'a' 'b'</td><td><code>"a" + "b"</code></td><td><code>printf("%s%s", a, b);</code></td></tr>
+<tr><td>jika ... maka</td><td><code>if syarat:</code></td><td><code>if (syarat) { }</code></td></tr>
+<tr><td>jika ... lainnya</td><td><code>else:</code></td><td><code>else { }</code></td></tr>
+<tr><td>ulangi 10 kali</td><td><code>for i in range(10):</code></td><td><code>for (i=0; i&lt;10; i++) { }</code></td></tr>
+<tr><td>ulangi sampai ...</td><td><code>while syarat_dibalik:</code></td><td><code>while (syarat_dibalik) { }</code></td></tr>
+<tr><td>dan / atau / bukan</td><td><code>and / or / not</code></td><td><code>&amp;&amp; / || / !</code></td></tr>
+<tr><td>sama dengan ( = )</td><td><code>==</code></td><td><code>==</code></td></tr>
+<tr><td>definisikan f(x)</td><td><code>def f(x):</code></td><td><code>tipe f(tipe x) { }</code></td></tr>
+<tr><td>kembalikan hasil</td><td><code>return hasil</code></td><td><code>return hasil;</code></td></tr>
+</tbody></table>
+<figure><img src="images/13_kamus_translasi.png" alt="Kamus translasi (gambar)"><figcaption>Versi gambar kamus, boleh disimpan atau dicetak.</figcaption></figure>
+</section>
+
+<section id="pasangan">
+<h2>3. Menyelidiki Lima Pasangan Blok dan Kode</h2>
+<p>Perhatikan <b>angka merah</b>: angka yang sama berarti blok dan kode itu berpasangan. Tebak dulu, baru baca kuncinya!</p>
+<div class="tabs" id="tabs"></div>
+<div id="panes">
+<div class="pane on" data-t="Input dan Output">
+<figure><img src="images/03_io_translasi.png" alt="Input output"></figure>
+<ul><li><code>katakan</code> menjadi <code>print(...)</code>. Teks wajib diapit kutip.</li><li><code>tanya ... dan tunggu</code> menjadi <code>input(...)</code>; jawaban disimpan di variabel.</li><li><code>gabungkan</code> menjadi tanda <code>+</code>.</li></ul></div>
+<div class="pane" data-t="Variabel">
+<figure><img src="images/04_variabel_translasi.png" alt="Variabel"></figure>
+<ul><li><code>atur harga menjadi 120000</code> menjadi <code>harga = 120000</code>.</li><li>Tanda <code>=</code> artinya <b>mengisi</b>, bukan "sama dengan" di Matematika.</li><li>&times; menjadi <code>*</code>.</li></ul></div>
+<div class="pane" data-t="Percabangan">
+<figure><img src="images/05_percabangan_translasi.png" alt="Percabangan"></figure>
+<ul><li>"Mulut" blok diganti <b>titik dua (:)</b> dan <b>indentasi</b>.</li><li><code>else:</code> juga memakai titik dua.</li></ul></div>
+<div class="pane" data-t="Perulangan">
+<figure><img src="images/06_perulangan_for.png" alt="Perulangan for"></figure>
+<figure><img src="images/07_perulangan_while.png" alt="Perulangan while"></figure>
+<div class="warn"><b>Awas jebakan!</b> "ulangi sampai i = 3" berhenti saat syarat terpenuhi. <code>while</code> justru jalan selama syarat masih benar. Jadi syaratnya <b>dibalik</b>: <code>while i &lt; 3</code>.</div></div>
+<div class="pane" data-t="Fungsi & Prosedur">
+<figure><img src="images/08_fungsi_translasi.png" alt="Fungsi"></figure>
+<figure><img src="images/09_prosedur_translasi.png" alt="Prosedur"></figure>
+<ul><li><code>definisikan</code> menjadi <code>def nama(parameter):</code>.</li><li>Fungsi punya <code>return</code>; prosedur tidak.</li></ul></div>
+</div>
+</section>
+
+<section id="sintaks">
+<h2>4. Sintaks: Tanda Kecil, Tugas Besar</h2>
+<p><b>Sintaks</b> = aturan penulisan. Komputer sangat teliti: kurang satu tanda saja, program error.</p>
+<figure><img src="images/12_anatomi_sintaks.png" alt="Anatomi sintaks"></figure>
+<h3>Enam kesalahan yang sering terjadi</h3>
+<figure><img src="images/14_kesalahan_umum.png" alt="Kesalahan umum"></figure>
+<div class="tip"><b>Tips detektif:</b> pesan error biasanya menyebut nomor baris. Mulailah memeriksa dari sana.</div>
+</section>
+
+<section id="kasus">
+<h2>5. Kasus: Kalkulator Warung Kepiting Soka</h2>
+<p>Kepiting soka khas Tarakan! Harga Rp120.000/kg. Beli <b>3 kg atau lebih</b> dapat potongan Rp20.000.</p>
+<figure><img src="images/10_kasus_kepiting.png" alt="Program kepiting"></figure>
+<h3>Coba jalankan langkah demi langkah</h3>
+<div class="row">
+<div class="col">
+<label for="berat"><b>Berat kepiting (kg):</b></label><br>
+<input type="number" id="berat" min="1" max="20" value="4">
+<p><button onclick="startSim()">Mulai</button> <button class="sec" onclick="nextStep()">Langkah berikutnya</button> <button class="gray" onclick="resetSim()">Ulang</button></p>
+<div class="codebox" id="sim"></div>
+</div>
+<div class="col">
+<b>Variabel di memori:</b>
+<div class="vars" id="vars"><i>belum berjalan</i></div>
+<b>Layar (keluaran):</b>
+<div class="out" id="out"></div>
+<p id="simnote" style="font-size:15px"></p>
+</div>
+</div>
+<div class="tip">Perhatikan: jika berat 1 atau 2 kg, baris <code>total = total - 20000</code> <b>dilewati</b> karena syarat <code>berat &gt;= 3</code> tidak terpenuhi.</div>
+</section>
+
+<section id="latihan">
+<h2>6. Latihan</h2>
+
+<h3>A. Pasangkan blok dengan kode</h3>
+<p>Klik satu blok, lalu klik pasangan kodenya.</p>
+<div class="mgrid" id="match"></div>
+<p class="score" id="mscore"></p>
+<button class="gray" onclick="initMatch()">Acak ulang</button>
+
+<h3>B. Detektif Bug</h3>
+<p>Klik baris yang mengandung kesalahan.</p>
+<div id="bugs"></div>
+
+<h3>C. Kuis</h3>
+<div id="quiz"></div>
+<p class="score" id="qscore"></p>
+</section>
+
+<section id="rangkuman">
+<h2>7. Rangkuman</h2>
+<figure><img src="images/16_sama_beda.png" alt="Sama dan beda"></figure>
+<h3>Kaidah Emas Translasi</h3>
+<div class="gold4">
+<div style="border-color:#328CC1"><b>1. Logika tetap sama</b>Yang berubah hanya cara menulis (sintaks).</div>
+<div style="border-color:#1D7874"><b>2. Ada padanan</b>Setiap blok punya pasangan kode. Pakai kamus.</div>
+<div style="border-color:#E88A1A"><b>3. Perhatikan tanda</b>Kurung, kutip, titik dua, indentasi.</div>
+<div style="border-color:#F2545B"><b>4. Uji dan debug</b>Error adalah petunjuk, bukan musuh.</div>
+</div>
+<figure><img src="images/15_alur_inquiry.png" alt="Alur inquiry"><figcaption>Kamu sudah menjalani semua tahap penyelidikan ini!</figcaption></figure>
+<div class="ok"><b>Tugas mandiri (opsional):</b> terjemahkan program Ongkos Ojek ke Python.<br><img src="images/18_ojek_blok.png" alt="Program ojek" style="max-width:100%;max-height:340px;margin-top:8px;border-radius:10px"></div>
+</section>
+</main>
+<footer>Materi Siswa TP 9 | Informatika Kelas IX | SMP Negeri 14 Tarakan</footer>
+
+<script>
+/* kamus filter */
+function filterKamus(){var q=document.getElementById('cari').value.toLowerCase();document.querySelectorAll('#kamus tbody tr').forEach(function(r){r.style.display=r.textContent.toLowerCase().indexOf(q)>-1?'':'none'})}
+/* tabs */
+(function(){var panes=document.querySelectorAll('#panes .pane'),tb=document.getElementById('tabs');
+panes.forEach(function(p,i){var b=document.createElement('button');b.className='tab'+(i==0?' on':'');b.textContent=p.getAttribute('data-t');b.onclick=function(){panes.forEach(function(x){x.classList.remove('on')});tb.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on')});p.classList.add('on');b.classList.add('on')};tb.appendChild(b)})})();
+/* simulator */
+var CODE=['harga = 120000','berat = int(input("Berat kepiting (kg)? "))','total = harga * berat','if berat >= 3:','    total = total - 20000','print("Total bayar: Rp " + str(total))'];
+var steps=[],si=-1;
+function buildSteps(b){var v={},s=[];
+v={harga:120000};s.push({l:0,v:Object.assign({},v),o:'',n:'harga diisi 120000.'});
+v.berat=b;s.push({l:1,v:Object.assign({},v),o:'Berat kepiting (kg)? '+b,n:'Pengguna mengetik '+b+'. int() mengubah teks "'+b+'" menjadi angka.'});
+v.total=v.harga*v.berat;s.push({l:2,v:Object.assign({},v),o:'',n:'total = 120000 x '+b+' = '+v.total+'.'});
+if(b>=3){s.push({l:3,v:Object.assign({},v),o:'',n:'Syarat berat >= 3 BENAR, masuk ke isi if.',skip:false});v.total=v.total-20000;s.push({l:4,v:Object.assign({},v),o:'',n:'total dikurangi 20000 menjadi '+v.total+'.'})}
+else{s.push({l:3,v:Object.assign({},v),o:'',n:'Syarat berat >= 3 SALAH. Baris isi if dilewati.',skip:true})}
+s.push({l:5,v:Object.assign({},v),o:'Total bayar: Rp '+v.total,n:'str(total) mengubah angka menjadi teks lalu digabung dan ditampilkan.'});return s}
+function render(){var h='';CODE.forEach(function(c,i){var cur=si>=0&&steps[si].l===i;var sk=si>=0&&steps[si].skip&&i===4;h+='<div class="'+(cur?'hl':'')+(sk?' skip':'')+'">'+(i+1)+'  '+c.replace(/</g,'&lt;')+'</div>'});document.getElementById('sim').innerHTML=h;
+if(si<0){document.getElementById('vars').innerHTML='<i>belum berjalan</i>';document.getElementById('out').textContent='';document.getElementById('simnote').textContent='';return}
+var s=steps[si],vh='';for(var k in s.v)vh+='<span>'+k+' = '+s.v[k]+'</span>';document.getElementById('vars').innerHTML=vh;
+var o='';for(var j=0;j<=si;j++)if(steps[j].o)o+=steps[j].o+'\n';document.getElementById('out').textContent=o;document.getElementById('simnote').textContent=s.n}
+function startSim(){var b=parseInt(document.getElementById('berat').value);if(!(b>=1)){b=1;document.getElementById('berat').value=1}steps=buildSteps(b);si=0;render()}
+function nextStep(){if(si<0){startSim();return}if(si<steps.length-1){si++;render()}else document.getElementById('simnote').textContent='Program selesai. Coba berat lain!'}
+function resetSim(){si=-1;steps=[];render()}
+render();
+/* match */
+var PAIRS=[['katakan \'Halo\'','print("Halo")'],['tanya ... dan tunggu','input("...")'],['jika ... maka','if syarat:'],['ulangi 3 kali','for i in range(3):'],['atur x menjadi 5','x = 5'],['definisikan f(x)','def f(x):']];
+var sel=null,solved=0;
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function initMatch(){var m=document.getElementById('match');m.innerHTML='';sel=null;solved=0;document.getElementById('mscore').textContent='';
+var L=document.createElement('div'),R=document.createElement('div');
+PAIRS.forEach(function(p,i){var e=document.createElement('div');e.className='mitem';e.textContent=p[0];e.dataset.i=i;e.onclick=pick;L.appendChild(e);L.appendChild(document.createElement('div')).style.height='8px'});
+shuffle(PAIRS.map(function(p,i){return i})).forEach(function(i){var e=document.createElement('div');e.className='mitem code';e.textContent=PAIRS[i][1];e.dataset.i=i;e.onclick=pick;R.appendChild(e);R.appendChild(document.createElement('div')).style.height='8px'});
+m.appendChild(L);m.appendChild(R)}
+function pick(ev){var e=ev.currentTarget;if(e.classList.contains('done'))return;
+var isCode=e.classList.contains('code');
+if(!sel||sel.classList.contains('code')===isCode){if(sel)sel.classList.remove('sel');sel=e;e.classList.add('sel');return}
+if(sel.dataset.i===e.dataset.i){sel.classList.remove('sel');sel.classList.add('done');e.classList.add('done');sel=null;solved++;if(solved===PAIRS.length)document.getElementById('mscore').textContent='Hebat! Semua pasangan benar.'}
+else{var a=sel,b=e;a.classList.remove('sel');a.classList.add('bad');b.classList.add('bad');setTimeout(function(){a.classList.remove('bad');b.classList.remove('bad')},450);sel=null}}
+initMatch();
+/* bugs */
+var BUGS=[
+{c:['harga = 120000','berat = 4','total = harga * berat','if berat >= 3','    total = total - 20000'],a:3,w:'Lupa titik dua (:) di akhir baris if.'},
+{c:['nilai = 80','if nilai >= 75:','print("Lulus")','else:','    print("Remedial")'],a:2,w:'Baris isi if harus menjorok (indentasi 4 spasi).'},
+{c:['nama = input("Namamu? ")','Print("Halo, " + nama)'],a:1,w:'Python membedakan huruf besar dan kecil: harus print, bukan Print.'},
+{c:['total = 460000','print("Total: Rp " + total)'],a:1,w:'Angka harus diubah menjadi teks dulu: str(total).'},
+{c:['nilai = 80','if nilai = 75:','    print("Pas")'],a:1,w:'Untuk membandingkan pakai == (atau >=). Tanda = itu untuk mengisi nilai.'}];
+(function(){var h='';BUGS.forEach(function(b,bi){h+='<div class="card"><b>Bug '+(bi+1)+'</b><div style="margin:8px 0;border-radius:10px;overflow:hidden" id="bg'+bi+'">';b.c.forEach(function(l,li){h+='<button class="bugline" onclick="chk('+bi+','+li+',this)">'+l.replace(/</g,'&lt;')+'</button>'});h+='</div><div class="fb" id="bf'+bi+'"></div></div>'});document.getElementById('bugs').innerHTML=h})();
+function chk(bi,li,el){var b=BUGS[bi],f=document.getElementById('bf'+bi);if(li===b.a){el.classList.add('right');f.innerHTML='<b style="color:#14683F">Betul!</b> '+b.w}else{el.classList.add('wrong');f.innerHTML='<b style="color:#B42335">Belum tepat.</b> Coba baris lain.'}}
+/* quiz */
+var QZ=[
+['Translasi blok ke teks berarti ...',['mengubah logika program','menerjemahkan bentuk penulisan tanpa mengubah logika','menghapus semua blok','mempercepat komputer'],1,'Logika tetap, hanya bentuk penulisan yang berubah.'],
+['Blok "katakan" pada Python menjadi ...',['say()','print()','echo','tulis()'],1,'print() menampilkan isinya ke layar.'],
+['Pada x = 5, tanda = berarti ...',['mengisi nilai','membandingkan','lebih besar','tidak sama'],0,'= adalah pengisian nilai.'],
+['Pengganti "mulut" blok jika-maka di Python adalah ...',['kurung kurawal','titik dua dan indentasi','titik koma','kurung siku'],1,'Kurung kurawal dipakai Bahasa C.'],
+['Hasil input() selalu bertipe ...',['teks','bilangan bulat','desimal','benar/salah'],0,'Ubah dengan int() bila ingin dihitung.'],
+['"ulangi sampai i = 5" paling tepat menjadi ...',['while i == 5:','while i != 5:','for i in 5:','until i = 5'],1,'while jalan selama syarat masih benar, jadi syarat dibalik.'],
+['Perbedaan fungsi dan prosedur ...',['prosedur pakai return','sama persis','fungsi mengembalikan nilai (return)','fungsi hanya di C'],2,'Fungsi punya return.'],
+['Yang SAMA antara blok dan teks adalah ...',['sintaks','logika/algoritma','kemungkinan typo','cara mengetik'],1,'Logika sama, sintaks berbeda.']];
+var ans=0,done=0;
+(function(){var h='';QZ.forEach(function(q,i){h+='<div class="q"><b>'+(i+1)+'. '+q[0]+'</b>';q[1].forEach(function(o,j){h+='<div class="opt" onclick="ans_('+i+','+j+',this)">'+'ABCD'[j]+'. '+o+'</div>'});h+='<div class="fb" id="qf'+i+'"></div></div>'});document.getElementById('quiz').innerHTML=h})();
+var got={};
+function ans_(i,j,el){if(got[i]!==undefined)return;got[i]=j;var q=QZ[i],box=el.parentNode.querySelectorAll('.opt');box[q[2]].classList.add('good');if(j!==q[2])el.classList.add('no');else ans++;done++;document.getElementById('qf'+i).textContent=(j===q[2]?'Benar. ':'Kurang tepat. ')+q[3];
+document.getElementById('qscore').textContent='Skor: '+ans+' / '+QZ.length+(done===QZ.length?(ans>=6?'  - Kerja bagus, detektif kode!':'  - Ayo baca kamus lagi dan coba ulang.'):'')}
+</script>
+</body>
+</html>

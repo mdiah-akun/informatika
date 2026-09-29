@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algoritma Stack Lanjutan — Materi Informatika Kelas VIII</title>
+<style>
+  :root{
+    --ink:#1e293b; --sub:#475569; --blue:#2563eb; --blue-l:#dbeafe;
+    --orange:#f59e0b; --orange-l:#fef3c7; --green:#10b981; --green-l:#d1fae5;
+    --purple:#7c3aed; --purple-l:#ede9fe; --card:#f1f5f9; --bg:#ffffff;
+    --red:#ef4444; --red-l:#fee2e2;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; font-family:'Segoe UI', Calibri, Arial, sans-serif; color:var(--ink); background:var(--bg); line-height:1.65;}
+  .wrap{max-width:900px; margin:0 auto; padding:0 20px;}
+
+  header.hero{background:linear-gradient(135deg,#0f172a 0%,#1e293b 55%,#3b0764 100%); color:#fff; padding:60px 0 52px; position:relative; overflow:hidden;}
+  header.hero::after{content:""; position:absolute; right:-80px; top:-80px; width:320px; height:320px; border-radius:50%; background:rgba(124,58,237,.35);}
+  header.hero .eyebrow{color:var(--orange); font-weight:700; letter-spacing:1.3px; font-size:.82rem; text-transform:uppercase;}
+  header.hero h1{font-size:2.2rem; margin:.5rem 0 .6rem; position:relative; z-index:2;}
+  header.hero p.lead{font-size:1.02rem; color:#cbd5e1; max-width:660px; position:relative; z-index:2;}
+  .badge-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; position:relative; z-index:2;}
+  .badge{background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.25); color:#e2e8f0; padding:6px 14px; border-radius:999px; font-size:.83rem;}
+
+  nav.toc{background:#f8fafc; border-bottom:1px solid #e2e8f0; position:sticky; top:0; z-index:50;}
+  nav.toc .wrap{display:flex; gap:4px; overflow-x:auto; padding:10px 20px;}
+  nav.toc a{white-space:nowrap; text-decoration:none; color:var(--sub); font-size:.83rem; font-weight:600; padding:8px 13px; border-radius:8px;}
+  nav.toc a:hover{background:var(--purple-l); color:var(--purple);}
+
+  main{padding:44px 0 20px;}
+  section{margin-bottom:54px; scroll-margin-top:60px;}
+  h2{font-size:1.6rem; margin-bottom:.3rem;}
+  h2 .num{color:var(--purple); font-weight:800; margin-right:8px;}
+  p.section-sub{color:var(--sub); margin-top:0; margin-bottom:20px;}
+
+  figure{margin:20px 0; text-align:center;}
+  figure img{max-width:100%; border-radius:12px; border:1px solid #e2e8f0;}
+  figcaption{color:var(--sub); font-size:.85rem; font-style:italic; margin-top:10px; padding:0 10px;}
+
+  .card{background:var(--card); border-radius:14px; padding:22px 24px; margin:18px 0;}
+  .card.blue{background:var(--blue-l);} .card.orange{background:var(--orange-l);}
+  .card.green{background:var(--green-l);} .card.purple{background:var(--purple-l);}
+  .card h3{margin-top:0; font-size:1.02rem;}
+  .card.blue h3{color:var(--blue);} .card.orange h3{color:#92400e;}
+  .card.green h3{color:#047857;} .card.purple h3{color:var(--purple);}
+  .card ul{margin:0; padding-left:20px;} .card li{margin-bottom:6px;}
+
+  code, .mono{font-family:'Courier New', monospace; background:#eef2ff; padding:2px 8px; border-radius:6px; color:var(--blue); font-weight:700;}
+
+  .scenario{background:#0f172a; color:#e2e8f0; border-radius:16px; padding:26px; margin:24px 0; border:1px solid #334155;}
+  .scenario .tag{display:inline-block; background:var(--orange); color:#0f172a; font-weight:800; font-size:.78rem; padding:5px 14px; border-radius:999px; margin-bottom:14px;}
+
+  .stepper{display:flex; flex-direction:column; gap:10px; margin:18px 0;}
+  .step{display:flex; gap:14px; align-items:flex-start; background:var(--card); border-radius:12px; padding:14px 18px;}
+  .step .n{flex:none; width:32px; height:32px; border-radius:50%; background:var(--purple); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.9rem;}
+
+  .quiz-box{background:#0f172a; color:#fff; border-radius:16px; padding:26px; margin:26px 0;}
+  .quiz-box .tag{display:inline-block; background:var(--orange); color:#0f172a; font-weight:800; font-size:.8rem; padding:5px 14px; border-radius:999px; margin-bottom:14px;}
+  .quiz-box p.q{font-size:1.02rem; font-weight:600; margin:8px 0 16px;}
+  .reveal-btn{background:var(--orange); color:#0f172a; border:none; padding:10px 20px; border-radius:8px; font-weight:700; cursor:pointer;}
+  .explain{display:none; margin-top:14px; background:#1e293b; padding:16px 18px; border-radius:10px; font-size:.92rem; color:#cbd5e1; line-height:1.7;}
+  .explain.show{display:block;}
+
+  .reflect-list{list-style:none; padding:0; margin:0;}
+  .reflect-list li{background:var(--card); border-radius:12px; padding:16px 18px; margin-bottom:12px; display:flex; gap:14px;}
+
+  footer{background:#0f172a; color:#94a3b8; text-align:center; padding:34px 20px; margin-top:40px; font-size:.85rem;}
+  a.top-link{position:fixed; bottom:22px; right:22px; background:var(--purple); color:#fff; width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:1.2rem; box-shadow:0 4px 14px rgba(0,0,0,.2); z-index:60;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Bab II &bull; Berpikir Komputasional &bull; Pendalaman TP 8</div>
+    <h1>Level Up! Jadi Programmer Stack 🚀</h1>
+    <p class="lead">Materi lanjutan Informatika Kelas VIII: algoritma konversi ekspresi infix ke postfix, pengecekan kurung seimbang, dan konsep stack overflow/underflow — dengan pendekatan Problem Based Learning.</p>
+    <div class="badge-row">
+      <span class="badge">⏱️ 120 menit</span>
+      <span class="badge">🧩 Problem Based Learning</span>
+      <span class="badge">💻 Algoritma Stack</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#recap">Flashback</a>
+    <a href="#misi">Misi</a>
+    <a href="#konversi">Konversi</a>
+    <a href="#trace">Trace</a>
+    <a href="#kurung">Kurung Seimbang</a>
+    <a href="#error">Overflow/Underflow</a>
+    <a href="#nyata">Penerapan</a>
+    <a href="#rangkuman">Rangkuman</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="recap">
+    <h2><span class="num">01</span>Flashback: Pertemuan Sebelumnya 🔁</h2>
+    <p class="section-sub">Sebelum lanjut, yuk ingat lagi apa yang sudah kalian pelajari.</p>
+    <div class="card purple">
+      <ul>
+        <li><strong>Stack</strong> = struktur data bertumpuk dengan prinsip <strong>LIFO</strong> (Last In First Out).</li>
+        <li><strong>PUSH</strong> = masukin data. <strong>POP</strong> = keluarin data — keduanya dari sisi atas (top).</li>
+        <li>Kalian sudah bisa menghitung ekspresi postfix seperti <span class="mono">4 8 3 + * 2 −</span> = 42 menggunakan stack.</li>
+      </ul>
+    </div>
+    <p>Tapi... dari mana asalnya ekspresi postfix itu? Aslinya kita menulis <span class="mono">4 * (8 + 3) − 2</span> — siapa yang mengubahnya jadi bentuk postfix? Hari ini kita cari tahu algoritmanya sendiri!</p>
+  </section>
+
+  <section id="misi">
+    <h2><span class="num">02</span>Misi: Tim Pengembang Aplikasi 📢</h2>
+    <div class="scenario">
+      <span class="tag">Skenario Masalah</span>
+      <p>Sebuah tim sedang membuat aplikasi kalkulator. Kalkulator menerima ekspresi biasa (infix) dari pengguna, tapi mesinnya cuma bisa menghitung bentuk postfix. Aplikasi ini juga harus tahu kalau pengguna salah menulis kurung.</p>
+      <p style="margin-bottom:0;"><strong>Tugas kalian:</strong> rancang cara kerja (algoritma) untuk (1) mengubah infix → postfix, dan (2) mengecek kurung seimbang — keduanya pakai stack!</p>
+    </div>
+  </section>
+
+  <section id="konversi">
+    <h2><span class="num">03</span>5 Aturan Konversi Infix → Postfix</h2>
+    <figure>
+      <img src="images/01_algoritma_konversi.png" alt="Algoritma konversi infix ke postfix">
+    </figure>
+    <p>Kunci pentingnya: <strong>presedensi (prioritas) operator</strong>.</p>
+    <figure>
+      <img src="images/01b_tabel_presedensi.png" alt="Tabel presedensi operator" style="max-width:420px;">
+      <figcaption>Perkalian (*) dan pembagian (/) presedensinya lebih tinggi daripada penjumlahan (+) dan pengurangan (−).</figcaption>
+    </figure>
+    <div class="card orange">
+      <h3>Ingat Baik-baik</h3>
+      <p style="margin:0;">Kalau di stack ada operator yang presedensinya <strong>lebih tinggi atau sama</strong> dengan operator baru yang dibaca, operator lama harus di-<strong>POP</strong> dulu ke output, baru operator baru di-<strong>PUSH</strong>.</p>
+    </div>
+  </section>
+
+  <section id="trace">
+    <h2><span class="num">04</span>Yuk Kita Coba Bareng! 🔍</h2>
+    <p>Ubah ekspresi <span class="mono">4 * (8 + 3) − 2</span> jadi postfix — ekspresi yang sama dari pertemuan lalu, sekarang kita cari cara dapatnya!</p>
+    <figure>
+      <img src="images/02_trace_konversi_infix_postfix.png" alt="Trace konversi infix ke postfix">
+      <figcaption>Trace lengkap token demi token, sampai hasilnya sama persis dengan yang kita hitung minggu lalu: 4 8 3 + * 2 −!</figcaption>
+    </figure>
+
+    <div class="quiz-box">
+      <span class="tag">✍️ Latihan Kelompok</span>
+      <p class="q">Ubahlah ekspresi berikut menjadi postfix, tunjukkan trace lengkapnya: <span class="mono" style="background:#1e293b;color:#fbbf24;">(6 + 2) * (9 − 3)</span></p>
+      <button class="reveal-btn" onclick="document.getElementById('jawab-1').classList.toggle('show')">Lihat Kunci Jawaban</button>
+      <div class="explain" id="jawab-1">
+        PUSH ( → [(] → PUSH ( → [(,(] → baca 6,2 → output: 6 2 → baca + (top '(' jadi langsung PUSH) → [(,(,+] → baca ) → POP + ke output, buang ( → output: 6 2 +, stack: [(] → baca * (top '(' jadi langsung PUSH) → [(,*] → PUSH ( → [(,*,(] → baca 9,3 → output: 6 2 + 9 3 → baca − (top '(' jadi langsung PUSH) → [(,*,(,−] → baca ) → POP − ke output, buang ( → output: 6 2 + 9 3 −, stack: [(,*] → selesai → POP semua sisa: * <br><br>
+        <strong>Hasil Postfix: 6 2 + 9 3 − *</strong>
+      </div>
+    </div>
+  </section>
+
+  <section id="kurung">
+    <h2><span class="num">05</span>Kurung Seimbang atau Enggak? 🔐</h2>
+    <p class="section-sub">Pernah ngetik rumus panjang terus muncul error karena kurungnya kurang satu? Nah, aplikasi kayak kalkulator/code editor pakai stack buat ngecek itu!</p>
+    <div class="card green">
+      <h3>Cara Ceknya</h3>
+      <ul>
+        <li>Ketemu kurung buka <span class="mono">( { [</span> → PUSH ke stack.</li>
+        <li>Ketemu kurung tutup <span class="mono">) } ]</span> → kalau stack kosong, langsung SALAH. Kalau tidak, POP dan cek apakah pasangannya cocok.</li>
+        <li>Setelah semua karakter dibaca: stack KOSONG → SEIMBANG. Masih ada isinya → TIDAK SEIMBANG.</li>
+      </ul>
+    </div>
+    <figure>
+      <img src="images/03_kurung_seimbang.png" alt="Contoh kurung seimbang dan tidak seimbang">
+    </figure>
+
+    <div class="quiz-box">
+      <span class="tag">⚡ Cek Cepat</span>
+      <p class="q">Apakah ekspresi berikut kurungnya SEIMBANG? <span class="mono" style="background:#1e293b;color:#fbbf24;">{ [ a + b ] * ( c − d ) }</span></p>
+      <button class="reveal-btn" onclick="document.getElementById('jawab-2').classList.toggle('show')">Lihat Jawaban</button>
+      <div class="explain" id="jawab-2">
+        ✅ <strong>SEIMBANG</strong> — trace: PUSH { → PUSH [ → baca ] → POP [ , cocok! → PUSH ( → baca ) → POP ( , cocok! → baca } → POP { , cocok! → stack akhir: kosong → SEIMBANG.
+      </div>
+    </div>
+  </section>
+
+  <section id="error">
+    <h2><span class="num">06</span>Dua "Kecelakaan" pada Stack ⚠️</h2>
+    <figure>
+      <img src="images/04_overflow_underflow.png" alt="Stack overflow dan underflow">
+    </figure>
+    <div class="stepper">
+      <div class="step"><div class="n">!</div><div><strong>Stack Overflow</strong> — terjadi kalau kita coba PUSH padahal stack sudah mencapai kapasitas maksimal (analoginya: numpuk piring sampai menyentuh langit-langit).</div></div>
+      <div class="step"><div class="n">!</div><div><strong>Stack Underflow</strong> — terjadi kalau kita coba POP padahal stack sudah kosong (analoginya: mau ambil piring dari tumpukan yang sudah habis).</div></div>
+    </div>
+    <p>Program yang baik harus selalu <strong>mengecek dulu</strong> dua kondisi ini sebelum melakukan PUSH atau POP, supaya tidak error atau memberi jawaban yang salah.</p>
+  </section>
+
+  <section id="nyata">
+    <h2><span class="num">07</span>Dipakai di Mana Aja Sih? 🌐</h2>
+    <figure>
+      <img src="images/05_penerapan_nyata.png" alt="Penerapan nyata algoritma stack">
+      <figcaption>Dari code editor, kalkulator/compiler, sampai cara program "mengingat" fungsi mana yang harus selesai duluan — semuanya pakai stack!</figcaption>
+    </figure>
+  </section>
+
+  <section id="rangkuman">
+    <h2><span class="num">08</span>Rangkuman Level Lanjut 📝</h2>
+    <div class="card purple">
+      <ul>
+        <li><strong>Konversi infix ke postfix:</strong> operand langsung ke output, kurung buka di-PUSH, kurung tutup memicu POP sampai ketemu kurung buka, operator dibandingkan presedensinya.</li>
+        <li><strong>Presedensi:</strong> * dan / lebih tinggi daripada + dan −.</li>
+        <li><strong>Kurung seimbang:</strong> PUSH saat buka, POP+cocokkan saat tutup, stack kosong di akhir = seimbang.</li>
+        <li><strong>Stack Overflow</strong> = PUSH saat penuh. <strong>Stack Underflow</strong> = POP saat kosong.</li>
+        <li>Algoritma stack dipakai di code editor, kalkulator/compiler, dan pemanggilan fungsi program (call stack).</li>
+      </ul>
+    </div>
+
+    <ul class="reflect-list">
+      <li>🙂 Mana yang lebih menantang: menghitung ekspresi postfix atau mengonversi infix ke postfix?</li>
+      <li>🤔 Pernahkah kalian mengalami error karena kurung tidak lengkap saat mengetik rumus? Sekarang kalian tahu kenapa itu bisa terdeteksi!</li>
+    </ul>
+    <p style="font-style:italic; color:var(--sub);">Sekarang kalian sudah selangkah lebih dekat memahami cara kerja aplikasi di balik layar. Siap-siap ketemu studi kasus seru di LKPD! 💻</p>
+  </section>
+
+</main>
+
+<footer>
+  <strong>Informatika Kelas VIII</strong> &bull; Bab II Berpikir Komputasional &bull; Pendalaman TP 8 — Algoritma Stack Lanjutan<br>
+  SMP Negeri 14 Tarakan
+</footer>
+
+<a href="#" class="top-link" title="Kembali ke atas">↑</a>
+
+</body>
+</html>

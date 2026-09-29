@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ulang, Ulang, Ulang... Lalu Berhenti! - TP10b</title>
+<meta name="description" content="Materi siswa web: perulangan pada flowchart, blok Scratch, dan Python. Proyek Rekap Harian Loket Wisata Mangrove Tarakan.">
+<style>
+:root{--green:#1f6f5c;--green2:#2e9e6b;--orange:#f28c28;--navy:#17324d;--mint:#e8f5ee;--sand:#fdf6e3;--bg:#f6f9fb;--card:#fff;--line:#d5dde5;--red:#d64541;--ink:#17324d;--mut:#5b6b7a}
+@media (prefers-color-scheme:dark){:root{--bg:#10171e;--card:#18222c;--line:#2c3a48;--ink:#e8eef4;--mut:#9fb0bf;--mint:#16302a;--sand:#33291a;--navy:#e8eef4}}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Calibri,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:17px}
+img{max-width:100%;height:auto;display:block;margin:0 auto}
+header.hero{background:linear-gradient(135deg,#1f6f5c,#2e9e6b);color:#fff;padding:34px 16px 26px;text-align:center}
+header.hero h1{margin:0 0 6px;font-size:clamp(24px,5vw,40px)}
+header.hero p{margin:4px auto;max-width:760px;opacity:.95}
+header.hero img{width:100%;max-width:800px;border-radius:14px;margin-top:18px;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+nav{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:2px solid var(--orange);display:flex;gap:4px;overflow-x:auto;padding:6px 10px;white-space:nowrap}
+nav a{color:var(--ink);text-decoration:none;padding:6px 12px;border-radius:20px;font-size:15px;font-weight:600}
+nav a:hover,nav a:focus{background:var(--mint)}
+main{max-width:940px;margin:0 auto;padding:10px 16px 60px}
+section{margin:34px 0}
+h2{color:var(--green);border-bottom:3px solid var(--orange);padding-bottom:6px;font-size:28px}
+h3{color:var(--orange);margin-bottom:6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+.tip{background:var(--sand);border-left:6px solid var(--orange);padding:12px 16px;border-radius:8px;margin:14px 0}
+.ok{background:var(--mint);border-left:6px solid var(--green);padding:12px 16px;border-radius:8px;margin:14px 0}
+figure{margin:14px 0;text-align:center}
+figcaption{font-size:14px;color:var(--mut);margin-top:4px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+button{font:inherit;cursor:pointer;border:2px solid var(--green);background:var(--card);color:var(--ink);border-radius:10px;padding:8px 14px;font-weight:600}
+button:hover{background:var(--mint)}
+button.pri{background:var(--green);color:#fff}
+button.sel{background:var(--orange);border-color:var(--orange);color:#fff}
+input[type=number],input[type=text]{font:inherit;padding:8px 10px;border:2px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+input[type=number]{width:110px}input[type=text]{width:100%;max-width:340px}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:15px}
+th{background:var(--green);color:#fff;padding:8px;text-align:center}
+td{border:1px solid var(--line);padding:7px 9px}
+td.c{text-align:center}
+.tblwrap{overflow-x:auto}
+code,pre{font-family:Consolas,"DejaVu Sans Mono",monospace}
+code{background:var(--mint);padding:1px 6px;border-radius:5px}
+pre{background:#1e222c;color:#e6ebf5;padding:12px 14px;border-radius:10px;overflow-x:auto;font-size:15px;margin:8px 0}
+.res{font-size:19px;font-weight:700;margin-top:10px}
+.bad{color:var(--red)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:8px 0}
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px 22px}
+.match button{text-align:left;width:100%}
+.match button.done{background:#d5f0df;border-color:var(--green2);color:#0d4a2d}
+.match button.wr{background:#fde4e2;border-color:var(--red)}
+.opt{display:block;width:100%;text-align:left;margin:6px 0}
+.opt.right{background:#d5f0df;border-color:var(--green2);color:#0d4a2d}
+.opt.wrong{background:#fde4e2;border-color:var(--red);color:#7a1d1a}
+.bar{height:12px;background:var(--line);border-radius:8px;overflow:hidden}.bar i{display:block;height:100%;background:var(--green2);width:0;transition:width .3s}
+.small{font-size:14px;color:var(--mut)}
+.parts{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+footer{text-align:center;padding:24px 10px;color:var(--mut);font-size:14px}
+</style>
+</head>
+<body>
+<header class="hero">
+  <h1>Ulang, Ulang, Ulang... Lalu Berhenti!</h1>
+  <p><strong>Perulangan pada Flowchart, Blok Scratch, dan Python</strong></p>
+  <p>Informatika Kelas IX · Bab II · TP10 (Pertemuan 2) · SMP Negeri 14 Tarakan</p>
+  <img src="images/ilustrasi_antrean.png" alt="Antrean pengunjung di Loket Wisata Mangrove, kasir memberi tanda 0 berarti loket tutup">
+</header>
+<nav aria-label="Navigasi bagian">
+  <a href="#misi">Misi</a><a href="#anatomi">Anatomi</a><a href="#ahliA">Ahli A</a><a href="#ahliB">Ahli B</a><a href="#ahliC">Ahli C</a><a href="#ahliD">Ahli D</a><a href="#proyek">Proyek</a><a href="#detektif">Detektif</a><a href="#kuis">Kuis</a>
+</nav>
+<main>
+
+<section id="misi">
+  <h2>Misi: Rekap Harian Loket</h2>
+  <p>Pertemuan lalu, programmu hanya melayani <strong>satu</strong> pengunjung. Hari libur bisa 200 pengunjung! Solusinya <strong>perulangan</strong>. Kamu akan membuat program <strong>Rekap Harian</strong> yang terus melayani sampai kasir mengetik <strong>0</strong>, lalu mencetak jumlah anak, dewasa, dan total pendapatan.</p>
+  <figure><img src="images/tangga_level.png" alt="Tangga level 1 sampai 8"><figcaption>Level 1-4 sudah kamu lalui. Sekarang Level 5-8.</figcaption></figure>
+  <figure><img src="images/ilustrasi_jigsaw.png" alt="Alur jigsaw: kelompok ahli lalu kelompok asal"><figcaption>Cara belajar hari ini: jadi ahli, lalu mengajar teman.</figcaption></figure>
+  <figure><img src="images/tiga_pola_loop.png" alt="Tiga pola perulangan: berhitung, sampai kondisi, mengumpulkan"></figure>
+  <div class="tip">Harga tiket dan aturan umur adalah <strong>karangan</strong> untuk latihan, bukan tarif resmi.</div>
+</section>
+
+<section id="anatomi">
+  <h2>1. Anatomi Loop: 4 Bagian Wajib</h2>
+  <figure><img src="images/loop_anatomi.png" alt="Flowchart penghitung pengunjung dengan empat bagian loop diberi nomor"></figure>
+  <p>Klik bagian untuk melihat penjelasannya:</p>
+  <div class="parts" id="partBtns"></div>
+  <div class="card" id="partInfo" aria-live="polite">Pilih salah satu bagian loop.</div>
+  <figure><img src="images/tabel_padanan_loop.png" alt="Padanan perulangan pada flowchart, Scratch, Python, dan C"><figcaption>Kamus padanan perulangan</figcaption></figure>
+</section>
+
+<section id="ahliA">
+  <h2>2. Ahli A: Ulang n Kali (for)</h2>
+  <div class="grid">
+    <figure><img src="images/fc_for.png" alt="Flowchart perulangan berhitung"></figure>
+    <div><figure><img src="images/blok_for.png" alt="Blok Scratch repeat n"></figure><figure><img src="images/kode_for.png" alt="Kode Python for i in range(1, n + 1)"></figure></div>
+  </div>
+  <figure><img src="images/ilustrasi_bibit.png" alt="Menanam bibit bakau ke-1 sampai ke-5"></figure>
+  <div class="card">
+    <h3>Simulator range()</h3>
+    <div class="row"><label>mulai <input type="number" id="rA" value="1"></label><label>berhenti <input type="number" id="rB" value="4"></label>
+    <button class="pri" onclick="simRange()">Jalankan for i in range(mulai, berhenti)</button></div>
+    <div class="res" id="rangeRes"></div>
+    <p class="small">Coba range(1, 4) lalu range(1, 5). Batas <strong>berhenti tidak ikut</strong>: inilah sumber kesalahan off-by-one.</p>
+  </div>
+</section>
+
+<section id="ahliB">
+  <h2>3. Ahli B: Ulang Sampai Kondisi (while)</h2>
+  <figure><img src="images/tiga_wajah_loop.png" alt="Flowchart, blok repeat until, dan Python while"><figcaption>Logika yang sama dalam tiga bentuk</figcaption></figure>
+  <div class="card">
+    <h3>Simulator antrean (sentinel 0)</h3>
+    <p class="small">Ketik umur pengunjung dipisah koma. Tanda berhenti adalah 0.</p>
+    <div class="row"><input type="text" id="antre" value="8, 30, 0" aria-label="Daftar umur"><button class="pri" onclick="simWhile()">Jalankan</button></div>
+    <label><input type="checkbox" id="salahKondisi"> pakai kondisi yang SALAH (<code>while umur == 0:</code>)</label>
+    <div class="tblwrap"><table id="wTbl" style="display:none"><thead><tr><th>Putaran</th><th>umur</th><th>umur != 0 ?</th><th>jumlah</th></tr></thead><tbody></tbody></table></div>
+    <div class="res" id="wRes"></div>
+  </div>
+  <div class="card">
+    <h3>Game: balik kondisinya!</h3>
+    <p class="small">Kondisi <strong>keluar</strong> di flowchart (repeat until) menjadi kondisi <strong>lanjut</strong> di while. Pilih yang benar.</p>
+    <div id="flip"></div>
+  </div>
+  <figure><img src="images/kode_while_c.png" alt="Kode C dengan while" style="width:100%;max-width:480px"><figcaption>Pembanding: while pada bahasa C</figcaption></figure>
+</section>
+
+<section id="ahliC">
+  <h2>4. Ahli C: Akumulator</h2>
+  <p>Variabel yang "tumbuh" tiap putaran. Aturan: nilai awal <strong>sebelum</strong> loop, diperbarui <strong>di dalam</strong> loop.</p>
+  <figure><img src="images/tabel_jejak_loop.png" alt="Tabel jejak rekap untuk input 8, 30, 12, 0"><figcaption>Tabel jejak untuk input 8, 30, 12, 0</figcaption></figure>
+  <div class="card">
+    <h3>Simulator total</h3>
+    <div class="row"><input type="text" id="akum" value="8, 30, 0" aria-label="Daftar umur"><button class="pri" onclick="simAkum()">Hitung total</button></div>
+    <label><input type="checkbox" id="resetTot"> tulis <code>total = 0</code> DI DALAM loop (bug K3)</label>
+    <div class="res" id="akumRes"></div>
+  </div>
+</section>
+
+<section id="ahliD">
+  <h2>5. Ahli D: Fungsi yang Mengembalikan Nilai</h2>
+  <div class="grid">
+    <figure><img src="images/fc_hitungharga.png" alt="Flowchart subprogram hitungHarga"></figure>
+    <figure><img src="images/kode_hitungharga.png" alt="Kode Python hitungHarga dengan return"></figure>
+  </div>
+  <div class="card">
+    <h3>Coba fungsinya</h3>
+    <div class="row"><label>umur <input type="number" id="uF" value="12" min="0"></label><button class="pri" onclick="simFungsi()">hitungHarga(umur)</button></div>
+    <div class="res" id="fRes"></div>
+  </div>
+  <div class="ok"><code>return</code> mengembalikan nilai ke pemanggil; <code>print</code> hanya menampilkan ke layar.</div>
+</section>
+
+<section id="proyek">
+  <h2>6. Proyek: Rekap Harian Loket</h2>
+  <figure><img src="images/fc_rekap.png" alt="Flowchart proyek rekap harian" style="width:100%;max-width:560px"><figcaption>Flowchart dari Analis</figcaption></figure>
+  <figure><img src="images/blok_rekap.png" alt="Blok Scratch proyek rekap harian"><figcaption>Versi Scratch</figcaption></figure>
+  <figure><img src="images/kode_rekap.png" alt="Kode Python proyek rekap harian" style="width:100%;max-width:560px"><figcaption>Versi Python</figcaption></figure>
+  <div class="card">
+    <h3>Simulator Rekap Harian</h3>
+    <p class="small">Ketik umur pengunjung dipisah koma, akhiri dengan 0. Coba: <code>8, 30, 11, 12, 0</code> dan <code>0</code>.</p>
+    <div class="row"><input type="text" id="rek" value="8, 30, 12, 0" aria-label="Daftar umur"><button class="pri" onclick="simRekap()">Jalankan</button></div>
+    <label><input type="checkbox" id="bintang"> tampilkan versi bintang (tertua dan rata-rata)</label>
+    <div class="tblwrap"><table id="rTbl" style="display:none"><thead><tr><th>Putaran</th><th>umur</th><th>harga</th><th>total</th><th>anak</th><th>dewasa</th></tr></thead><tbody></tbody></table></div>
+    <div class="res" id="rekRes"></div>
+  </div>
+  <figure><img src="images/kode_bintang.png" alt="Bagian akhir versi bintang" style="width:100%;max-width:480px"><figcaption>Versi bintang: hasil rata-rata dijaga dengan if n &gt; 0</figcaption></figure>
+</section>
+
+<section id="detektif">
+  <h2>7. Detektif Loop</h2>
+  <p>Telusuri dulu di kertas. Pilih penyebab masalah untuk tiap kartu.</p>
+  <div class="grid">
+    <figure><img src="images/kode_k1.png" alt="Kartu bug K1"><figcaption>K1: input 8 lalu 0</figcaption></figure>
+    <figure><img src="images/kode_k2.png" alt="Kartu bug K2"><figcaption>K2: n = 3</figcaption></figure>
+    <figure><img src="images/kode_k3.png" alt="Kartu bug K3"><figcaption>K3: input 8, 30, 0</figcaption></figure>
+    <figure><img src="images/kode_k4.png" alt="Kartu bug K4"><figcaption>K4: input 0 saja</figcaption></figure>
+  </div>
+  <div id="bugQ"></div>
+</section>
+
+<section id="kuis">
+  <h2>8. Kuis Mandiri (10 soal)</h2>
+  <div class="bar"><i id="prog"></i></div>
+  <div id="quiz" class="card"></div>
+</section>
+
+<section>
+  <h2>Rangkuman</h2>
+  <ul>
+    <li>Loop di flowchart = garis alir yang kembali ke pengecekan.</li>
+    <li>Empat bagian: inisialisasi, kondisi, badan, pembaruan.</li>
+    <li>for untuk jumlah putaran diketahui; while untuk berhenti karena data (sentinel).</li>
+    <li>Flowchart: kondisi keluar; while: kondisi lanjut (dibalik).</li>
+    <li>Akumulator: nilai awal sebelum loop, diperbarui di dalam loop.</li>
+    <li>Bug loop: tanpa henti, off-by-one, akumulator direset, bagi dengan nol.</li>
+  </ul>
+  <div class="ok"><strong>Tugas mini (Iuran Kas):</strong> baca iuran berulang sampai 0, cetak total, banyak penyetor, dan iuran terbesar. Uji 2000, 5000, 1000, 0 → 8000, 3, 5000.</div>
+</section>
+</main>
+<footer>SMP Negeri 14 Tarakan · Informatika Kelas IX · TP10 Pertemuan 2</footer>
+
+<script>
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function parseList(id){return document.getElementById(id).value.split(/[ ,;]+/).filter(x=>x!=='').map(Number)}
+function hitung(u){return u<12?5000:10000}
+
+// anatomi
+const PARTS=[
+ {n:'1 Inisialisasi',c:'#2e9e6b',t:'Siapkan variabel sebelum loop dan baca data pertama. Contoh: jumlah = 0 dan umur = int(input(...)).'},
+ {n:'2 Kondisi',c:'#f28c28',t:'Pertanyaan yang menentukan ulangi atau keluar. Flowchart: umur = 0 ? Python: while umur != 0:'},
+ {n:'3 Badan loop',c:'#5b9bd5',t:'Langkah yang diulang tiap putaran. Contoh: jumlah = jumlah + 1 (menjorok di Python).'},
+ {n:'4 Pembaruan',c:'#9b7ede',t:'Mengubah data supaya kondisi dapat berubah: membaca umur lagi DI DALAM loop. Jika hilang, loop tidak pernah berhenti!'}];
+const pb=document.getElementById('partBtns');
+PARTS.forEach(p=>{const b=document.createElement('button');b.textContent=p.n;b.style.borderColor=p.c;b.onclick=()=>{[...pb.children].forEach(c=>c.classList.remove('sel'));b.classList.add('sel');document.getElementById('partInfo').innerHTML='<h3>'+p.n+'</h3><p>'+esc(p.t)+'</p>'};pb.appendChild(b)});
+
+// range
+function simRange(){const a=parseInt(document.getElementById('rA').value),b=parseInt(document.getElementById('rB').value);const r=document.getElementById('rangeRes');
+ if(isNaN(a)||isNaN(b)){r.textContent='Isi kedua angka.';return}
+ const v=[];for(let i=a;i<b&&v.length<50;i++)v.push(i);
+ r.innerHTML='range('+a+', '+b+') menghasilkan: '+(v.length?v.join(', '):'(kosong)')+'<br>Banyak putaran: '+v.length+(v.length>=50?' (ditampilkan maksimal 50)':'')}
+
+// while
+function simWhile(){const L=parseList('antre');const wrong=document.getElementById('salahKondisi').checked;const tb=document.querySelector('#wTbl tbody');const res=document.getElementById('wRes');
+ tb.innerHTML='';document.getElementById('wTbl').style.display='table';
+ if(L.some(isNaN)||!L.length){res.textContent='Isi umur berupa angka dipisah koma.';return}
+ let idx=0,umur=L[idx++],jumlah=0,put=0;
+ const cond=()=>wrong?(umur===0):(umur!==0);
+ if(!cond()){tb.innerHTML='<tr><td class="c">-</td><td class="c">'+umur+'</td><td class="c">'+(wrong?'umur == 0':'umur != 0')+' = salah</td><td class="c">0</td></tr>';res.innerHTML=wrong?'<span class="bad">Loop tidak pernah dijalankan (kondisi dibalik salah).</span> Jumlah pengunjung: 0':'Jumlah pengunjung: 0 (hari sepi)';return}
+ while(cond()&&put<40){put++;jumlah++;tb.innerHTML+='<tr><td class="c">'+put+'</td><td class="c">'+umur+'</td><td class="c">benar</td><td class="c">'+jumlah+'</td></tr>';
+  if(idx>=L.length){res.innerHTML='<span class="bad">Daftar habis sebelum ada 0: program akan menunggu input berikutnya.</span> Jumlah sementara: '+jumlah;return}
+  umur=L[idx++]}
+ res.innerHTML='Kondisi salah pada umur '+umur+', loop berhenti. <br>Jumlah pengunjung: '+jumlah}
+
+// flip
+const FL=[['umur = 0','umur != 0',['umur == 0','umur != 0','umur > 0']],['kas = 0','kas != 0',['kas != 0','kas == 0','kas < 0']],['nilai < 0','nilai >= 0',['nilai > 0','nilai >= 0','nilai < 0']],['jumlah = 10','jumlah != 10',['jumlah == 10','jumlah != 10','jumlah > 10']]];
+const fl=document.getElementById('flip');
+FL.forEach(f=>{const d=document.createElement('div');d.className='row';d.innerHTML='<strong>repeat until &lt;'+esc(f[0])+'&gt;</strong> → while ';f[2].forEach(o=>{const b=document.createElement('button');b.textContent=o;b.style.fontFamily='Consolas,monospace';b.onclick=()=>{if(o===f[1]){b.className='sel';b.textContent=o+' ✔'}else{b.style.background='#fde4e2';b.textContent=o+' ✘'}};d.appendChild(b)});fl.appendChild(d)});
+
+// akumulator
+function simAkum(){const L=parseList('akum');const reset=document.getElementById('resetTot').checked;const r=document.getElementById('akumRes');
+ if(L.some(isNaN)||!L.length){r.textContent='Isi umur berupa angka dipisah koma.';return}
+ let total=0,i=0,hist=[];
+ while(i<L.length&&L[i]!==0){if(reset)total=0;total+=hitung(L[i]);hist.push(total);i++}
+ r.innerHTML='total setelah tiap putaran: '+(hist.length?hist.join(' → '):'0')+'<br>Total akhir: Rp'+(hist.length?hist[hist.length-1]:0)+(reset&&hist.length>1?' <span class="bad">← salah! total dikosongkan tiap putaran</span>':'')}
+
+function simFungsi(){const u=parseFloat(document.getElementById('uF').value);const r=document.getElementById('fRes');if(isNaN(u)||u<0){r.textContent='Isi umur dengan angka tidak negatif.';return}r.textContent='hitungHarga('+u+') mengembalikan '+hitung(u)}
+
+// rekap
+function simRekap(){const L=parseList('rek');const big=document.getElementById('bintang').checked;const tb=document.querySelector('#rTbl tbody');const r=document.getElementById('rekRes');
+ tb.innerHTML='';document.getElementById('rTbl').style.display='table';
+ if(L.some(isNaN)||!L.length){r.textContent='Isi umur berupa angka dipisah koma.';return}
+ let total=0,anak=0,dewasa=0,n=0,sum=0,tertua=0,i=0,put=0;
+ while(i<L.length&&L[i]!==0&&put<60){const u=L[i];put++;const h=hitung(u);total+=h;if(u<12)anak++;else dewasa++;n++;sum+=u;if(u>tertua)tertua=u;
+  tb.innerHTML+='<tr><td class="c">'+put+'</td><td class="c">'+u+'</td><td class="c">'+h+'</td><td class="c">'+total+'</td><td class="c">'+anak+'</td><td class="c">'+dewasa+'</td></tr>';i++}
+ let msg='';
+ if(i>=L.length)msg='<span class="bad">Tidak ada angka 0: program masih menunggu input berikutnya.</span><br>';
+ msg+='Anak: '+anak+'<br>Dewasa: '+dewasa+'<br>Total: Rp'+total;
+ if(big){msg+=n>0?'<br>Tertua: '+tertua+'<br>Rata-rata umur: '+(sum/n):'<br>Belum ada pengunjung'}
+ r.innerHTML=msg}
+
+// detektif
+const BQ=[
+ {k:'K1',q:'Input 8 lalu 0 tetapi program tidak pernah berhenti. Penyebabnya?',o:['range salah','umur tidak dibaca ulang di dalam loop','total tidak diberi nilai awal'],a:1,e:'Tanpa pembaruan, umur tetap 8 dan kondisi umur != 0 selalu benar.'},
+ {k:'K2',q:'n = 3 tetapi hanya tercetak Bibit ke-1 dan ke-2. Penyebabnya?',o:['off-by-one: range(1, n)','kondisi while dibalik','lupa return'],a:0,e:'range(1, n) berhenti di n - 1. Gunakan range(1, n + 1).'},
+ {k:'K3',q:'Input 8, 30, 0 menghasilkan Rp10.000, seharusnya Rp15.000. Penyebabnya?',o:['input tidak diubah int','total = 0 ditulis di dalam loop','harga tertukar'],a:1,e:'Total dikosongkan tiap putaran; hanya putaran terakhir yang tersisa.'},
+ {k:'K4',q:'Input 0 saja menimbulkan ZeroDivisionError. Penyebabnya?',o:['membagi dengan n = 0','menggunakan for','kurang titik dua'],a:0,e:'Tidak ada pengunjung sehingga n = 0. Bagi hanya jika n > 0.'}];
+const bq=document.getElementById('bugQ');
+BQ.forEach(b=>{const d=document.createElement('div');d.className='card';d.innerHTML='<strong>'+b.k+'.</strong> '+esc(b.q);b.o.forEach((o,i)=>{const bt=document.createElement('button');bt.className='opt';bt.textContent=o;bt.onclick=()=>{[...d.querySelectorAll('.opt')].forEach(x=>x.disabled=true);d.querySelectorAll('.opt')[b.a].classList.add('right');if(i!==b.a)bt.classList.add('wrong');const f=document.createElement('div');f.className=i===b.a?'ok':'tip';f.textContent=(i===b.a?'Benar! ':'Belum tepat. ')+b.e;d.appendChild(f)};d.appendChild(bt)});bq.appendChild(d)});
+
+// kuis
+const Q=[{"q":"Pada flowchart, perulangan digambarkan dengan ...","o":["simbol terminator kedua","simbol subprogram","garis alir yang kembali ke simbol pengecekan sebelumnya","dua simbol input berurutan"],"k":2,"e":"Perulangan = garis alir yang kembali ke pengecekan, sehingga langkah di dalamnya diulang."},{"q":"Perintah for i in range(1, 6): mengulang isi loop sebanyak ... kali.","o":["6","5","4","1"],"k":1,"e":"i bernilai 1, 2, 3, 4, 5. Batas atas 6 tidak ikut."},{"q":"Blok Scratch repeat until <umur = 0> padanannya dalam Python adalah ...","o":["while umur == 0:","for umur in 0:","if umur != 0:","while umur != 0:"],"k":3,"e":"repeat until berhenti saat kondisi benar; while lanjut saat kondisi benar, jadi kondisinya dibalik."},{"q":"Tujuan penulisan total = 0 SEBELUM perulangan adalah ...","o":["menyiapkan nilai awal akumulator","mengulang program","mencetak total","menghentikan perulangan"],"k":0,"e":"Akumulator butuh nilai awal (inisialisasi) sebelum mulai menambahkan."},{"q":"Jika total = 0 ditulis DI DALAM while (setiap putaran), akibatnya ...","o":["program error","total dihitung dua kali","total hanya berisi hasil putaran terakhir","perulangan berhenti"],"k":2,"e":"Setiap putaran total dikosongkan lagi, sehingga hanya putaran terakhir yang tersisa."},{"q":"Program rekap dijalankan dengan input 8, 30, 12, 0. Nilai anak yang tercetak adalah ...","o":["0","1","2","3"],"k":1,"e":"Hanya 8 yang < 12. Nilai 0 adalah tanda berhenti dan tidak dihitung."},{"q":"Penyebab paling umum perulangan tanpa henti adalah ...","o":["lupa membaca atau mengubah data di dalam loop sehingga kondisi tidak pernah berubah","menulis int() pada input","memakai terlalu banyak variabel","memakai return pada fungsi"],"k":0,"e":"Jika umur tidak dibaca ulang di dalam loop, kondisi umur != 0 selalu benar."},{"q":"Perbedaan repeat until dan while adalah ...","o":["keduanya sama persis","repeat until memakai for","while berhenti jika kondisi benar","repeat until berhenti saat kondisi benar, while lanjut selama kondisi benar"],"k":3,"e":"Kondisi keduanya berkebalikan, sehingga saat menerjemahkan kondisinya harus dibalik."},{"q":"Baris harga = hitungHarga(umur) hanya dapat menghasilkan nilai jika fungsi hitungHarga memakai ...","o":["print","return","input","while"],"k":1,"e":"return mengembalikan nilai ke pemanggil; print hanya menampilkan ke layar."},{"q":"Hasil dari: total = 0; for i in range(1, 4): total = total + i; print(total) adalah ...","o":["3","4","6","10"],"k":2,"e":"1 + 2 + 3 = 6 (i bernilai 1, 2, 3)."}];
+let qi=0,score=0,locked=false;
+function showQ(){const q=Q[qi];locked=false;document.getElementById('prog').style.width=(qi/Q.length*100)+'%';
+ const box=document.getElementById('quiz');box.innerHTML='<p class="small">Soal '+(qi+1)+' dari '+Q.length+'</p><p><strong>'+esc(q.q)+'</strong></p>';
+ q.o.forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent='ABCD'[j]+'. '+o;b.onclick=()=>answer(j,b);box.appendChild(b)});
+ const fb=document.createElement('div');fb.id='fb';fb.setAttribute('aria-live','polite');box.appendChild(fb)}
+function answer(j,b){if(locked)return;locked=true;const q=Q[qi];const opts=[...document.querySelectorAll('#quiz .opt')];
+ opts[q.k].classList.add('right');if(j===q.k){score++}else{b.classList.add('wrong')}
+ const fb=document.getElementById('fb');fb.innerHTML='<div class="'+(j===q.k?'ok':'tip')+'"><strong>'+(j===q.k?'Benar! ':'Belum tepat. ')+'</strong>'+esc(q.e)+'</div>';
+ const n=document.createElement('button');n.className='pri';n.textContent=qi<Q.length-1?'Soal berikutnya':'Lihat skor';n.onclick=()=>{qi++;if(qi<Q.length)showQ();else finish()};fb.appendChild(n)}
+function finish(){document.getElementById('prog').style.width='100%';const p=Math.round(score/Q.length*100);
+ document.getElementById('quiz').innerHTML='<h3>Skormu: '+score+' / '+Q.length+' ('+p+')</h3><p>'+(p>=80?'Mantap! Kamu siap membuat program berulang.':p>=60?'Bagus! Ulangi bagian kondisi dibalik dan akumulator.':'Ayo baca lagi anatomi loop dan kamus padanan, lalu coba lagi.')+'</p><button class="pri" onclick="qi=0;score=0;showQ()">Ulangi kuis</button>'}
+showQ();
+</script>
+</body>
+</html>

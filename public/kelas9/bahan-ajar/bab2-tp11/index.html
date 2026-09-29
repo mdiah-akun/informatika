@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TP11 Dari Pseudocode Jadi Program - Informatika IX</title>
+<style>
+:root{--teal:#0f766e;--tealD:#0b3b36;--tealL:#ccede8;--orange:#f59e0b;--orangeD:#b45309;--ink:#12303a;--gray:#64748b;--bg:#f8fafc;--red:#dc2626;--green:#16a34a;--purple:#7c3aed;--card:#fff;--line:#e2e8f0}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{overflow-x:hidden;margin:0;font-family:"Segoe UI",Calibri,Carlito,system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;font-size:17px}
+img{max-width:100%;height:auto;display:block}
+.zoomable{cursor:zoom-in}
+a{color:var(--teal)}
+code,.mono{font-family:"Consolas","DejaVu Sans Mono","Courier New",monospace}
+code{background:#fff3d6;color:#9a3412;padding:1px 6px;border-radius:6px;font-size:.92em}
+#prog{position:fixed;top:0;left:0;height:4px;background:var(--orange);width:0;z-index:60}
+nav{position:sticky;top:0;z-index:50;background:var(--tealD);box-shadow:0 2px 10px #0003}
+nav .in{max-width:1100px;margin:auto;display:flex;gap:4px;overflow-x:auto;padding:8px 12px;scrollbar-width:thin}
+nav a{color:#cdeeea;text-decoration:none;white-space:nowrap;padding:6px 12px;border-radius:999px;font-size:.88rem;font-weight:600}
+nav a:hover,nav a.on{background:var(--orange);color:var(--tealD)}
+header.hero{background:linear-gradient(135deg,var(--tealD),var(--teal));color:#fff;padding:44px 16px 56px}
+.hero .in{max-width:1100px;margin:auto;display:grid;grid-template-columns:1.05fr 1fr;gap:28px;align-items:center}
+.hero h1{font-size:2.6rem;line-height:1.1;margin:0 0 10px}
+.hero p{color:#cdeeea;margin:8px 0}
+.pill{display:inline-block;background:var(--orange);color:var(--tealD);font-weight:700;border-radius:999px;padding:6px 16px;font-size:.9rem;margin-top:8px}
+.hero .pic{background:#fff;border-radius:20px;padding:10px;box-shadow:0 10px 30px #0005}
+main{max-width:1100px;margin:auto;padding:0 16px 60px}
+section{padding-top:44px}
+h2{font-size:1.9rem;color:var(--tealD);margin:0 0 6px}
+h2 .n{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--orange);color:var(--tealD);font-size:1.05rem;margin-right:10px;vertical-align:middle}
+h3{color:var(--teal);margin:24px 0 6px}
+.lead{color:var(--gray);margin:0 0 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px;box-shadow:0 2px 8px #0000000a}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.callout{border-left:6px solid var(--teal);background:#ecfdf5;border-radius:14px;padding:12px 16px;margin:14px 0}
+.callout.warn{border-color:var(--red);background:#fef2f2}
+.callout.tip{border-color:var(--orange);background:#fffbeb}
+.callout b.t{display:block;margin-bottom:2px}
+.imgcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px;text-align:center}
+.imgcard figcaption{font-size:.85rem;color:var(--gray);margin-top:6px}
+figure{margin:12px 0}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.tab{border:2px solid var(--teal);background:#fff;color:var(--teal);font-weight:700;border-radius:999px;padding:6px 16px;cursor:pointer;font-size:.95rem;font-family:inherit}
+.tab.on{background:var(--teal);color:#fff}
+.pane{display:none}.pane.on{display:block}
+button.btn{background:var(--teal);color:#fff;border:0;border-radius:12px;padding:9px 18px;font-weight:700;cursor:pointer;font-size:1rem;font-family:inherit}
+button.btn:hover{background:var(--tealD)}
+button.btn.o{background:var(--orange);color:var(--tealD)}
+button.btn.g{background:#e2e8f0;color:var(--ink)}
+button.btn:disabled{opacity:.45;cursor:not-allowed}
+input[type=number],input[type=text],select{font:inherit;padding:8px 10px;border:2px solid var(--line);border-radius:10px;width:100%}
+label{font-weight:600;font-size:.92rem}
+.pcode{background:#fffbeb;border:2px solid var(--orange);border-radius:14px;padding:10px 6px;font-size:.95rem}
+.pcode .ln{display:block;padding:3px 12px;border-radius:8px;cursor:pointer;white-space:pre;font-family:"Consolas","DejaVu Sans Mono",monospace}
+.pcode .ln:hover{background:#fde68a}
+.pcode .ln.hl{background:#fde68a;outline:2px solid var(--orange)}
+.pcode .ln.done{color:#94a3b8}
+.k{color:var(--orangeD);font-weight:700}
+.dark{background:#0f172a;color:#e2e8f0;border-radius:14px;padding:12px 16px;font-family:"Consolas","DejaVu Sans Mono",monospace;font-size:.93rem;white-space:pre;overflow-x:auto}
+.step{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start;margin:10px 0}
+.bd{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:1.2rem}
+table.t{border-collapse:collapse;width:100%;font-size:.95rem}
+table.t th{background:var(--teal);color:#fff;padding:8px;text-align:center}
+table.t td{border:1px solid var(--line);padding:7px 8px;text-align:center;background:#fff}
+table.t td.l{text-align:left}
+.out{background:#0f172a;color:#86efac;border-radius:12px;padding:10px 14px;min-height:46px;font-family:"Consolas","DejaVu Sans Mono",monospace;white-space:pre-wrap}
+.vars{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.vars span{background:#e0f2f1;border:1px solid #99d6cf;border-radius:10px;padding:4px 10px;font-family:"Consolas",monospace;font-size:.92rem}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;padding:10px 14px;margin:6px 0;cursor:pointer;font:inherit;color:var(--ink)}
+.opt:hover{border-color:var(--teal)}
+.opt.ok{background:#dcfce7;border-color:var(--green)}
+.opt.bad{background:#fee2e2;border-color:var(--red)}
+.opt[disabled]{cursor:default}
+.fb{margin-top:8px;font-weight:600}
+.fb.ok{color:var(--green)}.fb.bad{color:var(--red)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:#fff;border:2px solid var(--teal);color:var(--tealD);border-radius:10px;padding:6px 10px;cursor:pointer;font-family:"Consolas","DejaVu Sans Mono",monospace;font-size:.9rem;white-space:pre;text-align:left}
+.chip:hover{background:var(--tealL)}
+.chip.used{opacity:.3;pointer-events:none}
+.slots{background:#0f172a;border-radius:14px;padding:10px;min-height:120px}
+.slots .row{display:flex;align-items:center;gap:8px;margin:4px 0}
+.slots .row .no{color:#64748b;width:22px;text-align:right;font-family:monospace}
+.slots .row .cd{flex:1;background:#1e293b;color:#e2e8f0;border-radius:8px;padding:5px 10px;font-family:"Consolas","DejaVu Sans Mono",monospace;white-space:pre;font-size:.9rem;cursor:pointer}
+.slots .row .cd.ok{outline:2px solid #22c55e}.slots .row .cd.bad{outline:2px solid #ef4444}
+.pairs{display:grid;grid-template-columns:1fr 1fr;gap:10px 30px}
+.pair{border:2px solid var(--line);background:#fff;border-radius:12px;padding:9px 12px;cursor:pointer;font-family:"Consolas","DejaVu Sans Mono",monospace;font-size:.95rem}
+.pair.sel{border-color:var(--orange);background:#fef3c7}
+.pair.ok{border-color:var(--green);background:#dcfce7;pointer-events:none}
+.pair.shake{animation:sh .3s}
+@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.linebtns{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.linebtns button{border:2px solid var(--line);background:#fff;border-radius:8px;padding:4px 10px;cursor:pointer;font-family:monospace;font-weight:700;color:var(--ink)}
+.linebtns button.on{background:var(--orange);border-color:var(--orange);color:var(--tealD)}
+.bar{height:10px;background:#e2e8f0;border-radius:999px;overflow:hidden}.bar i{display:block;height:100%;background:var(--teal);width:0;transition:width .3s}
+details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+details summary{cursor:pointer;font-weight:700;color:var(--teal)}
+#lb{position:fixed;inset:0;background:#000c;display:none;place-items:center;z-index:100;padding:20px;cursor:zoom-out}
+#lb img{max-width:96vw;max-height:92vh;background:#fff;border-radius:10px}
+footer{background:var(--tealD);color:#9cc9c3;text-align:center;padding:24px 16px;font-size:.9rem}
+.grid2>*,.grid3>*,.grid4>*,.hero .in>*{min-width:0}
+.pcode{overflow-x:auto}
+.card{overflow-wrap:anywhere}
+@media(max-width:800px){.pcode .ln{font-size:.82rem}.hero .in,.grid2,.grid3,.grid4,.pairs{grid-template-columns:1fr}.hero h1{font-size:2rem}body{font-size:16px}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<nav><div class="in">
+<a href="#mulai">Mulai</a><a href="#pseudo">Pseudocode</a><a href="#kenapa">Kenapa Translasi?</a><a href="#langkah">4 Langkah</a><a href="#kamus">Kamus</a><a href="#contoh">Contoh</a><a href="#misi">Misi Kasir</a><a href="#sim">Simulator</a><a href="#game">Game</a><a href="#detektif">Detektif Bug</a><a href="#kuis">Kuis</a><a href="#rangkum">Rangkuman</a>
+</div></nav>
+
+<header class="hero"><div class="in">
+<div>
+<h1>Dari Pseudocode<br>Jadi Program!</h1>
+<p>BAB II Berpikir Komputasional dalam Algoritma dan Pemrograman</p>
+<p><b>TP 11:</b> Menerjemahkan pseudocode ke program visual blok dan program tekstual</p>
+<span class="pill">Informatika Kelas IX &nbsp;|&nbsp; SMPN 14 Tarakan</span>
+</div>
+<div class="pic"><img class="zoomable" src="images/20_kantin_scene.png" alt="Ilustrasi Kantin SMPN 14"></div>
+</div></header>
+
+<main>
+<!-- ================= MULAI -->
+<section id="mulai">
+<h2><span class="n">1</span>Halo, Programmer Magang!</h2>
+<p class="lead">Ada tugas seru dari Kantin SMPN 14. Yuk, kita bantu!</p>
+<div class="card">
+<p>Bu Kepala Kantin ingin punya <b>program kasir</b> supaya menghitung uang jajan nggak pakai kalkulator lagi. Seorang <b>Analis</b> sudah menulis rancangan langkah-langkahnya di kertas. Tapi komputer nggak bisa membaca kertas itu. Rancangan itu namanya <b>pseudocode</b>, dan tugasmu adalah <b>menerjemahkannya</b> jadi program yang benar-benar jalan.</p>
+<div class="callout tip"><b class="t">Misi hari ini</b>Terjemahkan pseudocode Kasir Kantin ke <b>Scratch</b> dan <b>Python</b>, uji hasilnya, lalu jadi detektif bug. Semua harga fiktif, cuma buat latihan.</div>
+</div>
+<div class="grid4" style="margin-top:14px">
+<div class="card"><b>Tujuan 1</b><br>Paham apa itu pseudocode</div>
+<div class="card"><b>Tujuan 2</b><br>Menerjemahkan ke blok dan Python</div>
+<div class="card"><b>Tujuan 3</b><br>Menguji dengan data uji</div>
+<div class="card"><b>Tujuan 4</b><br>Menemukan bug terjemahan</div>
+</div>
+</section>
+
+<!-- ================= PSEUDOCODE -->
+<section id="pseudo">
+<h2><span class="n">2</span>Pseudocode Itu Apa Sih?</h2>
+<p class="lead">Rancangan algoritma yang bisa dibaca manusia, tapi belum bisa dijalankan komputer.</p>
+<div class="grid2">
+<div>
+<p>Pseudocode memakai bahasa mirip sehari-hari, ditambah <b>kata kunci</b> ala pemrograman seperti <code>IF</code>, <code>WHILE</code>, dan <code>CETAK</code> (huruf kapital). Ia adalah <i>perantara</i> antara bahasa manusia dan bahasa pemrograman.</p>
+<div class="callout"><b class="t">Coba klik!</b>Klik baris pseudocode di kanan untuk melihat padanannya di blok, Python, dan C.</div>
+<div id="kamusPanel" class="card" style="min-height:140px"><i style="color:var(--gray)">Belum ada baris yang dipilih.</i></div>
+</div>
+<div>
+<div class="pcode" id="pkasir"></div>
+</div>
+</div>
+<figure class="imgcard"><img class="zoomable" src="images/07_struktur_pseudocode.png" alt="Anatomi pseudocode" style="max-height:520px;margin:auto"><figcaption>Anatomi pseudocode Kasir Kantin: INPUT, PROSES, OUTPUT, dan dua percabangan.</figcaption></figure>
+</section>
+
+<!-- ================= KENAPA -->
+<section id="kenapa">
+<h2><span class="n">3</span>Kenapa Harus Diterjemahkan?</h2>
+<p class="lead">Karena kamu adalah penerjemah!</p>
+<figure class="imgcard"><img class="zoomable" src="images/22_analogi_penerjemah.png" alt="Analogi penerjemah"><figcaption>Analis berbicara pseudocode, komputer berbicara blok atau teks. Maknanya sama.</figcaption></figure>
+<figure class="imgcard"><img class="zoomable" src="images/01_alur_translasi.png" alt="Alur translasi"><figcaption>Alur translasi: pseudocode, program visual blok, lalu program tekstual.</figcaption></figure>
+<figure class="imgcard"><img class="zoomable" src="images/23_blok_vs_teks.png" alt="Blok vs teks" style="width:min(100%,800px);margin:auto"><figcaption>Blok vs teks: logikanya sama, cara menulisnya berbeda.</figcaption></figure>
+</section>
+
+<!-- ================= 4 LANGKAH -->
+<section id="langkah">
+<h2><span class="n">4</span>Empat Langkah Jitu</h2>
+<p class="lead">Kerjakan berurutan, dijamin lebih rapi dan jarang salah.</p>
+<figure class="imgcard"><img class="zoomable" src="images/06_empat_langkah.png" alt="Empat langkah translasi"></figure>
+<div class="grid4">
+<div class="card"><b style="color:var(--orangeD)">1 BACA</b><br>Baca semua pseudocode. Tandai INPUT, PROSES, OUTPUT.</div>
+<div class="card"><b style="color:var(--purple)">2 PETAKAN</b><br>Catat variabel dan strukturnya (IF, loop, fungsi).</div>
+<div class="card"><b style="color:var(--teal)">3 GANTI</b><br>Ganti baris demi baris jadi blok atau kode. Pakai kamus!</div>
+<div class="card"><b style="color:var(--red)">4 UJI</b><br>Jejak dengan data uji, termasuk nilai batas.</div>
+</div>
+</section>
+
+<!-- ================= KAMUS -->
+<section id="kamus">
+<h2><span class="n">5</span>Kamus Translasi</h2>
+<p class="lead">Klik gambar untuk memperbesar. Ini andalanmu saat menerjemahkan.</p>
+<div class="tabs" data-group="kamus">
+<button class="tab on" data-t="k1">I. Input-Output</button><button class="tab" data-t="k2">II. Percabangan</button><button class="tab" data-t="k3">III. Perulangan</button><button class="tab" data-t="k4">IV. Fungsi</button><button class="tab" data-t="k5">Semua</button>
+</div>
+<div class="pane on" data-group="kamus" id="k1"><img class="zoomable card" src="images/02a_kamus_io.png" alt="Kamus I"><div class="callout warn"><b class="t">Ingat!</b><code>input()</code> di Python selalu menghasilkan <b>teks</b>. Untuk bilangan, bungkus dengan <code>int()</code> atau <code>float()</code>.</div></div>
+<div class="pane" data-group="kamus" id="k2"><img class="zoomable card" src="images/02b_kamus_if.png" alt="Kamus II"><div class="callout"><b class="t">Trik Scratch</b>Scratch nggak punya tanda &ge;. <b>total &ge; 20000</b> ditulis <b>not &lt;total &lt; 20000&gt;</b>. Di Python, THEN dan ENDIF diganti titik dua dan indentasi.</div></div>
+<div class="pane" data-group="kamus" id="k3"><img class="zoomable card" src="images/02c_kamus_loop.png" alt="Kamus III"><div class="callout warn"><b class="t">Awas jebakan!</b><code>WHILE</code> jalan <b>selama</b> kondisi benar, sedangkan <code>repeat until</code> berhenti <b>kalau</b> kondisi benar. Balik kondisinya dengan <code>not</code>. Dan <code>FOR i &larr; 1 TO n</code> jadi <code>range(1, n + 1)</code>.</div></div>
+<div class="pane" data-group="kamus" id="k4"><img class="zoomable card" src="images/02d_kamus_fungsi.png" alt="Kamus IV"><div class="callout tip"><b class="t">RETURN vs CETAK</b><code>RETURN</code> menyerahkan nilai ke pemanggil, <code>CETAK</code> hanya menampilkan. Scratch nggak punya RETURN: simpan hasil di variabel.</div></div>
+<div class="pane" data-group="kamus" id="k5"><img class="zoomable card" src="images/02_kamus_translasi.png" alt="Kamus lengkap"></div>
+</section>
+
+<!-- ================= CONTOH -->
+<section id="contoh">
+<h2><span class="n">6</span>Contoh Pertama: Luas Lingkaran</h2>
+<p class="lead">Contoh dari buku. Pseudocodenya pendek: baca jari-jari, hitung luas, tampilkan.</p>
+<div class="tabs" data-group="lin">
+<button class="tab on" data-t="l1">Pseudocode</button><button class="tab" data-t="l2">Scratch</button><button class="tab" data-t="l3">Blockly</button><button class="tab" data-t="l4">Python dan C</button>
+</div>
+<div class="pane on" data-group="lin" id="l1"><figure class="imgcard"><img class="zoomable" src="images/25_pseudo_lingkaran.png" alt="Pseudocode luas lingkaran" style="width:min(100%,520px);margin:auto"></figure></div>
+<div class="pane" data-group="lin" id="l2"><figure class="imgcard"><img class="zoomable" src="images/03_scratch_lingkaran.png" alt="Scratch luas lingkaran" style="width:min(100%,520px);margin:auto"></figure></div>
+<div class="pane" data-group="lin" id="l3"><figure class="imgcard"><img class="zoomable" src="images/04_blockly_lingkaran.png" alt="Blockly luas lingkaran" style="width:min(100%,640px);margin:auto"></figure></div>
+<div class="pane" data-group="lin" id="l4"><figure class="imgcard"><img class="zoomable" src="images/05_kode_lingkaran.png" alt="Python dan C luas lingkaran"></figure></div>
+<div class="step"><div class="bd" style="background:var(--orange)">1</div><div><b>BACA</b>: input jari-jari <code>r</code>. Proses: hitung luas. Output: luas tercetak.</div></div>
+<div class="step"><div class="bd" style="background:var(--purple)">2</div><div><b>PETAKAN</b>: variabel <code>r</code> dan <code>luasLingkaran</code> (desimal). Tanpa IF atau perulangan.</div></div>
+<div class="step"><div class="bd" style="background:var(--teal)">3</div><div><b>GANTI</b>: <code>BACA</code> jadi ask + set; <code>&larr;</code> jadi set ... to; <code>CETAK</code> jadi say. Python: <code>float(input())</code> dan <code>print()</code>.</div></div>
+<div class="step"><div class="bd" style="background:var(--red)">4</div><div><b>UJI</b>: coba di bawah ini!</div></div>
+<div class="card">
+<div class="grid3">
+<div><label for="rr">Jari-jari r</label><input type="number" id="rr" value="7" min="0" step="any"></div>
+<div style="align-self:end"><button class="btn" id="rrun">Hitung</button></div>
+</div>
+<div class="grid2" style="margin-top:10px">
+<div><b>Python</b><div class="out" id="rpy"></div></div>
+<div><b>C (%.2f)</b><div class="out" id="rc"></div></div>
+</div>
+<p style="color:var(--gray);font-size:.9rem;margin-bottom:0">Coba r = 10. Kenapa Python menulis 314.0 sedangkan C menulis 314.00?</p>
+</div>
+</section>
+
+<!-- ================= MISI -->
+<section id="misi">
+<h2><span class="n">7</span>Misi Kasir Kantin</h2>
+<p class="lead">Coba terjemahkan sendiri dulu (di LKPD atau bukumu), baru buka kuncinya.</p>
+
+<h3>Level 1: Total Belanja</h3>
+<div class="grid2"><figure class="imgcard"><img class="zoomable" src="images/26_pseudo_total.png" alt="Pseudocode total belanja" style="width:min(100%,340px);margin:auto"></figure>
+<div class="card"><p>Terjemahkan ke blok dan Python. Contoh uji: harga 5000, jumlah 3 &rarr; <b>15000</b>.</p>
+<details><summary>Lihat kunci Python</summary><div class="dark">harga = int(input("Harga satuan: "))
+jumlah = int(input("Jumlah: "))
+total = harga * jumlah
+print(total)</div></details></div></div>
+
+<h3>Level 2: Potongan Harga</h3>
+<p>Total belanja <b>20.000 atau lebih</b> dapat potongan Rp2.000. Percabangan pertamamu!</p>
+<div class="grid2"><figure class="imgcard"><img class="zoomable" src="images/27_pseudo_diskon.png" alt="Pseudocode diskon" style="max-height:420px;margin:auto"></figure>
+<div class="card"><table class="t"><tr><th>harga</th><th>jumlah</th><th>total</th><th>bayar</th></tr><tr><td>5000</td><td>3</td><td>15000</td><td>15000</td></tr><tr><td>5000</td><td>4</td><td>20000</td><td>18000</td></tr><tr><td>7000</td><td>5</td><td>35000</td><td>33000</td></tr></table>
+<p style="font-size:.9rem;color:var(--gray)">Baris kedua adalah <b>nilai batas</b>. Wajib dicoba!</p></div></div>
+<details><summary>Lihat kunci Scratch, Python, dan C</summary>
+<div class="grid3"><figure class="imgcard"><img class="zoomable" src="images/12_scratch_diskon.png" alt="Scratch diskon"></figure><figure class="imgcard"><img class="zoomable" src="images/31_python_diskon.png" alt="Python diskon"></figure><figure class="imgcard"><img class="zoomable" src="images/11_c_diskon.png" alt="C diskon"></figure></div></details>
+
+<h3>Level 3: Kasir Lengkap</h3>
+<p>Sekarang ada uang dari pembeli. Ada <b>dua keputusan</b> yang dikerjakan berurutan.</p>
+<div class="grid2"><figure class="imgcard"><img class="zoomable" src="images/08_pseudo_kasir.png" alt="Pseudocode kasir" style="max-height:520px;margin:auto"></figure>
+<figure class="imgcard"><img class="zoomable" src="images/16_tabel_jejak_kasir.png" alt="Tabel jejak kasir"><figcaption>Tabel jejak kasir. Cocok dengan hasilmu?</figcaption></figure></div>
+<details><summary>Lihat kunci Scratch dan Python</summary>
+<figure class="imgcard"><img class="zoomable" src="images/09_scratch_kasir.png" alt="Scratch kasir"></figure>
+<figure class="imgcard"><img class="zoomable" src="images/10_python_kasir.png" alt="Python kasir" style="width:min(100%,520px);margin:auto"></figure></details>
+
+<h3>Level 4: Perulangan</h3>
+<div class="grid2"><figure class="imgcard"><img class="zoomable" src="images/28_pseudo_mundur.png" alt="Pseudocode hitung mundur" style="max-height:340px;margin:auto"><figcaption>4a. Hitung mundur bel (WHILE)</figcaption></figure>
+<figure class="imgcard"><img class="zoomable" src="images/29_pseudo_antrian.png" alt="Pseudocode nomor antrian" style="max-height:340px;margin:auto"><figcaption>4b. Nomor antrian (FOR)</figcaption></figure></div>
+<details><summary>Lihat kunci</summary>
+<div class="grid2"><figure class="imgcard"><img class="zoomable" src="images/13_scratch_mundur.png" alt="Scratch mundur"></figure><figure class="imgcard"><img class="zoomable" src="images/14_scratch_antrian.png" alt="Scratch antrian"></figure>
+<figure class="imgcard"><img class="zoomable" src="images/32_python_mundur.png" alt="Python mundur"></figure><figure class="imgcard"><img class="zoomable" src="images/33_python_antrian.png" alt="Python antrian"></figure></div>
+<figure class="imgcard"><img class="zoomable" src="images/35_tabel_jejak_mundur.png" alt="Tabel jejak mundur" style="width:min(100%,520px);margin:auto"><figcaption>Tabel jejak N = 3</figcaption></figure></details>
+
+<h3>Level 5: Fungsi</h3>
+<div class="grid2"><figure class="imgcard"><img class="zoomable" src="images/30_pseudo_fungsi.png" alt="Pseudocode fungsi" style="max-height:420px;margin:auto"></figure>
+<div class="card"><p>Aturan potongan dibungkus jadi fungsi <code>hitungBayar</code>. Ingat: <b>RETURN &ne; CETAK</b>. Di Scratch, hasilnya disimpan ke variabel.</p></div></div>
+<details><summary>Lihat kunci</summary>
+<figure class="imgcard"><img class="zoomable" src="images/15_scratch_fungsi.png" alt="Scratch fungsi"></figure>
+<figure class="imgcard"><img class="zoomable" src="images/34_python_fungsi.png" alt="Python fungsi" style="width:min(100%,520px);margin:auto"></figure></details>
+</section>
+
+<!-- ================= SIMULATOR -->
+<section id="sim">
+<h2><span class="n">8</span>Simulator: Lihat Program Berjalan</h2>
+<p class="lead">Ubah data ujinya, lalu jalankan langkah demi langkah seperti jejak di tabel.</p>
+<h3>Kasir Kantin (pseudocode Level 3)</h3>
+<div class="grid2">
+<div>
+<div class="card">
+<div class="grid3">
+<div><label for="sh">harga</label><input type="number" id="sh" value="5000" min="0"></div>
+<div><label for="sj">jumlah</label><input type="number" id="sj" value="4" min="0"></div>
+<div><label for="su">uang</label><input type="number" id="su" value="20000" min="0"></div>
+</div>
+<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="sStep">Langkah berikutnya</button><button class="btn o" id="sAll">Jalankan semua</button><button class="btn g" id="sReset">Ulang</button></div>
+<p style="margin:8px 0 0;font-size:.85rem;color:var(--gray)">Presets:
+<a href="#sim" data-p="5000,3,20000">15000 (tanpa potongan)</a> &middot; <a href="#sim" data-p="5000,4,20000">tepat 20000 (batas)</a> &middot; <a href="#sim" data-p="7000,5,30000">uang kurang</a></p>
+</div>
+<div class="vars" id="svars"></div>
+<div class="callout tip" id="smsg" style="margin:8px 0"><b class="t">Langkah</b><span id="smtxt">Tekan “Langkah berikutnya”.</span></div><b>Keluaran</b><div class="out" id="sout"></div>
+</div>
+<div class="pcode" id="skasir"></div>
+</div>
+
+<h3>Perulangan: hitung mundur dan antrian</h3>
+<div class="card">
+<div class="grid3">
+<div><label for="lm">Program</label><select id="lm"><option value="w">WHILE hitung mundur (N ← N - 1)</option><option value="f">FOR nomor antrian</option><option value="b">WHILE tanpa N ← N - 1 (bug K3)</option><option value="r">FOR range(1, n) (bug K4)</option></select></div>
+<div><label for="ln">Nilai N / n (0 sampai 10)</label><input type="number" id="ln" value="3" min="0" max="10"></div>
+<div style="align-self:end"><button class="btn" id="lrun">Jalankan</button></div>
+</div>
+<div id="ltab" style="margin-top:10px"></div>
+</div>
+</section>
+
+<!-- ================= GAME -->
+<section id="game">
+<h2><span class="n">9</span>Game Translasi</h2>
+<p class="lead">Tiga tantangan singkat untuk mengasah translasi.</p>
+<div class="grid2">
+<div class="card"><h3 style="margin-top:0">A. Balik Kondisi</h3><p>Scratch tidak punya while. Pilih kondisi <code>repeat until</code> yang ekuivalen dengan WHILE.</p><div id="gBalik"></div></div>
+<div class="card"><h3 style="margin-top:0">B. Jodohkan</h3><p>Klik pseudocode, lalu klik padanan Python-nya.</p><div class="pairs" id="gPair"></div><div class="fb" id="gPairFb"></div></div>
+</div>
+<div class="card" style="margin-top:18px"><h3 style="margin-top:0">C. Susun Kode Kasir</h3><p>Klik baris dari bank untuk menyusun program Python kasir sesuai pseudocode. Klik baris di programmu untuk membatalkan.</p>
+<div class="grid2"><div><b>Bank baris</b><div class="chips" id="sBank" style="margin-top:8px"></div></div><div><b>Programmu</b><div class="slots" id="sSlots"></div></div></div>
+<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="sCheck">Periksa</button><button class="btn g" id="sClear">Ulangi</button></div><div class="fb" id="sFb"></div></div>
+</section>
+
+<!-- ================= DETEKTIF -->
+<section id="detektif">
+<h2><span class="n">10</span>Detektif Bug!</h2>
+<p class="lead">Lima terjemahan yang keliru. Pilih baris yang salah, lalu pilih penyebabnya.</p>
+<figure class="imgcard"><img class="zoomable" src="images/24_jebakan_translasi.png" alt="Empat jebakan translasi"><figcaption>Empat jebakan yang paling sering bikin terjemahan salah.</figcaption></figure>
+<div id="bugs"></div>
+</section>
+
+<!-- ================= KUIS -->
+<section id="kuis">
+<h2><span class="n">11</span>Kuis 10 Soal</h2>
+<p class="lead">Uji pemahamanmu. Setiap jawaban langsung ada pembahasannya.</p>
+<div class="card" id="quiz"></div>
+</section>
+
+<!-- ================= RANGKUMAN -->
+<section id="rangkum">
+<h2><span class="n">12</span>Rangkuman</h2>
+<div class="grid2">
+<div class="card"><ul style="margin:0;padding-left:20px">
+<li><b>Pseudocode</b> = rancangan algoritma mirip bahasa manusia, belum bisa dijalankan.</li>
+<li><b>Translasi</b> = menerjemahkan ke blok atau teks dengan makna sama.</li>
+<li>Empat langkah: <b>BACA &rarr; PETAKAN &rarr; GANTI &rarr; UJI</b>.</li>
+<li><code>&larr;</code> jadi <code>=</code>; <code>BACA</code> jadi <code>int(input())</code>; <code>CETAK</code> jadi <code>print()</code>.</li>
+<li>IF di Python: titik dua + indentasi. WHILE di Scratch: <code>repeat until not</code>.</li>
+<li>FOR jadi <code>range(1, n + 1)</code>.</li>
+<li>RETURN menyerahkan nilai, CETAK hanya menampilkan.</li>
+<li>Selalu uji, terutama <b>nilai batas</b>.</li></ul></div>
+<div class="card" style="background:#fffbeb;border-color:var(--orange)"><h3 style="margin-top:0;color:var(--orangeD)">Tantangan Bintang</h3><p>Kantin hanya melayani maksimal 5 antrian. Jika n &gt; 5, cetak "Antrian penuh". Jika tidak, cetak nomor antrian 1 sampai n. Tulis pseudocode-nya, terjemahkan ke Scratch dan Python, lalu uji dengan n = 3 dan n = 8.</p>
+<details><summary>Lihat kunci</summary><div class="dark">n = int(input("Banyak pembeli: "))
+if n > 5:
+    print("Antrian penuh")
+else:
+    for i in range(1, n + 1):
+        print("Antrian ke-" + str(i))</div></details></div>
+</div>
+<h3>Kamus Istilah</h3>
+<div class="grid3">
+<div class="card"><b>Pseudocode</b><br>Rancangan algoritma berbahasa mirip bahasa manusia</div>
+<div class="card"><b>Translasi</b><br>Menerjemahkan satu bentuk penyajian algoritma ke bentuk lain</div>
+<div class="card"><b>Data uji</b><br>Contoh masukan untuk memeriksa apakah program benar</div>
+<div class="card"><b>Nilai batas</b><br>Nilai tepat di batas kondisi, misal 20000 pada total &ge; 20000</div>
+<div class="card"><b>Tabel jejak</b><br>Tabel yang mencatat perubahan nilai variabel langkah demi langkah</div>
+<div class="card"><b>Bug</b><br>Kesalahan pada program</div>
+</div>
+</section>
+</main>
+<footer>Materi Siswa TP11 &middot; Informatika Kelas IX &middot; SMP Negeri 14 Tarakan &middot; Semua nama dan harga bersifat fiktif untuk latihan</footer>
+<div id="lb"><img alt=""></div>
+
+<script>
+const PG = [{"q": "Apa yang dimaksud dengan pseudocode?", "o": ["Program yang siap langsung dijalankan komputer", "Rancangan algoritma berbahasa mirip bahasa manusia dengan kata kunci pemrograman, yang belum bisa dijalankan komputer", "Gambar alur yang tersusun dari simbol-simbol", "Bahasa mesin yang berisi angka 0 dan 1"], "k": 1, "e": "Pseudocode adalah perantara antara bahasa natural dan bahasa pemrograman. Isinya masih umum sehingga harus ditranslasikan dulu ke blok atau teks."}, {"q": "Baris pseudocode  total ← harga * jumlah  jika ditranslasikan ke Python menjadi ....", "o": ["total == harga * jumlah", "total <- harga * jumlah", "harga * jumlah = total", "total = harga * jumlah"], "k": 3, "e": "Tanda ← berarti memberi nilai, di Python ditulis =. Tanda == dipakai untuk membandingkan, bukan memberi nilai."}, {"q": "Baris pseudocode  BACA harga  (harga berupa bilangan bulat) paling tepat ditranslasikan ke Python menjadi ....", "o": ["harga = int(input(\"Harga: \"))", "harga = input(\"Harga: \")", "print(harga)", "int(harga) = input()"], "k": 0, "e": "input() menghasilkan teks, jadi harus dibungkus int() agar menjadi bilangan bulat yang bisa dihitung."}, {"q": "Baris pseudocode  CETAK kembalian  paling tepat diterjemahkan ke Scratch dengan blok ....", "o": ["ask (kembalian) and wait", "set kembalian to ...", "say (kembalian)", "repeat (kembalian)"], "k": 2, "e": "Blok say menampilkan nilai di layar. Itu padanan CETAK, sedangkan print() adalah padanannya di Python."}, {"q": "Scratch tidak punya blok while. Pseudocode  WHILE N > 0  paling tepat ditranslasikan menjadi ....", "o": ["repeat until <N > 0>", "repeat until <not <N > 0>>", "forever", "if <N > 0> then"], "k": 1, "e": "repeat until berhenti saat kondisinya BENAR, sedangkan WHILE berjalan selama kondisinya benar. Karena itu kondisinya dibalik dengan not."}, {"q": "Pada translasi IF ... THEN ... ELSE ... ENDIF ke Python, pernyataan yang benar adalah ....", "o": ["ENDIF ditulis end if", "THEN ditulis dengan kurung kurawal { }", "Python tidak mengenal percabangan", "Titik dua ( : ) dan indentasi (menjorok) menggantikan THEN dan ENDIF"], "k": 3, "e": "Python menandai isi percabangan dengan titik dua dan indentasi, sehingga THEN dan ENDIF tidak ditulis."}, {"q": "Pseudocode: IF total >= 20000 THEN bayar ← total - 2000 ELSE bayar ← total. Jika harga 4000 dan jumlah 5, nilai bayar adalah ....", "o": ["20000", "18000", "2000", "22000"], "k": 1, "e": "total = 4000 x 5 = 20000. Kondisi 20000 >= 20000 bernilai benar, sehingga bayar = 20000 - 2000 = 18000."}, {"q": "Pseudocode: BACA N; WHILE N > 0: CETAK N; N ← N - 1. Jika N = 3, keluaran yang tercetak berurutan adalah ....", "o": ["3, 2, 1", "3, 2, 1, 0", "1, 2, 3", "2, 1, 0"], "k": 0, "e": "Putaran berhenti saat N menjadi 0, dan nilai 0 tidak sempat dicetak karena kondisi N > 0 sudah salah."}, {"q": "Pseudocode  FOR i ← 1 TO n  yang berarti i berjalan dari 1 sampai n ditranslasikan ke Python menjadi ....", "o": ["for i in range(n):", "for i in range(1, n):", "for i in range(1, n + 1):", "for i in range(0, n + 1):"], "k": 2, "e": "range(1, n) berhenti sebelum n, sehingga harus range(1, n + 1) agar n ikut terhitung."}, {"q": "Program Python untuk total belanja menghasilkan keluaran 500050005000 ketika harga 5000 dan jumlah 3. Penyebab paling mungkin adalah ....", "o": ["operator * seharusnya diganti +", "variabel total belum dideklarasikan", "indentasi program salah", "input() tidak dibungkus int() sehingga harga berupa teks yang diulang 3 kali"], "k": 3, "e": "Tanpa int(), harga adalah teks \"5000\", dan \"5000\" * 3 menghasilkan teks yang diulang tiga kali."}];
+const $ = (s, r=document) => r.querySelector(s), $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+// ---------- progress + nav highlight + lightbox + tabs
+addEventListener('scroll', () => { const h = document.documentElement; $('#prog').style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%'; });
+const secs = $$('main section'); const links = $$('nav a');
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id)); }), {rootMargin: '-40% 0px -55% 0px'});
+secs.forEach(s => io.observe(s));
+document.addEventListener('click', e => {
+  const im = e.target.closest('img.zoomable'); if (im) { $('#lb img').src = im.src; $('#lb').style.display = 'grid'; return; }
+  if (e.target.closest('#lb')) $('#lb').style.display = 'none';
+  const tb = e.target.closest('.tab'); if (tb) { const g = tb.parentElement.dataset.group; $$('.tab', tb.parentElement).forEach(t => t.classList.toggle('on', t === tb)); $$('.pane[data-group="' + g + '"]').forEach(p => p.classList.toggle('on', p.id === tb.dataset.t)); }
+});
+addEventListener('keydown', e => { if (e.key === 'Escape') $('#lb').style.display = 'none'; });
+
+// ---------- pseudocode interaktif
+const KASIR = [
+ ['Algoritma Kasir Kantin', null], ['INPUT', null], ['  harga, jumlah, uang', null], ['PROSES', null],
+ ['  BACA harga, jumlah, uang', {b: 'ask (Harga satuan?) and wait, set harga to (answer) ... (diulang untuk jumlah dan uang)', p: 'harga = int(input("Harga satuan: "))\njumlah = int(input("Jumlah: "))\nuang = int(input("Uang pembeli: "))', c: 'scanf("%d %d %d", &harga, &jumlah, &uang);', n: 'input() menghasilkan teks, jadi dibungkus int().'}],
+ ['  total ← harga * jumlah', {b: 'set total to (harga × jumlah)', p: 'total = harga * jumlah', c: 'total = harga * jumlah;', n: 'Tanda ← jadi = (memberi nilai), bukan ==.'}],
+ ['  IF total >= 20000 THEN', {b: 'if <not <total < 20000>> then', p: 'if total >= 20000:', c: 'if (total >= 20000) {', n: 'Scratch tidak punya ≥, jadi dipakai not <total < 20000>.'}],
+ ['    bayar ← total - 2000', {b: 'set bayar to (total - 2000)', p: '    bayar = total - 2000', c: '    bayar = total - 2000;', n: 'Isi percabangan dijorokkan (indentasi) di Python.'}],
+ ['  ELSE', {b: 'else', p: 'else:', c: '} else {', n: 'Python memakai titik dua setelah else.'}],
+ ['    bayar ← total', {b: 'set bayar to (total)', p: '    bayar = total', c: '    bayar = total;', n: ''}],
+ ['  ENDIF', {b: '(ujung blok if)', p: '(tidak ditulis: cukup kembali ke indentasi semula)', c: '}', n: 'ENDIF tidak ada di Python.'}],
+ ['  IF uang < bayar THEN', {b: 'if <uang < bayar> then', p: 'if uang < bayar:', c: 'if (uang < bayar) {', n: ''}],
+ ['    CETAK "Uang kurang"', {b: 'say (Uang kurang)', p: '    print("Uang kurang")', c: '    printf("Uang kurang\\n");', n: 'CETAK jadi print() / say.'}],
+ ['  ELSE', {b: 'else', p: 'else:', c: '} else {', n: ''}],
+ ['    kembalian ← uang - bayar', {b: 'set kembalian to (uang - bayar)', p: '    kembalian = uang - bayar', c: '    kembalian = uang - bayar;', n: ''}],
+ ['    CETAK kembalian', {b: 'say (kembalian)', p: '    print(kembalian)', c: '    printf("%d\\n", kembalian);', n: ''}],
+ ['  ENDIF', {b: '(ujung blok if)', p: '(tidak ditulis)', c: '}', n: ''}],
+ ['OUTPUT', null], ['  kembalian atau pesan tercetak', null]
+];
+const KW = /\b(Algoritma|INPUT|PROSES|OUTPUT|BACA|CETAK|IF|THEN|ELSE|ENDIF|WHILE|ENDWHILE|FOR|TO|ENDFOR|FUNCTION|RETURN|ENDFUNCTION)\b/g;
+function pseudoHtml(l) { return esc(l).replace(KW, '<span class="k">$1</span>').replace(/←/g, '<span style="color:var(--red);font-weight:700">←</span>'); }
+function buildPseudo(el, arr, clickable) {
+  el.innerHTML = arr.map((r, i) => `<span class="ln" data-i="${i}">${pseudoHtml(r[0])}</span>`).join('');
+}
+buildPseudo($('#pkasir'), KASIR);
+$('#pkasir').addEventListener('click', e => {
+  const ln = e.target.closest('.ln'); if (!ln) return; const r = KASIR[+ln.dataset.i][1];
+  $$('#pkasir .ln').forEach(x => x.classList.remove('hl')); ln.classList.add('hl');
+  $('#kamusPanel').innerHTML = r ? `<b>Blok Scratch:</b> ${esc(r.b)}<br><b>Python:</b><div class="dark" style="margin:4px 0">${esc(r.p)}</div><b>C:</b> <code>${esc(r.c)}</code>${r.n ? '<div class="callout tip" style="margin:8px 0 0"><b class="t">Catatan</b>' + esc(r.n) + '</div>' : ''}` : '<i style="color:var(--gray)">Baris ini bagian kerangka (judul/INPUT/OUTPUT). Coba baris lain!</i>';
+});
+
+// ---------- kalkulator lingkaran
+function runLin() {
+  const r = parseFloat($('#rr').value); if (isNaN(r) || r < 0) { $('#rpy').textContent = 'Masukkan r >= 0'; $('#rc').textContent = ''; return; }
+  const v = 3.14 * r * r; let py = String(Math.round(v * 1e10) / 1e10); if (!/[.e]/.test(py)) py += '.0';
+  $('#rpy').textContent = 'print(luasLingkaran)  →  ' + py; $('#rc').textContent = 'printf("%.2f")  →  ' + v.toFixed(2);
+}
+$('#rrun').onclick = runLin; runLin();
+
+// ---------- simulator kasir
+let SL = [], SI = 0, SV = {};
+const KL = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]; // indeks baris kasir untuk sorotan
+buildPseudo($('#skasir'), KASIR);
+function kasirPlan(h, j, u) {
+  const st = []; const v = {};
+  st.push({ ln: 4, set: {harga: h, jumlah: j, uang: u}, out: null, msg: 'BACA harga, jumlah, uang' });
+  v.total = h * j; st.push({ ln: 5, set: {total: v.total}, msg: `total ← ${h} × ${j} = ${v.total}` });
+  const cond = v.total >= 20000; st.push({ ln: 6, msg: `IF ${v.total} >= 20000 ? → ${cond ? 'BENAR' : 'SALAH'}` });
+  if (cond) { v.bayar = v.total - 2000; st.push({ ln: 7, set: {bayar: v.bayar}, msg: `bayar ← ${v.total} − 2000 = ${v.bayar}` }); }
+  else { v.bayar = v.total; st.push({ ln: 9, set: {bayar: v.bayar}, msg: `ELSE: bayar ← total = ${v.bayar}` }); }
+  const c2 = u < v.bayar; st.push({ ln: 11, msg: `IF ${u} < ${v.bayar} ? → ${c2 ? 'BENAR' : 'SALAH'}` });
+  if (c2) st.push({ ln: 12, out: 'Uang kurang', msg: 'CETAK "Uang kurang"' });
+  else { v.kem = u - v.bayar; st.push({ ln: 14, set: {kembalian: v.kem}, msg: `kembalian ← ${u} − ${v.bayar} = ${v.kem}` }); st.push({ ln: 15, out: String(v.kem), msg: 'CETAK kembalian' }); }
+  return st;
+}
+function sReset() {
+  const h = +$('#sh').value, j = +$('#sj').value, u = +$('#su').value;
+  if ([h, j, u].some(x => isNaN(x) || x < 0)) { $('#sout').textContent = 'Isi angka >= 0'; SL = []; return false; }
+  SL = kasirPlan(h, j, u); SI = 0; SV = {}; $('#sout').textContent = ''; $('#smtxt').textContent = 'Tekan “Langkah berikutnya”.'; $$('#skasir .ln').forEach(x => x.classList.remove('hl', 'done')); $('#svars').innerHTML = ''; return true;
+}
+function sStep() {
+  if (!SL.length || SI >= SL.length) { if (!sReset()) return; }
+  const s = SL[SI++]; $$('#skasir .ln').forEach(x => x.classList.remove('hl')); const el = $(`#skasir .ln[data-i="${s.ln}"]`); el.classList.add('hl');
+  Object.assign(SV, s.set || {}); $('#svars').innerHTML = Object.entries(SV).map(([k, v]) => `<span>${k} = ${v}</span>`).join('');
+  if (s.out != null) $('#sout').textContent += (s.out + '\n');
+  $('#smtxt').textContent = s.msg;
+  if (SI >= SL.length) { $$('#skasir .ln').forEach(x => x.classList.add('done')); el.classList.add('hl'); $('#smtxt').textContent = s.msg + '  (selesai)'; }
+}
+$('#sStep').onclick = () => { if (!SL.length || SI >= SL.length) sReset(); sStep(); };
+$('#sReset').onclick = sReset;
+$('#sAll').onclick = () => { if (!sReset()) return; SL.forEach(() => sStep()); };
+$$('[data-p]').forEach(a => a.onclick = e => { const [h, j, u] = a.dataset.p.split(','); $('#sh').value = h; $('#sj').value = j; $('#su').value = u; sReset(); });
+sReset();
+
+// ---------- simulator perulangan
+$('#lrun').onclick = () => {
+  const m = $('#lm').value, n = parseInt($('#ln').value); if (isNaN(n) || n < 0 || n > 10) { $('#ltab').innerHTML = '<div class="callout warn">Isi N antara 0 dan 10.</div>'; return; }
+  let rows = [], head, note = '';
+  if (m === 'w') { head = ['Putaran', 'N sebelum', 'N > 0 ?', 'CETAK', 'N sesudah']; let x = n, i = 1; while (true) { const c = x > 0; rows.push([i, x, c ? 'ya' : 'tidak', c ? x : '—', c ? x - 1 : 'berhenti']); if (!c) break; x--; i++; } note = 'Keluaran: ' + (n > 0 ? Array.from({length: n}, (_, k) => n - k).join(', ') : '(tidak ada)'); }
+  else if (m === 'f') { head = ['i', 'i <= n ?', 'CETAK']; for (let i = 1; i <= n; i++) rows.push([i, 'ya', 'Antrian ke-' + i]); rows.push([n + 1, 'tidak', 'berhenti']); note = n ? 'Keluaran: Antrian ke-1 sampai Antrian ke-' + n : 'Tidak ada keluaran.'; }
+  else if (m === 'b') { head = ['Putaran', 'N', 'N > 0 ?', 'CETAK']; if (n === 0) { rows.push([1, 0, 'tidak', 'berhenti']); note = 'Untuk N = 0 program kebetulan benar. Coba N = 3!'; } else { for (let i = 1; i <= 6; i++) rows.push([i, n, 'ya', n]); rows.push(['...', n, 'ya (terus)', n]); note = 'Bug K3: N tidak pernah berkurang, kondisi N > 0 selalu benar, program TIDAK PERNAH berhenti.'; } }
+  else { head = ['i', 'i < n ?', 'CETAK']; for (let i = 1; i < n; i++) rows.push([i, 'ya', 'Antrian ke-' + i]); rows.push([Math.max(n, 1), 'tidak', 'berhenti']); note = n ? 'Bug K4: range(1, n) berhenti sebelum n. Antrian ke-' + n + ' tidak pernah tercetak.' : 'Tidak ada keluaran.'; }
+  $('#ltab').innerHTML = '<table class="t"><tr>' + head.map(h => '<th>' + h + '</th>').join('') + '</tr>' + rows.map(r => '<tr>' + r.map(c => '<td>' + c + '</td>').join('') + '</tr>').join('') + '</table><div class="callout ' + (m === 'b' || m === 'r' ? 'warn' : '') + '" style="margin-top:10px"><b class="t">Hasil</b>' + esc(note) + '</div>';
+};
+$('#lrun').click();
+
+// ---------- game A: balik kondisi
+const BAL = [
+ ['WHILE N > 0', ['<N > 0>', '<not <N > 0>>', '<N < 0>'], 1],
+ ['WHILE total < 20000', ['<total > 20000>', '<not <total < 20000>>', '<total = 20000>'], 1],
+ ['WHILE uang >= harga', ['<uang > harga>', '<uang < harga>', '<uang = harga>'], 1],
+ ['WHILE i <= n', ['<i < n>', '<i = n>', '<i > n>'], 2],
+ ['WHILE not (N = 0)', ['<N = 0>', '<not <N = 0>>', '<N > 0>'], 0]
+];
+let bi = 0, bscore = 0;
+function balik() {
+  const el = $('#gBalik');
+  if (bi >= BAL.length) { el.innerHTML = `<div class="callout"><b class="t">Selesai!</b>Skor ${bscore} / ${BAL.length}. Ingat: repeat until berhenti saat kondisi BENAR, jadi kondisinya dibalik.</div><button class="btn g" id="bRe">Main lagi</button>`; $('#bRe').onclick = () => { bi = 0; bscore = 0; balik(); }; return; }
+  const [w, opts, ok] = BAL[bi];
+  el.innerHTML = `<div class="bar"><i style="width:${bi / BAL.length * 100}%"></i></div><p style="margin:10px 0 2px"><span class="mono"><b>${esc(w)}</b></span> &rarr; <b>repeat until</b> ...?</p>` + opts.map((o, i) => `<button class="opt mono" data-i="${i}">${esc(o)}</button>`).join('') + '<div class="fb" id="bFb"></div>';
+  $$('#gBalik .opt').forEach(b => b.onclick = () => {
+    const i = +b.dataset.i; $$('#gBalik .opt').forEach(x => x.disabled = true);
+    $$('#gBalik .opt')[ok].classList.add('ok'); if (i !== ok) b.classList.add('bad'); else bscore++;
+    $('#bFb').className = 'fb ' + (i === ok ? 'ok' : 'bad'); $('#bFb').innerHTML = (i === ok ? 'Benar!' : 'Belum tepat.') + ' <button class="btn g" id="bNext" style="padding:4px 12px">Lanjut</button>';
+    $('#bNext').onclick = () => { bi++; balik(); };
+  });
+}
+balik();
+
+// ---------- game B: jodohkan
+const PAIRS = [['BACA n', 'n = int(input())'], ['n ← n - 1', 'n = n - 1'], ['CETAK n', 'print(n)'], ['WHILE n > 0', 'while n > 0:'], ['IF n >= 5 THEN', 'if n >= 5:']];
+(function () {
+  const L = PAIRS.map((p, i) => ({t: p[0], i})), R = PAIRS.map((p, i) => ({t: p[1], i})).sort(() => Math.random() - .5);
+  $('#gPair').innerHTML = '<div id="pl">' + L.map(x => `<div class="pair" data-i="${x.i}" data-s="l">${esc(x.t)}</div>`).join('<div style="height:8px"></div>') + '</div><div id="pr">' + R.map(x => `<div class="pair" data-i="${x.i}" data-s="r">${esc(x.t)}</div>`).join('<div style="height:8px"></div>') + '</div>';
+  let sel = null, done = 0;
+  $('#gPair').addEventListener('click', e => {
+    const p = e.target.closest('.pair'); if (!p) return;
+    if (p.dataset.s === 'l') { $$('#pl .pair').forEach(x => x.classList.remove('sel')); if (!p.classList.contains('ok')) { p.classList.add('sel'); sel = p; } return; }
+    if (!sel) { $('#gPairFb').textContent = 'Pilih dulu pseudocode di kiri.'; return; }
+    if (sel.dataset.i === p.dataset.i) { sel.classList.remove('sel'); sel.classList.add('ok'); p.classList.add('ok'); sel = null; done++; $('#gPairFb').className = 'fb ok'; $('#gPairFb').textContent = done === PAIRS.length ? 'Mantap! Semua cocok.' : 'Benar!'; }
+    else { p.classList.add('shake'); setTimeout(() => p.classList.remove('shake'), 350); $('#gPairFb').className = 'fb bad'; $('#gPairFb').textContent = 'Belum cocok, coba lagi.'; }
+  });
+})();
+
+// ---------- game C: susun kode
+const ANS = ['harga = int(input("Harga satuan: "))', 'jumlah = int(input("Jumlah: "))', 'uang = int(input("Uang pembeli: "))', 'total = harga * jumlah', 'if total >= 20000:', '    bayar = total - 2000', 'else:', '    bayar = total', 'if uang < bayar:', '    print("Uang kurang")', 'else:', '    kembalian = uang - bayar', '    print(kembalian)'];
+let bank = [], prog = [];
+function susun() {
+  $('#sBank').innerHTML = bank.map((b, i) => `<button class="chip ${b.u ? 'used' : ''}" data-i="${i}">${esc(b.t)}</button>`).join('');
+  $('#sSlots').innerHTML = prog.map((p, i) => `<div class="row"><span class="no">${i + 1}</span><div class="cd ${p.st || ''}" data-i="${i}">${esc(p.t)}</div></div>`).join('') || '<span style="color:#64748b">Klik baris dari bank…</span>';
+}
+function susunReset() { bank = ANS.map(t => ({t, u: false})).sort(() => Math.random() - .5); prog = []; $('#sFb').textContent = ''; susun(); }
+$('#sBank').addEventListener('click', e => { const c = e.target.closest('.chip'); if (!c) return; const b = bank[+c.dataset.i]; b.u = true; prog.push({t: b.t, bi: +c.dataset.i}); susun(); });
+$('#sSlots').addEventListener('click', e => { const c = e.target.closest('.cd'); if (!c) return; const p = prog.splice(+c.dataset.i, 1)[0]; bank[p.bi].u = false; prog.forEach(x => x.st = ''); susun(); });
+$('#sClear').onclick = susunReset;
+$('#sCheck').onclick = () => {
+  if (prog.length < ANS.length) { $('#sFb').className = 'fb bad'; $('#sFb').textContent = `Baru ${prog.length} dari ${ANS.length} baris.`; return; }
+  let ok = 0; prog.forEach((p, i) => { p.st = p.t === ANS[i] ? 'ok' : 'bad'; if (p.st === 'ok') ok++; }); susun();
+  $('#sFb').className = 'fb ' + (ok === ANS.length ? 'ok' : 'bad'); $('#sFb').textContent = ok === ANS.length ? 'Sempurna! Programmu sesuai pseudocode.' : `${ok} dari ${ANS.length} baris di tempat yang benar. Perhatikan urutan input, IF, dan indentasi.`;
+};
+susunReset();
+
+// ---------- detektif bug
+const BUGS = [
+ {k: 'K1', img: '17_bug_k1', n: 8, ok: [1], data: '5000, 4', gejala: 'Program langsung error (TypeError).', causes: ['input() tidak dibungkus int(), jadi harga berupa teks', 'Tanda >= salah tulis', 'Kurang titik dua di else'], c: 0, fix: 'harga = int(input("Harga satuan: "))'},
+ {k: 'K2', img: '17_bug_k2', n: 8, ok: [4], data: '7000, 5', gejala: 'Keluar 35000 tanpa error (seharusnya 33000).', causes: ['Memakai == padahal pseudocode >=', 'Rumus total salah', 'print di tempat yang salah'], c: 0, fix: 'if total >= 20000:'},
+ {k: 'K3', img: '17_bug_k3', n: 3, ok: [3], data: '3', gejala: 'Angka 3 muncul terus-menerus, tidak berhenti.', causes: ['Lupa n = n - 1 di dalam while', 'Kondisi while salah tulis', 'input() tidak dibungkus int()'], c: 0, fix: 'tambahkan  n = n - 1  di dalam while'},
+ {k: 'K4', img: '17_bug_k4', n: 3, ok: [2], data: '3', gejala: 'Hanya Antrian ke-1 dan ke-2 yang muncul.', causes: ['range(1, n) berhenti sebelum n', 'str(i) salah', 'Variabel i belum dibuat'], c: 0, fix: 'for i in range(1, n + 1):'},
+ {k: 'K5', img: '17_bug_k5', n: 11, ok: [3, 5], data: '7000, 5', gejala: 'Muncul 33000, lalu tulisan None.', causes: ['print dipakai padahal pseudocode RETURN', 'Fungsi dipanggil sebelum dibuat', 'Argumen fungsi salah'], c: 0, fix: 'return total - 2000  (dan  return total)'}
+];
+$('#bugs').innerHTML = BUGS.map((b, bi2) => `<div class="card" style="margin:16px 0" id="bug${bi2}"><div class="grid2"><div><img class="zoomable" src="images/${b.img}.png" alt="Kartu ${b.k}" style="width:min(100%,420px)"></div><div>
+<h3 style="margin-top:0">Kartu ${b.k}</h3><p><b>Data uji:</b> ${b.data}<br><b>Keluhan:</b> ${b.gejala}</p>
+<b>1. Baris yang keliru:</b><div class="linebtns">${Array.from({length: b.n}, (_, i) => `<button data-l="${i + 1}">${i + 1}</button>`).join('')}</div>
+<b>2. Penyebab:</b>${b.causes.map((c, i) => `<button class="opt" data-c="${i}">${esc(c)}</button>`).join('')}
+<button class="btn" data-check>Periksa</button><div class="fb"></div></div></div></div>`).join('');
+$$('#bugs .card').forEach((card, idx) => {
+  const b = BUGS[idx]; let line = null, cause = null;
+  card.addEventListener('click', e => {
+    const lb = e.target.closest('.linebtns button'); if (lb) { $$('.linebtns button', card).forEach(x => x.classList.toggle('on', x === lb)); line = +lb.dataset.l; }
+    const ob = e.target.closest('.opt'); if (ob) { $$('.opt', card).forEach(x => x.classList.remove('ok', 'bad')); ob.style.borderColor = 'var(--orange)'; $$('.opt', card).forEach(x => { if (x !== ob) x.style.borderColor = ''; }); cause = +ob.dataset.c; }
+    if (e.target.closest('[data-check]')) {
+      const fb = $('.fb', card); if (line == null || cause == null) { fb.className = 'fb bad'; fb.textContent = 'Pilih baris dan penyebabnya dulu.'; return; }
+      const okL = b.ok.includes(line), okC = cause === b.c;
+      fb.className = 'fb ' + (okL && okC ? 'ok' : 'bad'); fb.innerHTML = okL && okC ? 'Tepat! Perbaikan: <code>' + esc(b.fix) + '</code>' : (okL ? 'Barisnya benar, tapi penyebabnya belum tepat.' : okC ? 'Penyebabnya benar, tapi barisnya belum tepat.' : 'Belum tepat, coba lagi.');
+    }
+  });
+});
+
+// ---------- kuis
+let qi = 0, qs = 0, qa = [];
+function quiz() {
+  const el = $('#quiz');
+  if (qi >= PG.length) {
+    el.innerHTML = `<h3 style="margin-top:0">Skor kamu: ${qs} / ${PG.length}</h3><div class="bar"><i style="width:${qs / PG.length * 100}%"></i></div><p>${qs >= 9 ? 'Luar biasa! Kamu siap jadi programmer.' : qs >= 7 ? 'Bagus! Sedikit lagi.' : 'Ayo baca kamus translasi lalu coba lagi.'}</p>` +
+      qa.map((a, i) => `<details><summary>${i + 1}. ${a.ok ? '✅' : '❌'} ${esc(PG[i].q)}</summary><p>Jawabanmu: ${esc(PG[i].o[a.pick])}<br>Jawaban benar: <b>${esc(PG[i].o[PG[i].k])}</b></p><p>${esc(PG[i].e)}</p></details>`).join('') + '<button class="btn" id="qre">Ulangi kuis</button>';
+    $('#qre').onclick = () => { qi = 0; qs = 0; qa = []; quiz(); }; return;
+  }
+  const q = PG[qi];
+  el.innerHTML = `<div class="bar"><i style="width:${qi / PG.length * 100}%"></i></div><p style="color:var(--gray);margin:8px 0">Soal ${qi + 1} dari ${PG.length}</p><p style="font-weight:700;font-size:1.05rem">${esc(q.q)}</p>` +
+    q.o.map((o, i) => `<button class="opt" data-i="${i}"><b>${'ABCD'[i]}.</b> ${esc(o)}</button>`).join('') + '<div id="qfb"></div>';
+  $$('#quiz .opt').forEach(b => b.onclick = () => {
+    const i = +b.dataset.i; $$('#quiz .opt').forEach(x => x.disabled = true);
+    $$('#quiz .opt')[q.k].classList.add('ok'); if (i !== q.k) b.classList.add('bad'); else qs++;
+    qa.push({pick: i, ok: i === q.k});
+    $('#qfb').innerHTML = `<div class="callout ${i === q.k ? '' : 'warn'}"><b class="t">${i === q.k ? 'Benar!' : 'Belum tepat.'}</b>${esc(q.e)}</div><button class="btn" id="qn">${qi + 1 === PG.length ? 'Lihat skor' : 'Lanjut'}</button>`;
+    $('#qn').onclick = () => { qi++; quiz(); };
+  });
+}
+quiz();
+</script>
+</body>
+</html>

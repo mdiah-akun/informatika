@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Naik Level: Blok ke Kode - TP 9 Pertemuan 2</title>
+<style>
+:root{--navy:#0B3C5D;--teal:#1D7874;--sky:#328CC1;--coral:#F2545B;--sand:#FFF4D6;--gold:#F2C94C;--light:#E8F1F8;--ink:#1F2937;--bg:#F8FAFC;--dark:#1E293B;--green:#2E9E6B;--orange:#E88A1A}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:"Segoe UI",Calibri,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;font-size:17px}
+nav{position:sticky;top:0;z-index:20;background:var(--navy);display:flex;gap:4px;overflow-x:auto;padding:8px 12px;box-shadow:0 2px 8px #0003}
+nav a{color:#E8F1F8;text-decoration:none;padding:7px 13px;border-radius:20px;font-size:14px;white-space:nowrap;font-weight:600}nav a:hover{background:#ffffff26}
+header{background:linear-gradient(160deg,var(--navy),var(--teal));color:#fff;text-align:center;padding:0 0 22px}
+header img{width:100%;max-width:1100px;display:block;margin:0 auto}header p{margin:12px 16px 0;font-size:18px;color:#E8F1F8}
+main{max-width:1000px;margin:0 auto;padding:10px 18px 60px}section{padding-top:34px}
+h2{color:var(--navy);font-size:28px;margin:0 0 8px;border-left:8px solid var(--coral);padding-left:12px}h3{color:var(--teal);margin:22px 0 6px}
+.card{background:#fff;border:1px solid #D5E0EA;border-radius:16px;padding:16px 20px;margin:14px 0;box-shadow:0 2px 6px #0B3C5D10}
+.tip{background:var(--sand);border:2px solid var(--gold);border-radius:14px;padding:12px 18px;margin:14px 0}
+.warn{background:#FDECEE;border:2px solid #F2A5AB;border-radius:14px;padding:12px 18px;margin:14px 0}
+.ok{background:#E6F4EF;border:2px solid #8FD0BC;border-radius:14px;padding:12px 18px;margin:14px 0}
+figure{margin:14px 0;text-align:center}figure img{max-width:100%;height:auto;border-radius:12px;border:1px solid #D5E0EA;background:#fff}
+figcaption{font-size:14px;color:#556070;margin-top:4px;font-style:italic}
+code{font-family:Consolas,"DejaVu Sans Mono",monospace;background:#E3EEF5;padding:1px 6px;border-radius:6px;color:#0F766E;font-size:.95em}
+table{border-collapse:collapse;width:100%;font-size:15.5px;margin:10px 0}th{background:var(--navy);color:#fff;text-align:left;padding:8px 10px}td{padding:8px 10px;border-bottom:1px solid #DDE6EE}tr:nth-child(even) td{background:#F1F6FA}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.tab{border:2px solid var(--sky);background:#fff;color:var(--sky);border-radius:22px;padding:7px 16px;font-weight:700;cursor:pointer;font-size:15px}.tab.on{background:var(--sky);color:#fff}
+.pane{display:none}.pane.on{display:block}
+input[type=text],input[type=number]{font-size:17px;padding:8px 12px;border:2px solid #B8C7D6;border-radius:10px;width:100%;max-width:150px}
+button{font-family:inherit;font-size:16px;font-weight:700;border:0;border-radius:24px;padding:9px 20px;cursor:pointer;background:var(--coral);color:#fff}
+button.sec{background:var(--sky)}button.gray{background:#8A97A6}button.grn{background:var(--green)}button:hover{filter:brightness(1.08)}
+.row{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start}.col{flex:1 1 300px;min-width:0}
+.codebox{overflow-x:auto;background:var(--dark);border-radius:12px;padding:10px 0;font-family:Consolas,"DejaVu Sans Mono",monospace;font-size:14.5px}
+.codebox div{padding:2px 14px;color:#E2E8F0;white-space:pre;border-left:5px solid transparent}
+.codebox div.hl{background:#334155;border-left-color:var(--gold);color:#fff}.codebox div.dim{opacity:.4}
+.vars{background:#fff;border:1px solid #D5E0EA;border-radius:12px;padding:8px 14px;min-height:70px}
+.vars span{display:inline-block;background:var(--light);border-radius:8px;padding:2px 10px;margin:3px;font-family:Consolas,monospace;font-size:15px}
+.out{background:#0F172A;color:#86EFAC;border-radius:12px;padding:10px 14px;font-family:Consolas,monospace;min-height:48px;white-space:pre-wrap}
+.pill{display:inline-block;padding:3px 12px;border-radius:14px;font-weight:700;font-size:14px;margin:2px}
+.p-on{background:#D8F3E6;color:#14683F}.p-off{background:#EEF2F6;color:#64748B}.p-hit{background:var(--gold);color:#5A4300}
+.ladder{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:14px 0}
+.lv{background:#fff;border-radius:14px;padding:12px 14px;border-top:8px solid var(--sky);box-shadow:0 2px 6px #0B3C5D14}
+.lv b{display:block;font-size:18px}.lv label{display:block;margin-top:8px;font-weight:700;color:var(--green);cursor:pointer}
+.pcards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pc{background:var(--dark);color:#E2E8F0;font-family:Consolas,"DejaVu Sans Mono",monospace;font-size:14px;border-radius:10px;padding:10px 12px;margin:6px 0;cursor:pointer;white-space:pre;border-left:6px solid var(--coral);overflow-x:auto}
+.pc:hover{filter:brightness(1.25)}.pc.used{opacity:.25;pointer-events:none}
+.slot{background:#fff;border:2px dashed #94A3B8;border-radius:12px;padding:8px;min-height:60px}
+.bugline{display:block;width:100%;text-align:left;background:var(--dark);color:#E2E8F0;font-family:Consolas,"DejaVu Sans Mono",monospace;font-size:14.5px;border-radius:0;padding:4px 14px;white-space:pre;font-weight:400}
+.bugline:hover{background:#334155}.bugline.right{background:#14532D}.bugline.wrong{background:#7F1D1D}
+.q{margin:18px 0;padding-bottom:12px;border-bottom:1px dashed #C7D3DF}
+.opt{display:block;margin:6px 0;padding:9px 14px;border:2px solid #C7D3DF;border-radius:12px;cursor:pointer;background:#fff}.opt:hover{border-color:var(--sky)}
+.opt.good{background:#D8F3E6;border-color:var(--green)}.opt.no{background:#FDECEE;border-color:var(--coral)}
+.fb{font-size:15px;margin-top:6px;color:#334155}.score{font-size:22px;font-weight:800;color:var(--navy)}
+.gold6{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.gold6 div{background:#fff;border-radius:14px;padding:14px;border-top:6px solid var(--sky);box-shadow:0 2px 6px #0B3C5D14}.gold6 b{display:block;font-size:18px;margin-bottom:4px}
+footer{text-align:center;padding:24px;background:var(--navy);color:#BFD9EA;font-size:14px}
+@media(max-width:640px){body{font-size:16px}h2{font-size:23px}.pcards{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav><a href="#misi">Misi</a><a href="#referensi">Referensi</a><a href="#lab">Laboratorium</a><a href="#level">Level 1-4</a><a href="#latihan">Kuis</a><a href="#rangkuman">Rangkuman</a></nav>
+<header><img src="images/00_cover.png" alt="Sampul: Naik Level, Blok ke Kode"><p>Materi Siswa Informatika Kelas IX &nbsp;|&nbsp; Bab II TP 9 Pertemuan 2 &nbsp;|&nbsp; SMP Negeri 14 Tarakan</p></header>
+<main>
+
+<section id="misi">
+<h2>Misi Hari Ini</h2>
+<div class="card">Halo, detektif kode! Levelnya naik. Bersama <b>pasanganmu</b> kamu akan membuat <b>program Rekap Nilai Informatika</b> untuk Bu Wali Kelas: baca 3 nilai, hitung rata-rata, tampilkan predikat <b>A/B/C/D</b>.</div>
+<figure><img src="images/12_tangga_level.png" alt="Tangga level"><figcaption>Tangga level hari ini</figcaption></figure>
+<div class="ladder" id="ladder">
+<div class="lv" style="border-color:#328CC1"><b>Level 1: Susun kartu</b>Parsons problem<label><input type="checkbox"> Selesai</label></div>
+<div class="lv" style="border-color:#1D7874"><b>Level 2: Blok ke Python</b>Fungsi + perulangan<label><input type="checkbox"> Selesai</label></div>
+<div class="lv" style="border-color:#E88A1A"><b>Level 3: Teks ke blok</b>Translasi balik<label><input type="checkbox"> Selesai</label></div>
+<div class="lv" style="border-color:#F2545B"><b>Level 4: Debug</b>4 kesalahan<label><input type="checkbox"> Selesai</label></div>
+</div>
+<h3>Kerja berdua: driver dan navigator</h3>
+<p><b>Driver</b> menulis kode; <b>navigator</b> membaca kamus dan memeriksa tanda baca. <b>Tukar peran setiap ganti level.</b></p>
+<figure><img src="images/01_alur_pbl.png" alt="Alur PBL"></figure>
+<h3>Pecah masalahnya</h3>
+<figure><img src="images/02_dekomposisi.png" alt="Dekomposisi"></figure>
+<p>Predikat: rata-rata <b>90 ke atas = A</b>, <b>80 sampai kurang dari 90 = B</b>, <b>70 sampai kurang dari 80 = C</b>, selain itu <b>D</b>.</p>
+</section>
+
+<section id="referensi">
+<h2>1. Kotak Referensi</h2>
+<div class="tabs" id="tabs"></div>
+<div id="panes">
+<div class="pane on" data-t="if - elif - else">
+<figure><img src="images/03_fungsi_predikat.png" alt="Predikat"></figure>
+<ul><li><code>lainnya jika</code> menjadi <code>elif</code>.</li><li>Diperiksa dari <b>atas ke bawah</b>, berhenti di syarat pertama yang benar. <b>Urutan penting!</b></li></ul></div>
+<div class="pane" data-t="Operator">
+<figure><img src="images/04_operator.png" alt="Operator"></figure>
+<ul><li><code>=</code> mengisi, <code>==</code> membandingkan.</li><li><code>/</code> desimal, <code>//</code> bulat, <code>%</code> sisa.</li></ul></div>
+<div class="pane" data-t="Akumulator">
+<figure><img src="images/05_loop_akumulator.png" alt="Akumulator"></figure>
+<figure><img src="images/09_trace_tabel.png" alt="Tabel telusur"></figure>
+<p>Seperti celengan: mulai dari <b>nol di luar</b> perulangan, lalu <b>tambahkan</b> tiap putaran.</p></div>
+<div class="pane" data-t="range()">
+<figure><img src="images/06_range_ujung.png" alt="Ujung range"></figure>
+<div class="warn"><b>Jebakan!</b> Blok 'sampai 3' termasuk 3. <code>range(1, 4)</code> berhenti sebelum 4. <code>range(3)</code> = 0, 1, 2.</div></div>
+<div class="pane" data-t="Fungsi dan utama">
+<figure><img src="images/07_program_utama.png" alt="Program utama"></figure>
+<ul><li>Python membaca definisi fungsi lebih dulu; dijalankan saat dipanggil.</li><li><code>return</code> membawa jawaban pulang.</li></ul></div>
+<div class="pane" data-t="Tipe data">
+<figure><img src="images/08_tipe_data.png" alt="Tipe data"></figure></div>
+<div class="pane" data-t="Error">
+<figure><img src="images/10_membaca_error.png" alt="Membaca error"></figure></div>
+</div>
+</section>
+
+<section id="lab">
+<h2>2. Laboratorium Coba-coba</h2>
+
+<h3>A. Penjelajah Predikat: urutan syarat itu penting!</h3>
+<p>Masukkan rata-rata, pilih urutan syarat, lihat cabang mana yang dicek.</p>
+<div class="card">
+<label><b>Rata-rata:</b> <input type="number" id="pn" value="85" min="0" max="100" oninput="pred()"></label>
+&nbsp; <button class="sec" onclick="setOrd(0)">Urutan BENAR (90, 80, 70)</button> <button class="gray" onclick="setOrd(1)">Urutan SALAH (70, 80, 90)</button>
+<div class="codebox" id="pcode" style="margin-top:12px"></div>
+<p id="pres" style="font-size:18px"></p>
+</div>
+
+<h3>B. Kalkulator operator</h3>
+<div class="card">
+<label><b>a =</b> <input type="number" id="oa" value="17" oninput="ops()"></label> &nbsp;
+<label><b>b =</b> <input type="number" id="ob" value="5" oninput="ops()"></label>
+<table style="margin-top:10px"><tr><th>Python</th><th>Hasil</th><th>Tipe</th></tr>
+<tr><td><code>a / b</code></td><td id="o1"></td><td id="t1"></td></tr>
+<tr><td><code>a // b</code></td><td id="o2"></td><td id="t2"></td></tr>
+<tr><td><code>a % b</code></td><td id="o3"></td><td id="t3"></td></tr>
+<tr><td><code>a == b</code></td><td id="o4"></td><td>bool</td></tr></table>
+</div>
+
+<h3>C. Jalankan Rekap Nilai langkah demi langkah</h3>
+<div class="row">
+<div class="col">
+<label><b>Nilai 1:</b> <input type="number" id="n1" value="80"></label><br>
+<label><b>Nilai 2:</b> <input type="number" id="n2" value="90"></label><br>
+<label><b>Nilai 3:</b> <input type="number" id="n3" value="100"></label>
+<p><button onclick="startSim()">Mulai</button> <button class="sec" onclick="nextStep()">Langkah berikutnya</button> <button class="gray" onclick="resetSim()">Ulang</button></p>
+<div class="codebox" id="sim"></div>
+</div>
+<div class="col">
+<b>Variabel di memori:</b><div class="vars" id="vars"><i>belum berjalan</i></div>
+<b>Layar:</b><div class="out" id="out"></div>
+<p id="simnote" style="font-size:15px"></p>
+</div></div>
+</section>
+
+<section id="level">
+<h2>3. Level Tantangan</h2>
+
+<h3>Level 1: Susun kartu (Parsons)</h3>
+<p>Klik kartu di kiri untuk memindahkannya ke susunanmu (urut dari atas). Klik kartu di susunan untuk mengembalikannya.</p>
+<div class="pcards"><div><b>Kartu acak</b><div id="pbank"></div></div><div><b>Susunanmu</b><div class="slot" id="pans"></div></div></div>
+<p><button class="grn" onclick="pcheck()">Periksa</button> <button class="gray" onclick="pinit()">Ulang</button></p>
+<div id="pfb" class="fb"></div>
+
+<h3>Level 2: Terjemahkan blok ke Python</h3>
+<p>Terjemahkan program berikut di LKPD/editor Python, lalu bandingkan dengan simulator di atas (masukan 80, 90, 100).</p>
+<figure><img src="images/13_blok_rekap.png" alt="Blok rekap"></figure>
+
+<h3>Level 3: Terjemahkan balik (teks ke blok)</h3>
+<figure><img src="images/11_translasi_dua_arah.png" alt="Dua arah"></figure>
+<pre style="background:#1E293B;color:#E2E8F0;padding:12px 16px;border-radius:12px;overflow-x:auto;font-family:Consolas,monospace;font-size:15px">jam = int(input("Lama parkir (jam)? "))
+if jam &lt;= 1:
+    biaya = 2000
+elif jam &lt;= 5:
+    biaya = 2000 + (jam - 1) * 1000
+else:
+    biaya = 6000
+print("Biaya parkir: Rp " + str(biaya))</pre>
+<p>Susun blok setaranya di kertas/Blockly. Sudah? Klik untuk melihat kunci:</p>
+<button class="sec" onclick="document.getElementById('kp').style.display='block'">Tampilkan kunci</button>
+<figure id="kp" style="display:none"><img src="images/15_kunci_parkir.png" alt="Kunci parkir"></figure>
+
+<h3>Level 4: Detektif Bug</h3>
+<p>Program ini punya <b>4 kesalahan</b>. Klik baris yang salah. Kesalahan yang ditemukan akan hilang dari daftar target.</p>
+<div class="row"><div class="col" id="bugbox"></div><div class="col"><div class="card"><b>Ditemukan: <span id="bcount">0</span> / 4</b><div id="bfb" class="fb" style="margin-top:8px">Klik sebuah baris.</div></div></div></div>
+</section>
+
+<section id="latihan">
+<h2>4. Kuis</h2>
+<div id="quiz"></div>
+<p class="score" id="qscore"></p>
+</section>
+
+<section id="rangkuman">
+<h2>5. Rangkuman: Kaidah Emas</h2>
+<div class="gold6">
+<div style="border-color:#328CC1"><b>1. Urutan syarat penting</b>Yang paling ketat di atas.</div>
+<div style="border-color:#1D7874"><b>2. Ujung range tidak ikut</b>range(1, 4) = 1, 2, 3.</div>
+<div style="border-color:#E88A1A"><b>3. Akumulator</b>Nol di luar, tambah di dalam.</div>
+<div style="border-color:#F2545B"><b>4. = vs == ; / vs //</b>Mengisi vs membandingkan; desimal vs bulat.</div>
+<div style="border-color:#0B3C5D"><b>5. Tipe data eksplisit</b>int() untuk hitung, str() untuk gabung.</div>
+<div style="border-color:#2E9E6B"><b>6. Satu perbaikan, satu kali jalan</b>Uji dengan nilai batas!</div>
+</div>
+<div class="ok" style="margin-top:16px"><b>Bonus:</b> Rancang programmu sendiri dengan minimal satu if-elif-else dan satu perulangan (ongkos ojek, iuran kas, diskon kantin).</div>
+</section>
+</main>
+<footer>Materi Siswa TP 9 Pertemuan 2 | Informatika Kelas IX | SMP Negeri 14 Tarakan</footer>
+
+<script>
+function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+/* tabs */
+(function(){var panes=document.querySelectorAll('#panes .pane'),tb=document.getElementById('tabs');
+panes.forEach(function(p,i){var b=document.createElement('button');b.className='tab'+(i==0?' on':'');b.textContent=p.getAttribute('data-t');b.onclick=function(){panes.forEach(function(x){x.classList.remove('on')});tb.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on')});p.classList.add('on');b.classList.add('on')};tb.appendChild(b)})})();
+/* predikat explorer */
+var ord=0;
+function setOrd(o){ord=o;pred()}
+function pred(){var n=parseFloat(document.getElementById('pn').value);if(isNaN(n))n=0;
+var good=[['nilai >= 90','A',90],['nilai >= 80','B',80],['nilai >= 70','C',70]],bad=[['nilai >= 70','C',70],['nilai >= 80','B',80],['nilai >= 90','A',90]];
+var L=ord==0?good:bad,hit=-1;for(var i=0;i<3;i++){if(n>=L[i][2]){hit=i;break}}
+var h='<div>def predikat(nilai):</div>';
+for(var i=0;i<3;i++){var cls=hit===-1||i<hit?'dim':'';if(i===hit)cls='hl';if(hit!==-1&&i>hit)cls='dim';
+h+='<div class="'+cls+'">    '+(i==0?'if ':'elif ')+L[i][0]+':</div><div class="'+cls+'">        return "'+L[i][1]+'"</div>'}
+h+='<div class="'+(hit===-1?'hl':'dim')+'">    else:</div><div class="'+(hit===-1?'hl':'dim')+'">        return "D"</div>';
+document.getElementById('pcode').innerHTML=h;
+var r=hit===-1?'D':L[hit][1],benar=n>=90?'A':n>=80?'B':n>=70?'C':'D';
+document.getElementById('pres').innerHTML='Hasil: <b>'+r+'</b> '+(r===benar?'<span class="pill p-on">benar</span>':'<span class="pill p-hit">SALAH! seharusnya '+benar+' (urutan syarat keliru)</span>')+'<br><small>Baris yang menyala = syarat pertama yang benar; baris di bawahnya tidak pernah diperiksa.</small>'}
+pred();
+/* operator */
+function ops(){var a=parseFloat(document.getElementById('oa').value),b=parseFloat(document.getElementById('ob').value);
+function T(x){return Number.isInteger(x)&&!String(x).includes('.')?'int':'float'}
+if(isNaN(a)||isNaN(b)||b===0){document.getElementById('o1').textContent=document.getElementById('o2').textContent=document.getElementById('o3').textContent='(b tidak boleh 0)';return}
+var d=a/b,fd=Math.floor(a/b),m=((a%b)+b)%b;
+var s1=Number.isInteger(d)?d.toFixed(1):String(d);
+document.getElementById('o1').textContent=s1;document.getElementById('t1').textContent='float';
+document.getElementById('o2').textContent=fd;document.getElementById('t2').textContent='int';
+document.getElementById('o3').textContent=m;document.getElementById('t3').textContent='int';
+document.getElementById('o4').textContent=a===b?'True':'False'}
+ops();
+/* simulator rekap */
+var CODE=['def predikat(nilai):','    if nilai >= 90:','        return "A"','    elif nilai >= 80:','        return "B"','    elif nilai >= 70:','        return "C"','    else:','        return "D"','jumlah = 0','for i in range(1, 4):','    nilai = int(input("Nilai ke-" + str(i) + ": "))','    jumlah = jumlah + nilai','rata = jumlah / 3','print("Rata-rata: " + str(rata))','print("Predikat: " + predikat(rata))'];
+var steps=[],si=-1;
+function fmt(x){return Number.isInteger(x)?x.toFixed(1):String(x)}
+function predOf(r){return r>=90?['A',1]:r>=80?['B',3]:r>=70?['C',5]:['D',7]}
+function build(a){var s=[],v={};
+s.push({l:9,v:{jumlah:0},o:'',n:'jumlah diisi 0 (di LUAR perulangan).'});v.jumlah=0;
+var tot=0;
+for(var k=0;k<3;k++){var i=k+1;
+ s.push({l:10,v:Object.assign({},v,{i:i}),o:'',n:'Perulangan putaran ke-'+i+': i = '+i+' (range(1, 4) memberi 1, 2, 3).'});
+ s.push({l:11,v:Object.assign({},v,{i:i,nilai:a[k]}),o:'Nilai ke-'+i+': '+a[k],n:'Nilai dibaca. int() mengubah teks menjadi angka.'});
+ tot+=a[k];v={jumlah:tot};
+ s.push({l:12,v:{jumlah:tot,i:i,nilai:a[k]},o:'',n:'jumlah = jumlah + nilai = '+tot+'.'});v={jumlah:tot,i:i,nilai:a[k]}}
+var r=tot/3;s.push({l:13,v:{jumlah:tot,i:3,nilai:a[2],rata:fmt(r)},o:'',n:'rata = '+tot+' / 3 = '+fmt(r)+' (/ menghasilkan desimal).'});
+s.push({l:14,v:{jumlah:tot,i:3,nilai:a[2],rata:fmt(r)},o:'Rata-rata: '+fmt(r),n:'str(rata) mengubah angka menjadi teks lalu digabung.'});
+var p=predOf(r);s.push({l:15,v:{jumlah:tot,i:3,nilai:a[2],rata:fmt(r)},o:'Predikat: '+p[0],n:'Memanggil predikat('+fmt(r)+'): fungsi memeriksa dari atas dan mengembalikan "'+p[0]+'".',ext:p[1]});return s}
+function render(){var h='';CODE.forEach(function(c,i){var cur=si>=0&&steps[si].l===i;var inF=si>=0&&steps[si].l===15&&i===steps[si].ext&&false;
+h+='<div class="'+(cur?'hl':'')+'">'+String(i+1).padStart(2,' ')+'  '+esc(c)+'</div>'});
+document.getElementById('sim').innerHTML=h;
+if(si<0){document.getElementById('vars').innerHTML='<i>belum berjalan</i>';document.getElementById('out').textContent='';document.getElementById('simnote').textContent='';return}
+var s=steps[si],vh='';for(var k in s.v)vh+='<span>'+k+' = '+s.v[k]+'</span>';document.getElementById('vars').innerHTML=vh;
+var o='';for(var j=0;j<=si;j++)if(steps[j].o)o+=steps[j].o+'\n';document.getElementById('out').textContent=o;document.getElementById('simnote').textContent=s.n}
+function getIn(){return ['n1','n2','n3'].map(function(id){var x=parseInt(document.getElementById(id).value);return isNaN(x)?0:x})}
+function startSim(){steps=build(getIn());si=0;render()}
+function nextStep(){if(si<0){startSim();return}if(si<steps.length-1){si++;render()}else document.getElementById('simnote').textContent='Program selesai. Coba nilai lain, misalnya 80, 80, 80 (uji batas)!'}
+function resetSim(){si=-1;steps=[];render()}
+render();
+/* parsons */
+var PL=['jumlah = 0','for i in range(1, 4):','    nilai = int(input("Nilai ke-" + str(i) + ": "))','    jumlah = jumlah + nilai','rata = jumlah / 3','print("Rata-rata: " + str(rata))'];
+var pord=[2,4,5,3,0,1],pans=[];
+function pinit(){pans=[];document.getElementById('pfb').textContent='';prender()}
+function prender(){var b=document.getElementById('pbank'),a=document.getElementById('pans');b.innerHTML='';a.innerHTML='';
+pord.forEach(function(k){var e=document.createElement('div');e.className='pc'+(pans.indexOf(k)>-1?' used':'');e.textContent=PL[k];e.onclick=function(){pans.push(k);prender()};b.appendChild(e)});
+if(!pans.length)a.innerHTML='<i style="color:#94A3B8">kosong</i>';
+pans.forEach(function(k,ix){var e=document.createElement('div');e.className='pc';e.style.borderLeftColor='#2E9E6B';e.textContent=PL[k];e.onclick=function(){pans.splice(ix,1);prender()};a.appendChild(e)})}
+function pcheck(){var f=document.getElementById('pfb');if(pans.length<6){f.innerHTML='<b style="color:#B42335">Masih ada kartu yang belum dipasang.</b>';return}
+var ok=true;for(var i=0;i<6;i++)if(pans[i]!==i)ok=false;
+f.innerHTML=ok?'<b style="color:#14683F">Betul!</b> jumlah = 0 di luar perulangan, isi perulangan menjorok, lalu rata-rata dan cetak setelah perulangan selesai.':'<b style="color:#B42335">Belum tepat.</b> Petunjuk: apa yang harus dilakukan PERTAMA kali sebelum perulangan? Lalu, apa isi perulangan?'}
+pinit();
+/* bugs */
+var BUG=['def predikat(nilai):','    if nilai >= 70:','        return "C"','    elif nilai >= 80:','        return "B"','    elif nilai >= 90:','        return "A"','    else:','        return "D"','','jumlah = 0','for i in range(1, 3):','    nilai = input("Nilai ke-" + str(i) + ": ")','    jumlah = jumlah + nilai','rata = jumlah / 3','print("Rata-rata: " + rata)','print("Predikat: " + predikat(rata))'];
+var TARGET={1:['Urutan syarat salah: nilai 90 ke atas pun berhenti di `>= 70` dan menjadi "C". Tidak ada pesan error, tetapi hasilnya salah. Urutkan 90, 80, 70.','logika'],2:null,11:['range(1, 3) hanya menghasilkan 1, 2 (dua putaran). Seharusnya range(1, 4). Tidak ada pesan error, tetapi jumlah kurang.','logika'],12:['input() menghasilkan teks, sehingga jumlah + nilai memicu TypeError. Bungkus dengan int(...).','tipe'],15:['rata bertipe angka desimal; menggabungnya dengan teks memicu TypeError. Gunakan str(rata).','tipe']};
+var found={};
+(function(){var h='<div style="border-radius:12px;overflow:hidden">';BUG.forEach(function(l,i){h+='<button class="bugline" onclick="bchk('+i+',this)">'+String(i+1).padStart(2,' ')+'  '+esc(l)+'</button>'});h+='</div>';document.getElementById('bugbox').innerHTML=h})();
+function bchk(i,el){var fb=document.getElementById('bfb');
+var k=i;if(i>=1&&i<=6)k=1;var t=TARGET[k];
+if(t&&!found[k]){found[k]=1;el.classList.add('right');if(k===1)document.querySelectorAll('#bugbox .bugline').forEach(function(b,ix){if(ix>=1&&ix<=6)b.classList.add('right')});
+document.getElementById('bcount').textContent=Object.keys(found).length;fb.innerHTML='<b style="color:#14683F">Ketemu!</b> ('+t[1]+') '+esc(t[0]);if(Object.keys(found).length===4)fb.innerHTML+='<br><b>Semua bug ditemukan. Hebat, detektif!</b>'}
+else if(t&&found[k]){fb.textContent='Bug ini sudah kamu temukan.'}
+else{el.classList.add('wrong');fb.innerHTML='<b style="color:#B42335">Baris ini tidak salah.</b> Coba baca ulang dan telusuri.'}}
+/* quiz */
+var QZ=[
+['Blok "lainnya jika" dalam Python ditulis ...',['else if()','elif','elseif:','if not'],1,'Python memakai elif.'],
+['Nilai i pada for i in range(1, 6): adalah ...',['1 sampai 6','0 sampai 5','1 sampai 5','1 sampai 4'],2,'Ujung range tidak ikut.'],
+['Hasil 9 / 2 dan 9 // 2 berturut-turut ...',['4.5 dan 4','4 dan 4.5','4.5 dan 4.5','4 dan 4'],0,'/ desimal, // bulat.'],
+['Hasil 17 % 5 adalah ...',['3','2','3.4','12'],1,'Sisa bagi 17 oleh 5 adalah 2.'],
+['"Sama dengan" pada Python ditulis ...',['=','!=','==','<>'],2,'== membandingkan.'],
+['Fungsi: if n >= 70: return "C" / elif n >= 90: return "A". Untuk n = 95 hasilnya ...',['"A"','"B"','"C"','"D"'],2,'Syarat pertama yang benar adalah >= 70.'],
+['return "A" dalam fungsi berarti ...',['menampilkan A','membuat variabel A','mengulang fungsi','mengembalikan "A" ke pemanggil dan mengakhiri fungsi'],3,'return membawa nilai pulang.'],
+['jumlah = 0 lalu for i in range(1, 4): jumlah = jumlah + i. Nilai jumlah ...',['3','10','6','4'],2,'1 + 2 + 3 = 6.'],
+['"Rata-rata: " + rata error (rata = 90.0) karena ...',['tanda + tidak boleh','rata belum diisi','kutip salah','rata angka; perlu str()'],3,'Gunakan str(rata).'],
+['while i < 5: setara dengan blok ...',['ulangi sampai i = 5','ulangi 5 kali','ulangi selama i lebih dari 5','jika i < 5'],0,'Sampai i = 5 berarti berjalan selama i < 5.']];
+var ans=0,done=0,got={};
+(function(){var h='';QZ.forEach(function(q,i){h+='<div class="q"><b>'+(i+1)+'. '+esc(q[0])+'</b>';q[1].forEach(function(o,j){h+='<div class="opt" onclick="ans_('+i+','+j+',this)">'+'ABCD'[j]+'. '+esc(o)+'</div>'});h+='<div class="fb" id="qf'+i+'"></div></div>'});document.getElementById('quiz').innerHTML=h})();
+function ans_(i,j,el){if(got[i]!==undefined)return;got[i]=j;var q=QZ[i],box=el.parentNode.querySelectorAll('.opt');box[q[2]].classList.add('good');if(j!==q[2])el.classList.add('no');else ans++;done++;
+document.getElementById('qf'+i).textContent=(j===q[2]?'Benar. ':'Kurang tepat. ')+q[3];
+document.getElementById('qscore').textContent='Skor: '+ans+' / '+QZ.length+(done===QZ.length?(ans>=8?'  - Luar biasa, pemrogram handal!':ans>=6?'  - Kerja bagus! Coba ulangi yang salah.':'  - Ayo baca Kotak Referensi lagi.'):'')}
+</script>
+</body>
+</html>

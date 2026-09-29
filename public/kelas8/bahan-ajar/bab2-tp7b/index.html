@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Level Up! Operasi Bilangan dan Sandi Data — Materi Siswa TP 7 Pertemuan 2</title>
+<meta name="description" content="Materi belajar operasi bilangan biner, oktal, heksadesimal, komplemen dua, ASCII, operasi bit, dan checksum. Informatika Kelas VIII, Bab II Berpikir Komputasional, TP 7 Pertemuan 2.">
+<style>
+:root{--dec:#F97316;--bin:#2563EB;--oct:#16A34A;--hex:#9333EA;--ink:#1E293B;--muted:#64748B;--line:#CBD5E1;--soft:#F1F5F9;--navy:#1E3A8A}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;font-family:"Segoe UI",Calibri,system-ui,-apple-system,Arial,sans-serif;color:var(--ink);background:#F8FAFC;line-height:1.65;font-size:17px}
+.wrap{max-width:900px;margin:0 auto;padding:0 18px 60px}
+nav.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+nav.top .in{max-width:900px;margin:0 auto;display:flex;gap:6px;overflow-x:auto;padding:10px 18px;scrollbar-width:thin}
+nav.top a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:600;font-size:14px;padding:5px 12px;border-radius:999px;background:var(--soft)}
+nav.top a:hover,nav.top a:focus{background:var(--navy);color:#fff;outline:none}
+.hero{margin:18px 0 8px}.hero img{width:100%;height:auto;border-radius:18px;display:block;box-shadow:0 8px 24px rgba(30,58,138,.25)}
+.meta{color:var(--muted);font-size:14px;margin:8px 4px}
+h2.sec{font-size:26px;line-height:1.25;margin:44px 0 12px;padding:10px 16px;border-radius:14px;color:#fff;background:var(--c,var(--navy))}
+h3{font-size:20px;margin:26px 0 8px;color:var(--navy)}
+h4{margin:6px 0;font-size:17px}
+p{margin:0 0 12px}
+b{font-weight:700}
+sub,sup{line-height:0}
+code{font-family:Consolas,"DejaVu Sans Mono",monospace;background:#E8EEF7;border-radius:4px;padding:1px 6px;font-size:.92em}
+figure{margin:18px auto;text-align:center}
+figure img{max-width:100%;height:auto;border-radius:12px;border:1px solid var(--line);background:#fff}
+figcaption{font-size:14px;color:var(--muted);margin-top:6px;font-style:italic}
+.imgtext{display:flex;gap:20px;align-items:center;margin:8px 0 12px}
+.imgtext img{width:150px;height:auto;flex:none}
+.box{border-radius:14px;padding:12px 16px 6px;margin:16px 0;border:2px solid;border-left-width:8px}
+.box p,.box li{margin:0 0 8px}.box ul,.box ol{margin:0 0 8px;padding-left:22px}
+.box-title{font-weight:800;margin-bottom:4px}
+.box.info{background:#DBEAFE;border-color:#2563EB}.box.info .box-title{color:#1D4ED8}
+.box.tip{background:#DCFCE7;border-color:#16A34A}.box.tip .box-title{color:#15803D}
+.box.warn{background:#FFEDD5;border-color:#F97316}.box.warn .box-title{color:#C2410C}
+.box.try{background:#F3E8FF;border-color:#9333EA}.box.try .box-title{color:#7E22CE}
+.box.note{background:#F1F5F9;border-color:#94A3B8}
+details.ans{background:#FEF9C3;border:2px solid #CA8A04;border-radius:14px;padding:4px 16px;margin:14px 0}
+details.ans summary{cursor:pointer;font-weight:800;color:#854D0E;padding:8px 0;list-style:none}
+details.ans summary::before{content:"\25B6  ";font-size:12px}
+details.ans[open] summary::before{content:"\25BC  "}
+details.ans p{margin:0 0 8px}
+.formula{text-align:center;font-size:24px;font-weight:800;color:var(--navy);background:#EEF2FF;border-top:2px solid #C7D2FE;border-bottom:2px solid #C7D2FE;padding:10px;margin:14px 0}
+.tbl{overflow-x:auto;margin:14px 0}
+table{border-collapse:collapse;width:100%;background:#fff;font-size:15.5px}
+th{background:var(--navy);color:#fff;padding:8px 8px;border:1px solid var(--line)}
+td{padding:8px 10px;border:1px solid var(--line);vertical-align:middle}
+table.center td{text-align:center}
+td.fc{font-weight:700}
+tbody tr:nth-child(even){background:#F8FAFC}
+ul,ol{padding-left:24px}li{margin-bottom:6px}
+.widget{background:#fff;border:3px solid var(--navy);border-radius:18px;padding:16px 20px 18px;margin:26px 0;box-shadow:0 6px 0 rgba(30,58,138,.15)}
+.widget h3{margin-top:4px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.btn{font:inherit;font-weight:700;border:0;border-radius:999px;background:var(--navy);color:#fff;padding:9px 20px;cursor:pointer}
+.btn:hover{background:#2563EB}.btn.ghost{background:#E2E8F0;color:var(--ink)}.btn.ghost:hover{background:#CBD5E1}
+.btn:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible,.card:focus-visible{outline:3px solid #F97316;outline-offset:2px}
+.target{font-size:22px;margin:6px 0}.target b{color:var(--bin);font-size:30px}
+.cards{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0 6px}
+.card{width:78px;height:96px;border-radius:12px;border:3px dashed #94A3B8;background:#E2E8F0;color:#64748B;font:inherit;font-weight:800;font-size:26px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 5px 0 #CBD5E1;transition:transform .1s}
+.card small{font-size:12px;font-weight:600}
+.card.on{background:var(--bin);color:#fff;border:3px solid var(--bin);box-shadow:0 5px 0 #1D4ED8;transform:translateY(-3px)}
+.bits{text-align:center;font-size:34px;font-weight:800;color:var(--bin);letter-spacing:6px}
+.mono{font-family:Consolas,"DejaVu Sans Mono",monospace}
+.sum{text-align:center;font-size:19px;min-height:28px}
+.msg{text-align:center;font-weight:800;min-height:28px}.msg.ok{color:#15803D}.msg.no{color:#B45309}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:720px){.two{grid-template-columns:1fr}.imgtext{flex-direction:column;text-align:center}body{font-size:16px}.card{width:64px;height:84px;font-size:22px}}
+label{display:block;margin:8px 0;font-weight:600;font-size:15px}
+input,select{font:inherit;display:block;width:100%;margin-top:4px;padding:8px 10px;border:2px solid var(--line);border-radius:10px;background:#fff}
+.out{margin-top:10px;font-size:15px}.out .res{font-size:22px;font-weight:800;color:var(--navy);margin:8px 0}
+.out table{font-size:14.5px}.out td,.out th{text-align:center;padding:5px 6px}
+.err{color:#B91C1C;font-weight:700}
+.warn-inline{background:#FFEDD5;border-radius:10px;padding:8px 12px;font-size:15px}
+.q{border:2px solid var(--line);border-radius:14px;padding:10px 14px;margin:12px 0;background:#fff}
+.q legend{font-weight:700;padding:0 6px}
+.q label{font-weight:500;display:flex;gap:8px;align-items:flex-start;margin:5px 0;cursor:pointer}
+.q input{width:auto;margin:5px 0 0}
+.q.right{border-color:#16A34A;background:#F0FDF4}.q.wrong{border-color:#DC2626;background:#FEF2F2}
+.fb{margin-top:6px;font-size:15px}
+.score{font-size:22px;font-weight:800;color:var(--navy);margin-top:12px}
+footer{margin-top:50px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:14px;text-align:center}
+
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.mono{font-family:Consolas,"DejaVu Sans Mono",monospace}
+input.mono{letter-spacing:2px;font-size:18px}
+.gridtbl{border-collapse:collapse;width:auto;margin:8px auto;background:#fff}
+.gridtbl td,.gridtbl th{border:0;padding:4px 8px;text-align:center;font-family:Consolas,"DejaVu Sans Mono",monospace;font-size:20px;background:transparent;color:var(--ink)}
+.gridtbl tr.cy td{color:#F97316;font-size:15px;font-weight:700}
+.gridtbl tr.rs td{border-top:3px solid var(--navy);font-weight:800;color:var(--bin)}
+.gridtbl td.lb{font-family:inherit;font-size:14px;text-align:right;color:var(--muted);font-weight:600;white-space:nowrap}
+.gridtbl td.hl{background:#DBEAFE;border-radius:6px}
+.steps{margin:8px 0;font-size:15.5px}
+.steps div{margin:3px 0}
+.lamp{display:inline-block;width:18px;height:18px;border-radius:50%;vertical-align:middle;margin-right:6px}
+.lamp.g{background:#16A34A;box-shadow:0 0 10px #16A34A}.lamp.r{background:#DC2626;box-shadow:0 0 10px #DC2626}
+@media(max-width:720px){.three{grid-template-columns:1fr 1fr 1fr;gap:8px}.gridtbl td,.gridtbl th{padding:3px 4px;font-size:17px}}
+
+@media print{nav.top,.widget{display:none}body{background:#fff}details.ans{break-inside:avoid}}
+</style>
+</head>
+<body>
+<nav class="top" aria-label="Navigasi bagian"><div class="in"><a href="#level0">Level 0</a><a href="#level1">Level 1</a><a href="#level2">Level 2</a><a href="#level3">Level 3</a><a href="#level4">Level 4</a><a href="#boss">Boss</a><a href="#detektif">Detektif Kesalahan</a><a href="#cpu">Di Balik Layar</a><a href="#rangkuman">Rangkuman</a><a href="#latihan">Latihan Mandiri</a><a href="#refleksi">Refleksi</a><a href="#kamus">Kamus Mini</a></div></nav>
+<main class="wrap">
+<header class="hero"><img src="images/41_banner_p2.png" alt="Banner Level Up: Operasi Bilangan dan Sandi Data"><p class="meta">Materi Siswa  •  Informatika Kelas VIII  •  Bab II Berpikir Komputasional  •  TP 7  •  Pertemuan 2</p></header>
+<h2 class="sec" id="halo">Halo lagi, Agen Sandi!</h2>
+<div class="imgtext"><img src="images/16_maskot_bibi.png" alt="Bibi, robot maskot" loading="lazy"><div><p>Minggu lalu kamu sudah jago <b>mengubah</b> bilangan: desimal, biner, oktal, dan heksadesimal. Hari ini kita <b>naik level</b>. Kamu akan <b>mengoperasikan</b> bilangan: menjumlah, mengurang, membuat bilangan negatif, sampai mengubah huruf menjadi angka.</p><p>Ada kabar dari <b>Bibi</b>: brankas digital sekolah terkunci! Kodenya tersebar di empat level. Ayo kumpulkan semua kode dan buka brankasnya.</p></div></div>
+<figure style="max-width:100%"><img src="images/42_peta_level.png" alt="Gambar 1. Peta misi hari ini: empat level dan satu Boss" loading="lazy"><figcaption>Gambar 1. Peta misi hari ini: empat level dan satu Boss</figcaption></figure>
+<div class="box info"><div class="box-title">Misi kita hari ini</div><ul><li>Menjumlah dan mengurangkan <b>bilangan biner</b> (simpan dan pinjam).</li><li>Menjumlah dan mengurangkan <b>bilangan oktal dan heksadesimal</b>.</li><li>Membuat <b>bilangan negatif</b> dengan komplemen dua dan memahami <b>overflow</b>.</li><li>Mengubah <b>teks menjadi biner</b> (ASCII) dan memakai <b>operasi bit</b> (AND, OR, XOR).</li><li>Memeriksa hasil dengan <b>checksum</b>, lalu menemukan <b>kesalahan</b> pada pekerjaan orang lain.</li></ul></div>
+<div class="box tip"><div class="box-title">Cara mainnya</div><p>Kelompokmu berputar ke <b>4 stasiun</b>. Di tiap stasiun ada <b>Kartu Bantu</b> (contoh) dan <b>Kartu Tantangan</b>. Tulis jawabanmu di <b>Lembar Misi (LKPD)</b>.</p><p>Selalu <b>cek jawabanmu dengan desimal</b>. Kalau hasil biner tidak cocok dengan hitungan desimal, ada yang salah, dan justru di situlah serunya mencari kesalahannya.</p></div>
+<h2 class="sec" id="level0" style="--c:#F97316">Level 0: Pemanasan</h2>
+<p>Sebelum naik level, cek dulu kemampuan minggu lalu. Kerjakan di bukumu, lalu buka kotak jawaban.</p>
+<div class="box try"><div class="box-title">Ayo Temukan!</div><ol><li>Ubah 1010<sub>2</sub> ke desimal.</li><li>Ubah 45<sub>10</sub> ke biner (bagi terus dengan 2, sisa dibaca dari bawah ke atas).</li><li>Ubah 1010 1001<sub>2</sub> ke heksadesimal dengan jalan pintas 4 bit.</li></ol></div>
+<details class="ans"><summary>Kotak Jawaban Level 0</summary><p>1. 1×8 + 0×4 + 1×2 + 0×1 = <b>10</b>.</p><p>2. 45 ÷ 2 = 22 sisa 1; 22 ÷ 2 = 11 sisa 0; 11 ÷ 2 = 5 sisa 1; 5 ÷ 2 = 2 sisa 1; 2 ÷ 2 = 1 sisa 0; 1 ÷ 2 = 0 sisa 1. Dibaca dari bawah: <b>101101</b><sub>2</sub>.</p><p>3. 1010 = A dan 1001 = 9, jadi <b>A9</b><sub>16</sub>.</p></details>
+<h2 class="sec" id="level1" style="--c:#2563EB">Level 1: Si Penjumlah Biner</h2>
+<p>Menjumlah bilangan biner sama seperti menjumlah di kertas waktu SD: dari <b>kanan</b> ke kiri, dan ada <b>simpanan</b>. Bedanya, di biner simpanan muncul jauh lebih cepat, karena simbolnya cuma dua!</p>
+<figure style="max-width:100%"><img src="images/43_aturan_penjumlahan.png" alt="Gambar 2. Lima aturan dasar penjumlahan biner" loading="lazy"><figcaption>Gambar 2. Lima aturan dasar penjumlahan biner</figcaption></figure>
+<div class="box try"><div class="box-title">Ayo Temukan!</div><p>Tebak: berapa 1 + 1 + 1 di biner? (Petunjuk: tiga sama dengan satu ditambah dua, dan dua ditulis 10.)</p></div>
+<details class="ans"><summary>Jawaban</summary><p>1 + 1 + 1 = 3 = <b>11</b><sub>2</sub>. Tulis 1, simpan 1.</p></details>
+<figure style="max-width:100%"><img src="images/44_tambah_biner_contoh.png" alt="Gambar 3. Dua contoh penjumlahan biner dengan simpanan" loading="lazy"><figcaption>Gambar 3. Dua contoh penjumlahan biner dengan simpanan</figcaption></figure>
+
+<section class="widget" id="w-jumlah" aria-label="Kalkulator penjumlah dan pengurang biner">
+  <h3>Coba Sendiri: Penjumlah dan Pengurang Biner</h3>
+  <p class="warn-inline">Kerjakan dulu di bukumu, baru cek di sini. Perhatikan simpanan dan langkahnya, bukan hanya hasil akhirnya.</p>
+  <div class="two">
+    <label>Bilangan A (biner, maks. 8 bit) <input id="j-a" class="mono" type="text" inputmode="numeric" value="1011" autocomplete="off" spellcheck="false"></label>
+    <label>Bilangan B (biner, maks. 8 bit) <input id="j-b" class="mono" type="text" inputmode="numeric" value="0110" autocomplete="off" spellcheck="false"></label>
+  </div>
+  <div class="btns"><button id="j-add" class="btn" type="button">A + B</button><button id="j-sub" class="btn ghost" type="button">A &minus; B (komplemen dua)</button></div>
+  <div id="j-out" class="out" role="status"></div>
+</section>
+<div class="box info"><div class="box-title">Langkah menjumlah biner</div><ol><li>Sejajarkan bilangan dari <b>kanan</b>.</li><li>Jumlahkan tiap kolom: <b>bit atas + bit bawah + simpanan</b>.</li><li>Jumlah 0 atau 1: tulis apa adanya. Jumlah 2 atau 3: tulis <b>sisanya</b> (0 atau 1), <b>simpan 1</b> ke kolom kiri.</li><li>Kalau kolom terakhir masih menyisakan simpanan, tulis di paling kiri.</li><li><b>Cek dengan desimal.</b></li></ol></div>
+<div class="box try"><div class="box-title">Ayo hitung!</div><ol><li>0110 + 0011 = ?</li><li>1011 + 0110 = ? (cek di kertas, lalu bandingkan dengan Gambar 3)</li><li>1011 0110 + 0011 1101 = ? (ini 8 bit; tulis hasilnya dalam biner dan desimal)</li></ol></div>
+<details class="ans"><summary>Kotak Jawaban Level 1</summary><p>1. 0110 + 0011 = <b>1001</b> (6 + 3 = 9).</p><p>2. 1011 + 0110 = <b>10001</b> (11 + 6 = 17).</p><p>3. 10110110 + 00111101 = <b>11110011</b><sub>2</sub> = <b>243</b><sub>10</sub> (182 + 61 = 243). Dengan jalan pintas 4 bit, 1111 0011 = <b>F3</b><sub>16</sub>. Catat, ini Kode 1 untuk brankas!</p></details>
+<div class="box tip"><div class="box-title">Jalan pintas biner ke heksa</div><p>Setelah dapat hasil biner, kelompokkan <b>4 bit</b> dari kanan. 1111 = F, 0011 = 3. Hasilnya F3. Tidak perlu diubah ke desimal dulu.</p></div>
+<h2 class="sec" id="level2" style="--c:#F97316">Level 2: Pengurangan dan Bilangan Negatif</h2>
+<h3>Mengurang dengan meminjam</h3>
+<p>Mengurang biner juga mirip mengurang biasa. Kalau bit atas lebih kecil dari bit bawah (0 − 1), kita <b>meminjam</b> dari kolom kiri. Satu pinjaman dari kolom kiri bernilai <b>2</b> di kolom ini (bukan 10!).</p>
+<figure style="max-width:100%"><img src="images/45_kurang_biner_pinjam.png" alt="Gambar 4. Contoh 0110 − 0011 dengan pinjam berantai" loading="lazy"><figcaption>Gambar 4. Contoh 0110 − 0011 dengan pinjam berantai</figcaption></figure>
+<div class="box try"><div class="box-title">Ayo Temukan!</div><ol><li>Hitung 1101 − 0101. Adakah kolom yang perlu meminjam?</li><li>Cek dengan desimal: berapa 13 − 5?</li></ol></div>
+<details class="ans"><summary>Jawaban</summary><p>1. Kolom 0: 1−1 = 0. Kolom 1: 0−0 = 0. Kolom 2: 1−1 = 0. Kolom 3: 1−0 = 1. Hasil <b>1000</b><sub>2</sub>. Tidak ada yang meminjam.</p><p>2. 13 − 5 = <b>8</b>, dan 1000<sub>2</sub> = 8. Cocok!</p></details>
+<h3>Trik komputer: komplemen dua</h3>
+<p>Meminjam berantai itu rawan salah. Komputer tidak mau repot. Ia mengubah soal pengurangan jadi soal <b>penjumlahan</b>: <b>13 − 5 = 13 + (−5)</b>. Supaya bisa begitu, kita perlu cara menulis bilangan <b>negatif</b> dalam biner. Caranya disebut <b>komplemen dua</b>.</p>
+<figure style="max-width:100%"><img src="images/46_komplemen_dua.png" alt="Gambar 5. Membuat bilangan negatif dengan komplemen dua" loading="lazy"><figcaption>Gambar 5. Membuat bilangan negatif dengan komplemen dua</figcaption></figure>
+
+<section class="widget" id="w-kompl" aria-label="Pembuat komplemen dua">
+  <h3>Coba Sendiri: Pembuat Bilangan Negatif</h3>
+  <p>Masukkan bilangan bulat dari <b>&minus;128</b> sampai <b>127</b>. Lihat langkah komplemen dua 8 bit.</p>
+  <label>Bilangan desimal <input id="n-n" type="number" min="-128" max="127" value="-20"></label>
+  <button id="n-go" class="btn" type="button">Tampilkan</button>
+  <div id="n-out" class="out" role="status"></div>
+</section>
+<div class="formula">−x = (balik semua bit x) + 1</div>
+<div class="box info"><div class="box-title">Catat!</div><ul><li>Bit paling kiri adalah <b>tanda</b>: 0 berarti positif, 1 berarti negatif.</li><li>Bilangan 8 bit bertanda bisa menyimpan <b>−128 sampai +127</b>.</li><li>Kalau bit negatif dijumlahkan, <b>carry di luar 8 bit dibuang</b>.</li></ul></div>
+<div class="box try"><div class="box-title">Ayo hitung!</div><ol><li>Tentukan komplemen dua 8 bit dari −20. Tulis juga dalam heksadesimal.</li><li>Hitung 13 + (−5) dengan komplemen dua 8 bit. Berapa hasilnya setelah carry dibuang?</li></ol></div>
+<details class="ans"><summary>Kotak Jawaban</summary><p>1. 20 = 00010100. Balik bit: 11101011. Tambah 1: <b>11101100</b> = <b>EC</b><sub>16</sub>. Catat, ini Kode 2 untuk brankas!</p><p>2. 13 = 00001101 dan −5 = 11111011. Jumlah: 1 00001000. Buang carry: <b>00001000 = 8</b>. Cocok dengan 13 − 5!</p></details>
+<h3>Kalau tempatnya kurang: overflow</h3>
+<figure style="max-width:100%"><img src="images/47_overflow.png" alt="Gambar 6. Overflow terjadi saat hasil melebihi kapasitas bit" loading="lazy"><figcaption>Gambar 6. Overflow terjadi saat hasil melebihi kapasitas bit</figcaption></figure>
+<div class="box warn"><div class="box-title">Awas overflow!</div><p>Pada 8 bit tanpa tanda, nilai terbesar adalah <b>255</b> (= 2<sup>8</sup> − 1). 255 + 1 tidak menjadi 256, tetapi kembali ke <b>0</b>. Ini seperti odometer motor yang berputar kembali ke 000000. Karena itu skor game bisa tiba-tiba turun, dan program yang ceroboh bisa dibobol.</p></div>
+<h2 class="sec" id="level3" style="--c:#16A34A">Level 3: Oktal dan Heksa Ikut Menjumlah</h2>
+<p>Aturannya <b>sama persis</b> dengan biner dan desimal. Yang berubah hanya patokannya: <b>simpan 1 kalau jumlah kolom ≥ basis</b>, dan yang ditulis adalah <b>jumlah − basis</b>.</p>
+<figure style="max-width:100%"><img src="images/48_oktal_heksa_tambah.png" alt="Gambar 7. Penjumlahan oktal dan heksadesimal" loading="lazy"><figcaption>Gambar 7. Penjumlahan oktal dan heksadesimal</figcaption></figure>
+<div class="box info"><div class="box-title">Ingat huruf heksa</div><p>A = 10, B = 11, C = 12, D = 13, E = 14, F = 15. Waktu menjumlah, ubah dulu hurufnya ke angka, hitung, lalu ubah kembali ke huruf.</p></div>
+<div class="box try"><div class="box-title">Ayo hitung!</div><ol><li>65<sub>8</sub> + 27<sub>8</sub> = ?</li><li>745<sub>8</sub> + 366<sub>8</sub> = ? (cek dengan desimal)</li><li>7A<sub>16</sub> + 4F<sub>16</sub> = ?</li><li>3E<sub>16</sub> − 1B<sub>16</sub> = ?</li></ol></div>
+<details class="ans"><summary>Kotak Jawaban Level 3</summary><p>1. 5+7 = 12 = 14<sub>8</sub> (tulis 4, simpan 1); 6+2+1 = 9 = 11<sub>8</sub> (tulis 1, simpan 1); simpanan ditulis. Hasil <b>114</b><sub>8</sub> (53 + 23 = 76).</p><p>2. Tiap kolom berjumlah 11 = 13<sub>8</sub>. Hasil <b>1333</b><sub>8</sub> (485 + 246 = 731).</p><p>3. A+F = 25 = 19<sub>16</sub> (tulis 9, simpan 1); 7+4+1 = 12 = C. Hasil <b>C9</b><sub>16</sub> (122 + 79 = 201). Catat, ini Kode 3!</p><p>4. E−B = 14−11 = 3; 3−1 = 2. Hasil <b>23</b><sub>16</sub> (62 − 27 = 35).</p></details>
+<h2 class="sec" id="level4" style="--c:#9333EA">Level 4: Sandi Data (ASCII dan Operasi Bit)</h2>
+<p>Komputer hanya kenal angka. Lalu bagaimana ia menyimpan <b>huruf</b>? Setiap huruf, angka, dan tanda baca diberi <b>nomor</b>. Daftarnya disebut <b>ASCII</b>. Nomor itulah yang disimpan dalam biner 8 bit.</p>
+<figure style="max-width:100%"><img src="images/49_tabel_ascii.png" alt="Gambar 8. Tabel ASCII (huruf dan angka)" loading="lazy"><figcaption>Gambar 8. Tabel ASCII (huruf dan angka)</figcaption></figure>
+<figure style="max-width:100%"><img src="images/50_teks_ke_biner.png" alt="Gambar 9. Kata TARAKAN menjadi deretan bilangan biner" loading="lazy"><figcaption>Gambar 9. Kata TARAKAN menjadi deretan bilangan biner</figcaption></figure>
+
+<section class="widget" id="w-ascii" aria-label="Penyandi ASCII">
+  <h3>Coba Sendiri: Penyandi ASCII</h3>
+  <div class="two">
+    <div>
+      <h4>Teks &rarr; biner</h4>
+      <label>Ketik teks (maks. 12 karakter) <input id="a-t" type="text" maxlength="12" value="TARAKAN" autocomplete="off" spellcheck="false"></label>
+      <button id="a-go" class="btn" type="button">Sandikan</button>
+      <div id="a-out" class="out"></div>
+    </div>
+    <div>
+      <h4>Biner &rarr; teks</h4>
+      <label>Tulis biner 8 bit, pisahkan dengan spasi <input id="a-b" class="mono" type="text" value="01001011 01000001 01001110" autocomplete="off" spellcheck="false"></label>
+      <button id="a-back" class="btn" type="button">Baca sandi</button>
+      <div id="a-out2" class="out"></div>
+    </div>
+  </div>
+</section>
+<div class="box tip"><div class="box-title">Jalan pintas membaca huruf besar</div><p>Huruf besar selalu berawalan <b>010</b>. Lima bit terakhir menunjukkan <b>urutan huruf</b> dalam alfabet. Contoh: 010<b>10100</b> → 10100 = 20 → huruf ke-20 = <b>T</b>. Kamu tidak perlu menghitung sampai 84!</p></div>
+<div class="box try"><div class="box-title">Ayo sandikan!</div><ol><li>Bacalah pesan: 01001011 01000001 01001110. Huruf apa saja? (Petunjuk: pakai jalan pintas.)</li><li>Tulis kata <b>BIT</b> dalam biner 8 bit (B = 66, I = 73, T = 84).</li></ol></div>
+<details class="ans"><summary>Jawaban</summary><p>1. 01001011 → 01011 = 11 → <b>K</b>. 01000001 → 00001 = 1 → <b>A</b>. 01001110 → 01110 = 14 → <b>N</b>. Pesannya <b>KAN</b>.</p><p>2. B = 66 = <b>01000010</b>; I = 73 = <b>01001001</b>; T = 84 = <b>01010100</b>.</p></details>
+<h3>Operasi bit: AND, OR, XOR</h3>
+<p>Selain menjumlah, komputer mengolah bit lewat <b>operasi logika</b>. Tiap kolom dihitung sendiri-sendiri.</p>
+<figure style="max-width:100%"><img src="images/51_operasi_bit.png" alt="Gambar 10. Tabel kebenaran AND, OR, XOR, dan NOT" loading="lazy"><figcaption>Gambar 10. Tabel kebenaran AND, OR, XOR, dan NOT</figcaption></figure>
+<figure style="max-width:100%"><img src="images/52_besar_kecil_bit.png" alt="Gambar 11. Satu operasi bit mengubah huruf besar menjadi huruf kecil" loading="lazy"><figcaption>Gambar 11. Satu operasi bit mengubah huruf besar menjadi huruf kecil</figcaption></figure>
+
+<section class="widget" id="w-bit" aria-label="Kalkulator operasi bit">
+  <h3>Coba Sendiri: Operasi Bit</h3>
+  <div class="two">
+    <label>Bilangan A (biner, maks. 8 bit) <input id="b-a" class="mono" type="text" inputmode="numeric" value="01001011" autocomplete="off" spellcheck="false"></label>
+    <label>Bilangan B (biner, maks. 8 bit) <input id="b-b" class="mono" type="text" inputmode="numeric" value="00100000" autocomplete="off" spellcheck="false"></label>
+  </div>
+  <div class="btns"><button class="btn bop" data-op="AND" type="button">A AND B</button><button class="btn bop" data-op="OR" type="button">A OR B</button><button class="btn bop" data-op="XOR" type="button">A XOR B</button><button class="btn ghost bop" data-op="NOT" type="button">NOT A</button></div>
+  <div id="b-out" class="out" role="status"></div>
+</section>
+<div class="box try"><div class="box-title">Ayo hitung!</div><ol><li>1010 AND 0110 = ?   1010 OR 0110 = ?   1010 XOR 0110 = ?</li><li>Ubah huruf ‘K’ (01001011) menjadi ‘k’ dengan OR terhadap 00100000. Hasilnya berapa?</li><li><b>Sandi rahasia:</b> XOR-kan ‘K’ (01001011) dengan kunci 00001111. Lalu XOR-kan hasilnya sekali lagi dengan kunci yang sama. Apa yang kamu temukan?</li></ol></div>
+<details class="ans"><summary>Kotak Jawaban Level 4</summary><p>1. AND = <b>0010</b>; OR = <b>1110</b>; XOR = <b>1100</b>.</p><p>2. 01001011 OR 00100000 = <b>01101011</b> = ‘k’ (107).</p><p>3. 01001011 XOR 00001111 = <b>01000100</b> (huruf D). XOR sekali lagi dengan 00001111 = <b>01001011</b> (‘K’ kembali!). XOR dengan kunci yang sama dua kali mengembalikan data asli, sehingga cocok untuk sandi sederhana.</p></details>
+<div class="box info"><div class="box-title">Kata sandi brankas</div><p>Bacalah 01010100 01000001 01010010 01000001 01001011 01000001 01001110 dengan jalan pintasmu. Kata apa yang muncul? Jawabannya adalah <b>kata sandi</b> brankas!</p></div>
+<details class="ans"><summary>Jawaban kata sandi</summary><p>T (10100 = 20), A (1), R (10010 = 18), A (1), K (01011 = 11), A (1), N (01110 = 14): <b>TARAKAN</b>.</p></details>
+<h2 class="sec" id="boss" style="--c:#CA8A04">Boss: Buka Brankas!</h2>
+<figure style="max-width:100%"><img src="images/55_brankas.png" alt="Gambar 12. Brankas digital sekolah dengan pemeriksaan checksum" loading="lazy"><figcaption>Gambar 12. Brankas digital sekolah dengan pemeriksaan checksum</figcaption></figure>
+
+<section class="widget" id="w-brankas" aria-label="Simulasi brankas">
+  <h3>Boss: Simulasi Brankas</h3>
+  <p>Masukkan tiga kode heksadesimal (2 digit) dari Level 1, 2, dan 3, lalu tekan <b>Cek checksum</b>.</p>
+  <div class="three">
+    <label>Kode 1 <input id="s-1" class="mono" type="text" maxlength="2" autocomplete="off" spellcheck="false" placeholder="??"></label>
+    <label>Kode 2 <input id="s-2" class="mono" type="text" maxlength="2" autocomplete="off" spellcheck="false" placeholder="??"></label>
+    <label>Kode 3 <input id="s-3" class="mono" type="text" maxlength="2" autocomplete="off" spellcheck="false" placeholder="??"></label>
+  </div>
+  <button id="s-go" class="btn" type="button">Cek checksum</button>
+  <div id="s-out" class="out" role="status"></div>
+  <div id="s-pass" hidden>
+    <label>Kata sandi (hasil Level 4) <input id="s-word" type="text" maxlength="12" autocomplete="off" spellcheck="false"></label>
+    <button id="s-open" class="btn" type="button">Buka brankas</button>
+    <div id="s-msg" class="msg" role="status"></div>
+  </div>
+</section>
+<p>Kumpulkan tiga kode dari Level 1, 2, dan 3 (heksadesimal), lalu jalankan pemeriksaan <b>checksum</b>: jumlahkan ketiga kode, <b>buang carry di luar 8 bit</b>. Kalau semuanya benar, lampu hijau menyala.</p>
+<div class="box try"><div class="box-title">Ayo Temukan!</div><ol><li>Tulis tiga kodemu: Kode 1 = ___, Kode 2 = ___, Kode 3 = ___.</li><li>Jumlahkan ketiganya dalam heksadesimal. Berapa hasilnya? Berapa 8 bit terakhirnya?</li></ol></div>
+<details class="ans"><summary>Kotak Jawaban Boss</summary><p>1. Kode 1 = <b>F3</b>, Kode 2 = <b>EC</b>, Kode 3 = <b>C9</b>.</p><p>2. F3 + EC = 1DF; 1DF + C9 = 2A8. Delapan bit terakhir (buang carry 2) = <b>A8</b>. Lampu hijau!  (Cek desimal: 243 + 236 + 201 = 680 = 2×256 + 168 dan 168 = A8.)</p><p>Kalau hasilmu bukan A8, ada satu level yang keliru. Periksa satu per satu dengan cek desimal.</p></details>
+<h2 class="sec" id="detektif" style="--c:#F97316">Detektif Kesalahan</h2>
+<p>Teknisi Andi tergesa-gesa dan membuat tiga kesalahan. Bantu Andi: temukan letak salahnya, jelaskan penyebabnya, lalu betulkan!</p>
+<figure style="max-width:100%"><img src="images/56_laporan_andi.png" alt="Gambar 13. Laporan Teknisi Andi" loading="lazy"><figcaption>Gambar 13. Laporan Teknisi Andi</figcaption></figure>
+<details class="ans"><summary>Kotak Jawaban</summary><p>A. Andi lupa menambahkan <b>simpanan</b> dari kolom paling kanan ke kolom berikutnya. Yang benar: 1101 + 0111 = <b>10100</b> (13 + 7 = 20).</p><p>B. Andi memakai aturan <b>basis 10</b> (12 → tulis 2, simpan 1). Di oktal 12 = 14<sub>8</sub>, jadi tulis 4 simpan 1. Lalu 4+3+1 = 8 = 10<sub>8</sub>. Yang benar <b>104</b><sub>8</sub>. Digit 8 tidak boleh ada di oktal.</p><p>C. Andi lupa <b>menambah 1</b> setelah membalik bit. Yang benar: 11111010 (FA<sub>16</sub>), karena −6 = 256 − 6 = 250.</p></details>
+<h2 class="sec" id="cpu" style="--c:#2563EB">Di Balik Layar: Kok Komputer Bisa Menjumlah?</h2>
+<figure style="max-width:100%"><img src="images/57_penjumlah_cpu.png" alt="Gambar 14. Rangkaian penjumlah di dalam CPU" loading="lazy"><figcaption>Gambar 14. Rangkaian penjumlah di dalam CPU</figcaption></figure>
+<p>Aturan yang kamu temukan, yaitu <b>1 + 1 = 10</b> dan <b>simpan ke kolom kiri</b>, ditanamkan ke dalam rangkaian elektronik di CPU. Satu rangkaian bisa menjumlah, dan dengan komplemen dua ia juga bisa <b>mengurang</b>. Menarik, kan?</p>
+<h2 class="sec" id="rangkuman" style="--c:#2563EB">Rangkuman: Aturan Emas</h2>
+<div class="tbl"><table class=""><colgroup><col style="width:22.8%"><col style="width:77.2%"></colgroup><thead><tr><th>Topik</th><th>Aturan emas</th></tr></thead><tbody><tr><td class="fc">Menjumlah</td><td class="">Dari kanan ke kiri. <b>Simpan 1 kalau jumlah ≥ basis</b>, tulis jumlah − basis.</td></tr><tr><td class="fc">Biner</td><td class="">1 + 1 = 10 (tulis 0, simpan 1). 1 + 1 + 1 = 11 (tulis 1, simpan 1).</td></tr><tr><td class="fc">Mengurang</td><td class="">Kalau 0 − 1, <b>pinjam</b> dari kiri. Pinjaman bernilai <b>basis</b> (2 di biner, 8 di oktal, 16 di heksa).</td></tr><tr><td class="fc">Bilangan negatif</td><td class=""><b>−x = balik semua bit x, lalu tambah 1</b> (komplemen dua). Bit paling kiri 1 = negatif.</td></tr><tr><td class="fc">Overflow</td><td class="">8 bit menampung 0–255 (tanpa tanda) atau −128 sampai 127 (bertanda). Lebih dari itu, carry dibuang.</td></tr><tr><td class="fc">ASCII</td><td class="">Huruf besar A = 65 … Z = 90, huruf kecil a = 97 … z = 122. Disimpan dalam 8 bit.</td></tr><tr><td class="fc">Operasi bit</td><td class="">AND: keduanya 1. OR: salah satu 1. XOR: berbeda. NOT: dibalik.</td></tr><tr><td class="fc">Checksum</td><td class="">Jumlah semua byte, ambil 8 bit terakhir, untuk memeriksa data rusak atau tidak.</td></tr></tbody></table></div>
+<div class="box tip"><div class="box-title">Cek setiap hasilmu</div><p>Kebiasaan detektif hebat: <b>selalu cek balik ke desimal</b>. Kalau hasil biner tidak cocok dengan hitungan desimal, ada yang keliru.</p></div>
+<h2 class="sec" id="latihan" style="--c:#16A34A">Latihan Mandiri</h2>
+<div class="box try"><div class="box-title">Ayo Temukan!</div><ol><li>Hitung 10011<sub>2</sub> + 01110<sub>2</sub> dan cek dengan desimal.</li><li>Hitung 11010<sub>2</sub> − 01011<sub>2</sub> dan cek dengan desimal.</li><li>Hitung 3F<sub>16</sub> + 2C<sub>16</sub>.</li><li>Tentukan komplemen dua 8 bit dari −7, tulis dalam biner dan heksadesimal.</li><li>Sebuah penghitung 8 bit tanpa tanda menyimpan 240. Berapa nilainya setelah ditambah 20?</li><li>Tuliskan kata <b>INFO</b> dalam ASCII biner 8 bit. (I = 73, N = 78, F = 70, O = 79)</li><li>Hitung 1110 AND 1011 dan 1110 XOR 1011.</li><li>Kata sandi 01000010 01001001 01001110 dienkripsi. Bacalah kata aslinya dengan jalan pintas.</li></ol></div>
+<details class="ans"><summary>Kunci latihan mandiri</summary><p>1. 10011 + 01110 = <b>100001</b><sub>2</sub> (19 + 14 = 33).</p><p>2. 11010 − 01011 = <b>01111</b><sub>2</sub> (26 − 11 = 15).</p><p>3. F+C = 27 = 1B<sub>16</sub> (tulis B, simpan 1); 3+2+1 = 6. Hasil <b>6B</b><sub>16</sub> (63 + 44 = 107).</p><p>4. 7 = 00000111. Balik: 11111000. Tambah 1: <b>11111001</b> = <b>F9</b><sub>16</sub>.</p><p>5. 240 + 20 = 260 → 260 − 256 = <b>4</b> (overflow).</p><p>6. I = 01001001, N = 01001110, F = 01000110, O = 01001111.</p><p>7. 1110 AND 1011 = <b>1010</b>; 1110 XOR 1011 = <b>0101</b>.</p><p>8. 01000010 → 00010 = 2 → B; 01001001 → 01001 = 9 → I; 01001110 → 01110 = 14 → N. Kata: <b>BIN</b>.</p></details>
+
+<section class="widget" id="w-kuis" aria-label="Kuis mandiri">
+  <h3>Kuis Mandiri: 10 Soal Pilihan Ganda</h3>
+  <p>Pilih satu jawaban tiap soal, lalu klik <b>Periksa jawabanku</b>.</p>
+  <form id="kuis-form"></form>
+  <div class="btns"><button id="kuis-go" class="btn" type="button">Periksa jawabanku</button><button id="kuis-reset" class="btn ghost" type="button">Ulangi</button></div>
+  <div id="kuis-score" class="score" role="status"></div>
+</section>
+<h2 class="sec" id="refleksi" style="--c:#9333EA">Refleksi</h2>
+<div class="box note"><div class="box-title">Tulis di bukumu</div><ol><li>Level mana yang paling seru? Level mana yang paling sulit? Kenapa?</li><li>Apa kesalahan yang paling sering kamu buat hari ini, dan bagaimana kamu mencegahnya lain kali?</li><li>Di mana kamu bisa menemukan sandi ASCII, checksum, atau overflow dalam kehidupan sehari-hari?</li></ol></div>
+<h2 class="sec" id="kamus" style="--c:#2563EB">Kamus Mini</h2>
+<div class="tbl"><table class=""><colgroup><col style="width:24.9%"><col style="width:75.1%"></colgroup><thead><tr><th>Istilah</th><th>Artinya</th></tr></thead><tbody><tr><td class="fc">Simpanan (carry)</td><td class="">Angka 1 yang dipindah ke kolom kiri saat jumlah kolom ≥ basis.</td></tr><tr><td class="fc">Pinjam (borrow)</td><td class="">Mengambil 1 dari kolom kiri (bernilai sebesar basis) saat bit atas lebih kecil.</td></tr><tr><td class="fc">Komplemen dua</td><td class="">Cara menyatakan bilangan negatif: balik semua bit lalu tambah 1.</td></tr><tr><td class="fc">Overflow</td><td class="">Hasil melebihi jumlah bit yang tersedia sehingga nilainya "berputar".</td></tr><tr><td class="fc">ASCII</td><td class="">Daftar nomor untuk huruf, angka, dan simbol.</td></tr><tr><td class="fc">Operasi bit</td><td class="">AND, OR, XOR, NOT pada bit di kolom yang sama.</td></tr><tr><td class="fc">Checksum</td><td class="">Angka pemeriksa hasil penjumlahan byte untuk mendeteksi data rusak.</td></tr><tr><td class="fc">Byte</td><td class="">8 bit.</td></tr></tbody></table></div>
+<footer>Materi Siswa TP 7 Pertemuan 2 &bull; Informatika Kelas VIII &bull; SMP Negeri 14 Tarakan<br>Sumber acuan: Buku Siswa &amp; Buku Guru Informatika SMP/MTs Kelas VIII (Edisi Revisi), Kemendikbudristek 2024.</footer>
+</main>
+<script>
+(function(){
+var D="0123456789ABCDEF";
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function bin(n,len){var s=(n>>>0).toString(2);while(s.length<len)s='0'+s;return s.slice(-len)}
+function pad(s,n){while(s.length<n)s='0'+s;return s}
+function isBin(s){return /^[01]{1,8}$/.test(s)}
+function err(el,m){el.innerHTML='<p class="err">'+m+'</p>'}
+function gridRow(label,cells,cls){return '<tr class="'+(cls||'')+'"><td class="lb">'+label+'</td>'+cells.map(function(c){return '<td>'+c+'</td>'}).join('')+'</tr>'}
+
+/* ---------- penjumlah / pengurang ---------- */
+var jo=document.getElementById('j-out');
+function readAB(){
+  var a=document.getElementById('j-a').value.trim(), b=document.getElementById('j-b').value.trim();
+  if(!isBin(a)||!isBin(b)){err(jo,'Isi A dan B hanya dengan angka 0 dan 1 (1 sampai 8 bit).');return null}
+  return [a,b];
+}
+document.getElementById('j-add').addEventListener('click',function(){
+  var ab=readAB(); if(!ab) return;
+  var n=Math.max(ab[0].length,ab[1].length), a=pad(ab[0],n), b=pad(ab[1],n);
+  var carry=0, res=[], cin=[];
+  for(var i=n-1;i>=0;i--){var s=(+a[i])+(+b[i])+carry; cin[i]=carry; res[i]=s%2; carry=s>1?1:0;}
+  var top=carry;
+  var rowC=[top?'':'' ], cells=[];
+  var cyc=[''],ac=[''],bc=[''],rc=[top?'1':''];
+  for(var k=0;k<n;k++){cyc.push(cin[k]?'1':'&middot;');ac.push(a[k]);bc.push(b[k]);rc.push(res[k]);}
+  // carry ke kolom kiri dari kolom k ditampilkan sebagai simpanan di kolom k-1 (cin)
+  var html='<table class="gridtbl">'+gridRow('simpanan',cyc,'cy')+gridRow('A',ac)+gridRow('+ B',bc)+gridRow('hasil',rc,'rs')+'</table>';
+  var av=parseInt(a,2), bv=parseInt(b,2), rv=av+bv;
+  html+='<div class="steps"><div>Hasil biner: <b class="mono">'+(top?'1':'')+res.join('')+'</b></div><div>Cek desimal: '+av+' + '+bv+' = '+rv+' &rarr; '+rv.toString(2)+'<sub>2</sub> '+(rv.toString(2)===((top?'1':'')+res.join('')).replace(/^0+(?=.)/,'')?'&#10004; cocok':'')+'</div></div>';
+  jo.innerHTML=html;
+});
+document.getElementById('j-sub').addEventListener('click',function(){
+  var ab=readAB(); if(!ab) return;
+  var A=pad(ab[0],8), B=pad(ab[1],8), bv=parseInt(B,2), av=parseInt(A,2);
+  var inv=bin(~bv,8), neg=bin(256-bv,8), s=av+parseInt(neg,2), r=s&255, carryOut=s>255?1:0;
+  var sv=r>127?r-256:r;
+  var h='<div class="steps">';
+  h+='<div>1. B = <b class="mono">'+B+'</b> ('+bv+')</div>';
+  h+='<div>2. Balik semua bit: <b class="mono">'+inv+'</b></div>';
+  h+='<div>3. Tambah 1: <b class="mono">'+neg+'</b> (ini &minus;B)</div>';
+  h+='<div>4. A + (&minus;B) = <span class="mono">'+A+' + '+neg+' = '+(carryOut?'1 ':'')+bin(r,8)+'</span></div>';
+  h+='<div>5. Buang carry di luar 8 bit: <b class="mono">'+bin(r,8)+'</b></div>';
+  h+='<div class="res">'+av+' &minus; '+bv+' = '+sv+(sv<0?' (bilangan negatif dalam komplemen dua)':'')+'</div>';
+  h+='</div>';
+  jo.innerHTML=h;
+});
+
+/* ---------- komplemen dua ---------- */
+document.getElementById('n-go').addEventListener('click',function(){
+  var out=document.getElementById('n-out'), n=Number(document.getElementById('n-n').value);
+  if(!Number.isInteger(n)||n<-128||n>127){err(out,'Masukkan bilangan bulat dari -128 sampai 127.');return}
+  var h='<div class="steps">';
+  if(n>=0){
+    h+='<div>Bilangan positif: cukup ditulis dalam biner 8 bit (bit paling kiri 0).</div>';
+    h+='<div class="res">'+n+' = '+bin(n,8)+' = '+D[(n>>4)&15]+D[n&15]+'<sub>16</sub></div>';
+  }else{
+    var a=-n, pos=bin(a,8), inv=bin(~a,8), r=bin(256-a,8), hx=D[((256-a)>>4)&15]+D[(256-a)&15];
+    h+='<div>1. Tulis '+a+' dalam 8 bit: <b class="mono">'+pos+'</b></div>';
+    h+='<div>2. Balik semua bit: <b class="mono">'+inv+'</b></div>';
+    h+='<div>3. Tambah 1: <b class="mono">'+r+'</b></div>';
+    h+='<div class="res">'+n+' = '+r+' = '+hx+'<sub>16</sub></div>';
+    h+='<div>Cek: '+pos+' + '+r+' = 1 00000000. Carry dibuang, hasilnya 0, sehingga '+a+' + ('+n+') = 0 &#10004;</div>';
+  }
+  out.innerHTML=h+'</div>';
+});
+document.getElementById('n-go').click();
+
+/* ---------- ASCII ---------- */
+document.getElementById('a-go').addEventListener('click',function(){
+  var out=document.getElementById('a-out'), t=document.getElementById('a-t').value;
+  if(!t){err(out,'Ketik teks dulu.');return}
+  var rows='';
+  for(var i=0;i<t.length;i++){var c=t.charCodeAt(i); if(c<32||c>126){err(out,'Gunakan huruf, angka, dan tanda baca biasa (ASCII).');return}
+    rows+='<tr><td>'+(t[i]===' '?'&#9251;':esc(t[i]))+'</td><td>'+c+'</td><td class="mono">'+bin(c,8)+'</td><td>'+D[c>>4]+D[c&15]+'<sub>16</sub></td></tr>';}
+  out.innerHTML='<table><thead><tr><th>Huruf</th><th>ASCII</th><th>Biner 8 bit</th><th>Heksa</th></tr></thead><tbody>'+rows+'</tbody></table>';
+});
+document.getElementById('a-back').addEventListener('click',function(){
+  var out=document.getElementById('a-out2'), parts=document.getElementById('a-b').value.trim().split(/\s+/), txt='', rows='';
+  if(!parts[0]){err(out,'Tulis biner dulu.');return}
+  for(var i=0;i<parts.length;i++){
+    if(!/^[01]{8}$/.test(parts[i])){err(out,'Kelompok ke-'+(i+1)+' (&ldquo;'+esc(parts[i])+'&rdquo;) harus terdiri dari 8 angka 0/1.');return}
+    var v=parseInt(parts[i],2); if(v<32||v>126){err(out,'Kelompok ke-'+(i+1)+' bernilai '+v+', di luar huruf yang bisa dicetak (32 sampai 126).');return}
+    txt+=String.fromCharCode(v); rows+='<tr><td class="mono">'+parts[i]+'</td><td>'+v+'</td><td><b>'+esc(String.fromCharCode(v))+'</b></td></tr>';}
+  out.innerHTML='<table><thead><tr><th>Biner</th><th>ASCII</th><th>Huruf</th></tr></thead><tbody>'+rows+'</tbody></table><div class="res">Pesan: '+esc(txt)+'</div>';
+});
+document.getElementById('a-go').click();document.getElementById('a-back').click();
+
+/* ---------- operasi bit ---------- */
+var bo=document.getElementById('b-out');
+Array.prototype.forEach.call(document.querySelectorAll('.bop'),function(btn){
+  btn.addEventListener('click',function(){
+    var op=btn.getAttribute('data-op'), a=document.getElementById('b-a').value.trim(), b=document.getElementById('b-b').value.trim();
+    if(!isBin(a)||(op!=='NOT'&&!isBin(b))){err(bo,'Isi bilangan hanya dengan angka 0 dan 1 (1 sampai 8 bit).');return}
+    var n=Math.max(a.length,op==='NOT'?0:b.length); a=pad(a,n); if(op!=='NOT') b=pad(b,n);
+    var r='';
+    for(var i=0;i<n;i++){var x=+a[i], y=op==='NOT'?0:+b[i];
+      r+= op==='AND'?(x&y):op==='OR'?(x|y):op==='XOR'?(x^y):(x?0:1);}
+    var A=a.split(''), B=op==='NOT'?[]:b.split(''), R=r.split('');
+    var h='<table class="gridtbl">'+gridRow('A',A);
+    if(op!=='NOT') h+=gridRow(op,B);
+    h+=gridRow('hasil',R,'rs')+'</table>';
+    h+='<div class="steps"><div>Hasil: <b class="mono">'+r+'</b> = '+parseInt(r,2)+'<sub>10</sub> = '+D[parseInt(r,2)>>4]+D[parseInt(r,2)&15]+'<sub>16</sub></div>';
+    if(r.length===8&&parseInt(r,2)>=32&&parseInt(r,2)<=126) h+='<div>Sebagai huruf ASCII: <b>'+esc(String.fromCharCode(parseInt(r,2)))+'</b></div>';
+    h+='</div>';
+    bo.innerHTML=h;
+  });
+});
+
+/* ---------- brankas ---------- */
+var so=document.getElementById('s-out'), sp=document.getElementById('s-pass');
+document.getElementById('s-go').addEventListener('click',function(){
+  var v=[1,2,3].map(function(i){return document.getElementById('s-'+i).value.trim().toUpperCase()});
+  for(var i=0;i<3;i++){ if(!/^[0-9A-F]{1,2}$/.test(v[i])){err(so,'Kode '+(i+1)+' harus berisi 1 atau 2 digit heksadesimal (0-9, A-F).');sp.hidden=true;return} }
+  var n=v.map(function(x){return parseInt(x,16)}), sum=n[0]+n[1]+n[2], low=sum&255, hx=sum.toString(16).toUpperCase();
+  var ok=low===0xA8;
+  var h='<div class="steps"><div>'+v[0]+' + '+v[1]+' + '+v[2]+' = <b class="mono">'+hx+'</b><sub>16</sub> (desimal '+n[0]+' + '+n[1]+' + '+n[2]+' = '+sum+')</div>';
+  h+='<div>Buang carry di luar 8 bit: <b class="mono">'+D[low>>4]+D[low&15]+'</b></div>';
+  h+='<div><span class="lamp '+(ok?'g':'r')+'"></span><b>'+(ok?'Checksum cocok (A8)! Lampu hijau.':'Checksum belum cocok. Brankas meminta A8.')+'</b></div>';
+  if(!ok) h+='<div>Petunjuk: cek ulang hitungan Level 1, 2, dan 3 dengan desimal.</div>';
+  so.innerHTML=h+'</div>'; sp.hidden=!ok;
+});
+document.getElementById('s-open').addEventListener('click',function(){
+  var w=document.getElementById('s-word').value.trim().toUpperCase(), m=document.getElementById('s-msg');
+  if(w==='TARAKAN'){m.textContent='Brankas terbuka! Kamu Agen Sandi sejati.';m.className='msg ok'}
+  else{m.textContent='Kata sandi belum tepat. Baca ulang biner Level 4.';m.className='msg no'}
+});
+
+/* ---------- kuis ---------- */
+var PG=[{"q":"Pada penjumlahan bilangan biner, hasil dari 1 + 1 ditulis ….","o":["2","10","11","0"],"key":"B","why":"Biner hanya punya simbol 0 dan 1. 1 + 1 = 10<sub>2</sub>: tulis 0 dan simpan 1 ke kolom kiri."},{"q":"Hasil dari 1011<sub>2</sub> + 0101<sub>2</sub> adalah ….","o":["1110<sub>2</sub>","1111<sub>2</sub>","10001<sub>2</sub>","10000<sub>2</sub>"],"key":"D","why":"Kolom 0: 1+1 = 0 simpan 1. Kolom 1: 1+0+1 = 0 simpan 1. Kolom 2: 0+1+1 = 0 simpan 1. Kolom 3: 1+0+1 = 0 simpan 1. Simpanan terakhir jadi bit ke-4. Hasil 10000<sub>2</sub> (cek: 11 + 5 = 16)."},{"q":"Hasil dari 1001<sub>2</sub> − 0011<sub>2</sub> adalah ….","o":["0110<sub>2</sub>","0101<sub>2</sub>","1010<sub>2</sub>","0111<sub>2</sub>"],"key":"A","why":"Kolom 0: 1−1 = 0. Kolom 1 harus meminjam berantai dari kolom 3 (lewat kolom 2), jadi 2−1 = 1. Kolom 2: 1−0 = 1. Kolom 3: 0. Hasil 0110<sub>2</sub> (cek: 9 − 3 = 6)."},{"q":"Pada penjumlahan bilangan oktal, 6 + 5 menghasilkan ….","o":["11<sub>8</sub>","12<sub>8</sub>","13<sub>8</sub>","14<sub>8</sub>"],"key":"C","why":"6 + 5 = 11 (desimal). Basis 8, jadi 11 − 8 = 3, simpan 1. Ditulis 13<sub>8</sub>."},{"q":"Hasil dari 3E<sub>16</sub> + 1B<sub>16</sub> adalah ….","o":["59<sub>16</sub>","49<sub>16</sub>","5A<sub>16</sub>","4A<sub>16</sub>"],"key":"A","why":"E (14) + B (11) = 25. Basis 16, jadi 25 − 16 = 9, simpan 1. Lalu 3 + 1 + 1 = 5. Hasil 59<sub>16</sub> (cek: 62 + 27 = 89 = 5×16 + 9)."},{"q":"Komputer umumnya menyimpan bilangan negatif menggunakan ….","o":["kode ASCII","bilangan desimal biasa","tanda minus sebagai karakter","komplemen dua"],"key":"D","why":"Komplemen dua memungkinkan pengurangan dikerjakan dengan penjumlahan, sehingga cukup satu rangkaian penjumlah di CPU."},{"q":"Bentuk komplemen dua 8 bit dari bilangan −3 adalah ….","o":["11111100","11111101","11111011","00000011"],"key":"B","why":"3 = 00000011. Balik semua bit: 11111100. Tambah 1: 11111101."},{"q":"Sebuah penghitung 8 bit tanpa tanda menyimpan nilai 255. Setelah ditambah 1, nilai yang tersimpan menjadi ….","o":["256","1","0","255"],"key":"C","why":"255 = 11111111. Ditambah 1 menjadi 1 0000 0000 (9 bit). Bit ke-9 dibuang karena hanya 8 bit tersedia, sehingga tersisa 00000000 = 0. Inilah overflow."},{"q":"Kode ASCII huruf <b>A</b> adalah 65. Kode ASCII huruf <b>D</b> adalah ….","o":["66","67","69","68"],"key":"D","why":"Huruf berurutan: A = 65, B = 66, C = 67, D = 68."},{"q":"Hasil operasi <b>1100 AND 1010</b> adalah ….","o":["1110","1000","0110","1010"],"key":"B","why":"AND bernilai 1 hanya jika kedua bit 1. Kolom 3: 1 dan 1 → 1. Kolom 2: 1 dan 0 → 0. Kolom 1: 0 dan 1 → 0. Kolom 0: 0 dan 0 → 0. Hasil 1000."}];
+var form=document.getElementById('kuis-form');
+function build(){
+  form.innerHTML='';
+  PG.forEach(function(p,i){
+    var fs=document.createElement('fieldset');fs.className='q';fs.id='q'+i;
+    var h='<legend>'+(i+1)+'. '+p.q+'</legend>';
+    p.o.forEach(function(o,k){h+='<label><input type="radio" name="q'+i+'" value="'+'ABCD'[k]+'"> <span><b>'+'ABCD'[k]+'.</b> '+o+'</span></label>';});
+    h+='<div class="fb" id="fb'+i+'"></div>';
+    fs.innerHTML=h;form.appendChild(fs);
+  });
+  document.getElementById('kuis-score').textContent='';
+}
+build();
+document.getElementById('kuis-go').addEventListener('click',function(){
+  var ok=0,ans=0;
+  PG.forEach(function(p,i){
+    var sel=form.querySelector('input[name=q'+i+']:checked'), fs=document.getElementById('q'+i), fb=document.getElementById('fb'+i);
+    fs.classList.remove('right','wrong');
+    if(!sel){fb.innerHTML='<b>Belum dijawab.</b>';return;}
+    ans++;
+    if(sel.value===p.key){ok++;fs.classList.add('right');fb.innerHTML='<b>Benar!</b> '+p.why;}
+    else{fs.classList.add('wrong');fb.innerHTML='<b>Belum tepat.</b> Jawaban yang benar: <b>'+p.key+'</b>. '+p.why;}
+  });
+  document.getElementById('kuis-score').textContent='Hasilmu: '+ok+' dari '+PG.length+' soal benar'+(ans<PG.length?' ('+(PG.length-ans)+' soal belum dijawab)':'')+'.';
+});
+document.getElementById('kuis-reset').addEventListener('click',build);
+})();
+</script>
+</body>
+</html>
