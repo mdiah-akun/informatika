@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bikin Angka &ldquo;Bekerja&rdquo; Sendiri! — Informatika Kelas VII</title>
+<style>
+  :root{
+    --navy:#132A46; --blue:#0B5D8C; --teal:#1C7293; --mint:#17B890;
+    --amber:#F2A93B; --purple:#6B4FA0; --ink:#1B2430; --gray:#5B6B79; --line:#E3E9EF;
+    --bg:#F6F9FB; --card:#FFFFFF;
+    --radius:16px;
+    font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--ink);line-height:1.65;}
+  a{color:var(--blue);}
+  img{max-width:100%;display:block;}
+
+  .topnav{
+    position:sticky; top:0; z-index:100; background:rgba(19,42,70,.96);
+    backdrop-filter:blur(6px); display:flex; align-items:center; gap:18px;
+    padding:0 20px; height:56px; box-shadow:0 2px 10px rgba(0,0,0,.15);
+  }
+  .topnav .brand{
+    color:#fff; font-weight:700; font-size:.95rem; white-space:nowrap; flex:0 0 auto;
+  }
+  .topnav .links{
+    display:flex; gap:4px; overflow-x:auto; scrollbar-width:none; flex:1 1 auto;
+  }
+  .topnav .links::-webkit-scrollbar{display:none;}
+  .topnav .links a{
+    color:#CADCE8; text-decoration:none; font-size:.88rem; font-weight:600;
+    padding:8px 12px; border-radius:20px; white-space:nowrap; flex:0 0 auto;
+  }
+  .topnav .links a:hover{background:rgba(255,255,255,.08); color:#fff;}
+  .topnav .links a.active{background:var(--mint); color:#0B3D2E;}
+
+  header.hero{
+    background:radial-gradient(circle at 85% -10%, #1c4a72 0%, var(--navy) 55%);
+    color:#fff; padding:64px 24px 90px; text-align:center; position:relative; overflow:hidden;
+  }
+  header.hero .kicker{
+    letter-spacing:3px; font-size:.8rem; font-weight:700; color:#8FD3C7; text-transform:uppercase;
+  }
+  header.hero h1{font-size:2.4rem; margin:.5em auto .3em; max-width:800px; line-height:1.2;}
+  header.hero p.sub{color:#CADCE8; font-size:1.15rem; font-style:italic; max-width:640px; margin:0 auto;}
+  header.hero img.cover{
+    width:min(420px,80%); margin:28px auto 0; border-radius:var(--radius);
+    box-shadow:0 20px 45px rgba(0,0,0,.35); background:#fff;
+  }
+
+  nav.toc{
+    max-width:880px; margin:-56px auto 40px; background:var(--card); border-radius:var(--radius);
+    box-shadow:0 12px 30px rgba(19,42,70,.12); padding:22px 28px; position:relative; z-index:2;
+  }
+  nav.toc h2{font-size:1rem; margin:0 0 12px; color:var(--teal); text-transform:uppercase; letter-spacing:1px;}
+  nav.toc ol{margin:0; padding-left:1.2em; columns:2; column-gap:2em;}
+  nav.toc li{margin-bottom:8px;}
+  nav.toc a{text-decoration:none; color:var(--ink); font-weight:600;}
+  nav.toc a:hover{color:var(--blue);}
+
+  main{max-width:880px; margin:0 auto; padding:0 24px 80px;}
+  section{margin-bottom:56px; scroll-margin-top:72px;}
+  section h2{
+    font-size:1.6rem; color:var(--navy); border-bottom:3px solid var(--mint);
+    display:inline-block; padding-bottom:6px; margin-bottom:18px;
+  }
+  section h3{color:var(--teal); font-size:1.15rem; margin:28px 0 8px;}
+  p{font-size:1.05rem;}
+  ul.rapi{padding-left:1.3em;}
+  ul.rapi li{margin-bottom:8px;}
+  code{background:#EEF2F6; padding:2px 6px; border-radius:5px; font-size:.94em;}
+
+  figure{margin:24px 0; text-align:center;}
+  figure img{
+    border-radius:12px; border:1px solid var(--line); box-shadow:0 8px 24px rgba(19,42,70,.1);
+    margin:0 auto;
+  }
+  figcaption{font-size:.92rem; color:var(--gray); font-style:italic; margin-top:10px;}
+
+  .kotak{
+    background:#EAF6FF; border-left:5px solid var(--blue); border-radius:10px;
+    padding:16px 20px; margin:20px 0;
+  }
+  .kotak strong{color:var(--blue);}
+  .tips{background:#EAF7F2; border-left:5px solid var(--mint);}
+  .tips strong{color:#0E6B4F;}
+  .penting{background:#FEF3E2; border-left:5px solid var(--amber);}
+  .penting strong{color:#92400E;}
+
+  .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin:18px 0;}
+  .cards .c{
+    background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 18px;
+    box-shadow:0 4px 14px rgba(19,42,70,.06);
+  }
+  .cards .c b{display:block; color:var(--navy); margin-bottom:4px;}
+  .cards .c span{color:var(--gray); font-size:.94rem;}
+
+  table.dataset{width:100%; border-collapse:collapse; margin:20px 0; font-size:.94rem; box-shadow:0 4px 14px rgba(19,42,70,.06); border-radius:10px; overflow:hidden;}
+  table.dataset th{background:var(--blue); color:#fff; text-align:left; padding:9px 12px;}
+  table.dataset td{padding:8px 12px; border-bottom:1px solid var(--line);}
+  table.dataset tr:nth-child(even) td{background:#F8FAFC;}
+  .tablewrap{overflow-x:auto;}
+
+  .rangkuman{
+    background:linear-gradient(135deg,var(--navy),#1c4a72); color:#fff; border-radius:var(--radius);
+    padding:32px 32px 8px;
+  }
+  .rangkuman h2{color:#fff; border-bottom-color:var(--mint);}
+  .rangkuman ul{padding-left:1.3em;}
+  .rangkuman li{margin-bottom:12px; color:#E7EEF4;}
+
+  /* Uji Pemahaman quiz */
+  .quiz-wrap{background:var(--card); border-radius:var(--radius); border:1px solid var(--line); padding:28px 30px; box-shadow:0 10px 28px rgba(19,42,70,.08);}
+  .qitem{margin-bottom:26px; padding-bottom:22px; border-bottom:1px dashed var(--line);}
+  .qitem:last-child{border-bottom:none; margin-bottom:0;}
+  .qitem p.qtext{font-weight:700; margin:0 0 10px;}
+  .opts{display:flex; flex-direction:column; gap:8px;}
+  .opt{
+    text-align:left; padding:10px 14px; border-radius:10px; border:1px solid var(--line);
+    background:#fbfdfe; cursor:pointer; font-size:.98rem; color:var(--ink);
+  }
+  .opt:hover{border-color:var(--teal);}
+  .opt.correct{background:#EAF7F2; border-color:var(--mint); color:#0E6B4F; font-weight:700;}
+  .opt.wrong{background:#FDEDED; border-color:#E37676; color:#A33; font-weight:700;}
+  .opt[disabled]{cursor:default;}
+  .feedback{margin-top:8px; font-size:.92rem; color:var(--gray); min-height:1.2em;}
+  #quizScore{
+    text-align:center; font-weight:700; font-size:1.05rem; color:var(--navy);
+    margin-top:6px;
+  }
+
+  footer{text-align:center; color:var(--gray); font-size:.9rem; padding:30px 20px 50px;}
+
+  @media (max-width:600px){
+    .topnav .brand{display:none;}
+    header.hero{padding:48px 16px 70px;}
+    header.hero h1{font-size:1.8rem;}
+    nav.toc{margin-top:-40px; padding:18px 20px;}
+    nav.toc ol{columns:1;}
+    section h2{font-size:1.35rem;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <span class="brand">🧮 Fungsi Lembar Kerja</span>
+  <div class="links" id="topLinks">
+    <a href="#data" data-target="data">Data Kita</a>
+    <a href="#bagian1" data-target="bagian1">Anatomi Fungsi</a>
+    <a href="#bagian2" data-target="bagian2">SUM &amp; COUNT</a>
+    <a href="#bagian3" data-target="bagian3">SUMIF &amp; COUNTIF</a>
+    <a href="#bagian4" data-target="bagian4">Statistik</a>
+    <a href="#bagian5" data-target="bagian5">AND/OR/NOT</a>
+    <a href="#bagian6" data-target="bagian6">IF</a>
+    <a href="#bagian7" data-target="bagian7">Nested IF</a>
+    <a href="#rangkuman" data-target="rangkuman">Rangkuman</a>
+    <a href="#uji" data-target="uji">Uji Pemahaman</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="kicker">Informatika Kelas VII &bull; Bab 2 — Pengolahan Data &bull; Pertemuan 2</div>
+  <h1>Saatnya Bikin Angka &ldquo;Bekerja&rdquo; Sendiri!</h1>
+  <p class="sub">Mengenal Fungsi Dasar, Statistik, dan Logika pada Lembar Kerja</p>
+  <img class="cover" src="images/08_siklus_inquiry.png" alt="Diagram siklus model Inquiry Learning">
+</header>
+
+<nav class="toc">
+  <h2>Daftar Isi</h2>
+  <ol>
+    <li><a href="#data">Data yang Akan Kita Pakai</a></li>
+    <li><a href="#bagian1">Anatomi Sebuah Fungsi</a></li>
+    <li><a href="#bagian2">Fungsi Dasar: SUM &amp; COUNT</a></li>
+    <li><a href="#bagian3">Fungsi Dasar Bersyarat: SUMIF &amp; COUNTIF</a></li>
+    <li><a href="#bagian4">Fungsi Statistik Dasar</a></li>
+    <li><a href="#bagian5">Fungsi Logika: AND, OR, NOT</a></li>
+    <li><a href="#bagian6">Fungsi Logika Kondisional: IF</a></li>
+    <li><a href="#bagian7">Fungsi Logika Bertingkat: Nested IF</a></li>
+    <li><a href="#rangkuman">Rangkuman</a></li>
+    <li><a href="#uji">Uji Pemahaman</a></li>
+  </ol>
+</nav>
+
+<main>
+  <section id="intro">
+    <p>Di pertemuan sebelumnya, kita sudah kenalan sama &ldquo;dapur&rdquo; aplikasi lembar kerja — Ribbon, Formula Bar, cell, range, sampai Freeze Panes. Sekarang saatnya kita mulai masak beneran! 🍳</p>
+    <p>Bayangin kamu jadi ketua kelas, dan wali kelas minta tolong olah data nilai ulangan harian teman-temanmu — 10 orang. Ngitung total, rata-rata, siapa yang lulus KKM, satu-satu pakai kalkulator? Duh, lama banget dan gampang salah. Nah, di sinilah fungsi (<em>formula</em>) lembar kerja jadi penyelamat. Cukup satu baris rumus, komputer yang kerja, kamu tinggal lihat hasilnya!</p>
+  </section>
+
+  <section id="data">
+    <h2>Data yang Akan Kita Pakai</h2>
+    <p>Sepanjang materi ini, kita akan terus pakai satu data yang sama supaya kamu bisa lihat perbandingannya dengan jelas: <strong>Data Nilai Ulangan Harian Informatika Kelas VII-A</strong>, berisi Nilai (kolom C), persentase Kehadiran (kolom D), dan Ekstrakurikuler (kolom E) dari 10 siswa, pada baris 5 sampai 14.</p>
+    <div class="tablewrap">
+      <table class="dataset">
+        <thead><tr><th>No</th><th>Nama Siswa</th><th>Baris</th><th>Nilai (C)</th><th>Kehadiran % (D)</th><th>Ekskul (E)</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Adi Pratama</td><td>5</td><td>85</td><td>95</td><td>Olahraga</td></tr>
+          <tr><td>2</td><td>Bunga Lestari</td><td>6</td><td>72</td><td>88</td><td>Seni</td></tr>
+          <tr><td>3</td><td>Citra Amelia</td><td>7</td><td>90</td><td>98</td><td>Sains</td></tr>
+          <tr><td>4</td><td>Dimas Saputra</td><td>8</td><td>65</td><td>80</td><td>Olahraga</td></tr>
+          <tr><td>5</td><td>Eka Wulandari</td><td>9</td><td>78</td><td>92</td><td>Seni</td></tr>
+          <tr><td>6</td><td>Fajar Ramadhan</td><td>10</td><td>55</td><td>70</td><td>Olahraga</td></tr>
+          <tr><td>7</td><td>Gita Permata</td><td>11</td><td>88</td><td>96</td><td>Sains</td></tr>
+          <tr><td>8</td><td>Hafiz Ramadan</td><td>12</td><td>74</td><td>72</td><td>Seni</td></tr>
+          <tr><td>9</td><td>Indah Sari</td><td>13</td><td>95</td><td>99</td><td>Sains</td></tr>
+          <tr><td>10</td><td>Joko Susanto</td><td>14</td><td>68</td><td>82</td><td>Olahraga</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="kotak"><strong>Ingat:</strong> semua contoh di bawah pakai data yang sama ini, jadi kalau kamu bingung di satu bagian, coba balik lagi ke sini buat ngecek angkanya.</div>
+  </section>
+
+  <section id="bagian1">
+    <h2>1. Anatomi Sebuah Fungsi</h2>
+    <p>Sebelum masuk ke fungsi-fungsi spesifik, yuk kenalan dulu sama &ldquo;anatomi&rdquo; sebuah fungsi — bagian-bagian penyusunnya selalu sama, apa pun nama fungsinya.</p>
+    <figure>
+      <img src="images/01_anatomi_formula.png" alt="Diagram anatomi sebuah fungsi pada lembar kerja">
+      <figcaption>Bagian-bagian penyusun sebuah fungsi pada lembar kerja.</figcaption>
+    </figure>
+    <ul class="rapi">
+      <li><strong>Tanda sama dengan (=)</strong> — selalu di paling depan, penanda kalau ini formula, bukan teks biasa.</li>
+      <li><strong>Nama fungsi</strong> — misalnya SUM, COUNT, IF, dan sebagainya.</li>
+      <li><strong>Tanda kurung</strong> — membungkus argumen (data yang diproses fungsi).</li>
+      <li><strong>Argumen</strong> — bisa berupa angka, alamat cell, atau range, dipisah dengan koma bila lebih dari satu.</li>
+    </ul>
+    <div class="kotak"><strong>Bentuk umum:</strong> <code>=NAMAFUNGSI(argumen1, argumen2, …)</code></div>
+  </section>
+
+  <section id="bagian2">
+    <h2>2. Fungsi Dasar: SUM dan COUNT</h2>
+    <p>Dua fungsi paling sering dipakai buat olah data angka.</p>
+    <figure>
+      <img src="images/02_sum_count.png" alt="SUM dan COUNT diterapkan pada data Nilai UH">
+      <figcaption>SUM dan COUNT diterapkan pada data Nilai UH.</figcaption>
+    </figure>
+    <h3>SUM — menjumlahkan</h3>
+    <p><code>=SUM(C5:C14)</code> akan menjumlahkan semua nilai dari C5 sampai C14. Hasilnya <strong>770</strong>.</p>
+    <h3>COUNT — menghitung banyak data angka</h3>
+    <p><code>=COUNT(C5:C14)</code> menghitung ada berapa cell berisi angka di range itu. Hasilnya <strong>10</strong> (karena ada 10 siswa).</p>
+    <div class="kotak"><strong>Hati-hati:</strong> COUNT cuma menghitung cell berisi angka. Kalau kamu mau menghitung cell berisi teks juga (misalnya nama siswa), pakai <code>COUNTA</code>.</div>
+  </section>
+
+  <section id="bagian3">
+    <h2>3. Fungsi Dasar Bersyarat: SUMIF dan COUNTIF</h2>
+    <p>Gimana kalau kita cuma mau menjumlahkan atau menghitung data yang memenuhi syarat tertentu? Di sinilah SUMIF dan COUNTIF berperan.</p>
+    <figure>
+      <img src="images/03_sumif_countif.png" alt="SUMIF dan COUNTIF dengan satu kriteria">
+      <figcaption>SUMIF dan COUNTIF dengan satu kriteria.</figcaption>
+    </figure>
+    <h3>SUMIF — jumlahkan kalau memenuhi syarat</h3>
+    <p><code>=SUMIF(E5:E14,"Olahraga",C5:C14)</code> artinya: cek kolom Ekskul (E5:E14), kalau isinya &ldquo;Olahraga&rdquo;, jumlahkan Nilai (C) di baris yang sama. Hasilnya <strong>273</strong>.</p>
+    <h3>COUNTIF — hitung kalau memenuhi syarat</h3>
+    <p><code>=COUNTIF(C5:C14,"&gt;=75")</code> artinya: hitung berapa banyak cell di C5:C14 yang nilainya lebih besar atau sama dengan 75. Hasilnya <strong>5 siswa</strong>.</p>
+    <div class="kotak tips"><strong>Tips penulisan:</strong> kriteria berupa teks atau perbandingan (seperti <code>"&gt;=75"</code>) harus diapit tanda kutip dua.</div>
+  </section>
+
+  <section id="bagian4">
+    <h2>4. Fungsi Statistik Dasar</h2>
+    <p>Selain total dan banyak data, kita sering perlu tahu gambaran umum sebaran data — misalnya rata-rata, nilai tengah, tertinggi, dan terendah.</p>
+    <figure>
+      <img src="images/04_statistik_dasar.png" alt="AVERAGE, MEDIAN, MAX, MIN, LARGE, dan SMALL pada Nilai UH">
+      <figcaption>AVERAGE, MEDIAN, MAX, MIN, LARGE, dan SMALL pada Nilai UH.</figcaption>
+    </figure>
+    <div class="cards">
+      <div class="c"><b>AVERAGE(C5:C14) = 77</b><span>rata-rata seluruh nilai</span></div>
+      <div class="c"><b>MEDIAN(C5:C14) = 76</b><span>nilai tengah setelah diurutkan</span></div>
+      <div class="c"><b>MAX(C5:C14) = 95</b><span>nilai tertinggi</span></div>
+      <div class="c"><b>MIN(C5:C14) = 55</b><span>nilai terendah</span></div>
+      <div class="c"><b>LARGE(C5:C14,2) = 90</b><span>nilai tertinggi ke-2</span></div>
+      <div class="c"><b>SMALL(C5:C14,2) = 65</b><span>nilai terendah ke-2</span></div>
+    </div>
+    <div class="kotak tips"><strong>Kenapa penting?</strong> MEDIAN kadang lebih &ldquo;adil&rdquo; dibanding AVERAGE kalau ada nilai yang jauh beda sendiri (misalnya ada satu yang sangat rendah/tinggi) — nilai ekstrem tidak terlalu memengaruhi MEDIAN.</div>
+  </section>
+
+  <section id="bagian5">
+    <h2>5. Fungsi Logika: AND, OR, NOT</h2>
+    <p>Fungsi logika dipakai untuk menguji sebuah syarat, dan hasilnya selalu <strong>TRUE</strong> (benar) atau <strong>FALSE</strong> (salah).</p>
+    <figure>
+      <img src="images/05_logika_andornot.png" alt="Cara kerja AND, OR, dan NOT">
+      <figcaption>Cara kerja AND, OR, dan NOT.</figcaption>
+    </figure>
+    <h3>AND — semua syarat harus benar</h3>
+    <p><code>=AND(C5&gt;=75,D5&gt;=90)</code> baru TRUE kalau nilai ≥75 DAN kehadiran ≥90 dua-duanya terpenuhi.</p>
+    <h3>OR — salah satu syarat cukup</h3>
+    <p><code>=OR(C8&lt;60,D8&lt;75)</code> sudah TRUE kalau SALAH SATU syarat terpenuhi, walau syarat lainnya belum tentu.</p>
+    <h3>NOT — membalik hasil</h3>
+    <p><code>=NOT(D8&lt;75)</code> membalik logika: kalau D8&lt;75 hasilnya TRUE, maka NOT-nya jadi FALSE, begitu juga sebaliknya.</p>
+  </section>
+
+  <section id="bagian6">
+    <h2>6. Fungsi Logika Kondisional: IF</h2>
+    <p>Nah, ini dia fungsi favorit banyak orang — IF bisa bikin lembar kerja &ldquo;mengambil keputusan&rdquo; otomatis berdasarkan syarat tertentu.</p>
+    <figure>
+      <img src="images/06_if_tunggal.png" alt="Alur kerja fungsi IF tunggal">
+      <figcaption>Alur kerja fungsi IF tunggal.</figcaption>
+    </figure>
+    <p><code>=IF(C5&gt;=75,"Tuntas","Belum Tuntas")</code> artinya: kalau nilai di C5 lebih besar atau sama dengan 75, tulis &ldquo;Tuntas&rdquo;; kalau tidak, tulis &ldquo;Belum Tuntas&rdquo;.</p>
+    <div class="kotak"><strong>Bentuk umum:</strong> <code>=IF(syarat_logika, nilai_jika_benar, nilai_jika_salah)</code></div>
+  </section>
+
+  <section id="bagian7">
+    <h2>7. Fungsi Logika Bertingkat: IF Bersarang (Nested IF)</h2>
+    <p>Gimana kalau kategorinya lebih dari dua, misalnya predikat A/B/C/D? Kita bisa &ldquo;menumpuk&rdquo; beberapa IF sekaligus — ini yang disebut <em>nested IF</em>.</p>
+    <figure>
+      <img src="images/07_if_bertingkat.png" alt="Alur kerja IF bertingkat untuk menentukan predikat A/B/C/D">
+      <figcaption>Alur kerja IF bertingkat untuk menentukan predikat A/B/C/D.</figcaption>
+    </figure>
+    <p><code>=IF(C5&gt;=90,"A",IF(C5&gt;=80,"B",IF(C5&gt;=75,"C","D")))</code> — dibaca dari luar ke dalam: kalau nilai ≥90 → &ldquo;A&rdquo;. Kalau tidak, cek lagi: kalau ≥80 → &ldquo;B&rdquo;. Kalau tidak, cek lagi: kalau ≥75 → &ldquo;C&rdquo;. Kalau semua syarat di atas gagal → &ldquo;D&rdquo;.</p>
+    <div class="kotak penting"><strong>Penting!</strong> urutan syarat sangat menentukan hasil. Fungsi akan berhenti di syarat PERTAMA yang bernilai TRUE, jadi selalu urutkan dari syarat paling &ldquo;ketat&rdquo; ke paling &ldquo;longgar&rdquo;.</div>
+  </section>
+
+  <section id="rangkuman" class="rangkuman">
+    <h2>Rangkuman</h2>
+    <ul>
+      <li>SUM &amp; COUNT → total dan banyak data angka.</li>
+      <li>SUMIF &amp; COUNTIF → total dan banyak data yang memenuhi satu syarat.</li>
+      <li>AVERAGE, MEDIAN, MAX, MIN, LARGE, SMALL → menggambarkan sebaran data (statistik dasar).</li>
+      <li>AND, OR, NOT → menguji satu atau lebih syarat, hasilnya TRUE/FALSE.</li>
+      <li>IF → mengambil keputusan otomatis berdasar satu syarat; nested IF untuk lebih dari dua kategori.</li>
+    </ul>
+    <p style="padding-bottom:24px;color:#CADCE8;">Sekarang kamu sudah punya &ldquo;kotak perkakas&rdquo; fungsi dasar yang <em>powerful</em> banget buat olah data. Di pertemuan berikutnya, kita akan lanjut ke Pengolahan Data Lanjutan — mengurutkan (Sort), menyaring (Filter), dan validasi data. Sampai ketemu lagi! 👋</p>
+  </section>
+
+  <section id="uji">
+    <h2>Uji Pemahaman</h2>
+    <p>Coba jawab 5 pertanyaan singkat ini untuk mengecek pemahamanmu. Klik salah satu pilihan!</p>
+    <div class="quiz-wrap" id="quizWrap"></div>
+    <p id="quizScore"></p>
+  </section>
+</main>
+
+<footer>Materi Siswa &middot; Informatika Kelas VII &middot; Bab 2 — Pengolahan Data &middot; Pertemuan 2 &middot; SMP Negeri 14 Tarakan</footer>
+
+<script>
+const QUIZ = [
+  { q: "Fungsi yang tepat untuk menghitung BANYAKNYA cell berisi angka adalah …", opts: ["SUM","COUNT","COUNTIF"], correct: 1,
+    fb: ["Bukan — SUM itu untuk menjumlahkan.","Betul! COUNT menghitung banyaknya cell berisi angka.","Bukan — COUNTIF butuh kriteria tambahan."] },
+  { q: "Berdasarkan data Nilai UH, hasil dari =SUMIF(E5:E14,\"Sains\",C5:C14) adalah …", opts: ["245","273","301"], correct: 1,
+    fb: ["Bukan, coba jumlahkan lagi nilai siswa Ekskul Sains.","Betul! Citra (90) + Gita (88) + Indah (95) = 273.","Bukan, coba jumlahkan lagi nilai siswa Ekskul Sains."] },
+  { q: "MEDIAN dianggap lebih tahan terhadap nilai ekstrem (outlier) dibanding …", opts: ["AVERAGE","COUNT","MAX"], correct: 0,
+    fb: ["Betul! AVERAGE sangat dipengaruhi nilai ekstrem, MEDIAN tidak.","Bukan — COUNT cuma menghitung banyak data, bukan sebaran.","Bukan — MAX hanya mengambil nilai tertinggi saja."] },
+  { q: "Formula =AND(C5>=75,D5>=90) akan bernilai TRUE apabila …", opts: ["Salah satu syarat saja benar","Kedua syarat harus benar","Kedua syarat harus salah"], correct: 1,
+    fb: ["Bukan — itu cara kerja OR, bukan AND.","Betul! AND memerlukan SEMUA syarat terpenuhi.","Bukan, AND butuh syarat-syaratnya benar, bukan salah."] },
+  { q: "Pada =IF(C5>=90,\"A\",IF(C5>=80,\"B\",IF(C5>=75,\"C\",\"D\"))), kalau C5 = 65, hasilnya …", opts: ["A","C","D"], correct: 2,
+    fb: ["Bukan — 65 tidak memenuhi syarat ≥90.","Bukan — 65 tidak memenuhi syarat ≥75.","Betul! 65 gagal di semua syarat (≥90, ≥80, ≥75), jadi hasilnya \"D\"."] },
+];
+
+const wrap = document.getElementById("quizWrap");
+let score = 0, answered = 0;
+
+QUIZ.forEach((item, qi) => {
+  const div = document.createElement("div");
+  div.className = "qitem";
+  const p = document.createElement("p");
+  p.className = "qtext";
+  p.textContent = (qi+1) + ". " + item.q;
+  div.appendChild(p);
+  const optsDiv = document.createElement("div");
+  optsDiv.className = "opts";
+  const fbP = document.createElement("div");
+  fbP.className = "feedback";
+
+  item.opts.forEach((optText, oi) => {
+    const btn = document.createElement("button");
+    btn.className = "opt";
+    btn.textContent = optText;
+    btn.addEventListener("click", () => {
+      if (btn.disabled) return;
+      const buttons = optsDiv.querySelectorAll(".opt");
+      buttons.forEach(b => b.disabled = true);
+      if (oi === item.correct) {
+        btn.classList.add("correct");
+        score++;
+      } else {
+        btn.classList.add("wrong");
+        buttons[item.correct].classList.add("correct");
+      }
+      fbP.textContent = item.fb[oi];
+      answered++;
+      updateScore();
+    });
+    optsDiv.appendChild(btn);
+  });
+
+  div.appendChild(optsDiv);
+  div.appendChild(fbP);
+  wrap.appendChild(div);
+});
+
+function updateScore() {
+  const scoreEl = document.getElementById("quizScore");
+  if (answered === QUIZ.length) {
+    scoreEl.textContent = "Skormu: " + score + " dari " + QUIZ.length + (score === QUIZ.length ? " — Mantap, sempurna! 🎉" : " — Yuk baca ulang bagian yang masih keliru.");
+  } else {
+    scoreEl.textContent = "Terjawab " + answered + " dari " + QUIZ.length;
+  }
+}
+
+// Highlight the active menu link as the reader scrolls through sections
+(function () {
+  const navLinks = Array.from(document.querySelectorAll("#topLinks a"));
+  const targets = navLinks
+    .map(a => document.getElementById(a.dataset.target))
+    .filter(Boolean);
+  if (!("IntersectionObserver" in window) || targets.length === 0) return;
+
+  const setActive = (id) => {
+    navLinks.forEach(a => a.classList.toggle("active", a.dataset.target === id));
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) setActive(entry.target.id);
+    });
+  }, { rootMargin: "-80px 0px -70% 0px", threshold: 0 });
+
+  targets.forEach(t => observer.observe(t));
+})();
+</script>
+
+</body>
+</html>

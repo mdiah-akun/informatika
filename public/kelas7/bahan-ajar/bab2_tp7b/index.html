@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menyusun & Mengevaluasi Data Terstruktur — Materi Siswa Pertemuan 2</title>
+<style>
+  :root {
+    --deep: #0F4C5C;
+    --teal: #1B998B;
+    --sage: #5B8C85;
+    --amber: #F2A541;
+    --amberD: #D68411;
+    --ink: #1F2D2D;
+    --light: #E7F1EF;
+    --red: #D96C5F;
+    --cream: #F7F5F0;
+    --gray: #6B7A79;
+    --grid: #C9DCD8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Calibri, Roboto, sans-serif;
+    color: var(--ink);
+    background: #FFFFFF;
+    line-height: 1.65;
+  }
+  header.hero {
+    background: linear-gradient(135deg, var(--deep) 0%, #123f4c 100%);
+    color: #fff;
+    padding: 3rem 1.25rem 3.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  header.hero::after {
+    content: "";
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 320px; height: 320px;
+    background: rgba(27,153,139,0.35);
+    border-radius: 50%;
+  }
+  .hero-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--amber);
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+  }
+  h1.title { font-size: clamp(1.8rem, 5vw, 2.7rem); margin: 0 0 0.5rem; line-height: 1.2; }
+  .subtitle { font-size: 1.1rem; color: #CADCFC; margin: 0; }
+  nav.toc {
+    background: var(--cream);
+    border-bottom: 1px solid var(--grid);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+  nav.toc .toc-inner { max-width: 900px; margin: 0 auto; padding: 0 1.25rem; display: flex; gap: 0.25rem; }
+  nav.toc a {
+    display: inline-block;
+    padding: 0.85rem 0.9rem;
+    color: var(--deep);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border-bottom: 3px solid transparent;
+  }
+  nav.toc a:hover, nav.toc a:focus { border-bottom-color: var(--amber); color: var(--amberD); }
+  main { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+  section { margin-bottom: 3.2rem; scroll-margin-top: 3.5rem; }
+  h2 {
+    color: var(--deep);
+    font-size: 1.6rem;
+    border-bottom: 2px solid var(--deep);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.1rem;
+  }
+  h3 { color: var(--teal); font-size: 1.2rem; margin: 1.6rem 0 0.6rem; }
+  p { margin: 0 0 1rem; font-size: 1.02rem; }
+  img.fig { max-width: 100%; height: auto; display: block; margin: 1.2rem auto; border-radius: 10px; }
+  figure { margin: 1.5rem 0; text-align: center; }
+  figcaption { font-size: 0.88rem; color: var(--gray); font-style: italic; margin-top: 0.5rem; }
+  ul, ol { padding-left: 1.4rem; }
+  li { margin-bottom: 0.5rem; }
+  .tip {
+    background: var(--light);
+    border-left: 4px solid var(--teal);
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    font-style: italic;
+    color: var(--deep);
+    margin: 1.2rem 0;
+  }
+  .tip::before { content: "💡 "; font-style: normal; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+  .card {
+    background: var(--light);
+    border-radius: 12px;
+    padding: 1.1rem 1.2rem;
+    border-top: 5px solid var(--teal);
+  }
+  .card.c2 { border-top-color: var(--amberD); }
+  .card.c3 { border-top-color: var(--deep); }
+  .card h4 { margin: 0 0 0.4rem; color: var(--deep); font-size: 1.05rem; }
+  .card p { margin: 0; font-size: 0.94rem; }
+  .banner {
+    background: linear-gradient(120deg, var(--amber), var(--amberD));
+    color: #fff;
+    border-radius: 14px;
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0 1.2rem;
+  }
+  .banner .icon {
+    width: 3rem; height: 3rem; border-radius: 50%;
+    background: #fff; color: var(--amberD);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; flex-shrink: 0;
+  }
+  .banner .txt { font-size: 1.25rem; font-weight: 700; }
+  .steps { counter-reset: step; list-style: none; padding-left: 0; }
+  .steps li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 2.6rem;
+    margin-bottom: 1rem;
+  }
+  .steps li::before {
+    content: counter(step);
+    position: absolute; left: 0; top: -0.1rem;
+    width: 1.9rem; height: 1.9rem;
+    background: var(--deep); color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.95rem;
+  }
+  details.quiz {
+    background: var(--cream);
+    border: 1px solid var(--grid);
+    border-radius: 10px;
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 0.9rem;
+  }
+  details.quiz summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--deep);
+    list-style: none;
+  }
+  details.quiz summary::-webkit-details-marker { display: none; }
+  details.quiz summary::before { content: "▸ "; color: var(--amberD); }
+  details.quiz[open] summary::before { content: "▾ "; }
+  details.quiz .answer {
+    margin-top: 0.7rem;
+    padding-top: 0.7rem;
+    border-top: 1px dashed var(--grid);
+    color: var(--teal);
+    font-weight: 600;
+  }
+  .summary-box {
+    background: var(--deep);
+    color: #fff;
+    border-radius: 14px;
+    padding: 1.6rem 1.8rem;
+  }
+  .summary-box h2 { color: #fff; border-bottom-color: rgba(255,255,255,0.3); }
+  .summary-box ul { padding-left: 1.2rem; }
+  .summary-box li { margin-bottom: 0.6rem; }
+  footer.page-footer {
+    text-align: center;
+    color: var(--gray);
+    font-size: 0.85rem;
+    padding: 2rem 1.25rem 3rem;
+  }
+  table.mini { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: 0.95rem; }
+  table.mini th, table.mini td { border: 1px solid var(--grid); padding: 0.55rem 0.7rem; text-align: left; }
+  table.mini th { background: var(--deep); color: #fff; }
+  table.mini tr:nth-child(even) td { background: var(--light); }
+  .progress-note { text-align:center; color: var(--gray); font-size:0.85rem; margin-top: -0.5rem; }
+  @media (max-width: 600px) {
+    header.hero { padding: 2.2rem 1rem 2.6rem; }
+    main { padding: 1.8rem 1rem 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Informatika Kelas VII · Bab 2 Pengolahan Data · Pertemuan 2</div>
+    <h1 class="title">Level Up: Menyusun & Mengevaluasi Data!</h1>
+    <p class="subtitle">Materi untuk kamu — Tujuan Pembelajaran 1 (Lanjutan) — SMP Negeri 14 Tarakan</p>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Navigasi materi">
+  <div class="toc-inner">
+    <a href="#pembuka">Ingat Lagi</a>
+    <a href="#kualitas">Data Sehat</a>
+    <a href="#proses">Proses Bersih</a>
+    <a href="#kelompok">Kerja Kelompok</a>
+    <a href="#gallery">Gallery Walk</a>
+    <a href="#coba">Yuk Coba</a>
+    <a href="#cek">Cek Pemahaman</a>
+    <a href="#rangkuman">Rangkuman</a>
+  </div>
+</nav>
+
+<main>
+
+  <section id="pembuka">
+    <h2>Sebelum Lanjut, Kita Ingat-Ingat Dulu Yuk</h2>
+    <p>Masih ingat kan, apa itu himpunan data terstruktur? Yap — kumpulan data yang rapi, tersusun dalam baris dan kolom, punya judul yang jelas, dan gampang dicari-cari. Kamu juga sudah kenalan sama 5 tipe data: numerik, teks, tanggal, boolean, dan gambar.</p>
+    <figure>
+      <img class="fig" src="images/hero_pertemuan2.png" alt="Ilustrasi mengubah data berantakan menjadi himpunan data terstruktur">
+    </figure>
+    <p>Nah, sekarang bayangkan situasi ini: kamu ditugaskan mencatat siapa saja yang meminjam buku di perpustakaan sekolah. Tapi karena buru-buru, catatanmu jadi begini: "Budi pinjam Laskar Pelangi", terus beberapa hari kemudian "Budi, laskar pelangi lagi (?)", ada juga baris yang lupa ditulis tanggalnya, dan ada satu kolom yang kamu isi campur-campur — kadang angka, kadang tulisan "lupa".</p>
+    <p>Nah, catatan seperti itu, walaupun niatnya sudah dalam bentuk tabel, sebenarnya masih punya masalah. Yuk, kita bongkar apa saja masalah yang sering muncul saat menyusun data — dan bagaimana cara memperbaikinya!</p>
+  </section>
+
+  <section id="kualitas">
+    <h2>Data yang "Sehat" itu Kayak Apa, Sih?</h2>
+    <p>Nggak cukup cuma disusun dalam bentuk tabel — data yang baik juga harus "sehat" alias bebas dari masalah kualitas. Ada tiga masalah yang paling sering muncul:</p>
+    <figure>
+      <img class="fig" src="images/masalah_kualitas_data.png" alt="Tiga masalah kualitas data: data duplikat, data hilang, format tidak konsisten">
+    </figure>
+    <div class="cards">
+      <div class="card">
+        <h4>Data Duplikat</h4>
+        <p>Baris yang sama tercatat lebih dari sekali. Contohnya nama Budi muncul dua kali dengan judul buku yang mirip-mirip, padahal itu peminjaman yang sama.</p>
+      </div>
+      <div class="card c2">
+        <h4>Data Hilang</h4>
+        <p>Ada sel atau kolom yang dibiarkan kosong, misalnya tanggal peminjaman yang lupa diisi.</p>
+      </div>
+      <div class="card c3">
+        <h4>Format Tidak Konsisten</h4>
+        <p>Satu kolom berisi campuran jenis data, misalnya kolom "jumlah" isinya kadang angka (2), kadang tulisan ("lupa").</p>
+      </div>
+    </div>
+    <div class="tip">Coba pikirkan: pernahkah kamu mencatat sesuatu (misalnya daftar tugas atau kontak teman) yang ternyata punya salah satu dari tiga masalah di atas?</div>
+  </section>
+
+  <section id="proses">
+    <h2>Dari Berantakan ke Rapi: Proses Membersihkan Data</h2>
+    <p>Tenang, masalah kualitas data itu bisa diperbaiki kok! Perhatikan gambar berikut, bagaimana data yang tadinya berantakan bisa diubah jadi data terstruktur yang benar-benar bersih:</p>
+    <figure>
+      <img class="fig" src="images/data_kotor_vs_bersih.png" alt="Proses membersihkan data kotor menjadi data terstruktur">
+    </figure>
+    <p>Prosesnya sederhana, ikuti langkah ini:</p>
+    <ol>
+      <li>Baca ulang semua data mentah yang ada, satu per satu.</li>
+      <li>Tentukan kolom apa saja yang dibutuhkan, dan pastikan tiap kolom cuma berisi satu jenis data.</li>
+      <li>Cari baris yang kembar (duplikat), lalu gabungkan atau hapus salah satunya.</li>
+      <li>Cari sel yang masih kosong — isi kalau datanya ada, atau tandai dengan jelas kalau memang belum diketahui.</li>
+      <li>Cek ulang seluruh tabel: apakah sudah memenuhi 4 ciri data terstruktur yang kamu pelajari di pertemuan lalu?</li>
+    </ol>
+  </section>
+
+  <section id="kelompok">
+    <h2>Kerja Bareng, Yuk! (Kali Ini Kamu Kerja Kelompok)</h2>
+    <p>Di pertemuan ini, kamu akan bekerja dalam kelompok untuk mengubah data mentah menjadi himpunan data terstruktur — sungguhan, bukan cuma dari buku! Setiap kelompok akan mendapat satu tema data otentik dari lingkungan sekolahmu sendiri:</p>
+    <figure>
+      <img class="fig" src="images/contoh_data_sekolah_tema.png" alt="Lima pilihan tema data otentik sekolah: prestasi siswa, perpustakaan, kas kelas, piket kebersihan, ekstrakurikuler">
+    </figure>
+    <p>Supaya kerja kelompok lancar dan semua orang kebagian tugas, kalian akan berbagi peran seperti ini:</p>
+    <figure>
+      <img class="fig" src="images/kartu_peran_kelompok.png" alt="Empat peran dalam kelompok: Pencatat, Penata Kolom, Pemeriksa Kualitas, Presenter">
+    </figure>
+    <ul>
+      <li><strong>Pencatat</strong> — bertugas menulis hasil diskusi kelompok ke dalam tabel.</li>
+      <li><strong>Penata Kolom</strong> — menentukan judul kolom apa saja yang dibutuhkan beserta tipe datanya.</li>
+      <li><strong>Pemeriksa Kualitas</strong> — mengecek apakah masih ada data duplikat, data hilang, atau format yang tidak konsisten.</li>
+      <li><strong>Presenter</strong> — menyampaikan hasil kerja kelompok saat sesi gallery walk nanti.</li>
+    </ul>
+    <div class="tip">Setiap peran sama pentingnya — kelompok yang solid adalah kelompok yang setiap anggotanya aktif di perannya masing-masing!</div>
+  </section>
+
+  <section id="gallery">
+    <h2>Gallery Walk: Pamerkan & Saling Menilai</h2>
+    <p>Setelah tabel data kelompokmu jadi, saatnya "pameran"! Kegiatan ini disebut gallery walk — hasil kerja tiap kelompok dipajang, lalu kelompok lain berkeliling untuk melihat dan menilai.</p>
+    <figure>
+      <img class="fig" src="images/rubrik_gallery_walk.png" alt="Ilustrasi gallery walk dan rubrik penilaian antarkelompok">
+    </figure>
+    <p>Saat menilai hasil kerja kelompok lain, gunakan 4 pertanyaan berikut sebagai panduan (ingat lagi 4 ciri data terstruktur!):</p>
+    <ol>
+      <li>Apakah datanya sudah tersusun rapi dalam baris dan kolom?</li>
+      <li>Apakah setiap kolom cuma berisi satu jenis data (konsisten)?</li>
+      <li>Apakah tidak ada data yang duplikat atau kosong?</li>
+      <li>Apakah datanya mudah dibaca, dicari, dan diurutkan?</li>
+    </ol>
+    <p>Jangan lupa, saat giliran kelompokmu dikunjungi, si Presenter harus siap menjelaskan dan menjawab pertanyaan dari kelompok lain, ya!</p>
+  </section>
+
+  <section id="coba">
+    <div class="banner">
+      <div class="icon">❗</div>
+      <div class="txt">Tantangan Kelompok</div>
+    </div>
+    <figure>
+      <img class="fig" src="images/banner_tantangan_kelompok.png" alt="Banner tantangan kelompok: ubah data berantakan jadi himpunan data terstruktur">
+    </figure>
+    <p>Sebelum kerja kelompok dimulai, coba dulu latihan singkat ini secara mandiri di buku catatanmu:</p>
+    <ol class="steps">
+      <li>Tuliskan 3 baris data yang menurutmu "kotor" (boleh dikarang, misalnya daftar kontak teman yang berantakan).</li>
+      <li>Tandai masalah kualitas apa saja yang ada — duplikat, data hilang, atau format tidak konsisten?</li>
+      <li>Ubah menjadi tabel yang rapi dan bersih, lengkap dengan judul kolom.</li>
+    </ol>
+    <div class="tip">Latihan mandiri ini akan membantumu lebih siap saat mengerjakan LKPD bersama kelompokmu nanti.</div>
+  </section>
+
+  <section id="cek">
+    <h2>Cek Pemahaman Yuk!</h2>
+    <p>Klik tiap pertanyaan untuk melihat kunci jawabannya setelah kamu mencoba menjawab sendiri dulu.</p>
+
+    <details class="quiz">
+      <summary>1. Sebutkan tiga masalah kualitas data yang sudah kamu pelajari!</summary>
+      <div class="answer">Data duplikat (baris tercatat berulang), data hilang (sel/kolom kosong), dan format tidak konsisten (satu kolom campur angka & teks).</div>
+    </details>
+
+    <details class="quiz">
+      <summary>2. Kenapa mencampur angka dan teks dalam satu kolom bisa menyulitkan pengolahan data?</summary>
+      <div class="answer">Karena kolom yang tidak konsisten tipe datanya sulit dihitung atau dianalisis, misalnya sulit mencari rata-rata jika ada teks tercampur di antara angka.</div>
+    </details>
+
+    <details class="quiz">
+      <summary>3. Apa saja langkah untuk mengubah data mentah menjadi data terstruktur yang bersih?</summary>
+      <div class="answer">Baca ulang data mentah, tentukan kolom & tipe data, hapus/gabungkan data duplikat, lengkapi data yang hilang, lalu cek ulang 4 ciri data terstruktur.</div>
+    </details>
+
+    <details class="quiz">
+      <summary>4. Sebutkan 4 peran dalam kerja kelompok dan tugas masing-masing!</summary>
+      <div class="answer">Pencatat (menulis hasil diskusi), Penata Kolom (menentukan judul kolom & tipe data), Pemeriksa Kualitas (mengecek duplikat/data hilang/format), Presenter (menyampaikan hasil saat gallery walk).</div>
+    </details>
+
+    <details class="quiz">
+      <summary>5. Saat gallery walk, apa saja yang perlu kamu periksa dari hasil kerja kelompok lain?</summary>
+      <div class="answer">Apakah tersusun rapi dalam baris & kolom, setiap kolom konsisten satu jenis data, tidak ada duplikat/data hilang, dan mudah dibaca/dicari/diurutkan.</div>
+    </details>
+
+    <p class="progress-note">Kalau kamu bisa jawab semuanya, kamu sudah siap jadi bagian dari kelompok yang solid hari ini!</p>
+  </section>
+
+  <section id="rangkuman">
+    <div class="summary-box">
+      <h2>Rangkuman</h2>
+      <ul>
+        <li>Data yang baik tidak cukup hanya disusun dalam tabel — data juga harus bebas dari masalah kualitas.</li>
+        <li>Tiga masalah kualitas data yang umum: data duplikat, data hilang, dan format tidak konsisten.</li>
+        <li>Proses membersihkan data: baca ulang data mentah, tentukan kolom & tipe data, hapus duplikat, lengkapi data hilang, lalu cek ulang 4 ciri data terstruktur.</li>
+        <li>Kerja kelompok dibagi menjadi 4 peran: Pencatat, Penata Kolom, Pemeriksa Kualitas, dan Presenter.</li>
+        <li>Gallery walk adalah kegiatan saling menilai hasil kerja antarkelompok menggunakan rubrik berdasarkan 4 ciri data terstruktur.</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer class="page-footer">
+  Informatika Kelas VII · Bab 2 Pengolahan Data · TP1 Pertemuan 2 — SMP Negeri 14 Tarakan
+</footer>
+
+</body>
+</html>
