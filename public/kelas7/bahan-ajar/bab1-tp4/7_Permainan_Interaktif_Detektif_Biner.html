@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detektif Biner: Misteri Ruang yang Hilang</title>
+<style>
+  :root{
+    --navy:#1B3A5C;
+    --navy-dark:#0F2238;
+    --blue:#2E6FB0;
+    --orange:#F2994A;
+    --green:#1E8E5A;
+    --green-bg:#E8F6EF;
+    --red:#EB5757;
+    --red-bg:#FBEAEA;
+    --ice:#EAF3FB;
+    --card:#F4F8FC;
+    --gray:#5B6B7C;
+    --line:#DCE6F0;
+    --bg:#F3F6FA;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Segoe UI', Calibri, Arial, sans-serif;
+    background:linear-gradient(180deg, var(--navy-dark) 0%, var(--navy) 320px, var(--bg) 320px);
+    color:#1C2B3A; min-height:100vh;
+  }
+  .wrap{ max-width:1100px; margin:0 auto; padding:0 20px 60px; transition:max-width .25s ease; }
+  .wrap.wrap-duo{ max-width:1680px; }
+
+  header.top{ text-align:center; padding:28px 16px 10px; color:#fff; }
+  header.top .eyebrow{ color:var(--orange); font-weight:800; letter-spacing:.08em; font-size:.8rem; text-transform:uppercase; }
+  header.top h1{ font-size:1.9rem; margin:.3rem 0 .3rem; font-weight:800; }
+  header.top p{ color:#C7DAF0; margin:0; font-size:.98rem; }
+
+  .mtabs{ display:flex; justify-content:center; gap:10px; margin:22px 0 26px; flex-wrap:wrap; }
+  .mtab{
+    background:rgba(255,255,255,.08); color:#DCE9F8; border:1.5px solid rgba(255,255,255,.25);
+    padding:.65rem 1.3rem; border-radius:999px; font-size:.95rem; font-weight:700; cursor:pointer;
+    transition:all .15s ease;
+  }
+  .mtab:hover{ background:rgba(255,255,255,.16); }
+  .mtab.active{ background:var(--orange); color:#fff; border-color:var(--orange); box-shadow:0 4px 14px rgba(242,153,74,.4); }
+
+  [hidden]{ display:none !important; }
+
+  .duo-row{ display:flex; gap:26px; flex-wrap:wrap; align-items:flex-start; justify-content:center; }
+  .duo-col{ flex:1 1 420px; max-width:760px; min-width:320px; }
+  .duo-col .team-label{
+    text-align:center; font-weight:800; font-size:1.05rem; color:#fff; margin-bottom:10px;
+    background:var(--navy); border-radius:10px 10px 0 0; padding:.55rem 0;
+  }
+  .duo-col.team-b .team-label{ background:#8E5FD9; }
+
+  .board{ background:#fff; border-radius:14px; box-shadow:0 6px 24px rgba(20,45,80,.1); overflow:hidden; margin-bottom:10px; }
+
+  .hud{ display:flex; background:var(--navy); color:#fff; padding:12px 18px; gap:18px; flex-wrap:wrap; font-size:.92rem; font-weight:700; }
+  .hud-item{ display:flex; align-items:center; gap:6px; }
+  .hud-item .lbl{ color:#9FB6D0; font-weight:600; font-size:.8rem; }
+
+  .stage{ padding:22px 22px 10px; min-height:280px; }
+  .lvl-title{ color:var(--navy); font-size:1.25rem; margin:0 0 6px; font-weight:800; }
+  .lvl-desc{ color:var(--gray); font-size:.94rem; margin:0 0 16px; line-height:1.5; }
+  .ctx-box{
+    background:var(--ice); border:1px solid #CFE0F2; border-radius:10px; padding:.8rem 1rem;
+    font-size:.93rem; color:var(--navy); margin-bottom:16px; font-weight:600;
+  }
+
+  .quiz-list{ display:flex; flex-direction:column; gap:12px; }
+  .quiz-item{
+    border:1.5px solid var(--line); border-radius:10px; padding:12px 14px; background:#FBFDFF;
+  }
+  .quiz-item.correct{ border-color:var(--green); background:var(--green-bg); }
+  .quiz-text{ font-weight:600; font-size:.96rem; margin-bottom:10px; color:#20303F; }
+  .quiz-btns{ display:flex; gap:10px; flex-wrap:wrap; }
+  .opt-btn{
+    border:1.5px solid var(--line); background:#fff; color:var(--navy); font-weight:700;
+    padding:.5rem 1rem; border-radius:8px; cursor:pointer; font-size:.88rem; transition:all .12s ease;
+  }
+  .opt-btn:hover{ border-color:var(--blue); }
+  .opt-btn.picked-correct{ background:var(--green); border-color:var(--green); color:#fff; }
+  .opt-btn.picked-wrong{ background:var(--red); border-color:var(--red); color:#fff; }
+  .opt-btn[disabled]{ cursor:default; opacity:.85; }
+
+  .room-grid{ display:grid; grid-template-columns:repeat(6, minmax(58px,1fr)); gap:10px; margin:14px 0; }
+  .room-cell{
+    border:2px solid var(--line); background:#fff; border-radius:10px; padding:.55rem 0; text-align:center;
+    cursor:pointer; font-weight:800; color:var(--navy); font-size:1rem; transition:all .12s ease;
+  }
+  .room-cell .bitval{ display:block; font-size:1.15rem; margin-top:2px; color:var(--gray); font-weight:800; }
+  .room-cell.on{ background:var(--blue); border-color:var(--blue); color:#fff; }
+  .room-cell.on .bitval{ color:#fff; }
+  .room-cell.lock-correct{ background:var(--green); border-color:var(--green); color:#fff; cursor:default; }
+  .room-cell.lock-correct .bitval{ color:#fff; }
+  .room-cell.shake{ animation:shake .35s; }
+
+  .btn-check, .btn-next, .btn-hint, .btn-submit{
+    border:none; border-radius:9px; padding:.65rem 1.3rem; font-weight:800; cursor:pointer; font-size:.92rem;
+  }
+  .btn-check{ background:var(--blue); color:#fff; margin-top:4px; }
+  .btn-check:hover{ background:var(--navy); }
+  .btn-submit{ background:var(--orange); color:#fff; margin-top:10px; }
+  .btn-submit:hover{ background:#D97F30; }
+  .btn-submit[disabled]{ background:#CBD5E0; cursor:not-allowed; }
+
+  .feedback-msg{ margin-top:10px; font-weight:700; font-size:.92rem; min-height:1.3em; }
+  .feedback-msg.ok{ color:var(--green); }
+  .feedback-msg.bad{ color:var(--red); }
+
+  .or-table{ overflow-x:auto; margin:10px 0 6px; }
+  .or-grid{ display:grid; grid-auto-flow:column; grid-auto-columns:minmax(52px,1fr); gap:6px; min-width:620px; }
+  .or-col{ display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .or-col .room-letter{ font-size:.75rem; color:var(--gray); font-weight:800; }
+  .or-cell-fixed{
+    width:100%; text-align:center; padding:.35rem 0; border-radius:6px; font-weight:800; font-size:.92rem;
+    background:var(--card); border:1px solid var(--line); color:var(--navy);
+  }
+  .or-pick{ display:flex; gap:3px; }
+  .or-pick button{
+    flex:1; border:1.5px solid var(--line); background:#fff; color:var(--navy); font-weight:800;
+    border-radius:6px; padding:.3rem 0; cursor:pointer; font-size:.85rem;
+  }
+  .or-pick button.locked-correct{ background:var(--green); border-color:var(--green); color:#fff; cursor:default; }
+  .or-pick button.wrong-flash{ background:var(--red); border-color:var(--red); color:#fff; }
+
+  .num-row{ display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 16px; }
+  .num-btn{
+    width:42px; height:42px; border-radius:8px; border:1.5px solid var(--line); background:#fff;
+    font-weight:800; color:var(--navy); cursor:pointer; font-size:.95rem;
+  }
+  .num-btn.sel-correct{ background:var(--green); border-color:var(--green); color:#fff; }
+  .num-btn.sel-wrong{ background:var(--red); border-color:var(--red); color:#fff; }
+
+  .chip-grid{ display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 6px; }
+  .chip{
+    width:44px; height:44px; border-radius:50%; border:2px solid var(--line); background:#fff;
+    font-weight:800; color:var(--navy); cursor:pointer; font-size:.95rem;
+  }
+  .chip.sel{ background:var(--orange); border-color:var(--orange); color:#fff; }
+  .chip.locked-correct{ background:var(--green); border-color:var(--green); color:#fff; cursor:default; }
+  .chip.locked-wrong{ background:var(--red); border-color:var(--red); color:#fff; }
+
+  .game-footer{ display:flex; justify-content:space-between; align-items:center; padding:12px 22px 20px; gap:10px; flex-wrap:wrap; }
+  .btn-hint{ background:#FFF3E4; color:#A85E12; border:1.5px solid var(--orange); }
+  .btn-hint:hover{ background:#FFE6C4; }
+  .btn-hint[disabled]{ opacity:.45; cursor:not-allowed; }
+  .btn-next{ background:var(--navy); color:#fff; margin-left:auto; }
+  .btn-next:hover{ background:#0F2238; }
+  .btn-next[disabled]{ background:#CBD5E0; cursor:not-allowed; }
+
+  .complete-screen{ text-align:center; padding:30px 20px 10px; }
+  .complete-screen .trophy{ font-size:3.2rem; }
+  .complete-screen h2{ color:var(--navy); margin:.3rem 0; font-size:1.4rem; }
+  .complete-screen .badge-name{ color:var(--orange); font-weight:800; font-size:1.15rem; }
+  .stat-row{ display:flex; justify-content:center; gap:22px; margin:16px 0; flex-wrap:wrap; }
+  .stat{ background:var(--card); border-radius:10px; padding:10px 18px; min-width:90px; }
+  .stat .v{ font-size:1.3rem; font-weight:800; color:var(--navy); }
+  .stat .k{ font-size:.75rem; color:var(--gray); font-weight:700; }
+  .stars{ font-size:1.6rem; letter-spacing:4px; margin:6px 0; }
+  .btn-replay{ background:var(--orange); color:#fff; border:none; border-radius:9px; padding:.7rem 1.6rem; font-weight:800; cursor:pointer; font-size:.95rem; margin-top:6px; }
+  .btn-replay:hover{ background:#D97F30; }
+
+  @keyframes shake{
+    10%,90%{ transform:translateX(-3px); }
+    20%,80%{ transform:translateX(5px); }
+    30%,50%,70%{ transform:translateX(-7px); }
+    40%,60%{ transform:translateX(7px); }
+  }
+  .glow-hint{ animation:glowPulse 1s ease-in-out infinite; }
+  @keyframes glowPulse{
+    0%,100%{ box-shadow:0 0 0 0 rgba(242,153,74,.0); }
+    50%{ box-shadow:0 0 0 7px rgba(242,153,74,.45); }
+  }
+
+  .confetti-piece{
+    position:fixed; top:-20px; width:9px; height:14px; z-index:999; pointer-events:none;
+    animation:confettiFall linear forwards;
+  }
+  @keyframes confettiFall{
+    to{ transform:translateY(110vh) rotate(540deg); opacity:.9; }
+  }
+
+  footer.pagefoot{ text-align:center; color:var(--gray); font-size:.82rem; padding:18px 0 4px; }
+
+  @media (max-width:760px){
+    header.top h1{ font-size:1.5rem; }
+    .room-grid{ grid-template-columns:repeat(4, minmax(50px,1fr)); }
+    .stage{ padding:18px 14px 6px; }
+    .duo-row{ gap:16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap" id="pageWrap">
+  <header class="top">
+    <div class="eyebrow">BAB 1 · TP4 · Pertemuan 1 — Representasi Data (Biner)</div>
+    <h1>🔎 Detektif Biner: Misteri Ruang yang Hilang</h1>
+    <p>Ubah data jadi bit, gabungkan dengan operasi OR, lalu pecahkan misterinya!</p>
+  </header>
+
+  <div class="mtabs">
+    <button class="mtab active" id="modeSoloBtn" type="button">🎮 Main Sendiri</button>
+    <button class="mtab" id="modeTeamBtn" type="button">👥 Main Tim (Dua Tim)</button>
+  </div>
+
+  <section id="soloPanel"></section>
+  <section id="teamPanel" hidden>
+    <div class="duo-row">
+      <div class="duo-col team-a">
+        <div class="team-label">🔵 TIM A</div>
+        <div id="timAHost"></div>
+      </div>
+      <div class="duo-col team-b">
+        <div class="team-label">🟣 TIM B</div>
+        <div id="timBHost"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">Informatika Kelas VII · SMP Negeri 14 Tarakan · BAB 1 TP4 Pertemuan 1</footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+// ====================================================================
+// DATA — tiga papan (Solo, Tim A, Tim B) dengan soal & kasus BERBEDA
+// ====================================================================
+const ROOMS = "ABCDEFGHIJKL".split("");
+
+function orBits(a, b){
+  return a.split("").map((c,i)=> (c==="1"||b[i]==="1") ? "1":"0").join("");
+}
+
+const DATA = {
+  solo: {
+    quiz1: [
+      { text: "Apakah hari ini kamu sarapan roti?", isBinary: true },
+      { text: "Apa warna kesukaanmu?", isBinary: false },
+      { text: "Apakah kamu membawa payung hari ini?", isBinary: true },
+      { text: "Siapa nama lengkapmu?", isBinary: false },
+      { text: "Apakah hari ini kamu piket kelas?", isBinary: true },
+    ],
+    quiz2: [
+      { text: "Kondisi: “Hari ini kamu masuk sekolah” → YA", correct: 1 },
+      { text: "Kondisi: “Kamu membawa payung” → TIDAK", correct: 0 },
+      { text: "Kondisi: “Lampu kelas menyala” → YA", correct: 1 },
+      { text: "Kondisi: “Pintu kelas terbuka” → TIDAK", correct: 0 },
+    ],
+    senin: "101001001010",
+    selasa: "100100000111",
+    descSenin: "Ruang yang DIPINJAM hari Senin: A, C, F, I, K (ruang lainnya kosong).",
+    descSelasa: "Ruang yang DIPINJAM hari Selasa: A, D, J, K, L (ruang lainnya kosong).",
+  },
+  timA: {
+    quiz1: [
+      { text: "Apakah kamu suka pelajaran Informatika?", isBinary: true },
+      { text: "Berapa nomor absenmu di kelas?", isBinary: false },
+      { text: "Apakah hari ini jadwalmu olahraga?", isBinary: true },
+      { text: "Apa cita-citamu kelak?", isBinary: false },
+      { text: "Apakah HP-mu sedang dicas?", isBinary: true },
+    ],
+    quiz2: [
+      { text: "Kondisi: “Kamu sedang memakai sepatu” → YA", correct: 1 },
+      { text: "Kondisi: “Kelasmu memakai AC” → TIDAK", correct: 0 },
+      { text: "Kondisi: “Hari ini jadwal upacara” → YA", correct: 1 },
+      { text: "Kondisi: “Bel sekolah sudah berbunyi” → TIDAK", correct: 0 },
+    ],
+    senin: "110010100100",
+    selasa: "011001001001",
+    descSenin: "Ruang yang DIPINJAM hari Senin: A, B, E, G, J (ruang lainnya kosong).",
+    descSelasa: "Ruang yang DIPINJAM hari Selasa: B, C, F, I, L (ruang lainnya kosong).",
+  },
+  timB: {
+    quiz1: [
+      { text: "Apakah pintu perpustakaan sedang terbuka?", isBinary: true },
+      { text: "Berapa banyak buku yang kamu baca bulan ini?", isBinary: false },
+      { text: "Apakah kamu membawa botol minum hari ini?", isBinary: true },
+      { text: "Apa makanan favoritmu?", isBinary: false },
+      { text: "Apakah WiFi sekolah sedang menyala?", isBinary: true },
+    ],
+    quiz2: [
+      { text: "Kondisi: “Proyektor kelas sedang menyala” → YA", correct: 1 },
+      { text: "Kondisi: “Kamu terlambat hari ini” → TIDAK", correct: 0 },
+      { text: "Kondisi: “Loker kelasmu terkunci” → YA", correct: 1 },
+      { text: "Kondisi: “Papan tulis sudah dihapus” → TIDAK", correct: 0 },
+    ],
+    senin: "010110010010",
+    selasa: "100011000101",
+    descSenin: "Ruang yang DIPINJAM hari Senin: B, D, E, H, K (ruang lainnya kosong).",
+    descSelasa: "Ruang yang DIPINJAM hari Selasa: A, E, F, J, L (ruang lainnya kosong).",
+  },
+};
+
+// ====================================================================
+// BOARD MARKUP TEMPLATE
+// ====================================================================
+function boardTemplate(prefix){
+  return `
+    <div class="board" id="${prefix}-board">
+      <div class="hud">
+        <div class="hud-item"><span class="lbl">LEVEL</span> <span id="${prefix}-level">1</span>/5</div>
+        <div class="hud-item"><span class="lbl">SKOR</span> <span id="${prefix}-score">0</span></div>
+        <div class="hud-item"><span class="lbl">WAKTU</span> <span id="${prefix}-timer">00:00</span></div>
+      </div>
+      <div class="stage" id="${prefix}-stage"></div>
+      <div class="game-footer">
+        <button class="btn-hint" id="${prefix}-hint-btn" type="button">💡 Hint</button>
+        <button class="btn-next" id="${prefix}-next-btn" type="button" disabled>Lanjut ➜</button>
+      </div>
+    </div>`;
+}
+
+// ====================================================================
+// GAME FACTORY
+// ====================================================================
+function createGame(prefix, data){
+  const els = {
+    level: document.getElementById(prefix + "-level"),
+    score: document.getElementById(prefix + "-score"),
+    timer: document.getElementById(prefix + "-timer"),
+    stage: document.getElementById(prefix + "-stage"),
+    hintBtn: document.getElementById(prefix + "-hint-btn"),
+    nextBtn: document.getElementById(prefix + "-next-btn"),
+  };
+
+  const orCorrect = orBits(data.senin, data.selasa).split("");
+  const zeroIdx = orCorrect.map((b,i)=>b==="0"?i:-1).filter(i=>i>=0);
+
+  const st = {
+    level: 1,
+    score: 0,
+    mistakes: [0,0,0,0,0],
+    stars: [0,0,0,0,0],
+    elapsed: 0,
+    timerHandle: null,
+    hintUsed: false,
+    // working data
+    q1done: 0,
+    q2done: 0,
+    seninArr: new Array(12).fill(0),
+    selasaArr: new Array(12).fill(0),
+    phase3: "senin", // then "selasa"
+    orPicked: new Array(12).fill(null),
+    orLocked: new Array(12).fill(false),
+    q5count: null,
+    q5rooms: new Set(),
+  };
+
+  function addScore(n){
+    st.score = Math.max(0, st.score + n);
+    els.score.textContent = st.score;
+  }
+  function mistake(){
+    st.mistakes[st.level-1]++;
+  }
+  function fmtTime(s){
+    const m = Math.floor(s/60).toString().padStart(2,"0");
+    const sec = (s%60).toString().padStart(2,"0");
+    return m+":"+sec;
+  }
+  function startTimer(){
+    stopTimer();
+    st.timerHandle = setInterval(()=>{
+      st.elapsed++;
+      els.timer.textContent = fmtTime(st.elapsed);
+    }, 1000);
+  }
+  function stopTimer(){
+    if (st.timerHandle){ clearInterval(st.timerHandle); st.timerHandle = null; }
+  }
+
+  function starsForLevel(levelIdx){
+    const m = st.mistakes[levelIdx];
+    if (m === 0) return 3;
+    if (m <= 2) return 2;
+    return 1;
+  }
+
+  function setNextEnabled(on){
+    els.nextBtn.disabled = !on;
+  }
+
+  function goNextLevel(){
+    st.stars[st.level-1] = starsForLevel(st.level-1);
+    if (st.level >= 5){
+      finishGame();
+      return;
+    }
+    st.level++;
+    st.hintUsed = false;
+    els.level.textContent = st.level;
+    els.hintBtn.disabled = false;
+    setNextEnabled(false);
+    renderLevel();
+  }
+  els.nextBtn.addEventListener("click", goNextLevel);
+  els.hintBtn.addEventListener("click", ()=>{
+    if (st.hintUsed) return;
+    st.hintUsed = true;
+    els.hintBtn.disabled = true;
+    showHint();
+  });
+
+  function glow(elm, ms){
+    if (!elm) return;
+    elm.classList.add("glow-hint");
+    setTimeout(()=> elm.classList.remove("glow-hint"), ms || 2200);
+  }
+
+  function shakeEl(elm){
+    elm.classList.add("shake");
+    setTimeout(()=> elm.classList.remove("shake"), 350);
+  }
+
+  // ------------------------------------------------------------------
+  // LEVEL 1 — Biner atau Bukan?
+  // ------------------------------------------------------------------
+  function renderLevel1(){
+    st.q1done = 0;
+    const items = data.quiz1.map((q,i)=>`
+      <div class="quiz-item" data-i="${i}">
+        <div class="quiz-text">${i+1}. ${q.text}</div>
+        <div class="quiz-btns">
+          <button class="opt-btn" data-ans="ya">✅ Bisa 1 Bit</button>
+          <button class="opt-btn" data-ans="tidak">❌ Tidak Bisa</button>
+        </div>
+      </div>`).join("");
+    els.stage.innerHTML = `
+      <h3 class="lvl-title">Level 1 — Biner atau Bukan?</h3>
+      <p class="lvl-desc">Tentukan apakah jawaban tiap pertanyaan bisa diwakili dengan <strong>SATU BIT</strong> (tepat 2 kemungkinan: ya/tidak), atau <strong>tidak bisa</strong> karena kemungkinannya lebih dari dua.</p>
+      <div class="quiz-list">${items}</div>`;
+
+    els.stage.querySelectorAll(".quiz-item").forEach((item)=>{
+      const i = parseInt(item.dataset.i, 10);
+      const q = data.quiz1[i];
+      item.querySelectorAll(".opt-btn").forEach((btn)=>{
+        btn.addEventListener("click", ()=>{
+          if (item.classList.contains("correct")) return;
+          const pickedYa = btn.dataset.ans === "ya";
+          const isCorrect = pickedYa === q.isBinary;
+          if (isCorrect){
+            btn.classList.add("picked-correct");
+            item.classList.add("correct");
+            item.querySelectorAll(".opt-btn").forEach(b=> b.disabled = true);
+            addScore(10);
+            st.q1done++;
+            if (st.q1done === data.quiz1.length) setNextEnabled(true);
+          } else {
+            btn.classList.add("picked-wrong");
+            shakeEl(btn);
+            mistake();
+            addScore(-2);
+            setTimeout(()=> btn.classList.remove("picked-wrong"), 500);
+          }
+        });
+      });
+    });
+  }
+
+  // ------------------------------------------------------------------
+  // LEVEL 2 — Ubah Jadi Bit!
+  // ------------------------------------------------------------------
+  function renderLevel2(){
+    st.q2done = 0;
+    const items = data.quiz2.map((q,i)=>`
+      <div class="quiz-item" data-i="${i}">
+        <div class="quiz-text">${i+1}. ${q.text}</div>
+        <div class="quiz-btns">
+          <button class="opt-btn" data-bit="1">1</button>
+          <button class="opt-btn" data-bit="0">0</button>
+        </div>
+      </div>`).join("");
+    els.stage.innerHTML = `
+      <h3 class="lvl-title">Level 2 — Ubah Jadi Bit!</h3>
+      <p class="lvl-desc">Pilih kode bit yang tepat untuk setiap kondisi (<strong>1 = Ya</strong>, <strong>0 = Tidak</strong>).</p>
+      <div class="quiz-list">${items}</div>`;
+
+    els.stage.querySelectorAll(".quiz-item").forEach((item)=>{
+      const i = parseInt(item.dataset.i, 10);
+      const q = data.quiz2[i];
+      item.querySelectorAll(".opt-btn").forEach((btn)=>{
+        btn.addEventListener("click", ()=>{
+          if (item.classList.contains("correct")) return;
+          const picked = parseInt(btn.dataset.bit, 10);
+          if (picked === q.correct){
+            btn.classList.add("picked-correct");
+            item.classList.add("correct");
+            item.querySelectorAll(".opt-btn").forEach(b=> b.disabled = true);
+            addScore(10);
+            st.q2done++;
+            if (st.q2done === data.quiz2.length) setNextEnabled(true);
+          } else {
+            btn.classList.add("picked-wrong");
+            shakeEl(btn);
+            mistake();
+            addScore(-2);
+            setTimeout(()=> btn.classList.remove("picked-wrong"), 500);
+          }
+        });
+      });
+    });
+  }
+
+  // ------------------------------------------------------------------
+  // LEVEL 3 — Susun Kode Biner (Senin lalu Selasa)
+  // ------------------------------------------------------------------
+  function renderLevel3(){
+    st.phase3 = "senin";
+    st.seninArr = new Array(12).fill(0);
+    st.selasaArr = new Array(12).fill(0);
+    renderLevel3Phase();
+  }
+
+  function renderLevel3Phase(){
+    const isSenin = st.phase3 === "senin";
+    const desc = isSenin ? data.descSenin : data.descSelasa;
+    const cells = ROOMS.map((r,i)=>`
+      <button class="room-cell" data-i="${i}" type="button">${r}<span class="bitval">0</span></button>`).join("");
+    els.stage.innerHTML = `
+      <h3 class="lvl-title">Level 3 — Susun Kode Biner: ${isSenin ? "Senin" : "Selasa"}</h3>
+      <div class="ctx-box">${desc}</div>
+      <p class="lvl-desc">Klik tiap ruang untuk mengubah statusnya: <strong>1 = dipinjam</strong>, <strong>0 = kosong</strong>. Cocokkan dengan keterangan di atas, urut Ruang A sampai L.</p>
+      <div class="room-grid">${cells}</div>
+      <button class="btn-check" type="button">Cek Jawaban</button>
+      <div class="feedback-msg"></div>`;
+
+    const arr = isSenin ? st.seninArr : st.selasaArr;
+    const correctStr = isSenin ? data.senin : data.selasa;
+    const cellEls = Array.from(els.stage.querySelectorAll(".room-cell"));
+    const msg = els.stage.querySelector(".feedback-msg");
+
+    cellEls.forEach((cell)=>{
+      cell.addEventListener("click", ()=>{
+        const i = parseInt(cell.dataset.i, 10);
+        arr[i] = arr[i] === 0 ? 1 : 0;
+        cell.classList.toggle("on", arr[i] === 1);
+        cell.querySelector(".bitval").textContent = arr[i];
+      });
+    });
+
+    els.stage.querySelector(".btn-check").addEventListener("click", ()=>{
+      const userStr = arr.join("");
+      if (userStr === correctStr){
+        cellEls.forEach(c=> c.classList.add("lock-correct"));
+        msg.textContent = isSenin
+          ? "Benar! Kode hari Senin sudah tepat. Lanjut ke hari Selasa..."
+          : "Benar! Kedua kode sudah lengkap. Klik “Lanjut” untuk ke Level 4.";
+        msg.className = "feedback-msg ok";
+        els.stage.querySelector(".btn-check").disabled = true;
+        cellEls.forEach(c=> c.style.pointerEvents = "none");
+        if (isSenin){
+          setTimeout(()=>{ st.phase3 = "selasa"; renderLevel3Phase(); }, 1200);
+        } else {
+          setNextEnabled(true);
+        }
+      } else {
+        mistake();
+        addScore(-2);
+        msg.textContent = "Belum tepat, coba periksa lagi keterangan di atas.";
+        msg.className = "feedback-msg bad";
+        cellEls.forEach((c,i)=>{ if (arr[i] !== parseInt(correctStr[i],10)) shakeEl(c); });
+      }
+    });
+  }
+
+  // ------------------------------------------------------------------
+  // LEVEL 4 — Operasi OR Bit per Bit
+  // ------------------------------------------------------------------
+  function renderLevel4(){
+    st.orPicked = new Array(12).fill(null);
+    st.orLocked = new Array(12).fill(false);
+    const cols = ROOMS.map((r,i)=>`
+      <div class="or-col" data-i="${i}">
+        <div class="room-letter">${r}</div>
+        <div class="or-cell-fixed">${st.seninArr[i]}</div>
+        <div class="or-cell-fixed">${st.selasaArr[i]}</div>
+        <div class="or-pick">
+          <button data-bit="0" type="button">0</button>
+          <button data-bit="1" type="button">1</button>
+        </div>
+      </div>`).join("");
+    els.stage.innerHTML = `
+      <h3 class="lvl-title">Level 4 — Operasi OR Bit per Bit</h3>
+      <p class="lvl-desc">Untuk tiap ruang, gabungkan bit Senin dan Selasa dengan operasi <strong>OR</strong>: hasilnya <strong>1</strong> jika salah satu atau kedua bit bernilai 1, dan <strong>0</strong> hanya jika keduanya 0.</p>
+      <div class="or-table"><div class="or-grid">${cols}</div></div>
+      <div class="feedback-msg"></div>`;
+
+    els.stage.querySelectorAll(".or-col").forEach((col)=>{
+      const i = parseInt(col.dataset.i, 10);
+      col.querySelectorAll(".or-pick button").forEach((btn)=>{
+        btn.addEventListener("click", ()=>{
+          if (st.orLocked[i]) return;
+          const picked = parseInt(btn.dataset.bit, 10);
+          if (picked === parseInt(orCorrect[i], 10)){
+            btn.classList.add("locked-correct");
+            st.orLocked[i] = true;
+            col.querySelectorAll(".or-pick button").forEach(b=> b.disabled = true);
+            addScore(8);
+            if (st.orLocked.every(Boolean)) setNextEnabled(true);
+          } else {
+            btn.classList.add("wrong-flash");
+            shakeEl(col);
+            mistake();
+            addScore(-2);
+            setTimeout(()=> btn.classList.remove("wrong-flash"), 450);
+          }
+        });
+      });
+    });
+  }
+
+  // ------------------------------------------------------------------
+  // LEVEL 5 — Simpulkan!
+  // ------------------------------------------------------------------
+  function renderLevel5(){
+    st.q5count = null;
+    st.q5rooms = new Set();
+    const resultCells = ROOMS.map((r,i)=>`
+      <div class="or-col">
+        <div class="room-letter">${r}</div>
+        <div class="or-cell-fixed" style="background:${orCorrect[i]==='1'?'var(--green-bg)':'var(--red-bg)'};">${orCorrect[i]}</div>
+      </div>`).join("");
+    const numBtns = Array.from({length:13}, (_,n)=>`<button class="num-btn" data-n="${n}" type="button">${n}</button>`).join("");
+
+    els.stage.innerHTML = `
+      <h3 class="lvl-title">Level 5 — Simpulkan!</h3>
+      <div class="ctx-box">Ini hasil OR gabungan Senin &amp; Selasa yang sudah kamu buktikan di Level 4:</div>
+      <div class="or-table"><div class="or-grid">${resultCells}</div></div>
+      <p class="lvl-desc" style="margin-top:16px;"><strong>Pertanyaan 1.</strong> Berapa banyak ruang yang TIDAK PERNAH dipinjam (hitung angka 0 pada hasil OR)?</p>
+      <div class="num-row">${numBtns}</div>
+      <div id="${prefix}-q5b" hidden>
+        <p class="lvl-desc"><strong>Pertanyaan 2.</strong> Sebutkan ruang-ruang yang dimaksud (klik semua huruf yang tepat, lalu kumpulkan):</p>
+        <div class="chip-grid">${ROOMS.map((r)=>`<button class="chip" data-r="${r}" type="button">${r}</button>`).join("")}</div>
+        <button class="btn-submit" type="button">Kumpulkan Jawaban</button>
+      </div>
+      <div class="feedback-msg"></div>`;
+
+    const msg = els.stage.querySelector(".feedback-msg");
+    const numBtnEls = Array.from(els.stage.querySelectorAll(".num-btn"));
+    numBtnEls.forEach((btn)=>{
+      btn.addEventListener("click", ()=>{
+        if (st.q5count !== null) return;
+        const n = parseInt(btn.dataset.n, 10);
+        if (n === zeroIdx.length){
+          btn.classList.add("sel-correct");
+          st.q5count = n;
+          addScore(10);
+          numBtnEls.forEach(b=> b.disabled = true);
+          document.getElementById(prefix + "-q5b").hidden = false;
+          msg.textContent = "Benar! Sekarang sebutkan ruang-ruangnya.";
+          msg.className = "feedback-msg ok";
+        } else {
+          btn.classList.add("sel-wrong");
+          shakeEl(btn);
+          mistake();
+          addScore(-2);
+          setTimeout(()=> btn.classList.remove("sel-wrong"), 500);
+        }
+      });
+    });
+
+    const chips = Array.from(els.stage.querySelectorAll(".chip"));
+    chips.forEach((chip)=>{
+      chip.addEventListener("click", ()=>{
+        const r = chip.dataset.r;
+        if (st.q5rooms.has(r)){ st.q5rooms.delete(r); chip.classList.remove("sel"); }
+        else { st.q5rooms.add(r); chip.classList.add("sel"); }
+      });
+    });
+
+    els.stage.querySelector(".btn-submit").addEventListener("click", ()=>{
+      const correctSet = new Set(zeroIdx.map(i=>ROOMS[i]));
+      const same = correctSet.size === st.q5rooms.size && [...correctSet].every(r=>st.q5rooms.has(r));
+      if (same){
+        chips.forEach(c=>{
+          c.classList.remove("sel");
+          if (correctSet.has(c.dataset.r)) c.classList.add("locked-correct");
+          c.disabled = true;
+        });
+        addScore(15);
+        msg.textContent = "Mantap! Misteri terpecahkan — kasus selesai!";
+        msg.className = "feedback-msg ok";
+        els.stage.querySelector(".btn-submit").disabled = true;
+        setNextEnabled(true);
+      } else {
+        mistake();
+        addScore(-2);
+        msg.textContent = "Belum tepat semua, periksa kembali hasil OR di atas.";
+        msg.className = "feedback-msg bad";
+        chips.forEach(c=> shakeEl(c));
+      }
+    });
+  }
+
+  // ------------------------------------------------------------------
+  function renderLevel(){
+    setNextEnabled(false);
+    if (st.level === 1) renderLevel1();
+    else if (st.level === 2) renderLevel2();
+    else if (st.level === 3) renderLevel3();
+    else if (st.level === 4) renderLevel4();
+    else if (st.level === 5) renderLevel5();
+  }
+
+  function showHint(){
+    if (st.level === 1){
+      const item = els.stage.querySelector(".quiz-item:not(.correct)");
+      if (!item) return;
+      const i = parseInt(item.dataset.i, 10);
+      const want = data.quiz1[i].isBinary ? "ya" : "tidak";
+      glow(item.querySelector(`[data-ans="${want}"]`));
+    } else if (st.level === 2){
+      const item = els.stage.querySelector(".quiz-item:not(.correct)");
+      if (!item) return;
+      const i = parseInt(item.dataset.i, 10);
+      glow(item.querySelector(`[data-bit="${data.quiz2[i].correct}"]`));
+    } else if (st.level === 3){
+      const arr = st.phase3 === "senin" ? st.seninArr : st.selasaArr;
+      const correctStr = st.phase3 === "senin" ? data.senin : data.selasa;
+      for (let i=0;i<12;i++){
+        if (arr[i] !== parseInt(correctStr[i],10)){
+          glow(els.stage.querySelectorAll(".room-cell")[i]);
+          break;
+        }
+      }
+    } else if (st.level === 4){
+      const idx = st.orLocked.findIndex(v=>!v);
+      if (idx >= 0){
+        const col = els.stage.querySelectorAll(".or-col")[idx];
+        glow(col.querySelector(`[data-bit="${orCorrect[idx]}"]`));
+      }
+    } else if (st.level === 5){
+      if (st.q5count === null){
+        const btn = els.stage.querySelector(`.num-btn[data-n="${zeroIdx.length}"]`);
+        glow(btn);
+      } else {
+        const unpicked = els.stage.querySelector(".chip:not(.sel):not(:disabled)");
+        if (unpicked && zeroIdx.map(i=>ROOMS[i]).includes(unpicked.dataset.r)) glow(unpicked);
+        else {
+          const chips = Array.from(els.stage.querySelectorAll(".chip:not(:disabled)"));
+          const target = chips.find(c=> zeroIdx.map(i=>ROOMS[i]).includes(c.dataset.r) && !c.classList.contains("sel"));
+          if (target) glow(target);
+        }
+      }
+    }
+  }
+
+  function finishGame(){
+    stopTimer();
+    const avgStars = st.stars.reduce((a,b)=>a+b,0) / st.stars.length;
+    let badge = "🥉 Detektif Pemula";
+    if (avgStars >= 2.6) badge = "🏆 Master Detektif Biner";
+    else if (avgStars >= 1.8) badge = "🥈 Detektif Andal";
+
+    const starStr = "⭐".repeat(Math.round(avgStars)) + "☆".repeat(3-Math.round(avgStars));
+    els.stage.innerHTML = `
+      <div class="complete-screen">
+        <div class="trophy">🎉</div>
+        <h2>Kasus Selesai!</h2>
+        <div class="badge-name">${badge}</div>
+        <div class="stars">${starStr}</div>
+        <div class="stat-row">
+          <div class="stat"><div class="v">${st.score}</div><div class="k">SKOR</div></div>
+          <div class="stat"><div class="v">${fmtTime(st.elapsed)}</div><div class="k">WAKTU</div></div>
+          <div class="stat"><div class="v">${st.mistakes.reduce((a,b)=>a+b,0)}</div><div class="k">KESALAHAN</div></div>
+        </div>
+        <button class="btn-replay" type="button">Main Lagi 🔁</button>
+      </div>`;
+    els.nextBtn.disabled = true;
+    els.hintBtn.disabled = true;
+    launchConfetti();
+    els.stage.querySelector(".btn-replay").addEventListener("click", resetGame);
+  }
+
+  function launchConfetti(){
+    const colors = ["#F2994A","#2E6FB0","#1E8E5A","#8E5FD9","#EB5757"];
+    const rect = els.stage.getBoundingClientRect();
+    for (let i=0;i<60;i++){
+      const piece = document.createElement("div");
+      piece.className = "confetti-piece";
+      piece.style.left = (rect.left + Math.random()*rect.width) + "px";
+      piece.style.background = colors[i % colors.length];
+      piece.style.animationDuration = (1.8 + Math.random()*1.4) + "s";
+      piece.style.opacity = "0.95";
+      document.body.appendChild(piece);
+      setTimeout(()=> piece.remove(), 3400);
+    }
+  }
+
+  function resetGame(){
+    st.level = 1; st.score = 0; st.mistakes = [0,0,0,0,0]; st.stars = [0,0,0,0,0];
+    st.elapsed = 0; st.hintUsed = false;
+    els.level.textContent = 1; els.score.textContent = 0; els.timer.textContent = "00:00";
+    els.hintBtn.disabled = false;
+    renderLevel();
+    startTimer();
+  }
+
+  // expose minimal controls for mode switching (pause/resume)
+  return {
+    init(){ renderLevel(); startTimer(); },
+    pause(){ stopTimer(); },
+    resume(){ startTimer(); },
+  };
+}
+
+// ====================================================================
+// PAGE WIRING: mount boards, mode switching
+// ====================================================================
+document.getElementById("soloPanel").innerHTML = boardTemplate("solo");
+document.getElementById("timAHost").innerHTML = boardTemplate("timA");
+document.getElementById("timBHost").innerHTML = boardTemplate("timB");
+
+const gameSolo = createGame("solo", DATA.solo);
+const gameTimA = createGame("timA", DATA.timA);
+const gameTimB = createGame("timB", DATA.timB);
+
+gameSolo.init();
+gameTimA.init();
+gameTimB.init();
+gameTimA.pause();
+gameTimB.pause();
+
+const pageWrap = document.getElementById("pageWrap");
+const soloPanel = document.getElementById("soloPanel");
+const teamPanel = document.getElementById("teamPanel");
+const modeSoloBtn = document.getElementById("modeSoloBtn");
+const modeTeamBtn = document.getElementById("modeTeamBtn");
+
+function switchMode(mode){
+  if (mode === "solo"){
+    soloPanel.hidden = false;
+    teamPanel.hidden = true;
+    pageWrap.classList.remove("wrap-duo");
+    modeSoloBtn.classList.add("active");
+    modeTeamBtn.classList.remove("active");
+    gameSolo.resume();
+    gameTimA.pause();
+    gameTimB.pause();
+  } else {
+    soloPanel.hidden = true;
+    teamPanel.hidden = false;
+    pageWrap.classList.add("wrap-duo");
+    modeSoloBtn.classList.remove("active");
+    modeTeamBtn.classList.add("active");
+    gameSolo.pause();
+    gameTimA.resume();
+    gameTimB.resume();
+  }
+}
+modeSoloBtn.addEventListener("click", ()=> switchMode("solo"));
+modeTeamBtn.addEventListener("click", ()=> switchMode("team"));
+
+})();
+</script>
+
+</body>
+</html>

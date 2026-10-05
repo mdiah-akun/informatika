@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<title>Detektif List: Pemburu Kata Rahasia — Permainan TP3 Informatika Kelas VII</title>
+<style>
+  :root{
+    --navy:#1B2A4A; --navy2:#26406B; --blue:#2E6F9E; --teal:#2FA98C; --orange:#F2994A;
+    --red:#EB5757; --purple:#8E44AD; --bg:#0F1B2E; --card:#16233A; --cardline:#2C4265;
+    --text:#E8EFF7; --muted:#92A6C4; --gold:#F2C94C;
+  }
+  *{box-sizing:border-box;}
+  html,body{ margin:0; padding:0; overflow-x:hidden; }
+  body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:radial-gradient(ellipse at top, #1B2A4A 0%, #0B1424 65%);
+    color:var(--text); min-height:100vh; line-height:1.5;
+  }
+  .wrap{ max-width:860px; margin:0 auto; padding:16px 16px 40px; transition:max-width .15s; }
+  .wrap.wrap-duo{ max-width:1600px; }
+
+  header.gamehead{ text-align:center; padding:22px 0 10px; }
+  header.gamehead .kicker{
+    text-transform:uppercase; letter-spacing:2px; font-size:11.5px; font-weight:700;
+    color:var(--orange); margin-bottom:6px;
+  }
+  header.gamehead h1{ font-size:clamp(22px,5.5vw,32px); margin:0 0 6px; }
+  header.gamehead p{ font-size:13.5px; color:var(--muted); margin:0; max-width:520px; margin:0 auto; }
+
+  /* ---- mode tabs (Main Sendiri / Main Berdua) ---- */
+  .mode-tabs{ display:flex; gap:10px; justify-content:center; margin:20px 0 6px; flex-wrap:wrap; }
+  .mtab{
+    background:var(--card); border:1.5px solid var(--cardline); border-radius:12px;
+    padding:10px 20px; cursor:pointer; color:#fff; font-family:inherit; font-weight:700; font-size:13.5px;
+    transition:border-color .12s, background .12s;
+  }
+  .mtab:hover{ border-color:var(--blue); }
+  .mtab.active{ border-color:var(--teal); background:linear-gradient(145deg,#153a30,#16233a); }
+  .tabs-hint{
+    text-align:center; font-size:11.5px; color:var(--muted); margin:0 auto 6px;
+    max-width:520px;
+  }
+
+  /* ---- Main Berdua: dua papan berdampingan ---- */
+  .duo-grid{ display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start; margin-top:14px; }
+  .duo-col{ flex:1 1 380px; min-width:280px; max-width:720px; }
+  .duo-col .concept-grid{ grid-template-columns:1fr 1fr; }
+  .duo-col .card-grid{ grid-template-columns:repeat(auto-fit,minmax(118px,170px)); justify-content:center; }
+  .duo-label{
+    text-align:center; font-weight:800; font-size:14px; padding:8px 10px; border-radius:12px;
+    background:var(--navy2); border:1px solid var(--cardline); color:#fff; margin-bottom:8px;
+  }
+  .duo-label.p1{ color:var(--teal); border-color:#1d8068; }
+  .duo-label.p2{ color:var(--orange); border-color:#b06b2c; }
+  .duo-col .hud{ margin:0 0 8px; }
+  .duo-col .panel{ margin-top:0; }
+
+  .hud{
+    display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:18px 0 8px;
+  }
+  .hud .pill{
+    background:var(--card); border:1px solid var(--cardline); border-radius:999px;
+    padding:8px 16px; font-size:13px; font-weight:700; display:flex; align-items:center; gap:6px;
+    min-width:92px; justify-content:center;
+  }
+  .hud .pill .lbl{ color:var(--muted); font-weight:500; font-size:11px; }
+  .hud .pill.score{ color:var(--gold); }
+  .hud .pill.timer{ color:var(--teal); }
+  .hud .pill.level{ color:#fff; }
+
+  .stars{ display:flex; gap:2px; justify-content:center; margin:4px 0 2px; }
+  .stars span{ font-size:15px; opacity:.3; }
+  .stars span.on{ opacity:1; }
+
+  .panel{
+    background:linear-gradient(180deg,#152339,#101b2d); border:1px solid var(--cardline);
+    border-radius:18px; padding:22px 18px; margin-top:14px; box-shadow:0 10px 30px rgba(0,0,0,.35);
+  }
+
+  .btn{
+    display:inline-block; border:none; border-radius:10px; padding:12px 26px; font-size:15px;
+    font-weight:700; cursor:pointer; color:#fff; background:var(--blue); transition:transform .12s, filter .12s;
+  }
+  .btn:hover{ filter:brightness(1.12); }
+  .btn:active{ transform:scale(.97); }
+  .btn:disabled{ opacity:.6; cursor:default; filter:none; }
+  .btn:disabled:hover{ filter:none; }
+  .btn.primary{ background:linear-gradient(135deg,var(--teal),#239e82); }
+  .btn.ghost{ background:transparent; border:1.5px solid var(--cardline); color:var(--muted); }
+  .btn.wide{ width:100%; text-align:center; }
+  .btn-row{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:16px; }
+
+  /* ---- intro screen ---- */
+  .intro h2{ color:#fff; font-size:19px; margin:0 0 10px; text-align:center; }
+  .intro .concept-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin:14px 0; }
+  @media (max-width:520px){ .intro .concept-grid{ grid-template-columns:1fr; } }
+  .concept{
+    background:var(--card); border:1px solid var(--cardline); border-radius:12px; padding:12px 14px;
+  }
+  .concept b{ display:block; font-size:13.5px; margin-bottom:3px; }
+  .concept span{ font-size:12.5px; color:var(--muted); }
+  .concept.c1 b{ color:var(--blue); } .concept.c2 b{ color:var(--orange); }
+  .concept.c3 b{ color:var(--teal); } .concept.c4 b{ color:var(--purple); }
+  .rules{ font-size:13.5px; color:var(--muted); margin:14px 0 4px; padding-left:18px; }
+  .rules li{ margin-bottom:6px; }
+
+  /* ---- level intro mini ---- */
+  .level-banner{
+    text-align:center; padding:6px 0 2px;
+  }
+  .level-banner .tag{
+    display:inline-block; background:var(--navy2); border:1px solid var(--cardline);
+    color:var(--teal); font-size:11.5px; font-weight:700; letter-spacing:1px;
+    padding:4px 12px; border-radius:999px; margin-bottom:8px;
+  }
+  .instruction{
+    text-align:center; font-size:14.5px; color:#fff; margin:4px 0 14px; min-height:40px;
+  }
+  .instruction b{ color:var(--gold); }
+
+  /* ---- progress strip ---- */
+  .progress-strip{
+    display:flex; gap:6px; justify-content:center; flex-wrap:wrap; margin:0 0 18px;
+    min-height:46px; align-items:center;
+  }
+  .pchip{
+    width:40px; height:40px; border-radius:9px; background:var(--navy2);
+    border:1.5px dashed var(--cardline); display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:16px; color:var(--muted);
+  }
+  .pchip.filled{
+    background:linear-gradient(135deg,var(--teal),#1d8068); border:1.5px solid #1d8068; color:#fff;
+    animation:pop .3s ease;
+  }
+  .parrow{ color:var(--muted); font-size:15px; align-self:center; }
+  @keyframes pop{ 0%{ transform:scale(.5); opacity:0; } 70%{ transform:scale(1.15); } 100%{ transform:scale(1); opacity:1; } }
+
+  /* ---- card grid ---- */
+  .card-grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(118px,1fr)); gap:12px; margin-top:4px;
+  }
+  .nodecard{
+    background:var(--card); border:2px solid var(--cardline); border-radius:14px; padding:12px 10px;
+    text-align:center; cursor:pointer; user-select:none; transition:transform .12s, border-color .12s, background .2s;
+    position:relative;
+  }
+  .nodecard:hover{ transform:translateY(-3px); border-color:var(--blue); }
+  .nodecard .val{ font-size:22px; font-weight:800; color:#fff; margin-bottom:6px; }
+  .nodecard .ptr{ font-size:11px; color:var(--muted); }
+  .nodecard .ptr b{ color:var(--orange); font-size:12.5px; }
+  .nodecard.correct{
+    border-color:var(--teal); background:linear-gradient(145deg,#153a30,#102a24);
+    cursor:default; animation:none;
+  }
+  .nodecard.correct::after{ content:"✓"; position:absolute; top:6px; right:9px; color:var(--teal); font-weight:900; }
+  .nodecard.disabled{ opacity:.35; cursor:default; }
+  .nodecard.wrong{ animation:shake .4s; border-color:var(--red); }
+  @keyframes shake{
+    10%,90%{ transform:translateX(-2px); } 20%,80%{ transform:translateX(4px); }
+    30%,50%,70%{ transform:translateX(-7px); } 40%,60%{ transform:translateX(7px); }
+  }
+  .nodecard.dim-hint{ opacity:.25; filter:grayscale(.6); }
+  .nodecard.glow-hint{
+    border-color:var(--gold);
+    animation:glowPulse 1.1s ease-in-out infinite alternate;
+  }
+  @keyframes glowPulse{
+    from{ box-shadow:0 0 0 3px rgba(242,201,76,.35), 0 0 14px rgba(242,201,76,.4); }
+    to{ box-shadow:0 0 0 5px rgba(242,201,76,.55), 0 0 26px rgba(242,201,76,.75); }
+  }
+
+  /* ---- pointer reference strip (find-head helper) ---- */
+  .pointer-ref{
+    text-align:center; font-size:12.5px; color:var(--muted); margin:0 0 10px;
+    display:flex; flex-wrap:wrap; gap:6px; justify-content:center; align-items:center;
+  }
+  .pointer-ref-label{ margin-right:2px; }
+  .pointer-chip{
+    display:inline-block; background:var(--navy2); border:1px solid var(--cardline);
+    color:var(--orange); font-weight:800; font-size:13px; padding:3px 10px; border-radius:7px;
+  }
+  .hint-row{ text-align:center; margin:0 0 16px; }
+  .btn.small{ padding:7px 16px; font-size:12.5px; }
+  .hint-caption{ font-size:11.5px; color:var(--muted); margin-top:6px; }
+
+  /* ---- mini worked example (intro) ---- */
+  .mini-example{
+    background:var(--card); border:1px solid var(--cardline); border-radius:14px;
+    padding:16px; margin:16px 0 6px;
+  }
+  .mini-example-title{ font-size:13.5px; font-weight:700; color:#fff; text-align:center; margin-bottom:12px; }
+  .mini-cards{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:12px; }
+  .minicard{
+    background:var(--navy2); border:2px solid var(--cardline); border-radius:11px;
+    padding:9px 14px; text-align:center; min-width:62px;
+  }
+  .minicard.is-head{ border-color:var(--gold); box-shadow:0 0 14px rgba(242,201,76,.5); }
+  .minicard .mv{ font-size:18px; font-weight:800; color:#fff; }
+  .minicard .mp{ font-size:11px; color:var(--muted); margin-top:3px; }
+  .mini-answer{ font-size:12.5px; color:var(--muted); text-align:center; line-height:1.6; }
+  .mini-answer b{ color:var(--gold); }
+
+  .feedback{ text-align:center; font-size:13px; min-height:20px; margin-top:12px; font-weight:700; }
+  .feedback.ok{ color:var(--teal); }
+  .feedback.bad{ color:var(--red); }
+
+  /* ---- level complete ---- */
+  .complete{ text-align:center; }
+  .complete .word{
+    font-size:clamp(28px,7vw,44px); font-weight:900; letter-spacing:4px; color:#fff; margin:6px 0 2px;
+    text-shadow:0 0 24px rgba(47,169,140,.5);
+  }
+  .complete .stars-big span{ font-size:30px; }
+  .stat-row{ display:flex; gap:16px; justify-content:center; margin:14px 0; flex-wrap:wrap; }
+  .stat{ background:var(--card); border:1px solid var(--cardline); border-radius:12px; padding:10px 18px; min-width:100px; }
+  .stat .n{ font-size:19px; font-weight:800; color:var(--gold); }
+  .stat .l{ font-size:11px; color:var(--muted); }
+
+  /* ---- final screen ---- */
+  .final{ text-align:center; }
+  .trophy{ font-size:58px; margin-bottom:4px; }
+  .badge-title{ font-size:22px; font-weight:800; color:#fff; margin-bottom:4px; }
+  .badge-sub{ font-size:13.5px; color:var(--muted); margin-bottom:16px; }
+  .confetti-wrap{ position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:50; }
+  .confetti{ position:absolute; top:-20px; border-radius:2px; animation:fall linear forwards; }
+  @keyframes fall{ to{ transform:translateY(110vh) rotate(540deg); opacity:.3; } }
+
+  footer.gfoot{ text-align:center; padding:26px 10px 10px; color:var(--muted); font-size:11.5px; }
+  .legend-toggle{
+    display:block; text-align:center; font-size:12px; color:var(--muted); margin-top:16px; cursor:pointer;
+    text-decoration:underline; text-underline-offset:3px;
+  }
+  .legend-box{
+    display:none; margin-top:10px; background:var(--card); border:1px solid var(--cardline);
+    border-radius:12px; padding:12px 16px; font-size:12.5px; color:var(--muted);
+  }
+  .legend-box.show{ display:block; }
+  .legend-box b{ color:#fff; }
+</style>
+</head>
+<body>
+
+<div class="wrap" id="pageWrap">
+  <header class="gamehead">
+    <div class="kicker">Bab 1 · TP3 Pertemuan 1 · Struktur Data List</div>
+    <h1>🕵️ Detektif List: Pemburu Kata Rahasia</h1>
+    <p>Versi digital dari aktivitas kartu "Kata Rahasia" — temukan HEAD, telusuri pointer-nya, dan pecahkan kata rahasianya sebelum waktu habis!</p>
+  </header>
+
+  <div class="mode-tabs" id="modeTabs">
+    <button class="mtab active" id="modeSoloBtn" type="button">🎮 Main Sendiri</button>
+    <button class="mtab" id="modeDuoBtn" type="button">🧑‍🤝‍🧑 Main Berdua (Bersamaan)</button>
+  </div>
+  <p class="tabs-hint" id="hintSolo">Mode satu pemain — mainkan sendiri dari Level 1 sampai Level 5.</p>
+  <p class="tabs-hint" id="hintDuo" style="display:none;">Dua siswa bermain <b>bersamaan</b> di satu layar — papan kartu, skor, dan waktu masing-masing terpisah, tidak perlu bergantian.</p>
+
+  <!-- ===== MODE: MAIN SENDIRI ===== -->
+  <div class="mode-panel" id="modeWrapSolo">
+    <div class="hud" id="hudSolo" style="display:none;">
+      <div class="pill level"><span class="lbl">LEVEL</span> <span id="hudLevelSolo">1/5</span></div>
+      <div class="pill score">⭐ <span id="hudScoreSolo">0</span></div>
+      <div class="pill timer">⏱ <span id="hudTimerSolo">00:00</span></div>
+    </div>
+    <div class="panel" id="panelSolo"></div>
+  </div>
+
+  <!-- ===== MODE: MAIN BERDUA (dua papan tampil & bisa diklik bersamaan) ===== -->
+  <div class="mode-panel" id="modeWrapDuo" style="display:none;">
+    <div class="duo-grid">
+      <div class="duo-col">
+        <div class="duo-label p1">👤 Pemain 1</div>
+        <div class="hud" id="hudD1" style="display:none;">
+          <div class="pill level"><span class="lbl">LEVEL</span> <span id="hudLevelD1">1/5</span></div>
+          <div class="pill score">⭐ <span id="hudScoreD1">0</span></div>
+          <div class="pill timer">⏱ <span id="hudTimerD1">00:00</span></div>
+        </div>
+        <div class="panel" id="panelD1"></div>
+      </div>
+      <div class="duo-col">
+        <div class="duo-label p2">👤 Pemain 2</div>
+        <div class="hud" id="hudD2" style="display:none;">
+          <div class="pill level"><span class="lbl">LEVEL</span> <span id="hudLevelD2">1/5</span></div>
+          <div class="pill score">⭐ <span id="hudScoreD2">0</span></div>
+          <div class="pill timer">⏱ <span id="hudTimerD2">00:00</span></div>
+        </div>
+        <div class="panel" id="panelD2"></div>
+      </div>
+    </div>
+  </div>
+
+  <span class="legend-toggle" id="legendToggle">💡 Lupa istilahnya? Klik untuk lihat lagi</span>
+  <div class="legend-box" id="legendBox">
+    <b>NODE</b> — satu kartu/elemen dalam list, berisi NILAI dan PENUNJUK.
+    &nbsp;·&nbsp; <b>HEAD</b> — node pertama (nilainya tidak pernah jadi penunjuk kartu lain).
+    &nbsp;·&nbsp; <b>POINTER (penunjuk)</b> — menunjukkan node berikutnya dalam rangkaian.
+    &nbsp;·&nbsp; <b>TAIL</b> — node terakhir, penunjuknya ∅ (kosong).
+    &nbsp;·&nbsp; <b>TRAVERSAL</b> — menelusuri list dari head sampai tail, satu per satu.
+  </div>
+
+  <footer class="gfoot">Informatika Kelas VII · Bab 1 TP3 — Struktur Data List · SMP Negeri 14 Tarakan</footer>
+</div>
+
+<div class="confetti-wrap" id="confettiWrap"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------------- Shared game data & helpers (dipakai semua instance) ----------------
+  // Tiga set kata rahasia yang SEPENUHNYA BERBEDA — satu untuk tiap papan (Main Sendiri, Pemain 1 Berdua, Pemain 2 Berdua)
+  // supaya tak ada dua papan manapun yang bisa saling dicontek, baik satu komputer dipakai gantian maupun berdampingan.
+  // Panjang kata di tiap level tetap sama antar-set (4→5→6→7→8 huruf) supaya tingkat kesulitannya sebanding.
+
+  // Set A: dipakai Mode Sendiri — kata original, sama seperti aktivitas kartu "Kata Rahasia" di LKPD cetak.
+  const LEVELS_A = [
+    { word: "NODE",     hint: "Bagian dasar penyusun sebuah list" },
+    { word: "LARIK",    hint: "Istilah lain untuk array dalam Bahasa Indonesia" },
+    { word: "SIMBOL",   hint: "Digunakan untuk menuliskan pseudocode" },
+    { word: "SEKOLAH",  hint: "Tempatmu belajar Informatika setiap hari — sama seperti latihan mandiri di LKPD!" },
+    { word: "KOMPUTER", hint: "Kata rahasia legendaris dari aktivitas kartu pertama kelompokmu!" },
+  ];
+  // Set B: khusus Pemain 2 di Mode Berdua.
+  const LEVELS_B = [
+    { word: "BYTE",     hint: "Satuan dasar penyimpanan data pada komputer" },
+    { word: "INDEX",    hint: "Nomor urut posisi sebuah elemen dalam larik/list" },
+    { word: "MATERI",   hint: "Sesuatu yang sedang kamu pelajari hari ini di kelas Informatika" },
+    { word: "NETWORK",  hint: "Jaringan yang menghubungkan banyak komputer" },
+    { word: "TERMINAL", hint: "Aplikasi untuk menjalankan perintah teks ke komputer" },
+  ];
+  // Set C: khusus Pemain 1 di Mode Berdua — berbeda dari Set A (dipakai Solo) maupun Set B (dipakai Pemain 2).
+  const LEVELS_C = [
+    { word: "KODE",     hint: "Instruksi yang ditulis untuk dijalankan oleh komputer" },
+    { word: "KUNCI",    hint: "Nilai unik yang dipakai untuk mengenali satu data secara khusus" },
+    { word: "GRAFIK",   hint: "Tampilan visual untuk menyajikan data, misalnya diagram atau chart" },
+    { word: "DESKTOP",  hint: "Tampilan utama layar komputer tempat ikon-ikon aplikasi berada" },
+    { word: "KEYBOARD", hint: "Alat untuk mengetik huruf dan angka ke dalam komputer" },
+  ];
+  const COLORS_POOL = ["#2E6F9E","#2FA98C","#F2994A","#8E44AD","#EB5757","#1B9C9C","#C9A227","#5E72E4"];
+
+  document.getElementById("legendToggle").addEventListener("click", function(){
+    document.getElementById("legendBox").classList.toggle("show");
+  });
+
+  function fmtTime(ms){
+    const total = Math.floor(ms/1000);
+    const m = String(Math.floor(total/60)).padStart(2,"0");
+    const s = String(total%60).padStart(2,"0");
+    return m+":"+s;
+  }
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for (let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]] = [a[j],a[i]];
+    }
+    return a;
+  }
+
+  function starsForMistakes(m){
+    if (m === 0) return 3;
+    if (m <= 2) return 2;
+    return 1;
+  }
+
+  function badgeFor(totalStars, maxStars){
+    const pct = totalStars / maxStars;
+    if (pct >= 0.9) return { icon:"🏆", title:"Master Detektif List", sub:"Luar biasa! Kamu sangat memahami HEAD, POINTER, dan TRAVERSAL." };
+    if (pct >= 0.6) return { icon:"🥈", title:"Detektif List Andal", sub:"Bagus! Sedikit lagi untuk jadi master sejati." };
+    return { icon:"🥉", title:"Detektif List Pemula", sub:"Terus berlatih menelusuri list dari HEAD ya!" };
+  }
+
+  function launchConfetti(){
+    const wrap = document.getElementById("confettiWrap");
+    wrap.innerHTML = "";
+    const colors = ["#2FA98C","#F2994A","#EB5757","#2E6F9E","#F2C94C","#8E44AD"];
+    for (let i=0;i<60;i++){
+      const el = document.createElement("div");
+      el.className = "confetti";
+      const size = 6 + Math.random()*6;
+      el.style.width = size+"px";
+      el.style.height = (size*0.4)+"px";
+      el.style.left = (Math.random()*100)+"vw";
+      el.style.background = colors[Math.floor(Math.random()*colors.length)];
+      el.style.animationDuration = (2.2 + Math.random()*1.8)+"s";
+      el.style.animationDelay = (Math.random()*0.6)+"s";
+      wrap.appendChild(el);
+    }
+    setTimeout(function(){ wrap.innerHTML = ""; }, 4500);
+  }
+
+  function buildLevelNodes(word){
+    const letters = word.split("");
+    const colors = shuffle(COLORS_POOL).slice(0, letters.length);
+    const nodes = letters.map(function(ch, i){
+      return {
+        value: ch,
+        pointer: i < letters.length-1 ? letters[i+1] : null,
+        color: colors[i],
+      };
+    });
+    return shuffle(nodes);
+  }
+
+  // ---------------- Satu instance permainan (dipakai utk Solo, maupun tiap papan di mode Berdua) ----------------
+  // els = { panel, hud, hudLevel, hudScore, hudTimer }
+  function createGame(els, levelsArr){
+    const LEVELS = levelsArr;
+    let state = {
+      levelIdx: 0,
+      score: 0,
+      startTime: null,
+      timerHandle: null,
+      elapsedMs: 0,
+      levelMistakes: 0,
+      starsEarned: [],  // per level
+    };
+    let levelData = null;     // shuffled nodes for current level
+    let phase = "find-head";  // 'find-head' | 'traverse' | 'done'
+    let foundSoFar = [];      // array of letters found in order
+    let expectedNext = null;
+    let consumedSet = new Set();
+    let pausedForHide = false; // true jika timer dihentikan karena mode disembunyikan (bukan jeda alami antar level)
+
+    function startTimer(){
+      if (state.timerHandle) return;
+      state.startTime = Date.now() - state.elapsedMs;
+      state.timerHandle = setInterval(function(){
+        state.elapsedMs = Date.now() - state.startTime;
+        els.hudTimer.textContent = fmtTime(state.elapsedMs);
+      }, 250);
+    }
+    function stopTimer(){
+      clearInterval(state.timerHandle);
+      state.timerHandle = null;
+    }
+
+    function updateHud(){
+      els.hud.style.display = "flex";
+      els.hudLevel.textContent = (state.levelIdx+1) + "/" + LEVELS.length;
+      els.hudScore.textContent = state.score;
+      els.hudTimer.textContent = fmtTime(state.elapsedMs);
+    }
+
+    // ---------------- Screens ----------------
+    function renderIntro(){
+      els.panel.innerHTML = `
+        <div class="intro">
+          <h2>Cara Bermain</h2>
+          <div class="concept-grid">
+            <div class="concept c1"><b>1. Temukan HEAD</b><span>Cari kartu yang TIDAK ADA kartu lain yang menunjuk ke sana. Lihat contoh di bawah!</span></div>
+            <div class="concept c2"><b>2. Telusuri Pointer</b><span>Dari head, klik kartu berikutnya sesuai penunjuk — satu per satu, sampai ∅.</span></div>
+            <div class="concept c3"><b>3. Kumpulkan Skor</b><span>Semakin cepat & sedikit salah klik, semakin tinggi skor dan bintangmu.</span></div>
+            <div class="concept c4"><b>4. Naik Level</b><span>5 level dengan kata rahasia makin panjang — sampai ke level legendaris!</span></div>
+          </div>
+
+          <div class="mini-example">
+            <div class="mini-example-title">🔎 Contoh: dari 3 kartu ini, mana yang HEAD?</div>
+            <div class="mini-cards">
+              <div class="minicard"><div class="mv">B</div><div class="mp">Penunjuk: C</div></div>
+              <div class="minicard is-head"><div class="mv">A</div><div class="mp">Penunjuk: B</div></div>
+              <div class="minicard"><div class="mv">C</div><div class="mp">Penunjuk: ∅</div></div>
+            </div>
+            <div class="mini-answer">
+              Caranya: kumpulkan dulu semua tulisan "Penunjuk" dari ketiga kartu → <b>C, ∅, B</b>.
+              Lalu bandingkan dengan NILAI tiap kartu (A, B, C). Nilai <b>B</b> dan <b>C</b> sama-sama muncul di daftar penunjuk itu — tapi <b>A</b> tidak pernah muncul!
+              Artinya tidak ada kartu yang menunjuk ke A, jadi <b>A adalah HEAD</b>. Kartu dengan nilai <b>B</b> dan <b>C</b> pasti BUKAN head, karena keduanya ditunjuk oleh kartu lain.
+            </div>
+          </div>
+
+          <ul class="rules">
+            <li>Permainan ini punya 5 level. Tiap level, kamu harus menyusun satu kata rahasia dengan menelusuri list dari HEAD ke TAIL.</li>
+            <li>Saat mencari HEAD, akan ada daftar "semua penunjuk" yang membantumu membandingkan — dan tombol petunjuk kalau masih bingung.</li>
+            <li>Salah klik tidak membuatmu kalah — hanya mengurangi sedikit skor dan bintang level tersebut.</li>
+            <li>Waktu terus berjalan selama permainan — selesaikan secepat mungkin untuk bonus skor!</li>
+          </ul>
+          <div class="btn-row"><button class="btn primary wide" data-act="start">🚀 Mulai Permainan</button></div>
+        </div>
+      `;
+      els.panel.querySelector('[data-act="start"]').addEventListener("click", function(){
+        updateHud();
+        startTimer();
+        renderLevel();
+      });
+    }
+
+    function renderLevel(){
+      state.levelMistakes = 0;
+      phase = "find-head";
+      foundSoFar = [];
+      const lvl = LEVELS[state.levelIdx];
+      levelData = buildLevelNodes(lvl.word);
+      expectedNext = lvl.word[0];
+      updateHud();
+      drawLevelScreen();
+    }
+
+    function drawLevelScreen(){
+      const lvl = LEVELS[state.levelIdx];
+      const instr = phase === "find-head"
+        ? `Langkah 1: Cari <b>HEAD</b> — kartu yang NILAI-nya tidak muncul pada daftar "Penunjuk" di bawah ini.`
+        : `Langkah 2: Telusuri! Klik kartu dengan nilai <b>${expectedNext || "∅"}</b> berikutnya.`;
+
+      // Reference strip + hint button, only shown while hunting for HEAD
+      let pointerRefHtml = "";
+      let hintRowHtml = "";
+      if (phase === "find-head"){
+        const pointerValues = levelData.map(function(n){ return n.pointer; }).filter(Boolean);
+        pointerRefHtml = `
+          <div class="pointer-ref">
+            <span class="pointer-ref-label">📋 Semua tulisan "Penunjuk" di level ini:</span>
+            ${pointerValues.map(function(v){ return `<span class="pointer-chip">${v}</span>`; }).join("")}
+          </div>`;
+        hintRowHtml = `
+          <div class="hint-row">
+            <button class="btn ghost small" data-act="hint">💡 Masih bingung? Tampilkan petunjuk</button>
+            <div class="hint-caption">Nilai yang TIDAK ada di daftar penunjuk di atas = HEAD.</div>
+          </div>`;
+      }
+
+      let progressHtml = `<div class="progress-strip">`;
+      lvl.word.split("").forEach(function(ch, i){
+        const filled = i < foundSoFar.length;
+        progressHtml += `<div class="pchip ${filled ? "filled":""}">${filled ? foundSoFar[i] : "?"}</div>`;
+        if (i < lvl.word.length-1) progressHtml += `<div class="parrow">→</div>`;
+      });
+      progressHtml += `<div class="parrow">→ ∅</div></div>`;
+
+      let cardsHtml = `<div class="card-grid">`;
+      levelData.forEach(function(node, idx){
+        cardsHtml += `
+          <div class="nodecard ${consumedSet.has(node.value) ? "correct disabled" : ""}" data-val="${node.value}" data-idx="${idx}">
+            <div class="val" style="color:${node.color}">${node.value}</div>
+            <div class="ptr">Penunjuk: <b>${node.pointer || "∅"}</b></div>
+          </div>`;
+      });
+      cardsHtml += `</div>`;
+
+      els.panel.innerHTML = `
+        <div class="level-banner">
+          <div class="tag">LEVEL ${state.levelIdx+1} · ${lvl.word.length} NODE</div>
+        </div>
+        <div class="instruction">${instr}</div>
+        ${pointerRefHtml}
+        ${hintRowHtml}
+        ${progressHtml}
+        ${cardsHtml}
+        <div class="feedback">&nbsp;</div>
+      `;
+      attachCardHandlers();
+      attachHintHandler();
+    }
+
+    function attachHintHandler(){
+      const hintBtn = els.panel.querySelector('[data-act="hint"]');
+      if (!hintBtn) return;
+      hintBtn.addEventListener("click", function(){
+        const pointerSet = new Set(levelData.map(function(n){ return n.pointer; }).filter(Boolean));
+        els.panel.querySelectorAll(".nodecard").forEach(function(c){
+          const v = c.getAttribute("data-val");
+          c.classList.add(pointerSet.has(v) ? "dim-hint" : "glow-hint");
+        });
+        hintBtn.disabled = true;
+        hintBtn.textContent = "💡 Kartu yang menyala keemasan = HEAD";
+      });
+    }
+
+    function attachCardHandlers(){
+      const cards = els.panel.querySelectorAll(".nodecard:not(.disabled)");
+      cards.forEach(function(card){
+        card.addEventListener("click", function(){ onCardClick(card); });
+      });
+    }
+
+    function flashFeedback(msg, ok){
+      const fb = els.panel.querySelector(".feedback");
+      fb.textContent = msg;
+      fb.className = "feedback " + (ok ? "ok" : "bad");
+    }
+
+    function onCardClick(card){
+      const val = card.getAttribute("data-val");
+      const lvl = LEVELS[state.levelIdx];
+
+      if (phase === "find-head"){
+        if (val === lvl.word[0]){
+          consumedSet.add(val);
+          foundSoFar.push(val);
+          state.score += 20;
+          phase = "traverse";
+          expectedNext = lvl.word.length > 1 ? lvl.word[1] : null;
+          flashFeedback("Benar! Ini HEAD-nya. Sekarang telusuri pointer-nya satu per satu.", true);
+          updateHud();
+          setTimeout(drawLevelScreen, 450);
+        } else {
+          state.score = Math.max(0, state.score - 5);
+          state.levelMistakes++;
+          card.classList.add("wrong");
+          flashFeedback("Belum tepat. Cari kartu yang nilainya TIDAK pernah muncul sebagai penunjuk kartu lain.", false);
+          updateHud();
+          setTimeout(function(){ card.classList.remove("wrong"); }, 400);
+        }
+        return;
+      }
+
+      if (phase === "traverse"){
+        if (val === expectedNext){
+          consumedSet.add(val);
+          foundSoFar.push(val);
+          state.score += 20;
+          const idxInWord = foundSoFar.length;
+          if (idxInWord >= lvl.word.length){
+            expectedNext = null;
+            phase = "done";
+            flashFeedback("Kata rahasia lengkap!", true);
+            updateHud();
+            stopTimer();
+            setTimeout(renderLevelComplete, 500);
+          } else {
+            expectedNext = lvl.word[idxInWord];
+            flashFeedback("Tepat! Lanjutkan ke kartu berikutnya.", true);
+            updateHud();
+            setTimeout(drawLevelScreen, 350);
+          }
+        } else {
+          state.score = Math.max(0, state.score - 5);
+          state.levelMistakes++;
+          card.classList.add("wrong");
+          flashFeedback("Belum tepat. Perhatikan penunjuk kartu yang terakhir kamu temukan.", false);
+          updateHud();
+          setTimeout(function(){ card.classList.remove("wrong"); }, 400);
+        }
+        return;
+      }
+    }
+
+    function renderLevelComplete(){
+      const lvl = LEVELS[state.levelIdx];
+      const stars = starsForMistakes(state.levelMistakes);
+      state.starsEarned[state.levelIdx] = stars;
+      const timeBonus = Math.max(0, 30 - Math.floor(state.elapsedMs/1000/4));
+      state.score += timeBonus;
+      updateHud();
+
+      let starsHtml = "";
+      for (let i=0;i<3;i++){ starsHtml += `<span class="${i<stars?"on":""}">★</span>`; }
+
+      const isLast = state.levelIdx === LEVELS.length - 1;
+
+      els.panel.innerHTML = `
+        <div class="complete">
+          <div class="level-banner"><div class="tag">LEVEL ${state.levelIdx+1} SELESAI</div></div>
+          <div class="word">${lvl.word}</div>
+          <div class="stars-big">${starsHtml}</div>
+          <p style="color:var(--muted); font-size:13px; margin-top:6px;">${lvl.hint}</p>
+          <div class="stat-row">
+            <div class="stat"><div class="n">${state.levelMistakes}</div><div class="l">Salah Klik</div></div>
+            <div class="stat"><div class="n">+${timeBonus}</div><div class="l">Bonus Waktu</div></div>
+            <div class="stat"><div class="n">${state.score}</div><div class="l">Total Skor</div></div>
+          </div>
+          <div class="btn-row">
+            <button class="btn primary" data-act="next">${isLast ? "🏁 Lihat Hasil Akhir" : "Lanjut ke Level " + (state.levelIdx+2) + " →"}</button>
+          </div>
+        </div>
+      `;
+      els.panel.querySelector('[data-act="next"]').addEventListener("click", function(){
+        if (isLast){
+          renderFinal();
+        } else {
+          state.levelIdx++;
+          consumedSet = new Set();
+          startTimer();
+          renderLevel();
+        }
+      });
+    }
+
+    function renderFinal(){
+      stopTimer();
+      const maxStars = LEVELS.length * 3;
+      const totalStars = state.starsEarned.reduce(function(a,b){ return a+(b||0); }, 0);
+      const badge = badgeFor(totalStars, maxStars);
+
+      els.panel.innerHTML = `
+        <div class="final">
+          <div class="trophy">${badge.icon}</div>
+          <div class="badge-title">${badge.title}</div>
+          <div class="badge-sub">${badge.sub}</div>
+          <div class="stat-row">
+            <div class="stat"><div class="n">${state.score}</div><div class="l">Skor Total</div></div>
+            <div class="stat"><div class="n">${fmtTime(state.elapsedMs)}</div><div class="l">Waktu Total</div></div>
+            <div class="stat"><div class="n">${totalStars}/${maxStars}</div><div class="l">Bintang</div></div>
+          </div>
+          <p style="color:var(--muted); font-size:13px; max-width:420px; margin:10px auto 0;">
+            Kamu baru saja mensimulasikan konsep <b style="color:#fff">HEAD</b>, <b style="color:#fff">NODE</b>,
+            <b style="color:#fff">POINTER</b>, dan <b style="color:#fff">TRAVERSAL</b> lima kali berturut-turut —
+            persis seperti aktivitas kartu "Kata Rahasia" di kelas!
+          </p>
+          <div class="btn-row">
+            <button class="btn primary" data-act="replay">🔄 Main Lagi dari Awal</button>
+          </div>
+        </div>
+      `;
+      launchConfetti();
+      els.panel.querySelector('[data-act="replay"]').addEventListener("click", resetGame);
+    }
+
+    function resetGame(){
+      state = { levelIdx:0, score:0, startTime:null, timerHandle:null, elapsedMs:0, levelMistakes:0, starsEarned:[] };
+      consumedSet = new Set();
+      pausedForHide = false;
+      els.hud.style.display = "none";
+      renderIntro();
+    }
+
+    // Dipanggil saat mode ini disembunyikan (user pindah ke mode lain):
+    // jeda timer HANYA jika sedang berjalan, supaya waktu yang dicatat adalah waktu kerja nyata.
+    function onHide(){
+      if (state.timerHandle){
+        stopTimer();
+        pausedForHide = true;
+      }
+    }
+    // Dipanggil saat mode ini ditampilkan kembali: lanjutkan timer jika tadi dijeda karena disembunyikan.
+    function onShow(){
+      if (pausedForHide){
+        startTimer();
+        pausedForHide = false;
+      }
+    }
+
+    return { start: renderIntro, onHide: onHide, onShow: onShow };
+  }
+
+  // ---------------- Boot: 3 instance (Solo, Duo-Pemain1, Duo-Pemain2) + mode switcher ----------------
+  const gameSolo = createGame({
+    panel: document.getElementById("panelSolo"),
+    hud: document.getElementById("hudSolo"),
+    hudLevel: document.getElementById("hudLevelSolo"),
+    hudScore: document.getElementById("hudScoreSolo"),
+    hudTimer: document.getElementById("hudTimerSolo"),
+  }, LEVELS_A);
+  const gameD1 = createGame({
+    panel: document.getElementById("panelD1"),
+    hud: document.getElementById("hudD1"),
+    hudLevel: document.getElementById("hudLevelD1"),
+    hudScore: document.getElementById("hudScoreD1"),
+    hudTimer: document.getElementById("hudTimerD1"),
+  }, LEVELS_C);
+  const gameD2 = createGame({
+    panel: document.getElementById("panelD2"),
+    hud: document.getElementById("hudD2"),
+    hudLevel: document.getElementById("hudLevelD2"),
+    hudScore: document.getElementById("hudScoreD2"),
+    hudTimer: document.getElementById("hudTimerD2"),
+  }, LEVELS_B);
+
+  const modeSoloBtn = document.getElementById("modeSoloBtn");
+  const modeDuoBtn = document.getElementById("modeDuoBtn");
+  const modeWrapSolo = document.getElementById("modeWrapSolo");
+  const modeWrapDuo = document.getElementById("modeWrapDuo");
+  const hintSolo = document.getElementById("hintSolo");
+  const hintDuo = document.getElementById("hintDuo");
+  const pageWrap = document.getElementById("pageWrap");
+  let activeMode = "solo";
+
+  function switchMode(mode){
+    if (mode === activeMode) return;
+    if (activeMode === "solo"){
+      gameSolo.onHide();
+      modeWrapSolo.style.display = "none";
+    } else {
+      gameD1.onHide();
+      gameD2.onHide();
+      modeWrapDuo.style.display = "none";
+    }
+    activeMode = mode;
+    if (mode === "solo"){
+      modeWrapSolo.style.display = "";
+      gameSolo.onShow();
+      modeSoloBtn.classList.add("active");
+      modeDuoBtn.classList.remove("active");
+      hintSolo.style.display = "";
+      hintDuo.style.display = "none";
+      pageWrap.classList.remove("wrap-duo");
+    } else {
+      modeWrapDuo.style.display = "";
+      gameD1.onShow();
+      gameD2.onShow();
+      modeDuoBtn.classList.add("active");
+      modeSoloBtn.classList.remove("active");
+      hintDuo.style.display = "";
+      hintSolo.style.display = "none";
+      pageWrap.classList.add("wrap-duo");
+    }
+  }
+  modeSoloBtn.addEventListener("click", function(){ switchMode("solo"); });
+  modeDuoBtn.addEventListener("click", function(){ switchMode("duo"); });
+
+  gameSolo.start();
+  gameD1.start();
+  gameD2.start();
+})();
+</script>
+
+</body>
+</html>
