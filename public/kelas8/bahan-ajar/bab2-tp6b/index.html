@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detektif Himpunan — Materi Siswa TP 6 Pertemuan 2</title>
+<style>
+  :root{
+    --navy:#1E3A5F; --teal:#2E86AB; --orange:#F5A623; --coral:#F26C4F;
+    --green:#1E7A4C; --light:#EAF2F8; --lightTeal:#E7F5F4; --lightYellow:#FFF7DE;
+    --lightGreen:#E3F4EA; --lightCoral:#FFF0ED;
+    --gray:#5A6472; --text:#22303F; --maxw:880px;
+  }
+  *{box-sizing:border-box;}
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; font-family:'Segoe UI', Tahoma, Verdana, sans-serif; color:var(--text);
+    background:#f7fafc; line-height:1.65; padding-top:56px;
+  }
+  .topnav{
+    position:fixed; top:0; left:0; right:0; height:56px; z-index:1000;
+    background:var(--navy); box-shadow:0 2px 10px rgba(0,0,0,0.15); display:flex; align-items:center;
+  }
+  .topnav-inner{
+    max-width:1100px; margin:0 auto; width:100%; display:flex; align-items:center;
+    justify-content:space-between; padding:0 18px; gap:14px;
+  }
+  .brand{ color:#fff; font-weight:700; font-size:0.95rem; white-space:nowrap; text-decoration:none; display:flex; align-items:center; gap:8px; flex:none; }
+  .brand .dot{ width:9px; height:9px; border-radius:50%; background:var(--orange); flex:none; }
+  .topnav ul{ list-style:none; margin:0; padding:0; display:flex; gap:4px; overflow-x:auto; scrollbar-width:none; white-space:nowrap; }
+  .topnav ul::-webkit-scrollbar{ display:none; }
+  .topnav li{ flex:none; margin:0; }
+  a.navlink{ display:inline-block; color:#CADCFC; text-decoration:none; font-size:0.86rem; padding:8px 12px; border-radius:8px; transition:background .15s,color .15s; }
+  a.navlink:hover{ background:rgba(255,255,255,0.1); color:#fff; }
+  a.navlink.active{ background:var(--orange); color:var(--navy); font-weight:700; }
+  header.hero{
+    background:linear-gradient(135deg,var(--navy) 0%, #274d78 100%);
+    color:#fff; padding:56px 20px 70px; text-align:center; position:relative; overflow:hidden;
+  }
+  header.hero::before{ content:""; position:absolute; top:-80px; right:-80px; width:280px; height:280px; border-radius:50%; background:rgba(255,255,255,0.06); }
+  header.hero .kicker{ color:var(--orange); letter-spacing:2px; font-weight:700; font-size:0.85rem; margin-bottom:10px; }
+  header.hero h1{ font-size:2.1rem; margin:0 0 8px; }
+  header.hero p{ color:#CADCFC; font-size:1.05rem; margin:0; }
+  nav.toc{ max-width:var(--maxw); margin:-40px auto 30px; background:#fff; border-radius:14px; box-shadow:0 6px 24px rgba(30,58,95,0.12); padding:20px 26px; position:relative; z-index:2; }
+  nav.toc h2{ margin:0 0 10px; font-size:1rem; color:var(--navy); }
+  nav.toc ol{ margin:0; padding-left:22px; columns:2; gap:20px; }
+  nav.toc li{ margin-bottom:4px; }
+  nav.toc a{ color:var(--teal); text-decoration:none; font-size:0.95rem; }
+  nav.toc a:hover{ text-decoration:underline; }
+  main{ max-width:var(--maxw); margin:0 auto; padding:10px 20px 60px; }
+  section{ background:#fff; border-radius:14px; padding:30px 32px; margin-bottom:24px; box-shadow:0 2px 10px rgba(30,58,95,0.06); scroll-margin-top:72px; }
+  section h2{ color:var(--navy); font-size:1.5rem; margin-top:0; display:flex; align-items:center; gap:10px; }
+  section h2 .num{ background:var(--teal); color:#fff; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1rem; flex:none; }
+  section h3{ color:var(--teal); font-size:1.15rem; margin-top:26px; }
+  p{ font-size:1.02rem; }
+  figure{ margin:20px 0; text-align:center; }
+  figure img{ max-width:100%; height:auto; border-radius:10px; box-shadow:0 4px 16px rgba(0,0,0,0.08); }
+  figcaption{ font-size:0.9rem; color:var(--gray); font-style:italic; margin-top:10px; }
+  .callout{ border-radius:12px; padding:20px 22px; margin:20px 0; border-left:5px solid var(--teal); background:var(--lightTeal); }
+  .callout.yellow{ border-left-color:#D4A017; background:var(--lightYellow); }
+  .callout.coral{ border-left-color:var(--coral); background:var(--lightCoral); }
+  .callout.green{ border-left-color:var(--green); background:var(--lightGreen); }
+  .callout .label{ font-weight:700; color:var(--navy); margin-bottom:8px; display:block; }
+  code{ background:#eef3f8; padding:2px 7px; border-radius:5px; font-family:'Courier New',monospace; color:var(--navy); font-weight:700; }
+  ul{ padding-left:22px; }
+  li{ margin-bottom:8px; }
+  .intro-box{ background:var(--lightYellow); border:1px dashed #D4A017; border-radius:12px; padding:18px 22px; font-style:italic; margin:0; }
+  .try-box{ background:#F4F0FF; border-radius:12px; padding:22px 24px; border:2px dashed #9B7EDE; margin:20px 0; }
+  .try-box li{ margin-bottom:12px; }
+  .steps{ counter-reset:stepnum; padding-left:0; list-style:none; }
+  .steps li{ counter-increment:stepnum; margin-bottom:16px; padding-left:48px; position:relative; }
+  .steps li::before{ content:counter(stepnum); position:absolute; left:0; top:-2px; width:32px; height:32px; background:var(--orange); color:var(--navy); font-weight:700; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+  table.tb{ border-collapse:collapse; width:100%; margin:16px 0; font-size:0.97rem; }
+  table.tb th{ background:var(--navy); color:#fff; padding:9px 12px; text-align:left; }
+  table.tb td{ border:1px solid #cfd8e0; padding:8px 12px; vertical-align:top; }
+  table.tb tr:nth-child(even) td{ background:#f4f7fa; }
+  .tablewrap{ overflow-x:auto; }
+  .summary-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px; }
+  .summary-card{ background:#F7FAFC; border-radius:10px; padding:14px 16px; border-left:4px solid var(--orange); }
+  .summary-card b{ color:var(--navy); }
+  a.backtotop{ color:var(--teal); font-size:0.85rem; text-decoration:none; }
+  footer{ text-align:center; padding:30px 20px 50px; color:var(--gray); font-size:0.9rem; }
+
+  /* ===== interaktif ===== */
+  details.reveal{ margin:14px 0; border-radius:12px; background:var(--lightGreen); border:1px solid #b9dfc8; }
+  details.reveal > summary{ cursor:pointer; padding:12px 18px; font-weight:700; color:var(--green); list-style:none; }
+  details.reveal > summary::-webkit-details-marker{ display:none; }
+  details.reveal > summary::before{ content:"👀 "; }
+  details.reveal[open] > summary::before{ content:"✅ "; }
+  details.reveal .inner{ padding:2px 18px 16px; }
+  .lab{ background:#F4F7FA; border:2px solid var(--teal); border-radius:14px; padding:20px 22px; margin:20px 0; }
+  .lab h3{ margin-top:0; color:var(--navy); }
+  .bitrow{ display:flex; align-items:center; gap:6px; margin:6px 0; flex-wrap:wrap; }
+  .bitrow .lbl{ width:158px; font-weight:700; color:var(--navy); font-size:0.92rem; }
+  .bitrow .res{ margin-left:8px; color:var(--gray); font-size:0.93rem; }
+  .bit{ width:38px; height:38px; border-radius:8px; border:2px solid #c5cdd5; background:#e3e8ed; color:#8a96a3; font-weight:700; font-size:1.1rem; display:flex; align-items:center; justify-content:center; font-family:'Courier New',monospace; }
+  button.bit{ cursor:pointer; padding:0; }
+  button.bit:focus-visible{ outline:3px solid var(--orange); }
+  .bit.on.ta{ background:var(--teal); border-color:var(--teal); color:#fff; }
+  .bit.on.tb2{ background:var(--orange); border-color:var(--orange); color:var(--navy); }
+  .bit.on.tr{ background:var(--green); border-color:var(--green); color:#fff; }
+  .bit.on.tc{ background:var(--coral); border-color:var(--coral); color:#fff; }
+  .posrow .bit{ background:none; border:none; color:var(--navy); height:22px; font-size:0.85rem; }
+  .btn{ background:var(--navy); color:#fff; border:none; border-radius:8px; padding:9px 16px; font-size:0.95rem; cursor:pointer; font-family:inherit; }
+  .btn:hover{ background:#274d78; }
+  .btn.alt{ background:var(--orange); color:var(--navy); font-weight:700; }
+  .grid7{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:10px 0; }
+  .grid7 label{ font-size:0.86rem; color:var(--navy); font-weight:600; display:block; }
+  .grid7 input{ width:100%; padding:7px 8px; border:2px solid #c5cdd5; border-radius:8px; font-size:1rem; font-family:inherit; }
+  .grid7 input:focus{ border-color:var(--teal); outline:none; }
+  .out{ margin-top:10px; padding:12px 16px; border-radius:10px; background:#fff; border:1px solid #cfd8e0; font-size:1rem; }
+  .out.bad{ background:var(--lightCoral); border-color:var(--coral); }
+  .out.good{ background:var(--lightGreen); border-color:#b9dfc8; }
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin:10px 0; }
+  .chip{ padding:6px 14px; border-radius:20px; background:#e3e8ed; color:var(--navy); font-weight:600; font-size:0.93rem; border:2px solid transparent; }
+  .chip.k{ background:#fff; border-color:#c5cdd5; }
+  .chip.out-c{ background:#e9ecef; color:#9aa4ae; text-decoration:line-through; }
+  .chip.ok{ background:var(--green); color:#fff; }
+  .filters{ display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+  .filters button{ border:2px solid var(--teal); background:#fff; color:var(--teal); border-radius:20px; padding:7px 14px; cursor:pointer; font-weight:600; font-family:inherit; font-size:0.9rem; }
+  .filters button.sel{ background:var(--teal); color:#fff; }
+  .q{ border:1px solid #d5dde5; border-radius:12px; padding:16px 18px; margin:16px 0; background:#fff; }
+  .q .qt{ font-weight:700; color:var(--navy); margin-bottom:10px; }
+  .q .opts{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .q .opts button{ text-align:left; padding:10px 14px; border-radius:10px; border:2px solid #c5cdd5; background:#f8fafc; cursor:pointer; font-size:1rem; font-family:inherit; color:var(--text); }
+  .q .opts button:hover:not(:disabled){ border-color:var(--teal); }
+  .q .opts button.right{ background:var(--lightGreen); border-color:var(--green); }
+  .q .opts button.wrong{ background:var(--lightCoral); border-color:var(--coral); }
+  .q .fb{ margin-top:10px; font-size:0.96rem; display:none; }
+  .q .fb.show{ display:block; }
+  .score{ font-size:1.15rem; font-weight:700; color:var(--navy); margin-top:10px; }
+  @media(max-width:640px){
+    nav.toc ol{ columns:1; }
+    .summary-grid{ grid-template-columns:1fr; }
+    .grid7{ grid-template-columns:repeat(2,1fr); }
+    .q .opts{ grid-template-columns:1fr; }
+    header.hero h1{ font-size:1.5rem; }
+    section{ padding:22px 18px; }
+    .brand .brand-text{ display:none; }
+    a.navlink{ font-size:0.8rem; padding:7px 9px; }
+    .bit{ width:32px; height:32px; }
+    .bitrow .lbl{ width:100%; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a href="#top" class="brand"><span class="dot"></span><span class="brand-text">Detektif Himpunan</span></a>
+    <ul>
+      <li><a class="navlink" href="#top">Beranda</a></li>
+      <li><a class="navlink" href="#sec1">1. Misi</a></li>
+      <li><a class="navlink" href="#sec2">2. Kamus</a></li>
+      <li><a class="navlink" href="#sec3">3. Venn 3</a></li>
+      <li><a class="navlink" href="#sec4">4. Isi Tengah</a></li>
+      <li><a class="navlink" href="#sec5">5. Rumus</a></li>
+      <li><a class="navlink" href="#sec6">6. Deduksi</a></li>
+      <li><a class="navlink" href="#sec7">7. Bit</a></li>
+      <li><a class="navlink" href="#sec8">8. De Morgan</a></li>
+      <li><a class="navlink" href="#sec9">9. Dunia Nyata</a></li>
+      <li><a class="navlink" href="#sec10">10. Kuis</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="kicker">BAB II BERPIKIR KOMPUTASIONAL &bull; TP 6 &bull; PERTEMUAN 2 &bull; KELAS VIII</div>
+  <h1>Detektif Himpunan</h1>
+  <p>Memodelkan Persoalan Logika dalam Bentuk Himpunan — Informatika SMP Negeri 14 Tarakan</p>
+</header>
+
+<nav class="toc">
+  <h2>📑 Daftar Isi</h2>
+  <ol>
+    <li><a href="#sec1">Misi Hari Ini</a></li>
+    <li><a href="#sec2">Kamus Penerjemah Kalimat → Himpunan</a></li>
+    <li><a href="#sec3">Diagram Venn 3 Himpunan (8 Daerah)</a></li>
+    <li><a href="#sec4">Trik “Isi dari Tengah”</a></li>
+    <li><a href="#sec5">Rumus 3 Himpunan</a></li>
+    <li><a href="#sec6">Detektif: Menyaring Tersangka</a></li>
+    <li><a href="#sec7">Himpunan = Deretan Bit</a></li>
+    <li><a href="#sec8">Hukum De Morgan</a></li>
+    <li><a href="#sec9">Dipakai di Mana Sih?</a></li>
+    <li><a href="#sec10">KUDA Mandiri + Rangkuman</a></li>
+  </ol>
+</nav>
+
+<main>
+  <section>
+    <figure style="margin-top:0">
+      <img src="images/00_cover_p2.png" alt="Sampul: Detektif Himpunan">
+    </figure>
+    <div class="intro-box">
+      Halo lagi, Sobat Informatika! 🕵️ Minggu lalu kamu sudah kenalan sama himpunan. Hari ini kamu naik level
+      jadi <b>detektif data</b>: menerjemahkan kalimat petunjuk jadi simbol himpunan, menggambar Venn 3 lingkaran,
+      menyaring tersangka, sampai mengubah himpunan jadi deretan angka 0 dan 1 seperti yang dilakukan komputer.
+      Yuk, gas!
+    </div>
+  </section>
+
+  <section id="sec1">
+    <h2><span class="num">1</span>Misi Hari Ini</h2>
+    <p>Panitia <b>Tarakan Fest</b> minta bantuan tim detektif data. Ada tiga misi yang bakal kamu kerjakan bareng kelompok:</p>
+    <div class="summary-grid">
+      <div class="summary-card"><b>Misi A — Lomba Class Meeting</b><br>Data survei tiga lomba saling beririsan. Kamu isi Venn 3 lingkaran dan hitung.</div>
+      <div class="summary-card"><b>Misi B — Misteri AC Lab</b><br>10 tersangka, 5 petunjuk. Saring bertahap sampai tinggal satu pelaku.</div>
+      <div class="summary-card"><b>Misi C — Himpunan = Bit</b><br>Ubah himpunan jadi 0 dan 1, lalu temukan sendiri hukum De Morgan.</div>
+      <div class="summary-card"><b>Bintang 1 – 2 – 3</b><br>Ada tingkat tantangan. Selesai cepat? Kejar Bintang 3!</div>
+    </div>
+    <figure>
+      <img src="images/10_alur_pbl_p2.png" alt="Alur pertemuan 120 menit dengan lima kuis dadakan">
+      <figcaption>Alur pertemuan hari ini. Titik oranye = KUDA (kuis dadakan). Jadi dengarkan gurunya baik-baik ya!</figcaption>
+    </figure>
+    <figure>
+      <img src="images/07_papan_bukti_ac_lab.png" alt="Papan bukti kasus AC Lab: tabel tersangka dan ciri-cirinya">
+      <figcaption>Papan bukti Misi B. Tabel ini kamu pakai di LKPD, jadi kenali dulu bentuknya.</figcaption>
+    </figure>
+  </section>
+
+  <section id="sec2">
+    <h2><span class="num">2</span>Kamus Penerjemah: Kalimat → Himpunan</h2>
+    <p>Kunci pertama seorang detektif himpunan: <b>terjemahkan dulu, baru hitung</b>. Kata-kata logika dalam kalimat punya “kembaran” di dunia himpunan.</p>
+    <figure>
+      <img src="images/01_kamus_logika.png" alt="Tabel kamus: DAN = irisan, ATAU = gabungan, BUKAN = komplemen, TETAPI TIDAK = selisih">
+      <figcaption>Simpan gambar ini, bakal kepakai terus hari ini.</figcaption>
+    </figure>
+    <div class="callout">
+      <span class="label">📖 Kamus Singkat</span>
+      <b>DAN</b> → irisan <code>A ∩ B</code><br>
+      <b>ATAU</b> → gabungan <code>A ∪ B</code><br>
+      <b>BUKAN</b> → komplemen <code>Aᶜ</code><br>
+      <b>TETAPI TIDAK</b> → selisih <code>A − B</code> (sama dengan <code>A ∩ Bᶜ</code>)
+    </div>
+    <div class="callout coral">
+      <span class="label">⚠️ Awas Jebakan!</span>
+      Di percakapan sehari-hari, “A atau B” sering berarti <i>pilih salah satu saja</i>. Di himpunan,
+      <b>ATAU berarti salah satu atau keduanya</b> (boleh dua-duanya).
+    </div>
+    <h3>Contoh</h3>
+    <p>Misalkan <b>I</b> = penyuka IPA dan <b>M</b> = penyuka Matematika.</p>
+    <div class="tablewrap"><table class="tb">
+      <tr><th>Kalimat</th><th>Simbol</th></tr>
+      <tr><td>Suka IPA <b>dan</b> Matematika</td><td><code>I ∩ M</code></td></tr>
+      <tr><td>Suka IPA <b>atau</b> Matematika</td><td><code>I ∪ M</code></td></tr>
+      <tr><td>Suka IPA <b>tetapi tidak</b> Matematika</td><td><code>I − M</code></td></tr>
+      <tr><td><b>Tidak</b> suka IPA</td><td><code>Iᶜ</code></td></tr>
+    </table></div>
+    <div class="try-box">
+      <b>✍️ Coba sendiri!</b> Dengan A = penyuka bakso dan B = penyuka gorengan, tuliskan simbol untuk
+      “suka gorengan tetapi tidak suka bakso”.
+      <details class="reveal"><summary>Lihat jawaban</summary><div class="inner"><b>B − A</b>. Yang di depan “tetapi tidak” adalah yang dipertahankan (gorengan = B), lalu dikurangi bakso (A).</div></details>
+    </div>
+  </section>
+
+  <section id="sec3">
+    <h2><span class="num">3</span>Diagram Venn 3 Himpunan = 8 Daerah</h2>
+    <p>Dengan tiga lingkaran, kamu punya <b>8 daerah</b>. Kenapa 8? Karena tiap anggota punya 2 pilihan
+      (masuk atau tidak) untuk A, B, dan C: 2 × 2 × 2 = 8.</p>
+    <figure>
+      <img src="images/02_venn3_delapan_daerah.png" alt="Diagram Venn tiga himpunan dengan delapan daerah bernomor">
+      <figcaption>Delapan daerah pada Venn 3 himpunan. Nomor 8 ada di luar semua lingkaran!</figcaption>
+    </figure>
+    <div class="callout coral">
+      <span class="label">👀 Jangan Lupa Daerah Nomor 8</span>
+      Daerah di luar semua lingkaran tetap bagian dari semesta S. Isinya siswa yang tidak masuk himpunan mana pun.
+    </div>
+    <h3>Resep Detektif Himpunan: 5 Langkah</h3>
+    <figure>
+      <img src="images/03_resep_pemodelan.png" alt="Lima langkah: Baca, Namai, Terjemahkan, Gambar, Cek">
+      <figcaption>Pakai resep ini untuk semua misi. Langkah 5 (cek) jangan dilewat.</figcaption>
+    </figure>
+  </section>
+
+  <section id="sec4">
+    <h2><span class="num">4</span>Trik “Isi dari Tengah”</h2>
+    <p>Angka irisan sudah memuat daerah yang di tengah, jadi kalau langsung ditulis, hasilnya bakal dobel.
+      Solusinya: <b>isi dari tengah dulu, lalu ke luar</b>.</p>
+    <ol class="steps">
+      <li><b>Tengah</b>: tulis n(A ∩ B ∩ C) di daerah paling tengah.</li>
+      <li><b>Dua-dua saja</b>: kurangi irisan dua himpunan dengan angka tengah.</li>
+      <li><b>Satu saja</b>: kurangi jumlah himpunan dengan semua daerah di dalamnya.</li>
+      <li><b>Luar</b>: n(S) dikurangi jumlah ketujuh daerah.</li>
+    </ol>
+    <p><b>Contoh kasus:</b> 36 siswa disurvei tentang jajanan. Bakso (A) = 15, gorengan (B) = 14, es teh (C) = 18.
+      Bakso &amp; gorengan = 6, bakso &amp; es teh = 7, gorengan &amp; es teh = 5, dan yang suka ketiganya = 3.</p>
+    <figure>
+      <img src="images/04_isi_dari_tengah.png" alt="Empat langkah mengisi diagram Venn dari tengah">
+      <figcaption>Empat langkah mengisi Venn survei kantin.</figcaption>
+    </figure>
+    <figure>
+      <img src="images/05_kasus_kantin_venn.png" alt="Hasil diagram Venn survei kantin dan jawaban pertanyaan">
+      <figcaption>Hasil akhir. Cek: 5 + 6 + 9 + 3 + 4 + 2 + 3 + 4 = 36 ✔</figcaption>
+    </figure>
+    <div class="try-box">
+      <b>✍️ Coba sendiri!</b> Dari data di atas, berapa siswa yang suka <b>bakso dan gorengan saja</b> (tidak es teh)?
+      <details class="reveal"><summary>Lihat jawaban</summary><div class="inner"><b>3 siswa</b>. Irisan bakso &amp; gorengan = 6, tapi 3 di antaranya juga suka es teh. Jadi 6 − 3 = 3.</div></details>
+    </div>
+    <p>Mau latihan di kertas? Cetak template Venn kosong ini:</p>
+    <figure>
+      <img src="images/12_template_venn3_kosong.png" alt="Template diagram Venn tiga himpunan kosong">
+      <figcaption>Template Venn 3 himpunan kosong (klik kanan → simpan gambar, lalu cetak).</figcaption>
+    </figure>
+  </section>
+
+  <section id="sec5">
+    <h2><span class="num">5</span>Rumus 3 Himpunan (dan Kenapa Begitu)</h2>
+    <div class="callout coral">
+      <span class="label">🧮 Rumus Penting</span>
+      <code>n(A∪B∪C) = n(A)+n(B)+n(C) − n(A∩B) − n(A∩C) − n(B∩C) + n(A∩B∩C)</code>
+    </div>
+    <p>Idenya: <b>setiap daerah harus terhitung tepat 1 kali</b>.</p>
+    <figure>
+      <img src="images/06_rumus_tiga_himpunan.png" alt="Tiga tahap rumus: jumlahkan semua, kurangi irisan dua-dua, tambah irisan tiga">
+      <figcaption>Tahap 1 kebanyakan, tahap 2 tengah jadi 0 (kekurangan), tahap 3 tengah jadi pas 1.</figcaption>
+    </figure>
+    <div class="lab">
+      <h3>🧪 Kalkulator Rumus 3 Himpunan</h3>
+      <p>Masukkan data survei, dan lihat hasilnya. Kalau datanya mustahil, kalkulator akan memberi tahu (ini latihan jadi auditor data!).</p>
+      <div class="grid7">
+        <div><label for="cS">n(S) semesta</label><input id="cS" type="number" min="0" value="36"></div>
+        <div><label for="cA">n(A)</label><input id="cA" type="number" min="0" value="15"></div>
+        <div><label for="cB">n(B)</label><input id="cB" type="number" min="0" value="14"></div>
+        <div><label for="cC">n(C)</label><input id="cC" type="number" min="0" value="18"></div>
+        <div><label for="cAB">n(A∩B)</label><input id="cAB" type="number" min="0" value="6"></div>
+        <div><label for="cAC">n(A∩C)</label><input id="cAC" type="number" min="0" value="7"></div>
+        <div><label for="cBC">n(B∩C)</label><input id="cBC" type="number" min="0" value="5"></div>
+        <div><label for="cABC">n(A∩B∩C)</label><input id="cABC" type="number" min="0" value="3"></div>
+      </div>
+      <button class="btn" id="calcBtn" type="button">Hitung</button>
+      <div class="out" id="calcOut" aria-live="polite">Tekan “Hitung”.</div>
+    </div>
+    <div class="try-box">
+      <b>✍️ Coba sendiri!</b> n(A)=12, n(B)=10, n(C)=8, n(A∩B)=4, n(A∩C)=3, n(B∩C)=2, n(A∩B∩C)=1. Berapa n(A∪B∪C)?
+      <details class="reveal"><summary>Lihat jawaban</summary><div class="inner">12 + 10 + 8 − 4 − 3 − 2 + 1 = 30 − 9 + 1 = <b>22</b>.</div></details>
+    </div>
+  </section>
+
+  <section id="sec6">
+    <h2><span class="num">6</span>Detektif: Menyaring Tersangka Bertahap</h2>
+    <p>Di kasus AC Lab, kamu punya banyak petunjuk. Rahasianya: <b>satu petunjuk = satu himpunan</b>, lalu tersangka
+      disaring selangkah demi selangkah. Ini contoh mini yang bisa kamu coba langsung.</p>
+    <div class="callout yellow">
+      <span class="label">🔎 Kasus Mini: Siapa yang Menjatuhkan Vas?</span>
+      Tersangka: Ali, Budi, Cici, Dedi, Emi, Fani.<br>
+      <b>P1</b>: Pelaku berkacamata. &nbsp;<b>P2</b>: Pelaku <u>tidak</u> naik motor. &nbsp;<b>P3</b>: Pelaku bertubuh tinggi. &nbsp;<b>P4</b>: Pelaku <u>bukan</u> anggota pramuka.<br>
+      Data: kacamata (G) = Budi, Cici, Dedi, Fani. Naik motor (M) = Cici, Emi. Tinggi (T) = Ali, Dedi, Fani. Pramuka (R) = Ali, Fani.
+    </div>
+    <div class="lab">
+      <h3>🕵️ Saring Tersangkanya</h3>
+      <p>Klik petunjuk satu per satu dan lihat siapa yang tersisa.</p>
+      <div class="chips" id="sus"></div>
+      <div class="filters" id="filt">
+        <button type="button" data-k="G">P1: G (kacamata)</button>
+        <button type="button" data-k="M">P2: Mᶜ (bukan motor)</button>
+        <button type="button" data-k="T">P3: T (tinggi)</button>
+        <button type="button" data-k="R">P4: −R (bukan pramuka)</button>
+        <button type="button" data-k="reset" class="btn alt" style="border-color:var(--orange);background:var(--orange);color:var(--navy)">Ulangi</button>
+      </div>
+      <div class="out" id="susOut" aria-live="polite"></div>
+    </div>
+    <details class="reveal"><summary>Lihat ekspresi lengkapnya</summary>
+      <div class="inner">
+        Pelaku = <code>G ∩ Mᶜ ∩ T ∩ Rᶜ</code><br>
+        G ∩ Mᶜ = {Budi, Dedi, Fani} → ∩ T = {Dedi, Fani} → − R = <b>{Dedi}</b>. Pelakunya Dedi!
+      </div>
+    </details>
+    <div class="callout green">
+      <span class="label">🏅 Tantangan Bintang 3</span>
+      Kalau salah satu petunjuk dihapus, apakah pelaku tetap bisa dipastikan? Buktikan bahwa setiap petunjuk di Misi B
+      memang diperlukan (coba hapus satu per satu dan lihat sisa tersangkanya).
+    </div>
+  </section>
+
+  <section id="sec7">
+    <h2><span class="num">7</span>Himpunan = Deretan Bit</h2>
+    <p>Komputer tidak menyimpan “daftar nama”. Ia menyimpan <b>deretan 0 dan 1</b>. Untuk semesta S = {1, 2, …, 8},
+      setiap anggota punya satu kotak: <b>1 = ada di himpunan, 0 = tidak ada</b>.</p>
+    <figure>
+      <img src="images/08_himpunan_sebagai_bit.png" alt="Himpunan sebagai deretan bit: AND, OR, NOT">
+      <figcaption>Operasi himpunan = operasi bit: ∩ = AND, ∪ = OR, ᶜ = NOT.</figcaption>
+    </figure>
+    <div class="lab">
+      <h3>🧪 Lab Bit: Klik Kotaknya!</h3>
+      <p>Klik kotak A dan B untuk mengubah 0/1 dan lihat hasil operasinya. Semesta S = {1,…,8}.</p>
+      <div class="bitrow posrow"><span class="lbl">posisi</span><span id="pos"></span></div>
+      <div class="bitrow"><span class="lbl">A</span><span id="rowA" style="display:flex;gap:6px"></span><span class="res" id="setA"></span></div>
+      <div class="bitrow"><span class="lbl">B</span><span id="rowB" style="display:flex;gap:6px"></span><span class="res" id="setB"></span></div>
+      <hr>
+      <div class="bitrow"><span class="lbl">A AND B (A ∩ B)</span><span id="rAnd" style="display:flex;gap:6px"></span><span class="res" id="sAnd"></span></div>
+      <div class="bitrow"><span class="lbl">A OR B (A ∪ B)</span><span id="rOr" style="display:flex;gap:6px"></span><span class="res" id="sOr"></span></div>
+      <div class="bitrow"><span class="lbl">NOT A (Aᶜ)</span><span id="rNot" style="display:flex;gap:6px"></span><span class="res" id="sNot"></span></div>
+      <div class="bitrow"><span class="lbl">A AND NOT B (A − B)</span><span id="rDif" style="display:flex;gap:6px"></span><span class="res" id="sDif"></span></div>
+      <button class="btn" type="button" id="bitPreset">Isi contoh Misi C</button>
+      <button class="btn alt" type="button" id="bitRand">Acak</button>
+    </div>
+    <div class="try-box">
+      <b>✍️ Coba sendiri!</b> A = {1, 2, 4, 7} dan B = {2, 3, 4, 8}. Tulis A dan B sebagai deretan bit, lalu hitung A AND B.
+      <details class="reveal"><summary>Lihat jawaban</summary><div class="inner">
+        A = 11010010, B = 01110001. A AND B = 01010000 = <b>{2, 4}</b>.
+      </div></details>
+    </div>
+  </section>
+
+  <section id="sec8">
+    <h2><span class="num">8</span>Hukum De Morgan: “Tidak” Membalik DAN ↔ ATAU</h2>
+    <p>Bandingkan dua kalimat ini. Apakah sama artinya?</p>
+    <ul>
+      <li>“Aku <b>tidak</b> suka (bakso <b>atau</b> gorengan).”</li>
+      <li>“Aku <b>tidak</b> suka bakso <b>dan tidak</b> suka gorengan.”</li>
+    </ul>
+    <p>Ternyata sama! Itulah yang disebut <b>Hukum De Morgan</b>.</p>
+    <figure>
+      <img src="images/09_de_morgan.png" alt="Hukum De Morgan pada diagram Venn">
+      <figcaption>Yang diarsir sama persis di kedua sisi.</figcaption>
+    </figure>
+    <div class="callout coral">
+      <span class="label">📌 Hukum De Morgan</span>
+      <code>(A ∪ B)ᶜ = Aᶜ ∩ Bᶜ</code><br><br>
+      <code>(A ∩ B)ᶜ = Aᶜ ∪ Bᶜ</code><br><br>
+      Cara ingat: waktu “tidak” masuk ke dalam kurung, <b>DAN berubah jadi ATAU</b> dan <b>ATAU berubah jadi DAN</b>.
+    </div>
+    <div class="lab">
+      <h3>🧪 Buktikan Sendiri dengan Bit</h3>
+      <p>Memakai A dan B dari Lab Bit di atas:</p>
+      <div class="out" id="dmOut" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section id="sec9">
+    <h2><span class="num">9</span>Dipakai di Mana Sih?</h2>
+    <figure>
+      <img src="images/11_aplikasi_dunia_nyata.png" alt="Penerapan: mesin pencari, spreadsheet, toko online">
+      <figcaption>Mesin pencari, COUNTIFS di spreadsheet (Bab I), dan filter toko online memakai irisan, gabungan, dan komplemen.</figcaption>
+    </figure>
+    <div class="try-box">
+      <ul>
+        <li><b>Mesin pencari:</b> mengetik <code>wisata Tarakan -hotel</code> artinya “wisata Tarakan” dikurangi halaman yang memuat “hotel”. Itu selisih!</li>
+        <li><b>Toko online:</b> filter kategori + warna + harga adalah irisan beberapa himpunan.</li>
+        <li><b>Data audit:</b> jumlah irisan tidak mungkin lebih besar dari himpunan terkecil, dan n(A∪B) tidak mungkin lebih besar dari n(S). Kalau melanggar, datanya pasti salah!</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="sec10">
+    <h2><span class="num">10</span>KUDA Mandiri + Rangkuman</h2>
+    <p>Uji dirimu! Klik jawabanmu, langsung ketahuan benar atau salah.</p>
+    <div id="quiz"></div>
+    <div class="score" id="score"></div>
+
+    <h3>🌟 Rangkuman Kilat</h3>
+    <div class="summary-grid">
+      <div class="summary-card"><b>Kamus</b><br>DAN = ∩ • ATAU = ∪ • BUKAN = ᶜ • TETAPI TIDAK = −</div>
+      <div class="summary-card"><b>Venn 3</b><br>8 daerah. Isi dari tengah, lalu dua-dua, satu, luar. Cek jumlah = n(S).</div>
+      <div class="summary-card"><b>Rumus</b><br><code>n(A∪B∪C)</code> = jumlah − irisan dua-dua + irisan tiga</div>
+      <div class="summary-card"><b>Deduksi</b><br>Satu petunjuk = satu himpunan. Saring tersangka bertahap.</div>
+      <div class="summary-card"><b>Bit</b><br>Ada = 1, tidak ada = 0. ∩ = AND, ∪ = OR, ᶜ = NOT.</div>
+      <div class="summary-card"><b>De Morgan</b><br>(A∪B)ᶜ = Aᶜ∩Bᶜ dan (A∩B)ᶜ = Aᶜ∪Bᶜ</div>
+    </div>
+    <h3>📝 Refleksi</h3>
+    <ul>
+      <li>Aku bisa menerjemahkan kalimat dengan DAN, ATAU, BUKAN, TETAPI TIDAK ke simbol himpunan.</li>
+      <li>Aku bisa mengisi Venn 3 himpunan mulai dari daerah tengah.</li>
+      <li>Aku bisa menyaring tersangka dengan petunjuk bertahap.</li>
+      <li>Aku bisa mengubah himpunan jadi deretan bit dan menghitung AND/OR/NOT.</li>
+    </ul>
+    <p style="margin-top:22px; font-style:italic; color:var(--gray);">
+      Kerja bagus, detektif! Di pertemuan berikutnya kita masuk ke sistem bilangan, dunia 0 dan 1 yang lebih dalam. 🔢✨
+    </p>
+    <p><a class="backtotop" href="#top">↑ Kembali ke atas</a></p>
+  </section>
+</main>
+
+<footer>
+  Informatika Kelas VIII — Bab II Berpikir Komputasional — TP 6 (Pertemuan Kedua)<br>
+  SMP Negeri 14 Tarakan
+</footer>
+
+<script>
+(function(){
+  /* ===== nav aktif ===== */
+  var links = Array.prototype.slice.call(document.querySelectorAll('.topnav a.navlink'));
+  var targets = links.map(function(a){ return document.getElementById(a.getAttribute('href').replace('#','')); });
+  function onScroll(){
+    var pos = window.scrollY + 90, idx = 0;
+    for (var i=0;i<targets.length;i++){ if (targets[i] && targets[i].offsetTop <= pos) idx = i; }
+    links.forEach(function(a,i){ a.classList.toggle('active', i===idx); });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  /* ===== kalkulator rumus 3 himpunan ===== */
+  function v(id){ var x = parseInt(document.getElementById(id).value,10); return isNaN(x)?0:x; }
+  document.getElementById('calcBtn').addEventListener('click', function(){
+    var S=v('cS'),A=v('cA'),B=v('cB'),C=v('cC'),AB=v('cAB'),AC=v('cAC'),BC=v('cBC'),T=v('cABC');
+    var out=document.getElementById('calcOut'), msgs=[];
+    var r = {
+      abc:T, abOnly:AB-T, acOnly:AC-T, bcOnly:BC-T
+    };
+    r.aOnly = A-r.abOnly-r.acOnly-T;
+    r.bOnly = B-r.abOnly-r.bcOnly-T;
+    r.cOnly = C-r.acOnly-r.bcOnly-T;
+    var union = A+B+C-AB-AC-BC+T;
+    r.outside = S-union;
+    if (T>Math.min(AB,AC,BC)) msgs.push('n(A∩B∩C) tidak boleh lebih besar dari irisan dua-duanya.');
+    ['abOnly','acOnly','bcOnly','aOnly','bOnly','cOnly'].forEach(function(k){});
+    if (r.abOnly<0||r.acOnly<0||r.bcOnly<0) msgs.push('Ada irisan dua-dua yang lebih kecil dari irisan tiga-tiganya.');
+    if (r.aOnly<0||r.bOnly<0||r.cOnly<0) msgs.push('Ada himpunan yang lebih kecil dari jumlah daerah di dalamnya (angka “saja” jadi negatif).');
+    if (r.outside<0) msgs.push('Gabungan lebih besar dari semesta, mustahil!');
+    if (msgs.length){
+      out.className='out bad';
+      out.innerHTML='<b>❌ Datanya mustahil:</b><ul><li>'+msgs.join('</li><li>')+'</li></ul>n(A∪B∪C) menurut rumus = '+union+', tapi datanya tidak konsisten.';
+    } else {
+      out.className='out good';
+      out.innerHTML='<b>✅ Data konsisten.</b><br>n(A∪B∪C) = '+A+'+'+B+'+'+C+' − '+AB+' − '+AC+' − '+BC+' + '+T+' = <b>'+union+'</b><br>'+
+        'Di luar semua lingkaran = '+S+' − '+union+' = <b>'+r.outside+'</b><br>'+
+        '<small>8 daerah: A saja '+r.aOnly+' • B saja '+r.bOnly+' • C saja '+r.cOnly+' • A&amp;B saja '+r.abOnly+' • A&amp;C saja '+r.acOnly+' • B&amp;C saja '+r.bcOnly+' • ketiganya '+T+' • luar '+r.outside+'</small>';
+    }
+  });
+
+  /* ===== saring tersangka ===== */
+  var names=['Ali','Budi','Cici','Dedi','Emi','Fani'];
+  var G=['Budi','Cici','Dedi','Fani'], M=['Cici','Emi'], T=['Ali','Dedi','Fani'], R=['Ali','Fani'];
+  var applied={};
+  function inArr(a,x){ return a.indexOf(x)>=0; }
+  function susRender(){
+    var box=document.getElementById('sus'); box.innerHTML='';
+    var alive=[];
+    names.forEach(function(n){
+      var ok=true;
+      if(applied.G && !inArr(G,n)) ok=false;
+      if(applied.M && inArr(M,n)) ok=false;
+      if(applied.T && !inArr(T,n)) ok=false;
+      if(applied.R && inArr(R,n)) ok=false;
+      var c=document.createElement('span');
+      c.className='chip '+(ok?'k':'out-c'); c.textContent=n; box.appendChild(c);
+      if(ok) alive.push(n);
+    });
+    var any=Object.keys(applied).some(function(k){return applied[k];});
+    var out=document.getElementById('susOut');
+    if(!any){ out.textContent='Belum ada petunjuk dipakai. Tersangka: 6 orang.'; }
+    else if(alive.length===1){
+      out.className='out good'; out.innerHTML='🎯 Tinggal satu tersangka: <b>'+alive[0]+'</b>';
+      var chips=box.querySelectorAll('.chip.k'); chips.forEach(function(c){c.className='chip ok';});
+      return;
+    } else { out.textContent='Sisa tersangka: '+alive.length+' orang ('+alive.join(', ')+'). Pakai petunjuk lain!'; }
+    out.className='out';
+  }
+  document.getElementById('filt').addEventListener('click',function(e){
+    var k=e.target.getAttribute('data-k'); if(!k) return;
+    if(k==='reset'){ applied={}; Array.prototype.forEach.call(this.querySelectorAll('button'),function(b){b.classList.remove('sel');}); }
+    else { applied[k]=!applied[k]; e.target.classList.toggle('sel',applied[k]); }
+    susRender();
+  });
+  susRender();
+
+  /* ===== lab bit ===== */
+  var N=8, A=[1,1,0,1,0,0,1,0], B=[0,1,1,1,0,0,0,1];
+  var pos=document.getElementById('pos'); pos.style.display='flex'; pos.style.gap='6px';
+  for(var i=1;i<=N;i++){ var s=document.createElement('span'); s.className='bit'; s.textContent=i; pos.appendChild(s); }
+  function toSet(bits){ var r=[]; bits.forEach(function(b,i){ if(b) r.push(i+1); }); return '{'+r.join(', ')+'}'; }
+  function paintRow(id, bits, cls, toggler){
+    var box=document.getElementById(id); box.innerHTML='';
+    bits.forEach(function(b,i){
+      var el=document.createElement(toggler?'button':'span');
+      if(toggler){ el.type='button'; el.setAttribute('aria-label','posisi '+(i+1)+' nilai '+b); el.addEventListener('click',function(){ toggler(i); }); }
+      el.className='bit '+(b?'on '+cls:''); el.textContent=b; box.appendChild(el);
+    });
+  }
+  var and=function(a,b){return a.map(function(x,i){return x&b[i];});},
+      or=function(a,b){return a.map(function(x,i){return x|b[i];});},
+      not=function(a){return a.map(function(x){return 1-x;});};
+  var str=function(a){return a.join('');};
+  function bitRender(){
+    paintRow('rowA',A,'ta',function(i){A[i]=1-A[i];bitRender();});
+    paintRow('rowB',B,'tb2',function(i){B[i]=1-B[i];bitRender();});
+    document.getElementById('setA').textContent='= '+toSet(A);
+    document.getElementById('setB').textContent='= '+toSet(B);
+    var rAnd=and(A,B), rOr=or(A,B), rNot=not(A), rDif=and(A,not(B));
+    paintRow('rAnd',rAnd,'tr'); paintRow('rOr',rOr,'tr'); paintRow('rNot',rNot,'tc'); paintRow('rDif',rDif,'tc');
+    document.getElementById('sAnd').textContent='= '+toSet(rAnd);
+    document.getElementById('sOr').textContent='= '+toSet(rOr);
+    document.getElementById('sNot').textContent='= '+toSet(rNot);
+    document.getElementById('sDif').textContent='= '+toSet(rDif);
+    /* De Morgan */
+    var l1=not(or(A,B)), r1=and(not(A),not(B)), l2=not(and(A,B)), r2=or(not(A),not(B));
+    var same1=str(l1)===str(r1), same2=str(l2)===str(r2);
+    document.getElementById('dmOut').innerHTML=
+      'A = <code>'+str(A)+'</code> &nbsp; B = <code>'+str(B)+'</code><br><br>'+
+      'NOT(A OR B) = <code>'+str(l1)+'</code><br>(NOT A) AND (NOT B) = <code>'+str(r1)+'</code> → '+(same1?'<b style="color:#1E7A4C">SAMA ✔</b>':'beda')+'<br><br>'+
+      'NOT(A AND B) = <code>'+str(l2)+'</code><br>(NOT A) OR (NOT B) = <code>'+str(r2)+'</code> → '+(same2?'<b style="color:#1E7A4C">SAMA ✔</b>':'beda')+'<br><br>'+
+      '<i>Coba ubah kotak A dan B di Lab Bit. Selalu sama, kan? Itulah hukum De Morgan.</i>';
+  }
+  document.getElementById('bitPreset').addEventListener('click',function(){ A=[1,1,0,1,0,0,1,0]; B=[0,1,1,1,0,0,0,1]; bitRender(); });
+  document.getElementById('bitRand').addEventListener('click',function(){
+    A=A.map(function(){return Math.random()<0.5?1:0;}); B=B.map(function(){return Math.random()<0.5?1:0;}); bitRender(); });
+  bitRender();
+
+  /* ===== kuis mandiri ===== */
+  var Q=[
+    {t:'Suka IPA tetapi tidak suka Matematika ditulis…', o:['I ∩ M','I ∪ M','I − M','Iᶜ'], a:2, e:'“Tetapi tidak” = selisih. I − M.'},
+    {t:'n(A)=12, n(B)=10, n(C)=8, n(A∩B)=4, n(A∩C)=3, n(B∩C)=2, n(A∩B∩C)=1. Berapa n(A∪B∪C)?', o:['20','22','30','24'], a:1, e:'12 + 10 + 8 − 4 − 3 − 2 + 1 = 22.'},
+    {t:'Bentuk yang sama dengan (A ∪ B)ᶜ adalah…', o:['Aᶜ ∪ Bᶜ','Aᶜ ∩ Bᶜ','A ∩ B','(A ∩ B)ᶜ'], a:1, e:'De Morgan: tidak (A atau B) = tidak A dan tidak B.'},
+    {t:'A = 1100 dan B = 1010 (bit). Hasil A AND B adalah…', o:['1110','1000','0110','0000'], a:1, e:'AND: hanya posisi yang 1 di keduanya, yaitu posisi pertama. Hasil 1000.'},
+    {t:'Di Venn 3 himpunan, daerah yang berada di luar semua lingkaran…', o:['Tidak dihitung','Tetap bagian dari semesta S','Selalu kosong','Sama dengan A ∩ B ∩ C'], a:1, e:'Semesta S memuat semua anggota, termasuk yang tidak masuk himpunan mana pun.'}
+  ];
+  var answered=0, correct=0;
+  var quiz=document.getElementById('quiz');
+  Q.forEach(function(q,qi){
+    var d=document.createElement('div'); d.className='q';
+    var h='<div class="qt">KUDA '+(qi+1)+'. '+q.t+'</div><div class="opts">';
+    q.o.forEach(function(o,oi){ h+='<button type="button" data-q="'+qi+'" data-o="'+oi+'"><b>'+'ABCD'[oi]+'.</b> '+o+'</button>'; });
+    h+='</div><div class="fb" id="fb'+qi+'"></div>';
+    d.innerHTML=h; quiz.appendChild(d);
+  });
+  quiz.addEventListener('click',function(e){
+    var btn=e.target.closest('button[data-q]'); if(!btn) return;
+    var qi=+btn.getAttribute('data-q'), oi=+btn.getAttribute('data-o'), q=Q[qi];
+    var all=btn.parentNode.querySelectorAll('button');
+    all.forEach(function(b){ b.disabled=true; });
+    var fb=document.getElementById('fb'+qi);
+    all[q.a].classList.add('right');
+    if(oi===q.a){ correct++; fb.innerHTML='🎉 <b>Benar!</b> '+q.e; }
+    else { btn.classList.add('wrong'); fb.innerHTML='🤔 <b>Belum tepat.</b> Jawaban: '+'ABCD'[q.a]+'. '+q.e; }
+    fb.classList.add('show'); answered++;
+    if(answered===Q.length){
+      var msg = correct===Q.length ? 'Sempurna, detektif sejati! 🏆' : (correct>=3 ? 'Bagus! Ulangi bagian yang masih keliru ya.' : 'Yuk baca ulang materinya, lalu coba lagi.');
+      document.getElementById('score').textContent='Skor: '+correct+' / '+Q.length+' — '+msg;
+    }
+  });
+})();
+</script>
+</body>
+</html>
