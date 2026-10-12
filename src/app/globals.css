@@ -26,3 +26,27 @@ body {
   background: var(--background);
   color: var(--foreground);
 }
+
+/* Scrollbar disamarkan: transparan saat diam, tipis dan samar saat kursor di
+   atas areanya. Tetap bisa di-scroll (roda mouse / sentuh / drag). */
+.scroll-samar {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+.scroll-samar:hover {
+  scrollbar-color: rgb(148 163 184 / 0.5) transparent;
+}
+.scroll-samar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scroll-samar::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 9999px;
+}
+.scroll-samar:hover::-webkit-scrollbar-thumb {
+  background: rgb(148 163 184 / 0.5);
+}
+.scroll-samar::-webkit-scrollbar-track {
+  background: transparent;
+}
