@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kalkulator Iuran Cerdas · Materi Siswa Pertemuan 2</title>
+<meta name="description" content="Materi siswa Bab III TP 9 Pertemuan 2: merancang algoritma penyelesaian masalah numerasi (variabel, percabangan, perulangan, flowchart, uji dan bug).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#123C3A; --teal:#1F7A6D; --leaf:#3FA37C; --mint:#E3F3EC; --mint2:#CBE8DC;
+    --amber:#F2A33A; --amberl:#FDEBC8; --coral:#E8604C; --corall:#FBE0DB; --slate:#5B6B6A;
+    --white:#fff; --bg:#F6FBF8; --shadow:0 6px 24px rgba(18,60,58,.10);
+    --radius:20px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:76px}
+  body{margin:0;font-family:'Poppins','Segoe UI',system-ui,-apple-system,Roboto,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65;font-size:16px}
+  img{max-width:100%;height:auto;display:block}
+  a{color:var(--teal)}
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--mint2)}
+  nav .wrap{display:flex;align-items:center;gap:14px;height:60px}
+  .brand{font-weight:700;color:var(--teal);white-space:nowrap;font-size:15px}
+  .links{min-width:0;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1}
+  .links::-webkit-scrollbar{display:none}
+  .links a{padding:6px 12px;border-radius:999px;text-decoration:none;font-size:13px;font-weight:500;color:var(--slate);white-space:nowrap}
+  .links a:hover,.links a.on{background:var(--mint);color:var(--teal)}
+  #bar{position:absolute;left:0;bottom:-1px;height:3px;background:var(--amber);width:0;transition:width .1s}
+
+  /* HERO */
+  .hero{background:var(--mint);padding:28px 0 38px}
+  .hero .wrap{display:grid;gap:22px}
+  .hero img{border-radius:var(--radius);box-shadow:var(--shadow);width:100%}
+  .hero h1{font-size:clamp(28px,5vw,44px);line-height:1.2;margin:0}
+  .hero p{margin:0;color:var(--slate);max-width:62ch}
+  .btn{display:inline-block;background:var(--amber);color:var(--ink);font-weight:700;padding:12px 24px;border-radius:999px;text-decoration:none;border:0;cursor:pointer;font:inherit;font-weight:700}
+  .btn:hover{filter:brightness(.96)}
+  .btn.sec{background:var(--white);border:2px solid var(--teal);color:var(--teal)}
+  .tag{display:inline-block;background:var(--white);color:var(--teal);font-weight:600;font-size:13px;padding:4px 12px;border-radius:999px;margin:0 6px 6px 0;border:1px solid var(--mint2)}
+
+  /* SECTIONS */
+  section{padding:46px 0 6px}
+  .num{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--teal);color:#fff;font-weight:700;margin-right:10px;font-size:17px}
+  h2{font-size:clamp(22px,3.4vw,30px);margin:0 0 14px;line-height:1.25;display:flex;align-items:center}
+  h3{margin:22px 0 8px;font-size:19px;color:var(--teal)}
+  .card{background:var(--white);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);margin:16px 0}
+  .fig{margin:16px 0;text-align:center}
+  .fig img{margin:0 auto;border-radius:16px;border:1px solid var(--mint2);background:#fff}
+  .fig figcaption{font-size:13px;color:var(--slate);margin-top:8px}
+  .callout{border-radius:16px;padding:16px 18px;margin:16px 0;border-left:6px solid var(--teal);background:var(--mint)}
+  .callout.amber{background:var(--amberl);border-color:var(--amber)}
+  .callout.coral{background:var(--corall);border-color:var(--coral)}
+  .callout b.t{display:block;margin-bottom:4px}
+  .two{display:grid;gap:16px}
+  @media(min-width:760px){.two{grid-template-columns:1fr 1fr}.hero .wrap{grid-template-columns:1.1fr 1fr;align-items:center}}
+  table{width:100%;border-collapse:collapse;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden}
+  th{background:var(--teal);color:#fff;text-align:left;padding:10px 12px;font-weight:600}
+  td{padding:10px 12px;border-bottom:1px solid var(--mint2);vertical-align:top}
+  tr:nth-child(even) td{background:var(--mint)}
+  .tblwrap{overflow-x:auto;border-radius:12px;border:1px solid var(--mint2)}
+  ul.clean{padding-left:20px;margin:8px 0}
+  ul.clean li{margin:5px 0}
+  .goal{display:grid;gap:10px}
+  .goal div{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--mint2);border-radius:14px;padding:12px 14px}
+  .goal span{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--amber);font-weight:700}
+
+  /* interaktif */
+  .opts{display:grid;gap:10px;margin:12px 0}
+  @media(min-width:640px){.opts.row{grid-template-columns:repeat(3,1fr)}}
+  .opt{background:#fff;border:2px solid var(--mint2);border-radius:14px;padding:12px 16px;cursor:pointer;font:inherit;font-weight:600;text-align:left;color:var(--ink);transition:.15s}
+  .opt:hover{border-color:var(--teal);background:var(--mint)}
+  .opt.ok{background:#d9f3e4;border-color:var(--leaf)}
+  .opt.no{background:var(--corall);border-color:var(--coral)}
+  .opt:disabled{cursor:default}
+  .fb{display:none;margin-top:10px;padding:12px 14px;border-radius:12px;background:var(--mint);font-size:15px}
+  .fb.show{display:block}
+  .sim{display:grid;gap:12px}
+  @media(min-width:640px){.sim{grid-template-columns:1fr 1fr}}
+  label{font-weight:600;font-size:14px;display:block;margin-bottom:4px}
+  input[type=number],select{width:100%;font:inherit;padding:10px 12px;border:2px solid var(--mint2);border-radius:12px;background:#fff;color:var(--ink)}
+  input:focus,select:focus,button:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .res{background:var(--ink);color:#fff;border-radius:16px;padding:16px 18px;font-size:15px}
+  .res .big{font-size:26px;font-weight:700;color:var(--amber)}
+  .res p{margin:4px 0}
+  details{background:#fff;border:1px solid var(--mint2);border-radius:14px;margin:12px 0;overflow:hidden}
+  summary{cursor:pointer;padding:14px 18px;font-weight:700;color:var(--teal);list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"＋";margin-right:10px;color:var(--amber);font-weight:700}
+  details[open] summary::before{content:"－"}
+  details .in{padding:0 18px 16px}
+  ol.steps{padding-left:0;list-style:none;counter-reset:s;margin:10px 0}
+  ol.steps li{counter-increment:s;display:flex;gap:12px;margin:10px 0;align-items:flex-start}
+  ol.steps li>div,.goal div>*:not(span){min-width:0;overflow-wrap:anywhere}
+  ol.steps li::before{content:counter(s);flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--teal);color:#fff;font-weight:700;font-size:14px;margin-top:2px}
+  .match{display:grid;gap:10px}
+  .match div{display:grid;grid-template-columns:1fr 150px;gap:10px;align-items:center;background:#fff;border:2px solid var(--mint2);border-radius:14px;padding:10px 12px}
+  .match div.ok{border-color:var(--leaf);background:#d9f3e4}
+  .match div.no{border-color:var(--coral);background:var(--corall)}
+  @media(max-width:560px){.match div{grid-template-columns:1fr}}
+  .q{margin:18px 0;padding-bottom:6px}
+  .q p.qt{font-weight:600;margin:0 0 6px}
+  .score{font-size:18px;font-weight:700;color:var(--teal);margin-top:12px}
+  .steps5{display:grid;gap:10px;margin-top:12px}
+  @media(min-width:760px){.steps5{grid-template-columns:repeat(5,1fr)}}
+  .steps5 div{background:#fff;border:1px solid var(--mint2);border-radius:14px;padding:12px;text-align:center;font-size:14px}
+  .steps5 b{display:block;font-size:15px;color:var(--teal)}
+  footer{margin-top:56px;background:var(--ink);color:var(--mint2);padding:30px 0;font-size:14px}
+  footer b{color:#fff}
+  .kuda{display:inline-block;background:var(--amber);color:var(--ink);font-weight:700;padding:2px 12px;border-radius:999px;font-size:13px;margin-right:6px}
+  @media print{nav,.btn,.fb{display:none}.card{box-shadow:none;border:1px solid #ccc}}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  pre.code{background:var(--ink);color:#fff;border-radius:16px;padding:16px 18px;overflow-x:auto;font:500 14px/1.7 'DejaVu Sans Mono',Consolas,monospace;margin:12px 0}
+  pre.code .k{color:var(--amber);font-weight:700} pre.code .n{color:#7FA8A3} pre.code .hl{background:rgba(232,96,76,.35);display:inline-block;width:100%;border-radius:6px}
+  .trace{width:100%;border-collapse:collapse;font-size:14px;margin:10px 0}
+  .trace th{background:var(--teal);color:#fff;padding:8px 10px;text-align:center}
+  .trace td{padding:7px 10px;border:1px solid var(--mint2);text-align:center;background:#fff}
+  .trace tr.last td{background:var(--amberl);font-weight:700}
+  .row2{display:grid;gap:12px}@media(min-width:640px){.row2{grid-template-columns:repeat(3,1fr)}}
+  .sim3{display:grid;gap:12px}@media(min-width:640px){.sim3{grid-template-columns:repeat(3,1fr)}}
+  .badge{display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;margin:2px 4px 2px 0}
+  .badge.ok{background:#d9f3e4;color:#14633f}.badge.bad{background:var(--corall);color:#a63a2a}
+  .warnbox{background:var(--corall);border-left:6px solid var(--coral);border-radius:12px;padding:12px 14px;margin-top:10px}
+  .okbox{background:#d9f3e4;border-left:6px solid var(--leaf);border-radius:12px;padding:12px 14px;margin-top:10px}
+  .vote{display:inline-grid;place-items:center;width:46px;height:46px;border-radius:50%;border:0;font:700 18px 'Poppins',sans-serif;cursor:pointer;margin:3px}
+  .vote.A{background:var(--amber)}.vote.I{background:#7FC4DD}.vote.T{background:var(--coral);color:#fff}
+  .btnrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .btn.small{padding:8px 16px;font-size:14px}
+  .tblwrap table td,.tblwrap table th{white-space:nowrap}
+</style>
+</head>
+<body>
+
+<nav aria-label="Navigasi bagian">
+  <div class="wrap">
+    <span class="brand">Algoritma VIII</span>
+    <div class="links" id="links">
+      <a href="#mulai">Mulai</a><a href="#variabel">Variabel</a><a href="#divmod">DIV &amp; MOD</a><a href="#cabang">Percabangan</a><a href="#ulang">Perulangan</a>
+      <a href="#flow">Flowchart</a><a href="#trace">Penelusuran</a><a href="#bug">Uji &amp; Bug</a><a href="#efisien">Efisiensi</a><a href="#optimasi">Optimasi</a><a href="#proyek">Proyek</a><a href="#latihan">Latihan</a><a href="#rangkum">Rangkuman</a>
+    </div>
+  </div>
+  <div id="bar"></div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <span class="tag">Informatika · Kelas VIII</span><span class="tag">Bab III Algoritma Pemrograman</span><span class="tag">TP 9 · Pertemuan 2</span>
+      <h1>Naik Level: Jadi Perancang Algoritma!</h1>
+      <p>Kemarin kamu menghitung. Hari ini kamu membuat <b>“Kalkulator Iuran Cerdas”</b>: langkah-langkah yang bisa dipakai untuk kelas mana pun. Ada simulator yang bisa kamu coba langsung!</p>
+      <p style="margin-top:16px"><a class="btn" href="#mulai">Mulai belajar</a></p>
+    </div>
+    <img src="images/01_banner_kalkulator.png" alt="Banner Kalkulator Iuran Cerdas dengan flowchart mini" width="1600" height="700">
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="mulai">
+  <h2><span class="num">1</span>Dari Menghitung ke Merancang</h2>
+  <div class="card">
+    <p>Setiap kelas ingin menghitung iuran karyawisatanya. Masa kita menghitung dari awal terus-terusan? Bayangkan kamu menulis <b>resep</b>, bukan memasak sepiring nasi goreng. Resep itulah <b>algoritma</b>.</p>
+    <p><b>Tebak dulu!</b> Rombongan 40 orang, satu bus muat 12 orang. Berapa bus yang dibutuhkan?</p>
+    <div class="opts row" id="hook">
+      <button class="opt" data-v="3">3 bus</button><button class="opt" data-v="3.33">3,33 bus</button><button class="opt" data-v="4">4 bus</button>
+    </div>
+    <div class="fb" id="hookfb"></div>
+  </div>
+  <figure class="fig"><img src="images/02_tangga_level.png" alt="Tangga lima level: Hitung, Rancang, Algoritma, Uji dan Debug, Optimasi" width="700" height="336" loading="lazy"><figcaption>Gambar 1. Kemarin level 1–2, hari ini level 3–5.</figcaption></figure>
+  <div class="goal">
+    <b>Setelah belajar ini, kamu bisa:</b>
+    <div><span>1</span>memakai <b>variabel, DIV, dan MOD</b></div>
+    <div><span>2</span>menyusun <b>percabangan</b> dan <b>perulangan</b></div>
+    <div><span>3</span>menggambar <b>flowchart</b> dan membuat <b>tabel penelusuran</b></div>
+    <div><span>4</span><b>menguji</b> algoritma dan <b>mencari bug</b></div>
+  </div>
+</section>
+
+<section id="variabel">
+  <h2><span class="num">2</span>Variabel: Kotak Bernama</h2>
+  <div class="card"><p><b>Variabel</b> adalah kotak yang punya nama dan isinya bisa diganti. Tanda <b>←</b> dibaca “diisi dengan”. Jadi <b>bus ← bus + 1</b> artinya: ambil isi lama, tambah 1, simpan lagi.</p></div>
+  <figure class="fig"><img src="images/03_variabel_kotak.png" alt="Tiga variabel peserta, kapasitas, bus dan perubahan nilai bus dari 3 ke 4" width="700" height="350" loading="lazy"><figcaption>Gambar 2. Variabel dan tanda ←.</figcaption></figure>
+  <div class="card">
+    <h3 style="margin-top:0">Coba sendiri: bus ← bus + 1</h3>
+    <p>Isi kotak <b>bus</b> sekarang: <span class="badge ok" id="busval">3</span></p>
+    <div class="btnrow"><button class="btn small" id="busplus">Jalankan: bus ← bus + 1</button><button class="btn small sec" id="busreset">Ulang</button></div>
+  </div>
+  <div class="callout coral"><b class="t">Awas, bukan sama dengan!</b>Di matematika “bus = bus + 1” itu mustahil. Di algoritma, ← berarti memasukkan nilai baru ke kotak.</div>
+</section>
+
+<section id="divmod">
+  <h2><span class="num">3</span>DIV dan MOD</h2>
+  <div class="card"><p><b>DIV</b> = hasil bagi bulat (berapa kali muat penuh). <b>MOD</b> = sisa bagi. Contoh: 40 DIV 12 = <b>3</b>, 40 MOD 12 = <b>4</b>, sebab 40 = 3 × 12 + 4.</p></div>
+  <figure class="fig"><img src="images/04_div_mod_bus.png" alt="40 DIV 12 sama dengan 3 dan 40 MOD 12 sama dengan 4 dengan gambar bus dan sisa orang" width="700" height="350" loading="lazy"><figcaption>Gambar 3. Tiga bus penuh dan 4 orang tersisa.</figcaption></figure>
+  <div class="card">
+    <h3 style="margin-top:0">Kalkulator DIV dan MOD</h3>
+    <div class="sim"><div><label for="da">Bilangan a</label><input type="number" id="da" value="40" min="0" max="99999"></div><div><label for="db">Dibagi b</label><input type="number" id="db" value="12" min="1" max="99999"></div></div>
+    <div class="res" id="dres" style="margin-top:12px" aria-live="polite"></div>
+  </div>
+  <div class="callout amber"><b class="t">Pembulatan ke atas ala komputer</b><b>bus ← peserta DIV kapasitas</b><br><b>JIKA peserta MOD kapasitas &gt; 0 MAKA bus ← bus + 1</b></div>
+
+  <div class="card">
+    <h3 style="margin-top:0"><span class="kuda">KUDA</span> Cocokkan istilah</h3>
+    <div class="match" id="match"></div>
+    <p style="margin-top:14px"><button class="btn" id="matchBtn">Periksa jawaban</button></p><div class="score" id="matchScore"></div>
+  </div>
+</section>
+
+<section id="cabang">
+  <h2><span class="num">4</span>Percabangan: Memilih Jalan</h2>
+  <div class="card"><p>Percabangan memakai <b>JIKA … MAKA … JIKA TIDAK …</b>. Di flowchart, pertanyaan ditulis di <b>belah ketupat</b> dengan dua jalan: <b>Ya</b> dan <b>Tidak</b>.</p></div>
+  <figure class="fig"><img src="images/05_percabangan.png" alt="Percabangan sisa lebih dari 0: ya tambah satu bus, tidak bus tetap" width="700" height="350" loading="lazy"><figcaption>Gambar 4. JIKA sisa &gt; 0 MAKA bus + 1.</figcaption></figure>
+</section>
+
+<section id="ulang">
+  <h2><span class="num">5</span>Perulangan: Ulangi Sampai Cukup</h2>
+  <div class="card"><p><b>ULANGI n kali</b> dipakai jika jumlah putaran pasti. <b>SELAMA syarat</b> mengulang saat syarat <b>benar</b> dan berhenti saat <b>salah</b>.</p></div>
+  <figure class="fig"><img src="images/06_perulangan.png" alt="Diagram perulangan SELAMA kursi kurang dari peserta tambah bus" width="700" height="380" loading="lazy"><figcaption>Gambar 5. Bus ditambah satu per satu sampai kursi cukup.</figcaption></figure>
+  <div class="card">
+    <h3 style="margin-top:0">Jalankan perulangan langkah demi langkah</h3>
+    <div class="sim"><div><label for="lp">Peserta</label><input type="number" id="lp" value="40" min="1" max="500"></div><div><label for="lk">Kapasitas</label><input type="number" id="lk" value="12" min="1" max="500"></div></div>
+    <pre class="code"><span class="n">1</span> bus ← 0
+<span class="n">2</span> kursi ← 0
+<span class="n">3</span> <span class="k">SELAMA</span> kursi &lt; peserta
+<span class="n">4</span>     bus ← bus + 1
+<span class="n">5</span>     kursi ← kursi + kapasitas
+<span class="n">6</span> <span class="k">TAMPILKAN</span> bus</pre>
+    <div class="btnrow"><button class="btn small" id="lstep">Langkah berikutnya</button><button class="btn small sec" id="lreset">Ulang</button></div>
+    <div class="tblwrap" style="margin-top:10px"><table class="trace" id="ltable"><thead><tr><th>Putaran</th><th>bus</th><th>kursi</th><th>kursi &lt; peserta ?</th></tr></thead><tbody></tbody></table></div>
+    <div class="fb" id="lfb"></div>
+  </div>
+</section>
+
+<section id="flow">
+  <h2><span class="num">6</span>Flowchart: Resep Bergambar</h2>
+  <figure class="fig"><img src="images/07_simbol_flowchart.png" alt="Enam simbol flowchart: terminator, input output, proses, keputusan, arah alur, konektor" width="760" height="355" loading="lazy"><figcaption>Gambar 6. Simbol flowchart.</figcaption></figure>
+  <figure class="fig"><img src="images/08_flowchart_jumlah_bus.png" alt="Flowchart jumlah bus dengan DIV, MOD dan keputusan sisa lebih dari 0" width="520" height="432" loading="lazy"><figcaption>Gambar 7. Flowchart jumlah bus.</figcaption></figure>
+  <figure class="fig"><img src="images/19_kartu_unplugged.png" alt="Kartu flowchart diacak lalu disusun berurutan" width="760" height="355" loading="lazy"><figcaption>Gambar 8. Latihan: susun kartu menjadi flowchart.</figcaption></figure>
+  <div class="callout amber"><b class="t">Aturan emas</b>Keputusan (belah ketupat) wajib punya <b>dua</b> jalan keluar berlabel Ya dan Tidak.</div>
+</section>
+
+<section id="trace">
+  <h2><span class="num">7</span>Tabel Penelusuran</h2>
+  <div class="card"><p>Sebelum percaya pada sebuah algoritma, <b>jalankan dulu dengan pensil</b>. Catat nilai variabel di setiap langkah. Itu namanya <b>tabel penelusuran</b> (trace table). Jangan menebak!</p></div>
+  <figure class="fig"><img src="images/10_trace_table.png" alt="Tabel penelusuran peserta 40 kapasitas 12 menghasilkan 4 bus" width="760" height="396" loading="lazy"><figcaption>Gambar 9. Penelusuran peserta = 40, kapasitas = 12.</figcaption></figure>
+  <div class="card">
+    <h3 style="margin-top:0">Counter: hitung suara menu</h3>
+    <p>Klik suara satu per satu (A = ayam, I = ikan, T = telur). Perulangan membaca suara, percabangan menambah penghitung yang sesuai.</p>
+    <div id="votes"><button class="vote A" data-v="A">A</button><button class="vote I" data-v="I">I</button><button class="vote T" data-v="T">T</button></div>
+    <div class="res" id="cres" style="margin-top:10px" aria-live="polite"></div>
+    <div class="btnrow"><button class="btn small sec" id="creset">Ulang</button></div>
+  </div>
+  <figure class="fig"><img src="images/22_counter_angket.png" alt="Contoh counter: ayam 4, ikan 2, telur 2" width="700" height="345" loading="lazy"><figcaption>Gambar 10. Contoh: A I A A T I A T → 4, 2, 2.</figcaption></figure>
+</section>
+
+<section id="bug">
+  <h2><span class="num">8</span>Uji dan Cari Bug</h2>
+  <div class="card"><p><b>Bug</b> adalah kesalahan dalam algoritma. Cara menemukannya: <b>uji dengan banyak kasus</b>. Satu kasus saja bisa menipu!</p></div>
+  <figure class="fig"><img src="images/14_kasus_uji.png" alt="Empat kasus uji: baku, pas, sisa 1, dan terlarang" width="760" height="385" loading="lazy"><figcaption>Gambar 11. Empat kasus uji.</figcaption></figure>
+  <div class="card">
+    <h3 style="margin-top:0">Simulator Kalkulator Iuran</h3>
+    <p>Pilih kasus uji (atau isi sendiri), lalu pilih <b>versi algoritma</b>. Lihat apakah bug-nya ketahuan.</p>
+    <div class="sim3">
+      <div><label for="kasus">Kasus uji</label><select id="kasus"><option value="96,6,30">1 · Baku (96 siswa + 6 guru, kap 30)</option><option value="54,6,30">2 · Pas (54 + 6, kap 30)</option><option value="60,1,30">3 · Sisa 1 (60 + 1, kap 30)</option><option value="96,6,0">4 · Terlarang (kapasitas 0)</option></select></div>
+      <div><label for="ver">Versi algoritma</label><select id="ver"><option value="ok">Benar</option><option value="b1">Bug 1: lupa sisa</option><option value="b2">Bug 2: dibagi peserta</option><option value="b3">Bug 3: pembulatan terdekat</option><option value="b4">Bug 4: tanpa validasi</option></select></div>
+      <div style="align-self:end"><button class="btn" id="jalan" style="width:100%">Jalankan</button></div>
+    </div>
+    <div class="sim3" style="margin-top:12px">
+      <div><label for="sewa">Sewa per bus (Rp)</label><input type="number" id="sewa" value="1800000"></div>
+      <div><label for="tiket">Tiket per orang (Rp)</label><input type="number" id="tiket" value="5000"></div>
+      <div><label for="kons">Konsumsi per orang (Rp)</label><input type="number" id="kons" value="18000"></div>
+    </div>
+    <div id="simout" aria-live="polite" style="margin-top:12px"></div>
+  </div>
+  <figure class="fig"><img src="images/13_cari_bug.png" alt="Algoritma dengan dua baris bug disorot dan penjelasannya" width="760" height="385" loading="lazy"><figcaption>Gambar 12. Dua baris salah pada algoritma contoh.</figcaption></figure>
+</section>
+
+<section id="efisien">
+  <h2><span class="num">9</span>Dua Cara, Mana Lebih Baik?</h2>
+  <figure class="fig"><img src="images/15_efisiensi.png" alt="Perbandingan perulangan 334 putaran dan rumus DIV MOD 3 langkah untuk 10000 orang" width="760" height="385" loading="lazy"><figcaption>Gambar 13. Jumlah putaran naik, langkah rumus tetap.</figcaption></figure>
+  <div class="card"><h3 style="margin-top:0">Hitung putaran vs langkah</h3>
+    <div class="sim"><div><label for="ep">Jumlah peserta</label><input type="number" id="ep" value="10000" min="1" max="1000000"></div><div><label for="ek">Kapasitas</label><input type="number" id="ek" value="30" min="1" max="10000"></div></div>
+    <div class="res" id="eres" style="margin-top:12px" aria-live="polite"></div></div>
+  <div class="callout"><b class="t">Kesimpulan</b>Perulangan <b>mudah dipahami</b>, rumus DIV/MOD <b>efisien</b>. Pilih sesuai tujuan.</div>
+</section>
+
+<section id="optimasi">
+  <h2><span class="num">10</span>Tantangan Platinum: Kombinasi Termurah</h2>
+  <figure class="fig"><img src="images/16_pilihan_kendaraan.png" alt="Tiga pilihan kendaraan: Bus A 30 kursi, Bus B 45 kursi, Minibus C 15 kursi" width="760" height="355" loading="lazy"><figcaption>Gambar 14. Tiga pilihan kendaraan.</figcaption></figure>
+  <div class="card"><h3 style="margin-top:0">Komputer mencoba semua kombinasi</h3>
+    <div class="sim"><div><label for="op">Jumlah peserta</label><input type="number" id="op" value="102" min="1" max="400"></div><div style="align-self:end"><button class="btn" id="ojalan" style="width:100%">Cari 5 kombinasi termurah</button></div></div>
+    <div class="tblwrap" style="margin-top:12px"><table class="trace" id="otable"><thead><tr><th>Kombinasi</th><th>Kursi</th><th>Biaya sewa</th><th>Kosong</th></tr></thead><tbody></tbody></table></div>
+    <p style="font-size:14px;color:var(--slate)">Algoritma: untuk a dari 0 sampai 4, untuk b dari 0 sampai 4, untuk c dari 0 sampai 4 (125 kombinasi). Simpan yang kursinya cukup dan biayanya terendah.</p>
+  </div>
+  <figure class="fig"><img src="images/17_grafik_kombinasi.png" alt="Grafik biaya sewa berbagai kombinasi untuk 102 orang" width="760" height="395" loading="lazy"><figcaption>Gambar 15. Termurah: 2 Bus B + 1 Minibus C.</figcaption></figure>
+</section>
+
+<section id="proyek">
+  <h2><span class="num">11</span>Proyek Kelompok</h2>
+  <figure class="fig"><img src="images/20_poster_proyek.png" alt="Poster proyek Kalkulator Iuran Cerdas: masukan, algoritma, keluaran" width="760" height="428" loading="lazy"><figcaption>Gambar 16. Produk kelompokmu.</figcaption></figure>
+  <figure class="fig"><img src="images/12_level_tantangan.png" alt="Empat level tantangan: perunggu, perak, emas, platinum" width="760" height="355" loading="lazy"><figcaption>Gambar 17. Mulai dari levelmu, naik bila siap.</figcaption></figure>
+  <figure class="fig"><img src="images/18_peran_proyek.png" alt="Empat peran tim: analis data, perancang alur, penguji, juru bicara" width="760" height="355" loading="lazy"><figcaption>Gambar 18. Empat peran dalam tim.</figcaption></figure>
+  <details><summary>Jalur komputer (opsional): blok Scratch</summary><div class="in"><figure class="fig"><img src="images/21_blok_scratch.png" alt="Pemetaan algoritma ke blok Scratch" width="760" height="385" loading="lazy"></figure><p>Input = ask and wait, variabel = set, sisa = mod, percabangan = if then, perulangan = repeat until, keluaran = say.</p></div></details>
+  <details><summary>Flowchart lengkap Kalkulator Iuran (lihat setelah mencoba sendiri!)</summary><div class="in"><figure class="fig"><img src="images/09_flowchart_kalkulator.png" alt="Flowchart lengkap kalkulator iuran dengan validasi dan pembulatan" width="900" height="580" loading="lazy"></figure></div></details>
+</section>
+
+<section id="latihan">
+  <h2><span class="num">12</span>Cek Pemahamanmu</h2>
+  <p>Telusuri dulu di kertas, baru pilih jawabannya.</p>
+  <div class="card" id="quiz"></div><div class="score" id="quizScore" aria-live="polite"></div>
+</section>
+
+<section id="rangkum">
+  <h2><span class="num">13</span>Rangkuman Singkat</h2>
+  <div class="callout"><b class="t">Yang harus kamu ingat</b>
+    <ul class="clean">
+      <li><b>Variabel</b> = kotak bernama; <b>←</b> berarti “diisi dengan”.</li>
+      <li><b>DIV</b> = hasil bagi bulat, <b>MOD</b> = sisa. Pembulatan ke atas: DIV, lalu JIKA sisa &gt; 0 MAKA tambah 1.</li>
+      <li><b>Percabangan</b> memilih jalan; <b>perulangan</b> mengulang selama syarat benar.</li>
+      <li><b>Flowchart</b> menggambar algoritma; <b>tabel penelusuran</b> menjalankannya dengan pensil.</li>
+      <li><b>Uji dengan banyak kasus</b> (baku, batas, terlarang) supaya bug ketahuan.</li>
+    </ul></div>
+  <h3>Kamus Mini</h3>
+  <div class="tblwrap"><table><tr><th>Istilah</th><th>Artinya</th></tr>
+    <tr><td><b>Algoritma</b></td><td>Urutan langkah yang jelas untuk menyelesaikan masalah</td></tr>
+    <tr><td><b>Variabel</b></td><td>Kotak bernama yang menyimpan nilai</td></tr>
+    <tr><td><b>Bug</b></td><td>Kesalahan dalam algoritma</td></tr>
+    <tr><td><b>Kasus uji</b></td><td>Data contoh untuk menguji algoritma</td></tr>
+    <tr><td><b>Tabel penelusuran</b></td><td>Tabel nilai variabel pada tiap langkah</td></tr></table></div>
+  <div class="card" style="margin-top:24px"><h3 style="margin-top:0">Tugas mandiri</h3><p>Temukan satu masalah di rumah atau sekolah (misalnya menyusun kursi dalam baris berisi 8 kursi). Tulis <b>algoritma dan tabel penelusurannya</b> untuk 3 kasus: biasa, pas, dan sisa 1. Pertemuan berikutnya (TP 10): menulis instruksi dalam format <b>pseudocode</b>.</p></div>
+</section>
+</main>
+
+<footer><div class="wrap"><p><b>Materi Siswa · Informatika Kelas VIII · Bab III Algoritma Pemrograman · TP 9 Pertemuan 2</b></p><p>SMP Negeri 14 Tarakan · Disusun oleh Muh. Diah · Rujukan: Buku Siswa Informatika SMP/MTs Kelas VIII (Edisi Revisi), Kemendikbudristek 2024. Data harga hanya ilustrasi.</p></div></footer>
+
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i);};
+  var rp=function(n){return 'Rp'+Math.round(n).toLocaleString('id-ID');};
+  // nav
+  var bar=$('bar'), links=[].slice.call(document.querySelectorAll('#links a')), secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  function onScroll(){var h=document.documentElement;bar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';var cur=0;secs.forEach(function(s,i){if(s&&s.getBoundingClientRect().top<120)cur=i;});links.forEach(function(a,i){a.classList.toggle('on',i===cur);});}
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  // hook
+  var fbTxt={'3':'Hampir! 40 DIV 12 = 3, tetapi 40 MOD 12 = 4. Ada <b>4 orang sisa</b>, jadi 3 bus belum cukup.','3.33':'Hitungannya benar, tetapi bus tidak bisa “3,33 buah”. Hasil harus bilangan bulat.','4':'<b>Tepat!</b> 3 bus penuh + 1 bus untuk 4 orang sisa. Komputer melakukannya dengan DIV, MOD, dan JIKA sisa &gt; 0.'};
+  [].forEach.call($('hook').querySelectorAll('.opt'),function(b){b.addEventListener('click',function(){[].forEach.call($('hook').querySelectorAll('.opt'),function(x){x.classList.remove('ok','no');});b.classList.add(b.dataset.v==='4'?'ok':'no');$('hookfb').innerHTML=fbTxt[b.dataset.v];$('hookfb').classList.add('show');});});
+  // variabel
+  var bv=3;$('busplus').addEventListener('click',function(){bv++;$('busval').textContent=bv;});$('busreset').addEventListener('click',function(){bv=3;$('busval').textContent=bv;});
+  // div mod
+  function dm(){var a=parseInt($('da').value,10),b=parseInt($('db').value,10);var r=$('dres');if(!(a>=0&&b>0)){r.innerHTML='Isi a ≥ 0 dan b &gt; 0.';return;}var q=Math.floor(a/b),m=a%b;r.innerHTML='<p>'+a+' DIV '+b+' = <span class="big">'+q+'</span></p><p>'+a+' MOD '+b+' = <span class="big">'+m+'</span></p><p>Cek: '+q+' × '+b+' + '+m+' = '+(q*b+m)+'</p><p>'+(m>0?'Sisa &gt; 0, jadi butuh <b>'+(q+1)+'</b> wadah (dibulatkan ke atas).':'Sisa = 0, jadi cukup <b>'+q+'</b> wadah.')+'</p>';}
+  $('da').addEventListener('input',dm);$('db').addEventListener('input',dm);dm();
+  // matching
+  var right=['A. Mengulang langkah selama syarat terpenuhi','B. Hasil yang ditampilkan kepada pengguna','C. Kotak bernama penyimpan nilai','D. Diagram alir langkah dengan simbol','E. Memilih jalan berdasarkan syarat Ya/Tidak','F. Data yang dimasukkan sebelum diproses'];
+  var left=[['Variabel',2],['Input',5],['Percabangan',4],['Perulangan',0],['Output',1],['Flowchart',3]];
+  var mt=$('match');left.forEach(function(it,i){var d=document.createElement('div');d.innerHTML='<span><b>'+(i+1)+'.</b> '+it[0]+'</span><select aria-label="Pasangan untuk '+it[0]+'"><option value="">Pilih…</option>'+right.map(function(c,k){return '<option value="'+k+'">'+c+'</option>';}).join('')+'</select>';mt.appendChild(d);});
+  $('matchBtn').addEventListener('click',function(){var ok=0;left.forEach(function(it,i){var v=mt.children[i].querySelector('select').value,g=(v!==''&&parseInt(v,10)===it[1]);mt.children[i].classList.remove('ok','no');mt.children[i].classList.add(g?'ok':'no');if(g)ok++;});$('matchScore').textContent='Skormu: '+ok+' dari 6'+(ok===6?' — Hebat!':' — perbaiki yang merah.');});
+  // perulangan step
+  var L={bus:0,kursi:0,put:0,done:false};
+  function lreset(){L={bus:0,kursi:0,put:0,done:false};$('ltable').querySelector('tbody').innerHTML='';addRow();$('lfb').classList.remove('show');}
+  function addRow(){var p=parseInt($('lp').value,10)||1;var c=L.kursi<p;var tr=document.createElement('tr');tr.innerHTML='<td>'+(L.put===0?'awal':L.put)+'</td><td>'+L.bus+'</td><td>'+L.kursi+'</td><td>'+(c?'Ya':'Tidak')+'</td>';if(!c)tr.className='last';$('ltable').querySelector('tbody').appendChild(tr);return c;}
+  $('lstep').addEventListener('click',function(){var p=parseInt($('lp').value,10)||1,k=parseInt($('lk').value,10)||1;if(L.kursi>=p){$('lfb').innerHTML='Perulangan sudah berhenti. Output: bus = <b>'+L.bus+'</b>.';$('lfb').classList.add('show');return;}L.bus++;L.kursi+=k;L.put++;var c=addRow();if(!c){$('lfb').innerHTML='Syarat <b>kursi &lt; peserta</b> menjadi salah, perulangan berhenti. Output: bus = <b>'+L.bus+'</b> setelah '+L.put+' putaran.';$('lfb').classList.add('show');}});
+  $('lreset').addEventListener('click',lreset);$('lp').addEventListener('input',lreset);$('lk').addEventListener('input',lreset);lreset();
+  // counter
+  var cn={A:0,I:0,T:0},seq=[];
+  function cr(){var t=seq.length;$('cres').innerHTML=t===0?'Belum ada suara. Klik A, I, atau T.':'<p>Suara: '+seq.join(' ')+'</p><p>ayam = <b>'+cn.A+'</b> · ikan = <b>'+cn.I+'</b> · telur = <b>'+cn.T+'</b> (total '+t+')</p><p>Persen: ayam '+Math.round(cn.A/t*100)+'% · ikan '+Math.round(cn.I/t*100)+'% · telur '+Math.round(cn.T/t*100)+'%</p>';}
+  [].forEach.call(document.querySelectorAll('.vote'),function(b){b.addEventListener('click',function(){cn[b.dataset.v]++;seq.push(b.dataset.v);cr();});});$('creset').addEventListener('click',function(){cn={A:0,I:0,T:0};seq=[];cr();});cr();
+  // simulator iuran
+  function algo(o,ver){
+    if(!(o.kap>0)){ if(ver!=='b4') return {error:true}; return {crash:true}; }
+    var peserta=o.siswa+o.guru, bus=Math.floor(peserta/o.kap), sisa=peserta%o.kap;
+    if(ver!=='b1'&&sisa>0) bus++;
+    var kosong=bus*o.kap-peserta, total=bus*o.sewa+peserta*(o.tiket+o.kons), div=(ver==='b2')?peserta:o.siswa, kasar=total/div, iuran;
+    if(ver==='b3') iuran=Math.round(kasar/5000)*5000; else {iuran=Math.floor(total/div); if(total%div>0) iuran++; var r=iuran%5000; if(r>0) iuran+=5000-r;}
+    return {peserta:peserta,bus:bus,sisa:sisa,kosong:kosong,total:total,kasar:kasar,iuran:iuran,terkumpul:iuran*o.siswa,sisaDana:iuran*o.siswa-total,tertinggal:Math.max(0,peserta-bus*o.kap)};
+  }
+  $('jalan').addEventListener('click',function(){
+    var p=$('kasus').value.split(',').map(Number),o={siswa:p[0],guru:p[1],kap:p[2],sewa:+$('sewa').value,tiket:+$('tiket').value,kons:+$('kons').value},ver=$('ver').value;
+    var r=algo(o,ver),out=$('simout');
+    if(r.error){out.innerHTML='<div class="okbox"><b>Pesan:</b> “Kapasitas harus &gt; 0”. Algoritma berhenti dengan aman. Validasi bekerja!</div>';return;}
+    if(r.crash){out.innerHTML='<div class="warnbox"><b>Bug 4 ketahuan!</b> Tanpa pemeriksaan “kapasitas &gt; 0”, algoritma membagi dengan nol dan tidak bisa menghasilkan jawaban.</div>';return;}
+    var good=algo(o,'ok'),notes=[];
+    if(r.tertinggal>0) notes.push('<b>'+r.tertinggal+' orang tertinggal</b> karena kursi kurang (lupa memeriksa sisa).');
+    if(r.sisaDana<0) notes.push('Dana terkumpul <b>kurang '+rp(-r.sisaDana)+'</b> dari total biaya.');
+    if(r.iuran!==good.iuran||r.bus!==good.bus) { if(!notes.length) notes.push('Hasil berbeda dari algoritma yang benar.'); }
+    var h='<div class="res"><p>peserta = '+r.peserta+' · bus = <b>'+r.bus+'</b> · sisa = '+r.sisa+' · kosong = '+r.kosong+'</p><p>total = '+rp(r.total)+' · iuran kasar = '+rp(r.kasar)+'</p><p>iuran per siswa = <span class="big">'+rp(r.iuran)+'</span></p><p>terkumpul = '+rp(r.terkumpul)+' · sisa dana = '+rp(r.sisaDana)+'</p></div>';
+    if(notes.length) h+='<div class="warnbox"><b>Bug ketahuan!</b> '+notes.join(' ')+'<br>Hasil benar: bus '+good.bus+', iuran '+rp(good.iuran)+'.</div>'; else h+='<div class="okbox"><b>'+(ver==='ok'?'Hasil benar.':'Bug ini TIDAK ketahuan pada kasus ini!')+'</b> '+(ver==='ok'?'Bus '+r.bus+', iuran '+rp(r.iuran)+'.':'Coba kasus uji lain untuk menemukannya.')+'</div>';
+    out.innerHTML=h;
+  });
+  // efisiensi
+  function ef(){var p=parseInt($('ep').value,10),k=parseInt($('ek').value,10),r=$('eres');if(!(p>0&&k>0)){r.innerHTML='Isi angka &gt; 0.';return;}var putar=0,kursi=0;while(kursi<p){kursi+=k;putar++;}var b=Math.floor(p/k)+(p%k>0?1:0);r.innerHTML='<p>Cara 1 · perulangan: <span class="big">'+putar+'</span> putaran</p><p>Cara 2 · DIV, MOD, JIKA: <span class="big">3</span> langkah</p><p>Hasil sama: '+putar+' = '+b+' bus '+(putar===b?'✓':'✗')+'</p>';}
+  $('ep').addEventListener('input',ef);$('ek').addEventListener('input',ef);ef();
+  // optimasi
+  $('ojalan').addEventListener('click',function(){
+    var P=parseInt($('op').value,10)||102,res=[];
+    for(var a=0;a<=4;a++)for(var b=0;b<=4;b++)for(var c=0;c<=4;c++){var k=a*30+b*45+c*15;if(k>=P)res.push({a:a,b:b,c:c,k:k,h:a*1800000+b*2200000+c*1000000});}
+    res.sort(function(x,y){return x.h-y.h||x.k-y.k;});
+    var tb=$('otable').querySelector('tbody');tb.innerHTML='';
+    if(!res.length){tb.innerHTML='<tr><td colspan="4">Tidak ada kombinasi yang cukup (maksimal 4 unit tiap jenis).</td></tr>';return;}
+    res.slice(0,5).forEach(function(r,i){var nm=[r.a?r.a+' A':'',r.b?r.b+' B':'',r.c?r.c+' C':''].filter(Boolean).join(' + ');var tr=document.createElement('tr');if(i===0)tr.className='last';tr.innerHTML='<td>'+nm+'</td><td>'+r.k+'</td><td>'+rp(r.h)+'</td><td>'+(r.k-P)+'</td>';tb.appendChild(tr);});
+  });
+  // kuis
+  var Q=[
+    ['Berapa 47 DIV 10 dan 47 MOD 10?',['4 dan 7','7 dan 4','4,7 dan 0','5 dan 3'],0,'47 = 4 × 10 + 7, jadi DIV = 4 dan MOD = 7.'],
+    ['a ← 5; b ← a × 2; a ← b − 3. Nilai akhir a dan b?',['a = 2, b = 10','a = 7, b = 10','a = 7, b = 7','a = 10, b = 7'],1,'b = 10, lalu a diisi ulang menjadi 10 − 3 = 7.'],
+    ['x ← 3. SELAMA x &lt; 50: x ← x + 12. Nilai akhir x?',['39','50','51','63'],2,'3 → 15 → 27 → 39 → 51. Saat x = 39 syarat masih benar, lalu menjadi 51 dan berhenti.'],
+    ['Peserta 60, kapasitas 30 adalah kasus uji untuk kondisi ...',['sisa = 0','kapasitas = 0','peserta paling sedikit','iuran paling mahal'],0,'60 MOD 30 = 0, algoritma tidak boleh menambah bus.'],
+    ['Total Rp4.980.000 dibagi 54 siswa dan dibulatkan ke atas ke kelipatan Rp5.000. Iuran?',['Rp90.000','Rp92.222','Rp95.000','Rp100.000'],2,'4.980.000 ÷ 54 = 92.222,2 → dibulatkan ke atas menjadi Rp95.000.']
+  ];
+  var qz=$('quiz'),done=0,right_=0;
+  Q.forEach(function(q,i){var d=document.createElement('div');d.className='q';d.innerHTML='<p class="qt">'+(i+1)+'. '+q[0]+'</p><div class="opts"></div><div class="fb"></div>';var box=d.querySelector('.opts'),fb=d.querySelector('.fb');q[1].forEach(function(o,k){var b=document.createElement('button');b.className='opt';b.type='button';b.textContent='ABCD'[k]+'. '+o;b.addEventListener('click',function(){[].forEach.call(box.children,function(x){x.disabled=true;});var g=(k===q[2]);b.classList.add(g?'ok':'no');if(!g)box.children[q[2]].classList.add('ok');fb.innerHTML=(g?'<b>Benar!</b> ':'<b>Belum tepat.</b> ')+q[3];fb.classList.add('show');done++;if(g)right_++;if(done===Q.length)$('quizScore').textContent='Skormu: '+right_+' dari '+Q.length+(right_===Q.length?' — Luar biasa, kamu siap merancang algoritma!':' — baca lagi bagian yang kurang, lalu coba lagi.');});box.appendChild(b);});qz.appendChild(d);});
+})();
+</script>
+</body>
+</html>

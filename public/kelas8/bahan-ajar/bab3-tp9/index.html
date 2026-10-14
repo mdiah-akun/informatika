@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Literasi Numerasi · Materi Siswa Kelas VIII</title>
+<meta name="description" content="Materi siswa Bab III Algoritma Pemrograman TP 9: Merancang penyelesaian masalah yang melibatkan literasi numerasi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#123C3A; --teal:#1F7A6D; --leaf:#3FA37C; --mint:#E3F3EC; --mint2:#CBE8DC;
+    --amber:#F2A33A; --amberl:#FDEBC8; --coral:#E8604C; --corall:#FBE0DB; --slate:#5B6B6A;
+    --white:#fff; --bg:#F6FBF8; --shadow:0 6px 24px rgba(18,60,58,.10);
+    --radius:20px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:76px}
+  body{margin:0;font-family:'Poppins','Segoe UI',system-ui,-apple-system,Roboto,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65;font-size:16px}
+  img{max-width:100%;height:auto;display:block}
+  a{color:var(--teal)}
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--mint2)}
+  nav .wrap{display:flex;align-items:center;gap:14px;height:60px}
+  .brand{font-weight:700;color:var(--teal);white-space:nowrap;font-size:15px}
+  .links{min-width:0;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1}
+  .links::-webkit-scrollbar{display:none}
+  .links a{padding:6px 12px;border-radius:999px;text-decoration:none;font-size:13px;font-weight:500;color:var(--slate);white-space:nowrap}
+  .links a:hover,.links a.on{background:var(--mint);color:var(--teal)}
+  #bar{position:absolute;left:0;bottom:-1px;height:3px;background:var(--amber);width:0;transition:width .1s}
+
+  /* HERO */
+  .hero{background:var(--mint);padding:28px 0 38px}
+  .hero .wrap{display:grid;gap:22px}
+  .hero img{border-radius:var(--radius);box-shadow:var(--shadow);width:100%}
+  .hero h1{font-size:clamp(28px,5vw,44px);line-height:1.2;margin:0}
+  .hero p{margin:0;color:var(--slate);max-width:62ch}
+  .btn{display:inline-block;background:var(--amber);color:var(--ink);font-weight:700;padding:12px 24px;border-radius:999px;text-decoration:none;border:0;cursor:pointer;font:inherit;font-weight:700}
+  .btn:hover{filter:brightness(.96)}
+  .btn.sec{background:var(--white);border:2px solid var(--teal);color:var(--teal)}
+  .tag{display:inline-block;background:var(--white);color:var(--teal);font-weight:600;font-size:13px;padding:4px 12px;border-radius:999px;margin:0 6px 6px 0;border:1px solid var(--mint2)}
+
+  /* SECTIONS */
+  section{padding:46px 0 6px}
+  .num{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--teal);color:#fff;font-weight:700;margin-right:10px;font-size:17px}
+  h2{font-size:clamp(22px,3.4vw,30px);margin:0 0 14px;line-height:1.25;display:flex;align-items:center}
+  h3{margin:22px 0 8px;font-size:19px;color:var(--teal)}
+  .card{background:var(--white);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);margin:16px 0}
+  .fig{margin:16px 0;text-align:center}
+  .fig img{margin:0 auto;border-radius:16px;border:1px solid var(--mint2);background:#fff}
+  .fig figcaption{font-size:13px;color:var(--slate);margin-top:8px}
+  .callout{border-radius:16px;padding:16px 18px;margin:16px 0;border-left:6px solid var(--teal);background:var(--mint)}
+  .callout.amber{background:var(--amberl);border-color:var(--amber)}
+  .callout.coral{background:var(--corall);border-color:var(--coral)}
+  .callout b.t{display:block;margin-bottom:4px}
+  .two{display:grid;gap:16px}
+  @media(min-width:760px){.two{grid-template-columns:1fr 1fr}.hero .wrap{grid-template-columns:1.1fr 1fr;align-items:center}}
+  table{width:100%;border-collapse:collapse;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden}
+  th{background:var(--teal);color:#fff;text-align:left;padding:10px 12px;font-weight:600}
+  td{padding:10px 12px;border-bottom:1px solid var(--mint2);vertical-align:top}
+  tr:nth-child(even) td{background:var(--mint)}
+  .tblwrap{overflow-x:auto;border-radius:12px;border:1px solid var(--mint2)}
+  ul.clean{padding-left:20px;margin:8px 0}
+  ul.clean li{margin:5px 0}
+  .goal{display:grid;gap:10px}
+  .goal div{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--mint2);border-radius:14px;padding:12px 14px}
+  .goal span{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--amber);font-weight:700}
+
+  /* interaktif */
+  .opts{display:grid;gap:10px;margin:12px 0}
+  @media(min-width:640px){.opts.row{grid-template-columns:repeat(3,1fr)}}
+  .opt{background:#fff;border:2px solid var(--mint2);border-radius:14px;padding:12px 16px;cursor:pointer;font:inherit;font-weight:600;text-align:left;color:var(--ink);transition:.15s}
+  .opt:hover{border-color:var(--teal);background:var(--mint)}
+  .opt.ok{background:#d9f3e4;border-color:var(--leaf)}
+  .opt.no{background:var(--corall);border-color:var(--coral)}
+  .opt:disabled{cursor:default}
+  .fb{display:none;margin-top:10px;padding:12px 14px;border-radius:12px;background:var(--mint);font-size:15px}
+  .fb.show{display:block}
+  .sim{display:grid;gap:12px}
+  @media(min-width:640px){.sim{grid-template-columns:1fr 1fr}}
+  label{font-weight:600;font-size:14px;display:block;margin-bottom:4px}
+  input[type=number],select{width:100%;font:inherit;padding:10px 12px;border:2px solid var(--mint2);border-radius:12px;background:#fff;color:var(--ink)}
+  input:focus,select:focus,button:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .res{background:var(--ink);color:#fff;border-radius:16px;padding:16px 18px;font-size:15px}
+  .res .big{font-size:26px;font-weight:700;color:var(--amber)}
+  .res p{margin:4px 0}
+  details{background:#fff;border:1px solid var(--mint2);border-radius:14px;margin:12px 0;overflow:hidden}
+  summary{cursor:pointer;padding:14px 18px;font-weight:700;color:var(--teal);list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"＋";margin-right:10px;color:var(--amber);font-weight:700}
+  details[open] summary::before{content:"－"}
+  details .in{padding:0 18px 16px}
+  ol.steps{padding-left:0;list-style:none;counter-reset:s;margin:10px 0}
+  ol.steps li{counter-increment:s;display:flex;gap:12px;margin:10px 0;align-items:flex-start}
+  ol.steps li>div,.goal div>*:not(span){min-width:0;overflow-wrap:anywhere}
+  ol.steps li::before{content:counter(s);flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--teal);color:#fff;font-weight:700;font-size:14px;margin-top:2px}
+  .match{display:grid;gap:10px}
+  .match div{display:grid;grid-template-columns:1fr 150px;gap:10px;align-items:center;background:#fff;border:2px solid var(--mint2);border-radius:14px;padding:10px 12px}
+  .match div.ok{border-color:var(--leaf);background:#d9f3e4}
+  .match div.no{border-color:var(--coral);background:var(--corall)}
+  @media(max-width:560px){.match div{grid-template-columns:1fr}}
+  .q{margin:18px 0;padding-bottom:6px}
+  .q p.qt{font-weight:600;margin:0 0 6px}
+  .score{font-size:18px;font-weight:700;color:var(--teal);margin-top:12px}
+  .steps5{display:grid;gap:10px;margin-top:12px}
+  @media(min-width:760px){.steps5{grid-template-columns:repeat(5,1fr)}}
+  .steps5 div{background:#fff;border:1px solid var(--mint2);border-radius:14px;padding:12px;text-align:center;font-size:14px}
+  .steps5 b{display:block;font-size:15px;color:var(--teal)}
+  footer{margin-top:56px;background:var(--ink);color:var(--mint2);padding:30px 0;font-size:14px}
+  footer b{color:#fff}
+  .kuda{display:inline-block;background:var(--amber);color:var(--ink);font-weight:700;padding:2px 12px;border-radius:999px;font-size:13px;margin-right:6px}
+  @media print{nav,.btn,.fb{display:none}.card{box-shadow:none;border:1px solid #ccc}}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<nav aria-label="Navigasi bagian">
+  <div class="wrap">
+    <span class="brand">Numerasi VIII</span>
+    <div class="links" id="links">
+      <a href="#mulai">Mulai</a><a href="#apa">Apa itu numerasi?</a><a href="#komponen">6 Komponen</a><a href="#algoritma">Algoritma</a>
+      <a href="#langkah">5 Langkah</a><a href="#bulat">Pembulatan</a><a href="#contoh">Contoh</a><a href="#misi">Misi</a><a href="#latihan">Latihan</a><a href="#rangkum">Rangkuman</a>
+    </div>
+  </div>
+  <div id="bar"></div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <span class="tag">Informatika · Kelas VIII</span><span class="tag">Bab III Algoritma Pemrograman</span><span class="tag">TP 9</span>
+      <h1>Yuk, Jago Literasi Numerasi!</h1>
+      <p>Belajar merancang penyelesaian masalah yang melibatkan angka: dari karyawisata, diskon, sampai grafik. Seru, runtut, dan bisa kamu praktikkan langsung di kehidupan sehari-hari.</p>
+      <p style="margin-top:16px"><a class="btn" href="#mulai">Mulai belajar</a></p>
+    </div>
+    <img src="images/01_banner_numerasi.png" alt="Banner Literasi Numerasi: hitung cerdas, putuskan tepat" width="1600" height="700">
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- MULAI -->
+<section id="mulai">
+  <h2><span class="num">1</span>Mulai dari Masalah</h2>
+  <div class="card">
+    <p>Sekolahmu mau karyawisata. Pesertanya <b>40 orang</b> (siswa dan guru). Satu kendaraan hanya muat <b>12 orang</b>. Berapa kendaraan yang harus disewa?</p>
+    <p><b>Coba tebak dulu!</b> Jawabanmu yang mana?</p>
+    <div class="opts row" id="hook">
+      <button class="opt" data-v="3">3 kendaraan</button>
+      <button class="opt" data-v="3.33">3,33 kendaraan</button>
+      <button class="opt" data-v="4">4 kendaraan</button>
+    </div>
+    <div class="fb" id="hookfb"></div>
+  </div>
+  <figure class="fig">
+    <img src="images/02_bus_40_orang.png" alt="Ilustrasi 40 orang naik kendaraan berkapasitas 12 orang: tiga kendaraan penuh dan satu kendaraan berisi 4 orang" width="700" height="430" loading="lazy">
+    <figcaption>Gambar 1. Tiga kendaraan penuh (36 orang) + satu kendaraan berisi 4 orang.</figcaption>
+  </figure>
+  <div class="goal">
+    <b>Setelah belajar ini, kamu bisa:</b>
+    <div><span>1</span>menjelaskan beda <b>matematika</b> dan <b>literasi numerasi</b></div>
+    <div><span>2</span>menyebutkan <b>6 komponen</b> numerasi dan contohnya</div>
+    <div><span>3</span><b>merancang langkah</b> (algoritma) penyelesaian masalah angka</div>
+    <div><span>4</span>menentukan pembulatan <b>ke atas, ke bawah, atau terdekat</b></div>
+  </div>
+</section>
+
+<!-- APA -->
+<section id="apa">
+  <h2><span class="num">2</span>Apa Sih Literasi Numerasi Itu?</h2>
+  <div class="card">
+    <p><b>Literasi numerasi</b> adalah kecakapan memakai <b>angka dan simbol matematika</b> untuk memecahkan masalah sehari-hari, termasuk <b>membaca informasi</b> dalam bentuk tabel, grafik, dan bagan. Dengan numerasi kamu bisa menyelesaikan masalah secara praktis, <b>memperkirakan</b> sesuatu, dan <b>mengambil keputusan</b>.</p>
+  </div>
+  <figure class="fig">
+    <img src="images/20_numerasi_sehari_hari.png" alt="Empat contoh numerasi sehari-hari: belanja, takaran resep, jadwal, menabung" width="600" height="400" loading="lazy">
+    <figcaption>Gambar 2. Tanpa sadar, kamu sudah memakai numerasi setiap hari!</figcaption>
+  </figure>
+  <h3>Numerasi ≠ Matematika</h3>
+  <figure class="fig">
+    <img src="images/03_matematika_vs_numerasi.png" alt="Perbandingan: matematika membulatkan 3,33 menjadi 3, numerasi menafsirkan menjadi 4 kendaraan" width="760" height="434" loading="lazy">
+    <figcaption>Gambar 3. Hitungannya sama, penafsirannya berbeda.</figcaption>
+  </figure>
+  <div class="tblwrap"><table>
+    <tr><th></th><th>Matematika</th><th>Literasi Numerasi</th></tr>
+    <tr><td><b>Hasil 40 ÷ 12</b></td><td>3,33 → dibulatkan jadi 3</td><td>3,33 → jadi 4 karena 4 orang tidak boleh tertinggal</td></tr>
+    <tr><td><b>Pertanyaan kunci</b></td><td>“Berapa hasilnya?”</td><td>“Apa artinya hasil ini untuk masalahku?”</td></tr>
+  </table></div>
+  <div class="callout amber"><b class="t">Intinya</b>Numerasi = <b>hitung + paham konteks</b>. Hitungan yang benar belum tentu menjawab masalah nyata.</div>
+</section>
+
+<!-- KOMPONEN -->
+<section id="komponen">
+  <h2><span class="num">3</span>Enam Komponen Literasi Numerasi</h2>
+  <figure class="fig">
+    <img src="images/04_enam_komponen_numerasi.png" alt="Bagan enam komponen literasi numerasi" width="760" height="490" loading="lazy">
+    <figcaption>Gambar 4. Enam komponen literasi numerasi.</figcaption>
+  </figure>
+  <div class="tblwrap"><table>
+    <tr><th>Komponen</th><th>Contoh dalam hidupmu</th></tr>
+    <tr><td>1. Pecahan, desimal, persen, perbandingan</td><td>Diskon 25%, ½ gelas gula</td></tr>
+    <tr><td>2. Pengukuran</td><td>Tinggi badan, berat tas, jarak ke sekolah</td></tr>
+    <tr><td>3. Menafsirkan informasi statistik</td><td>Membaca grafik dan tabel nilai</td></tr>
+    <tr><td>4. Estimasi &amp; hitung bilangan bulat</td><td>Memperkirakan total belanja</td></tr>
+    <tr><td>5. Penalaran spasial</td><td>Membaca denah, memilih rute</td></tr>
+    <tr><td>6. Pola dan relasi</td><td>Menabung Rp5.000 tiap minggu</td></tr>
+  </table></div>
+
+  <div class="card">
+    <h3 style="margin-top:0"><span class="kuda">KUDA</span> Kuis Dadakan: Cocokkan!</h3>
+    <p>Pilih komponen yang paling tepat untuk setiap situasi.</p>
+    <div class="match" id="match"></div>
+    <p style="margin-top:14px"><button class="btn" id="matchBtn">Periksa jawaban</button></p>
+    <div class="score" id="matchScore"></div>
+  </div>
+</section>
+
+<!-- ALGORITMA -->
+<section id="algoritma">
+  <h2><span class="num">4</span>Numerasi Ketemu Algoritma</h2>
+  <div class="card">
+    <p>Ingat <b>algoritma</b>? Itu <b>urutan langkah yang jelas</b> untuk menyelesaikan masalah. Merancang penyelesaian masalah numerasi sama seperti menulis algoritma: ada <b>input</b> (diketahui), <b>proses</b> (menghitung), dan <b>output</b> (jawaban yang masuk akal).</p>
+  </div>
+  <figure class="fig">
+    <img src="images/09_input_proses_output.png" alt="Diagram Input, Proses, Output pada kasus kendaraan" width="760" height="391" loading="lazy">
+    <figcaption>Gambar 5. Input – Proses – Output pada kasus kendaraan.</figcaption>
+  </figure>
+  <div class="callout"><b class="t">Kenapa harus ditulis?</b>Rancangan yang jelas bisa <b>diulang</b> orang lain dan <b>diperiksa</b> kalau ada yang salah, seperti resep masakan.</div>
+</section>
+
+<!-- LANGKAH -->
+<section id="langkah">
+  <h2><span class="num">5</span>Lima Langkah Jago Numerasi</h2>
+  <figure class="fig">
+    <img src="images/05_lima_langkah_numerasi.png" alt="Lima langkah: Pahami, Rancang, Hitung, Tafsirkan, Periksa" width="900" height="315" loading="lazy">
+    <figcaption>Gambar 6. Pegang lima langkah ini setiap kali menemui soal cerita.</figcaption>
+  </figure>
+  <div class="steps5">
+    <div><b>1 · Pahami</b>Apa yang diketahui &amp; ditanya?</div>
+    <div><b>2 · Rancang</b>Langkah &amp; urutannya?</div>
+    <div><b>3 · Hitung</b>Kerjakan satu per satu</div>
+    <div><b>4 · Tafsirkan</b>Artinya apa? Perlu dibulatkan?</div>
+    <div><b>5 · Periksa</b>Masuk akal? Hitung balik</div>
+  </div>
+  <div class="callout amber"><b class="t">Tips</b>Tulis dulu rancanganmu, baru tekan kalkulator. Kebanyakan salah hitung terjadi karena langsung menghitung tanpa merencanakan.</div>
+</section>
+
+<!-- BULAT -->
+<section id="bulat">
+  <h2><span class="num">6</span>Trik Pembulatan: Pakai Akal Sehat!</h2>
+  <figure class="fig">
+    <img src="images/06_pembulatan_konteks.png" alt="Tiga situasi pembulatan: ke atas, ke bawah, terdekat" width="760" height="434" loading="lazy">
+    <figcaption>Gambar 7. Tiga situasi pembulatan.</figcaption>
+  </figure>
+  <ul class="clean">
+    <li><b>Ke ATAS</b> kalau kekurangan itu masalah (kendaraan, kursi, iuran).</li>
+    <li><b>Ke BAWAH</b> kalau kelebihan berarti tidak cukup (jumlah barang yang bisa dibeli).</li>
+    <li><b>TERDEKAT</b> kalau cukup perkiraan (tinggi badan, persen survei).</li>
+  </ul>
+  <div class="callout amber"><b class="t">Pertanyaan ajaib</b>“Kalau aku bulatkan begini, masalahnya <b>beres</b> atau malah <b>bikin masalah baru</b>?”</div>
+
+  <div class="card">
+    <h3 style="margin-top:0">Simulator Pembulatan</h3>
+    <p>Ubah angkanya dan lihat apa yang terjadi kalau kamu salah membulatkan!</p>
+    <div class="sim">
+      <div><label for="peserta">Jumlah orang</label><input type="number" id="peserta" value="40" min="1" max="999"></div>
+      <div><label for="kap">Muat berapa orang per kendaraan?</label><input type="number" id="kap" value="12" min="1" max="999"></div>
+    </div>
+    <div class="res" id="simres" style="margin-top:14px" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- CONTOH -->
+<section id="contoh">
+  <h2><span class="num">7</span>Yuk, Lihat Contohnya!</h2>
+
+  <details open>
+    <summary>Contoh 1 · Penjualan Toko A</summary>
+    <div class="in">
+      <p>Penjualan Toko A tahun 2022 ada <b>200 barang</b>. Setiap tahun naik <b>4%</b> dari penjualan awal. Pada tahun berapa penjualannya mencapai <b>270 barang</b>?</p>
+      <ol class="steps">
+        <li><div><b>Pahami:</b> awal 200 barang; naik 4% dari awal tiap tahun; target 270; mulai 2022.</div></li>
+        <li><div><b>Rancang:</b> cari kenaikan per tahun → cari selisih → bagi → ubah jadi tahun bulat.</div></li>
+        <li><div><b>Hitung:</b> kenaikan = 4% × 200 = <b>8</b>; selisih = 270 − 200 = <b>70</b>; 70 ÷ 8 = <b>8,75 tahun</b>; 2022 + 8,75 = 2030,75.</div></li>
+        <li><div><b>Tafsirkan:</b> tahun harus bulat dan target baru tercapai di akhir tahun ke-9, jadi dibulatkan ke atas: <b>2031</b>.</div></li>
+        <li><div><b>Periksa:</b> 2030 → 200 + 8×8 = 264 (belum); 2031 → 200 + 8×9 = 272 (sudah ≥ 270 ✓).</div></li>
+      </ol>
+      <figure class="fig"><img src="images/16_grafik_penjualan_toko_a.png" alt="Grafik penjualan Toko A per tahun, target 270 tercapai pada 2031" width="700" height="380" loading="lazy"><figcaption>Gambar 8. Penjualan Toko A naik 8 barang tiap tahun.</figcaption></figure>
+    </div>
+  </details>
+
+  <details>
+    <summary>Contoh 2 · Tangki Air Sekolah</summary>
+    <div class="in">
+      <p>Tangki air sekolah berisi <b>60 liter</b>. Sebanyak <b>¾ bagian</b> sudah dipakai. Berapa liter yang tersisa?</p>
+      <figure class="fig"><img src="images/14_tangki_contoh_60L.png" alt="Tangki 60 liter dibagi empat bagian, tiga bagian terpakai" width="600" height="350" loading="lazy"><figcaption>Gambar 9. Tangki dibagi 4 bagian sama besar.</figcaption></figure>
+      <ol class="steps">
+        <li><div><b>Pahami:</b> total 60 L, terpakai ¾, ditanya sisa.</div></li>
+        <li><div><b>Rancang:</b> hitung yang terpakai (60 × ¾), lalu kurangkan dari total.</div></li>
+        <li><div><b>Hitung:</b> 60 × ¾ = <b>45 L</b>; sisa = 60 − 45 = <b>15 L</b>.</div></li>
+        <li><div><b>Tafsirkan:</b> air yang tersisa 15 liter.</div></li>
+        <li><div><b>Periksa:</b> sisa ¼ bagian → ¼ × 60 = 15 L ✓.</div></li>
+      </ol>
+    </div>
+  </details>
+
+  <details>
+    <summary>Contoh 3 · Membaca Grafik Ekskul</summary>
+    <div class="in">
+      <p>Sebanyak 40 siswa memilih ekstrakurikuler (data ilustrasi).</p>
+      <figure class="fig"><img src="images/19_grafik_ekskul_contoh.png" alt="Grafik batang pilihan ekstrakurikuler 40 siswa" width="600" height="320" loading="lazy"><figcaption>Gambar 10. Pilihan ekstrakurikuler 40 siswa.</figcaption></figure>
+      <div class="tblwrap"><table>
+        <tr><th>Pertanyaan</th><th>Pengerjaan</th></tr>
+        <tr><td>Berapa persen yang memilih Pramuka?</td><td>14 ÷ 40 × 100% = <b>35%</b></td></tr>
+        <tr><td>Pramuka lebih banyak berapa siswa dari Robotik?</td><td>14 − 8 = <b>6 siswa</b></td></tr>
+        <tr><td>Berapa persen yang memilih PMR?</td><td>3 ÷ 40 × 100% = 7,5% → terdekat <b>8%</b></td></tr>
+      </table></div>
+      <div class="callout coral"><b class="t">Awas jebakan!</b>Pastikan <b>totalnya benar</b> saat menghitung persen (di sini 40 siswa).</div>
+    </div>
+  </details>
+</section>
+
+<!-- MISI -->
+<section id="misi">
+  <h2><span class="num">8</span>Sneak Peek: Misi Karyawisata ke KKMB Tarakan</h2>
+  <p>Di kelas nanti kamu dan timmu menjadi <b>Panitia Numerasi</b>: merencanakan karyawisata ke Kawasan Konservasi Mangrove dan Bekantan (KKMB) Tarakan untuk <b>96 siswa dan 6 guru</b>.</p>
+  <figure class="fig">
+    <img src="images/07_misi_karyawisata.png" alt="Poster Misi Numerasi: karyawisata ke KKMB Tarakan dengan dua bus" width="760" height="428" loading="lazy">
+    <figcaption>Gambar 11. Misi Numerasi (data harga hanya ilustrasi untuk latihan).</figcaption>
+  </figure>
+  <div class="two">
+    <div class="card" style="margin:0">
+      <h3 style="margin-top:0">Data misi</h3>
+      <ul class="clean">
+        <li>96 siswa + 6 guru = <b>102 orang</b></li>
+        <li>Bus <b>30 kursi</b>, sewa <b>Rp1.800.000</b>/bus</li>
+        <li>Tiket <b>Rp5.000</b>/orang</li>
+        <li>Konsumsi <b>Rp15.000 + Rp3.000</b>/orang</li>
+        <li>Iuran dibagi 96 siswa, dibulatkan <b>ke atas</b> kelipatan Rp5.000</li>
+      </ul>
+    </div>
+    <div class="card" style="margin:0">
+      <h3 style="margin-top:0">Kamu akan menghitung</h3>
+      <ul class="clean">
+        <li>Jumlah bus &amp; kursi kosong <small>(bilangan bulat, spasial)</small></li>
+        <li>Total biaya &amp; iuran <small>(estimasi, pembulatan)</small></li>
+        <li>Persen pilihan menu <small>(persen, statistik)</small></li>
+        <li>Pilihan bus paling hemat <small>(perbandingan)</small></li>
+      </ul>
+    </div>
+  </div>
+  <figure class="fig">
+    <img src="images/17_denah_kursi_bus.png" alt="Denah kursi satu bus: 6 baris, 5 kursi per baris, 30 kursi" width="700" height="360" loading="lazy">
+    <figcaption>Gambar 12. Denah satu bus: 6 baris × 5 kursi = 30 kursi (petunjuk untuk Misi 1).</figcaption>
+  </figure>
+  <div class="callout amber"><b class="t">Aturan main</b>Kerjakan <b>LKPD</b> bersama kelompokmu. <b>Tulis rancangan Input–Proses–Output dulu</b>, baru menghitung!</div>
+</section>
+
+<!-- LATIHAN -->
+<section id="latihan">
+  <h2><span class="num">9</span>Cek Pemahamanmu</h2>
+  <p>Pilih jawaban lalu lihat penjelasannya. Coba kerjakan dulu di kertas dengan 5 langkah jago numerasi!</p>
+  <div class="card" id="quiz"></div>
+  <div class="score" id="quizScore" aria-live="polite"></div>
+</section>
+
+<!-- RANGKUM -->
+<section id="rangkum">
+  <h2><span class="num">10</span>Rangkuman Singkat</h2>
+  <div class="callout">
+    <b class="t">Yang harus kamu ingat</b>
+    <ul class="clean">
+      <li><b>Numerasi ≠ matematika.</b> Numerasi memakai hitungan untuk menjawab masalah nyata dan menafsirkan hasilnya.</li>
+      <li>Ada <b>6 komponen</b> numerasi: pecahan/persen/perbandingan, pengukuran, statistik, estimasi bilangan bulat, penalaran spasial, pola dan relasi.</li>
+      <li>Rancang penyelesaian seperti <b>algoritma</b>: Input → Proses → Output.</li>
+      <li><b>5 Langkah Jago Numerasi:</b> Pahami – Rancang – Hitung – Tafsirkan – Periksa.</li>
+      <li><b>Pembulatan</b> sesuai konteks: atas (kurang = masalah), bawah (lebih = tidak cukup), terdekat (cukup perkiraan).</li>
+    </ul>
+  </div>
+  <h3>Kamus Mini</h3>
+  <div class="tblwrap"><table>
+    <tr><th>Istilah</th><th>Artinya</th></tr>
+    <tr><td><b>Literasi numerasi</b></td><td>Kecakapan memakai angka dan simbol matematika untuk memecahkan masalah sehari-hari</td></tr>
+    <tr><td><b>Algoritma</b></td><td>Urutan langkah yang jelas untuk menyelesaikan masalah</td></tr>
+    <tr><td><b>Input / Proses / Output</b></td><td>Data yang diketahui / langkah menghitung / hasil yang sudah ditafsirkan</td></tr>
+    <tr><td><b>Frekuensi</b></td><td>Banyaknya data yang muncul (mis. jumlah siswa pada tiap pilihan)</td></tr>
+    <tr><td><b>Pembulatan</b></td><td>Menyederhanakan angka ke bilangan bulat tertentu (atas, bawah, terdekat)</td></tr>
+  </table></div>
+  <div class="card" style="margin-top:24px">
+    <h3 style="margin-top:0">Tugas mandiri</h3>
+    <p>Temukan <b>satu masalah numerasi</b> di rumah (belanja, resep, tabungan) dan tulis <b>Input–Proses–Output</b>-nya di buku tugas. Pertemuan berikutnya (TP 10): menuliskan instruksi dalam format <b>pseudocode</b>.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b>Materi Siswa · Informatika Kelas VIII · Bab III Algoritma Pemrograman · TP 9</b></p>
+    <p>SMP Negeri 14 Tarakan · Disusun oleh Muh. Diah · Rujukan: Buku Siswa Informatika SMP/MTs Kelas VIII (Edisi Revisi), Kemendikbudristek 2024. Data harga pada Misi Karyawisata hanya ilustrasi.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // ---- progress bar & nav highlight ----
+  var bar=document.getElementById('bar');
+  var links=[].slice.call(document.querySelectorAll('#links a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  function onScroll(){
+    var h=document.documentElement;
+    bar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+    var cur=0;
+    secs.forEach(function(s,i){ if(s && s.getBoundingClientRect().top<120) cur=i; });
+    links.forEach(function(a,i){ a.classList.toggle('on',i===cur); });
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  // ---- hook ----
+  var fbTxt={
+    '3':'Hampir! 40 ÷ 12 = 3,33. Kalau cuma 3 kendaraan, hanya 3 × 12 = 36 orang yang bisa naik, jadi <b>4 orang tertinggal</b> di sekolah. Coba lagi ya!',
+    '3.33':'Hitungannya benar, tapi kendaraan tidak bisa “3,33 buah”. Jumlah kendaraan harus bilangan bulat, dan tidak boleh ada orang yang tertinggal. Coba lagi!',
+    '4':'<b>Tepat sekali!</b> 3 kendaraan penuh (36 orang) + 1 kendaraan untuk 4 orang sisanya = <b>4 kendaraan</b>. Inilah yang disebut berpikir numerasi: hitung + paham konteks.'
+  };
+  var hook=document.getElementById('hook'), hfb=document.getElementById('hookfb');
+  [].forEach.call(hook.querySelectorAll('.opt'),function(b){
+    b.addEventListener('click',function(){
+      [].forEach.call(hook.querySelectorAll('.opt'),function(x){x.classList.remove('ok','no');});
+      b.classList.add(b.dataset.v==='4'?'ok':'no');
+      hfb.innerHTML=fbTxt[b.dataset.v]; hfb.classList.add('show');
+    });
+  });
+
+  // ---- matching ----
+  var comp=['Pengukuran','Pola dan relasi','Estimasi & hitung bilangan bulat','Penalaran spasial','Menafsirkan data & statistik','Pecahan, desimal, persen & perbandingan'];
+  var items=[
+    ['Membaca grafik jumlah siswa tiap ekskul',4],
+    ['Menghitung ¾ bagian dari 60 liter air',5],
+    ['Mengukur panjang meja dan tinggi badan',0],
+    ['Menggambar denah posisi kursi di dalam bus',3],
+    ['Menentukan angka berikutnya: 200, 208, 216, …',1],
+    ['Memperkirakan total uang belanja di kantin',2]
+  ];
+  var m=document.getElementById('match');
+  items.forEach(function(it,i){
+    var d=document.createElement('div');
+    var opts='<option value="">Pilih…</option>'+comp.map(function(c,k){return '<option value="'+k+'">'+'ABCDEF'[k]+'. '+c+'</option>';}).join('');
+    d.innerHTML='<span><b>'+(i+1)+'.</b> '+it[0]+'</span><select aria-label="Pasangan untuk situasi '+(i+1)+'">'+opts+'</select>';
+    m.appendChild(d);
+  });
+  document.getElementById('matchBtn').addEventListener('click',function(){
+    var ok=0, rows=m.children;
+    items.forEach(function(it,i){
+      var v=rows[i].querySelector('select').value;
+      var good=(v!=='' && parseInt(v,10)===it[1]);
+      rows[i].classList.remove('ok','no'); rows[i].classList.add(good?'ok':'no');
+      if(good) ok++;
+    });
+    document.getElementById('matchScore').textContent='Skormu: '+ok+' dari '+items.length+(ok===items.length?' — Hebat!':' — coba perbaiki yang berwarna merah.');
+  });
+
+  // ---- simulator pembulatan ----
+  var p=document.getElementById('peserta'), k=document.getElementById('kap'), res=document.getElementById('simres');
+  function sim(){
+    var n=parseInt(p.value,10), c=parseInt(k.value,10);
+    if(!(n>0&&c>0)){res.innerHTML='Isi kedua angka dengan bilangan lebih dari 0.';return;}
+    var raw=n/c, lo=Math.floor(raw), hi=Math.ceil(raw);
+    var fmt=function(x){return (Math.round(x*100)/100).toString().replace('.',',');};
+    var lost=n-lo*c, empty=hi*c-n;
+    var h='<p>'+n+' ÷ '+c+' = <b>'+fmt(raw)+'</b></p>';
+    if(lo===hi){
+      h+='<p class="big">'+hi+' kendaraan</p><p>Pas! Semua orang terangkut dan tidak ada kursi kosong.</p>';
+    }else{
+      h+='<p>Dibulatkan <b>ke bawah</b> → '+lo+' kendaraan → hanya '+(lo*c)+' orang terangkut, <b style="color:#F2A33A">'+lost+' orang tertinggal!</b></p>';
+      h+='<p>Dibulatkan <b>ke atas</b> → <span class="big">'+hi+' kendaraan</span> → semua terangkut, '+empty+' kursi kosong.</p>';
+      h+='<p>Untuk kebutuhan kendaraan, pilih <b>ke atas</b>.</p>';
+    }
+    res.innerHTML=h;
+  }
+  p.addEventListener('input',sim); k.addEventListener('input',sim); sim();
+
+  // ---- kuis ----
+  var Q=[
+    ['Rombongan 55 orang naik minibus. Satu minibus muat 9 orang. Berapa minibus yang dibutuhkan?',['6 minibus','7 minibus','6,11 minibus','8 minibus'],1,'55 ÷ 9 = 6,11. Dengan 6 minibus hanya 54 orang terangkut (1 orang tertinggal), jadi dibulatkan <b>ke atas</b> menjadi 7.'],
+    ['Uang Rafi Rp30.000. Harga satu permen Rp3.500. Paling banyak berapa permen yang bisa dibeli?',['8 permen','9 permen','8,57 permen','7 permen'],0,'30.000 ÷ 3.500 = 8,57. Dibulatkan <b>ke bawah</b> menjadi 8, sebab 9 permen = Rp31.500 (uang tidak cukup).'],
+    ['Panjang tali 25 m. Sebanyak ⅗ bagian dipakai untuk pramuka. Berapa meter tali yang tersisa?',['15 meter','5 meter','10 meter','12 meter'],2,'Terpakai = 25 × ⅗ = 15 m. Sisa = 25 − 15 = <b>10 meter</b>.'],
+    ['Dari grafik ekskul (Contoh 3), berapa persen siswa yang memilih Futsal (10 dari 40 siswa)?',['10%','40%','4%','25%'],3,'10 ÷ 40 × 100% = <b>25%</b>.'],
+    ['Tabungan Sinta Rp15.000. Setiap minggu bertambah Rp5.000. Berapa minggu lagi tabungannya mencapai Rp50.000?',['6 minggu','8 minggu','10 minggu','7 minggu'],3,'(50.000 − 15.000) ÷ 5.000 = 35.000 ÷ 5.000 = <b>7 minggu</b>.']
+  ];
+  var qz=document.getElementById('quiz'), done=0, right=0;
+  Q.forEach(function(q,i){
+    var d=document.createElement('div'); d.className='q';
+    d.innerHTML='<p class="qt">'+(i+1)+'. '+q[0]+'</p><div class="opts"></div><div class="fb"></div>';
+    var box=d.querySelector('.opts'), fb=d.querySelector('.fb');
+    q[1].forEach(function(o,k){
+      var b=document.createElement('button'); b.className='opt'; b.type='button'; b.textContent='ABCD'[k]+'. '+o;
+      b.addEventListener('click',function(){
+        [].forEach.call(box.children,function(x){x.disabled=true;});
+        var good=(k===q[2]); b.classList.add(good?'ok':'no');
+        if(!good) box.children[q[2]].classList.add('ok');
+        fb.innerHTML=(good?'<b>Benar!</b> ':'<b>Belum tepat.</b> ')+q[3]; fb.classList.add('show');
+        done++; if(good) right++;
+        if(done===Q.length) document.getElementById('quizScore').textContent='Skormu: '+right+' dari '+Q.length+(right===Q.length?' — Luar biasa, kamu siap untuk Misi Karyawisata!':' — baca lagi bagian yang kurang, lalu coba lagi.');
+      });
+      box.appendChild(b);
+    });
+    qz.appendChild(d);
+  });
+})();
+</script>
+</body>
+</html>

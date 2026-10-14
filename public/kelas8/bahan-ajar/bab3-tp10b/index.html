@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Naik Level Pseudocode - Materi Siswa Informatika VIII (Pertemuan 2)</title>
+<meta name="description" content="Materi siswa Bab III TP 10 pertemuan 2: pseudocode level 2 dengan Inquiry Learning. SMP Negeri 14 Tarakan.">
+<style>
+:root{--navy:#0B3C5D;--teal:#168AAD;--coral:#FF6B4A;--sun:#FFC145;--mint:#52B788;--ink:#12263A;--bg:#F4F9FB;--card:#fff;--grey:#5B6F82;--line:#D7E6EE;--code:#10243A}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 "Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif}
+header.top{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;display:flex;align-items:center;gap:14px;padding:10px 20px;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+header.top{flex-wrap:wrap}header.top b{font-size:17px}header.top button{margin-left:auto;background:#1C5B80;color:#fff;border:0;border-radius:8px;padding:8px 12px;font:inherit;font-size:14px;cursor:pointer}
+.layout{max-width:1180px;margin:0 auto;padding:20px;display:grid;grid-template-columns:260px 1fr;gap:28px}
+nav#toc{position:sticky;top:76px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:14.5px}
+nav#toc ol{list-style:none;margin:0;padding:0}nav#toc li{margin:2px 0}nav#toc a{display:block;padding:5px 8px;border-radius:8px;color:var(--ink);text-decoration:none}nav#toc a:hover,nav#toc a.on{background:#E3F1F7;color:var(--navy);font-weight:600}
+main{min-width:0}
+.hero{background:linear-gradient(135deg,var(--navy),var(--teal));color:#fff;border-radius:20px;padding:28px 30px;margin-bottom:22px}
+.hero small{letter-spacing:.12em;color:var(--sun);font-weight:700}.hero h1{margin:6px 0 8px;font-size:clamp(28px,5vw,44px);line-height:1.15}.hero p{margin:0;opacity:.92}
+.hero img{width:100%;border-radius:14px;margin-top:18px;display:block}
+h2.sec{font-size:26px;color:var(--navy);margin:44px 0 12px;padding-bottom:8px;border-bottom:3px solid var(--coral)}
+h3{font-size:20px;color:var(--teal);margin:26px 0 8px}h4{font-size:17px;color:var(--navy);margin:20px 0 6px}
+p{margin:0 0 12px}ul,ol{margin:0 0 14px;padding-left:24px}li{margin:3px 0}
+code{font:0.88em Consolas,"Courier New",monospace;background:#EAF1F5;color:#B0361A;padding:1px 6px;border-radius:5px}
+figure{margin:18px 0;text-align:center}figure img{max-width:100%;height:auto;border-radius:14px;box-shadow:0 6px 22px rgba(11,60,93,.15);cursor:zoom-in;background:#fff}
+figcaption{font-size:14px;color:var(--grey);margin-top:8px}
+.note{border-radius:14px;padding:12px 16px;margin:16px 0;border:2px solid}.note p{margin:4px 0}.note .nt{font-weight:700;margin-bottom:2px}
+.note.tip{background:#E3F4EC;border-color:#3FA66B}.note.warn{background:#FFE9E3;border-color:var(--coral)}.note.try,.note.kuda{background:#FFF3D6;border-color:#E0A100}.note.info{background:#E1F1F7;border-color:var(--teal)}
+.tw{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;background:#fff;border-radius:12px;overflow:hidden;font-size:15.5px}
+th{background:var(--navy);color:#fff;text-align:left;padding:9px 12px}td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}tbody tr:nth-child(even){background:#F0F7FA}
+.pg{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 6px 22px rgba(11,60,93,.08)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}.chip{border:2px solid var(--teal);background:#fff;color:var(--teal);border-radius:999px;padding:6px 14px;font:inherit;font-size:14.5px;font-weight:600;cursor:pointer}.chip.on,.chip:hover{background:var(--teal);color:#fff}
+.pgrid{display:grid;grid-template-columns:1.2fr 1fr;gap:14px}label{display:block;font-weight:700;font-size:14px;color:var(--navy);margin:0 0 4px}
+textarea{width:100%;font:15px/1.5 Consolas,"Courier New",monospace;background:var(--code);color:#E6EEF5;border:0;border-radius:12px;padding:12px;resize:vertical;tab-size:2}
+textarea#inp{background:#fff;color:var(--ink);border:2px solid var(--line);margin-bottom:10px}
+pre.screen{margin:0;min-height:150px;background:#0A0F14;color:#B8F5C9;border-radius:12px;padding:12px;font:15px/1.4 Consolas,"Courier New",monospace;white-space:pre-wrap;overflow:auto;max-height:260px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}.btn{background:var(--coral);color:#fff;border:0;border-radius:10px;padding:10px 18px;font:inherit;font-weight:700;cursor:pointer}.btn:hover{filter:brightness(1.06)}.btn.ghost{background:#E3F1F7;color:var(--navy)}
+.msg{font-weight:600}.msg.err{color:#B0361A}.msg.ok{color:#1F6B45}
+form#quiz fieldset{min-width:0;border:2px solid var(--line);background:#fff;border-radius:14px;margin:0 0 14px;padding:12px 16px}legend{font-weight:700;padding:0 6px;color:var(--navy)}
+pre.qcode{max-width:100%;background:var(--code);color:#E6EEF5;padding:10px 14px;border-radius:10px;font:14.5px/1.5 Consolas,monospace;overflow:auto}
+.opt{display:flex;gap:8px;align-items:flex-start;padding:6px 8px;border-radius:8px;cursor:pointer;font-weight:400;font-size:16px;color:var(--ink)}.opt:hover{background:#EEF6FA}
+fieldset.good{border-color:var(--mint)}fieldset.bad{border-color:var(--coral)}.exp{margin-top:6px;padding:8px 12px;border-radius:10px;background:#FFF3D6;font-size:15px}
+a{overflow-wrap:anywhere}footer{max-width:1180px;margin:30px auto;padding:20px;text-align:center;color:var(--grey);font-size:14px}
+#lb{position:fixed;inset:0;background:rgba(10,20,30,.88);display:none;align-items:center;justify-content:center;z-index:50;padding:16px;cursor:zoom-out}#lb img{max-width:100%;max-height:100%;border-radius:10px}#lb.on{display:flex}
+@media(max-width:900px){header.top span{display:none}body{font-size:16px}.layout{grid-template-columns:1fr;padding:14px}nav#toc{position:static;max-height:none;display:none}nav#toc.open{display:block}.pgrid{grid-template-columns:1fr}}
+@media(min-width:901px){header.top button{display:none}}
+@media print{header.top,nav#toc,.pg .btn,#lb{display:none}.layout{display:block}}
+</style></head><body>
+<header class="top"><b>🕵️ Naik Level · Informatika VIII</b><span style="opacity:.8;font-size:14px">Bab III · TP 10 · Pertemuan 2 · SMPN 14 Tarakan</span><button id="tocbtn" aria-controls="toc">☰ Daftar isi</button></header>
+<div class="layout">
+<nav id="toc" aria-label="Daftar isi"><ol><li><a href="#1-pemanasan-bekal-dari-pertemuan-1">1. Pemanasan: Bekal dari Pertemuan 1</a></li><li><a href="#2-misi-1-program-misterius">2. Misi 1: Program Misterius</a></li><li><a href="#3-level-2a-tangga-keputusan">3. Level 2A: Tangga Keputusan</a></li><li><a href="#4-level-2b-syarat-gabungan">4. Level 2B: Syarat Gabungan</a></li><li><a href="#5-level-2c-menghitung-seperti-kasir-akumulator">5. Level 2C: Menghitung seperti Kasir (Akumulator)</a></li><li><a href="#6-level-2d-mencacah-dan-mencari-yang-terbesar">6. Level 2D: Mencacah dan Mencari yang Terbesar</a></li><li><a href="#7-level-2e-satpam-program-validasi">7. Level 2E: Satpam Program (Validasi)</a></li><li><a href="#8-misi-bug-detektif-beraksi">8. Misi Bug: Detektif Beraksi</a></li><li><a href="#9-proyek-rekap-nilai-kelas-viii">9. Proyek: Rekap Nilai Kelas VIII</a></li><li><a href="#simulator-pseudocode">Simulator Pseudocode</a></li><li><a href="#kuis-10-soal">Kuis Cek Pemahaman</a></li><li><a href="#10-rangkuman-level-2">10. Rangkuman Level 2</a></li><li><a href="#11-latihan-mandiri">11. Latihan Mandiri</a></li></ol></nav>
+<main>
+<section class="hero"><small>BAB III · ALGORITMA PEMROGRAMAN</small><h1>Naik Level: Jadi Detektif Program</h1><p>Pertemuan 2 (TP 10): JIKA bersarang, syarat gabungan, akumulator, pencacah, validasi, dan proyek Rekap Nilai Kelas.</p><img src="images/21_cover_p2.png" alt="Sampul pertemuan 2: Naik Level" data-zoom></section>
+<aside class="note info"><div class="nt">ℹ️ Halo lagi, Detektif Program! 🕵️</div><p>Minggu lalu kamu sudah jago menulis instruksi pakai <strong>pseudocode</strong>. Hari ini kita <strong>naik level</strong>. Kamu nggak cuma menulis, tapi juga <strong>menebak, menguji, dan membuktikan</strong> cara kerja sebuah program, lalu membuat program rekap nilai kelas buatanmu sendiri.</p></aside>
+<h3>Target belajarmu</h3>
+<ul><li>menulis keputusan bertingkat (<strong>JIKA bersarang</strong>) dengan urutan yang benar,</li><li>memakai syarat gabungan <strong>DAN, ATAU, TIDAK</strong>,</li><li>membuat program yang <strong>menjumlah, menghitung, dan mencari nilai terbesar</strong>,</li><li>menjaga program dengan <strong>validasi input</strong>, dan</li><li>menemukan serta memperbaiki <strong>bug</strong> dengan tabel jejak.</li></ul>
+<figure><img src="images/22_peta_level.png" alt="Gambar 1. Dari level 1 ke level 2" data-zoom><figcaption>Gambar 1. Dari level 1 ke level 2</figcaption></figure>
+<h2 class="sec" id="1-pemanasan-bekal-dari-pertemuan-1">1. Pemanasan: Bekal dari Pertemuan 1</h2>
+<p>Sebelum naik level, cek dulu bekalmu. Delapan kata kunci ini akan kita pakai terus.</p>
+<div class="tw"><table><thead><tr><th>Kata kunci</th><th>Fungsinya</th><th>Contoh</th></tr></thead><tbody><tr><td><code>MULAI</code> / <code>SELESAI</code></td><td>Awal dan akhir program</td><td><code>MULAI … SELESAI</code></td></tr><tr><td><code>BACA</code></td><td>Minta input</td><td><code>BACA nilai</code></td></tr><tr><td><code>TULIS</code> / <code>BARIS_BARU</code></td><td>Tampilkan / pindah baris</td><td><code>TULIS "Halo"</code></td></tr><tr><td><code>ISI x ← …</code></td><td>Simpan nilai ke variabel</td><td><code>ISI i ← i + 1</code></td></tr><tr><td><code>JIKA … MAKA … JIKA TIDAK</code></td><td>Memilih</td><td><code>JIKA nilai ≥ 75 MAKA</code></td></tr><tr><td><code>ULANGI n KALI</code></td><td>Mengulang tepat n kali</td><td><code>ULANGI 3 KALI</code></td></tr><tr><td><code>SELAMA … LAKUKAN</code></td><td>Mengulang selama syarat benar</td><td><code>SELAMA i ≤ N LAKUKAN</code></td></tr></tbody></table></div>
+<aside class="note try"><div class="nt">🧪 Kuis dadakan di kelas (KUDA)</div><p>Guru akan memberi <strong>KUDA</strong> di sela-sela pelajaran. Simak penjelasan, karena jawabannya muncul di slide berikutnya!</p></aside>
+<h2 class="sec" id="2-misi-1-program-misterius">2. Misi 1: Program Misterius</h2>
+<p>Ada sebuah <strong>kotak hitam</strong>. Kamu hanya melihat angka yang masuk dan hasil yang keluar. Isinya program, tapi kamu belum boleh melihat kodenya.</p>
+<figure><img src="images/24_program_misterius.png" alt="Gambar 2. Kotak hitam: apa aturannya?" data-zoom><figcaption>Gambar 2. Kotak hitam: apa aturannya?</figcaption></figure>
+<p>Seorang detektif nggak langsung menuduh. Dia bertanya, menduga, mengumpulkan bukti, baru menyimpulkan. Itulah cara belajar kita hari ini, namanya <strong>Inquiry</strong> (penyelidikan).</p>
+<figure><img src="images/23_siklus_inquiry.png" alt="Gambar 3. Lima langkah detektif program" data-zoom><figcaption>Gambar 3. Lima langkah detektif program</figcaption></figure>
+<figure><img src="images/34_inquiry_card.png" alt="Gambar 4. Inquiry card, catat penyelidikanmu di LKPD" data-zoom><figcaption>Gambar 4. Inquiry card, catat penyelidikanmu di LKPD</figcaption></figure>
+<aside class="note tip"><div class="nt">💡 Aturan emas detektif</div><p><strong>Tulis dugaanmu DULU</strong>, baru jalankan programnya. Kalau dugaanmu salah, nggak apa-apa, justru di situ kamu belajar.</p></aside>
+<h2 class="sec" id="3-level-2a-tangga-keputusan">3. Level 2A: Tangga Keputusan</h2>
+<p>Pada kotak hitam tadi, hasilnya bukan cuma “ya” atau “tidak”, tapi <strong>A, B, C, atau Perlu remedial</strong>. Artinya ada banyak keputusan yang disusun bertingkat seperti tangga. Cara menulisnya: taruh <strong>JIKA di dalam JIKA TIDAK</strong>. Itulah <strong>JIKA bersarang</strong>.</p>
+
+<figure><img src="images/25_tangga_keputusan.png" alt="Gambar 5. Program turun tangga dari atas, berhenti di syarat pertama yang benar" data-zoom><figcaption>Gambar 5. Program turun tangga dari atas, berhenti di syarat pertama yang benar</figcaption></figure>
+<p><strong>Ayo telusuri nilai 76:</strong> ≥ 90? salah → ≥ 80? salah → ≥ 75? <strong>benar</strong> → tulis “C”. Program berhenti di situ dan nggak lanjut mengecek yang lain.</p>
+<div class="tw"><table><thead><tr><th>Nilai</th><th>Jalur</th><th>Hasil</th></tr></thead><tbody><tr><td>95</td><td>≥ 90 benar</td><td>A</td></tr><tr><td>85</td><td>≥ 90 salah → ≥ 80 benar</td><td>B</td></tr><tr><td>75</td><td>≥ 90, ≥ 80 salah → ≥ 75 benar</td><td>C</td></tr><tr><td>74</td><td>semua salah</td><td>Perlu remedial</td></tr></tbody></table></div>
+<h4>Awas, urutan itu penting!</h4>
+<figure><img src="images/26_urutan_syarat.png" alt="Gambar 6. Satu perubahan kecil, hasil salah" data-zoom><figcaption>Gambar 6. Satu perubahan kecil, hasil salah</figcaption></figure>
+<aside class="note warn"><div class="nt">⚠️ Pelajaran dari bug ini</div><p>Mulai dari syarat yang <strong>paling ketat</strong> (≥ 90), bukan yang paling longgar (≥ 75). Kalau terbalik, nilai 95 akan “nyangkut” di C. Selalu uji dengan <strong>data batas</strong>: 90, 89, 75, 74.</p></aside>
+<h2 class="sec" id="4-level-2b-syarat-gabungan">4. Level 2B: Syarat Gabungan</h2>
+<p>Kadang keputusan butuh <strong>dua syarat sekaligus</strong>. Misalnya, siswa dinyatakan tuntas kalau nilainya cukup <strong>dan</strong> kehadirannya cukup. Di pseudocode kita pakai kata <strong>DAN</strong>, <strong>ATAU</strong>, dan <strong>TIDAK</strong>.</p>
+<figure><img src="images/27_dan_atau_tidak.png" alt="Gambar 7. DAN, ATAU, TIDAK" data-zoom><figcaption>Gambar 7. DAN, ATAU, TIDAK</figcaption></figure>
+
+<div class="tw"><table><thead><tr><th>Nilai</th><th>Hadir</th><th>Nilai ≥ 75 ?</th><th>Hadir ≥ 80 ?</th><th>DAN</th><th>Hasil</th></tr></thead><tbody><tr><td>80</td><td>85</td><td>benar</td><td>benar</td><td>benar</td><td>Tuntas</td></tr><tr><td>80</td><td>70</td><td>benar</td><td>salah</td><td>salah</td><td>Belum tuntas</td></tr><tr><td>60</td><td>90</td><td>salah</td><td>benar</td><td>salah</td><td>Belum tuntas</td></tr></tbody></table></div>
+<aside class="note tip"><div class="nt">💡 Ingat gampangnya</div><ul><li><strong>DAN</strong>: harus keduanya benar (seperti syarat daftar: usia cukup DAN bawa kartu).</li><li><strong>ATAU</strong>: cukup salah satu (libur jika Sabtu ATAU Minggu).</li><li><strong>TIDAK</strong>: membalik benar jadi salah.</li></ul></aside>
+<h2 class="sec" id="5-level-2c-menghitung-seperti-kasir-akumulator">5. Level 2C: Menghitung seperti Kasir (Akumulator)</h2>
+<p>Bagaimana program menjumlahkan banyak nilai? Seperti kasir yang menambah total belanja tiap barang masuk. Kita siapkan variabel <code>jumlah</code> yang <strong>mulai dari 0</strong>, lalu tiap ada nilai baru: <code>jumlah ← jumlah + nilai</code>. Variabel ini disebut <strong>akumulator</strong>.</p>
+<figure><img src="images/28_akumulator.png" alt="Gambar 8. Akumulator: isinya bertambah, bukan ditimpa" data-zoom><figcaption>Gambar 8. Akumulator: isinya bertambah, bukan ditimpa</figcaption></figure>
+
+<p>Rata-rata dihitung <strong>setelah</strong> perulangan selesai: <code>jumlah / N</code>.</p>
+<aside class="note try"><div class="nt">🧪 Coba tebak</div><p>Kalau baris <code>ISI jumlah ← 0</code> dihapus, apa yang terjadi? Coba di simulator. Lalu ganti <code>jumlah + nilai</code> menjadi <code>nilai</code> saja. Hasilnya?</p></aside>
+<h2 class="sec" id="6-level-2d-mencacah-dan-mencari-yang-terbesar">6. Level 2D: Mencacah dan Mencari yang Terbesar</h2>
+<figure><img src="images/29_cacah_maks.png" alt="Gambar 9. Dua pola favorit programmer" data-zoom><figcaption>Gambar 9. Dua pola favorit programmer</figcaption></figure>
+<div class="tw"><table><thead><tr><th>Pola</th><th>Siapkan di awal</th><th>Di dalam perulangan</th></tr></thead><tbody><tr><td><strong>Pencacah</strong> (berapa yang lulus?)</td><td><code>ISI hitung ← 0</code></td><td><code>JIKA nilai ≥ 75 MAKA</code> → <code>ISI hitung ← hitung + 1</code></td></tr><tr><td><strong>Nilai terbesar</strong></td><td><code>ISI maks ← 0</code></td><td><code>JIKA nilai &gt; maks MAKA</code> → <code>ISI maks ← nilai</code></td></tr></tbody></table></div>
+
+
+<aside class="note warn"><div class="nt">⚠️ Hati-hati</div><p>Pencari nilai terkecil memakai nilai awal <strong>besar</strong> (100), bukan 0. Kalau <code>min ← 0</code>, nggak ada nilai yang lebih kecil dari 0, jadi hasilnya selalu 0!</p></aside>
+<h2 class="sec" id="7-level-2e-satpam-program-validasi">7. Level 2E: Satpam Program (Validasi)</h2>
+<p>Bagaimana kalau seseorang mengetik nilai <strong>150</strong> atau <strong>-5</strong>? Program yang baik bertindak seperti satpam: <strong>selama nilai nggak masuk akal, minta ulang</strong>.</p>
+<figure><img src="images/30_validasi.png" alt="Gambar 10. Validasi input" data-zoom><figcaption>Gambar 10. Validasi input</figcaption></figure>
+
+<div class="tw"><table><thead><tr><th>Input berurutan</th><th>Yang terjadi</th></tr></thead><tbody><tr><td>150, -5, 88</td><td>“Tidak valid” tampil 2 kali, lalu nilai 88 diterima</td></tr><tr><td>0</td><td>Langsung diterima (batas bawah)</td></tr><tr><td>100</td><td>Langsung diterima (batas atas)</td></tr><tr><td>101</td><td>Ditolak, diminta ulang</td></tr></tbody></table></div>
+<h2 class="sec" id="8-misi-bug-detektif-beraksi">8. Misi Bug: Detektif Beraksi</h2>
+<figure><img src="images/33_misi_bug2.png" alt="Gambar 11. Rata-rata seharusnya 80, kenapa hasilnya 30?" data-zoom><figcaption>Gambar 11. Rata-rata seharusnya 80, kenapa hasilnya 30?</figcaption></figure>
+<aside class="note try"><div class="nt">🧪 Empat langkah membasmi bug</div><p>1. <strong>Gejala</strong>: hasil yang salah.</p><p>2. <strong>Dugaan</strong>: baris mana yang mencurigakan?</p><p>3. <strong>Jejak</strong>: isi tabel jejak untuk membuktikannya.</p><p>4. <strong>Perbaikan</strong>: ubah, lalu uji ulang dengan data yang sama.</p></aside>
+<h2 class="sec" id="9-proyek-rekap-nilai-kelas-viii">9. Proyek: Rekap Nilai Kelas VIII</h2>
+<p>Bu Rina, wali kelas, butuh laporan cepat dari nilai ulangan. Programmu harus membaca <strong>N</strong> nilai, menolak nilai yang tidak masuk akal, lalu menampilkan <strong>rata-rata, nilai tertinggi, dan banyak siswa tuntas (≥ 75)</strong>.</p>
+<figure><img src="images/31_proyek_rekap.png" alt="Gambar 12. Masalah proyek" data-zoom><figcaption>Gambar 12. Masalah proyek</figcaption></figure>
+<h4>Strategi memecah masalah</h4>
+<ol><li>Siapkan semua variabel: <code>jumlah</code>, <code>tuntas</code>, <code>maks</code>, <code>i</code>.</li><li>Buat perulangan <code>SELAMA i ≤ N</code>.</li><li>Di dalam perulangan: baca nilai → validasi → tambahkan ke jumlah → cek tuntas → cek terbesar → naikkan i.</li><li>Setelah perulangan: tampilkan rata-rata, tertinggi, dan tuntas.</li></ol>
+
+<figure><img src="images/32_trace_rekap.png" alt="Gambar 13. Tabel jejak data uji: 80, 120 (ditolak), 90, 70, 60" data-zoom><figcaption>Gambar 13. Tabel jejak data uji: 80, 120 (ditolak), 90, 70, 60</figcaption></figure><h2 class="sec" id="simulator-pseudocode">Simulator Pseudocode</h2>
+<p>Tulis pseudocode-mu di kotak kiri, isi input di kanan (<strong>satu nilai per baris</strong>, sesuai urutan <code>BACA</code>), lalu tekan <strong>Jalankan</strong>. Pakai indentasi 2 spasi, 8 kosakata baku, dan syarat DAN / ATAU / TIDAK. Pilih contoh di bawah, lalu coba ubah-ubah!</p>
+<div class="pg">
+  <div class="chips" id="chips"><button class="chip" data-k="predikat">Predikat (JIKA bersarang)</button><button class="chip" data-k="lulus">Tuntas (DAN)</button><button class="chip" data-k="atau">Libur (ATAU)</button><button class="chip" data-k="total">Jumlah &amp; rata-rata</button><button class="chip" data-k="cacah">Pencacah (Program X)</button><button class="chip" data-k="maks">Terbesar (Program Y)</button><button class="chip" data-k="validasi">Validasi input</button><button class="chip" data-k="bug">Misi Bug (rata-rata keliru)</button><button class="chip" data-k="kantin">Diskon kantin</button><button class="chip" data-k="rekap">Proyek: Rekap Nilai</button></div>
+  <div class="pgrid">
+    <div><label for="code">Pseudocode</label><textarea id="code" spellcheck="false" rows="14"></textarea></div>
+    <div><label for="inp">Input (satu nilai per baris)</label><textarea id="inp" spellcheck="false" rows="4"></textarea>
+      <label>Layar (output)</label><pre id="out" class="screen" aria-live="polite">Tekan “Jalankan”…</pre></div>
+  </div>
+  <div class="row"><button id="run" class="btn">▶ Jalankan</button><button id="reset" class="btn ghost">Reset contoh</button><span id="msg" class="msg"></span></div>
+</div><h2 class="sec" id="kuis-10-soal">Kuis Cek Pemahaman</h2>
+<p>10 soal pilihan ganda. Pilih jawabanmu, lalu tekan <strong>Periksa jawaban</strong>.</p>
+<form id="quiz"><fieldset class="q" data-a="2"><legend>1. Perhatikan pseudocode berikut.</legend><pre class="qcode">MULAI
+  BACA nilai
+  JIKA nilai ≥ 90 MAKA
+    TULIS "A"
+  JIKA TIDAK
+    JIKA nilai ≥ 80 MAKA
+      TULIS "B"
+    JIKA TIDAK
+      JIKA nilai ≥ 75 MAKA
+        TULIS "C"
+      JIKA TIDAK
+        TULIS "Perlu remedial"
+SELESAI</pre><p>Jika nilai yang dibaca adalah 75, tampilan di layar adalah ....</p><label class="opt"><input type="radio" name="q0" value="0"><span>A. A</span></label><label class="opt"><input type="radio" name="q0" value="1"><span>B. B</span></label><label class="opt"><input type="radio" name="q0" value="2"><span>C. C</span></label><label class="opt"><input type="radio" name="q0" value="3"><span>D. Perlu remedial</span></label><div class="exp" hidden>75 tidak ≥ 90 dan tidak ≥ 80, tetapi ≥ 75, sehingga cabang ketiga dijalankan: C.</div></fieldset><fieldset class="q" data-a="3"><legend>2. Pada pseudocode predikat di atas (soal nomor 1), jika nilai yang dibaca 74, tampilan di layar adalah ....</legend><label class="opt"><input type="radio" name="q1" value="0"><span>A. C</span></label><label class="opt"><input type="radio" name="q1" value="1"><span>B. B</span></label><label class="opt"><input type="radio" name="q1" value="2"><span>C. Tidak ada tampilan</span></label><label class="opt"><input type="radio" name="q1" value="3"><span>D. Perlu remedial</span></label><div class="exp" hidden>74 gagal pada ketiga syarat (≥ 90, ≥ 80, ≥ 75), sehingga masuk JIKA TIDAK terakhir: Perlu remedial.</div></fieldset><fieldset class="q" data-a="1"><legend>3. Perhatikan pseudocode berikut.</legend><pre class="qcode">BACA nilai
+BACA hadir
+JIKA nilai ≥ 75 DAN hadir ≥ 80 MAKA
+  TULIS "Tuntas"
+JIKA TIDAK
+  TULIS "Belum tuntas"</pre><p>Jika nilai = 90 dan hadir = 70, tampilan di layar adalah ....</p><label class="opt"><input type="radio" name="q2" value="0"><span>A. Tuntas</span></label><label class="opt"><input type="radio" name="q2" value="1"><span>B. Belum tuntas</span></label><label class="opt"><input type="radio" name="q2" value="2"><span>C. Tuntas Belum tuntas</span></label><label class="opt"><input type="radio" name="q2" value="3"><span>D. Tidak ada tampilan</span></label><div class="exp" hidden>Operator DAN menuntut kedua syarat benar. Syarat hadir ≥ 80 salah (70), sehingga hasilnya SALAH dan JIKA TIDAK dijalankan.</div></fieldset><fieldset class="q" data-a="1"><legend>4. Pernyataan yang benar tentang operator ATAU adalah ....</legend><label class="opt"><input type="radio" name="q3" value="0"><span>A. Hasil BENAR hanya bila kedua syarat BENAR</span></label><label class="opt"><input type="radio" name="q3" value="1"><span>B. Hasil BENAR bila minimal salah satu syarat BENAR</span></label><label class="opt"><input type="radio" name="q3" value="2"><span>C. Hasil selalu SALAH bila syarat pertama SALAH</span></label><label class="opt"><input type="radio" name="q3" value="3"><span>D. Hasil selalu kebalikan dari syarat pertama</span></label><div class="exp" hidden>ATAU bernilai BENAR bila salah satu atau kedua syaratnya BENAR. Hanya bernilai SALAH bila keduanya SALAH.</div></fieldset><fieldset class="q" data-a="1"><legend>5. Pada program yang menjumlahkan N nilai, variabel jumlah harus diisi 0 sebelum perulangan karena ....</legend><label class="opt"><input type="radio" name="q4" value="0"><span>A. Agar perulangan berjalan lebih cepat</span></label><label class="opt"><input type="radio" name="q4" value="1"><span>B. Agar jumlah awal jelas dan nilai pertama ditambahkan ke angka nol</span></label><label class="opt"><input type="radio" name="q4" value="2"><span>C. Agar nilai terakhir otomatis dihapus</span></label><label class="opt"><input type="radio" name="q4" value="3"><span>D. Agar program tidak memerlukan BACA</span></label><div class="exp" hidden>Akumulator perlu nilai awal yang jelas. Jika tidak diisi, jumlah ← jumlah + nilai tidak punya dasar penjumlahan (variabel belum terdefinisi).</div></fieldset><fieldset class="q" data-a="1"><legend>6. Perhatikan pseudocode berikut.</legend><pre class="qcode">MULAI
+  BACA N
+  ISI s ← 0
+  ISI i ← 1
+  SELAMA i ≤ N LAKUKAN
+    BACA x
+    ISI s ← s + x
+    ISI i ← i + 1
+  TULIS s / N
+SELESAI</pre><p>Jika N = 3 dan nilai yang dibaca 10, 20, 30, maka tampilan di layar adalah ....</p><label class="opt"><input type="radio" name="q5" value="0"><span>A. 10</span></label><label class="opt"><input type="radio" name="q5" value="1"><span>B. 20</span></label><label class="opt"><input type="radio" name="q5" value="2"><span>C. 60</span></label><label class="opt"><input type="radio" name="q5" value="3"><span>D. 30</span></label><div class="exp" hidden>s = 10 + 20 + 30 = 60. Rata-rata = 60 / 3 = 20.</div></fieldset><fieldset class="q" data-a="1"><legend>7. Perhatikan pseudocode berikut.</legend><pre class="qcode">MULAI
+  BACA N
+  ISI c ← 0
+  ISI i ← 1
+  SELAMA i ≤ N LAKUKAN
+    BACA x
+    JIKA x ≥ 75 MAKA
+      ISI c ← c + 1
+    ISI i ← i + 1
+  TULIS c
+SELESAI</pre><p>Jika N = 5 dan nilai yang dibaca 80, 60, 75, 90, 74, maka tampilan di layar adalah ....</p><label class="opt"><input type="radio" name="q6" value="0"><span>A. 2</span></label><label class="opt"><input type="radio" name="q6" value="1"><span>B. 3</span></label><label class="opt"><input type="radio" name="q6" value="2"><span>C. 4</span></label><label class="opt"><input type="radio" name="q6" value="3"><span>D. 5</span></label><div class="exp" hidden>Nilai yang ≥ 75 adalah 80, 75, dan 90. Jadi c = 3.</div></fieldset><fieldset class="q" data-a="2"><legend>8. Perhatikan pseudocode berikut.</legend><pre class="qcode">ISI m ← 0
+BACA N
+ISI i ← 1
+SELAMA i ≤ N LAKUKAN
+  BACA x
+  JIKA x &gt; m MAKA
+    ISI m ← x
+  ISI i ← i + 1
+TULIS m</pre><p>Jika N = 3 dan nilai yang dibaca 40, 90, 70, maka tampilan di layar adalah ....</p><label class="opt"><input type="radio" name="q7" value="0"><span>A. 40</span></label><label class="opt"><input type="radio" name="q7" value="1"><span>B. 70</span></label><label class="opt"><input type="radio" name="q7" value="2"><span>C. 90</span></label><label class="opt"><input type="radio" name="q7" value="3"><span>D. 200</span></label><div class="exp" hidden>m diperbarui hanya bila ada x yang lebih besar. 0 → 40 → 90, lalu 70 tidak lebih besar dari 90. Hasil: 90.</div></fieldset><fieldset class="q" data-a="2"><legend>9. Perhatikan pseudocode berikut.</legend><pre class="qcode">BACA nilai
+SELAMA nilai &lt; 0 ATAU nilai &gt; 100 LAKUKAN
+  TULIS "Ulangi "
+  BACA nilai</pre><p>Jika nilai yang dibaca berturut-turut 120, 105, 90, maka kata “Ulangi” ditampilkan sebanyak ....</p><label class="opt"><input type="radio" name="q8" value="0"><span>A. 0 kali</span></label><label class="opt"><input type="radio" name="q8" value="1"><span>B. 1 kali</span></label><label class="opt"><input type="radio" name="q8" value="2"><span>C. 2 kali</span></label><label class="opt"><input type="radio" name="q8" value="3"><span>D. 3 kali</span></label><div class="exp" hidden>120 dan 105 tidak valid (&gt; 100), sehingga “Ulangi” tampil 2 kali. 90 valid dan perulangan berhenti.</div></fieldset><fieldset class="q" data-a="2"><legend>10. Untuk menentukan predikat A bila nilai ≥ 90, B bila ≥ 80, dan C bila ≥ 75 dengan JIKA bersarang, urutan pemeriksaan yang benar adalah ....</legend><label class="opt"><input type="radio" name="q9" value="0"><span>A. ≥ 75 dahulu, lalu ≥ 80, lalu ≥ 90</span></label><label class="opt"><input type="radio" name="q9" value="1"><span>B. ≥ 80 dahulu, lalu ≥ 90, lalu ≥ 75</span></label><label class="opt"><input type="radio" name="q9" value="2"><span>C. ≥ 90 dahulu, lalu ≥ 80, lalu ≥ 75</span></label><label class="opt"><input type="radio" name="q9" value="3"><span>D. Urutan bebas, hasilnya selalu sama</span></label><div class="exp" hidden>Mulailah dari syarat paling ketat. Jika syarat longgar (≥ 75) diperiksa lebih dulu, nilai 95 akan berhenti di C.</div></fieldset>
+<div class="row"><button type="submit" class="btn">Periksa jawaban</button><button type="button" id="qreset" class="btn ghost">Ulangi</button><span id="score" class="msg"></span></div></form><h2 class="sec" id="10-rangkuman-level-2">10. Rangkuman Level 2</h2>
+<div class="tw"><table><thead><tr><th>Pola</th><th>Ciri utama</th><th>Contoh singkat</th></tr></thead><tbody><tr><td>JIKA bersarang</td><td>JIKA di dalam JIKA TIDAK; syarat ketat dulu</td><td><code>JIKA nilai ≥ 90 MAKA …</code></td></tr><tr><td>DAN / ATAU / TIDAK</td><td>Menggabungkan syarat</td><td><code>JIKA a ≥ 75 DAN b ≥ 80 MAKA</code></td></tr><tr><td>Akumulator</td><td>Nilai awal 0, lalu ditambah</td><td><code>ISI jumlah ← jumlah + nilai</code></td></tr><tr><td>Pencacah</td><td>Naik 1 hanya bila syarat benar</td><td><code>ISI hitung ← hitung + 1</code></td></tr><tr><td>Nilai terbesar / terkecil</td><td>Nilai awal tepat, bandingkan</td><td><code>JIKA nilai &gt; maks MAKA …</code></td></tr><tr><td>Validasi</td><td>SELAMA input tidak masuk akal, baca ulang</td><td><code>SELAMA n &lt; 0 ATAU n &gt; 100 LAKUKAN</code></td></tr></tbody></table></div>
+<figure><img src="images/13_aturan_penulisan.png" alt="Gambar 14. Aturan penulisan pseudocode tetap berlaku" data-zoom><figcaption>Gambar 14. Aturan penulisan pseudocode tetap berlaku</figcaption></figure>
+<h2 class="sec" id="11-latihan-mandiri">11. Latihan Mandiri</h2>
+<ol><li>Ubah program predikat agar ada predikat <strong>D</strong> untuk nilai 60–74 dan <strong>E</strong> untuk di bawah 60.</li><li>Program kantin: total &gt; 100.000 diskon 10%, &gt; 50.000 diskon 5%. Tulis pseudocode-nya dan uji dengan 120000, 60000, 30000.</li><li>Buat program yang menghitung berapa siswa <strong>remedial</strong> (nilai &lt; 75) dari N siswa.</li><li>Tambahkan ke proyek rekap: tampilkan <strong>nilai terendah</strong>.</li><li>Tantangan: tampilkan “Kelas tuntas semua!” bila semua siswa ≥ 75.</li></ol>
+<aside class="note info"><div class="nt">ℹ️ Refleksi</div><ul><li>Hal yang paling kupahami hari ini: ……………</li><li>Hal yang masih membingungkan: ……………</li><li>Satu tips untuk temanku: ……………</li></ul></aside>
+</main></div>
+<footer>Materi Siswa · Informatika Kelas VIII · Bab III · TP 10 · Pertemuan 2 · SMP Negeri 14 Tarakan<br>Klik gambar untuk memperbesar.</footer>
+<div id="lb" role="dialog" aria-label="Gambar diperbesar"><img alt=""></div>
+<script>// Interpreter mini pseudocode (kosakata terbatas) - dipakai di web & diuji di Node
+(function(root){
+function runPseudo(src,inputText,maxSteps){
+  maxSteps=maxSteps||20000;
+  const inputs=(inputText||"").split(/\r?\n/).map(s=>s.trim()).filter(s=>s!=="");
+  let inPos=0; const V=Object.create(null); let out=""; let steps=0;
+  class PErr extends Error{constructor(m,line){super(m);this.line=line;}}
+  const lines=[]; src.split(/\r?\n/).forEach((raw,i)=>{ const t=raw.replace(/\t/g,"  "); if(!t.trim()||/^\s*(\/\/|#)/.test(t)) return; const ind=t.match(/^ */)[0].length; lines.push({ind,text:t.trim(),no:i+1}); });
+  const root={ch:[],ind:-1}; const stack=[root];
+  for(const L of lines){ while(stack[stack.length-1].ind>=L.ind) stack.pop(); const node={...L,ch:[]}; stack[stack.length-1].ch.push(node); stack.push(node); }
+  function toJS(expr,no){
+    const re=/\s*("[^"]*"|\d+(?:\.\d+)?|[A-Za-z_][A-Za-z_0-9]*|<=|>=|<>|!=|≤|≥|≠|←|[-+*\/()=<>])/y; let i=0; const parts=[]; expr=expr.trim();
+    if(!expr) throw new PErr("Ekspresi kosong",no);
+    while(i<expr.length){ re.lastIndex=i; const m=re.exec(expr); if(!m){ if(/^\s*$/.test(expr.slice(i))) break; throw new PErr("Simbol tidak dikenali: "+expr.slice(i).trim().charAt(0),no);} i=re.lastIndex; const t=m[1];
+      if(t[0]==='"') parts.push(JSON.stringify(t.slice(1,-1)));
+      else if(/^\d/.test(t)) parts.push(t);
+      else if(t==="MOD") parts.push("%"); else if(t==="DAN") parts.push("&&"); else if(t==="ATAU") parts.push("||"); else if(t==="TIDAK") parts.push("!");
+      else if(t==="="||t==="==") parts.push("==="); else if(t==="≠"||t==="<>"||t==="!=") parts.push("!=="); else if(t==="≤") parts.push("<="); else if(t==="≥") parts.push(">=");
+      else if(t==="BENAR") parts.push("true"); else if(t==="SALAH") parts.push("false");
+      else if(/^[A-Za-z_]/.test(t)) parts.push('$("'+t+'")');
+      else parts.push(t); }
+    return parts.join(" ");
+  }
+  const $=(n)=>{ if(!(n in V)) throw new PErr('Variabel "'+n+'" belum diisi',0); return V[n]; };
+  function ev(expr,no){ const js=toJS(expr,no); try{ return Function("$","return ("+js+")")((n)=>{ if(!(n in V)) throw new PErr('Variabel "'+n+'" belum diisi (gunakan ISI atau BACA dulu)',no); return V[n]; }); }catch(e){ if(e instanceof PErr) throw e; throw new PErr("Ekspresi tidak valid: "+expr,no); } }
+  function tick(no){ if(++steps>maxSteps) throw new PErr("Perulangan terlalu panjang. Mungkin tidak pernah berhenti? Periksa syarat SELAMA atau nilai variabelnya.",no); }
+  function exec(list){
+    for(let k=0;k<list.length;k++){ const n=list[k]; const t=n.text; tick(n.no);
+      if(/^MULAI$/.test(t)){ exec(n.ch); }
+      else if(/^SELESAI$/.test(t)){ }
+      else if(/^BARIS_BARU$/.test(t)){ out+="\n"; }
+      else if(/^BACA\s+/.test(t)){ const name=t.replace(/^BACA\s+/,"").trim(); if(!/^[A-Za-z_]\w*$/.test(name)) throw new PErr("Nama variabel untuk BACA tidak valid",n.no); if(inPos>=inputs.length) throw new PErr('Input untuk "'+name+'" belum diisi. Isi kolom input (satu nilai per baris).',n.no); const raw=inputs[inPos++]; V[name]=(raw!==""&&!isNaN(Number(raw)))?Number(raw):raw; }
+      else if(/^TULIS\s+/.test(t)){ const v=ev(t.replace(/^TULIS\s+/,""),n.no); out+=String(v); }
+      else if(/^ISI\s+/.test(t)){ const m=t.match(/^ISI\s+([A-Za-z_]\w*)\s*(?:←|<-)\s*(.+)$/); if(!m) throw new PErr("Format ISI: ISI nama ← nilai",n.no); V[m[1]]=ev(m[2],n.no); }
+      else if(/^JIKA TIDAK$/.test(t)){ /* ditangani oleh JIKA */ }
+      else if(/^JIKA\s+/.test(t)){ const m=t.match(/^JIKA\s+(.+?)\s+MAKA$/); if(!m) throw new PErr("Format JIKA: JIKA syarat MAKA",n.no); const c=ev(m[1],n.no); const nx=list[k+1]; const hasElse=nx&&/^JIKA TIDAK$/.test(nx.text); if(c) exec(n.ch); else if(hasElse) exec(nx.ch); }
+      else if(/^ULANGI\s+/.test(t)){ const m=t.match(/^ULANGI\s+(.+?)\s+KALI$/); if(!m) throw new PErr("Format ULANGI: ULANGI n KALI",n.no); const cnt=ev(m[1],n.no); if(typeof cnt!=="number"||cnt<0||!isFinite(cnt)) throw new PErr("Jumlah pengulangan harus bilangan",n.no); for(let r=0;r<Math.floor(cnt);r++){ tick(n.no); exec(n.ch);} }
+      else if(/^SELAMA\s+/.test(t)){ const m=t.match(/^SELAMA\s+(.+?)\s+LAKUKAN$/); if(!m) throw new PErr("Format SELAMA: SELAMA syarat LAKUKAN",n.no); while(ev(m[1],n.no)){ tick(n.no); exec(n.ch);} }
+      else throw new PErr('Kata kunci tidak dikenal: "'+t.split(/\s+/)[0]+'". Pakai 8 kosakata baku.',n.no);
+    }
+  }
+  try{ exec(root.ch); return {ok:true,out}; }catch(e){ if(e instanceof PErr||e.line!==undefined) return {ok:false,out,error:e.message,line:e.line}; return {ok:false,out,error:String(e.message||e)}; }
+}
+if(typeof module!=="undefined") module.exports={runPseudo}; else root.runPseudo=runPseudo;
+})(typeof window!=="undefined"?window:this);
+</script>
+<script>
+const PRESETS={"predikat":{"n":"Predikat (JIKA bersarang)","code":"MULAI\n  BACA nilai\n  JIKA nilai ≥ 90 MAKA\n    TULIS \"A\"\n  JIKA TIDAK\n    JIKA nilai ≥ 80 MAKA\n      TULIS \"B\"\n    JIKA TIDAK\n      JIKA nilai ≥ 75 MAKA\n        TULIS \"C\"\n      JIKA TIDAK\n        TULIS \"Perlu remedial\"\nSELESAI","inp":"76"},"lulus":{"n":"Tuntas (DAN)","code":"MULAI\n  BACA nilai\n  BACA hadir\n  JIKA nilai ≥ 75 DAN hadir ≥ 80 MAKA\n    TULIS \"Tuntas\"\n  JIKA TIDAK\n    TULIS \"Belum tuntas\"\nSELESAI","inp":"60\n90"},"atau":{"n":"Libur (ATAU)","code":"MULAI\n  BACA hari\n  JIKA hari = 6 ATAU hari = 7 MAKA\n    TULIS \"Libur\"\n  JIKA TIDAK\n    TULIS \"Masuk sekolah\"\nSELESAI","inp":"7"},"total":{"n":"Jumlah & rata-rata","code":"MULAI\n  BACA N\n  ISI jumlah ← 0\n  ISI i ← 1\n  SELAMA i ≤ N LAKUKAN\n    BACA nilai\n    ISI jumlah ← jumlah + nilai\n    ISI i ← i + 1\n  TULIS \"Jumlah: \"\n  TULIS jumlah\n  BARIS_BARU\n  TULIS \"Rata-rata: \"\n  TULIS jumlah / N\nSELESAI","inp":"3\n60\n70\n80"},"cacah":{"n":"Pencacah (Program X)","code":"MULAI\n  BACA N\n  ISI c ← 0\n  ISI i ← 1\n  SELAMA i ≤ N LAKUKAN\n    BACA x\n    JIKA x ≥ 75 MAKA\n      ISI c ← c + 1\n    ISI i ← i + 1\n  TULIS c\nSELESAI","inp":"5\n80\n60\n75\n90\n74"},"maks":{"n":"Terbesar (Program Y)","code":"MULAI\n  BACA N\n  ISI m ← 0\n  ISI i ← 1\n  SELAMA i ≤ N LAKUKAN\n    BACA x\n    JIKA x > m MAKA\n      ISI m ← x\n    ISI i ← i + 1\n  TULIS m\nSELESAI","inp":"3\n40\n90\n70"},"validasi":{"n":"Validasi input","code":"MULAI\n  TULIS \"Masukkan nilai (0-100): \"\n  BACA nilai\n  SELAMA nilai < 0 ATAU nilai > 100 LAKUKAN\n    TULIS \"Tidak valid, ulangi: \"\n    BACA nilai\n  TULIS \"Nilai diterima: \"\n  TULIS nilai\nSELESAI","inp":"150\n-5\n88"},"bug":{"n":"Misi Bug (rata-rata keliru)","code":"MULAI\n  BACA N\n  ISI jumlah ← 0\n  ISI i ← 1\n  SELAMA i ≤ N LAKUKAN\n    BACA nilai\n    ISI jumlah ← nilai\n    ISI i ← i + 1\n  TULIS jumlah / N\nSELESAI","inp":"3\n80\n70\n90"},"kantin":{"n":"Diskon kantin","code":"MULAI\n  BACA total\n  JIKA total > 100000 MAKA\n    TULIS \"Diskon 10%\"\n  JIKA TIDAK\n    JIKA total > 50000 MAKA\n      TULIS \"Diskon 5%\"\n    JIKA TIDAK\n      TULIS \"Tanpa diskon\"\nSELESAI","inp":"60000"},"rekap":{"n":"Proyek: Rekap Nilai","code":"MULAI\n  TULIS \"Banyak siswa: \"\n  BACA N\n  ISI jumlah ← 0\n  ISI tuntas ← 0\n  ISI maks ← 0\n  ISI i ← 1\n  SELAMA i ≤ N LAKUKAN\n    TULIS \"Nilai siswa ke-\"\n    TULIS i\n    TULIS \": \"\n    BACA nilai\n    SELAMA nilai < 0 ATAU nilai > 100 LAKUKAN\n      TULIS \"Harus 0-100, ulangi: \"\n      BACA nilai\n    ISI jumlah ← jumlah + nilai\n    JIKA nilai ≥ 75 MAKA\n      ISI tuntas ← tuntas + 1\n    JIKA nilai > maks MAKA\n      ISI maks ← nilai\n    ISI i ← i + 1\n  BARIS_BARU\n  TULIS \"Rata-rata   : \"\n  TULIS jumlah / N\n  BARIS_BARU\n  TULIS \"Tertinggi   : \"\n  TULIS maks\n  BARIS_BARU\n  TULIS \"Tuntas      : \"\n  TULIS tuntas\n  TULIS \" dari \"\n  TULIS N\n  JIKA tuntas = N MAKA\n    BARIS_BARU\n    TULIS \"Kelas tuntas semua!\"\nSELESAI","inp":"4\n80\n120\n90\n70\n60"}};
+const $=s=>document.querySelector(s);let cur="predikat";
+function load(k){cur=k;$("#code").value=PRESETS[k].code;$("#inp").value=PRESETS[k].inp;$("#out").textContent="Tekan “Jalankan”…";$("#msg").textContent="";$("#msg").className="msg";document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c.dataset.k===k));}
+document.querySelectorAll(".chip").forEach(c=>c.addEventListener("click",()=>load(c.dataset.k)));
+$("#reset").addEventListener("click",()=>load(cur));
+$("#run").addEventListener("click",()=>{const r=runPseudo($("#code").value,$("#inp").value);let o=r.out;if(o.length>3000)o=o.slice(0,3000)+"\n…(dipotong)";$("#out").textContent=o||"(tidak ada output)";const m=$("#msg");if(r.ok){m.textContent="✔ Program selesai dijalankan";m.className="msg ok";}else{m.textContent="✖ "+(r.line?"Baris "+r.line+": ":"")+r.error;m.className="msg err";}});
+$("#code").addEventListener("keydown",e=>{if(e.key==="Tab"){e.preventDefault();const t=e.target,s=t.selectionStart;t.value=t.value.slice(0,s)+"  "+t.value.slice(t.selectionEnd);t.selectionStart=t.selectionEnd=s+2;}});
+load("predikat");
+const quiz=$("#quiz");
+quiz.addEventListener("submit",e=>{e.preventDefault();let sc=0;quiz.querySelectorAll("fieldset.q").forEach(f=>{const a=f.dataset.a;const ch=f.querySelector("input:checked");const ok=ch&&ch.value===a;if(ok)sc++;f.classList.remove("good","bad");f.classList.add(ok?"good":"bad");f.querySelector(".exp").hidden=false;f.querySelector(".exp").prepend(document.createTextNode(ok?"✔ Benar. ":"✖ Jawaban benar: "+"ABCD"[a]+". "));});
+const s=$("#score");s.textContent="Skor: "+sc+" / 10 → nilai "+sc*10;s.className="msg "+(sc>=7?"ok":"err");});
+$("#qreset").addEventListener("click",()=>{quiz.reset();quiz.querySelectorAll("fieldset.q").forEach(f=>{f.classList.remove("good","bad");const x=f.querySelector(".exp");x.hidden=true;x.textContent=x.dataset.t||x.textContent.replace(/^(✔ Benar\. |✖ Jawaban benar: [A-D]\. )/,"");});$("#score").textContent="";});
+const lb=$("#lb");document.querySelectorAll("img[data-zoom]").forEach(i=>i.addEventListener("click",()=>{lb.querySelector("img").src=i.src;lb.classList.add("on");}));lb.addEventListener("click",()=>lb.classList.remove("on"));document.addEventListener("keydown",e=>{if(e.key==="Escape")lb.classList.remove("on");});
+$("#tocbtn").addEventListener("click",()=>$("#toc").classList.toggle("open"));
+const links=[...document.querySelectorAll("#toc a")];const secs=links.map(a=>document.getElementById(a.getAttribute("href").slice(1)));
+const io=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){links.forEach(l=>l.classList.remove("on"));const i=secs.indexOf(en.target);if(i>=0)links[i].classList.add("on");}});},{rootMargin:"-20% 0px -70% 0px"});secs.forEach(s=>s&&io.observe(s));
+document.querySelectorAll("#toc a").forEach(a=>a.addEventListener("click",()=>$("#toc").classList.remove("open")));
+</script></body></html>
