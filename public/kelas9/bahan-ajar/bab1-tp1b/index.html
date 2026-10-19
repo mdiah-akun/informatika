@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Detektif Struktur Data — Materi Siswa TP1b</title>
+<style>
+:root{--navy:#1B2440;--coral:#E76F51;--teal:#2A9D8F;--blue:#2A6F97;--gold:#E9C46A;--purple:#6B4C9A;--bg:#F4F6FA;--ink:#2B2D42;--gray:#6B7390;--card:#fff;--line:#D8DEEA}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:Calibri,"Segoe UI",system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65;font-size:17px}
+h1,h2,h3{font-family:Cambria,Georgia,serif;color:var(--navy);line-height:1.25}
+a{color:var(--blue)}
+nav{position:sticky;top:0;z-index:10;background:var(--navy);display:flex;gap:4px;overflow-x:auto;padding:8px 12px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+nav a{color:#E8ECF8;text-decoration:none;font-size:14px;padding:6px 12px;border-radius:999px;white-space:nowrap}
+nav a:hover{background:#2c3862}
+.hero{background:var(--navy);color:#fff;padding:48px 20px}
+.hero .in{max-width:1000px;margin:auto;display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:center}
+.hero small{color:var(--gold);letter-spacing:.2em;font-weight:700;font-size:12px}
+.hero h1{color:#fff;font-size:clamp(32px,6vw,50px);margin:.3em 0}
+.hero p{color:#9FE3D8;font-size:19px;font-style:italic;margin:0}
+.hero .pic{background:#fff;border-radius:18px;padding:14px}
+.hero img{width:100%;height:auto;display:block}
+main{max-width:1000px;margin:auto;padding:12px 16px 60px}
+section{margin:34px 0}
+section>h2{font-size:30px;margin:0 0 6px}
+.kick{color:var(--teal);font-weight:700;letter-spacing:.15em;font-size:12px;text-transform:uppercase}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin:16px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+figure{margin:16px 0;text-align:center}
+figure img{max-width:100%;height:auto;border-radius:12px;background:#fff;border:1px solid var(--line);padding:8px}
+figcaption{font-size:14px;color:var(--gray);font-style:italic;margin-top:6px}
+.note{border-radius:14px;padding:14px 18px;margin:16px 0;border:1px solid}
+.note b.t{display:block;margin-bottom:2px}
+.note.tip{background:#EAF4F2;border-color:var(--teal)}.note.tip b.t{color:var(--teal)}
+.note.warn{background:#FDEBE5;border-color:var(--coral)}.note.warn b.t{color:var(--coral)}
+.note.gold{background:#FFF6DD;border-color:var(--gold)}.note.gold b.t{color:#8a6500}
+.note.info{background:#EAF1F7;border-color:var(--blue)}.note.info b.t{color:var(--blue)}
+.pill{display:inline-block;padding:2px 10px;border-radius:999px;font-weight:700;font-size:13px;color:#fff}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:16px;background:#fff;border-radius:12px;overflow:hidden}
+th{background:var(--navy);color:#fff;padding:9px 12px;text-align:left}td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:#F7F8FC}
+.term{display:flex;gap:12px;align-items:flex-start;margin:8px 0}.term .dot{flex:0 0 12px;height:12px;border-radius:50%;margin-top:9px}
+details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 16px;margin:10px 0}
+summary{cursor:pointer;font-weight:700;color:var(--blue)}
+button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:9px 16px;background:var(--blue);color:#fff;font-weight:700}
+button:hover{filter:brightness(1.1)}button.ghost{background:#fff;color:var(--blue);border:2px solid var(--blue)}
+button.opt{display:block;width:100%;text-align:left;background:#fff;color:var(--ink);border:2px solid var(--line);margin:8px 0;font-weight:500}
+button.opt:hover{border-color:var(--blue)}button.opt.ok{background:#DFF5EC;border-color:var(--teal)}button.opt.bad{background:#FDE3DC;border-color:var(--coral)}
+.fb{margin-top:10px;font-weight:600}.fb.ok{color:#17776c}.fb.bad{color:#b4472f}
+select,input[type=number],textarea{font:inherit;padding:8px 10px;border:2px solid var(--line);border-radius:10px;background:#fff}
+textarea{width:100%;min-height:80px}
+.kuda{border:3px solid var(--coral);background:linear-gradient(#fff,#fff)}
+.kuda .tag{background:var(--gold);color:#8E1230;font-weight:800;border-radius:999px;padding:3px 14px;font-size:13px;display:inline-block}
+.calc label{display:flex;gap:8px;align-items:center;margin:8px 0}
+.calc .res{margin-top:12px;padding:14px;border-radius:12px;background:#F3F5FA}
+.u{display:flex;gap:8px;margin:5px 0;align-items:center}.u .b{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:14px;flex:0 0 26px}
+.b.y{background:var(--teal)}.b.n{background:var(--coral)}
+.case h3{margin-top:0}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+footer{background:var(--navy);color:#AAB3CC;text-align:center;padding:22px 10px;font-size:14px}
+@media(max-width:760px){.hero .in,.grid2,.grid3{grid-template-columns:1fr}body{font-size:16px}}
+</style>
+</head>
+<body>
+<nav>
+<a href="#tujuan">Tujuan</a><a href="#ingat">Ingat Lagi</a><a href="#tree">Bedah Tree</a><a href="#graph">Bedah Graph</a><a href="#uji">Tiga Uji Tree</a><a href="#kasus">Berkas Kasus</a><a href="#bintang">Tantangan Bintang</a><a href="#kuda">KUDA</a><a href="#rangkum">Rangkuman</a><a href="#kamus">Kamus</a>
+</nav>
+<header class="hero"><div class="in">
+<div><small>INFORMATIKA • KELAS IX • BAB I • TP 1 PERTEMUAN 2</small><h1>Detektif Struktur Data</h1><p>Bedah tree dan graph sampai ke dalam-dalamnya!</p></div>
+<div class="pic"><img src="images/01-sampul-detektif-struktur.png" alt="Kaca pembesar di atas tree dan graph"></div>
+</div></header>
+<main>
+<section id="tujuan">
+<div class="kick">Mulai dari sini</div><h2>Halo, Detektif Muda! 👋</h2>
+<p>Minggu lalu kamu sudah kenalan sama <b>tree</b> (pohon) dan <b>graph</b> (jejaring). Hari ini kita naik level: bukan cuma <b>mengenali</b>, tapi juga <b>membuktikan</b> pakai angka dan logika, seperti detektif beneran.</p>
+<div class="grid2">
+<div class="card"><h3>Misi hari ini</h3><ul><li>Bedah anatomi <b>tree</b>: level, tinggi, derajat, subtree.</li><li>Bedah anatomi <b>graph</b>: berarah, berbobot, derajat, siklus.</li><li>Pakai <b>Tiga Uji Tree</b> untuk menyidangkan 6 berkas kasus.</li><li>Ambil <b>Tantangan Bintang</b> ⭐</li></ul></div>
+<figure><img src="images/02-alur-inquiry.png" alt="Alur enam tahap petualangan"><figcaption>Enam tahap petualangan kita</figcaption></figure>
+</div>
+</section>
+
+<section id="ingat">
+<div class="kick">Bagian 1</div><h2>Ingat Lagi: Tree dan Graph</h2>
+<table><tr><th></th><th>TREE (pohon)</th><th>GRAPH (jejaring)</th></tr>
+<tr><td><b>Bentuk</b></td><td>Bercabang ke bawah, ada root di atas</td><td>Jejaring bebas, bisa melingkar</td></tr>
+<tr><td><b>Induk</b></td><td>Setiap simpul (kecuali root) punya SATU induk</td><td>Satu simpul bisa punya banyak koneksi</td></tr>
+<tr><td><b>Putaran</b></td><td>Tidak boleh ada jalur berputar</td><td>Boleh ada jalur berputar (siklus)</td></tr>
+<tr><td><b>Contoh</b></td><td>Silsilah, folder, struktur organisasi</td><td>Pertemanan medsos, peta jalan, rute kapal</td></tr></table>
+<div class="note info"><b class="t">Biar nggak lupa</b><b>Simpul (node)</b> = titik data. <b>Ruas (edge)</b> = garis penghubung dua simpul. <b>Bobot (weight)</b> = angka pada ruas, misalnya jarak atau waktu.</div>
+</section>
+
+<section id="tree">
+<div class="kick">Bagian 2</div><h2>Bedah Tree Lebih Dalam 🌳</h2>
+<p>Kita pakai satu contoh biar fokus: <b>folder proyek</b> di laptop.</p>
+<figure><img src="images/03-tree-lab-folder.png" alt="Tree folder Proyek dengan level 0 sampai 3"><figcaption>Tree folder “Proyek”: 12 simpul, 11 ruas</figcaption></figure>
+<h3>Level, tinggi, derajat</h3>
+<div class="grid3">
+<div class="card"><span class="pill" style="background:var(--blue)">LEVEL</span><p>Jarak (jumlah ruas) dari root. Root ada di <b>level 0</b>. “bab2.docx” di level 3.</p></div>
+<div class="card"><span class="pill" style="background:var(--teal)">TINGGI</span><p>Level paling dalam. Tree folder ini tingginya <b>3</b>.</p></div>
+<div class="card"><span class="pill" style="background:var(--coral)">DERAJAT</span><p>Jumlah anak sebuah simpul. “Proyek” = 3, “Laporan” = 2, leaf = 0.</p></div>
+</div>
+<div class="note warn"><b class="t">Awas ketuker!</b>Level = jarak dari root. Derajat = jumlah anak. “Laporan” ada di level 1, tapi derajatnya 2.</div>
+<h3>“Keluarga” simpul</h3>
+<figure><img src="images/04-keluarga-simpul-tree.png" alt="Jalur, saudara, leluhur, keturunan, subtree"><figcaption>Jalur, saudara, leluhur, keturunan, dan subtree</figcaption></figure>
+<div class="term"><span class="dot" style="background:var(--blue)"></span><div><b>Saudara (sibling)</b>: simpul yang satu induk. Gambar, Data, Laporan.</div></div>
+<div class="term"><span class="dot" style="background:var(--purple)"></span><div><b>Leluhur (ancestor)</b>: semua simpul di jalur ke atas sampai root.</div></div>
+<div class="term"><span class="dot" style="background:#C79A18"></span><div><b>Keturunan dan subtree</b>: semua simpul di bawah; subtree = simpul + keturunannya. Subtree Laporan = 6 simpul.</div></div>
+<div class="term"><span class="dot" style="background:var(--coral)"></span><div><b>Jalur (path)</b>: urutan simpul lewat ruas. Seperti alamat file <code>C:\Proyek\Laporan\Draft\bab2.docx</code>.</div></div>
+<h3>Rahasia jumlah ruas tree</h3>
+<figure><img src="images/05-rumus-ruas-tree.png" alt="1 sampai 5 simpul dan ruasnya"><figcaption>Setiap simpul baru membawa satu ruas</figcaption></figure>
+<div class="note gold"><b class="t">Rumus</b>Tree dengan <b>n simpul</b> selalu punya <b>n − 1 ruas</b>. Pada tree folder: 12 simpul → 11 ruas.</div>
+<details><summary>✏️ Coba dulu: tree 20 simpul punya berapa ruas?</summary><p>19 ruas (20 − 1).</p></details>
+<details><summary>✏️ Coba dulu: berapa simpul di subtree “Final”?</summary><p>2 simpul: Final dan laporan.pdf.</p></details>
+<details><summary>⭐ Bonus: pohon biner</summary><figure><img src="images/06-pohon-biner-bonus.png" alt="Pohon biner"><figcaption>Maksimal 2 anak per simpul</figcaption></figure><p>Pohon biner dipakai untuk mencari dan mengurutkan data dengan cepat. Tree “Proyek” bukan pohon biner karena ada simpul beranak 3.</p></details>
+</section>
+
+<section id="graph">
+<div class="kick">Bagian 3</div><h2>Bedah Graph Lebih Dalam 🕸️</h2>
+<figure><img src="images/07-jenis-graph.png" alt="Empat sifat graph"><figcaption>Tak berarah, berarah, berbobot, tidak terhubung</figcaption></figure>
+<ul><li><b>Tak berarah</b>: hubungan dua arah.</li><li><b>Berarah</b>: hubungan satu arah, digambar dengan panah (follow, tautan web).</li><li><b>Berbobot</b>: ruas punya angka (jarak, waktu, biaya).</li><li><b>Tidak terhubung</b>: ada “pulau” yang tidak bisa dicapai.</li></ul>
+<h3>Derajat simpul</h3>
+<figure><img src="images/08-derajat-simpul.png" alt="Derajat pada graph tak berarah dan berarah"><figcaption>Derajat; jumlah derajat = 2 × jumlah ruas</figcaption></figure>
+<div class="note gold"><b class="t">Fakta seru: rumus jabat tangan 🤝</b>Setiap ruas punya dua ujung, jadi menyumbang 2 derajat. Maka <b>jumlah semua derajat = 2 × jumlah ruas</b>. Pada gambar kiri: 2+4+1+2+1 = 10 = 2 × 5.</div>
+<h3>Peta wisata Tarakan</h3>
+<figure><img src="images/09-peta-wisata-tarakan.png" alt="Peta wisata Tarakan berbobot"><figcaption>Nama tempat nyata, tata letak dan jarak direka untuk belajar</figcaption></figure>
+<ul><li>6 simpul, 9 ruas. Jumlah derajat = 2+4+3+3+3+3 = 18 = 2 × 9 ✅</li><li>Jalur S–G–J = 2 + 12 = 14 km.</li><li>Siklus: S–G–T–S. Karena ada siklus, peta ini <b>bukan tree</b>.</li><li>Terhubung: dari mana pun bisa sampai ke mana pun.</li></ul>
+<details><summary>✏️ Coba dulu: derajat 3, 3, 2, 2, 2 → berapa ruas?</summary><p>Jumlah derajat 12, jadi ruas = 6.</p></details>
+</section>
+
+<section id="uji">
+<div class="kick">Bagian 4</div><h2>Tree itu Graph Spesial</h2>
+<figure><img src="images/11-hubungan-tree-graph.png" alt="Tree berada di dalam graph"><figcaption>Setiap tree adalah graph, tapi tidak setiap graph adalah tree</figcaption></figure>
+<figure><img src="images/10-tiga-uji-tree.png" alt="Tiga uji tree"><figcaption>Tiga Uji Tree dan aturan 2 dari 3</figcaption></figure>
+<div class="note warn"><b class="t">Aturan 2 dari 3 🎯</b>Kalau dua uji lolos, uji ketiga otomatis lolos. Tapi hati-hati: <b>ruas = n − 1 saja belum cukup!</b></div>
+<div class="card calc" id="calc"><h3>🔧 Mesin Uji Tree</h3>
+<p>Masukkan data sebuah struktur lalu lihat putusannya.</p>
+<label>Jumlah simpul (n): <input type="number" id="cn" min="1" value="6"></label>
+<label>Jumlah ruas (m): <input type="number" id="cm" min="0" value="5"></label>
+<label><input type="checkbox" id="cc"> Semua simpul terhubung</label>
+<label><input type="checkbox" id="cs"> Ada siklus</label>
+<button onclick="uji()">Jalankan uji</button>
+<div class="res" id="cres">Hasil muncul di sini.</div></div>
+</section>
+
+<section id="kasus">
+<div class="kick">Bagian 5</div><h2>Enam Berkas Kasus 🔍</h2>
+<p>Hitung n dan m, cek terhubung dan siklus, lalu pilih putusanmu.</p>
+<figure><img src="images/18-papan-penyidik.png" alt="Papan penyidik"></figure>
+<div id="cases"></div>
+</section>
+
+<section id="bintang">
+<div class="kick">Bagian 6</div><h2>Tantangan Bintang ⭐</h2>
+<p>Peta wisata punya 6 simpul dan 9 ruas. Agar jadi tree, hapus berapa ruas?</p>
+<div class="card"><button class="ghost" onclick="show('bt1')">Lihat petunjuk</button><p id="bt1" hidden>Tree 6 simpul punya 5 ruas, jadi 9 − 5 = <b>4 ruas</b> harus dihapus. Hapus ruas yang berada di dalam siklus, bukan ruas “jembatan” yang membuat tempat terputus.</p>
+<button class="ghost" onclick="show('bt2')">Lihat contoh jawaban (coba dulu!)</button><div id="bt2" hidden><figure><img src="images/20-jawaban-tantangan-bintang.png" alt="Contoh jawaban tantangan bintang"><figcaption>Sisa 5 ruas, total 18 km. Jawaban lain yang tree juga boleh!</figcaption></figure></div></div>
+</section>
+
+<section id="kuda">
+<div class="kick">Latihan</div><h2>KUDA: Kuis Dadakan 🎯</h2>
+<p>Enam soal singkat. Jawab dulu, baru lihat pembahasan.</p>
+<div id="kudas"></div>
+</section>
+
+<section id="rangkum">
+<div class="kick">Ringkasan</div><h2>Yang Perlu Kamu Ingat</h2>
+<table><tr><th>Topik</th><th>Intinya</th></tr>
+<tr><td>Level, tinggi, derajat</td><td>Level = jarak dari root (root = 0); tinggi = level terdalam; derajat = jumlah anak.</td></tr>
+<tr><td>Subtree dan jalur</td><td>Subtree = simpul + keturunannya. Jalur = urutan simpul lewat ruas.</td></tr>
+<tr><td>Ruas tree</td><td>n simpul → n − 1 ruas.</td></tr>
+<tr><td>Jenis graph</td><td>Tak berarah, berarah, berbobot, tidak terhubung.</td></tr>
+<tr><td>Derajat graph</td><td>Jumlah derajat = 2 × jumlah ruas.</td></tr>
+<tr><td>Tiga Uji Tree</td><td>Terhubung, tanpa siklus, ruas = n − 1 (2 dari 3).</td></tr>
+<tr><td>Hubungan</td><td>Setiap tree adalah graph, tetapi tidak setiap graph adalah tree.</td></tr></table>
+<h3>Latihan mandiri</h3>
+<div id="lat"></div>
+</section>
+
+<section id="kamus">
+<div class="kick">Kamus mini</div><h2>Istilah Penting</h2>
+<table><tr><th>Istilah</th><th>Artinya</th></tr>
+<tr><td>Simpul (node)</td><td>Titik data</td></tr><tr><td>Ruas (edge)</td><td>Garis penghubung dua simpul</td></tr><tr><td>Root / leaf</td><td>Simpul paling atas / simpul tanpa anak</td></tr><tr><td>Level</td><td>Jarak (jumlah ruas) dari root</td></tr><tr><td>Tinggi</td><td>Level terdalam pada tree</td></tr><tr><td>Derajat</td><td>Jumlah ruas yang menempel pada simpul</td></tr><tr><td>Subtree</td><td>Simpul beserta semua keturunannya</td></tr><tr><td>Siklus</td><td>Jalur yang kembali ke simpul awal</td></tr><tr><td>Terhubung</td><td>Semua simpul bisa saling dicapai</td></tr><tr><td>Graph berarah</td><td>Ruas berupa panah (satu arah)</td></tr><tr><td>Bobot</td><td>Angka pada ruas</td></tr></table>
+</section>
+</main>
+<footer>SMP Negeri 14 Tarakan • Informatika Kelas IX • Bab I TP 1 Pertemuan Kedua</footer>
+<script>
+const KUDA=[{"no": 1, "tipe": "Mencocokkan", "judul": "Pemanasan Detektif", "tanya": "Cocokkan istilah (1–4) dengan artinya (A–D)!", "kiri": ["1. Root", "2. Leaf", "3. Ruas (edge)", "4. Bobot (weight)"], "kanan": ["A. Nilai pada ruas, misalnya jarak atau waktu", "B. Simpul paling atas, tidak punya induk", "C. Simpul paling ujung, tidak punya anak", "D. Garis penghubung dua simpul"], "kunci": "1–B, 2–C, 3–D, 4–A", "bahas": "Root = simpul paling atas tanpa induk. Leaf = simpul tanpa anak. Ruas menghubungkan dua simpul. Bobot adalah nilai yang melekat pada ruas."}, {"no": 2, "tipe": "Pilihan Ganda", "judul": "Bedah Tree Folder", "tanya": "Perhatikan tree folder 'Proyek'. Simpul 'Laporan' punya berapa anak (derajat), dan berapa simpul di dalam subtree-nya (termasuk dirinya sendiri)?", "opsi": ["A. 2 anak, 4 simpul", "B. 2 anak, 6 simpul", "C. 3 anak, 6 simpul", "D. 6 anak, 2 simpul"], "kunci": "B", "bahas": "Laporan punya 2 anak (Draft dan Final) sehingga derajatnya 2. Subtree-nya: Laporan, Draft, Final, bab1.docx, bab2.docx, laporan.pdf = 6 simpul."}, {"no": 3, "tipe": "Mencocokkan", "judul": "Jenis-Jenis Graph", "tanya": "Cocokkan situasi (1–4) dengan istilah graph yang paling tepat (A–D)!", "kiri": ["1. Ayu mengikuti Budi, tetapi Budi belum tentu mengikuti Ayu", "2. Peta yang menuliskan jarak 5 km, 8 km, dan seterusnya di tiap jalan", "3. Dua grup chat kelas yang tidak punya anggota yang sama", "4. Berjalan dari A ke B ke C lalu kembali lagi ke A"], "kanan": ["A. Graph berbobot", "B. Graph tidak terhubung", "C. Siklus", "D. Graph berarah"], "kunci": "1–D, 2–A, 3–B, 4–C", "bahas": "Hubungan satu arah = graph berarah. Nilai pada ruas = berbobot. Ada 'pulau' yang tak bisa dicapai = tidak terhubung. Jalur yang berputar kembali ke titik awal = siklus."}, {"no": 4, "tipe": "Esai Singkat", "judul": "Sebuah Struktur Mencurigakan", "tanya": "Sebuah struktur punya 8 simpul dan 8 ruas, dan semua simpulnya saling terhubung. Apakah struktur itu tree? Jelaskan alasanmu dalam 1–2 kalimat!", "kunci": "Bukan tree.", "bahas": "Tree dengan 8 simpul harus punya tepat 7 ruas (n − 1). Karena ruasnya 8 (lebih satu) sementara semua simpul sudah terhubung, pasti ada satu siklus. Jadi struktur itu graph biasa, bukan tree."}, {"no": 5, "tipe": "Pilihan Ganda", "judul": "Hitung Derajat", "tanya": "Sebuah graph tak berarah punya 7 simpul dengan derajat: 3, 2, 2, 4, 1, 3, 1. Berapa jumlah ruas graph itu?", "opsi": ["A. 16", "B. 8", "C. 7", "D. 6"], "kunci": "B", "bahas": "Jumlah derajat = 3+2+2+4+1+3+1 = 16. Karena jumlah derajat = 2 × jumlah ruas, maka ruas = 16 ÷ 2 = 8."}, {"no": 6, "tipe": "Pilihan Ganda", "judul": "Kesimpulan Akhir", "tanya": "Manakah pernyataan yang PALING TEPAT tentang hubungan tree dan graph?", "opsi": ["A. Tree dan graph adalah dua hal yang sama sekali berbeda", "B. Setiap graph adalah tree", "C. Setiap tree adalah graph, tetapi tidak setiap graph adalah tree", "D. Graph adalah tree yang punya satu induk"], "kunci": "C", "bahas": "Tree adalah graph khusus: terhubung, tanpa siklus, dan ruasnya n − 1. Graph yang punya siklus, tidak terhubung, atau ruasnya berlebih bukan tree."}];
+const CASES=[{"id": "A", "nama": "Menu aplikasi piket sekolah", "img": "12-kasus-a-menu-aplikasi.png", "n": 9, "m": 8, "t": "Ya", "s": "Tidak", "e": "Ya (8 = 9 − 1)", "tree": true, "why": "Dua dari tiga uji pasti lolos, jadi ini <b>TREE</b> dengan root “Beranda” dan tinggi 2."}, {"id": "B", "nama": "Peta wisata Tarakan (skema)", "img": "09-peta-wisata-tarakan.png", "n": 6, "m": 9, "t": "Ya", "s": "Ya (mis. S–G–T–S)", "e": "Tidak (9 ≠ 5)", "tree": false, "why": "Ada siklus dan ruasnya berlebih. Ini <b>graph tak berarah dan berbobot</b>."}, {"id": "C", "nama": "Mengikuti di media sosial", "img": "14-kasus-c-follow.png", "n": 5, "m": 6, "t": "Ya", "s": "Ya (Ayu→Budi→Citra→Ayu)", "e": "Tidak (6 ≠ 4)", "tree": false, "why": "Ini <b>graph berarah</b> dengan siklus."}, {"id": "D", "nama": "Folder dengan shortcut", "img": "15-kasus-d-folder-shortcut.png", "n": 7, "m": 7, "t": "Ya", "s": "Ya (Laporan punya dua induk)", "e": "Tidak (7 ≠ 6)", "tree": false, "why": "Shortcut membuat folder Laporan punya dua induk sehingga terbentuk siklus. Kalau shortcut dihapus, strukturnya kembali menjadi tree."}, {"id": "E", "nama": "Dua grup chat kelas", "img": "16-kasus-e-dua-grup.png", "n": 6, "m": 5, "t": "TIDAK (2 grup)", "s": "Ya (segitiga A1–A2–A3)", "e": "Ya (5 = 6 − 1)", "tree": false, "why": "Jebakan! m = n − 1, tetapi tidak terhubung dan satu grup membentuk segitiga. Hanya 1 dari 3 uji yang lolos: <b>bukan tree</b>."}, {"id": "F", "nama": "Struktur halaman web (HTML)", "img": "17-kasus-f-html.png", "n": 9, "m": 8, "t": "Ya", "s": "Tidak", "e": "Ya (8 = 9 − 1)", "tree": true, "why": "Halaman web di balik layar berbentuk <b>TREE</b> dengan root “html” dan tinggi 3."}];
+const LAT=[["Tree dengan 15 simpul punya … ruas.", "14"], ["Pada tree folder “Proyek”, simpul Draft ada pada level …", "2"], ["Graph tak berarah dengan derajat 2, 2, 2, 2 punya … ruas.", "4"], ["Struktur 5 simpul, 5 ruas, terhubung. Tree atau bukan?", "Bukan tree; tree 5 simpul harus 4 ruas. Kelebihan satu ruas berarti ada siklus."], ["Sebutkan satu contoh graph berarah di kehidupanmu!", "Mengikuti akun di media sosial, tautan antar halaman web, atau jalan satu arah."]];
+function show(id){document.getElementById(id).hidden=false}
+function uji(){
+ const n=+document.getElementById('cn').value, m=+document.getElementById('cm').value, c=document.getElementById('cc').checked, s=document.getElementById('cs').checked;
+ const u1=c,u2=!s,u3=(m===n-1); const ok=u1&&u2&&u3; let w='';
+ if(c&&m<n-1) w='⚠️ Mustahil: graph yang terhubung minimal punya n − 1 ruas.';
+ else if(!s&&m>n-1) w='⚠️ Mustahil: struktur tanpa siklus paling banyak punya n − 1 ruas.';
+ const row=(b,t)=>`<div class="u"><span class="b ${b?'y':'n'}">${b?'✓':'✗'}</span><span>${t}</span></div>`;
+ const cnt=[u1,u2,u3].filter(Boolean).length;
+ document.getElementById('cres').innerHTML=row(u1,'Uji 1: terhubung')+row(u2,'Uji 2: tanpa siklus')+row(u3,`Uji 3: ruas = n − 1 (${m} ${u3?'=':'≠'} ${n-1})`)+`<p><b>${cnt} dari 3 uji lolos.</b> ${ok?'🌳 Ini <b>TREE</b>!':'Ini <b>bukan tree</b> (graph biasa).'}</p>`+(w?`<p>${w}</p>`:'')+(cnt===2&&!ok&&!w?'<p>Dua uji lolos tetapi satu gagal? Cek lagi datamu: menurut aturan 2 dari 3, itu tidak mungkin terjadi.</p>':'');
+}
+// KUDA
+const kd=document.getElementById('kudas');
+KUDA.forEach(k=>{
+ const d=document.createElement('div');d.className='card kuda';
+ let h=`<span class="tag">KUDA #${k.no} • ${k.tipe}</span><h3>${k.judul}</h3><p><b>${k.tanya}</b></p>`;
+ if(k.tipe==='Pilihan Ganda'){h+=k.opsi.map(o=>`<button class="opt" data-k="${o[0]}">${o}</button>`).join('')+'<div class="fb"></div>';}
+ else if(k.tipe==='Mencocokkan'){h+='<table>'+k.kiri.map((t,i)=>`<tr><td>${t}</td><td><select data-i="${i+1}"><option value="">Pilih…</option>${k.kanan.map(r=>`<option value="${r[0]}">${r}</option>`).join('')}</select></td></tr>`).join('')+'</table><button class="chk">Periksa</button><div class="fb"></div>';}
+ else{h+='<textarea placeholder="Tulis jawabanmu…"></textarea><button class="chk">Lihat jawaban</button><div class="fb"></div>';}
+ h+=`<details><summary>Pembahasan</summary><p><b>Kunci: ${k.kunci}</b></p><p>${k.bahas}</p></details>`;
+ d.innerHTML=h;kd.appendChild(d);
+ if(k.tipe==='Pilihan Ganda'){d.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const ok=b.dataset.k===k.kunci;d.querySelectorAll('.opt').forEach(x=>x.classList.remove('ok','bad'));b.classList.add(ok?'ok':'bad');const f=d.querySelector('.fb');f.className='fb '+(ok?'ok':'bad');f.textContent=ok?'Benar! 🎉':'Belum tepat, coba lagi.';});}
+ else if(k.tipe==='Mencocokkan'){d.querySelector('.chk').onclick=()=>{const want={};k.kunci.split(', ').forEach(p=>{const a=p.split('–');want[a[0]]=a[1]});let r=0;d.querySelectorAll('select').forEach(s=>{if(s.value===want[s.dataset.i])r++;});const f=d.querySelector('.fb');f.className='fb '+(r===4?'ok':'bad');f.textContent=r===4?'Semua cocok! 🎉':`Cocok ${r} dari 4. Coba perbaiki.`;};}
+ else{d.querySelector('.chk').onclick=()=>{const f=d.querySelector('.fb');f.className='fb ok';f.textContent='Jawaban: '+k.kunci+' — '+k.bahas;};}
+});
+// Kasus
+const cs=document.getElementById('cases');
+CASES.forEach(c=>{
+ const d=document.createElement('div');d.className='card case';
+ d.innerHTML=`<h3>Berkas ${c.id} — ${c.nama}</h3><figure><img src="images/${c.img}" alt="${c.nama}"></figure><div class="row"><button data-a="tree">🌳 Ini TREE</button><button data-a="graph" class="ghost">🕸️ Ini GRAPH (bukan tree)</button></div><div class="fb"></div><details><summary>Lihat bukti hitungan</summary><table><tr><th>n</th><th>m</th><th>Terhubung</th><th>Siklus</th><th>m = n − 1</th></tr><tr><td>${c.n}</td><td>${c.m}</td><td>${c.t}</td><td>${c.s}</td><td>${c.e}</td></tr></table><p>${c.why}</p></details>`;
+ cs.appendChild(d);
+ d.querySelectorAll('button').forEach(b=>b.onclick=()=>{const ok=(b.dataset.a==='tree')===c.tree;const f=d.querySelector('.fb');f.className='fb '+(ok?'ok':'bad');f.textContent=ok?'Putusan tepat! Buka “bukti hitungan” untuk mencocokkan.':'Belum tepat. Hitung ulang n, m, dan cek siklus dulu ya.';});
+});
+// Latihan mandiri
+const lt=document.getElementById('lat');
+LAT.forEach((q,i)=>{const d=document.createElement('details');d.innerHTML=`<summary>${i+1}. ${q[0]}</summary><p><b>Jawaban:</b> ${q[1]}</p>`;lt.appendChild(d);});
+</script>
+</body>
+</html>

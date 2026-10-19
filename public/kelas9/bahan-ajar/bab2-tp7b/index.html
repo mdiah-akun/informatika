@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bengkel Modul Kasir Bazar PKS — TP 7b</title>
+<style>
+:root{--navy:#1E2761;--deep:#065A82;--teal:#1C7293;--mint:#02C39A;--coral:#F96167;--gold:#F9E795;--ink:#1A1A2E;--bg:#FBFCFE;--card:#fff;--line:#E4EAF0;--muted:#5B6774;--pale:#EAF3F8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Calibri,Arial,sans-serif;line-height:1.6}
+h1,h2,h3{font-family:Cambria,Georgia,serif;color:var(--navy);margin:0 0 .4em}.wrap{max-width:920px;margin:0 auto;padding:0 20px}
+header.hero{background:linear-gradient(135deg,var(--navy),var(--deep));color:#fff;padding:56px 0 48px;position:relative;overflow:hidden}
+header.hero::before{content:"";position:absolute;right:-80px;top:-100px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.06)}
+.kicker{display:inline-block;background:rgba(249,231,149,.18);color:var(--gold);font-weight:700;font-size:13px;padding:6px 14px;border-radius:999px;margin-bottom:16px}
+header.hero h1{color:#fff;font-size:2.2rem;max-width:700px}header.hero p{color:#CFE3ED;max-width:620px;margin:0;font-size:1.05rem}
+nav{position:sticky;top:0;background:rgba(251,252,254,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);z-index:10}
+nav .wrap{display:flex;gap:4px;overflow-x:auto;padding:8px 20px}nav a{white-space:nowrap;color:var(--teal);text-decoration:none;font-size:.86rem;font-weight:600;padding:8px 12px;border-radius:8px}nav a:hover{background:var(--pale)}
+section{margin:44px 0;scroll-margin-top:60px}.eyebrow{color:var(--coral);font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;box-shadow:0 1px 3px rgba(20,30,50,.05)}
+figure{margin:20px 0;text-align:center}figure img{max-width:100%;border-radius:10px;border:1px solid var(--line)}figcaption{font-size:.88rem;color:var(--muted);font-style:italic;margin-top:8px}
+.callout{background:#FFF6E5;border-left:5px solid var(--coral);border-radius:10px;padding:14px 18px;margin:18px 0}
+code,pre{font-family:"Courier New",monospace}pre{background:#F4F7FA;border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;font-size:.88rem;line-height:1.5;margin:10px 0}
+code.i{background:#EEF3F7;color:var(--deep);padding:1px 6px;border-radius:5px;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:16px}
+.pill{border-radius:14px;padding:18px;color:#fff}.pill h3{color:#fff;font-size:1.1rem}.pill p{margin:0;font-size:.92rem}
+.p1{background:var(--deep)}.p2{background:var(--teal)}.p3{background:var(--mint);color:var(--navy)}.p3 h3{color:var(--navy)}.p4{background:var(--coral)}
+label{font-weight:700;font-size:.9rem;display:block;margin:10px 0 4px}input,select{font:inherit;padding:8px 10px;border:1.5px solid var(--line);border-radius:8px;width:100%;max-width:260px}
+button{font:inherit;font-weight:700;background:var(--deep);color:#fff;border:0;border-radius:10px;padding:10px 18px;cursor:pointer;margin:8px 8px 0 0}button:hover{background:var(--navy)}button.alt{background:var(--coral)}button:disabled{opacity:.45;cursor:default}
+.row{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end}.out{margin-top:14px;padding:14px 16px;border-radius:10px;background:var(--pale);border:1.5px dashed var(--teal);min-height:54px}
+.stackbox{display:flex;flex-direction:column-reverse;gap:6px;min-height:60px}.frame{background:var(--deep);color:#fff;border-radius:8px;padding:8px 12px;font-family:"Courier New",monospace;font-size:.85rem;font-weight:700}.frame.top{background:var(--coral)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:720px){.two{grid-template-columns:1fr}}
+.log{font-family:"Courier New",monospace;font-size:.86rem;max-height:260px;overflow:auto;background:#F4F7FA;border:1px solid var(--line);border-radius:10px;padding:10px 12px}.log div{padding:2px 0}.ret{color:#0A8F72;font-weight:700}.call{color:var(--navy);font-weight:700}.act{color:var(--coral);font-weight:700}
+.opt{display:block;width:100%;text-align:left;background:#fff;color:var(--ink);border:2px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0;font-weight:500}.opt:hover{border-color:var(--teal);background:var(--pale)}
+.opt.ok{border-color:var(--mint);background:#EAFBF6}.opt.no{border-color:var(--coral);background:#FFF1F1}
+.fb{margin-top:8px;padding:10px 14px;border-radius:8px;font-size:.93rem}.fb.ok{background:#EAFBF6;border-left:4px solid var(--mint)}.fb.no{background:#FFF1F1;border-left:4px solid var(--coral)}
+.codeline{display:block;width:100%;text-align:left;font-family:"Courier New",monospace;font-size:.88rem;background:#fff;color:var(--ink);border:2px solid var(--line);border-radius:8px;padding:8px 12px;margin:6px 0;font-weight:700}.codeline:hover{border-color:var(--teal)}.codeline.ok{border-color:var(--mint);background:#EAFBF6}.codeline.no{border-color:var(--coral);background:#FFF1F1}
+table{border-collapse:collapse;width:100%;font-size:.92rem}th{background:var(--deep);color:#fff;text-align:left;padding:8px 10px}td{border:1px solid var(--line);padding:8px 10px}
+.score{font-family:Cambria,serif;font-size:1.6rem;color:var(--navy)}footer{background:var(--navy);color:#CFE3ED;padding:28px 0;margin-top:56px;font-size:.9rem}
+</style></head><body>
+<header class="hero"><div class="wrap"><span class="kicker">INFORMATIKA · KELAS IX · BAB II · TP 7 PERTEMUAN 2</span><h1>Bengkel Modul: Kasir Bazar PKS</h1><p>Merakit, menelusuri, memperbaiki, dan menguji modul program. Ada mesin modul, penelusur jejak, detektif bug, dan kuis.</p></div></header>
+<nav><div class="wrap"><a href="#kasus">Kasus</a><a href="#anatomi">Anatomi</a><a href="#mesin">Mesin Modul</a><a href="#jejak">Jejak</a><a href="#lingkup">Lokal vs Global</a><a href="#siap">SIAP</a><a href="#bug">Detektif Bug</a><a href="#kuis">Kuis</a></div></nav>
+<main class="wrap">
+<section id="kasus"><div class="eyebrow">Cerita pembuka</div><h2>Kasir untuk Bazar PKS</h2>
+<p>Minggu depan ada Bazar PKS di sekolah: Amplang, Nasi Kuning, dan Es Teh. Panitia butuh kasir digital. Kemarin kamu belajar memecah program menjadi <b>modul</b>. Hari ini kamu merakit, menelusuri, memperbaiki, dan menguji modul-modul itu.</p>
+<figure><img src="images/kasus_bazar.png" alt="Kasus Kasir Bazar PKS"><figcaption>Menu, aturan diskon, dan alur kasir</figcaption></figure>
+<div class="callout"><b>Pertanyaan penuntun:</b> bagaimana memecah program kasir menjadi modul yang mudah diuji dan aman diubah saat aturan diskon berganti?</div></section>
+<section id="anatomi"><div class="eyebrow">Konsep 1</div><h2>Anatomi sebuah modul</h2>
+<p><b>Parameter</b> = wadah input yang ditulis pada definisi. <b>Argumen</b> = nilai nyata yang dikirim saat pemanggilan. <b>Return</b> = nilai yang dikirim balik. Argumen masuk ke parameter menurut <b>urutan</b>.</p>
+<figure><img src="images/anatomi_modul.png" alt="Anatomi modul"><figcaption>Definisi dan pemanggilan</figcaption></figure></section>
+<section id="mesin"><div class="eyebrow">Coba sendiri</div><h2>Mesin Modul</h2>
+<div class="card"><p>Pilih sebuah modul, isi argumennya, lalu panggil. Perhatikan: <b>urutan argumen menentukan hasil</b>.</p>
+<div class="row"><div><label for="mm">Modul</label><select id="mm"><option value="sub">hitungSubtotal(harga, jumlah)</option><option value="dis">hitungDiskon(subtotal)</option><option value="tot">hitungTotal(harga, jumlah)</option><option value="kem">hitungKembalian(bayar, total)</option><option value="sel">selisih(a, b) = a − b</option></select></div>
+<div><label for="a1" id="l1">Argumen 1</label><input id="a1" type="number" value="15000"></div><div><label for="a2" id="l2">Argumen 2</label><input id="a2" type="number" value="2"></div></div>
+<button id="callBtn">Panggil modul</button><button class="alt" id="swapBtn">Tukar urutan argumen</button>
+<div class="out" id="mout">Hasil akan muncul di sini.</div></div></section>
+<section id="jejak"><div class="eyebrow">Konsep 2</div><h2>Jejak eksekusi dan tumpukan panggilan</h2>
+<p>Saat sebuah modul memanggil modul lain, program pergi ke sana, mengerjakannya, lalu <b>kembali</b> ke pemanggil. Modul yang dipanggil paling akhir selesai paling dulu.</p>
+<figure><img src="images/jejak_eksekusi.png" alt="Jejak eksekusi"><figcaption>Satu transaksi: Amplang × 2 dibayar Rp30.000</figcaption></figure>
+<div class="card"><h3>Penelusur Jejak</h3><p>Pilih kasus uji, lalu tekan <b>Langkah berikutnya</b>. Lihat tumpukan di sebelah kanan.</p>
+<label for="tc">Kasus</label><select id="tc"></select><br><button id="stepBtn">Langkah berikutnya</button><button class="alt" id="resetBtn">Ulangi</button>
+<div class="two" style="margin-top:14px"><div><b>Catatan langkah</b><div class="log" id="tlog"></div></div><div><b>Tumpukan panggilan</b><div class="stackbox" id="tstack"></div></div></div></div>
+<figure><img src="images/call_stack.png" alt="Tumpukan panggilan"><figcaption>Kedalaman tumpukan maksimum 4 modul</figcaption></figure></section>
+<section id="lingkup"><div class="eyebrow">Konsep 3</div><h2>Variabel lokal dan global</h2>
+<p>Parameter dan variabel di dalam modul adalah <b>kamar pribadi</b>. Kirim data lewat <b>parameter</b>, terima lewat <b>return</b>.</p>
+<figure><img src="images/lingkup_variabel.png" alt="Lokal vs global"></figure>
+<div class="card"><h3>Prediksi dulu!</h3><pre>prosedur utama
+    x ← 5
+    ubah()
+    tampil x
+
+prosedur ubah
+    x ← 99      (x lokal milik ubah)</pre><p>Apa yang ditampilkan?</p><div id="scopeq"></div></div></section>
+<section id="siap"><div class="eyebrow">Konsep 4</div><h2>Aturan SIAP dan peta modul</h2>
+<figure><img src="images/siap.png" alt="Aturan SIAP"></figure><figure><img src="images/peta_modul_kasir.png" alt="Peta modul kasir"><figcaption>Mint = fungsi, coral = prosedur, panah = memanggil</figcaption></figure>
+<h3>Refactoring: dari kode berulang menjadi modul</h3><figure><img src="images/refactor_sebelum_sesudah.png" alt="Refactoring"></figure>
+<div class="card"><h3>Fungsi atau prosedur?</h3><p>Klik jawaban yang tepat untuk setiap modul.</p><div id="fp"></div></div></section>
+<section id="bug"><div class="eyebrow">Berburu bug</div><h2>Detektif Bug</h2><p>Ada empat kartu bug. Baca kode dan gejalanya, lalu klik <b>baris yang salah</b>.</p><div id="bugs"></div></section>
+<section id="kuis"><div class="eyebrow">Uji dirimu</div><h2>Kuis Akhir</h2><div class="card" id="quiz"></div></section>
+</main>
+<footer><div class="wrap">SMP Negeri 14 Tarakan · Informatika Kelas IX · Bab II TP 7 Pertemuan 2</div></footer>
+<script>
+const TESTS=[{"no":1,"jenis":"Biasa","item":"Amplang","jml":2,"bayar":30000,"harga":15000,"sub":30000,"dis":1500,"tot":28500,"cukup":true,"valid":true,"kemb":1500,"kurang":null,"hasil":"Kembali Rp1.500"},{"no":2,"jenis":"Biasa (uang kurang)","item":"Amplang","jml":4,"bayar":50000,"harga":15000,"sub":60000,"dis":6000,"tot":54000,"cukup":false,"valid":true,"kemb":null,"kurang":4000,"hasil":"Uang kurang Rp4.000"},{"no":3,"jenis":"Biasa (tanpa diskon)","item":"Es Teh","jml":3,"bayar":20000,"harga":5000,"sub":15000,"dis":0,"tot":15000,"cukup":true,"valid":true,"kemb":5000,"kurang":null,"hasil":"Kembali Rp5.000"},{"no":4,"jenis":"Batas diskon 5%","item":"Es Teh","jml":5,"bayar":25000,"harga":5000,"sub":25000,"dis":1250,"tot":23750,"cukup":true,"valid":true,"kemb":1250,"kurang":null,"hasil":"Kembali Rp1.250"},{"no":5,"jenis":"Batas diskon 10%","item":"Es Teh","jml":10,"bayar":50000,"harga":5000,"sub":50000,"dis":5000,"tot":45000,"cukup":true,"valid":true,"kemb":5000,"kurang":null,"hasil":"Kembali Rp5.000"},{"no":6,"jenis":"Tepat di bawah batas / uang pas","item":"Nasi Kuning","jml":2,"bayar":24000,"harga":12000,"sub":24000,"dis":0,"tot":24000,"cukup":true,"valid":true,"kemb":0,"kurang":null,"hasil":"Kembali Rp0"},{"no":7,"jenis":"Data tidak valid","item":"Bakso","jml":1,"bayar":10000,"harga":0,"valid":false,"hasil":"Menu tidak ditemukan"}], BUGS=[{"id":"A","judul":"Diskon batas 10% meleset","modul":"hitungDiskon","jenis":"Kesalahan kondisi batas (> bukan ≥)","kode":"fungsi hitungDiskon(subtotal)\n    jika subtotal > 50000\n        kembalikan subtotal × 10 / 100\n    jika subtotal ≥ 25000\n        kembalikan subtotal × 5 / 100\n    kembalikan 0","gejala":"Kasus: Es Teh × 10, dibayar Rp50.000 (subtotal Rp50.000).\nTampil: Kembali Rp2.500.   Seharusnya: Kembali Rp5.000.","baris":["jika subtotal > 50000","kembalikan subtotal × 10 / 100","jika subtotal ≥ 25000","kembalikan 0"],"salah":0,"perbaikan":"Ganti > menjadi ≥ → jika subtotal ≥ 50000","alasan":"Pada subtotal tepat 50000, syarat > bernilai salah sehingga jatuh ke diskon 5% (2500 dan bukan 5000). Selalu uji nilai batas."},{"id":"B","judul":"Kembalian negatif","modul":"hitungKembalian","jenis":"Urutan argumen tertukar","kode":"fungsi hitungKembalian(total, bayar)\n    kembalikan bayar − total\n\n...\nkembali ← hitungKembalian(bayar, total)","gejala":"Kasus: Amplang × 2, total Rp28.500, dibayar Rp30.000.\nTampil: Kembali −Rp1.500.   Seharusnya: Kembali Rp1.500.","baris":["fungsi hitungKembalian(total, bayar)","kembalikan bayar − total","kembali ← hitungKembalian(bayar, total)"],"salah":2,"perbaikan":"Samakan urutan: panggil hitungKembalian(total, bayar), atau ubah parameter menjadi (bayar, total)","alasan":"Argumen masuk ke parameter menurut URUTAN, bukan menurut nama variabel. Parameter total menerima 30000 dan parameter bayar menerima 28500, hasilnya 28500 − 30000 = −1500."},{"id":"C","judul":"Total hilang","modul":"hitungTotal","jenis":"Fungsi tanpa nilai kembalian (return)","kode":"fungsi hitungTotal(harga, jumlah)\n    sub ← hitungSubtotal(harga, jumlah)\n    hasilAkhir ← sub − hitungDiskon(sub)","gejala":"Kasus: Amplang × 2, dibayar Rp30.000.\nTampil: Total kosong, dan pengecekan uang selalu gagal.","baris":["sub ← hitungSubtotal(harga, jumlah)","hasilAkhir ← sub − hitungDiskon(sub)","(tidak ada baris kembalikan)"],"salah":2,"perbaikan":"Tambahkan baris: kembalikan sub − hitungDiskon(sub)","alasan":"Hasil hanya disimpan di variabel lokal hasilAkhir lalu hilang ketika modul selesai. Fungsi wajib mengirim hasil lewat return."},{"id":"D","judul":"Variabel dari modul lain","modul":"layaniPelanggan","jenis":"Pelanggaran lingkup (variabel lokal dipakai di luar modulnya)","kode":"fungsi hitungTotal(harga, jumlah)\n    sub ← hitungSubtotal(harga, jumlah)\n    kembalikan sub − hitungDiskon(sub)\n\nprosedur layaniPelanggan(namaItem, jumlah, bayar)\n    ...\n    total ← hitungTotal(harga, jumlah)\n    jika tidak cukup\n        tampilPesan(\"Uang kurang Rp\" + (sub − bayar))","gejala":"Kasus: Amplang × 4, dibayar Rp50.000 (uang kurang).\nTampil: galat \"variabel sub tidak dikenal\" (atau angka aneh).","baris":["sub ← hitungSubtotal(harga, jumlah)","total ← hitungTotal(harga, jumlah)","tampilPesan(\"Uang kurang Rp\" + (sub − bayar))"],"salah":2,"perbaikan":"Pakai total milik layaniPelanggan sendiri: tampilPesan(\"Uang kurang Rp\" + (total − bayar))","alasan":"sub adalah variabel LOKAL hitungTotal, hanya hidup di dalam kamarnya. Modul lain harus memakai nilai yang DIKEMBALIKAN (total), bukan mengintip isi modul lain."}], QUIZ=[{"q":"Perhatikan definisi: fungsi hitungSubtotal(harga, jumlah). Kata “harga” dan “jumlah” pada definisi tersebut disebut ...","o":["Argumen","Parameter","Nilai kembalian","Prosedur"],"a":1,"p":"Parameter adalah wadah input yang ditulis saat definisi; argumen adalah nilai yang dikirim saat pemanggilan."},{"q":"Modul dipanggil dengan hitungSubtotal(12000, 3). Di dalam modul, parameter harga bernilai ...","o":["3","36000","12000","Tidak bernilai apa pun"],"a":2,"p":"Argumen pertama (12000) masuk ke parameter pertama (harga); argumen kedua (3) ke parameter kedua (jumlah)."},{"q":"Nilai yang dikembalikan hitungDiskon(30000) adalah ...","o":["Rp1.500","Rp0","Rp3.000","Rp5.000"],"a":0,"p":"30000 ≥ 25000 tetapi < 50000 sehingga diskon 5%: 30000 × 5 / 100 = 1500."},{"q":"hitungTotal(15000, 4) memanggil hitungSubtotal dan hitungDiskon. Nilai yang dikembalikan adalah ...","o":["Rp60.000","Rp57.000","Rp6.000","Rp54.000"],"a":3,"p":"Subtotal 60000; diskon 10% = 6000; total = 60000 − 6000 = 54000."},{"q":"Aturan diskon: subtotal ≥ 50000 mendapat 10%. Nilai hitungDiskon(50000) yang BENAR adalah ...","o":["Rp1.250","Rp2.500","Rp0","Rp5.000"],"a":3,"p":"Pada nilai batas 50000, syarat ≥ bernilai benar sehingga diskon 10% = 5000. Jika salah memakai >, hasilnya 2500."},{"q":"Modul tampilStruk(namaItem, jumlah, total, bayar, kembali) hanya menampilkan struk ke layar. Modul ini paling tepat disebut ...","o":["Fungsi, karena memiliki parameter","Fungsi, karena memberi hasil di layar","Prosedur, karena menjalankan aksi tanpa mengembalikan nilai","Library, karena memiliki banyak baris"],"a":2,"p":"Punya parameter tidak otomatis menjadi fungsi. Kunci pembeda: apakah modul mengembalikan nilai ke pemanggil."}];
+const rp=n=>"Rp"+String(n).replace(/\B(?=(\d{3})+(?!\d))/g,".");
+const cariHarga=n=>({"Amplang":15000,"Nasi Kuning":12000,"Es Teh":5000})[n]||0;
+const dis=s=>s>=50000?Math.floor(s*10/100):s>=25000?Math.floor(s*5/100):0;
+// Mesin Modul
+const MM={sub:{l:["harga","jumlah"],v:[15000,2],f:(a,b)=>a*b,txt:(a,b,r)=>"harga="+a+", jumlah="+b+" → kembalikan "+a+" × "+b+" = "+r},
+dis:{l:["subtotal",""],v:[30000,0],f:a=>dis(a),txt:(a,b,r)=>"subtotal="+a+" → diskon "+(a>=50000?"10%":a>=25000?"5%":"0")+" = "+r},
+tot:{l:["harga","jumlah"],v:[15000,2],f:(a,b)=>a*b-dis(a*b),txt:(a,b,r)=>"subtotal "+a*b+" − diskon "+dis(a*b)+" = "+r},
+kem:{l:["bayar","total"],v:[30000,28500],f:(a,b)=>a-b,txt:(a,b,r)=>"parameter bayar="+a+", total="+b+" → "+a+" − "+b+" = "+r},
+sel:{l:["a","b"],v:[3,10],f:(a,b)=>a-b,txt:(a,b,r)=>"a="+a+", b="+b+" → "+a+" − "+b+" = "+r}};
+const mm=document.getElementById("mm"),a1=document.getElementById("a1"),a2=document.getElementById("a2");
+function setMM(){const m=MM[mm.value];document.getElementById("l1").textContent="Argumen 1 → parameter "+m.l[0];document.getElementById("l2").textContent=m.l[1]?"Argumen 2 → parameter "+m.l[1]:"(tidak dipakai)";a1.value=m.v[0];a2.value=m.v[1];a2.disabled=!m.l[1];document.getElementById("mout").textContent="Hasil akan muncul di sini."}
+mm.onchange=setMM;setMM();
+function callMM(){const m=MM[mm.value],x=+a1.value,y=+a2.value,r=m.f(x,y);document.getElementById("mout").innerHTML="<b>Nilai kembalian: "+r+"</b><br><small>"+m.txt(x,y,r)+"</small>"}
+document.getElementById("callBtn").onclick=callMM;
+document.getElementById("swapBtn").onclick=()=>{const t=a1.value;a1.value=a2.value;a2.value=t;callMM()};
+// Penelusur
+const tc=document.getElementById("tc");TESTS.forEach(t=>{const o=document.createElement("option");o.value=t.no-1;o.textContent=t.no+". "+t.item+" × "+t.jml+", bayar "+rp(t.bayar)+" ("+t.jenis+")";tc.appendChild(o)});
+let steps=[],si=0;
+function build(t){const S=[];const push=(stack,log,cls)=>S.push({stack:stack.slice(),log,cls});
+ const base=["utama()"];const lp='layaniPelanggan("'+t.item+'", '+t.jml+', '+t.bayar+')';
+ push(base,"utama memanggil "+lp,"call");const st=[...base,"layaniPelanggan(...)"];push(st,"layaniPelanggan mulai","call");
+ const h=cariHarga(t.item);push([...st,'cariHarga("'+t.item+'")'],"cariHarga → return "+h,"ret");
+ if(!h){push(st,'tampilPesan("Menu tidak ditemukan") → prosedur menampilkan pesan','act');push(base,"layaniPelanggan selesai. Kontrol kembali ke utama.","ret");return S}
+ const hT="hitungTotal("+h+", "+t.jml+")";push([...st,hT],"layaniPelanggan memanggil "+hT,"call");
+ push([...st,hT,"hitungSubtotal("+h+", "+t.jml+")"],"hitungSubtotal → return "+t.sub,"ret");
+ push([...st,hT,"hitungDiskon("+t.sub+")"],"hitungDiskon("+t.sub+") → return "+t.dis,"ret");
+ push([...st,hT],"hitungTotal → return "+t.sub+" − "+t.dis+" = "+t.tot,"ret");
+ push([...st,"cekUangCukup("+t.bayar+", "+t.tot+")"],"cekUangCukup → return "+(t.cukup?"benar":"salah"),"ret");
+ if(t.cukup){push([...st,"hitungKembalian("+t.bayar+", "+t.tot+")"],"hitungKembalian → return "+t.kemb,"ret");push([...st,"tampilStruk(...)"],"tampilStruk menampilkan struk: total "+rp(t.tot)+", bayar "+rp(t.bayar)+", kembali "+rp(t.kemb),"act")}
+ else push([...st,'tampilPesan("Uang kurang '+rp(t.kurang)+'")'],"tampilPesan menampilkan: Uang kurang "+rp(t.kurang),"act");
+ push(base,"layaniPelanggan selesai. Kontrol kembali ke utama.","ret");return S}
+function resetT(){steps=build(TESTS[+tc.value]);si=0;document.getElementById("tlog").innerHTML="";document.getElementById("tstack").innerHTML="";document.getElementById("stepBtn").disabled=false}
+function stepT(){if(si>=steps.length)return;const s=steps[si++];const l=document.getElementById("tlog");const d=document.createElement("div");d.className=s.cls;d.textContent=si+". "+s.log;l.appendChild(d);l.scrollTop=l.scrollHeight;const sb=document.getElementById("tstack");sb.innerHTML="";s.stack.forEach((f,i)=>{const e=document.createElement("div");e.className="frame"+(i===s.stack.length-1?" top":"");e.textContent=f;sb.appendChild(e)});if(si>=steps.length)document.getElementById("stepBtn").disabled=true}
+tc.onchange=resetT;document.getElementById("resetBtn").onclick=resetT;document.getElementById("stepBtn").onclick=stepT;resetT();
+// generic choice builder
+function choice(host,opts,ans,why){const box=document.getElementById(host);let done=false;opts.forEach((o,i)=>{const b=document.createElement("button");b.className="opt";b.textContent=o;b.onclick=()=>{if(done)return;done=true;[...box.querySelectorAll(".opt")].forEach((x,j)=>{if(j===ans)x.classList.add("ok");else if(j===i)x.classList.add("no")});const f=document.createElement("div");f.className="fb "+(i===ans?"ok":"no");f.textContent=(i===ans?"Tepat! ":"Belum tepat. ")+why;box.appendChild(f)};box.appendChild(b)})}
+choice("scopeq",["5","99","104","Galat"],0,"x di dalam ubah adalah variabel lokal milik ubah, sehingga x milik utama tetap 5.");
+// fungsi/prosedur
+const FP=[["hitungSubtotal(harga, jumlah)",0,"Mengembalikan harga × jumlah."],["tampilStruk(...)",1,"Hanya menampilkan struk, tidak mengembalikan nilai."],["cekUangCukup(bayar, total)",0,"Mengembalikan benar atau salah."],["tampilPesan(teks)",1,"Hanya menampilkan pesan."],["hitungKembalian(bayar, total)",0,"Mengembalikan bayar − total."]];
+FP.forEach((f,i)=>{const d=document.createElement("div");d.id="fp"+i;d.innerHTML="<p><code class='i'>"+f[0]+"</code></p>";document.getElementById("fp").appendChild(d);choice("fp"+i,["Fungsi","Prosedur"],f[1],f[2])});
+// bugs
+BUGS.forEach(b=>{const c=document.createElement("div");c.className="card";c.style.margin="16px 0";c.innerHTML="<h3>Kartu "+b.id+" — modul "+b.modul+"</h3><pre>"+b.kode.replace(/</g,"&lt;")+"</pre><p><b>Gejala:</b><br>"+b.gejala.replace(/\n/g,"<br>")+"</p><p><b>Klik baris yang salah:</b></p>";let done=false;b.baris.forEach((l,i)=>{const e=document.createElement("button");e.className="codeline";e.textContent=l;e.onclick=()=>{if(done)return;done=true;[...c.querySelectorAll(".codeline")].forEach((x,j)=>{if(j===b.salah)x.classList.add("ok");else if(j===i)x.classList.add("no")});const f=document.createElement("div");f.className="fb "+(i===b.salah?"ok":"no");f.innerHTML=(i===b.salah?"<b>Betul!</b> ":"<b>Belum tepat.</b> ")+"Jenis bug: "+b.jenis+".<br><b>Perbaikan:</b> "+b.perbaikan+"<br>"+b.alasan;c.appendChild(f)};c.appendChild(e)});document.getElementById("bugs").appendChild(c)});
+// kuis
+(function(){const host=document.getElementById("quiz");let i=0,score=0;function show(){host.innerHTML="";if(i>=QUIZ.length){host.innerHTML="<p class='score'>Skor kamu: "+score+" / "+QUIZ.length+"</p><p>"+(score>=5?"Hebat! Kamu siap membangun kasir.":score>=3?"Bagus. Ulangi bagian jejak eksekusi dan SIAP.":"Ayo baca lagi anatomi modul dan coba Penelusur Jejak.")+"</p>";const b=document.createElement("button");b.textContent="Ulangi kuis";b.onclick=()=>{i=0;score=0;show()};host.appendChild(b);return}
+const q=QUIZ[i];const h=document.createElement("p");h.innerHTML="<b>Soal "+(i+1)+" dari "+QUIZ.length+".</b> "+q.q;host.appendChild(h);let done=false;q.o.forEach((o,j)=>{const b=document.createElement("button");b.className="opt";b.textContent="ABCD"[j]+".  "+o;b.onclick=()=>{if(done)return;done=true;if(j===q.a)score++;[...host.querySelectorAll(".opt")].forEach((x,k)=>{if(k===q.a)x.classList.add("ok");else if(k===j)x.classList.add("no")});const f=document.createElement("div");f.className="fb "+(j===q.a?"ok":"no");f.textContent=(j===q.a?"Tepat! ":"Belum tepat. ")+q.p;host.appendChild(f);const n=document.createElement("button");n.textContent=i+1<QUIZ.length?"Soal berikutnya":"Lihat skor";n.onclick=()=>{i++;show()};host.appendChild(n)};host.appendChild(b)})}show()})();
+</script></body></html>

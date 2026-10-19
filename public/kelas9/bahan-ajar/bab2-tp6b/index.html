@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studio Rancang Library — TP 6 Pertemuan 2</title>
+<style>
+:root{--navy:#1E2761;--deep:#065A82;--teal:#1C7293;--mint:#02C39A;--coral:#F96167;--gold:#F9E795;--ink:#1A1A2E;--bg:#FBFCFE;--card:#FFFFFF;--pale:#EAF4F8;--line:#E4EAF0;--muted:#5B6774;--okbg:#E6F8F3;--badbg:#FDECEC}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Segoe UI",Calibri,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:17px}
+header.hero{background:linear-gradient(135deg,var(--navy),var(--deep));color:#fff;padding:48px 20px 56px}
+.wrap{max-width:900px;margin:0 auto;padding:0 18px}
+.hero .tag{color:var(--mint);font-weight:700;letter-spacing:.12em;font-size:.8rem}
+.hero h1{font-size:2.4rem;margin:.3em 0 .2em;line-height:1.15}
+.hero p{color:#CFE3ED;max-width:640px;margin:0}
+nav.toc{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);z-index:5}
+nav.toc .wrap{display:flex;gap:6px;overflow-x:auto;padding:8px 18px}
+nav.toc a{white-space:nowrap;text-decoration:none;color:var(--deep);font-size:.85rem;font-weight:600;padding:6px 12px;border-radius:99px;background:var(--pale)}
+nav.toc a:hover{background:var(--mint);color:#fff}
+section{padding:36px 0 8px}
+h2{color:var(--navy);font-size:1.6rem;margin:0 0 .4em;border-bottom:3px solid var(--mint);padding-bottom:6px;display:inline-block}
+h3{color:var(--deep);margin:1.2em 0 .3em}
+img.fig{width:100%;height:auto;border:1px solid var(--line);border-radius:12px;background:#fff;margin:10px 0 4px}
+.cap{font-size:.85rem;color:var(--muted);text-align:center;margin:0 0 12px}
+.callout{border-left:6px solid var(--teal);background:var(--pale);padding:12px 16px;border-radius:0 10px 10px 0;margin:14px 0}
+.callout.coral{border-color:var(--coral);background:var(--badbg)}
+.callout.mint{border-color:var(--mint);background:var(--okbg)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:8px 14px;background:var(--deep);color:#fff;font-weight:600}
+button:hover{background:var(--navy)}
+button.alt{background:var(--pale);color:var(--deep);border:1px solid var(--line)}
+button.alt:hover{background:var(--mint);color:#fff}
+button:disabled{opacity:.5;cursor:default}
+.fb{margin-top:8px;padding:8px 12px;border-radius:10px;font-size:.95rem;display:none}
+.fb.ok{display:block;background:var(--okbg);border:1px solid var(--mint)}
+.fb.bad{display:block;background:var(--badbg);border:1px solid var(--coral)}
+code,.mono{font-family:Consolas,"Courier New",monospace;background:#EEF3F7;padding:1px 6px;border-radius:6px;font-size:.92em}
+input,select{font:inherit;padding:7px 10px;border:1px solid #C9D6DF;border-radius:8px;max-width:100%}
+input[type=number],input[type=text]{width:130px}
+.det .btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.score{font-weight:700;color:var(--deep)}
+.chips li{flex-wrap:wrap;list-style:none;display:flex;gap:10px;align-items:center;justify-content:space-between;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0}
+ol.order{padding:0}
+ol.order li{list-style:none;display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0}
+ol.order .n{width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem}
+ol.order .mv{margin-left:auto;display:flex;gap:4px}
+ol.order .mv button{padding:2px 9px}
+.q p{font-weight:600;margin:.2em 0 .5em}
+.q label{display:block;padding:6px 10px;border:1px solid var(--line);border-radius:8px;margin:5px 0;cursor:pointer;background:#fff}
+.q label:hover{background:var(--pale)}
+.out{font-size:1.15rem;font-weight:700;color:var(--navy)}
+footer{margin:48px 0 0;background:var(--navy);color:#CFE3ED;padding:26px 0;font-size:.9rem;text-align:center}
+@media (max-width:560px){body{font-size:16px}.hero h1{font-size:1.8rem}input[type=number],input[type=text]{width:100px}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+<div class="tag">INFORMATIKA KELAS IX · BAB II · TP 6 (PERTEMUAN 2)</div>
+<h1>Studio Rancang Library</h1>
+<p>Naik level dari “mendaftar sub-masalah” menjadi merancang library yang rapi, bisa diuji, dan bisa dipakai ulang. Kasus kita: aplikasi <b>SiLomba PKS</b> panitia SMP Negeri 14 Tarakan.</p>
+</div></header>
+<nav class="toc"><div class="wrap">
+<a href="#kasus">Kasus</a><a href="#bertingkat">Dekomposisi</a><a href="#modul">MODUL</a><a href="#detektif">Detektif</a><a href="#kartu">Kartu &amp; Uji Meja</a><a href="#library">Susun Library</a><a href="#urutan">Urutan</a><a href="#kuis">Kuis</a>
+</div></nav>
+<main class="wrap">
+
+<section id="kasus"><h2>1. Tantangan Panitia</h2>
+<p>Pada pertemuan pertama kamu sudah kenal dekomposisi dan library. Kali ini panitia PKS membuat aplikasi <b>SiLomba PKS</b> untuk Lomba Poster Digital:</p>
+<ul>
+<li>mendata peserta (hanya <b>kelas 7, 8, 9</b>);</li>
+<li>menerima nilai <b>3 juri</b> (0–100), menghitung nilai akhir dan predikat;</li>
+<li>menentukan peringkat, hadiah <b>Rp300.000 / 200.000 / 100.000</b> dari dana <b>Rp1.000.000</b>;</li>
+<li>mencetak sertifikat dan rekap.</li></ul>
+<div class="callout"><b>Pertanyaan pemantik:</b> Mengapa library <i>Bangun_Datar</i> dari pertemuan 1 tidak dipakai di sini?</div>
+</section>
+
+<section id="bertingkat"><h2>2. Dekomposisi Bertingkat</h2>
+<p>Pecah masalah besar → bagian → modul kecil. <b>Berhenti memecah</b> ketika sebuah bagian sudah punya <b>satu tugas yang jelas dan bisa diuji sendiri</b>.</p>
+<img class="fig" src="images/hierarki_dekomposisi.png" alt="Diagram dekomposisi tiga tingkat aplikasi SiLomba PKS: empat bagian dan enam belas modul kecil">
+<p class="cap">Gambar 1. Tiga tingkat dekomposisi SiLomba PKS</p>
+</section>
+
+<section id="modul"><h2>3. Lima Ciri Modul yang Baik: MODUL</h2>
+<img class="fig" src="images/kriteria_modul.png" alt="Lima ciri modul: Mono-tugas, Output jelas, Dapat diuji, Ulang pakai, Label jelas">
+<p class="cap">Gambar 2. Singkatan MODUL sebagai daftar periksa</p>
+<div class="grid">
+<div class="card"><b>M</b>ono-tugas<br>Satu modul, satu tugas.</div>
+<div class="card"><b>O</b>utput jelas<br>Hasilnya jelas: angka, teks, atau benar/salah.</div>
+<div class="card"><b>D</b>apat diuji<br>Bisa dicoba dengan data contoh.</div>
+<div class="card"><b>U</b>lang pakai<br>Tidak ada modul kembar.</div>
+<div class="card"><b>L</b>abel jelas<br>Nama menjelaskan tugas.</div>
+</div></section>
+
+<section id="detektif"><h2>4. Detektif Rancangan</h2>
+<p>Untuk tiap modul di bawah, tentukan: apakah <b>sudah baik</b>, atau <b>melanggar ciri</b> yang mana? Klik satu jawaban.</p>
+<img class="fig" src="images/rancangan_buruk_baik.png" alt="Perbandingan rancangan X yang bermasalah dan rancangan Y yang baik">
+<p class="cap">Gambar 3. Rancangan X (bermasalah) dan Y (baik)</p>
+<div id="detList"></div>
+<p class="score" id="detScore"></p>
+</section>
+
+<section id="kartu"><h2>5. Kartu Spesifikasi dan Uji Meja</h2>
+<p>Kartu spesifikasi berisi: nama, input (parameter), proses, output (nilai balik), dipakai oleh, dan uji meja.</p>
+<img class="fig" src="images/kartu_spesifikasi.png" alt="Contoh kartu spesifikasi modul hitungRataRata" style="max-width:520px;display:block;margin:10px auto 4px">
+<p class="cap">Gambar 4. Contoh kartu spesifikasi</p>
+<div class="card">
+<h3 style="margin-top:0">Simulator Uji Meja</h3>
+<p>Pilih modul, isi data, lalu <b>tebak dulu</b> hasilnya sebelum menekan “Jalankan”. Cobalah <b>data biasa, nilai batas, dan data salah</b>!</p>
+<div><label>Modul: <select id="simMod"></select></label></div>
+<div id="simKartu" class="callout" style="margin-top:10px"></div>
+<div id="simInputs" style="display:flex;flex-wrap:wrap;gap:10px;margin:10px 0"></div>
+<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center"><label>Tebakanku: <input type="text" id="simGuess" placeholder="mis. 80"></label><button id="simRun">Jalankan</button></div>
+<div class="fb" id="simFb"></div>
+</div></section>
+
+<section id="library"><h2>6. Susun Library Bertema</h2>
+<p>Hasil dekomposisi digabung: modul yang serupa dijadikan satu. <code>cekKelasValid</code> (7–9) dan <code>cekNilaiValid</code> (0–100) sama-sama bertanya “apakah angka ada di dalam rentang?”. Keduanya cukup diganti <code>cekDalamRentang(nilai, min, maks)</code>.</p>
+<div class="callout mint"><b>Pola yang sama → satu modul.</b> Bagian yang berbeda (7–9, 0–100) dijadikan <b>parameter</b>.</div>
+<p>Sekarang tempatkan setiap modul ke library yang paling cocok.</p>
+<ul class="chips" id="libList" style="padding:0"></ul>
+<button id="libCheck">Periksa susunan</button>
+<div class="fb" id="libFb"></div>
+<img class="fig" src="images/peta_library.png" alt="Peta library SiLomba PKS: lima library dan program utama cetakRekap" style="margin-top:18px">
+<p class="cap">Gambar 5. Satu kemungkinan peta library (rancanganmu boleh berbeda bila alasannya kuat)</p>
+</section>
+
+<section id="urutan"><h2>7. Mana yang Dibuat Duluan?</h2>
+<p>Modul yang <b>dipanggil</b> harus dibuat dan diuji lebih dulu daripada modul yang <b>memanggil</b>. Aturan panggilan: <code>tambahPeserta</code> memanggil <code>cekDalamRentang</code>; <code>cetakRekap</code> memanggil semua modul lain; <code>buatKalimatSertifikat</code> dan <code>hitungRataRata</code> tidak memanggil modul lain. Urutkan dengan tombol ▲ ▼.</p>
+<ol class="order" id="ordList"></ol>
+<button id="ordCheck">Periksa urutan</button>
+<div class="fb" id="ordFb"></div>
+</section>
+
+<section id="kuis"><h2>8. Kuis Penutup</h2>
+<div id="quiz"></div>
+<button id="quizCheck">Periksa jawaban</button>
+<p class="score" id="quizScore"></p>
+</section>
+</main>
+<footer><div class="wrap">SMP Negeri 14 Tarakan · Informatika Kelas IX · Bab II TP 6 (Pertemuan 2)<br>Pertemuan berikutnya: TP 7 — Modularisasi Program</div></footer>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+function fb(el,ok,html){el.className='fb '+(ok?'ok':'bad');el.innerHTML=html;}
+
+/* ---------- Detektif ---------- */
+const DET=[
+ {n:'prosesSemua() — menghitung nilai, mencari juara, menghitung hadiah, lalu mencetak sertifikat sekaligus',a:'M',why:'Mengerjakan banyak tugas sekaligus (melanggar Mono-tugas). Pecah menjadi beberapa modul.'},
+ {n:'hitungNilai1() dan hitungNilai2() — isinya sama persis',a:'U',why:'Dua modul kembar: pemakaian ulang gagal. Gabungkan dan jadikan perbedaannya parameter.'},
+ {n:'proses3() — nama tidak menjelaskan apa-apa',a:'L',why:'Nama tidak menjelaskan tugas (Label tidak jelas). Namai misalnya tentukanHadiah.'},
+ {n:'cekKelas() — tidak jelas hasilnya benar/salah atau angka',a:'O',why:'Hasil modul tidak jelas (Output tidak jelas). Tegaskan di kartu: benar/salah.'},
+ {n:'hitungRataRata(n1, n2, n3) → angka',a:'OK',why:'Satu tugas, input dan output jelas, bisa diuji, namanya jelas. Sudah baik.'},
+ {n:'Modul yang baru bisa dicoba setelah SEMUA modul lain selesai dibuat',a:'D',why:'Tidak bisa diuji sendirian (melanggar Dapat diuji).'}
+];
+const detDone={};
+const detEl=$('#detList');
+DET.forEach((d,i)=>{
+ const c=document.createElement('div');c.className='card det';
+ c.innerHTML='<div><b>'+(i+1)+'.</b> '+d.n+'</div><div class="btns"></div><div class="fb"></div>';
+ const b=c.querySelector('.btns');
+ [['M','Melanggar M'],['O','Melanggar O'],['D','Melanggar D'],['U','Melanggar U'],['L','Melanggar L'],['OK','Sudah baik']].forEach(([k,t])=>{
+  const bt=document.createElement('button');bt.className='alt';bt.textContent=t;
+  bt.onclick=()=>{
+   const ok=(k===d.a);detDone[i]=ok;
+   fb(c.querySelector('.fb'),ok,(ok?'<b>Tepat!</b> ':'<b>Belum tepat.</b> Jawaban: '+(d.a==='OK'?'Sudah baik':'melanggar '+d.a)+'. ')+d.why);
+   const s=Object.values(detDone).filter(Boolean).length;
+   $('#detScore').textContent='Skor sementara: '+s+' dari '+DET.length+' (terjawab '+Object.keys(detDone).length+')';
+  };b.appendChild(bt);
+ });
+ detEl.appendChild(c);
+});
+
+/* ---------- Simulator ---------- */
+const rp=n=>'Rp'+String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+const MODS={
+ cekDalamRentang:{in:[['nilai',50],['min',0],['maks',100]],f:(n,a,b)=>(n>=a&&n<=b)?'benar':'salah',proses:'benar bila min ≤ nilai ≤ maks',out:'benar / salah',hint:'Coba nilai 0, 100 (batas) dan 101 atau -1 (salah).'},
+ hitungRataRata:{in:[['nilai1',80],['nilai2',90],['nilai3',70]],f:(a,b,c)=>+(((a+b+c)/3).toFixed(2)),proses:'(nilai1 + nilai2 + nilai3) : 3',out:'satu angka',hint:'Coba (100, 100, 100) dan (60, 75, 90).'},
+ tentukanPredikat:{in:[['nilaiAkhir',80]],f:n=>n>=85?'Sangat Baik':n>=70?'Baik':n>=55?'Cukup':'Perlu Latihan',proses:'≥85 Sangat Baik; ≥70 Baik; ≥55 Cukup; selain itu Perlu Latihan',out:'satu teks',hint:'Coba nilai batas 85, 84, 70, 69, 55, 54.'},
+ tentukanHadiah:{in:[['peringkat',1]],f:p=>p===1?rp(300000):p===2?rp(200000):p===3?rp(100000):rp(0),proses:'peringkat 1/2/3 → 300.000/200.000/100.000; selain itu 0',out:'satu angka (rupiah)',hint:'Coba peringkat 1, 3, 4.'},
+ hitungSisaDana:{in:[['dana',1000000],['totalHadiah',600000]],f:(d,t)=>rp(d-t).replace('Rp-','-Rp'),proses:'dana − totalHadiah',out:'satu angka (rupiah)',hint:'Coba dana 500000: hasilnya minus! Modul apa yang perlu ditambahkan?'},
+ cekDanaCukup:{in:[['dana',1000000],['totalHadiah',600000]],f:(d,t)=>d>=t?'benar':'salah',proses:'benar bila dana ≥ totalHadiah',out:'benar / salah',hint:'Coba dana 600000 dan totalHadiah 600000 (nilai batas).'},
+ formatRupiah:{in:[['angka',300000]],f:n=>rp(n),proses:'awalan “Rp” dan titik pemisah ribuan',out:'satu teks',hint:'Coba 0 dan 1250000.'},
+ buatKalimatSertifikat:{in:[['nama','Rina'],['peringkat',1]],f:(n,p)=>'Sertifikat Juara '+p+' diberikan kepada '+n,proses:'gabungkan teks',out:'satu teks',hint:'Ganti nama dan peringkat.'}
+};
+const sel=$('#simMod');Object.keys(MODS).forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=k;sel.appendChild(o);});
+function drawSim(){
+ const k=sel.value,m=MODS[k];
+ $('#simKartu').innerHTML='<b>Kartu: '+k+'</b><br>Input: '+m.in.map(x=>x[0]).join(', ')+'<br>Proses: '+m.proses+'<br>Output: '+m.out+'<br><i>Saran uji: '+m.hint+'</i>';
+ const box=$('#simInputs');box.innerHTML='';
+ m.in.forEach(([n,v])=>{const l=document.createElement('label');l.textContent=n+': ';const i=document.createElement('input');i.type=typeof v==='number'?'number':'text';i.value=v;i.dataset.t=typeof v;l.appendChild(i);box.appendChild(l);});
+ $('#simGuess').value='';$('#simFb').className='fb';
+}
+sel.onchange=drawSim;drawSim();
+$('#simRun').onclick=()=>{
+ const m=MODS[sel.value];
+ const vals=[...document.querySelectorAll('#simInputs input')].map(i=>i.dataset.t==='number'?parseFloat(i.value):i.value);
+ if(vals.some(v=>typeof v==='number'&&isNaN(v))){fb($('#simFb'),false,'Isi semua kolom dengan angka.');return;}
+ const r=String(m.f(...vals));const g=$('#simGuess').value.trim();
+ let html='Hasil: <span class="out">'+r+'</span>';
+ if(g){html+=(g.toLowerCase()===r.toLowerCase()||g.replace(/\./g,'')===r.replace(/\./g,''))?' — <b>Tebakanmu benar!</b>':' — tebakanmu ('+g+') belum sama. Telusuri lagi prosesnya.';}
+ fb($('#simFb'),true,html);
+};
+
+/* ---------- Susun Library ---------- */
+const LIBS=['Data_Peserta','Validasi_Data','Penilaian','Peringkat_Hadiah','Tampilan_Laporan','Program utama'];
+const LM=[
+ ['tambahPeserta',['Data_Peserta']],['hitungJumlahPeserta',['Data_Peserta']],['cariPeserta',['Data_Peserta']],
+ ['cekDalamRentang',['Validasi_Data']],['cekDanaCukup',['Validasi_Data','Peringkat_Hadiah']],
+ ['hitungRataRata',['Penilaian']],['tentukanPredikat',['Penilaian']],['cariNilaiTertinggi',['Penilaian']],
+ ['urutkanPeringkat',['Peringkat_Hadiah']],['tentukanHadiah',['Peringkat_Hadiah']],['hitungSisaDana',['Peringkat_Hadiah']],
+ ['tampilkanPesan',['Tampilan_Laporan']],['formatRupiah',['Tampilan_Laporan']],['buatKalimatSertifikat',['Tampilan_Laporan']],
+ ['cetakRekap',['Program utama']]
+];
+const ll=$('#libList');
+LM.forEach(([n],i)=>{const li=document.createElement('li');li.innerHTML='<span class="mono">'+n+'()</span>';const s=document.createElement('select');s.innerHTML='<option value="">— pilih —</option>'+LIBS.map(l=>'<option>'+l+'</option>').join('');s.id='lib'+i;li.appendChild(s);ll.appendChild(li);});
+$('#libCheck').onclick=()=>{
+ let ok=0,miss=[];
+ LM.forEach(([n,ans],i)=>{const v=$('#lib'+i).value;if(ans.includes(v))ok++;else miss.push(n);});
+ const all=ok===LM.length;
+ fb($('#libFb'),all,all?'<b>Hebat!</b> Semua modul ditempatkan dengan tepat. Perhatikan: cetakRekap bukan anggota library, ia program utama yang hanya memanggil modul lain.':'<b>'+ok+' dari '+LM.length+' tepat.</b> Periksa lagi: '+miss.join(', ')+'. Tanyakan: apa tema modul ini? Apakah ia hanya mengatur urutan pemanggilan?');
+};
+
+/* ---------- Urutan ---------- */
+let order=['cetakRekap','tambahPeserta','buatKalimatSertifikat','cekDalamRentang','hitungRataRata'];
+function drawOrd(){
+ const ol=$('#ordList');ol.innerHTML='';
+ order.forEach((n,i)=>{const li=document.createElement('li');li.innerHTML='<span class="n">'+(i+1)+'</span><span class="mono">'+n+'()</span><span class="mv"></span>';
+  const mv=li.querySelector('.mv');
+  const up=document.createElement('button');up.className='alt';up.textContent='▲';up.setAttribute('aria-label','Naikkan '+n);up.disabled=i===0;up.onclick=()=>{[order[i-1],order[i]]=[order[i],order[i-1]];drawOrd();};
+  const dn=document.createElement('button');dn.className='alt';dn.textContent='▼';dn.setAttribute('aria-label','Turunkan '+n);dn.disabled=i===order.length-1;dn.onclick=()=>{[order[i+1],order[i]]=[order[i],order[i+1]];drawOrd();};
+  mv.appendChild(up);mv.appendChild(dn);ol.appendChild(li);});
+}
+drawOrd();
+$('#ordCheck').onclick=()=>{
+ const p=n=>order.indexOf(n);
+ const ok1=p('cekDalamRentang')<p('tambahPeserta');
+ const ok2=p('cetakRekap')===order.length-1;
+ if(ok1&&ok2)fb($('#ordFb'),true,'<b>Urutan sudah benar.</b> cekDalamRentang dibuat sebelum tambahPeserta, dan program utama cetakRekap dibuat paling akhir. hitungRataRata dan buatKalimatSertifikat boleh di posisi mana pun sebelum cetakRekap karena tidak bergantung pada modul lain.');
+ else fb($('#ordFb'),false,'<b>Belum tepat.</b> '+(ok1?'':'tambahPeserta memanggil cekDalamRentang, jadi cekDalamRentang harus lebih dulu. ')+(ok2?'':'cetakRekap memanggil semua modul lain, jadi harus dibuat paling akhir.'));
+};
+
+/* ---------- Kuis ---------- */
+const QZ=[
+ {q:'Kapan sebuah bagian berhenti dipecah dalam dekomposisi bertingkat?',o:['Saat nama modulnya sudah panjang','Saat bagian itu punya satu tugas yang jelas dan bisa diuji sendiri','Saat jumlah modul mencapai sepuluh'],a:1,e:'Aturan berhenti: satu tugas yang jelas dan dapat diuji sendiri.'},
+ {q:'Hasil tentukanPredikat(84) dengan aturan ≥85 Sangat Baik, ≥70 Baik, ≥55 Cukup?',o:['Sangat Baik','Baik','Cukup'],a:1,e:'84 kurang dari 85 tetapi sudah ≥ 70, jadi Baik.'},
+ {q:'Mengapa cekKelasValid dan cekNilaiValid digabung menjadi cekDalamRentang?',o:['Pola yang sama; perbedaan batas dijadikan parameter','Supaya tidak perlu diuji','Supaya namanya lebih pendek'],a:0,e:'Mengenali pola, lalu bagian yang berbeda menjadi parameter.'},
+ {q:'Mengapa cetakRekap bukan anggota library?',o:['Karena namanya pendek','Karena ia program utama yang hanya memanggil modul library','Karena tidak punya parameter'],a:1,e:'cetakRekap mengatur urutan pemanggilan modul, bukan menghitung sendiri.'},
+ {q:'hitungSisaDana(500000, 600000) = -100000. Modul apa yang perlu ditambahkan?',o:['formatRupiah','cekDanaCukup','hitungRataRata'],a:1,e:'Periksa dana cukup SEBELUM menghitung sisa dana.'}
+];
+const qz=$('#quiz');
+QZ.forEach((x,i)=>{const d=document.createElement('div');d.className='card q';d.innerHTML='<p>'+(i+1)+'. '+x.q+'</p>'+x.o.map((t,j)=>'<label><input type="radio" name="q'+i+'" value="'+j+'"> '+t+'</label>').join('')+'<div class="fb" id="qf'+i+'"></div>';qz.appendChild(d);});
+$('#quizCheck').onclick=()=>{
+ let s=0,ans=0;
+ QZ.forEach((x,i)=>{const c=document.querySelector('input[name="q'+i+'"]:checked');if(!c){return;}ans++;const ok=+c.value===x.a;if(ok)s++;fb($('#qf'+i),ok,(ok?'<b>Benar!</b> ':'<b>Belum tepat.</b> ')+x.e);});
+ $('#quizScore').textContent='Skor: '+s+' dari '+QZ.length+(ans<QZ.length?' (masih ada soal yang belum dijawab)':'')+(s===QZ.length?' — luar biasa!':'');
+};
+})();
+</script>
+</body>
+</html>

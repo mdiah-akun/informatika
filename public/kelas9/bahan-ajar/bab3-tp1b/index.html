@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Klinik Komputer SMPN 14 · Materi Siswa Pertemuan 2</title>
+<style>
+:root{--teal:#0F766E;--teal-d:#115E59;--teal-l:#CCFBF1;--orange:#F97316;--navy:#1E3A5F;--bg:#F8FAFC;--ink:#0F172A;--mut:#475569;--line:#E2E8F0;--green:#16A34A;--red:#DC2626;--yel:#FEF9C3}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;font-family:"Segoe UI",system-ui,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;font-size:17px}
+nav{position:sticky;top:0;z-index:50;background:var(--teal);display:flex;gap:4px;align-items:center;padding:6px 12px;overflow-x:auto}
+nav b{color:#fff;margin-right:10px;white-space:nowrap}nav a{color:#E6FFFA;text-decoration:none;padding:6px 12px;border-radius:999px;font-size:15px;white-space:nowrap}nav a:hover{background:#fff;color:var(--teal-d)}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+header{background:linear-gradient(135deg,var(--teal),var(--teal-d));color:#fff;padding:30px 0 40px}
+header .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;align-items:center}
+header h1{font-size:2.2rem;line-height:1.15;margin:.3em 0}header p{color:#CCFBF1}
+header img{width:100%;border-radius:16px}
+.tag{background:var(--orange);color:#fff;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.85rem}
+section{padding:30px 0 6px}h2{color:var(--teal);font-size:1.6rem;border-left:8px solid var(--orange);padding-left:12px}h3{color:var(--navy)}
+figure{margin:16px 0;text-align:center}figure img{max-width:100%;border-radius:14px;border:1px solid var(--line);background:#fff}figcaption{font-size:.85rem;color:var(--mut);font-style:italic}
+.box{border-radius:14px;padding:12px 18px;margin:14px 0;border:2px solid var(--teal);background:var(--teal-l)}.box.tip{background:var(--yel);border-color:#CA8A04}
+.lab{background:#fff;border:2px dashed var(--orange);border-radius:16px;padding:16px;margin:18px 0}.lab h4{margin:0 0 8px;color:var(--orange)}
+input,select{font:inherit;padding:8px 10px;border:2px solid var(--line);border-radius:10px;margin:3px 4px 3px 0;max-width:100%}
+input[type=range]{padding:0}
+button,.btn{background:var(--orange);color:#fff;border:0;font:inherit;font-weight:700;padding:9px 18px;border-radius:12px;cursor:pointer;margin:3px 4px 3px 0}
+button.sec{background:var(--teal)}button:disabled{opacity:.5}
+.out{background:#F1F5F9;border-radius:10px;padding:10px 14px;margin-top:8px;font-weight:600;min-height:44px}
+.ok{color:var(--green)}.bad{color:var(--red)}
+.bar{height:26px;background:#E2E8F0;border-radius:8px;overflow:hidden;margin:4px 0}.bar i{display:block;height:100%;background:var(--teal);transition:width .3s}
+table{border-collapse:collapse;width:100%;margin:10px 0}th,td{border:1px solid var(--line);padding:6px 10px;text-align:left}th{background:var(--teal);color:#fff}
+.opt{display:block;width:100%;text-align:left;background:#fff;color:var(--ink);border:2px solid var(--line);margin:6px 0}.opt.right{border-color:var(--green);background:#DCFCE7}.opt.wrong{border-color:var(--red);background:#FEE2E2}
+.bits{display:flex;gap:6px;flex-wrap:wrap}.bit{width:46px;height:56px;border-radius:10px;background:#E2E8F0;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;font-weight:700;user-select:none}.bit.on{background:#FACC15}.bit small{font-size:.65rem;color:var(--mut)}
+footer{text-align:center;color:var(--mut);padding:30px 0 40px;font-size:.9rem}
+@media(max-width:700px){header .wrap{grid-template-columns:1fr}header h1{font-size:1.7rem}}
+</style></head><body>
+<nav><b>Klinik Komputer</b><a href="#a">A·Bahasa</a><a href="#b">B·Dapur</a><a href="#c">C·Gerbang</a><a href="#d">D·Benteng</a><a href="#proyek">Proyek</a><a href="#kuis">Kuis</a></nav>
+<header><div class="wrap"><div><span class="tag">Informatika IX · Bab III TP1 · Pertemuan 2</span><h1>Klinik Komputer SMPN 14</h1><p>Naik level dari bit sampai jadi teknisi lab. Ada lab interaktif di tiap stasiun: coba langsung!</p></div><img src="images/00_cover.png" alt="Sampul"></div></header>
+<main class="wrap">
+<section><h2>Peta perjalanan</h2><figure><img src="images/01_tangga_level.png" alt="Tangga level"><figcaption>10 level, 4 stasiun, 1 proyek</figcaption></figure><figure><img src="images/19_peta_konsep.png" alt="Peta konsep"></figure></section>
+
+<section id="a"><h2>Stasiun A · Bahasa Komputer</h2>
+<p>Data dihitung dari bit (0/1). 8 bit = 1 byte. Tiap naik satuan dikali 1024.</p>
+<figure><img src="images/02_satuan_data.png" alt="Satuan data"></figure>
+<div class="box tip"><b>Flashdisk 16 GB terbaca 14,9 GB?</b> Pabrik: 1 GB = 10⁹ byte. Komputer: 1 GB = 1024³ byte. 16×10⁹ ÷ 1024³ ≈ 14,9 GB.</div>
+<div class="lab"><h4>Lab 1 · Konverter satuan</h4>
+<input id="cv" type="number" value="3" min="0" step="any"> <select id="cu"><option value="0">byte</option><option value="1">KB</option><option value="2" selected>MB</option><option value="3">GB</option></select> = 
+<div class="out" id="cvo"></div></div>
+<figure><img src="images/03_biner_ascii.png" alt="Biner ASCII"></figure>
+<div class="lab"><h4>Lab 2 · Biner ↔ ASCII</h4><p>Klik kotak bit untuk menyalakan/mematikan (nilai posisi di bawahnya).</p>
+<div class="bits" id="bits"></div><div class="out" id="bo"></div>
+<p>Atau ketik teks: <input id="tx" value="HALO"></p><div class="out" id="txo"></div></div>
+<figure><img src="images/04_piksel_rgb.png" alt="Piksel RGB"></figure>
+<div class="lab"><h4>Lab 3 · Kalkulator ukuran gambar (tanpa kompresi)</h4>
+Lebar <input id="gw" type="number" value="1920" min="1"> × tinggi <input id="gh" type="number" value="1080" min="1"> piksel
+<div class="out" id="go"></div></div></section>
+
+<section id="b"><h2>Stasiun B · Dapur Komputer</h2>
+<figure><img src="images/08_siklus_instruksi.png" alt="Siklus CPU"></figure>
+<figure><img src="images/05_hierarki_memori.png" alt="Hierarki memori"></figure>
+<div class="lab"><h4>Lab 4 · Skala kecepatan memori</h4><p>Jika akses RAM terasa <b>1 detik</b> (perkiraan: RAM 100 ns, SSD 100 µs, HDD 10 ms):</p>
+<table><tr><th>Memori</th><th>Perkiraan nyata</th><th>Terasa seperti</th></tr><tr><td>RAM</td><td>100 ns</td><td>1 detik</td></tr><tr><td>SSD</td><td>100 µs</td><td>±17 menit</td></tr><tr><td>HDD</td><td>10 ms</td><td>±28 jam</td></tr></table></div>
+<figure><img src="images/06_virtual_memory.png" alt="Virtual memory"></figure>
+<div class="lab"><h4>Lab 5 · Simulator RAM</h4>RAM terpasang: <select id="rm"><option>4</option><option>8</option><option>16</option></select> GB
+<div id="apps"></div><div class="bar"><i id="rb"></i></div><div class="out" id="ro"></div></div>
+<figure><img src="images/07_task_manager.png" alt="Task Manager"></figure>
+<div class="lab"><h4>Lab 6 · Klinik Task Manager</h4><p id="tmq"></p><div id="tmo"></div><div class="out" id="tmf"></div><button class="sec" id="tmn">Kasus berikutnya</button></div></section>
+
+<section id="c"><h2>Stasiun C · Penjaga Gerbang dan Detektif Flowchart</h2>
+<figure><img src="images/09_validasi_input.png" alt="Validasi"></figure>
+<div class="lab"><h4>Lab 7 · Validator formulir</h4>
+Nama <input id="vn"><br>NISN (10 angka) <input id="vs"><br>Nilai (0–100) <input id="vv"><br>Tanggal lahir (DD/MM/YYYY) <input id="vt" placeholder="17/08/2010"><br><div class="out" id="vo"></div></div>
+<figure><img src="images/10_flowchart_tidak_menyala.png" alt="Flowchart"></figure>
+<div class="lab"><h4>Lab 8 · Flowchart interaktif: komputer tidak menyala</h4><div id="fl"></div><button class="sec" id="fr">Ulangi</button></div></section>
+
+<section id="d"><h2>Stasiun D · Benteng Digital dan Hemat Energi</h2>
+<figure><img src="images/11_jenis_malware.png" alt="Malware"></figure><figure><img src="images/12_phishing.png" alt="Phishing"></figure>
+<figure><img src="images/14_kekuatan_sandi.png" alt="Sandi"></figure>
+<div class="lab"><h4>Lab 9 · Penguji kekuatan sandi (tidak dikirim ke mana pun)</h4><input id="pw" type="text" placeholder="ketik sandi contoh"> 
+<div class="out" id="po"></div><small>Asumsi penyerang: 1 miliar percobaan/detik. Jangan pakai sandi aslimu!</small></div>
+<figure><img src="images/13_backup_321.png" alt="Backup"></figure>
+<div class="lab"><h4>Lab 10 · Kalkulator backup 3-2-1</h4>Siswa <input id="bs" type="number" value="450" min="1"> × <input id="bm" type="number" value="25" min="1"> MB<div class="out" id="bo2"></div></div>
+<figure><img src="images/15_energi_lab.png" alt="Energi"></figure>
+<div class="lab"><h4>Lab 11 · Kalkulator energi lab</h4>Unit <input id="eu" type="number" value="30"> Watt <input id="ew" type="number" value="150"> Jam/hari <input id="ej" type="number" value="6" step="any"> Hari/bulan <input id="eh" type="number" value="24"> Tarif Rp/kWh <input id="et" type="number" value="1500"><div class="out" id="eo"></div></div></section>
+
+<section id="proyek"><h2>Proyek · Klinik Komputer SMPN 14</h2><figure><img src="images/16_klinik_proyek.png" alt="Proyek"></figure><figure><img src="images/18_pjbl_6_tahap.png" alt="PjBL"></figure><figure><img src="images/17_stasiun_rotasi.png" alt="Rotasi"></figure>
+<table><tr><th>Kode</th><th>RAM</th><th>Penyimpanan</th><th>CPU/RAM/Disk</th><th>Gejala</th></tr><tr><td>PC-01</td><td>4 GB</td><td>SSD 120 GB, terpakai 112 GB</td><td>30/98/99%</td><td>12 tab browser, PowerPoint, pemutar video, musik</td></tr><tr><td>PC-02</td><td>8 GB</td><td>HDD 500 GB, terpakai 200 GB</td><td>99/42/4%</td><td>Tidak ada aplikasi dibuka; proses teratas 'chr0me.exe' (angka nol) 88% CPU</td></tr><tr><td>PC-03</td><td>4 GB</td><td>HDD 320 GB, terpakai 150 GB</td><td>0/0/0%</td><td>Tidak menyala: stopkontak hidup; kabel daya di belakang CPU longgar</td></tr><tr><td>PC-04</td><td>4 GB</td><td>HDD 500 GB, terpakai 480 GB</td><td>12/38/100%</td><td>Lambat saat membuka file; tidak ada aplikasi berat</td></tr></table>
+<div class="box">Tugas: diagnosis PC-01–PC-04, rencana backup, kebijakan sandi dan energi, lalu Kartu SOP 6 aturan (lihat LKPD).</div></section>
+
+<section id="kuis"><h2>Kuis 10 Soal</h2><div id="qz"></div></section>
+</main><footer>Informatika Kelas IX · SMP Negeri 14 Tarakan · Kurikulum Merdeka</footer>
+<script>
+const QUIZ=[{"q": "Satuan 1 KB (kilobyte) pada sistem biner komputer setara dengan ....", "o": ["8 byte", "100 byte", "1000 bit", "1024 byte"], "k": 3, "e": "1 KB = 1024 byte; 1 MB = 1024 KB; 1 GB = 1024 MB."}, {"q": "File presentasi berukuran 5 MB. Ukurannya dalam KB adalah ....", "o": ["500 KB", "5000 KB", "50 KB", "5120 KB"], "k": 3, "e": "5 × 1024 = 5120 KB."}, {"q": "Flashdisk 8 GB (1 GB = 1024 MB) paling banyak menampung berapa foto berukuran 4 MB?", "o": ["1024 foto", "4096 foto", "2048 foto", "8192 foto"], "k": 2, "e": "8 × 1024 = 8192 MB; 8192 ÷ 4 = 2048 foto."}, {"q": "Dalam kode ASCII huruf A = 01000001. Kode huruf B (satu lebih besar) adalah ....", "o": ["01000000", "01000011", "01000010", "10000010"], "k": 2, "e": "A = 65 sehingga B = 66 = 64 + 2 = 01000010."}, {"q": "Saat RAM penuh, sistem operasi memindahkan sebagian data sementara ke disk (virtual memory). Dampak yang paling mungkin adalah ....", "o": ["komputer melambat karena disk jauh lebih lambat daripada RAM", "komputer menjadi lebih cepat karena disk besar", "semua data terhapus permanen", "monitor langsung mati"], "k": 0, "e": "Disk (terutama HDD) ribuan hingga ratusan ribu kali lebih lambat daripada RAM."}, {"q": "Urutan penyimpanan dari yang paling cepat ke paling lambat adalah ....", "o": ["HDD – SSD – RAM – Cache – Register", "Register – Cache – RAM – SSD – HDD", "RAM – Register – Cache – HDD – SSD", "Cache – Register – SSD – RAM – HDD"], "k": 1, "e": "Semakin dekat dengan CPU, semakin cepat, mahal, dan kecil kapasitasnya."}, {"q": "Komputer lab tanpa aplikasi terbuka menunjukkan CPU 99%, RAM 40%, Disk 3%. Proses teratas bernama “svch0st.exe” (angka nol) memakai CPU 85%. Dugaan paling tepat adalah ....", "o": ["RAM kurang", "disk penuh", "kemungkinan malware yang menyamar sebagai proses sistem", "kabel monitor longgar"], "k": 2, "e": "CPU tinggi tanpa aplikasi, sumber daya lain wajar, nama proses meniru svchost.exe: tanda malware."}, {"q": "Formulir nilai menerima input 105 padahal nilai yang sah adalah 0 sampai 100. Validasi yang seharusnya mencegahnya adalah validasi ....", "o": ["tipe data", "format", "kelengkapan", "rentang"], "k": 3, "e": "Nilai di luar batas 0-100 melanggar aturan rentang."}, {"q": "Aturan cadangan 3-2-1 berarti ....", "o": ["3 salinan data, 2 jenis media berbeda, 1 salinan di lokasi lain", "3 komputer, 2 flashdisk, 1 printer", "3 kali sehari, 2 kali seminggu, 1 kali sebulan", "3 sandi, 2 akun, 1 email"], "k": 0, "e": "Tiga salinan, dua jenis media berbeda, satu salinan disimpan di lokasi terpisah (mis. penyimpanan awan)."}, {"q": "Lab memiliki 20 komputer, masing-masing 100 W dan menyala 5 jam sehari. Energi listrik per hari adalah ....", "o": ["100 kWh", "1 kWh", "10 kWh", "0,5 kWh"], "k": 2, "e": "20 × 100 W × 5 jam = 10.000 Wh = 10 kWh."}];
+const $=id=>document.getElementById(id);
+const fmt=(x,d=2)=>x.toLocaleString("id-ID",{maximumFractionDigits:d});
+// Lab1
+function cv(){const v=parseFloat($("cv").value)||0,u=+$("cu").value;const b=v*Math.pow(1024,u);const n=["byte","KB","MB","GB"];
+ $("cvo").innerHTML=n.map((x,i)=>fmt(b/Math.pow(1024,i),6)+" "+x).join("<br>")+"<br>= "+fmt(b*8,0)+" bit";}
+["cv","cu"].forEach(i=>$(i).addEventListener("input",cv));cv();
+// Lab2
+const pv=[128,64,32,16,8,4,2,1];let st=[0,1,0,0,0,0,0,1];
+function rb(){$("bits").innerHTML="";st.forEach((s,i)=>{const d=document.createElement("div");d.className="bit"+(s?" on":"");d.innerHTML=s+"<small>"+pv[i]+"</small>";d.onclick=()=>{st[i]^=1;rb()};$("bits").appendChild(d)});
+ const n=st.reduce((a,s,i)=>a+s*pv[i],0);$("bo").textContent=st.join("")+" = "+n+(n>=32&&n<127?" → huruf “"+String.fromCharCode(n)+"”":"");}
+rb();
+function tx(){const t=$("tx").value.slice(0,12);$("txo").innerHTML=[...t].map(c=>c+" = "+c.charCodeAt(0)+" = "+c.charCodeAt(0).toString(2).padStart(8,"0")).join("<br>")+"<br><b>"+t.length+" karakter = "+t.length+" byte = "+t.length*8+" bit</b>";}
+$("tx").addEventListener("input",tx);tx();
+// Lab3
+function gi(){const w=+$("gw").value||0,h=+$("gh").value||0,b=w*h*3;$("go").innerHTML=fmt(w*h,0)+" piksel × 3 = "+fmt(b,0)+" byte<br>≈ "+fmt(b/1024)+" KB ≈ "+fmt(b/1048576)+" MB";}
+["gw","gh"].forEach(i=>$(i).addEventListener("input",gi));gi();
+// Lab5
+const APPS=[["Sistem operasi",2.0,1],["Browser 14 tab",2.2,0],["PowerPoint",0.6,0],["Dua video",1.0,0],["Musik",0.3,0]];
+$("apps").innerHTML=APPS.map((a,i)=>`<label><input type="checkbox" data-i="${i}" ${a[2]?"checked disabled":"checked"}> ${a[0]} (${a[1]} GB)</label><br>`).join("");
+function sim(){const ram=+$("rm").value;let t=0;document.querySelectorAll("#apps input").forEach(c=>{if(c.checked)t+=APPS[+c.dataset.i][1]});t=Math.round(t*10)/10;
+ $("rb").style.width=Math.min(100,t/ram*100)+"%";$("rb").style.background=t>ram?"#DC2626":"#0F766E";
+ $("ro").innerHTML=t>ram?`<span class="bad">Kebutuhan ${fmt(t,1)} GB > RAM ${ram} GB: kurang ${fmt(t-ram,1)} GB → virtual memory aktif, komputer LEMOT.</span>`:`<span class="ok">Kebutuhan ${fmt(t,1)} GB ≤ RAM ${ram} GB: aman (terpakai ${fmt(t/ram*100,0)}%).</span>`;}
+$("rm").onchange=sim;document.querySelectorAll("#apps input").forEach(c=>c.onchange=sim);sim();
+// Lab6
+const TM=[{q:"CPU 20%, RAM 97%, Disk 98%, 12 tab browser",a:0,e:"Memori penuh: tutup aplikasi/tab, bebaskan disk, tambah RAM."},{q:"CPU 99%, RAM 40%, Disk 3%, proses svch0st.exe 85% (tanpa aplikasi dibuka)",a:1,e:"Dugaan malware: nama proses meniru svchost.exe. Putus jaringan, scan antivirus, lapor guru."},{q:"CPU 15%, RAM 35%, Disk 100%, HDD terpakai 96%",a:2,e:"Disk menjadi hambatan: kosongkan, pindahkan data, ganti SSD."},{q:"CPU 5%, RAM 30%, Disk 4%, Word: Not responding",a:3,e:"Aplikasi error: akhiri tugas, buka ulang, perbarui/instal ulang."}];
+const TMO=["Memori penuh","Dugaan malware","Disk jadi hambatan","Aplikasi error"];let ti=0;
+function tmShow(){const k=TM[ti];$("tmq").textContent=k.q;$("tmf").textContent="";$("tmo").innerHTML="";TMO.forEach((o,i)=>{const b=document.createElement("button");b.className="sec";b.textContent=o;b.onclick=()=>{$("tmf").innerHTML=i===k.a?`<span class="ok">Benar! </span>${k.e}`:`<span class="bad">Belum tepat. </span>Coba lagi.`};$("tmo").appendChild(b)});}
+$("tmn").onclick=()=>{ti=(ti+1)%TM.length;tmShow()};tmShow();
+// Lab7
+function val(){const r=[];const n=$("vn").value.trim(),s=$("vs").value,v=$("vv").value,t=$("vt").value;
+ r.push(n?(/^[A-Za-zÀ-ÿ' .]+$/.test(n)?"✔ Nama valid":"✘ Nama hanya huruf (tipe data)"):"✘ Nama wajib diisi (kelengkapan)");
+ r.push(/^\d{10}$/.test(s)?"✔ NISN valid":"✘ NISN harus tepat 10 angka (tipe/format)");
+ r.push(v!==""&&/^\d+(\.\d+)?$/.test(v)&&+v>=0&&+v<=100?"✔ Nilai valid":"✘ Nilai harus angka 0–100 (tipe/rentang)");
+ let ok=false;const m=/^(\d{2})\/(\d{2})\/(\d{4})$/.exec(t);if(m){const d=new Date(+m[3],+m[2]-1,+m[1]);ok=d.getFullYear()==+m[3]&&d.getMonth()==+m[2]-1&&d.getDate()==+m[1]}
+ r.push(ok?"✔ Tanggal valid":"✘ Tanggal harus DD/MM/YYYY dan benar-benar ada (format)");
+ $("vo").innerHTML=r.map(x=>x[0]=="✔"?`<span class="ok">${x}</span>`:`<span class="bad">${x}</span>`).join("<br>");}
+["vn","vs","vv","vt"].forEach(i=>$(i).addEventListener("input",val));val();
+// Lab8
+const FL=[["Listrik di stopkontak ada?","Cek MCB / coba stopkontak lain; lapor jika listrik padam."],["Kabel daya terpasang kuat?","Pasang ulang sampai kuat lalu coba menyalakan lagi."],["Kipas/lampu hidup saat power ditekan?","Power supply / charger rusak → lapor teknisi."],["Layar menampilkan gambar?","Cek kabel dan tombol monitor; tetap hitam → RAM/VGA → teknisi."],["Masuk ke sistem operasi?","BSOD/error: restart dulu; sering terjadi → periksa RAM dan driver."]];let fi=0;
+function fl(){if(fi>=FL.length){$("fl").innerHTML='<div class="out ok">Komputer normal ✔</div>';return}
+ $("fl").innerHTML=`<div class="out">Pertanyaan ${fi+1}: ${FL[fi][0]}</div><button class="sec" id="fy">Ya</button><button id="fn">Tidak</button>`;
+ $("fy").onclick=()=>{fi++;fl()};$("fn").onclick=()=>{$("fl").innerHTML=`<div class="out bad">Tindakan: ${FL[fi][1]}</div>`}}
+$("fr").onclick=()=>{fi=0;fl()};fl();
+// Lab9
+function pw(){const s=$("pw").value;if(!s){$("po").textContent="Ketik sesuatu…";return}
+ let k=0;if(/[a-z]/.test(s))k+=26;if(/[A-Z]/.test(s))k+=26;if(/\d/.test(s))k+=10;if(/[^A-Za-z0-9]/.test(s))k+=33;
+ const bits=s.length*Math.log2(k),comb=Math.pow(k,s.length),sec=comb/1e9;let t;
+ if(sec<1)t="kurang dari 1 detik";else if(sec<3600)t=fmt(sec,0)+" detik";else if(sec<86400)t=fmt(sec/3600,1)+" jam";else if(sec<31557600)t=fmt(sec/86400,1)+" hari";else t=fmt(sec/31557600,0)+" tahun";
+ const lv=sec<60?"LEMAH":sec<86400*365?"SEDANG":"KUAT";
+ $("po").innerHTML=`Karakter ${s.length}, set ${k} jenis → kombinasi ≈ ${comb>1e15?comb.toExponential(2):fmt(comb,0)}<br>Perkiraan waktu: <b>${t}</b> · <b class="${lv=="KUAT"?"ok":"bad"}">${lv}</b>`;}
+$("pw").addEventListener("input",pw);pw();
+// Lab10
+function bk(){const n=+$("bs").value||0,m=+$("bm").value||0,t=n*m;$("bo2").innerHTML=`${fmt(n,0)} × ${fmt(m,0)} MB = ${fmt(t,0)} MB ≈ ${fmt(t/1024)} GB<br>3 salinan ≈ ${fmt(t*3/1024)} GB`}
+["bs","bm"].forEach(i=>$(i).addEventListener("input",bk));bk();
+// Lab11
+function en(){const u=+$("eu").value,w=+$("ew").value,j=+$("ej").value,h=+$("eh").value,t=+$("et").value;const k=w*j*u*h/1000,k2=w*(j-1)*u*h/1000;
+ $("eo").innerHTML=`Energi: ${fmt(k)} kWh → Rp${fmt(k*t,0)}<br>Jika 1 jam lebih singkat: ${fmt(k2)} kWh → hemat Rp${fmt((k-k2)*t,0)} per bulan`}
+["eu","ew","ej","eh","et"].forEach(i=>$(i).addEventListener("input",en));en();
+// Kuis
+let qi=0,sc=0;
+function qz(){const q=QUIZ[qi];if(!q){$("qz").innerHTML=`<div class="box"><h3>Skor: ${sc} / ${QUIZ.length}</h3><p>${sc>=8?"Mantap, teknisi andal!":sc>=6?"Bagus, ulangi bagian yang masih keliru.":"Yuk, ulangi stasiun A–D lalu coba lagi."}</p><button onclick="qi=0;sc=0;qz()">Ulangi</button></div>`;return}
+ $("qz").innerHTML=`<p><b>Soal ${qi+1}/${QUIZ.length}.</b> ${q.q}</p><div id="qo"></div><div class="out" id="qe" style="display:none"></div><button id="qn" style="display:none">Lanjut</button>`;
+ q.o.forEach((o,i)=>{const b=document.createElement("button");b.className="opt";b.textContent="ABCD"[i]+". "+o;b.onclick=()=>{[...$("qo").children].forEach((x,j)=>{x.disabled=true;if(j===q.k)x.classList.add("right")});if(i===q.k)sc++;else b.classList.add("wrong");
+  $("qe").style.display="block";$("qe").textContent=(i===q.k?"Benar! ":"Kurang tepat. ")+q.e;$("qn").style.display="inline-block";$("qn").onclick=()=>{qi++;qz()}};$("qo").appendChild(b)});}
+qz();
+</script></body></html>

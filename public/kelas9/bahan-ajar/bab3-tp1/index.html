@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pemrosesan Data dengan Komputer · Materi Siswa</title>
+<style>
+:root{--teal:#0F766E;--teal-d:#115E59;--teal-l:#CCFBF1;--orange:#F97316;--orange-l:#FFEDD5;--navy:#1E3A5F;--bg:#F8FAFC;--card:#fff;--ink:#0F172A;--mut:#475569;--line:#E2E8F0;--green:#16A34A;--green-l:#DCFCE7;--red:#DC2626;--red-l:#FEE2E2;--yel:#FEF9C3;--blue:#2563EB;--blue-l:#DBEAFE}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;font-size:17px}
+nav{position:sticky;top:0;z-index:50;background:var(--teal);color:#fff;display:flex;gap:4px;align-items:center;padding:6px 14px;overflow-x:auto;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+nav b{margin-right:10px;white-space:nowrap}
+nav a{color:#E6FFFA;text-decoration:none;padding:7px 12px;border-radius:999px;font-size:15px;white-space:nowrap}
+nav a:hover,nav a.on{background:#fff;color:var(--teal-d)}
+header.hero{background:linear-gradient(135deg,var(--teal),var(--teal-d));color:#fff;padding:36px 16px 44px}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+.hero .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:26px;align-items:center}
+.hero h1{font-size:2.3rem;line-height:1.15;margin:.3em 0}
+.hero p{color:#CCFBF1;margin:.2em 0 1em}
+.tag{display:inline-block;background:var(--orange);color:#fff;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.85rem}
+.hero img{width:100%;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.btn{display:inline-block;border:0;background:var(--orange);color:#fff;font-weight:700;padding:10px 20px;border-radius:12px;font-size:1rem;cursor:pointer;text-decoration:none;font-family:inherit}
+.btn:hover{filter:brightness(1.07)}
+.btn.sec{background:var(--teal)}
+.btn.ghost{background:#fff;color:var(--teal-d);border:2px solid var(--teal)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+section{padding:34px 0 8px}
+h2{color:var(--teal);font-size:1.7rem;margin:.2em 0 .4em;border-left:8px solid var(--orange);padding-left:12px}
+h3{color:var(--navy);margin:1.2em 0 .3em}
+figure{margin:16px 0;text-align:center}
+figure img{max-width:100%;border-radius:14px;border:1px solid var(--line);background:#fff;box-shadow:0 4px 14px rgba(15,23,42,.08)}
+figcaption{font-size:.85rem;color:var(--mut);margin-top:6px;font-style:italic}
+.box{border-radius:14px;padding:14px 18px;margin:16px 0;border:2px solid}
+.box h4{margin:0 0 6px}
+.box.goal{background:var(--teal-l);border-color:var(--teal)}
+.box.tip{background:var(--yel);border-color:#CA8A04}
+.box.warn{background:var(--red-l);border-color:var(--red)}
+.box.ok{background:var(--green-l);border-color:var(--green)}
+.box.find{background:var(--blue-l);border-color:var(--blue)}
+.box ul{margin:.3em 0 0;padding-left:1.2em}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 3px 10px rgba(15,23,42,.05)}
+.steps{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.steps div{flex:1 1 130px;border-radius:14px;padding:10px;text-align:center;color:#fff;font-weight:700;font-size:.95rem}
+details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 14px;margin:8px 0}
+summary{cursor:pointer;font-weight:700;color:var(--navy)}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:.95rem;background:#fff}
+th{background:var(--teal);color:#fff;padding:8px;text-align:left}
+td{padding:8px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:#F1F5F9}
+.tblwrap{overflow-x:auto}
+/* widgets */
+.lab{background:#fff;border:3px solid var(--teal);border-radius:20px;padding:18px;margin:22px 0}
+.lab>h3{margin:0 0 4px;color:var(--teal)}
+.lab .sub{color:var(--mut);margin:0 0 12px;font-size:.95rem}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+.stage{border:3px solid var(--line);border-radius:14px;padding:10px;text-align:center;min-height:128px;background:#F8FAFC;transition:.3s}
+.stage .t{font-weight:800;font-size:.85rem;letter-spacing:.04em}
+.stage .v{font-size:1.5rem;font-weight:800;margin-top:6px;word-break:break-word;min-height:2em}
+.stage small{display:block;color:var(--mut);font-size:.78rem}
+.stage.on{transform:scale(1.04);box-shadow:0 6px 18px rgba(0,0,0,.15)}
+#sI.on{border-color:var(--blue);background:var(--blue-l)}#sP.on{border-color:var(--teal);background:var(--teal-l)}#sO.on{border-color:var(--green);background:var(--green-l)}#sS.on{border-color:#CA8A04;background:var(--yel)}
+.stage.err{border-color:var(--red)!important;background:var(--red-l)!important}
+input[type=text],textarea{font:inherit;padding:10px 12px;border:2px solid #CBD5E1;border-radius:12px;width:100%}
+input[type=text]:focus,textarea:focus{outline:none;border-color:var(--teal)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.msg{margin-top:10px;padding:10px 14px;border-radius:12px;background:#F1F5F9;min-height:44px}
+.msg.good{background:var(--green-l)}.msg.bad{background:var(--red-l)}
+.pool{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;min-height:48px}
+.chip{border:2px solid var(--teal);background:#fff;color:var(--teal-d);padding:7px 14px;border-radius:999px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem}
+.chip.sel{background:var(--teal);color:#fff}
+.chip.done{background:var(--green-l);border-color:var(--green);color:#166534;cursor:default}
+.buckets{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.bucket{border:3px dashed #94A3B8;border-radius:14px;padding:8px;min-height:130px;cursor:pointer;background:#fff}
+.bucket:hover{background:#F0FDFA}
+.bucket h5{margin:0 0 6px;text-align:center;font-size:.95rem}
+.bucket.shake{animation:sh .35s}
+@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.bucket .chip{font-size:.8rem;padding:3px 9px;margin:2px}
+.sym{display:flex;flex-wrap:wrap;gap:8px}
+.panel{background:#FFF7ED;border:2px solid var(--orange);border-radius:14px;padding:14px 16px;margin-top:12px}
+.panel h4{margin:.2em 0;color:#C2410C}
+.panel ol,.panel ul{margin:.3em 0 .6em;padding-left:1.3em}
+.opt{display:block;width:100%;text-align:left;border:2px solid #CBD5E1;background:#fff;border-radius:12px;padding:10px 14px;margin:7px 0;font:inherit;cursor:pointer}
+.opt:hover{border-color:var(--teal);background:#F0FDFA}
+.opt.right{background:var(--green-l);border-color:var(--green)}
+.opt.wrong{background:var(--red-l);border-color:var(--red)}
+.opt:disabled{cursor:default}
+.progress{height:10px;background:var(--line);border-radius:99px;overflow:hidden;margin:6px 0 14px}
+.progress i{display:block;height:100%;background:var(--orange);width:0;transition:.3s}
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px}
+.match button{border:2px solid #CBD5E1;background:#fff;border-radius:12px;padding:9px 12px;text-align:left;font:inherit;cursor:pointer}
+.match button.sel{border-color:var(--blue);background:var(--blue-l)}
+.match button.paired{border-color:var(--green);background:var(--green-l)}
+.match button.bad{border-color:var(--red);background:var(--red-l)}
+.ram-ed{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+.mini{border-radius:12px;padding:10px;border:3px solid;min-height:96px;word-break:break-word}
+.mini.ram{border-color:var(--green);background:var(--green-l)}.mini.sto{border-color:#CA8A04;background:var(--yel)}
+.mini b{display:block;font-size:.85rem}
+.refl label{display:flex;gap:10px;align-items:center;background:#fff;border:1px solid var(--line);padding:10px 14px;border-radius:12px;margin:6px 0;cursor:pointer}
+footer{background:var(--navy);color:#CBD5E1;text-align:center;padding:24px 16px;margin-top:40px;font-size:.9rem}
+@media(max-width:760px){.hero .wrap{grid-template-columns:1fr}.hero h1{font-size:1.8rem}.grid2,.ram-ed,.match{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}.buckets{grid-template-columns:1fr 1fr}body{font-size:16px}}
+</style>
+</head>
+<body>
+<nav id="nav"><b>Detektif Komputer</b>
+<a href="#mulai">Mulai</a><a href="#data">Data</a><a href="#ipo">Alur IPO</a><a href="#masalah">Masalah</a><a href="#perkakas">Perkakas</a><a href="#kuis">Kuis</a><a href="#rangkuman">Rangkuman</a></nav>
+
+<header class="hero"><div class="wrap">
+<div><span class="tag">BAB III · TP 1 · KELAS IX</span>
+<h1>Pemrosesan Data dengan Komputer</h1>
+<p>Input · Proses · Output · Masalah Dasar · Perkakas. Ayo jadi detektif komputer: temukan sendiri jawabannya!</p>
+<a class="btn" href="#mulai">Mulai Petualangan</a> <a class="btn ghost" href="#kuis" style="margin-left:6px">Langsung ke Kuis</a></div>
+<img src="images/00_cover.png" alt="Ilustrasi komputer yang menghitung 5 tambah 3 sama dengan 8">
+</div></header>
+
+<main class="wrap">
+<section id="mulai">
+<h2>Halo, Detektif Komputer!</h2>
+<p>Pernah nggak, kamu lagi asyik ngerjain tugas, eh tiba-tiba komputernya <b>lemot</b>, layar jadi <b>biru</b>, atau tugas yang belum disimpan <b>hilang</b> gara-gara mati lampu? Itu semua ada penjelasannya. Hari ini kamu yang akan <b>menemukan sendiri</b> jawabannya lewat percobaan di halaman ini.</p>
+<figure><img src="images/19_discovery_6_fase.png" alt="Enam langkah belajar discovery learning"><figcaption>Langkah belajar kita: kamu yang menemukan, guru yang memandu</figcaption></figure>
+<div class="box goal"><h4>Yang akan kamu temukan</h4><ul>
+<li>Cara komputer mengubah <b>data mentah</b> menjadi <b>informasi</b></li>
+<li>Alur <b>input → proses → output → penyimpanan</b> dan perangkatnya</li>
+<li>Kenapa komputer bisa <b>bermasalah</b> dan langkah awal mengatasinya</li>
+<li>Cara memakai <b>perkakas komputer</b> dengan baik dan benar</li></ul></div>
+<figure><img src="images/20_peta_konsep.png" alt="Peta konsep materi"><figcaption>Peta konsep materi hari ini</figcaption></figure>
+</section>
+
+<section id="data">
+<h2>1. Data Mentah dan Informasi</h2>
+<p><b>Data</b> adalah bahan mentah: angka, huruf, suara, gambar, atau video yang belum punya arti. Setelah diolah komputer, data menjadi <b>informasi</b> yang berguna untuk mengambil keputusan.</p>
+<figure><img src="images/01_data_informasi.png" alt="Data nilai diolah menjadi rata-rata 77,5"><figcaption>Nilai 80, 75, 90, 65 diolah menjadi rata-rata 77,5</figcaption></figure>
+<div class="lab"><h3>Lab 1 · Hitung Rata-rata Kilat</h3>
+<p class="sub">Masukkan empat nilai (pisahkan dengan koma). Komputer mengolah data mentahmu menjadi informasi.</p>
+<div class="row"><input type="text" id="nilaiIn" value="80, 75, 90, 65" aria-label="Daftar nilai"><button class="btn sec" id="nilaiGo">Olah Data</button></div>
+<div class="msg" id="nilaiOut">Klik “Olah Data”.</div></div>
+<details><summary>Cek pemahaman: apa bedanya data dan informasi?</summary><p>Data = fakta mentah yang belum bermakna (mis. 80, 75, 90, 65). Informasi = hasil olahan yang bermakna dan membantu keputusan (mis. rata-rata kelas 77,5, sehingga guru tahu siapa yang perlu pendampingan).</p></details>
+</section>
+
+<section id="ipo">
+<h2>2. Input → Proses → Output → Penyimpanan</h2>
+<p>Membuat jus: buah di talenan = <b>input</b>, blender = <b>proses</b>, jus di gelas = <b>output</b>. Komputer bekerja persis seperti itu.</p>
+<figure><img src="images/02_analogi_jus.png" alt="Analogi membuat jus dan mengetik 5 + 3"><figcaption>Bikin jus dan mengetik 5 + 3 punya pola yang sama</figcaption></figure>
+<figure><img src="images/03_alur_ipo.png" alt="Alur pemrosesan data pada komputer"><figcaption>Alur pemrosesan data pada komputer</figcaption></figure>
+
+<div class="lab"><h3>Lab 2 · Bengkel IPO</h3>
+<p class="sub">Ketik hitungan sederhana, misalnya <code>5 + 3</code>, <code>12 * 4</code>, <code>20 / 5</code>, lalu lihat perjalanan datanya. Coba juga input yang salah, seperti <code>8O + 3</code> (huruf O).</p>
+<div class="row"><input type="text" id="ipoIn" value="5 + 3" aria-label="Hitungan"><button class="btn sec" id="ipoGo">Jalankan</button><button class="btn ghost" id="ipoSave" disabled>Simpan hasil</button></div>
+<div class="flow">
+<div class="stage" id="sI"><div class="t" style="color:var(--blue)">1 INPUT</div><div class="v" id="vI">–</div><small>keyboard</small></div>
+<div class="stage" id="sP"><div class="t" style="color:var(--teal)">2 PROSES</div><div class="v" id="vP">–</div><small>RAM menampung, ALU menghitung, CU mengatur</small></div>
+<div class="stage" id="sO"><div class="t" style="color:var(--green)">3 OUTPUT</div><div class="v" id="vO">–</div><small>monitor</small></div>
+<div class="stage" id="sS"><div class="t" style="color:#A16207">4 PENYIMPANAN</div><div class="v" id="vS" style="font-size:1rem">kosong</div><small>hard disk / SSD / flashdisk</small></div></div>
+<div class="msg" id="ipoMsg">Tekan “Jalankan”.</div></div>
+
+<h3>Perangkat di tiap tahap</h3>
+<figure><img src="images/04_perangkat_input.png" alt="Perangkat input"><figcaption>Input: keyboard, mouse, scanner, mikrofon, kamera</figcaption></figure>
+<p><b>CPU</b> (Central Processing Unit) adalah “otak komputer”. <b>ALU</b> menghitung dan membandingkan; <b>CU</b> mengatur alur data seperti polisi lalu lintas. Data yang sedang dipakai ditampung sementara di <b>RAM</b>.</p>
+<figure><img src="images/05_cpu_ram.png" alt="CPU terdiri atas ALU dan CU, bekerja dengan RAM"><figcaption>Tahap proses: ALU, CU, dan RAM</figcaption></figure>
+<figure><img src="images/06_perangkat_output_simpan.png" alt="Perangkat output dan penyimpanan"><figcaption>Output: monitor, speaker, printer · Penyimpanan: hard disk, SSD, flashdisk</figcaption></figure>
+
+<div class="lab"><h3>Lab 3 · Sortir Perangkat</h3>
+<p class="sub">Klik satu kartu perangkat, lalu klik kotak tahap yang tepat. Skor: <b id="sortScore">0</b> / 13</p>
+<div class="pool" id="pool"></div>
+<div class="buckets" id="buckets"></div>
+<div class="msg" id="sortMsg">Pilih kartu dulu.</div>
+<div class="row"><button class="btn ghost" id="sortReset">Ulangi</button></div></div>
+
+<h3>RAM vs Penyimpanan: kenapa harus “Save”?</h3>
+<figure><img src="images/07_ram_vs_storage.png" alt="RAM sementara, penyimpanan permanen"><figcaption>Tugas yang belum di-save hanya ada di RAM</figcaption></figure>
+<div class="lab"><h3>Lab 4 · Eksperimen Mati Lampu</h3>
+<p class="sub">Ketik kalimat pada kotak, tekan “Save” kapan saja, lalu tekan “Mati lampu”. Apa yang selamat?</p>
+<textarea id="eds" rows="3" placeholder="Ketik tugasmu di sini..."></textarea>
+<div class="row"><button class="btn sec" id="edSave">Save (Ctrl + S)</button><button class="btn" id="edOff" style="background:var(--red)">Mati lampu!</button><button class="btn ghost" id="edReset">Mulai ulang</button></div>
+<div class="ram-ed"><div class="mini ram"><b>RAM (sementara)</b><span id="ramView">kosong</span></div><div class="mini sto"><b>PENYIMPANAN (permanen)</b><span id="stoView">kosong</span></div></div>
+<div class="msg" id="edMsg">Ketik sesuatu.</div></div>
+
+<h3>Pemrosesan data ada di mana-mana</h3>
+<p>HP, ATM, mesin kasir, robot, dan mobil pintar memakai prinsip yang sama. Saat membuka HP dengan wajah: kamera menangkap wajah (input), HP mencocokkan dengan data tersimpan (proses), layar terbuka jika cocok (output).</p>
+<figure><img src="images/08_ipo_sehari_hari.png" alt="IPO pada HP, ATM, dan mesin kasir"><figcaption>Contoh input → proses → output di sekitar kita</figcaption></figure>
+<figure><img src="images/09_gigo.png" alt="Garbage in garbage out"><figcaption>Garbage In, Garbage Out: input salah, output kacau</figcaption></figure>
+<details><summary>Cek pemahaman: sebutkan 4 tahap pemrosesan data dan contoh perangkatnya</summary><p>Input (keyboard, mouse, mikrofon, kamera, scanner) → Proses (CPU dengan ALU dan CU, dibantu RAM) → Output (monitor, speaker, printer) → Penyimpanan (hard disk, SSD, flashdisk).</p></details>
+</section>
+
+<section id="masalah">
+<h2>3. Masalah Dasar pada Komputer</h2>
+<p>Komputer kadang rewel, dan kamu tidak perlu panik. Cukup <b>amati gejala, duga penyebab, coba langkah paling mudah, cek hasil</b>, dan <b>minta bantuan</b> bila belum berhasil.</p>
+<figure><img src="images/10_tujuh_masalah.png" alt="Tujuh masalah dasar komputer"><figcaption>Tujuh masalah dasar pada komputer</figcaption></figure>
+
+<div class="lab"><h3>Lab 5 · Ruang Diagnosa</h3>
+<p class="sub">Pilih satu gejala untuk melihat dugaan penyebab dan langkah penanganannya.</p>
+<div class="sym" id="sym"></div><div id="symOut"></div></div>
+
+<div class="grid2">
+<figure><img src="images/11_kasus_rina.png" alt="Kasus Rina"><figcaption>Kasus Rina: CPU, RAM, dan disk hampir penuh</figcaption></figure>
+<figure><img src="images/12_bsod.png" alt="BSOD"><figcaption>BSOD: restart dulu, jangan panik</figcaption></figure></div>
+<figure><img src="images/13_kasus_aldi_virus.png" alt="Kasus Aldi virus dari USB"><figcaption>Kasus Aldi: virus dari USB teman</figcaption></figure>
+<figure><img src="images/14_alur_troubleshoot.png" alt="Alur memecahkan masalah komputer"><figcaption>Amati → Duga → Coba → Cek → Minta bantuan</figcaption></figure>
+
+<div class="lab"><h3>Lab 6 · Uji Detektif</h3>
+<p class="sub">Baca kasusnya, pilih penyebab yang paling mungkin. Skor: <b id="detScore">0</b> / <b id="detTot">0</b></p>
+<div class="card" id="detCase"></div><div id="detOpts"></div><div class="msg" id="detMsg">Pilih jawabanmu.</div>
+<div class="row"><button class="btn sec" id="detNext">Kasus berikutnya</button></div></div>
+
+<div class="lab"><h3>Lab 7 · Jodohkan Gejala dan Solusi Pertama</h3>
+<p class="sub">Klik satu gejala di kiri, lalu pasangannya di kanan.</p>
+<div class="match" id="match"></div><div class="msg" id="matchMsg">Pasangkan semuanya.</div>
+<div class="row"><button class="btn ghost" id="matchReset">Ulangi</button></div></div>
+
+<div class="box warn"><h4>Penting!</h4><p style="margin:0">Jangan membongkar komputer sekolah atau mencabut kabel sembarangan. Tugas detektif adalah menemukan penyebab dan melapor kepada guru atau teknisi.</p></div>
+<details><summary>Cek pemahaman: kasus Rina dan Aldi</summary>
+<p><b>Rina:</b> lambat karena banyak aplikasi berjalan bersamaan (RAM/CPU penuh). Tutup aplikasi, bersihkan file sementara dan recycle bin, gunakan aplikasi pembersih.</p>
+<p><b>Aldi:</b> virus dari USB teman. Cegah dengan memindai USB sebelum dibuka dan memakai antivirus; bila sudah terinfeksi, lakukan pemindaian penuh, hapus atau karantina file berbahaya, minta bantuan guru.</p></details>
+</section>
+
+<section id="perkakas">
+<h2>4. Perkakas Komputer dan Penggunaannya yang Baik dan Benar</h2>
+<p><b>Perkakas (tools)</b> adalah alat bantu: perangkat keras (keyboard, CPU, printer, hard disk) dan perangkat lunak (pengolah kata, spreadsheet, presentasi, browser, antivirus, rapat daring, asisten AI). Memilih yang tepat membuat kerja lebih cepat dan hasil lebih baik.</p>
+<figure><img src="images/15_perkakas.png" alt="Perkakas komputer"><figcaption>Perkakas komputer dan fungsinya</figcaption></figure>
+<p>Teknologi seperti pisau dapur: bermanfaat jika dipakai benar, berbahaya jika sembarangan. Kuncinya <b>mindfulness</b>: menggunakan teknologi dengan sadar, bijak, dan seimbang.</p>
+<figure><img src="images/16_empat_bidang_dampak.png" alt="Dampak di empat bidang"><figcaption>Dampak penggunaan perkakas komputer di empat bidang</figcaption></figure>
+<div class="tblwrap"><table><tr><th>Bidang</th><th>Dampak negatif bila tidak bijak</th><th>Sikap bijak</th></tr>
+<tr><td><b>Pendidikan</b></td><td>Terganggu notifikasi, kecanduan gadget, malas berpikir karena asal copy-paste AI</td><td>Batasi screen time, seimbangkan aktivitas fisik dan sosial, AI sebagai pendamping</td></tr>
+<tr><td><b>Lingkungan</b></td><td>Boros listrik, limbah elektronik (e-waste) berbahan beracun seperti timbal dan merkuri</td><td>Mode hemat energi, matikan perangkat sebelum pulang, perbaiki/daur ulang/donasikan gawai</td></tr>
+<tr><td><b>Kesehatan</b></td><td>Mata lelah, sakit punggung, sulit tidur, kecanduan gawai</td><td>Rutinitas sebelum tidur, latihan pernapasan, pembatas screen time</td></tr>
+<tr><td><b>Ekonomi</b></td><td>Boros karena iklan, penipuan online, akun kurang aman</td><td>Pertimbangkan kebutuhan, buat anggaran sederhana, jaga keamanan akun</td></tr></table></div>
+<div class="grid2">
+<figure><img src="images/17_ewaste_hemat_energi.png" alt="Hemat energi dan e-waste"><figcaption>Lingkungan</figcaption></figure>
+<figure><img src="images/18_screen_time_sehat.png" alt="Screen time sehat"><figcaption>Kesehatan</figcaption></figure></div>
+
+<div class="lab"><h3>Lab 8 · Kebiasaan Bijak atau Berlebihan?</h3>
+<p class="sub">Tentukan setiap kebiasaan: bijak atau perlu diperbaiki. Skor: <b id="habScore">0</b> / <b id="habTot">0</b></p>
+<div class="card" id="habCard"></div><div class="row"><button class="btn sec" id="habGood">Bijak</button><button class="btn" id="habBad">Perlu diperbaiki</button></div><div class="msg" id="habMsg">Pilih salah satu.</div></div>
+</section>
+
+<section id="kuis">
+<h2>Kuis Akhir (10 Soal)</h2>
+<div class="progress"><i id="qBar"></i></div>
+<div class="card" id="qBox"></div>
+</section>
+
+<section id="rangkuman">
+<h2>Rangkuman dan Refleksi</h2>
+<div class="box ok"><h4>Yang sudah kamu temukan</h4><ul>
+<li>Pemrosesan data = mengubah <b>data mentah</b> menjadi <b>informasi</b>.</li>
+<li><b>Input → Proses (CPU: ALU + CU, dibantu RAM) → Output</b>, plus <b>Penyimpanan</b> untuk hasil permanen.</li>
+<li>RAM itu <b>sementara</b>, penyimpanan itu <b>permanen</b>: save berkala!</li>
+<li>Masalah dasar: lambat, BSOD, tanpa internet, tidak menyala, virus, peripheral mati, aplikasi error. Berpikir ala detektif: <b>amati, duga, coba, cek, minta bantuan</b>.</li>
+<li>Pakai perkakas dengan bijak (mindfulness) di bidang pendidikan, lingkungan, kesehatan, dan ekonomi.</li></ul></div>
+<h3>Refleksi diri</h3>
+<div class="refl">
+<label><input type="checkbox"> Aku bisa menjelaskan alur input–proses–output–penyimpanan</label>
+<label><input type="checkbox"> Aku bisa membedakan RAM dan penyimpanan</label>
+<label><input type="checkbox"> Aku bisa menjelaskan penyebab dan solusi masalah dasar komputer</label>
+<label><input type="checkbox"> Aku bisa memakai perkakas komputer dengan bijak</label></div>
+<p id="reflMsg" class="msg">Centang yang sudah kamu kuasai. Yang belum? Ulangi lab terkait.</p>
+<div class="box find"><h4>Tantangan di rumah</h4><p style="margin:0">Amati satu masalah teknologi di rumah atau sekolah (HP lemot, Wi-Fi putus, dll.). Tulis gejala, dugaan penyebab, langkah yang kamu coba, dan hasilnya.</p></div>
+</section>
+</main>
+<footer>Informatika Kelas IX · Bab III Literasi Digital untuk Produktivitas · SMP Negeri 14 Tarakan<br>Rujukan: Buku Siswa dan Panduan Guru Informatika SMP/MTs Kelas IX (Edisi Revisi), Kemendikdasmen 2025</footer>
+
+<script>
+const QUIZ = [{"q": "Urutan tahapan pemrosesan data pada komputer yang benar adalah ....", "o": ["Output – Proses – Input", "Input – Proses – Output", "Proses – Input – Output", "Input – Output – Proses"], "k": 1, "e": "Data lebih dulu dimasukkan (input), diolah CPU (proses), baru hasilnya ditampilkan (output)."}, {"q": "Perangkat berikut yang termasuk perangkat input adalah ....", "o": ["Printer", "Speaker", "Mikrofon", "Monitor"], "k": 2, "e": "Mikrofon memasukkan data suara ke komputer. Printer, speaker, dan monitor adalah perangkat output."}, {"q": "Bagian CPU yang bertugas melakukan perhitungan matematika dan logika adalah ....", "o": ["Control Unit (CU)", "Random Access Memory (RAM)", "Arithmetic Logic Unit (ALU)", "Solid State Drive (SSD)"], "k": 2, "e": "ALU melakukan perhitungan (+, −, ×, ÷) dan perbandingan logika. CU mengatur alur data."}, {"q": "Fungsi utama RAM pada komputer adalah ....", "o": ["menyimpan data secara permanen", "menyimpan sementara data dan program yang sedang digunakan", "mencetak dokumen ke kertas", "mengatur lalu lintas data di dalam CPU"], "k": 1, "e": "RAM adalah penyimpanan sementara agar CPU dapat mengakses data dengan cepat."}, {"q": "Dimas mengetik laporan 2 jam tanpa menyimpannya. Tiba-tiba listrik padam dan laporannya hilang. Penyebab paling tepat adalah ....", "o": ["data yang belum disimpan hanya berada di RAM yang bersifat sementara", "flashdisk Dimas rusak", "printer tidak terhubung", "ALU salah menghitung data"], "k": 0, "e": "RAM kehilangan isinya saat listrik mati. Data yang sudah di-save berada di penyimpanan permanen."}, {"q": "Komputer Rani menjadi sangat lambat karena membuka banyak aplikasi sekaligus. Langkah pertama yang paling tepat adalah ....", "o": ["menginstal ulang sistem operasi", "membeli komputer baru", "mengganti keyboard", "menutup aplikasi yang tidak sedang digunakan"], "k": 3, "e": "Menutup aplikasi mengurangi beban RAM dan CPU. Ini langkah termudah dan paling murah."}, {"q": "Layar komputer tiba-tiba berwarna biru dan komputer tidak bisa digunakan (BSOD). Tindakan awal yang sebaiknya dilakukan adalah ....", "o": ["me-restart komputer terlebih dahulu", "mencabut dan menancapkan kabel monitor berkali-kali", "memformat seluruh hard disk", "terus mengetik sampai layar normal"], "k": 0, "e": "Langkah pertama adalah restart. Jika BSOD sering muncul, minta bantuan guru TIK atau teknisi untuk memeriksa RAM dan driver."}, {"q": "Agar komputer tidak terinfeksi virus dari flashdisk teman, tindakan yang tepat adalah ....", "o": ["langsung membuka semua file di flashdisk", "mematikan antivirus supaya komputer cepat", "menghapus semua file di komputer", "memindai (scan) flashdisk dengan antivirus sebelum dibuka"], "k": 3, "e": "Antivirus dan pemindaian berkala adalah pencegahan utama terhadap virus dan malware."}, {"q": "Pernyataan yang tepat tentang pemrosesan data saat membuka HP dengan pemindai wajah adalah ....", "o": ["wajah pengguna adalah output", "layar HP terbuka adalah proses", "kamera menangkap wajah (input), HP mencocokkan dengan data tersimpan (proses), lalu layar terbuka (output)", "tidak ada proses karena HP bukan komputer"], "k": 2, "e": "HP, ATM, mesin kasir, robot, dan mobil pintar bekerja dengan prinsip input–proses–output yang sama."}, {"q": "Sikap yang paling bijak dalam menggunakan AI untuk mengerjakan tugas sekolah adalah ....", "o": ["menyalin (copy-paste) semua jawaban AI tanpa membaca", "menggunakan AI sebagai pendamping belajar sambil tetap memahami dan mengolah jawabannya sendiri", "meminta AI mengerjakan seluruh tugas agar cepat selesai", "tidak pernah belajar sendiri karena AI sudah pintar"], "k": 1, "e": "Teknologi membantu, tetapi kemampuan berpikir manusia tetap harus diasah. Terlalu bergantung pada AI membuat malas berpikir."}];
+const CASES = [{"kode": "K1", "nama": "Kasus Rina", "kasus": "Rina mengerjakan presentasi PowerPoint sambil membuka browser dan memutar musik. Tiba-tiba komputernya sangat lambat dan macet.", "sebab": "Banyak aplikasi berjalan bersamaan → RAM/CPU penuh (juga mungkin disk hampir penuh).", "solusi": "Tutup aplikasi yang tidak dipakai; hapus file sementara dan isi recycle bin; gunakan aplikasi pembersih; simpan pekerjaan.", "bantuan": "Mandiri", "short": "RAM dan CPU penuh karena terlalu banyak aplikasi terbuka"}, {"kode": "K2", "nama": "Kasus Aldi", "kasus": "Aldi tidak bisa membuka file tugasnya dan muncul pesan error. Ternyata komputer terinfeksi virus dari USB temannya.", "sebab": "Virus/malware dari flashdisk teman.", "solusi": "Cegah: scan flashdisk sebelum dibuka, antivirus aktif dan diperbarui, unduh dari situs resmi. Tangani: scan penuh, karantina/hapus file berbahaya, lapor guru.", "bantuan": "Guru TIK jika file tak pulih", "short": "Virus atau malware dari flashdisk/USB"}, {"kode": "K3", "nama": "Layar Biru", "kasus": "Saat lab komputer digunakan, layar salah satu komputer mendadak biru dengan tulisan error dan tidak bisa dipakai.", "sebab": "BSOD: kesalahan sistem, driver rusak, atau gangguan hardware (mis. RAM).", "solusi": "Tenang, restart dahulu. Jika sering muncul, minta guru TIK/teknisi memeriksa RAM dan driver.", "bantuan": "Guru TIK / teknisi", "short": "BSOD: kesalahan sistem, driver, atau hardware"}, {"kode": "K4", "nama": "Internet Hilang", "kasus": "Eka ingin membuka Google untuk mencari bahan tugas, tetapi halaman tidak bisa dibuka.", "sebab": "Wi-Fi tidak terhubung, jaringan terganggu, atau pengaturan jaringan bermasalah.", "solusi": "Periksa Wi-Fi aktif dan terhubung; matikan lalu hidupkan Wi-Fi; restart modem; tanya orang dewasa apakah jaringan sedang gangguan.", "bantuan": "Orang dewasa / admin jaringan", "short": "Wi-Fi atau jaringan bermasalah"}, {"kode": "K5", "nama": "Laptop Mati Total", "kasus": "Fajar menekan tombol power laptop, tetapi layar tetap hitam dan tidak ada reaksi.", "sebab": "Kabel daya tidak terpasang baik, baterai habis, atau catu daya (power supply) rusak.", "solusi": "Periksa kabel daya ke listrik dan komputer; sambungkan charger dan tunggu beberapa saat; bila tetap mati, minta bantuan teknisi.", "bantuan": "Teknisi", "short": "Kabel daya, baterai, atau power supply bermasalah"}, {"kode": "K6", "nama": "Keyboard Diam", "kasus": "Gita ingin mengetik tugas, tetapi huruf tidak muncul di layar.", "sebab": "Kabel longgar, baterai (perangkat nirkabel) habis, atau perangkat/port USB rusak.", "solusi": "Lepas dan pasang kembali kabel; periksa baterai; coba di port USB lain atau gunakan perangkat lain untuk memastikan sumber masalah.", "bantuan": "Guru TIK jika tetap tak berfungsi", "short": "Kabel longgar, baterai habis, atau port/perangkat rusak"}, {"kode": "K7", "nama": "Aplikasi Menutup Sendiri", "kasus": "Hana membuka Microsoft Word, tetapi aplikasinya tiba-tiba tertutup sendiri.", "sebab": "Aplikasi rusak atau tidak kompatibel dengan sistem.", "solusi": "Instal ulang (reinstall) atau gunakan versi terbaru yang sesuai; biasakan menyimpan pekerjaan secara berkala.", "bantuan": "Guru TIK jika berulang", "short": "Aplikasi rusak atau tidak kompatibel dengan sistem"}];
+const DEV = [{"n": "Keyboard", "c": "Input"}, {"n": "Mouse", "c": "Input"}, {"n": "Mikrofon", "c": "Input"}, {"n": "Scanner", "c": "Input"}, {"n": "Kamera", "c": "Input"}, {"n": "CPU", "c": "Proses"}, {"n": "RAM", "c": "Proses"}, {"n": "Monitor", "c": "Output"}, {"n": "Speaker", "c": "Output"}, {"n": "Printer", "c": "Output"}, {"n": "Hard disk", "c": "Penyimpanan"}, {"n": "SSD", "c": "Penyimpanan"}, {"n": "Flashdisk", "c": "Penyimpanan"}];
+const M5 = {"kiri": ["Layar biru mendadak", "Wi-Fi tersambung tetapi laman tidak terbuka", "Laptop tidak menyala", "Keyboard tidak mengetik", "File tugas rusak setelah colok USB teman"], "kanan": ["Pasang ulang kabel / ganti baterai, coba perangkat lain", "Restart komputer", "Pindai dengan antivirus", "Matikan-hidupkan Wi-Fi, restart modem", "Cek kabel daya dan charger"], "kunci": [1, 3, 4, 0, 2]};
+const HAB = [
+ {t:"Mematikan notifikasi media sosial saat belajar dan mengeceknya pada jam istirahat",ok:true,e:"Menjaga fokus belajar: contoh penerapan mindfulness."},
+ {t:"Membiarkan laptop menyala semalaman karena malas mematikannya",ok:false,e:"Boros listrik dan memperpendek umur perangkat. Matikan atau aktifkan mode hemat energi."},
+ {t:"Menyalin semua jawaban AI tanpa membaca dan memahaminya",ok:false,e:"Membuatmu malas berpikir dan tidak benar-benar paham materi."},
+ {t:"Memakai AI untuk menjelaskan materi sulit, lalu menulis ulang dengan kalimat sendiri",ok:true,e:"AI sebagai pendamping belajar, proses berpikir tetap kamu yang lakukan."},
+ {t:"Memeriksa USB teman dengan antivirus sebelum membuka filenya",ok:true,e:"Pencegahan virus yang tepat."},
+ {t:"Membuang HP rusak ke tempat sampah biasa",ok:false,e:"E-waste mengandung timbal dan merkuri. Perbaiki, daur ulang, atau serahkan ke pengumpul e-waste."},
+ {t:"Menjeda layar tiap 20 menit dan tidak memakai gawai menjelang tidur",ok:true,e:"Menjaga kesehatan mata dan kualitas tidur."},
+ {t:"Membeli barang karena terpengaruh iklan influencer tanpa menimbang kebutuhan",ok:false,e:"Memicu pemborosan. Timbang kebutuhan dan buat anggaran sederhana."}
+];
+const $ = id => document.getElementById(id);
+const fmt = n => Number(n).toLocaleString('id-ID',{maximumFractionDigits:4});
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+// ---------- Lab 1 rata-rata
+$('nilaiGo').onclick=()=>{
+  const raw=$('nilaiIn').value.split(',').map(s=>s.trim().replace(',','.')).filter(s=>s!=='');
+  const nums=raw.map(Number);
+  if(!raw.length||nums.some(isNaN)){$('nilaiOut').className='msg bad';$('nilaiOut').textContent='Input tidak valid: tulis angka dipisah koma. Contoh: 80, 75, 90, 65 (ingat GIGO!).';return}
+  const sum=nums.reduce((a,b)=>a+b,0),avg=sum/nums.length;
+  const below=nums.filter(n=>n<avg).length;
+  $('nilaiOut').className='msg good';
+  $('nilaiOut').innerHTML='<b>Data mentah:</b> '+nums.join(', ')+'<br><b>Proses:</b> jumlah '+fmt(sum)+' ÷ '+nums.length+' data<br><b>Informasi:</b> rata-rata = <b>'+fmt(avg)+'</b>; '+below+' dari '+nums.length+' nilai berada di bawah rata-rata.';
+};
+
+// ---------- Lab 2 IPO
+let lastResult=null,timers=[];
+function setStage(id,on){$(id).classList.toggle('on',on)}
+function clearTimers(){timers.forEach(clearTimeout);timers=[]}
+$('ipoGo').onclick=()=>{
+  clearTimers();
+  ['sI','sP','sO'].forEach(i=>{$(i).classList.remove('on','err')});
+  const txt=$('ipoIn').value;
+  $('vI').textContent=txt||'(kosong)';$('vP').textContent='…';$('vO').textContent='…';
+  $('ipoSave').disabled=true;lastResult=null;
+  const m=txt.match(/^\s*(-?\d+(?:[.,]\d+)?)\s*([+\-*\/x×÷:])\s*(-?\d+(?:[.,]\d+)?)\s*$/i);
+  setStage('sI',true);$('ipoMsg').className='msg';$('ipoMsg').textContent='1) INPUT: kamu mengetik “'+txt+'” lewat keyboard.';
+  timers.push(setTimeout(()=>{
+    setStage('sI',false);setStage('sP',true);
+    if(!m){$('vP').textContent='?';$('ipoMsg').textContent='2) PROSES: CPU mencoba membaca input...';return}
+    const a=parseFloat(m[1].replace(',','.')),b=parseFloat(m[3].replace(',','.'));let op=m[2].toLowerCase();
+    $('vP').innerHTML=fmt(a)+' '+op.replace('x','×').replace('*','×').replace('/','÷').replace(':','÷')+' '+fmt(b);
+    $('ipoMsg').textContent='2) PROSES: data dimuat ke RAM, CU mengatur langkah, ALU menghitung.';
+  },1100));
+  timers.push(setTimeout(()=>{
+    setStage('sP',false);setStage('sO',true);
+    if(!m){$('sO').classList.add('err');$('vO').textContent='Error';$('ipoMsg').className='msg bad';$('ipoMsg').innerHTML='3) OUTPUT: input tidak bisa diproses. Ini <b>Garbage In, Garbage Out</b>: input yang salah (mis. huruf O di tempat angka 0) menghasilkan output yang salah. Format yang benar: angka, operator, angka.';return}
+    const a=parseFloat(m[1].replace(',','.')),b=parseFloat(m[3].replace(',','.'));let op=m[2].toLowerCase(),r;
+    if(op==='+')r=a+b;else if(op==='-')r=a-b;else if(op==='*'||op==='x'||op==='×')r=a*b;else{ if(b===0){$('sO').classList.add('err');$('vO').textContent='Error';$('ipoMsg').className='msg bad';$('ipoMsg').textContent='3) OUTPUT: tidak bisa membagi dengan nol. Komputer tidak menebak maksudmu, jadi periksa inputnya!';return} r=a/b}
+    lastResult=fmt(r);$('vO').textContent=lastResult;$('ipoMsg').className='msg good';$('ipoMsg').textContent='3) OUTPUT: hasil tampil di monitor. Mau disimpan permanen? Tekan “Simpan hasil”.';$('ipoSave').disabled=false;
+  },2300));
+};
+$('ipoSave').onclick=()=>{
+  if(lastResult===null)return;
+  setStage('sS',true);$('vS').textContent='Tersimpan: '+$('ipoIn').value+' = '+lastResult;
+  $('ipoMsg').className='msg good';$('ipoMsg').textContent='4) PENYIMPANAN: hasil tersimpan di hard disk/SSD/flashdisk dan tidak hilang saat komputer dimatikan.';
+  $('ipoSave').disabled=true;
+};
+
+// ---------- Lab 3 sortir
+const CATS=['Input','Proses','Output','Penyimpanan'];
+let sel=null,score=0,poolItems=[];
+function renderSort(){
+  const pool=$('pool');pool.innerHTML='';
+  poolItems.forEach(p=>{const b=document.createElement('button');b.className='chip'+(sel===p?' sel':'');b.textContent=p.n;b.onclick=()=>{sel=p;$('sortMsg').className='msg';$('sortMsg').textContent='Terpilih: '+p.n+'. Klik kotak tahap yang tepat.';renderSort()};pool.appendChild(b)});
+  document.querySelectorAll('.bucket').forEach(bk=>{
+    const c=bk.dataset.c;bk.querySelector('.in').innerHTML='';
+    DEV.filter(d=>d.placed===c).forEach(d=>{const s=document.createElement('span');s.className='chip done';s.textContent=d.n;bk.querySelector('.in').appendChild(s)});
+  });
+  $('sortScore').textContent=score;
+  if(score===13){$('sortMsg').className='msg good';$('sortMsg').textContent='Hebat! Semua perangkat sudah tepat. Perhatikan: RAM dan CPU sama-sama di tahap PROSES.'}
+}
+function initSort(){
+  DEV.forEach(d=>delete d.placed);poolItems=shuffle(DEV);sel=null;score=0;
+  const bs=$('buckets');bs.innerHTML='';
+  CATS.forEach(c=>{const d=document.createElement('div');d.className='bucket';d.dataset.c=c;d.innerHTML='<h5>'+c.toUpperCase()+'</h5><div class="in"></div>';
+    d.onclick=()=>{
+      if(!sel){$('sortMsg').className='msg';$('sortMsg').textContent='Pilih kartu perangkat dulu.';return}
+      if(sel.c===c){sel.placed=c;poolItems=poolItems.filter(p=>p!==sel);score++;$('sortMsg').className='msg good';$('sortMsg').textContent='Tepat! '+sel.n+' termasuk '+c+'.';sel=null;renderSort()}
+      else{d.classList.remove('shake');void d.offsetWidth;d.classList.add('shake');$('sortMsg').className='msg bad';$('sortMsg').textContent='Belum tepat. Pikirkan: apakah '+sel.n+' memasukkan data, mengolah, menampilkan hasil, atau menyimpan permanen?'}
+    };bs.appendChild(d)});
+  $('sortMsg').className='msg';$('sortMsg').textContent='Pilih kartu dulu.';renderSort();
+}
+$('sortReset').onclick=initSort;
+
+// ---------- Lab 4 mati lampu
+let ram='',sto='';
+function viewEd(){$('ramView').textContent=ram||'kosong';$('stoView').textContent=sto||'kosong'}
+$('eds').addEventListener('input',e=>{ram=e.target.value;viewEd();$('edMsg').className='msg';$('edMsg').textContent='Teks yang kamu ketik berada di RAM. Belum aman!'});
+$('edSave').onclick=()=>{sto=ram;viewEd();$('edMsg').className='msg good';$('edMsg').textContent='Tersimpan ke penyimpanan permanen.'};
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'&&document.activeElement===$('eds')){e.preventDefault();$('edSave').click()}});
+$('edOff').onclick=()=>{
+  const had=ram;ram='';$('eds').value=sto;ram=sto;
+  if(!had){$('edMsg').className='msg';$('edMsg').textContent='Belum ada yang diketik.'}
+  else if(had===sto){$('edMsg').className='msg good';$('edMsg').textContent='Listrik padam, tapi tugasmu selamat karena sudah di-save.'}
+  else if(sto){$('edMsg').className='msg bad';$('edMsg').textContent='Listrik padam! Hanya versi terakhir yang di-save yang selamat. Ketikan setelah Save hilang.'}
+  else{$('edMsg').className='msg bad';$('edMsg').textContent='Listrik padam! Tugasmu hilang karena belum pernah di-save. Biasakan Ctrl + S!'}
+  viewEd();
+};
+$('edReset').onclick=()=>{ram='';sto='';$('eds').value='';viewEd();$('edMsg').className='msg';$('edMsg').textContent='Ketik sesuatu.'};
+
+// ---------- Lab 5 diagnosa
+function renderSym(){
+  const s=$('sym');s.innerHTML='';
+  CASES.forEach((c,i)=>{const b=document.createElement('button');b.className='chip';b.textContent=c.nama;b.onclick=()=>{
+    [...s.children].forEach(x=>x.classList.remove('sel'));b.classList.add('sel');
+    $('symOut').innerHTML='<div class="panel"><h4>Gejala</h4><p>'+c.kasus+'</p><h4>Dugaan penyebab</h4><p>'+c.sebab+'</p><h4>Langkah yang dicoba</h4><p>'+c.solusi+'</p><h4>Jika belum berhasil</h4><p>Minta bantuan: '+c.bantuan+'</p></div>'};s.appendChild(b)});
+}
+
+// ---------- Lab 6 uji detektif
+let det={i:0,score:0,tot:0,done:false,order:[]};
+function nextDet(){
+  det.done=false;det.i=Math.floor(Math.random()*CASES.length);
+  const c=CASES[det.i];
+  $('detCase').innerHTML='<b>'+c.kode+' · '+c.nama+'</b><br>'+c.kasus;
+  const others=shuffle(CASES.filter((_,k)=>k!==det.i)).slice(0,2);
+  det.order=shuffle([c,...others]);
+  const o=$('detOpts');o.innerHTML='';
+  det.order.forEach(x=>{const b=document.createElement('button');b.className='opt';b.textContent=x.short;b.onclick=()=>{
+    if(det.done)return;det.done=true;det.tot++;
+    [...o.children].forEach((bb,idx)=>{bb.disabled=true;if(det.order[idx]===c)bb.classList.add('right')});
+    if(x===c){det.score++;$('detMsg').className='msg good';$('detMsg').innerHTML='Tepat! Langkah awal: '+c.solusi}
+    else{b.classList.add('wrong');$('detMsg').className='msg bad';$('detMsg').innerHTML='Belum tepat. Penyebab paling mungkin: <b>'+c.short+'</b>. Langkah awal: '+c.solusi}
+    $('detScore').textContent=det.score;$('detTot').textContent=det.tot;
+  };o.appendChild(b)});
+  $('detMsg').className='msg';$('detMsg').textContent='Pilih jawabanmu.';
+}
+$('detNext').onclick=nextDet;
+
+// ---------- Lab 7 jodohkan
+let mSel=null,mPaired={},mDone=0;
+function renderMatch(){
+  const box=$('match');box.innerHTML='';
+  const L=document.createElement('div'),R=document.createElement('div');
+  const ro=M5.order||(M5.order=shuffle(M5.kanan.map((_,i)=>i)));
+  M5.kiri.forEach((t,i)=>{const b=document.createElement('button');b.textContent=(i+1)+'. '+t;if(mPaired[i]!==undefined)b.classList.add('paired');if(mSel===i)b.classList.add('sel');
+    b.onclick=()=>{if(mPaired[i]!==undefined)return;mSel=i;renderMatch()};L.appendChild(b);L.appendChild(document.createElement('div')).style.height='8px'});
+  ro.forEach(ri=>{const b=document.createElement('button');b.textContent=M5.kanan[ri];if(Object.values(mPaired).includes(ri))b.classList.add('paired');
+    b.onclick=()=>{
+      if(mSel===null){$('matchMsg').className='msg';$('matchMsg').textContent='Pilih gejala di kiri dulu.';return}
+      if(Object.values(mPaired).includes(ri))return;
+      if(M5.kunci[mSel]===ri){mPaired[mSel]=ri;mDone++;mSel=null;$('matchMsg').className='msg good';$('matchMsg').textContent=mDone===M5.kiri.length?'Semua cocok! Kamu jago mendiagnosis.':'Cocok! Lanjut.';renderMatch()}
+      else{b.classList.add('bad');$('matchMsg').className='msg bad';$('matchMsg').textContent='Belum cocok. Coba pikirkan penyebab dan langkah paling mudah.';setTimeout(renderMatch,500)}
+    };R.appendChild(b);R.appendChild(document.createElement('div')).style.height='8px'});
+  box.appendChild(L);box.appendChild(R);
+}
+$('matchReset').onclick=()=>{mSel=null;mPaired={};mDone=0;M5.order=null;$('matchMsg').className='msg';$('matchMsg').textContent='Pasangkan semuanya.';renderMatch()};
+
+// ---------- Lab 8 kebiasaan
+let hab={i:0,score:0,tot:0,order:shuffle(HAB)};
+function showHab(){
+  if(hab.i>=hab.order.length){$('habCard').innerHTML='<b>Selesai!</b> Skormu '+hab.score+' dari '+hab.tot+'.';$('habGood').disabled=$('habBad').disabled=true;return}
+  $('habCard').textContent=hab.order[hab.i].t;$('habGood').disabled=$('habBad').disabled=false;
+}
+function ansHab(v){
+  const h=hab.order[hab.i];hab.tot++;const ok=h.ok===v;if(ok)hab.score++;
+  $('habMsg').className='msg '+(ok?'good':'bad');$('habMsg').textContent=(ok?'Tepat! ':'Kurang tepat. ')+h.e;
+  $('habScore').textContent=hab.score;$('habTot').textContent=hab.tot;hab.i++;setTimeout(showHab,900);$('habGood').disabled=$('habBad').disabled=true;
+}
+$('habGood').onclick=()=>ansHab(true);$('habBad').onclick=()=>ansHab(false);
+
+// ---------- Kuis
+let q={i:0,score:0,order:[]};
+function showQ(){
+  const box=$('qBox');
+  $('qBar').style.width=(q.i/QUIZ.length*100)+'%';
+  if(q.i>=QUIZ.length){
+    const pct=Math.round(q.score/QUIZ.length*100);
+    box.innerHTML='<h3 style="margin-top:0">Skormu: '+q.score+' / '+QUIZ.length+' ('+pct+')</h3><p>'+(pct>=80?'Luar biasa! Kamu detektif komputer sejati.':pct>=60?'Bagus! Ulangi lab pada materi yang masih keliru.':'Jangan menyerah. Pelajari lagi gambar dan lab, lalu coba kuis ini kembali.')+'</p><button class="btn" id="qRe">Ulangi kuis</button>';
+    $('qRe').onclick=()=>{q.i=0;q.score=0;showQ()};return;
+  }
+  const it=QUIZ[q.i];
+  const idx=shuffle(it.o.map((_,k)=>k));
+  box.innerHTML='<p><b>Soal '+(q.i+1)+' dari '+QUIZ.length+'</b></p><p>'+it.q+'</p><div id="qo"></div><div class="msg" id="qm" style="display:none"></div><div class="row"><button class="btn sec" id="qNext" style="display:none">'+(q.i===QUIZ.length-1?'Lihat skor':'Soal berikutnya')+'</button></div>';
+  const qo=$('qo');
+  idx.forEach(k=>{const b=document.createElement('button');b.className='opt';b.textContent=it.o[k];b.onclick=()=>{
+    [...qo.children].forEach(x=>x.disabled=true);
+    const ok=k===it.k;if(ok){q.score++;b.classList.add('right')}else{b.classList.add('wrong');[...qo.children].forEach((x,n)=>{if(idx[n]===it.k)x.classList.add('right')})}
+    $('qm').style.display='block';$('qm').className='msg '+(ok?'good':'bad');$('qm').textContent=(ok?'Benar! ':'Kurang tepat. ')+it.e;
+    $('qNext').style.display='inline-block';
+  };qo.appendChild(b)});
+  $('qNext').onclick=()=>{q.i++;showQ()};
+}
+
+// ---------- refleksi
+document.querySelectorAll('.refl input').forEach(c=>c.onchange=()=>{
+  const n=document.querySelectorAll('.refl input:checked').length;
+  $('reflMsg').textContent=n===4?'Keren! Kamu sudah menguasai semua target hari ini.':n+' dari 4 target sudah kamu kuasai. Ulangi lab untuk yang belum.';
+});
+
+// ---------- nav aktif
+const secs=[...document.querySelectorAll('main section')],links=[...document.querySelectorAll('nav a')];
+addEventListener('scroll',()=>{let cur=secs[0].id;secs.forEach(s=>{if(s.getBoundingClientRect().top<120)cur=s.id});links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur))});
+
+initSort();viewEd();renderSym();nextDet();renderMatch();showHab();showQ();
+</script>
+</body>
+</html>

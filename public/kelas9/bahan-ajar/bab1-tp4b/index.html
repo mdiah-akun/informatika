@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Operasi Hemat Watt: Materi Siswa Web (TP 4 Pertemuan 2)</title>
+<style>
+:root{--navy:#1B2A4A;--teal:#2A9D8F;--gold:#E9C46A;--coral:#E76F51;--purple:#6A4C93;--blue:#2E6F95;--green:#5B8C5A;--bg:#F4F7FA;--card:#fff;--line:#D1D5DE;--ink:#1B2A4A;--mute:#5B6478;--r:16px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;font-size:17px}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--blue)}
+header.hero{background:var(--navy);color:#fff}
+header.hero .wrap{padding:0 20px}
+.hero img{width:100%;max-height:340px;object-fit:cover;object-position:left center}
+.hero .txt{max-width:1000px;margin:0 auto;padding:22px 20px 28px}
+.hero h1{margin:.2em 0 .1em;font-size:clamp(28px,5vw,46px);line-height:1.15}
+.hero p{margin:.3em 0;color:#C9D6EA}
+.chip{display:inline-block;background:rgba(233,196,106,.18);color:var(--gold);border:1px solid var(--gold);border-radius:999px;padding:2px 12px;font-size:13px;font-weight:700;letter-spacing:.03em}
+nav.top{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 10px rgba(27,42,74,.06)}
+nav.top .in{max-width:1000px;margin:0 auto;display:flex;gap:4px;overflow-x:auto;padding:8px 14px;scrollbar-width:thin}
+nav.top a{white-space:nowrap;text-decoration:none;color:var(--navy);font-size:14.5px;font-weight:600;padding:6px 12px;border-radius:999px;background:var(--bg)}
+nav.top a:hover,nav.top a.on{background:var(--navy);color:#fff}
+#bar{height:4px;background:var(--teal);width:0;position:fixed;top:0;left:0;z-index:30;transition:width .15s}
+main{max-width:1000px;margin:0 auto;padding:10px 20px 60px}
+section{margin:44px 0;scroll-margin-top:70px}
+h2{font-size:clamp(24px,4vw,32px);margin:0 0 6px;color:var(--navy)}
+h2 .n{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--teal);color:#fff;font-size:20px;margin-right:10px;vertical-align:middle}
+h3{font-size:20px;margin:22px 0 6px;color:var(--blue)}
+.lead{color:var(--mute);margin:0 0 14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;margin:14px 0}
+.fig{margin:14px 0}
+.fig img{border-radius:var(--r);border:1px solid var(--line);background:#fff;margin:0 auto}
+.fig figcaption{text-align:center;font-size:14px;color:var(--mute);margin-top:6px}
+.note{border-left:6px solid var(--teal);background:#EAF6F4;padding:12px 16px;border-radius:0 var(--r) var(--r) 0;margin:14px 0}
+.note.warn{border-color:var(--coral);background:#FDEFEA}.note.gold{border-color:var(--gold);background:#FDF6E3}.note.purple{border-color:var(--purple);background:#F1ECF8}.note.blue{border-color:var(--blue);background:#EAF1F8}
+.note b.t{display:block;margin-bottom:2px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:720px){.grid2{grid-template-columns:1fr}body{font-size:16px}}
+table{border-collapse:collapse;width:100%;font-size:15.5px;background:#fff}
+th{background:var(--navy);color:#fff;text-align:left;padding:8px 10px;font-weight:600}
+td{border-bottom:1px solid var(--line);padding:7px 10px;vertical-align:middle}
+tr:nth-child(even) td{background:#F8FAFC}
+.tw{overflow-x:auto;border-radius:12px;border:1px solid var(--line)}
+code,pre{font-family:Consolas,"Courier New",monospace}
+pre.code{background:var(--navy);color:#fff;padding:14px 16px;border-radius:var(--r);overflow-x:auto;font-size:15px;line-height:1.7;margin:10px 0}
+pre.code span.l{display:block;padding:0 6px;border-radius:6px}
+pre.code span.l.hit{background:rgba(233,196,106,.28);color:var(--gold)}
+.btn{font:inherit;font-weight:700;border:0;border-radius:12px;padding:9px 16px;background:var(--navy);color:#fff;cursor:pointer}
+.btn:hover{filter:brightness(1.15)}.btn.alt{background:var(--teal)}.btn.ghost{background:#fff;color:var(--navy);border:2px solid var(--navy)}
+.btn:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+select,input[type=number]{font:inherit;padding:6px 8px;border:2px solid var(--line);border-radius:10px;background:#fff;max-width:100%}
+.ok{color:var(--green);font-weight:700}.bad{color:#D64545;font-weight:700}
+.badge{display:inline-block;border-radius:999px;padding:1px 10px;font-size:13px;font-weight:700;color:#fff}
+.stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:12px 0}
+.stat div{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:10px 14px}
+.stat small{display:block;color:var(--mute);font-size:13px}.stat b{font-size:24px}
+.opsi{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.opt{display:flex;gap:10px;align-items:flex-start;border:2px solid var(--line);border-radius:14px;padding:10px 12px;background:#fff;cursor:pointer;user-select:none}
+.opt input{width:22px;height:22px;margin-top:3px;accent-color:var(--teal)}
+.opt.on{border-color:var(--teal);background:#EAF6F4}
+.opt .k{background:var(--navy);color:#fff;border-radius:8px;min-width:28px;height:28px;display:grid;place-items:center;font-weight:800}
+.opt small{color:var(--mute);display:block}
+.meter{position:relative;height:26px;background:#E7ECF2;border-radius:13px;overflow:visible;margin:8px 0 22px}
+.meter i{position:absolute;left:0;top:0;bottom:0;border-radius:13px;background:var(--teal);transition:width .25s}
+.meter u{position:absolute;top:-6px;bottom:-6px;width:3px;background:var(--navy);text-decoration:none}
+.meter u::after{content:attr(data-l);position:absolute;top:100%;left:50%;transform:translateX(-50%);font-size:12px;color:var(--navy);white-space:nowrap;margin-top:2px}
+.pill{display:inline-block;border:2px solid var(--line);border-radius:999px;padding:3px 12px;margin:3px;cursor:pointer;background:#fff;font-weight:600;font-size:14.5px}
+.pill:hover{border-color:var(--teal)}
+.q{margin:16px 0;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:var(--r)}
+.q .o{display:block;width:100%;text-align:left;font:inherit;padding:9px 12px;margin:6px 0;border:2px solid var(--line);border-radius:12px;background:#fff;cursor:pointer}
+.q .o:hover:not([disabled]){border-color:var(--teal)}
+.q .o.right{border-color:var(--green);background:#E6F3E6}.q .o.wrong{border-color:#D64545;background:#FDECEC}
+.q .exp{display:none;margin-top:8px;font-size:15px;color:var(--mute)}.q.done .exp{display:block}
+svg text{font-family:inherit}
+.kbd{display:inline-block;border:1px solid var(--line);border-bottom-width:3px;border-radius:6px;padding:0 6px;background:#fff;font-size:.9em}
+footer{background:var(--navy);color:#C9D6EA;text-align:center;padding:24px 16px;font-size:14px}
+.big{font-size:34px;font-weight:800}
+.res{padding:14px 16px;border-radius:var(--r);margin:10px 0;font-weight:700}
+.res.good{background:#E6F3E6;border:2px solid var(--green)}.res.mid{background:#FDF6E3;border:2px solid var(--gold)}.res.no{background:#FDECEC;border:2px solid #D64545}
+@media print{nav.top,#bar,.btn{display:none}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<header class="hero">
+  <img src="images/17-banner-operasi-hemat-watt.png" alt="Banner Operasi Hemat Watt: lampu, kaca pembesar, dan grafik batang">
+  <div class="txt">
+    <span class="chip">INFORMATIKA • KELAS IX • BAB I • TP 4 • PERTEMUAN 2</span>
+    <h1>Operasi Hemat Watt!</h1>
+    <p>Jadi detektif data di sekolahmu: <b>bersihkan, selidiki, simulasikan, putuskan</b>. Di halaman ini kamu bisa mencoba sendiri, bukan cuma membaca.</p>
+    <p style="font-size:14px">SMP Negeri 14 Tarakan • Semua data adalah data simulasi untuk latihan, bukan data resmi sekolah.</p>
+  </div>
+</header>
+<nav class="top"><div class="in" id="nav">
+  <a href="#misi">Misi</a><a href="#lab1">1 Bersihkan</a><a href="#lab2">2 Pola</a><a href="#lab3">3 Simulasi</a><a href="#lab4">4 Alarm</a><a href="#sidang">Sidang</a><a href="#kuis">Kuis</a>
+</div></nav>
+<main>
+
+<section id="misi">
+  <h2>Surat Tugas dari Kepala Sekolah</h2>
+  <p class="lead">Kemarin kamu sudah jago menghitung listrik rumah. Hari ini rumahnya diganti satu sekolah, dan datanya tidak serapi kemarin!</p>
+  <figure class="fig"><img src="images/01-surat-tugas-audit.png" alt="Surat tugas audit energi: turunkan 15 persen, anggaran Rp10 juta, belajar tetap nyaman"><figcaption>Tiga syarat sekaligus: −15%, maksimal Rp10 juta, belajar tetap nyaman</figcaption></figure>
+  <div class="grid2">
+    <figure class="fig"><img src="images/02-naik-level.png" alt="Tangga level dari C3 ke C4, C5, C6"><figcaption>Naik level dari pertemuan 1</figcaption></figure>
+    <figure class="fig"><img src="images/03-siklus-detektif-data.png" alt="Siklus detektif data enam pos"><figcaption>Siklus Detektif Data: 6 pos, 4 misi</figcaption></figure>
+  </div>
+  <div class="note gold"><b class="t">Cara memakai halaman ini</b>Kerjakan Lab 1 sampai Lab 4 berurutan. Setiap lab punya tombol untuk mengecek jawabanmu. Di akhir ada kuis 10 soal.</div>
+</section>
+
+<section id="lab1">
+  <h2><span class="n">1</span>Misi 1: Bersihkan Data</h2>
+  <p class="lead">Petugas mencatat angka meter Lab Komputer selama dua minggu. Catatannya berantakan. Ada lima jenis data kotor:</p>
+  <figure class="fig"><img src="images/05-lima-jenis-data-kotor.png" alt="Lima jenis data kotor: kosong, ganda, satuan beda, salah ketik, tidak seragam"><figcaption>Lima jenis data kotor dan obatnya</figcaption></figure>
+  <h3>Lab 1: Pilih tindakan untuk tiap baris</h3>
+  <p>Untuk setiap baris, pilih tindakan yang menurutmu paling tepat. Lalu klik <b>Cek &amp; hitung</b>. Kolom kWh dalam satuan kWh.</p>
+  <div class="tw"><table id="t1"><thead><tr><th>No</th><th>Ruang</th><th>Hari</th><th>Isi</th><th>Tindakanmu</th><th>Hasil</th></tr></thead><tbody></tbody></table></div>
+  <p><button class="btn alt" id="b1">Cek &amp; hitung</button> <button class="btn ghost" id="r1">Ulangi</button></p>
+  <div id="o1"></div>
+  <figure class="fig"><img src="images/06-sebelum-sesudah-bersih.png" alt="Perbandingan rata-rata sebelum dan sesudah dibersihkan"><figcaption>Satu angka salah bisa merusak seluruh kesimpulan</figcaption></figure>
+  <div class="note"><b class="t">Aturan emas detektif data</b>Jangan asal buang, jangan asal ubah. Catat baris mana, diubah jadi apa, dan <b>kenapa</b>.</div>
+</section>
+
+<section id="lab2">
+  <h2><span class="n">2</span>Misi 2: Selidiki Pola</h2>
+  <p class="lead">Total terbesar belum tentu paling boros. Coba bandingkan dua cara melihat data yang sama.</p>
+  <h3>Lab 2A: Total vs per hari efektif</h3>
+  <p><button class="btn" id="m_tot">Total kWh per bulan</button> <button class="btn ghost" id="m_per">kWh per hari efektif</button></p>
+  <div class="card"><svg id="chart" viewBox="0 0 700 320" role="img" aria-label="Grafik 12 bulan listrik sekolah" style="width:100%;height:auto"></svg><div id="tip" style="min-height:3.2em;color:var(--mute)">Klik sebuah batang/titik untuk melihat detailnya.</div></div>
+  <figure class="fig"><img src="images/07-total-vs-per-hari.png" alt="Dua grafik berdampingan: total per bulan dan per hari efektif"><figcaption>Sama datanya, beda ceritanya. Normalisasi = total ÷ hari efektif</figcaption></figure>
+  <h3>Lab 2B: Tebak anomalinya</h3>
+  <p>Pada grafik per hari efektif, bulan mana yang menyimpang jauh?</p>
+  <div id="g2"></div><div id="o2"></div>
+  <h3>Lab 2C: Kalkulator normalisasi</h3>
+  <p>Bandingkan dua bulan: <select id="s1"></select> dan <select id="s2"></select></p>
+  <div id="o2c" class="stat"></div>
+  <figure class="fig"><img src="images/08-tiga-pola.png" alt="Tren, musiman, anomali"><figcaption>Tiga pola yang dicari detektif: tren, musiman, anomali</figcaption></figure>
+  <h3>Lab 2D: Naik bersamaan, saling menyebabkan?</h3>
+  <figure class="fig"><img src="images/09-korelasi-bukan-sebab.png" alt="Es teh dan AC sama-sama naik karena cuaca panas"><figcaption>Es teh laris dan AC boros: keduanya dipengaruhi cuaca panas</figcaption></figure>
+  <div id="g3"></div>
+</section>
+
+<section id="lab3">
+  <h2><span class="n">3</span>Misi 3: Simulasi What-If</h2>
+  <p class="lead">Kondisi sekarang <b>180 kWh/hari efektif</b>. Target hemat 15% (<b>27 kWh/hari</b>) dengan anggaran maksimal <b>Rp10.000.000</b>.</p>
+  <div class="grid2">
+    <figure class="fig"><img src="images/10-komposisi-listrik-sekolah.png" alt="Diagram donat komposisi beban listrik sekolah"><figcaption>Ke mana listrik sekolah pergi?</figcaption></figure>
+    <figure class="fig"><img src="images/11-enam-opsi-penghematan.png" alt="Enam opsi penghematan A sampai F"><figcaption>Enam opsi penghematan</figcaption></figure>
+  </div>
+  <div class="note purple"><b class="t">Awas, jebakan tumpang tindih!</b>Opsi B dan D sama-sama menyasar AC. Jika keduanya dipilih, total hemat B + D hanya 12 kWh/hari, bukan 16.</div>
+  <h3>Lab 3: Susun paketmu</h3>
+  <div class="opsi" id="opsi"></div>
+  <div class="card">
+    <div class="stat"><div><small>Total hemat</small><b id="x_h">0</b> <span>kWh/hari</span></div><div><small>% dari 180</small><b id="x_p">0</b>%</div><div><small>Total biaya</small><b id="x_b" style="font-size:20px">Rp0</b></div><div><small>Balik modal (payback)</small><b id="x_pb">-</b></div></div>
+    <b>Penghematan vs target</b><div class="meter"><i id="m_h"></i><u id="u_t" data-l="target 27"></u></div>
+    <b>Biaya vs anggaran</b><div class="meter"><i id="m_b" style="background:var(--gold)"></i><u id="u_a" data-l="Rp10 juta"></u></div>
+    <label><input type="checkbox" id="u90"> <b>Uji kepekaan:</b> anggap hasil nyata hanya 90% dari perkiraan</label>
+    <div id="x_res" class="res mid">Pilih beberapa opsi di atas.</div>
+    <button class="btn ghost" id="find">Tampilkan semua paket yang memenuhi syarat</button>
+    <div id="found" style="margin-top:8px"></div>
+  </div>
+  <div class="grid2">
+    <figure class="fig"><img src="images/12-simulasi-paket.png" alt="Grafik batang simulasi paket terhadap target"><figcaption>Siapa yang lolos target 153 kWh/hari?</figcaption></figure>
+    <figure class="fig"><img src="images/13-payback.png" alt="Grafik payback paket"><figcaption>Kapan modal kembali?</figcaption></figure>
+  </div>
+</section>
+
+<section id="lab4">
+  <h2><span class="n">4</span>Misi 4: Rancang Alarm Boros</h2>
+  <p class="lead">Alarm menilai pemakaian listrik harian. Algoritmanya ditulis dalam <b>pseudocode</b>, lalu <b>diuji</b>.</p>
+  <figure class="fig"><img src="images/14-bagan-alir-alarm.png" alt="Bagan alir dan pseudocode alarm boros"><figcaption>Bagan alir (kiri) dan pseudocode (kanan)</figcaption></figure>
+  <h3>Lab 4: Jalankan seperti komputer</h3>
+  <div class="card">
+    <p>Jenis hari: <select id="jh"><option value="sekolah">sekolah</option><option value="libur">libur</option></select>
+    &nbsp; kWh: <input type="number" id="kw" value="172" min="0" max="400" style="width:90px"> <input type="range" id="kr" min="0" max="260" value="172" style="vertical-align:middle;width:160px"></p>
+    <pre class="code" id="pc"></pre>
+    <div id="o4" class="res mid"></div>
+    <label><input type="checkbox" id="strict"> Ubah kondisi batas “kwh &lt;= 200” menjadi “kwh &lt; 200”</label>
+    <p><button class="btn alt" id="b4">Jalankan 5 data uji</button></p>
+    <div class="tw"><table id="t4"><thead><tr><th>#</th><th>Hari</th><th>Jenis</th><th>kWh</th><th>Seharusnya</th><th>Hasil algoritma</th><th></th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <div class="note"><b class="t">Kasus batas</b>Data uji nomor 2 (200 kWh) berada tepat di batas. Centang kotak di atas, lalu jalankan 5 data uji lagi. Satu tanda saja mengubah keputusan!</div>
+</section>
+
+<section id="sidang">
+  <h2>Sidang Rekomendasi</h2>
+  <figure class="fig"><img src="images/15-sidang-rekomendasi.png" alt="Tiga penguji menanyakan data, asumsi, dan risiko"><figcaption>Penguji akan bertanya: Apa buktinya? Apa asumsinya? Apa risikonya?</figcaption></figure>
+  <div class="note gold"><b class="t">Isi surat rekomendasi</b><ul style="margin:.3em 0 0"><li><b>Temuan</b>: tiga bukti angka (rata-rata bersih, anomali Juli, tren naik).</li><li><b>Rekomendasi</b>: paket, total hemat, biaya, payback.</li><li><b>Asumsi dan risiko</b>: termasuk uji kepekaan 90%.</li><li><b>Evaluasi</b>: bagaimana kita tahu berhasil?</li></ul></div>
+  <figure class="fig"><img src="images/16-pilar-dan-evaluasi.png" alt="Empat pilar berpikir komputasional ditambah evaluasi"><figcaption>Empat pilar + evaluasi di setiap misi</figcaption></figure>
+</section>
+
+<section id="kuis">
+  <h2>Kuis Akhir (10 soal)</h2>
+  <p class="lead">Pilih jawaban, penjelasan langsung muncul. Skormu: <b id="sc">0</b> / 10</p>
+  <div id="quiz"></div>
+  <p><button class="btn ghost" id="rq">Ulangi kuis</button></p>
+  <div id="final"></div>
+</section>
+</main>
+<footer>Operasi Hemat Watt • Informatika Kelas IX • SMP Negeri 14 Tarakan • Data simulasi untuk latihan</footer>
+
+<script>
+const LOG=[{"no": 1, "ruang": "Lab Komputer", "hari": "Senin (mgg 1)", "isi": "18,0", "val": 18.0, "ok": ["pakai"]}, {"no": 2, "ruang": "Lab Komputer", "hari": "Selasa (mgg 1)", "isi": "18,4", "val": 18.4, "ok": ["pakai"]}, {"no": 3, "ruang": "lab komputer", "hari": "Rabu (mgg 1)", "isi": "17,6", "val": 17.6, "ok": ["seragam"]}, {"no": 4, "ruang": "lab komputer", "hari": "Rabu (mgg 1)", "isi": "17,6", "val": 17.6, "ok": ["hapus"]}, {"no": 5, "ruang": "Lab Komputer", "hari": "Kamis (mgg 1)", "isi": "(kosong)", "val": null, "ok": ["isi", "hapus"]}, {"no": 6, "ruang": "Lab. Kom", "hari": "Jumat (mgg 1)", "isi": "14,0", "val": 14.0, "ok": ["seragam"]}, {"no": 7, "ruang": "Lab Komputer", "hari": "Senin (mgg 2)", "isi": "18,1", "val": 18.1, "ok": ["pakai"]}, {"no": 8, "ruang": "Lab Komputer", "hari": "Selasa (mgg 2)", "isi": "179", "val": 179.0, "ok": ["gs10"]}, {"no": 9, "ruang": "Lab Komputer", "hari": "Rabu (mgg 2)", "isi": "18300 Wh", "val": 18300.0, "ok": ["gs1000"]}, {"no": 10, "ruang": "Lab Komputer", "hari": "Kamis (mgg 2)", "isi": "18,0", "val": 18.0, "ok": ["pakai"]}, {"no": 11, "ruang": "Lab Komputer", "hari": "Jumat (mgg 2)", "isi": "14,2", "val": 14.2, "ok": ["pakai"]}], BULAN=[{"b": "Jan", "he": 18, "tot": 2880, "perh": 160}, {"b": "Feb", "he": 18, "tot": 2916, "perh": 162}, {"b": "Mar", "he": 17, "tot": 2720, "perh": 160}, {"b": "Apr", "he": 18, "tot": 2970, "perh": 165}, {"b": "Mei", "he": 16, "tot": 2640, "perh": 165}, {"b": "Jun", "he": 14, "tot": 2240, "perh": 160}, {"b": "Jul", "he": 5, "tot": 1200, "perh": 240}, {"b": "Agu", "he": 19, "tot": 3135, "perh": 165}, {"b": "Sep", "he": 20, "tot": 3400, "perh": 170}, {"b": "Okt", "he": 21, "tot": 3675, "perh": 175}, {"b": "Nov", "he": 20, "tot": 3600, "perh": 180}, {"b": "Des", "he": 15, "tot": 2775, "perh": 185}], OPSI=[{"k": "A", "nama": "Ganti lampu TL ke LED", "hemat": 14, "biaya": 6000000}, {"k": "B", "nama": "Aturan AC 25°C + matikan 15 menit sebelum pulang", "hemat": 7, "biaya": 0}, {"k": "C", "nama": "Matikan komputer & monitor total (bukan standby) + stopkontak bersaklar", "hemat": 6, "biaya": 500000}, {"k": "D", "nama": "Timer/sensor otomatis untuk AC", "hemat": 9, "biaya": 4500000}, {"k": "E", "nama": "Pompa air dengan tangki + saklar pelampung", "hemat": 3, "biaya": 1800000}, {"k": "F", "nama": "Panel surya atap", "hemat": 10, "biaya": 45000000}], PG=[{"q": "Tim audit memecah masalah “listrik sekolah boros” menjadi data harian, data bulanan, dan daftar alat. Langkah ini adalah penerapan pilar…", "o": ["Abstraksi", "Pengenalan pola", "Dekomposisi", "Algoritma"], "a": 2, "e": "Memecah masalah besar menjadi bagian kecil = dekomposisi."}, {"q": "Pada catatan meter, baris “Rabu — 17,6” tertulis dua kali persis sama. Tindakan yang paling tepat adalah…", "o": ["memakai keduanya agar datanya lebih banyak", "menyimpan satu baris dan menghapus kembarannya", "menjumlahkan keduanya menjadi 35,2", "menghapus seluruh data hari Rabu"], "a": 1, "e": "Data ganda dapat membuat jumlah dan rata-rata menjadi salah. Simpan satu saja."}, {"q": "Dalam tabel berisi satuan kWh tertulis “18300 Wh”. Nilai yang benar dalam kWh adalah…", "o": ["18,3 kWh", "183 kWh", "1,83 kWh", "18.300 kWh"], "a": 0, "e": "1 kWh = 1000 Wh, sehingga 18300 Wh ÷ 1000 = 18,3 kWh."}, {"q": "Data kWh harian: 18; 18,5; 17,5; 180; 18. Angka 180 diduga salah geser koma (seharusnya 18). Setelah dikoreksi, rata-ratanya adalah…", "o": ["50,4", "36", "90", "18"], "a": 3, "e": "(18 + 18,5 + 17,5 + 18 + 18) ÷ 5 = 90 ÷ 5 = 18. Tanpa koreksi rata-ratanya 50,4 (menyesatkan)."}, {"q": "Bulan X: 2.000 kWh dalam 10 hari efektif. Bulan Y: 3.000 kWh dalam 20 hari efektif. Pernyataan yang benar adalah…", "o": ["Y lebih boros karena totalnya lebih besar", "X lebih boros per hari karena 200 kWh/hari, sedangkan Y 150 kWh/hari", "X dan Y sama borosnya", "X dan Y tidak dapat dibandingkan"], "a": 1, "e": "Normalisasi: 2.000 ÷ 10 = 200 dan 3.000 ÷ 20 = 150 kWh/hari."}, {"q": "Konsumsi listrik per hari efektif selama lima bulan berturut-turut: 165, 170, 175, 180, 185. Pola ini disebut…", "o": ["tren naik", "anomali", "pola musiman", "data kotor"], "a": 0, "e": "Naik bertahap sebesar 5 tiap bulan = tren naik."}, {"q": "Ketika satu titik data menyimpang sangat jauh dari yang lain, sikap detektif data yang tepat adalah…", "o": ["langsung menghapusnya karena pasti salah", "menganggapnya pola musiman", "mengubahnya menjadi nilai rata-rata tanpa mencatat", "menyelidiki penyebabnya karena bisa berupa kesalahan atau kejadian nyata"], "a": 3, "e": "Anomali perlu diselidiki. Dihapus hanya jika terbukti salah, dan alasannya dicatat."}, {"q": "Pada musim hujan, jumlah siswa yang membawa payung dan kWh lampu sekolah sama-sama naik. Kesimpulan yang paling tepat adalah…", "o": ["payung membuat lampu boros", "lampu yang boros membuat siswa membawa payung", "keduanya mungkin dipengaruhi faktor ketiga, yaitu cuaca mendung atau hujan", "keduanya pasti tidak berhubungan"], "a": 2, "e": "Korelasi tidak sama dengan sebab-akibat. Cari faktor ketiga dan uji dengan data tambahan."}, {"q": "Sekolah ingin hemat minimal 13 kWh/hari dengan anggaran maksimal Rp6 juta. Opsi X: hemat 10 kWh, Rp6 juta. Opsi Y: hemat 8 kWh, Rp3 juta. Opsi Z: hemat 5 kWh, Rp2 juta. Paket yang memenuhi syarat adalah…", "o": ["X saja", "Y + Z", "X + Z", "X + Y"], "a": 1, "e": "Y + Z = 13 kWh dengan biaya Rp5 juta (memenuhi). X saja hanya 10 kWh; X + Z Rp8 juta; X + Y Rp9 juta (melebihi anggaran)."}, {"q": "Perhatikan pseudocode: JIKA kwh <= 180 MAKA TAMPIL “NORMAL”; SELAIN ITU JIKA kwh <= 200 MAKA TAMPIL “WASPADA”; SELAIN ITU TAMPIL “BOROS”. Untuk kwh = 200, hasilnya adalah…", "o": ["NORMAL", "BOROS", "WASPADA", "tidak ada keluaran"], "a": 2, "e": "200 tidak <= 180, tetapi 200 <= 200 sehingga hasilnya WASPADA (kasus batas)."}];
+const $=s=>document.querySelector(s), fmt=(x,n=2)=>x.toLocaleString("id-ID",{maximumFractionDigits:n,minimumFractionDigits:0});
+const rp=x=>"Rp"+Math.round(x).toLocaleString("id-ID");
+/* progress + nav */
+addEventListener("scroll",()=>{const h=document.documentElement;$("#bar").style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+"%";
+ let cur="";document.querySelectorAll("main section").forEach(s=>{if(s.getBoundingClientRect().top<120)cur=s.id});
+ document.querySelectorAll("#nav a").forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+cur));});
+
+/* ---- LAB 1 ---- */
+const ACT={pakai:"Pakai apa adanya",hapus:"Hapus / tidak dipakai",isi:"Isi dengan 18,0 (nilai Kamis lain)",gs1000:"Ubah satuan (÷ 1000)",gs10:"Koreksi geser koma (÷ 10)",seragam:"Seragamkan nama ruang"};
+function build1(){const tb=$("#t1 tbody");tb.innerHTML="";LOG.forEach((r,i)=>{const tr=document.createElement("tr");
+ tr.innerHTML=`<td>${r.no}</td><td>${r.ruang}</td><td>${r.hari}</td><td><b>${r.isi}</b></td><td><select id="a${i}" aria-label="Tindakan baris ${r.no}">${Object.entries(ACT).map(([k,v])=>`<option value="${k}">${v}</option>`).join("")}</select></td><td id="h${i}"></td>`;tb.appendChild(tr)});$("#o1").innerHTML=""}
+function used(r,a){if(a==="hapus")return null;if(a==="isi")return 18;if(a==="gs1000")return r.val/1000;if(a==="gs10")return r.val/10;return r.val}
+$("#b1").onclick=()=>{let vals=[],good=0;LOG.forEach((r,i)=>{const a=$("#a"+i).value,v=used(r,a),ok=r.ok.includes(a);if(ok)good++;if(v!==null&&v!==undefined)vals.push(v);
+ $("#h"+i).innerHTML=ok?'<span class="ok">✓ tepat</span>':'<span class="bad">✗ coba lagi</span>'});
+ const m=vals.reduce((a,b)=>a+b,0)/vals.length;const kotor=LOG.filter(r=>r.val!==null).reduce((a,r)=>a+r.val,0)/LOG.filter(r=>r.val!==null).length;
+ const target=17.25,dekat=Math.abs(m-target)<0.2;
+ $("#o1").innerHTML=`<div class="stat"><div><small>Rata-rata dari pilihanmu</small><b>${fmt(m)}</b> kWh</div><div><small>Rata-rata jika semua dipakai apa adanya</small><b>${fmt(kotor)}</b> kWh</div><div><small>Rata-rata data bersih (kunci)</small><b>${fmt(target)}</b> kWh</div><div><small>Baris tepat</small><b>${good}</b> / ${LOG.length}</div></div>
+ <div class="res ${good===LOG.length?"good":dekat?"mid":"no"}">${good===LOG.length?"Mantap! Semua tindakan tepat dan rata-ratamu sama dengan data bersih (17,25 kWh/hari).":dekat?"Rata-ratamu sudah dekat, tetapi masih ada baris yang tindakannya kurang tepat. Baca lagi lima jenis data kotor.":"Rata-ratamu masih jauh dari data bersih. Periksa baris yang bertanda ✗ (petunjuk: ada angka yang salah geser koma dan ada yang beda satuan)."}</div>`};
+$("#r1").onclick=build1;build1();
+
+/* ---- LAB 2 ---- */
+let mode="tot";
+function chart(){const W=700,H=320,L=56,B=40,T=24,R=16,pw=W-L-R,ph=H-T-B;const vals=BULAN.map(b=>mode==="tot"?b.tot:b.perh);
+ const max=mode==="tot"?4000:260,min=mode==="tot"?0:140;const x=i=>L+pw*(i+.5)/12,y=v=>T+ph*(1-(v-min)/(max-min));
+ let s=`<rect width="${W}" height="${H}" fill="#fff"/>`;const ticks=mode==="tot"?[0,1000,2000,3000,4000]:[140,180,220,260];
+ ticks.forEach(t=>{s+=`<line x1="${L}" x2="${W-R}" y1="${y(t)}" y2="${y(t)}" stroke="#E1E6EE"/><text x="${L-8}" y="${y(t)+4}" font-size="12" text-anchor="end" fill="#5B6478">${t.toLocaleString("id-ID")}</text>`});
+ if(mode==="tot"){BULAN.forEach((b,i)=>{const bw=pw/12*.62;s+=`<rect class="pt" data-i="${i}" x="${x(i)-bw/2}" y="${y(b.tot)}" width="${bw}" height="${y(0)-y(b.tot)}" rx="4" fill="${b.b==="Okt"?"#2E6F95":b.b==="Jul"?"#9AA6B8":"#C5CDD9"}" style="cursor:pointer"/>`})}
+ else{s+=`<polyline fill="none" stroke="#2A9D8F" stroke-width="3.5" points="${BULAN.map((b,i)=>x(i)+","+y(b.perh)).join(" ")}"/>`;BULAN.forEach((b,i)=>{s+=`<circle class="pt" data-i="${i}" cx="${x(i)}" cy="${y(b.perh)}" r="${b.b==="Jul"?10:6}" fill="${b.b==="Jul"?"#E76F51":"#2A9D8F"}" style="cursor:pointer"/>`})}
+ BULAN.forEach((b,i)=>{s+=`<text x="${x(i)}" y="${H-14}" font-size="12.5" text-anchor="middle" fill="#5B6478">${b.b}</text>`});
+ s+=`<text x="${L}" y="14" font-size="13" font-weight="700" fill="#1B2A4A">${mode==="tot"?"Total kWh per bulan":"kWh per hari efektif (total ÷ hari efektif)"}</text>`;
+ $("#chart").innerHTML=s;document.querySelectorAll("#chart .pt").forEach(e=>e.onclick=()=>{const b=BULAN[e.dataset.i];$("#tip").innerHTML=`<b>${b.b}</b>: ${b.he} hari efektif • total ${fmt(b.tot,0)} kWh • <b>${b.perh} kWh/hari efektif</b>`})}
+$("#m_tot").onclick=()=>{mode="tot";chart()};$("#m_per").onclick=()=>{mode="per";chart()};chart();
+$("#g2").innerHTML=BULAN.map(b=>`<span class="pill" data-b="${b.b}">${b.b}</span>`).join("");
+document.querySelectorAll("#g2 .pill").forEach(p=>p.onclick=()=>{const ok=p.dataset.b==="Jul";$("#o2").innerHTML=ok?`<div class="res good">Tepat! Juli: hanya 5 hari efektif, total kecil (1.200 kWh), tetapi <b>240 kWh per hari efektif</b>, jauh di atas ±165. Jika 5 hari efektif memakai ±165 kWh (825), sisa 375 kWh dipakai selama 26 hari libur: <b>±14,4 kWh per hari libur</b>. Ada alat yang tetap menyala saat libur! Hipotesis: AC, lampu, komputer standby, pompa. Data yang diperlukan: angka meter harian saat libur dan daftar alat yang menyala.</div>`:`<div class="res no">${p.dataset.b} tampak biasa saja (sekitar ${BULAN.find(b=>b.b===p.dataset.b).perh} kWh/hari efektif). Cari titik yang paling menyimpang dari pola. Pada mode “per hari efektif”, titik mana yang melonjak?</div>`});
+$("#s1").innerHTML=$("#s2").innerHTML=BULAN.map((b,i)=>`<option value="${i}">${b.b}</option>`).join("");$("#s1").value=9;$("#s2").value=6;
+function cmp(){const a=BULAN[$("#s1").value],b=BULAN[$("#s2").value];$("#o2c").innerHTML=[a,b].map(m=>`<div><small>${m.b}</small>Total <b>${fmt(m.tot,0)}</b> kWh<br>${m.he} hari efektif<br>= <b>${fmt(m.tot/m.he,1)}</b> kWh/hari</div>`).join("")+`<div><small>Kesimpulan adil</small>${(a.tot/a.he)>(b.tot/b.he)?a.b:(a.tot/a.he)<(b.tot/b.he)?b.b:"Sama"} lebih boros <b>per hari efektif</b></div>`}
+$("#s1").onchange=$("#s2").onchange=cmp;cmp();
+const KOR=[{q:"Saat musim hujan, jumlah siswa membawa payung dan kWh lampu sekolah sama-sama naik. Kesimpulan terbaik?",o:["Payung membuat lampu boros","Lampu boros membuat siswa membawa payung","Keduanya dipengaruhi faktor ketiga: hari mendung atau hujan"],a:2,e:"Faktor ketiga (cuaca mendung) menggerakkan keduanya. Korelasi belum tentu kausalitas."},
+{q:"Bulan ketika kWh sekolah naik, jumlah laptop yang dipinjam siswa juga naik. Guru menyimpulkan: “Hentikan peminjaman laptop!” Langkah detektif yang tepat?",o:["Setuju, hentikan peminjaman sekarang","Cari data tambahan: bandingkan hari dengan dan tanpa peminjaman, cek cuaca dan jumlah siswa","Abaikan, data seperti ini tidak berguna"],a:1,e:"Hipotesis harus diuji dengan data tambahan sebelum diambil tindakan."}];
+$("#g3").innerHTML=KOR.map((k,i)=>`<div class="q" id="k${i}"><b>${k.q}</b>${k.o.map((o,j)=>`<button class="o" data-j="${j}">${o}</button>`).join("")}<div class="exp">${k.e}</div></div>`).join("");
+KOR.forEach((k,i)=>document.querySelectorAll(`#k${i} .o`).forEach(b=>b.onclick=()=>{const q=$("#k"+i);q.querySelectorAll(".o").forEach((x,j)=>{x.disabled=true;if(j===k.a)x.classList.add("right");else if(x===b)x.classList.add("wrong")});q.classList.add("done")}));
+
+/* ---- LAB 3 ---- */
+const HARI=200,TARIF=1500,BASE=180,TARGET=27,ANG=10000000;
+$("#opsi").innerHTML=OPSI.map(o=>`<label class="opt" id="op${o.k}"><input type="checkbox" value="${o.k}"><span class="k">${o.k}</span><span><b>${o.nama}</b><small>Hemat ${o.hemat} kWh/hari • ${o.biaya?rp(o.biaya):"Rp0"}</small></span></label>`).join("");
+function calc(sel){let h=0,b=0;sel.forEach(k=>{const o=OPSI.find(x=>x.k===k);h+=o.hemat;b+=o.biaya});if(sel.includes("B")&&sel.includes("D"))h-=4;return{h,b}}
+function upd(){const sel=[...document.querySelectorAll("#opsi input:checked")].map(i=>i.value);OPSI.forEach(o=>$("#op"+o.k).classList.toggle("on",sel.includes(o.k)));
+ const c=calc(sel),f=$("#u90").checked?.9:1,h=c.h*f,pct=h/BASE*100,perY=h*HARI*TARIF;
+ $("#x_h").textContent=fmt(h,1);$("#x_p").textContent=fmt(pct,1);$("#x_b").textContent=rp(c.b);$("#x_pb").textContent=c.b===0?(sel.length?"langsung":"-"):(perY>0?fmt(c.b/perY,2)+" th":"-");
+ $("#m_h").style.width=Math.min(100,h/45*100)+"%";$("#u_t").style.left=(TARGET/45*100)+"%";$("#m_b").style.width=Math.min(100,c.b/15000000*100)+"%";$("#u_a").style.left=(ANG/15000000*100)+"%";
+ const okT=h>=TARGET-1e-9,okB=c.b<=ANG;let r=$("#x_res");
+ if(!sel.length){r.className="res mid";r.textContent="Pilih beberapa opsi di atas."}
+ else if(okT&&okB){r.className="res good";r.textContent="Memenuhi target dan anggaran"+($("#u90").checked?" bahkan pada skenario 90%. Paket ini tahan terhadap ketidakpastian.":". Coba aktifkan uji kepekaan 90% untuk melihat apakah masih aman.")}
+ else{r.className="res no";r.textContent=(!okT?`Belum mencapai target ${TARGET} kWh/hari (kurang ${fmt(TARGET-h,1)}). `:"")+(!okB?`Biaya melebihi anggaran ${rp(c.b-ANG)}. `:"")+(sel.includes("B")&&sel.includes("D")?"Ingat: B + D tumpang tindih.":"")}}
+document.querySelectorAll("#opsi input").forEach(i=>i.onchange=upd);$("#u90").onchange=upd;upd();
+$("#find").onclick=()=>{const ks=OPSI.map(o=>o.k),res=[];for(let m=1;m<64;m++){const sel=ks.filter((_,i)=>m>>i&1),c=calc(sel);if(c.h>=TARGET&&c.b<=ANG)res.push({sel,c})}
+ $("#found").innerHTML=res.length?`<p>Ada <b>${res.length}</b> paket yang memenuhi target dan anggaran (klik untuk mencoba):</p>`+res.map(r=>`<span class="pill" data-s="${r.sel.join("")}">${r.sel.join("+")} • ${r.c.h} kWh • ${rp(r.c.b)} • uji 90%: ${r.c.h*.9>=TARGET-1e-9?"✓ aman":"✗ gagal"}</span>`).join(""):"Tidak ada paket yang memenuhi.";
+ document.querySelectorAll("#found .pill").forEach(p=>p.onclick=()=>{document.querySelectorAll("#opsi input").forEach(i=>i.checked=p.dataset.s.includes(i.value));upd()})};
+
+/* ---- LAB 4 ---- */
+const PC=['MULAI','BACA jenis_hari, kwh','JIKA jenis_hari = "libur" MAKA','    JIKA kwh > 20 MAKA TAMPIL "CEK ALAT"','    SELAIN ITU TAMPIL "AMAN"','SELAIN ITU','    JIKA kwh <= 180 MAKA TAMPIL "NORMAL"','    SELAIN ITU JIKA kwh <= 200 MAKA TAMPIL "WASPADA"','    SELAIN ITU TAMPIL "BOROS"','SELESAI'];
+function run(j,k,strict){let hit=[0,1,2],out;if(j==="libur"){hit.push(3);if(k>20){out="CEK ALAT"}else{hit.push(4);out="AMAN"}}else{hit.push(5,6);if(k<=180){out="NORMAL"}else{hit.push(7);if(strict?k<200:k<=200){out="WASPADA"}else{hit.push(8);out="BOROS"}}}hit.push(9);return{out,hit}}
+function show(){const strict=$("#strict").checked,r=run($("#jh").value,+$("#kw").value,strict);
+ $("#pc").innerHTML=PC.map((l,i)=>`<span class="l ${r.hit.includes(i)?"hit":""}">${(strict&&i===7?l.replace("<= 200","<  200"):l).replace(/ /g,"&nbsp;")}</span>`).join("");
+ const o=$("#o4");o.className="res "+(r.out==="BOROS"?"no":r.out==="WASPADA"||r.out==="CEK ALAT"?"mid":"good");o.textContent="Keluaran: "+r.out}
+$("#kw").oninput=()=>{$("#kr").value=$("#kw").value;show()};$("#kr").oninput=()=>{$("#kw").value=$("#kr").value;show()};$("#jh").onchange=show;$("#strict").onchange=()=>{show();if($("#t4 tbody").innerHTML)$("#b4").click()};show();
+const UJI=[["Senin","sekolah",172,"NORMAL"],["Selasa","sekolah",200,"WASPADA"],["Rabu","sekolah",214,"BOROS"],["Sabtu","libur",12,"AMAN"],["Minggu","libur",38,"CEK ALAT"]];
+$("#b4").onclick=()=>{const st=$("#strict").checked;$("#t4 tbody").innerHTML=UJI.map((u,i)=>{const r=run(u[1],u[2],st).out,ok=r===u[3];return`<tr><td>${i+1}</td><td>${u[0]}</td><td>${u[1]}</td><td>${u[2]}</td><td>${u[3]}</td><td><b>${r}</b></td><td>${ok?'<span class="ok">✓</span>':'<span class="bad">✗ beda!</span>'}</td></tr>`}).join("")};
+
+/* ---- KUIS ---- */
+let score=0,answered=0;
+function quiz(){score=0;answered=0;$("#sc").textContent=0;$("#final").innerHTML="";$("#quiz").innerHTML=PG.map((p,i)=>`<div class="q" id="q${i}"><b>${i+1}. ${p.q}</b>${p.o.map((o,j)=>`<button class="o" data-j="${j}"><b>${"ABCD"[j]}.</b> ${o}</button>`).join("")}<div class="exp"><b>Pembahasan:</b> ${p.e}</div></div>`).join("");
+ PG.forEach((p,i)=>document.querySelectorAll(`#q${i} .o`).forEach(b=>b.onclick=()=>{const q=$("#q"+i);q.querySelectorAll(".o").forEach((x,j)=>{x.disabled=true;if(j===p.a)x.classList.add("right");else if(x===b)x.classList.add("wrong")});q.classList.add("done");answered++;if(+b.dataset.j===p.a)score++;$("#sc").textContent=score;
+ if(answered===PG.length)$("#final").innerHTML=`<div class="res ${score>=8?"good":score>=6?"mid":"no"}">Skor akhir: ${score} / ${PG.length}. ${score>=8?"Hebat! Kamu detektif data sejati.":score>=6?"Bagus! Baca lagi pembahasan soal yang salah.":"Ayo ulangi lab-nya, lalu coba kuis lagi."}</div>`}))}
+$("#rq").onclick=quiz;quiz();
+</script>
+</body>
+</html>
