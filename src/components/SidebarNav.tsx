@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { GraduationCap, BookOpen, Library, Users, IdCard, CalendarDays, BookText, Home, ListChecks, ClipboardList, Target, Link2, NotebookPen, ClipboardCheck, BarChart3, Smile, ThumbsUp, ThumbsDown, Award, AlertTriangle, SquarePen, Table, FileCheck2, FileCheck, School } from "lucide-react";
+import { GraduationCap, BookOpen, Library, Users, IdCard, CalendarDays, BookText, Home, ListChecks, ClipboardList, Target, Link2, NotebookPen, ClipboardCheck, BarChart3, Smile, ThumbsUp, ThumbsDown, Award, AlertTriangle, SquarePen, Table, FileCheck2, FileCheck, School, Upload, Settings2 } from "lucide-react";
 
 export default function SidebarNav({
   role,
@@ -28,8 +28,10 @@ export default function SidebarNav({
   const isActiveAdminRekapTp = pathname.startsWith("/admin/rekap-tp");
   const isActiveAdminNilaiSts = pathname.startsWith("/admin/nilai-sts");
   const isActiveAdminNilaiSas = pathname.startsWith("/admin/nilai-sas");
+  const isActiveAdminSetingNilai = pathname.startsWith("/admin/seting-nilai");
   const isActiveAdminKelas = pathname.startsWith("/admin/kelas");
   const isActiveAdminSikap = pathname.startsWith("/admin/sikap");
+  const isActiveAdminImportSikap = pathname.startsWith("/admin/import-sikap");
   const isActiveAdminCatatSikapPositif = pathname.startsWith("/admin/catat-sikap-positif");
   const isActiveAdminCatatSikapNegatif = pathname.startsWith("/admin/catat-sikap-negatif");
   const isActiveAdminRekapSikapPositif = pathname.startsWith("/admin/rekap-sikap-positif");
@@ -98,10 +100,6 @@ export default function SidebarNav({
               <Users className="h-4 w-4 shrink-0" />
               {!collapsed && "Kelola User"}
             </Link>
-            <Link href="/admin/jadwal" title="Jadwal Pelajaran" className={linkClass(isActiveAdminJadwal)}>
-              <CalendarDays className="h-4 w-4 shrink-0" />
-              {!collapsed && "Jadwal Pelajaran"}
-            </Link>
             <Link href="/admin/ebook" title="E-book" className={linkClass(isActiveAdminEbook)}>
               <BookText className="h-4 w-4 shrink-0" />
               {!collapsed && "E-book"}
@@ -109,6 +107,17 @@ export default function SidebarNav({
             <Link href="/admin/materi-guru" title="Materi Guru" className={linkClass(isActiveAdminMateriGuru)}>
               <Link2 className="h-4 w-4 shrink-0" />
               {!collapsed && "Materi Guru"}
+            </Link>
+            {collapsed ? (
+              <div className="my-2 border-t border-slate-200 dark:border-slate-700" title="Rutinitas" />
+            ) : (
+              <p className="px-3 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                Rutinitas
+              </p>
+            )}
+            <Link href="/admin/jadwal" title="Jadwal Pelajaran" className={linkClass(isActiveAdminJadwal)}>
+              <CalendarDays className="h-4 w-4 shrink-0" />
+              {!collapsed && "Jadwal Pelajaran"}
             </Link>
             <Link href="/admin/jurnal" title="Jurnal Mengajar" className={linkClass(isActiveAdminJurnal)}>
               <NotebookPen className="h-4 w-4 shrink-0" />
@@ -122,13 +131,20 @@ export default function SidebarNav({
               <BarChart3 className="h-4 w-4 shrink-0" />
               {!collapsed && "Lap. Presensi"}
             </Link>
+            {collapsed ? (
+              <div className="my-2 border-t border-slate-200 dark:border-slate-700" title="Penilaian" />
+            ) : (
+              <p className="px-3 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                Penilaian
+              </p>
+            )}
+            <Link href="/admin/seting-nilai" title="Seting Nilai" className={linkClass(isActiveAdminSetingNilai)}>
+              <Settings2 className="h-4 w-4 shrink-0" />
+              {!collapsed && "Seting Nilai"}
+            </Link>
             <Link href="/admin/catat-nilai-tp" title="Catat Nilai TP" className={linkClass(isActiveAdminCatatNilaiTp)}>
               <SquarePen className="h-4 w-4 shrink-0" />
               {!collapsed && "Catat Nilai TP"}
-            </Link>
-            <Link href="/admin/rekap-tp" title="Rekap TP" className={linkClass(isActiveAdminRekapTp)}>
-              <Table className="h-4 w-4 shrink-0" />
-              {!collapsed && "Rekap TP"}
             </Link>
             <Link href="/admin/nilai-sts" title="Nilai STS" className={linkClass(isActiveAdminNilaiSts)}>
               <FileCheck2 className="h-4 w-4 shrink-0" />
@@ -137,6 +153,10 @@ export default function SidebarNav({
             <Link href="/admin/nilai-sas" title="Nilai SAS" className={linkClass(isActiveAdminNilaiSas)}>
               <FileCheck className="h-4 w-4 shrink-0" />
               {!collapsed && "Nilai SAS"}
+            </Link>
+            <Link href="/admin/rekap-tp" title="Rekap TP" className={linkClass(isActiveAdminRekapTp)}>
+              <Table className="h-4 w-4 shrink-0" />
+              {!collapsed && "Rekap TP"}
             </Link>
             {collapsed ? (
               <div className="my-2 border-t border-slate-200 dark:border-slate-700" title="Nilai Sikap" />
@@ -180,6 +200,10 @@ export default function SidebarNav({
             >
               <AlertTriangle className="h-4 w-4 shrink-0" />
               {!collapsed && "Rekap Sikap -"}
+            </Link>
+            <Link href="/admin/import-sikap" title="Import Sikap" className={linkClass(isActiveAdminImportSikap)}>
+              <Upload className="h-4 w-4 shrink-0" />
+              {!collapsed && "Import Sikap"}
             </Link>
             <div className="my-2 border-t border-slate-200 dark:border-slate-700" />
             <Link href="/admin/soal" title="Bank Soal" className={linkClass(isActiveAdminSoal)}>

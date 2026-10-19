@@ -45,6 +45,7 @@ export default function AdminPresensiClient({ siswaList }: { siswaList: SiswaRin
   const [saving, setSaving] = useState(false);
   const [adding, setAdding] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [infoTempel, setInfoTempel] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const rombelOpsi = Array.from(
@@ -181,6 +182,61 @@ export default function AdminPresensiClient({ siswaList }: { siswaList: SiswaRin
       else delete next[kunci(sesiId, siswaId)];
       return next;
     });
+  }
+
+  // Tempel dari Excel: baris Excel = urutan siswa di tabel (ke bawah), kolom
+  // Excel = urutan pertemuan (ke kanan), dimulai dari sel yang sedang aktif.
+  function tempel(e: React.ClipboardEvent<HTMLInputElement>, baris: number, kolom: number) {
+    const NL = String.fromCharCode(10);
+    const TAB = String.fromCharCode(9);
+    const CR = String.fromCharCode(13);
+
+    const teks = e.clipboardData.getData("text/plain").split(CR).join("");
+    const bersih = teks.endsWith(NL) ? teks.slice(0, -1) : teks;
+    if (!bersih.includes(NL) && !bersih.includes(TAB)) return;
+    e.preventDefault();
+
+    let terisi = 0;
+    let dikosongkan = 0;
+    let tidakValid = 0;
+    let terpotong = 0;
+    const perubahan: Record<string, string> = {};
+
+    bersih.split(NL).forEach((barisTeks, r) => {
+      barisTeks.split(TAB).forEach((sel, c) => {
+        const b = baris + r;
+        const k = kolom + c;
+        if (b >= siswa.length || k >= sesi.length) {
+          if (sel.trim() !== "") terpotong += 1;
+          return;
+        }
+        const v = sel.trim().toUpperCase();
+        if (v !== "" && !KODE_VALID.includes(v)) {
+          tidakValid += 1;
+          return;
+        }
+        perubahan[kunci(sesi[k].id, siswa[b].id)] = v;
+        if (v === "") dikosongkan += 1;
+        else terisi += 1;
+      });
+    });
+
+    setSaved(false);
+    setNilai((prev) => {
+      const next = { ...prev };
+      for (const [key, v] of Object.entries(perubahan)) {
+        if (v === "") delete next[key];
+        else next[key] = v;
+      }
+      return next;
+    });
+
+    const bagian = [terisi + " sel terisi"];
+    if (dikosongkan > 0) bagian.push(dikosongkan + " dikosongkan");
+    if (tidakValid > 0) bagian.push(tidakValid + " dilewati (bukan kode H/S/I/L/M/A/P/G)");
+    if (terpotong > 0) bagian.push(terpotong + " di luar tabel (siswa/kolom kurang)");
+    setInfoTempel("Tempel: " + bagian.join(", ") + ". Klik Simpan untuk menyimpan.");
+    setTimeout(() => setInfoTempel(null), 8000);
   }
 
   function pindahFokus(baris: number, kolom: number) {
@@ -336,6 +392,7 @@ export default function AdminPresensiClient({ siswaList }: { siswaList: SiswaRin
         {adaPerubahan && !saved && (
           <span className="text-xs text-amber-600 dark:text-amber-400">Ada perubahan belum disimpan</span>
         )}
+        {infoTempel && <span className="text-xs text-indigo-600 dark:text-indigo-300">{infoTempel}</span>}
       </div>
 
       {error && (
@@ -411,6 +468,7 @@ export default function AdminPresensiClient({ siswaList }: { siswaList: SiswaRin
                         value={nilai[kunci(x.id, s.id)] ?? ""}
                         onChange={(e) => ubah(x.id, s.id, e.target.value)}
                         onKeyDown={(e) => tekanTombol(e, baris, kolom)}
+                        onPaste={(e) => tempel(e, baris, kolom)}
                         onFocus={(e) => {
                           e.target.select();
                           setBarisAktif(baris);
@@ -440,7 +498,8 @@ export default function AdminPresensiClient({ siswaList }: { siswaList: SiswaRin
         ))}
       </p>
       <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">
-        Ketik kode langsung di sel (H, S, I, L, M, A, P, G); panah atau Enter untuk pindah sel. Arahkan kursor ke
+        Ketik kode langsung di sel (H, S, I, L, M, A, P, G); panah atau Enter untuk pindah sel. Bisa juga menempel
+        (paste) dari Excel: klik sel pertama lalu Ctrl+V; urutan baris harus sama dengan urutan siswa di tabel. Arahkan kursor ke
         tanggal untuk menghapus kolom.
       </p>
     </div>

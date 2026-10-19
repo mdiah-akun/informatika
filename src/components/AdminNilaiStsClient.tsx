@@ -12,7 +12,7 @@ type Semester = "Ganjil" | "Genap";
 type Jenis = "sts" | "sas";
 
 const INFO_JENIS: Record<Jenis, { judul: string; label: string; nama: string; tabel: string; kolomManual: string }> = {
-  sts: { judul: "Nilai STS", label: "PTS", nama: "Sumatif Tengah Semester", tabel: "nilai_sts", kolomManual: "pts_manual" },
+  sts: { judul: "Nilai STS", label: "STS", nama: "Sumatif Tengah Semester", tabel: "nilai_sts", kolomManual: "pts_manual" },
   sas: { judul: "Nilai SAS", label: "SAS", nama: "Sumatif Akhir Semester", tabel: "nilai_sas", kolomManual: "sas_manual" },
 };
 type Isi = { pts: string; rem1: string; rem2: string };
@@ -73,6 +73,8 @@ export default function AdminNilaiStsClient({
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [pakaiAuto, setPakaiAuto] = useState(true);
+  const [infoTempel, setInfoTempel] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const rombelOpsi = Array.from(
@@ -91,6 +93,25 @@ export default function AdminNilaiStsClient({
   const adaPerubahan = siswa.some((s) =>
     KOLOM.some((k) => ada(isi, s.id)[k] !== ada(tersimpan, s.id)[k])
   );
+
+  const kunciAuto = "nilai-" + jenis + "-auto";
+
+  useEffect(() => {
+    try {
+      if (localStorage.getItem(kunciAuto) === "0") setPakaiAuto(false);
+    } catch {
+      // penyimpanan browser tidak tersedia: tetap pakai nilai awal
+    }
+  }, [kunciAuto]);
+
+  function ubahPakaiAuto(nilai: boolean) {
+    setPakaiAuto(nilai);
+    try {
+      localStorage.setItem(kunciAuto, nilai ? "1" : "0");
+    } catch {
+      // abaikan
+    }
+  }
 
   useEffect(() => {
     const supabase = createClient();
@@ -177,6 +198,67 @@ export default function AdminNilaiStsClient({
     }
     setError(null);
     setKkmTersimpan(n);
+  }
+
+  // Tempel dari Excel: baris Excel = urutan siswa yang tampil di tabel (ke
+  // bawah), kolom Excel = kolom isian ke kanan (Manual, REM.1, REM.2),
+  // dimulai dari sel yang sedang aktif.
+  function tempel(e: React.ClipboardEvent<HTMLInputElement>, baris: number, kol: number) {
+    const NL = String.fromCharCode(10);
+    const TAB = String.fromCharCode(9);
+    const CR = String.fromCharCode(13);
+
+    const teks = e.clipboardData.getData("text/plain").split(CR).join("");
+    const bersih = teks.endsWith(NL) ? teks.slice(0, -1) : teks;
+    if (!bersih.includes(NL) && !bersih.includes(TAB)) return;
+    e.preventDefault();
+
+    const awalIdx = siswaTampil.findIndex((x) => x.id === siswa[baris]?.id);
+    if (awalIdx < 0) return;
+
+    let terisi = 0;
+    let dikosongkan = 0;
+    let tidakValid = 0;
+    let terpotong = 0;
+    const perubahan: { id: string; kolom: keyof Isi; teks: string }[] = [];
+
+    bersih.split(NL).forEach((barisTeks, r) => {
+      barisTeks.split(TAB).forEach((sel, c) => {
+        const tujuan = siswaTampil[awalIdx + r];
+        const kolomTujuan = KOLOM[kol + c];
+        const mentah = sel.trim().split("%").join("");
+        if (!tujuan || !kolomTujuan) {
+          if (mentah !== "") terpotong += 1;
+          return;
+        }
+        if (mentah === "") {
+          perubahan.push({ id: tujuan.id, kolom: kolomTujuan, teks: "" });
+          dikosongkan += 1;
+          return;
+        }
+        const angka = Number(mentah.split(",").join("."));
+        if (!Number.isFinite(angka) || angka < 0 || angka > 100) {
+          tidakValid += 1;
+          return;
+        }
+        perubahan.push({ id: tujuan.id, kolom: kolomTujuan, teks: String(Math.round(angka * 100) / 100) });
+        terisi += 1;
+      });
+    });
+
+    setSaved(false);
+    setIsi((prev) => {
+      const next = { ...prev };
+      for (const x of perubahan) next[x.id] = { ...ada(next, x.id), [x.kolom]: x.teks };
+      return next;
+    });
+
+    const bagian = [terisi + " sel terisi"];
+    if (dikosongkan > 0) bagian.push(dikosongkan + " dikosongkan");
+    if (tidakValid > 0) bagian.push(tidakValid + " dilewati (bukan angka 0-100)");
+    if (terpotong > 0) bagian.push(terpotong + " di luar tabel (siswa/kolom kurang)");
+    setInfoTempel("Tempel: " + bagian.join(", ") + ". Klik Simpan untuk menyimpan.");
+    setTimeout(() => setInfoTempel(null), 8000);
   }
 
   function pindahFokus(baris: number, kol: number) {
@@ -277,7 +359,7 @@ export default function AdminNilaiStsClient({
                 : "border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
             }`}
           >
-            {kelasLabel(k)}
+            {ROMAN[k]}
           </button>
         ))}
 
@@ -309,6 +391,16 @@ export default function AdminNilaiStsClient({
             <option value="Ganjil">Semester Ganjil</option>
             <option value="Genap">Semester Genap</option>
           </select>
+          <label className="flex items-center gap-1.5 text-sm text-slate-600 dark:text-slate-300 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={pakaiAuto}
+              onChange={(e) => ubahPakaiAuto(e.target.checked)}
+              title={"Centang: nilai ujian online " + jenis.toUpperCase() + " ditampilkan dan dipakai. Hapus centang: nilai tersebut dihilangkan."}
+              className="h-4 w-4 accent-indigo-600"
+            />
+            {info.label} Auto
+          </label>
           <label className="flex items-center gap-1.5 text-sm text-slate-600 dark:text-slate-300">
             KKM
             <input
@@ -347,6 +439,7 @@ export default function AdminNilaiStsClient({
         {adaPerubahan && !saved && (
           <span className="text-xs text-amber-600 dark:text-amber-400">Ada nilai belum disimpan</span>
         )}
+        {infoTempel && <span className="text-xs text-indigo-600 dark:text-indigo-300">{infoTempel}</span>}
       </div>
 
       {error && (
@@ -405,7 +498,7 @@ export default function AdminNilaiStsClient({
                   const ptsManual = parseNilai(sekarang.pts);
                   const rem1 = parseNilai(sekarang.rem1);
                   const rem2 = parseNilai(sekarang.rem2);
-                  const otomatis = nilaiAuto[s.id] ?? null;
+                  const otomatis = pakaiAuto ? (nilaiAuto[s.id] ?? null) : null;
                   const pts = ptsManual !== null && !Number.isNaN(ptsManual) ? ptsManual : otomatis;
                   const akhir = hitungAkhir(
                     pts,
@@ -447,6 +540,7 @@ export default function AdminNilaiStsClient({
                               value={sekarang[k]}
                               onChange={(e) => ubah(s.id, k, e.target.value)}
                               onKeyDown={(e) => tekanTombol(e, baris, kol)}
+                              onPaste={(e) => tempel(e, baris, kol)}
                               onFocus={(e) => {
                                 e.target.select();
                                 setBarisAktif(s.id);
@@ -481,7 +575,8 @@ export default function AdminNilaiStsClient({
         {info.label} (Auto) otomatis dari hasil ujian online {jenis.toUpperCase()} (rata-rata ujian pilihan ganda dan
         essai yang sudah dikoreksi); kolom ini tidak bisa diisi. {info.label} yang dipakai = {info.label} (Manual)
         jika diisi, kalau tidak {info.label} (Auto). Nilai Akhir = {info.label} jika tanpa remedial; jika ada
-        remedial, nilai terbaik antara {info.label} dan remedial dengan remedial paling tinggi sebesar KKM ({kkm}). REM.2 dipakai jika lebih baik dari REM.1. Panah atau Enter untuk pindah sel.
+        remedial, nilai terbaik antara {info.label} dan remedial dengan remedial paling tinggi sebesar KKM ({kkm}). REM.2 dipakai jika lebih baik dari REM.1. Panah atau Enter untuk pindah sel. Bisa juga menempel (paste) dari Excel: klik sel pertama lalu Ctrl+V; urutan
+        baris harus sama dengan urutan siswa di tabel, dan kolom Excel berurutan Manual, REM.1, REM.2.
       </p>
     </div>
   );
