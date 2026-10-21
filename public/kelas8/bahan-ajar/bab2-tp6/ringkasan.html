@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ringkasan Catatan — Memodelkan Logika dengan Himpunan</title>
+<style>
+:root{--bg:#f7fafc;--card:#fff;--text:#22303F;--navy:#1E3A5F;--teal:#2E86AB;--orange:#F5A623;--box:#EAF2F8;--ex:#FFF7DE;--key:#FFF0ED;--line:#d5dee8;--gray:#5A6472;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a24;--card:#1b2634;--text:#e6edf5;--navy:#9cc3ee;--teal:#6cc0e5;--orange:#F5A623;--box:#223246;--ex:#352e18;--key:#3a2420;--line:#33445a;--gray:#9fb0c3}}
+:root[data-theme="dark"]{--bg:#121a24;--card:#1b2634;--text:#e6edf5;--navy:#9cc3ee;--teal:#6cc0e5;--orange:#F5A623;--box:#223246;--ex:#352e18;--key:#3a2420;--line:#33445a;--gray:#9fb0c3}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Segoe UI',Tahoma,Verdana,sans-serif;line-height:1.6}
+.wrap{max-width:800px;margin:0 auto;padding:20px 16px 48px}
+h1{color:var(--navy);font-size:1.5rem;margin:0 0 4px}
+.sub{color:var(--gray);margin:0 0 20px;font-size:.92rem}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:16px}
+h2{color:var(--navy);font-size:1.15rem;margin:0 0 10px;border-bottom:3px solid var(--orange);padding-bottom:6px}
+h3{color:var(--teal);font-size:1rem;margin:14px 0 6px}
+.def{background:var(--box);border-left:5px solid var(--teal);border-radius:8px;padding:10px 14px;margin:8px 0}
+.key{background:var(--key);border-left:5px solid #F26C4F;border-radius:8px;padding:10px 14px;margin:8px 0}
+.ex{background:var(--ex);border-left:5px solid #D4A017;border-radius:8px;padding:10px 14px;margin:8px 0}
+.ex b.t{display:block;color:var(--navy);margin-bottom:4px}
+code{background:var(--box);padding:1px 6px;border-radius:4px;font-family:'Courier New',monospace;font-weight:700}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:420px;font-size:.93rem}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:var(--box);color:var(--navy)}
+ul,ol{margin:6px 0;padding-left:22px}
+.foot{text-align:center;color:var(--gray);font-size:.85rem;margin-top:20px}
+@media print{body{background:#fff}section{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Memodelkan Persoalan Logika dengan Himpunan</h1>
+<p class="sub">Ringkasan Catatan • Informatika Kelas VIII • Bab II Berpikir Komputasional • TP 6 (Pertemuan 2)</p>
+
+<section>
+<h2>1. Pengingat Singkat</h2>
+<ul>
+<li><b>Himpunan</b> = kumpulan data dengan ciri yang sama, ditulis dengan <code>{ }</code>.</li>
+<li><b>Diagram Venn</b> = cara menggambar himpunan memakai lingkaran.</li>
+<li><b>Semesta (S)</b> = himpunan semua anggota yang sedang dibicarakan.</li>
+</ul>
+</section>
+
+<section>
+<h2>2. Empat Operasi Himpunan</h2>
+<div class="scroll"><table>
+<tr><th>Operasi</th><th>Simbol</th><th>Arti</th></tr>
+<tr><td>Gabungan</td><td><code>A ∪ B</code></td><td>Semua anggota A atau B (tanpa duplikat)</td></tr>
+<tr><td>Irisan</td><td><code>A ∩ B</code></td><td>Anggota yang dimiliki A <b>dan</b> B sekaligus</td></tr>
+<tr><td>Komplemen</td><td><code>Aᶜ</code></td><td>Anggota semesta yang <b>bukan</b> anggota A</td></tr>
+<tr><td>Selisih</td><td><code>A − B</code></td><td>Anggota A yang <b>tidak</b> dimiliki B</td></tr>
+</table></div>
+
+<div class="ex">
+<b class="t">Contoh</b>
+S = {1, 2, 3, 4, 5, 6, 7, 8}<br>
+A = {1, 2, 3, 4, 5}  &nbsp; B = {4, 5, 6, 7}
+<ul>
+<li><code>A ∪ B</code> = {1, 2, 3, 4, 5, 6, 7}</li>
+<li><code>A ∩ B</code> = {4, 5}</li>
+<li><code>Aᶜ</code> = {6, 7, 8}</li>
+<li><code>A − B</code> = {1, 2, 3} &nbsp;(anggota A yang tidak ada di B)</li>
+<li><code>B − A</code> = {6, 7} &nbsp;(hasilnya <b>beda</b> dengan A − B)</li>
+</ul>
+</div>
+<div class="def"><b>Tips:</b> Komplemen = "lawan"; selisih = anggota "eksklusif" milik satu himpunan saja.</div>
+</section>
+
+<section>
+<h2>3. Kardinalitas (Banyak Anggota)</h2>
+<div class="def">Kardinalitas = <b>jumlah</b> anggota himpunan, ditulis <code>n(A)</code>. Contoh: A = {a, b, c} → n(A) = 3.</div>
+<div class="key"><b>Rumus Penting</b><br><code>n(A ∪ B) = n(A) + n(B) − n(A ∩ B)</code><br>
+Dikurangi irisan karena anggota irisan terhitung <b>dua kali</b> (di n(A) dan n(B)).</div>
+
+<div class="ex">
+<b class="t">Contoh 1 (dari himpunan di atas)</b>
+n(A) = 5, n(B) = 4, n(A ∩ B) = 2<br>
+n(A ∪ B) = 5 + 4 − 2 = <b>7</b> ✔ (cocok dengan {1,2,3,4,5,6,7})
+</div>
+<div class="ex">
+<b class="t">Contoh 2 (soal cerita)</b>
+Dari 30 siswa: 18 suka ikan bakar (A), 15 suka soto banjar (B), 8 suka keduanya.<br>
+• Suka salah satu atau keduanya: 18 + 15 − 8 = <b>25 siswa</b><br>
+• Tidak suka keduanya: 30 − 25 = <b>5 siswa</b> (ini komplemen dari A ∪ B)
+</div>
+</section>
+
+<section>
+<h2>4. Studi Kasus 1: Memilih Hotel (Irisan 3 Himpunan)</h2>
+<p><b>Langkah:</b></p>
+<ol>
+<li>Tulis tiap syarat sebagai satu himpunan.</li>
+<li>Gambar diagram Venn 3 lingkaran.</li>
+<li>Hotel yang memenuhi <b>semua</b> syarat ada di irisan ketiganya (<code>M ∩ D ∩ B</code>).</li>
+</ol>
+<div class="ex">
+<b class="t">Contoh</b>
+Syarat: harga &lt; Rp500.000 (M), jarak &lt; 10 km (D), bintang ≤ 4 (B).<br>
+M = {H1, H2, H3, H4} &nbsp; D = {H2, H3, H5} &nbsp; B = {H1, H2, H3, H5}<br>
+M ∩ D = {H2, H3} → ∩ B = <b>{H2, H3}</b><br>
+Jadi kandidat terbaik: <b>H2 dan H3</b>. H1, H4, H5 gugur karena gagal di minimal satu syarat.
+</div>
+</section>
+
+<section>
+<h2>5. Studi Kasus 2: Teka-Teki Pupuk Ajaib (Komplemen + Irisan)</h2>
+<p><b>Langkah:</b></p>
+<ol>
+<li>Tentukan gelas yang <b>pasti</b> berisi pupuk (selalu menyebabkan perubahan).</li>
+<li>Air murni = <b>komplemen</b> dari himpunan gelas berisi pupuk.</li>
+<li>Pakai <b>irisan</b> petunjuk untuk mempersempit kemungkinan.</li>
+</ol>
+<div class="ex">
+<b class="t">Contoh sederhana (buatan sendiri, bukan data soal asli)</b>
+Ada 4 gelas: A, B, C, D, dan salah satunya air murni.<br>
+Percobaan 1: gelas A → tanaman subur. &nbsp; Percobaan 2: gelas B → subur. &nbsp; Percobaan 3: gelas C → subur.<br>
+Pupuk = {A, B, C}, semesta S = {A, B, C, D}<br>
+Air murni = komplemen = <b>{D}</b> → <b>gelas D</b>.
+</div>
+</section>
+
+<section>
+<h2>6. Penerapan di Dunia Nyata</h2>
+<ul>
+<li><b>Toko online:</b> filter "sepatu + hitam + di bawah 200rb" = irisan beberapa kriteria.</li>
+<li><b>Media sosial:</b> rekomendasi teman/konten = irisan minat.</li>
+<li><b>Dokter:</b> diagnosis dari gejala yang cocok/tidak cocok = irisan &amp; komplemen.</li>
+</ul>
+</section>
+
+<section>
+<h2>7. Rangkuman Kilat</h2>
+<ul>
+<li>4 operasi: <code>∪</code> gabungan, <code>∩</code> irisan, <code>ᶜ</code> komplemen, <code>−</code> selisih.</li>
+<li>Kardinalitas: <code>n(A ∪ B) = n(A) + n(B) − n(A ∩ B)</code>.</li>
+<li>Banyak syarat sekaligus → <b>irisan</b>. "Yang bukan" → <b>komplemen</b>.</li>
+</ul>
+</section>
+
+<p class="foot">Pertemuan berikutnya: Sistem Bilangan Biner 🔢</p>
+</div>
+</body>
+</html>
