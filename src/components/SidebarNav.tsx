@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { GraduationCap, BookOpen, Library, Users, IdCard, CalendarDays, BookText, Home, ListChecks, ClipboardList, Target, Link2, NotebookPen, ClipboardCheck, BarChart3, Smile, ThumbsUp, ThumbsDown, Award, AlertTriangle, SquarePen, Table, FileCheck2, FileCheck, School, Upload, Settings2 } from "lucide-react";
+import { GraduationCap, BookOpen, Library, Users, IdCard, CalendarDays, BookText, Home, ListChecks, ClipboardList, Target, Link2, NotebookPen, ClipboardCheck, BarChart3, Smile, ThumbsUp, ThumbsDown, Award, AlertTriangle, SquarePen, Table, FileCheck2, FileCheck, School, Upload, Settings2, ScrollText } from "lucide-react";
 
 export default function SidebarNav({
   role,
@@ -29,6 +29,7 @@ export default function SidebarNav({
   const isActiveAdminNilaiSts = pathname.startsWith("/admin/nilai-sts");
   const isActiveAdminNilaiSas = pathname.startsWith("/admin/nilai-sas");
   const isActiveAdminSetingNilai = pathname.startsWith("/admin/seting-nilai");
+  const isActiveAdminKisiKisi = pathname.startsWith("/admin/kisi-kisi");
   const isActiveAdminKelas = pathname.startsWith("/admin/kelas");
   const isActiveAdminSikap = pathname.startsWith("/admin/sikap");
   const isActiveAdminImportSikap = pathname.startsWith("/admin/import-sikap");
@@ -40,6 +41,7 @@ export default function SidebarNav({
   const isActiveAdminSoal = pathname.startsWith("/admin/soal");
   const isActiveAdminLaporan = pathname.startsWith("/admin/laporan");
   const isActiveAdminTp = pathname.startsWith("/admin/tp");
+  const isActiveKisiKisi = pathname.startsWith("/kisi-kisi");
   const isActiveSoal = pathname.startsWith("/soal");
   const isActiveTp = pathname.startsWith("/tp");
 
@@ -87,6 +89,10 @@ export default function SidebarNav({
             <Link href="/admin/tp" title="Tujuan Pembelajaran" className={linkClass(isActiveAdminTp)}>
               <Target className="h-4 w-4 shrink-0" />
               {!collapsed && "TP"}
+            </Link>
+            <Link href="/admin/kisi-kisi" title="Kisi-kisi" className={linkClass(isActiveAdminKisiKisi)}>
+              <ScrollText className="h-4 w-4 shrink-0" />
+              {!collapsed && "Kisi-kisi"}
             </Link>
             <Link href="/admin/siswa" title="Data Siswa" className={linkClass(isActiveAdminSiswa)}>
               <IdCard className="h-4 w-4 shrink-0" />
@@ -236,6 +242,10 @@ export default function SidebarNav({
             <Link href="/ebook" title="E-book" className={linkClass(isActiveEbook)}>
               <BookText className="h-4 w-4 shrink-0" />
               {!collapsed && "E-book"}
+            </Link>
+            <Link href="/kisi-kisi" title="Kisi-kisi" className={linkClass(isActiveKisiKisi)}>
+              <ScrollText className="h-4 w-4 shrink-0" />
+              {!collapsed && "Kisi-kisi"}
             </Link>
             <Link href="/soal" title="Soal" className={linkClass(isActiveSoal)}>
               <ListChecks className="h-4 w-4 shrink-0" />
