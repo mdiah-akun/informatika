@@ -50,3 +50,20 @@ body {
 .scroll-samar::-webkit-scrollbar-track {
   background: transparent;
 }
+
+/* Cetak: hanya area #area-cetak (mis. QR di menu Link Ujian) yang dicetak. */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #area-cetak,
+  #area-cetak * {
+    visibility: visible;
+  }
+  #area-cetak {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}

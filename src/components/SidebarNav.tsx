@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { GraduationCap, BookOpen, Library, Users, IdCard, CalendarDays, BookText, Home, ListChecks, ClipboardList, Target, Link2, NotebookPen, ClipboardCheck, BarChart3, Smile, ThumbsUp, ThumbsDown, Award, AlertTriangle, SquarePen, Table, FileCheck2, FileCheck, School, Upload, Settings2, ScrollText } from "lucide-react";
+import { GraduationCap, BookOpen, Library, Users, IdCard, CalendarDays, BookText, Home, ListChecks, ClipboardList, Target, Link2, NotebookPen, ClipboardCheck, BarChart3, Smile, ThumbsUp, ThumbsDown, Award, AlertTriangle, SquarePen, Table, FileCheck2, FileCheck, School, Upload, Settings2, ScrollText, QrCode } from "lucide-react";
 
 export default function SidebarNav({
   role,
@@ -39,9 +39,11 @@ export default function SidebarNav({
   const isActiveAdminRekapSikapNegatif = pathname.startsWith("/admin/rekap-sikap-negatif");
   const isActiveEbook = pathname.startsWith("/ebook");
   const isActiveAdminSoal = pathname.startsWith("/admin/soal");
+  const isActiveAdminLinkUjian = pathname.startsWith("/admin/link-ujian");
   const isActiveAdminLaporan = pathname.startsWith("/admin/laporan");
   const isActiveAdminTp = pathname.startsWith("/admin/tp");
   const isActiveKisiKisi = pathname.startsWith("/kisi-kisi");
+  const isActiveAksesUjian = pathname.startsWith("/akses-ujian");
   const isActiveSoal = pathname.startsWith("/soal");
   const isActiveTp = pathname.startsWith("/tp");
 
@@ -220,6 +222,10 @@ export default function SidebarNav({
               <ClipboardList className="h-4 w-4 shrink-0" />
               {!collapsed && "Laporan Ujian"}
             </Link>
+            <Link href="/admin/link-ujian" title="Link Ujian" className={linkClass(isActiveAdminLinkUjian)}>
+              <QrCode className="h-4 w-4 shrink-0" />
+              {!collapsed && "Link Ujian"}
+            </Link>
           </>
         ) : (
           <>
@@ -250,6 +256,10 @@ export default function SidebarNav({
             <Link href="/soal" title="Soal" className={linkClass(isActiveSoal)}>
               <ListChecks className="h-4 w-4 shrink-0" />
               {!collapsed && "Soal"}
+            </Link>
+            <Link href="/akses-ujian" title="Link Ujian" className={linkClass(isActiveAksesUjian)}>
+              <QrCode className="h-4 w-4 shrink-0" />
+              {!collapsed && "Link Ujian"}
             </Link>
           </>
         )}

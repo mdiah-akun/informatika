@@ -11,6 +11,9 @@ const PUBLIC_PATHS = ["/login", "/signup"];
 const SESSION_MAX_AGE_MS = 3 * 24 * 60 * 60 * 1000; // 3 hari
 
 export async function updateSession(request: NextRequest) {
+  // Tautan pendek ke situs ujian: terbuka tanpa login (QR dipindai dari HP).
+  if (request.nextUrl.pathname === "/link-ujian") return NextResponse.next({ request });
+
   let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(
