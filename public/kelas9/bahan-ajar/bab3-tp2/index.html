@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jagoan Digital · Materi Siswa Bab III TP2</title>
+<style>
+:root{--teal:#0f766e;--teal2:#14b8a6;--tealL:#ccfbf1;--navy:#1e3a5f;--orange:#f59e0b;--orangeL:#fef3c7;--blue:#3b82f6;--blueL:#dbeafe;--green:#16a34a;--greenL:#dcfce7;--red:#dc2626;--redL:#fee2e2;--purple:#7c3aed;--purpleL:#ede9fe;--gray:#64748b;--bg:#f0fdfa;--ink:#0f172a}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;font-size:17px}
+img{max-width:100%;height:auto;border-radius:14px;display:block;margin:0 auto}
+header.hero{background:linear-gradient(135deg,#0f766e,#14b8a6);color:#fff;padding:34px 20px 26px;text-align:center}
+header.hero h1{margin:.2em 0 .1em;font-size:clamp(26px,5vw,42px);line-height:1.2}
+header.hero p{margin:.3em auto;max-width:720px;color:#ccfbf1}
+header.hero img{max-width:760px;margin-top:18px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid #cbd5e1;overflow-x:auto;white-space:nowrap;padding:8px 12px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+nav a{display:inline-block;padding:6px 12px;margin:2px;border-radius:999px;text-decoration:none;color:var(--teal);font-size:14px;font-weight:600;background:var(--tealL)}
+nav a:hover{background:var(--teal);color:#fff}
+main{max-width:980px;margin:0 auto;padding:10px 16px 60px}
+section{background:#fff;border-radius:20px;padding:22px 22px 26px;margin:22px 0;box-shadow:0 2px 12px rgba(15,118,110,.08)}
+h2{color:var(--teal);margin:.1em 0 .5em;font-size:clamp(22px,3.5vw,30px)}
+h3{color:var(--navy);margin:1.2em 0 .3em}
+.badge{display:inline-block;background:var(--orange);color:#1f2937;font-weight:700;border-radius:999px;padding:2px 12px;font-size:13px;margin-bottom:6px}
+.callout{border-left:6px solid var(--teal);background:var(--tealL);border-radius:10px;padding:12px 16px;margin:14px 0}
+.callout.o{border-color:var(--orange);background:var(--orangeL)}.callout.g{border-color:var(--green);background:var(--greenL)}.callout.r{border-color:var(--red);background:var(--redL)}.callout.p{border-color:var(--purple);background:var(--purpleL)}.callout.b{border-color:var(--blue);background:var(--blueL)}
+.callout b.t{display:block;margin-bottom:2px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.card{border:2px solid #e2e8f0;border-radius:14px;padding:12px 14px;background:#fff}
+.card h4{margin:.1em 0 .3em}
+figure{margin:14px 0}figcaption{text-align:center;color:var(--gray);font-size:14px;margin-top:6px}
+table{border-collapse:collapse;width:100%;font-size:15px;margin:10px 0}
+th{background:var(--teal);color:#fff;padding:7px 8px;text-align:left}td{border:1px solid #cbd5e1;padding:6px 8px}
+tr:nth-child(even) td{background:#f8fafc}
+code{background:#0f172a;color:#99f6e4;padding:1px 7px;border-radius:6px;font-family:Consolas,monospace;font-size:.92em}
+button{font:inherit;cursor:pointer;border:none;border-radius:10px;padding:8px 14px;background:var(--teal);color:#fff;font-weight:600}
+button:hover{filter:brightness(1.1)}button.alt{background:#e2e8f0;color:var(--navy)}button.alt.sel{background:var(--purple);color:#fff}
+button:disabled{opacity:.5;cursor:not-allowed}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+.lab{border:3px dashed var(--teal2);border-radius:18px;padding:16px;margin:18px 0;background:#f8fffe}
+.lab>.badge{background:var(--purple);color:#fff}
+.fb{margin-top:8px;font-weight:600;min-height:1.4em}.ok{color:var(--green)}.no{color:var(--red)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.task{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;border:1px solid #e2e8f0;border-radius:12px;padding:8px 12px;margin:8px 0}
+.task .opts{display:flex;gap:6px;flex-wrap:wrap}.task .opts button{padding:5px 10px;font-size:14px}
+.task.good{background:var(--greenL);border-color:var(--green)}.task.bad{background:var(--redL);border-color:var(--red)}
+.chip{display:inline-block;margin:4px;padding:8px 12px;border-radius:12px;background:var(--blueL);border:2px solid var(--blue);cursor:pointer;font-weight:600;color:var(--navy)}
+.chip.used{opacity:.35;pointer-events:none}
+ol.seq{padding-left:22px}ol.seq li{background:var(--greenL);border-radius:8px;margin:5px 0;padding:6px 10px;list-style-position:inside}
+.sheet{overflow:auto;max-height:420px;border:1px solid #cbd5e1;border-radius:10px}
+.sheet table{margin:0;min-width:520px}.sheet th{position:sticky;top:0}
+.sheet input{width:64px;padding:4px;border:2px solid #bae6fd;border-radius:6px;font:inherit;text-align:center}
+.price input{width:90px;padding:4px;border:2px solid var(--orange);border-radius:6px;font:inherit;text-align:center;background:var(--orangeL)}
+.stats{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:12px 0}
+.stat{background:var(--tealL);border-radius:12px;padding:10px;text-align:center}.stat b{display:block;font-size:22px;color:var(--teal)}.stat span{font-size:13px;color:var(--navy)}
+select{font:inherit;padding:7px;border-radius:8px;border:2px solid #cbd5e1;max-width:100%}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;background:#f1f5f9;color:var(--ink);font-weight:500}.opt:hover{background:#e2e8f0}
+.opt.right{background:var(--greenL);outline:2px solid var(--green)}.opt.wrong{background:var(--redL);outline:2px solid var(--red)}
+.qbox{border:2px solid #e2e8f0;border-radius:14px;padding:12px 14px;margin:12px 0}.q{font-weight:700}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+svg text{font-family:inherit}
+.bar{cursor:pointer;transition:opacity .15s}.bar:hover{opacity:.8}
+footer{text-align:center;color:var(--gray);padding:22px;font-size:14px}
+@media(max-width:560px){body{font-size:16px}section{padding:16px 14px}.sheet input{width:52px}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="badge">Informatika Kelas IX · Bab III · TP 13</div>
+  <h1>Jagoan Digital: Laporan, Presentasi, Analisis &amp; Interpretasi Data</h1>
+  <p>Hari ini kamu jadi <b>bendahara Bank Sampah Kelas IX</b>. Belajar sambil mencoba: klik, hitung, buat grafik, dan maknai datanya!</p>
+  <img src="images/00_banner_bab3_tp2.png" alt="Banner Bab III: Perkakas Digital untuk Laporan, Presentasi, Analisis dan Interpretasi Data">
+</header>
+<nav aria-label="Navigasi bagian">
+  <a href="#cerita">Cerita</a><a href="#perkakas">Perkakas</a><a href="#tahap">6 Tahap</a><a href="#sheet">Spreadsheet</a><a href="#grafik">Grafik</a><a href="#slide">Presentasi</a><a href="#empatb">4B</a><a href="#etika">Etika</a><a href="#kuis">Kuis</a>
+</nav>
+<main>
+
+<section id="cerita">
+  <span class="badge">Mulai dari masalah nyata</span>
+  <h2>Bendahara Kebingungan</h2>
+  <figure><img src="images/01_bendahara_bingung.png" alt="Bendahara bingung menghadapi tumpukan nota setoran sampah"><figcaption>Nota menumpuk, laporan harus jadi!</figcaption></figure>
+  <p>Kelas IX menabung sampah tiap hari Sabtu. Yang diterima: <b>koran bekas Rp3.000/kg</b> dan <b>botol plastik Rp2.000/kg</b>. Wali kelas minta laporan lengkap dengan grafik. Apa yang harus dilakukan bendahara?</p>
+  <figure><img src="images/21_bank_sampah.png" alt="Ilustrasi koran bekas, botol plastik, timbangan, dan rupiah"><figcaption>Sampah dipilah, ditimbang, dicatat, ditukar jadi tabungan.</figcaption></figure>
+  <div class="callout o"><b class="t">Pikirkan dulu!</b>(1) Apa yang perlu dihitung? (2) Alat digital apa yang dipakai? (3) Bagaimana menunjukkannya supaya cepat dipahami?</div>
+  <h3>Tujuan belajar</h3>
+  <ul><li>Menjelaskan fungsi dan contoh aplikasi pengolah kata, lembar kerja, dan presentasi.</li><li>Memilih perkakas dan format file yang tepat.</li><li>Menyusun laporan lewat 6 tahap.</li><li>Mengolah data (rumus, fungsi), membuat grafik.</li><li>Menginterpretasi data dengan 4B.</li></ul>
+  <figure><img src="images/03_alur_data_ke_keputusan.png" alt="Alur data dari kumpulkan, olah, sajikan, presentasi, interpretasi, sampai keputusan"><figcaption>Perjalanan data: dari catatan mentah sampai keputusan</figcaption></figure>
+</section>
+
+<section id="perkakas">
+  <span class="badge">Konsep 1</span>
+  <h2>Tiga Perkakas Jagoan</h2>
+  <figure><img src="images/02_peta_perkakas.png" alt="Peta perkakas digital: laporan, analisis, presentasi, interpretasi"><figcaption>Satu tujuan, satu alat yang tepat</figcaption></figure>
+  <div class="grid">
+    <div class="card"><h4>Pengolah Kata</h4><p>Jagonya <b>tulisan</b>: laporan, surat, artikel. Contoh: Word, Google Docs, LibreOffice Writer, Apple Pages, WPS Writer.</p><img src="images/04_mockup_pengolah_kata.png" alt="Tampilan pengolah kata dengan laporan satu halaman"></div>
+    <div class="card"><h4>Lembar Kerja (Spreadsheet)</h4><p>Jagonya <b>angka</b>: tabel, rumus, grafik. Contoh: Excel, Google Sheets, LibreOffice Calc, Apple Numbers, WPS Spreadsheets.</p><img src="images/05_mockup_spreadsheet.png" alt="Tampilan spreadsheet dengan rumus saldo"></div>
+    <div class="card"><h4>Aplikasi Presentasi</h4><p>Jagonya <b>tampil</b>: slide berisi teks, gambar, grafik. Contoh: PowerPoint, Google Slides, Keynote, LibreOffice Impress, Prezi, WPS Presentation.</p><img src="images/06_mockup_presentasi.png" alt="Tampilan aplikasi presentasi dengan grafik di slide"></div>
+  </div>
+  <figure><img src="images/22_word_vs_sheet_vs_slide.png" alt="Perbandingan cocok dan kurang cocok pengolah kata, lembar kerja, presentasi"><figcaption>Cocok untuk apa? Kurang cocok untuk apa?</figcaption></figure>
+  <div class="callout"><b class="t">Analogi gunting dan pisau</b>Memotong bungkus keripik lebih pas pakai gunting. Menghitung total tabungan lebih pas di spreadsheet.</div>
+  <h3>Kenali format file</h3>
+  <figure><img src="images/15_format_file.png" alt="Format file docx, xlsx, pptx, pdf, dan csv beserta kegunaannya"></figure>
+  <figure><img src="images/16_kolaborasi_cloud.png" alt="Tiga siswa mengedit satu berkas di cloud secara bersamaan"><figcaption>Google Docs/Sheets/Slides: kerja bareng, tersimpan otomatis</figcaption></figure>
+
+  <div class="lab" id="lab1">
+    <span class="badge">Lab 1 · Detektif Perkakas</span>
+    <p>Pilih perkakas yang paling tepat untuk setiap tugas.</p>
+    <div id="lab1-list"></div>
+    <div class="row"><button id="lab1-reset" class="alt">Ulangi</button><span id="lab1-score" class="fb"></span></div>
+  </div>
+</section>
+
+<section id="tahap">
+  <span class="badge">Konsep 2</span>
+  <h2>Enam Tahap Menyusun Laporan</h2>
+  <figure><img src="images/12_tahapan_laporan.png" alt="Enam tahap menyusun laporan berbasis data"><figcaption>Olah dulu, baru sajikan</figcaption></figure>
+  <div class="lab" id="lab2">
+    <span class="badge">Lab 2 · Urutkan Tahapan</span>
+    <p>Klik kartu sesuai urutan yang benar (tahap 1 sampai 6).</p>
+    <div id="lab2-pool"></div>
+    <ol class="seq" id="lab2-seq"></ol>
+    <div class="row"><button id="lab2-check">Periksa</button><button id="lab2-reset" class="alt">Ulangi</button></div>
+    <div class="fb" id="lab2-fb"></div>
+  </div>
+</section>
+
+<section id="sheet">
+  <span class="badge">Konsep 3</span>
+  <h2>Spreadsheet: Rumus, Fungsi, dan Tanda $</h2>
+  <figure><img src="images/11_anatomi_rumus.png" alt="Anatomi rumus saldo =D2*$K$1+E2*$K$2"><figcaption>D2 relatif (bergeser) · $K$1 absolut (terkunci)</figcaption></figure>
+  <ul><li>Rumus diawali <code>=</code>.</li><li><b>Relatif</b> (D2) ikut bergeser saat disalin; <b>absolut</b> ($K$1) tetap.</li><li>Fungsi: <code>SUM</code> jumlah, <code>AVERAGE</code> rata-rata, <code>MAX</code> terbesar, <code>MIN</code> terkecil, <code>COUNT</code> banyak data.</li></ul>
+
+  <div class="lab" id="lab3">
+    <span class="badge">Lab 3 · Spreadsheet Mini Bank Sampah</span>
+    <p>Ubah angka berat atau harga, lalu lihat saldo dan ringkasan berubah otomatis. Itulah kekuatan rumus!</p>
+    <div class="price row"><label>Harga koran/kg (K1): <input id="pk" type="number" min="0" step="500" value="3000"></label><label>Harga botol/kg (K2): <input id="pb" type="number" min="0" step="500" value="2000"></label><button id="lab3-reset" class="alt">Kembalikan data asli</button></div>
+    <div class="sheet"><table id="lab3-table"><thead><tr><th>No</th><th>Tanggal</th><th>Nama</th><th>Koran (kg)</th><th>Botol (kg)</th><th>Saldo (Rp)</th></tr></thead><tbody></tbody></table></div>
+    <p style="font-size:14px;color:var(--gray)">Rumus tiap baris: <code>=D<i>n</i>*$K$1+E<i>n</i>*$K$2</code></p>
+    <div class="stats" id="stats"></div>
+    <h3>Rekap per siswa</h3>
+    <table id="per"><thead><tr><th>Nama</th><th>Koran (kg)</th><th>Botol (kg)</th><th>Total saldo</th></tr></thead><tbody></tbody></table>
+  </div>
+
+  <div class="lab" id="lab3b">
+    <span class="badge">Lab 4 · Uji Tanda $</span>
+    <p>Rumus di F2 disalin ke baris lain. Pilih baris tujuan dan lihat apa yang terjadi.</p>
+    <div class="row"><label>Salin ke baris: <select id="rowsel"></select></label></div>
+    <div class="grid" style="margin-top:10px">
+      <div class="card" style="border-color:var(--green)"><h4>Dengan $ (benar)</h4><code id="f-abs"></code><p id="f-abs-t" class="fb ok"></p></div>
+      <div class="card" style="border-color:var(--red)"><h4>Tanpa $ (salah)</h4><code id="f-rel"></code><p id="f-rel-t" class="fb no"></p></div>
+    </div>
+  </div>
+</section>
+
+<section id="grafik">
+  <span class="badge">Konsep 4</span>
+  <h2>Memilih Grafik yang Pas</h2>
+  <figure><img src="images/20_tabel_ke_grafik.png" alt="Tiga langkah dari tabel ke grafik"></figure>
+  <figure><img src="images/10_pilih_grafik.png" alt="Memilih jenis grafik: batang, garis, lingkaran, tabel"></figure>
+  <div class="grid">
+    <figure><img src="images/07_grafik_batang_saldo.png" alt="Grafik batang saldo tiap siswa"><figcaption>Batang: bandingkan siswa</figcaption></figure>
+    <figure><img src="images/08_grafik_garis_tren.png" alt="Grafik garis tren total sampah per pekan"><figcaption>Garis: tren per pekan</figcaption></figure>
+    <figure><img src="images/09_grafik_lingkaran.png" alt="Grafik lingkaran sumbangan koran dan botol"><figcaption>Lingkaran: bagian dari keseluruhan</figcaption></figure>
+  </div>
+  <div class="lab" id="lab5">
+    <span class="badge">Lab 5 · Pembuat Grafik</span>
+    <p>Pilih pertanyaan, lalu pilih jenis grafik. Data diambil dari Lab 3 (jadi kalau kamu ubah angkanya, grafiknya ikut berubah).</p>
+    <label>Pertanyaanku: <select id="qsel"><option value="0">Siapa saldo tertinggi? Bagaimana perbandingan antar siswa?</option><option value="1">Apakah total sampah naik atau turun tiap pekan?</option><option value="2">Berapa persen sumbangan koran dan botol terhadap total saldo?</option></select></label>
+    <div class="tabs" role="group" aria-label="Jenis grafik"><button class="alt" data-t="bar">Batang</button><button class="alt" data-t="line">Garis</button><button class="alt" data-t="pie">Lingkaran</button></div>
+    <div class="fb" id="g-fb"></div>
+    <div id="chart" role="img" aria-label="Grafik hasil pilihanmu"></div>
+  </div>
+</section>
+
+<section id="slide">
+  <span class="badge">Konsep 5</span>
+  <h2>Presentasi yang Enak Dilihat</h2>
+  <figure><img src="images/14_slide_baik_buruk.png" alt="Perbandingan slide yang buruk dan slide yang baik"></figure>
+  <div class="lab" id="lab6">
+    <span class="badge">Lab 6 · Ciri Slide Baik</span>
+    <p>Pilih semua pernyataan yang merupakan <b>ciri slide yang baik</b>, lalu klik Periksa.</p>
+    <div id="lab6-list"></div>
+    <div class="row"><button id="lab6-check">Periksa</button><button id="lab6-reset" class="alt">Ulangi</button></div>
+    <div class="fb" id="lab6-fb"></div>
+  </div>
+</section>
+
+<section id="empatb">
+  <span class="badge">Konsep 6</span>
+  <h2>Maknai Angkanya: Rumus 4B</h2>
+  <figure><img src="images/13_empat_B_interpretasi.png" alt="Rumus 4B: Baca, Bandingkan, Bermakna, Bertindak"></figure>
+  <div class="lab" id="lab7">
+    <span class="badge">Lab 7 · Susun Interpretasi 4B</span>
+    <p>Dari grafik batang saldo: pilih kalimat terbaik untuk tiap langkah.</p>
+    <div id="lab7-q"></div>
+    <div class="row"><button id="lab7-check">Periksa</button><button id="lab7-reset" class="alt">Ulangi</button></div>
+    <div class="fb" id="lab7-fb"></div>
+  </div>
+  <h3>Detektif Data</h3>
+  <figure><img src="images/19_data_janggal.png" alt="Grafik koran pekan 2 dengan nilai janggal 30 kg"></figure>
+  <div class="lab" id="lab8">
+    <span class="badge">Lab 8 · Data Janggal</span>
+    <p>Koran pekan 2 (kg). Klik batang yang menurutmu janggal, lalu pilih perbaikan.</p>
+    <div id="jg-chart"></div>
+    <div class="row"><button class="alt" id="jg-fix">Perbaiki jadi 3 kg</button><button class="alt" id="jg-reset">Kembalikan 30 kg</button></div>
+    <div class="stats"><div class="stat"><b id="jg-sum">54</b><span>total koran pekan 2 (kg)</span></div><div class="stat"><b id="jg-all">105</b><span>total koran 3 pekan (kg)</span></div><div class="stat"><b id="jg-avg">5,83</b><span>rata-rata koran per setoran (kg)</span></div></div>
+    <div class="fb" id="jg-fb"></div>
+  </div>
+</section>
+
+<section id="etika">
+  <span class="badge">Konsep 7</span>
+  <h2>Etika Digital</h2>
+  <figure><img src="images/18_etika_sumber.png" alt="Empat kebiasaan etika digital"></figure>
+  <div class="callout r"><b class="t">Ingat!</b>Mengunduh gambar tanpa sumber lalu mengaku karya sendiri itu melanggar hak cipta. Jangan juga mengubah angka agar hasil tampak bagus.</div>
+</section>
+
+<section id="kuis">
+  <span class="badge">Kuis Akhir</span>
+  <h2>KUDA: Uji Pemahamanmu</h2>
+  <figure><img src="images/23_kuda_banner.png" alt="Banner KUDA kuis dadakan"></figure>
+  <div id="quiz"></div>
+  <div class="row"><button id="quiz-reset" class="alt">Ulangi kuis</button></div>
+  <div class="callout g" id="quiz-score" style="display:none"></div>
+</section>
+</main>
+<footer>SMP Negeri 14 Tarakan · Informatika Kelas IX · Bab III TP2 · Data bank sampah adalah data latihan.</footer>
+
+<script>
+const DATA={
+ "rows": [
+  {
+   "no": 1,
+   "tgl": "3 Okt 2026",
+   "nama": "Aisyah",
+   "koran": 4,
+   "botol": 2,
+   "saldo": 16000
+  },
+  {
+   "no": 2,
+   "tgl": "3 Okt 2026",
+   "nama": "Budi",
+   "koran": 3,
+   "botol": 5,
+   "saldo": 19000
+  },
+  {
+   "no": 3,
+   "tgl": "3 Okt 2026",
+   "nama": "Citra",
+   "koran": 6,
+   "botol": 1,
+   "saldo": 20000
+  },
+  {
+   "no": 4,
+   "tgl": "3 Okt 2026",
+   "nama": "Dimas",
+   "koran": 2,
+   "botol": 4,
+   "saldo": 14000
+  },
+  {
+   "no": 5,
+   "tgl": "3 Okt 2026",
+   "nama": "Eka",
+   "koran": 5,
+   "botol": 3,
+   "saldo": 21000
+  },
+  {
+   "no": 6,
+   "tgl": "3 Okt 2026",
+   "nama": "Fajar",
+   "koran": 1,
+   "botol": 6,
+   "saldo": 15000
+  },
+  {
+   "no": 7,
+   "tgl": "10 Okt 2026",
+   "nama": "Aisyah",
+   "koran": 5,
+   "botol": 3,
+   "saldo": 21000
+  },
+  {
+   "no": 8,
+   "tgl": "10 Okt 2026",
+   "nama": "Budi",
+   "koran": 4,
+   "botol": 4,
+   "saldo": 20000
+  },
+  {
+   "no": 9,
+   "tgl": "10 Okt 2026",
+   "nama": "Citra",
+   "koran": 7,
+   "botol": 2,
+   "saldo": 25000
+  },
+  {
+   "no": 10,
+   "tgl": "10 Okt 2026",
+   "nama": "Dimas",
+   "koran": 3,
+   "botol": 5,
+   "saldo": 19000
+  },
+  {
+   "no": 11,
+   "tgl": "10 Okt 2026",
+   "nama": "Eka",
+   "koran": 6,
+   "botol": 2,
+   "saldo": 22000
+  },
+  {
+   "no": 12,
+   "tgl": "10 Okt 2026",
+   "nama": "Fajar",
+   "koran": 2,
+   "botol": 7,
+   "saldo": 20000
+  },
+  {
+   "no": 13,
+   "tgl": "17 Okt 2026",
+   "nama": "Aisyah",
+   "koran": 6,
+   "botol": 4,
+   "saldo": 26000
+  },
+  {
+   "no": 14,
+   "tgl": "17 Okt 2026",
+   "nama": "Budi",
+   "koran": 2,
+   "botol": 6,
+   "saldo": 18000
+  },
+  {
+   "no": 15,
+   "tgl": "17 Okt 2026",
+   "nama": "Citra",
+   "koran": 8,
+   "botol": 3,
+   "saldo": 30000
+  },
+  {
+   "no": 16,
+   "tgl": "17 Okt 2026",
+   "nama": "Dimas",
+   "koran": 4,
+   "botol": 6,
+   "saldo": 24000
+  },
+  {
+   "no": 17,
+   "tgl": "17 Okt 2026",
+   "nama": "Eka",
+   "koran": 7,
+   "botol": 4,
+   "saldo": 29000
+  },
+  {
+   "no": 18,
+   "tgl": "17 Okt 2026",
+   "nama": "Fajar",
+   "koran": 3,
+   "botol": 8,
+   "saldo": 25000
+  }
+ ],
+ "tk": 78,
+ "tb": 75,
+ "ts": 384000,
+ "per": [
+  {
+   "nama": "Aisyah",
+   "koran": 15,
+   "botol": 9,
+   "saldo": 63000
+  },
+  {
+   "nama": "Budi",
+   "koran": 9,
+   "botol": 15,
+   "saldo": 57000
+  },
+  {
+   "nama": "Citra",
+   "koran": 21,
+   "botol": 6,
+   "saldo": 75000
+  },
+  {
+   "nama": "Dimas",
+   "koran": 9,
+   "botol": 15,
+   "saldo": 57000
+  },
+  {
+   "nama": "Eka",
+   "koran": 18,
+   "botol": 9,
+   "saldo": 72000
+  },
+  {
+   "nama": "Fajar",
+   "koran": 6,
+   "botol": 21,
+   "saldo": 60000
+  }
+ ],
+ "wk": [
+  {
+   "pekan": 1,
+   "tgl": "3 Okt 2026",
+   "koran": 21,
+   "botol": 21,
+   "saldo": 105000
+  },
+  {
+   "pekan": 2,
+   "tgl": "10 Okt 2026",
+   "koran": 27,
+   "botol": 23,
+   "saldo": 127000
+  },
+  {
+   "pekan": 3,
+   "tgl": "17 Okt 2026",
+   "koran": 30,
+   "botol": 31,
+   "saldo": 152000
+  }
+ ],
+ "avgk": 4.33,
+ "avgb": 4.17
+};
+const rp=n=>"Rp"+Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,".");
+const dec=n=>(Math.round(n*100)/100).toString().replace(".",",");
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+
+/* ---------- Lab 1 ---------- */
+const L1=[["Menulis laporan kegiatan 3 halaman dengan teks dan gambar","kata"],["Menghitung total dan rata-rata dari 18 catatan setoran","sheet"],["Menyampaikan hasil proyek di depan kelas dengan tampilan visual","slide"],["Menghitung total uang kas dari 40 baris catatan secara otomatis","sheet"],["Membuat surat undangan acara sekolah","kata"],["Menampilkan grafik saldo dalam rapat OSIS","slide"]];
+const L1N={kata:"Pengolah kata",sheet:"Lembar kerja",slide:"Presentasi"};
+let l1state=[];
+function lab1(){const box=$("lab1-list");box.innerHTML="";l1state=L1.map(()=>null);
+  L1.forEach((t,i)=>{const d=document.createElement("div");d.className="task";d.innerHTML=`<span>${i+1}. ${esc(t[0])}</span><span class="opts"></span>`;
+    Object.keys(L1N).forEach(k=>{const b=document.createElement("button");b.className="alt";b.textContent=L1N[k];b.onclick=()=>{l1state[i]=k;d.className="task "+(k===t[1]?"good":"bad");d.querySelectorAll("button").forEach(x=>x.disabled=true);
+      const done=l1state.filter(Boolean).length;const sc=l1state.filter((v,j)=>v===L1[j][1]).length;$("lab1-score").textContent=done===L1.length?`Skor: ${sc} dari ${L1.length}`:`Terjawab ${done}/${L1.length}`;
+      $("lab1-score").className="fb "+(sc===L1.length&&done===L1.length?"ok":"");if(k!==t[1])d.querySelector(".opts").insertAdjacentHTML("beforeend",`<b class="no">→ ${L1N[t[1]]}</b>`);};
+      d.querySelector(".opts").appendChild(b);});box.appendChild(d);});$("lab1-score").textContent="";}
+$("lab1-reset").onclick=lab1;lab1();
+
+/* ---------- Lab 2 ---------- */
+const STEPS=[["B","Tentukan tujuan dan pembaca"],["D","Kumpulkan dan rapikan data"],["F","Olah data dengan rumus dan fungsi"],["A","Sajikan dalam tabel atau grafik"],["E","Tulis laporan dan kesimpulan"],["C","Periksa lalu presentasikan"]];
+let seq=[];
+function lab2(){seq=[];const shuffled=[...STEPS].map((s,i)=>({s,i})).sort((a,b)=>((a.s[0].charCodeAt(0)*7)%5)-((b.s[0].charCodeAt(0)*7)%5)||a.s[0].localeCompare(b.s[0]));
+  const pool=$("lab2-pool");pool.innerHTML="";$("lab2-seq").innerHTML="";$("lab2-fb").textContent="";
+  shuffled.forEach(o=>{const c=document.createElement("span");c.className="chip";c.tabIndex=0;c.setAttribute("role","button");c.textContent=o.s[1];const pick=()=>{if(c.classList.contains("used"))return;c.classList.add("used");seq.push(o.i);const li=document.createElement("li");li.textContent=o.s[1];$("lab2-seq").appendChild(li);};c.onclick=pick;c.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}};pool.appendChild(c);});}
+$("lab2-reset").onclick=lab2;
+$("lab2-check").onclick=()=>{const fb=$("lab2-fb");if(seq.length<6){fb.className="fb";fb.textContent="Lengkapi dulu semua enam tahap.";return;}
+  const ok=seq.every((v,i)=>v===i);fb.className="fb "+(ok?"ok":"no");fb.textContent=ok?"Tepat! Urutannya: tujuan, data, olah, sajikan, tulis, periksa/presentasikan.":`Belum tepat: ${seq.filter((v,i)=>v===i).length} dari 6 posisi benar. Ingat, data harus diolah sebelum disajikan.`;};
+lab2();
+
+/* ---------- Lab 3 ---------- */
+let rows=JSON.parse(JSON.stringify(DATA.rows));
+const names=[...new Set(DATA.rows.map(r=>r.nama))];
+function price(){return [Math.max(0,+$("pk").value||0),Math.max(0,+$("pb").value||0)];}
+function build3(){const tb=$("lab3-table").querySelector("tbody");tb.innerHTML="";
+  rows.forEach((r,i)=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${r.no}</td><td>${r.tgl}</td><td>${r.nama}</td><td><input type="number" min="0" max="99" value="${r.koran}" aria-label="Koran baris ${r.no}"></td><td><input type="number" min="0" max="99" value="${r.botol}" aria-label="Botol baris ${r.no}"></td><td class="s"></td>`;
+    const [ik,ib]=tr.querySelectorAll("input");ik.oninput=()=>{r.koran=Math.max(0,+ik.value||0);upd3();};ib.oninput=()=>{r.botol=Math.max(0,+ib.value||0);upd3();};tb.appendChild(tr);});upd3();}
+function saldo(r){const [a,b]=price();return r.koran*a+r.botol*b;}
+function upd3(){const tb=$("lab3-table").querySelector("tbody");rows.forEach((r,i)=>tb.rows[i].querySelector(".s").textContent=rp(saldo(r)));
+  const tk=rows.reduce((a,r)=>a+r.koran,0),tbt=rows.reduce((a,r)=>a+r.botol,0),sal=rows.map(saldo),ts=sal.reduce((a,b)=>a+b,0);
+  const mx=Math.max(...sal),mn=Math.min(...sal),imx=sal.indexOf(mx),imn=sal.indexOf(mn);
+  $("stats").innerHTML=[["=SUM(D)",tk+" kg","Total koran"],["=SUM(E)",tbt+" kg","Total botol"],["=SUM(F)",rp(ts),"Total saldo"],["=AVERAGE(D)",dec(tk/rows.length)+" kg","Rata-rata koran/setoran"],["=AVERAGE(E)",dec(tbt/rows.length)+" kg","Rata-rata botol/setoran"],["=MAX(F)",rp(mx),"Tertinggi ("+rows[imx].nama+")"],["=MIN(F)",rp(mn),"Terendah ("+rows[imn].nama+")"],["=COUNT(F)",rows.length,"Jumlah setoran"]].map(x=>`<div class="stat"><b>${x[1]}</b><span>${x[2]}<br><code>${x[0]}</code></span></div>`).join("");
+  const pt=$("per").querySelector("tbody");pt.innerHTML="";
+  names.forEach(n=>{const rr=rows.filter(r=>r.nama===n);const k=rr.reduce((a,r)=>a+r.koran,0),b=rr.reduce((a,r)=>a+r.botol,0);pt.insertAdjacentHTML("beforeend",`<tr><td>${n}</td><td>${k}</td><td>${b}</td><td>${rp(rr.reduce((a,r)=>a+saldo(r),0))}</td></tr>`);});
+  drawChart();}
+$("pk").oninput=upd3;$("pb").oninput=upd3;
+$("lab3-reset").onclick=()=>{rows=JSON.parse(JSON.stringify(DATA.rows));$("pk").value=3000;$("pb").value=2000;build3();};
+
+/* ---------- Lab 4 ($) ---------- */
+const sel=$("rowsel");for(let n=3;n<=19;n++)sel.insertAdjacentHTML("beforeend",`<option value="${n}">Baris ${n}</option>`);
+function upd4(){const n=+sel.value;const k=n-1;$("f-abs").textContent=`=D${n}*$K$1+E${n}*$K$2`;$("f-abs-t").textContent="Berat ikut bergeser, harga tetap di K1 dan K2. Benar!";
+  $("f-rel").textContent=`=D${n}*K${k}+E${n}*K${k+1}`;$("f-rel-t").textContent=`Harga ikut bergeser ke K${k} dan K${k+1} (kosong). Hasilnya salah.`;}
+sel.onchange=upd4;sel.value=3;upd4();
+
+/* ---------- Lab 5 chart ---------- */
+let gtype=null;const COL=["#0f766e","#3b82f6","#f59e0b","#7c3aed","#ec4899","#16a34a"];
+function perStudent(){return names.map(n=>({n,v:rows.filter(r=>r.nama===n).reduce((a,r)=>a+saldo(r),0)}));}
+function perWeek(){return [0,1,2].map(w=>{const rr=rows.slice(w*6,w*6+6);return{k:rr.reduce((a,r)=>a+r.koran,0),b:rr.reduce((a,r)=>a+r.botol,0)};});}
+const BEST=["bar","line","pie"];
+function svgBar(data,title,unit){const W=640,H=340,m={l:56,r:16,t:40,b:40};const mx=Math.max(...data.map(d=>d.v),1)*1.15;const bw=(W-m.l-m.r)/data.length;const top=Math.max(...data.map(d=>d.v));
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img"><text x="${W/2}" y="22" text-anchor="middle" font-size="17" font-weight="700" fill="#1e3a5f">${title}</text>`;
+  for(let i=0;i<=4;i++){const y=H-m.b-(H-m.t-m.b)*i/4;s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y}" y2="${y}" stroke="#e2e8f0"/><text x="${m.l-6}" y="${y+4}" text-anchor="end" font-size="11" fill="#64748b">${Math.round(mx*i/4/1000)}</text>`;}
+  data.forEach((d,i)=>{const h=(H-m.t-m.b)*d.v/mx;const x=m.l+i*bw+bw*.15;s+=`<rect x="${x}" y="${H-m.b-h}" width="${bw*.7}" height="${h}" fill="${d.v===top?"#f59e0b":"#0f766e"}" rx="4"/><text x="${x+bw*.35}" y="${H-m.b-h-5}" text-anchor="middle" font-size="11" font-weight="700">${rp(d.v)}</text><text x="${x+bw*.35}" y="${H-m.b+16}" text-anchor="middle" font-size="12">${d.n}</text>`;});
+  return s+`<text x="10" y="${m.t+4}" font-size="11" fill="#64748b">${unit}</text></svg>`;}
+function svgLine(w){const W=640,H=340,m={l:50,r:20,t:40,b:46};const mx=Math.max(...w.map(x=>Math.max(x.k,x.b)),1)*1.2;const px=i=>m.l+(W-m.l-m.r)*(i+.5)/3;const py=v=>H-m.b-(H-m.t-m.b)*v/mx;
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img"><text x="${W/2}" y="22" text-anchor="middle" font-size="17" font-weight="700" fill="#1e3a5f">Tren Total Sampah per Pekan (kg)</text>`;
+  for(let i=0;i<=4;i++){const y=H-m.b-(H-m.t-m.b)*i/4;s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y}" y2="${y}" stroke="#e2e8f0"/><text x="${m.l-6}" y="${y+4}" text-anchor="end" font-size="11" fill="#64748b">${Math.round(mx*i/4)}</text>`;}
+  [["k","#3b82f6","Koran"],["b","#f59e0b","Botol"]].forEach(([key,c,lab],li)=>{s+=`<polyline fill="none" stroke="${c}" stroke-width="4" points="${w.map((x,i)=>px(i)+","+py(x[key])).join(" ")}"/>`;w.forEach((x,i)=>{s+=`<circle cx="${px(i)}" cy="${py(x[key])}" r="6" fill="${c}"/><text x="${px(i)}" y="${py(x[key])+(li?20:-10)}" text-anchor="middle" font-size="12" font-weight="700" fill="${c}">${x[key]}</text>`;});s+=`<text x="${m.l+10+li*90}" y="${H-6}" font-size="12" fill="${c}" font-weight="700">● ${lab}</text>`;});
+  w.forEach((x,i)=>s+=`<text x="${px(i)}" y="${H-m.b+18}" text-anchor="middle" font-size="12">Pekan ${i+1}</text>`);return s+"</svg>";}
+function svgPie(a,b){const t=a+b||1;const f=a/t;const R=110,cx=200,cy=175;const ang=2*Math.PI*f;const x2=cx+R*Math.sin(ang),y2=cy-R*Math.cos(ang);const large=f>.5?1:0;
+  return `<svg viewBox="0 0 640 340" width="100%" role="img"><text x="320" y="22" text-anchor="middle" font-size="17" font-weight="700" fill="#1e3a5f">Sumbangan Jenis Sampah terhadap Total Saldo</text><path d="M${cx} ${cy} L${cx} ${cy-R} A${R} ${R} 0 ${large} 1 ${x2} ${y2} Z" fill="#3b82f6"/><path d="M${cx} ${cy} L${x2} ${y2} A${R} ${R} 0 ${1-large} 1 ${cx} ${cy-R} Z" fill="#f59e0b"/><text x="400" y="150" font-size="16" font-weight="700" fill="#3b82f6">■ Koran ${Math.round(f*100)}%</text><text x="400" y="175" font-size="14">${rp(a)}</text><text x="400" y="215" font-size="16" font-weight="700" fill="#d97706">■ Botol ${100-Math.round(f*100)}%</text><text x="400" y="240" font-size="14">${rp(b)}</text></svg>`;}
+function drawChart(){const q=+$("qsel").value;const box=$("chart");if(!gtype){box.innerHTML="";return;}
+  const [pk,pb]=price();const tk=rows.reduce((a,r)=>a+r.koran,0),tbt=rows.reduce((a,r)=>a+r.botol,0);
+  box.innerHTML=gtype==="bar"?svgBar(perStudent(),"Total Saldo Tabungan per Siswa (ribuan rupiah di sumbu)","Rp (ribu)"):gtype==="line"?svgLine(perWeek()):svgPie(tk*pk,tbt*pb);
+  const fb=$("g-fb");const ok=BEST[q]===gtype;fb.className="fb "+(ok?"ok":"no");
+  const why=["Batang paling pas untuk membandingkan kategori (siswa).","Garis paling pas untuk melihat tren dari waktu ke waktu.","Lingkaran paling pas untuk bagian dari keseluruhan."];
+  fb.textContent=ok?"Pilihan tepat! "+why[q]:"Kurang pas untuk pertanyaan ini. Coba lagi. Petunjuk: "+why[q];}
+document.querySelectorAll("#lab5 .tabs button").forEach(b=>b.onclick=()=>{document.querySelectorAll("#lab5 .tabs button").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");gtype=b.dataset.t;drawChart();});
+$("qsel").onchange=()=>{$("g-fb").textContent="";drawChart();};
+
+/* ---------- Lab 6 ---------- */
+const L6=[["Satu ide per slide",1],["Judul berupa pesan, mis. “Citra jadi penabung terbanyak”",1],["Teks panjang berupa paragraf agar lengkap",0],["Grafik jelas dengan judul dan sumber",1],["Warna mencolok bertabrakan agar menarik",0],["Teks ringkas dan huruf cukup besar",1],["Grafik lingkaran dengan 9 potongan kecil",0],["Kontras warna tinggi (tulisan mudah dibaca)",1]];
+function lab6(){const box=$("lab6-list");box.innerHTML="";$("lab6-fb").textContent="";L6.forEach((t,i)=>{const l=document.createElement("label");l.className="task";l.style.cursor="pointer";l.innerHTML=`<span><input type="checkbox" id="c6-${i}"> ${t[0]}</span>`;box.appendChild(l);});}
+$("lab6-reset").onclick=lab6;
+$("lab6-check").onclick=()=>{let ok=0;L6.forEach((t,i)=>{const c=$("c6-"+i);const l=c.closest(".task");const right=c.checked===!!t[1];if(right)ok++;l.className="task "+(right?"good":"bad");});const fb=$("lab6-fb");fb.className="fb "+(ok===L6.length?"ok":"no");fb.textContent=ok===L6.length?"Sempurna! Kamu paham ciri slide yang baik.":`Benar ${ok} dari ${L6.length}. Yang merah perlu ditinjau lagi.`;};
+lab6();
+
+/* ---------- Lab 7 ---------- */
+const L7=[["Baca",["Saldo Citra tercatat Rp75.000, tertinggi pada grafik.","Citra pasti paling pintar sedunia.","Grafik ini bagus sekali."],0],["Bandingkan",["Saldo Citra sama dengan saldo Budi.","Saldo Citra Rp18.000 lebih tinggi daripada Budi (Rp57.000).","Semua siswa punya saldo Rp64.000."],1],["Bermakna",["Citra curang.","Karena namanya Citra.","Citra menyetor koran 21 kg, dan koran dihargai lebih tinggi (Rp3.000/kg) daripada botol."],2],["Bertindak",["Hapus saja data Budi.","Ajak teman memilah koran lebih dulu dan pertahankan jadwal Sabtu.","Tidak perlu melakukan apa-apa."],1]];
+function lab7(){const box=$("lab7-q");box.innerHTML="";$("lab7-fb").textContent="";L7.forEach((q,i)=>{box.insertAdjacentHTML("beforeend",`<div class="qbox"><div class="q">${i+1}. ${q[0]}</div>${q[1].map((o,j)=>`<label style="display:block;margin:4px 0"><input type="radio" name="l7-${i}" value="${j}"> ${o}</label>`).join("")}</div>`);});}
+$("lab7-reset").onclick=lab7;
+$("lab7-check").onclick=()=>{let ok=0,ans=0;L7.forEach((q,i)=>{const c=document.querySelector(`input[name=l7-${i}]:checked`);if(c){ans++;if(+c.value===q[2])ok++;}});const fb=$("lab7-fb");if(ans<4){fb.className="fb";fb.textContent="Jawab semua empat langkah dulu.";return;}fb.className="fb "+(ok===4?"ok":"no");fb.textContent=ok===4?"Mantap! Interpretasimu lengkap: fakta, banding, makna, tindakan.":`Benar ${ok} dari 4. Tips: Baca = fakta dari grafik; Bandingkan = selisih/tren; Bermakna = alasan berdasar data; Bertindak = saran nyata.`;};
+lab7();
+
+/* ---------- Lab 8 ---------- */
+let jv=[5,4,7,30,6,2];const JN=["Aisyah","Budi","Citra","Dimas","Eka","Fajar"];let flagged=null;
+function drawJ(){const W=640,H=280,m={l:36,r:10,t:16,b:34};const mx=34;const bw=(W-m.l-m.r)/6;let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Berat koran per siswa pekan 2">`;
+  for(let i=0;i<=4;i++){const y=H-m.b-(H-m.t-m.b)*i/4;s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y}" y2="${y}" stroke="#e2e8f0"/><text x="${m.l-5}" y="${y+4}" text-anchor="end" font-size="11" fill="#64748b">${Math.round(mx*i/4)}</text>`;}
+  jv.forEach((v,i)=>{const h=(H-m.t-m.b)*v/mx;const x=m.l+i*bw+bw*.15;const c=flagged===i?"#dc2626":(v>20?"#fb923c":"#0f766e");s+=`<rect class="bar" data-i="${i}" x="${x}" y="${H-m.b-h}" width="${bw*.7}" height="${h}" fill="${c}" rx="4" tabindex="0" role="button" aria-label="${JN[i]} ${v} kg"/><text x="${x+bw*.35}" y="${H-m.b-h-5}" text-anchor="middle" font-size="13" font-weight="700">${v}</text><text x="${x+bw*.35}" y="${H-m.b+18}" text-anchor="middle" font-size="12">${JN[i]}</text>`;});
+  $("jg-chart").innerHTML=s+"</svg>";document.querySelectorAll("#jg-chart .bar").forEach(r=>{const f=()=>{flagged=+r.dataset.i;drawJ();jfb();};r.onclick=f;r.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();f();}};});
+  const sum=jv.reduce((a,b)=>a+b,0);const all=78-3+jv[3];$("jg-sum").textContent=sum;$("jg-all").textContent=all;$("jg-avg").textContent=dec(all/18);}
+function jfb(){const fb=$("jg-fb");if(flagged===null){fb.textContent="";return;}if(flagged===3){fb.className="fb ok";fb.textContent=jv[3]===30?"Betul! 30 kg jauh dari 2–7 kg teman lain. Cek nota asli, lalu perbaiki (mis. jadi 3 kg).":"Sudah diperbaiki. Catat revisinya sebelum membuat grafik!";}else{fb.className="fb no";fb.textContent="Nilai itu masih wajar. Cari yang jauh berbeda dari yang lain.";}}
+$("jg-fix").onclick=()=>{jv[3]=3;drawJ();jfb();if(flagged===null){$("jg-fb").className="fb ok";$("jg-fb").textContent="Data diperbaiki: total koran kembali 78 kg dan rata-rata 4,33 kg.";}};
+$("jg-reset").onclick=()=>{jv[3]=30;flagged=null;drawJ();$("jg-fb").textContent="";};
+drawJ();
+
+/* ---------- Kuis ---------- */
+const QZ=[
+["Bendahara kelas ingin menghitung total uang kas dari 40 baris catatan secara otomatis. Perkakas paling tepat adalah …",["pengolah kata","pengolah lembar kerja (spreadsheet)","aplikasi presentasi","pemutar video"],1,"Menghitung otomatis data angka adalah fungsi lembar kerja."],
+["Pasangan aplikasi dan jenis perkakas yang BENAR adalah …",["Google Slides – pengolah kata","LibreOffice Calc – aplikasi presentasi","Microsoft Word – pengolah lembar kerja","LibreOffice Impress – aplikasi presentasi"],3,"Impress = presentasi; Slides = presentasi; Calc = lembar kerja; Word = pengolah kata."],
+["Urutan tahapan menyusun laporan berbasis data yang benar adalah …",["tentukan tujuan → kumpulkan data → olah data → sajikan → tulis laporan → periksa dan presentasikan","olah data → kumpulkan data → tentukan tujuan → sajikan → periksa → tulis laporan","sajikan grafik → kumpulkan data → olah data → tentukan tujuan → tulis laporan → periksa","tulis laporan → olah data → tentukan tujuan → kumpulkan data → sajikan → periksa"],0,"Mulai dari tujuan, baru data, diolah, disajikan, ditulis, diperiksa."],
+["Rumus =D2*$K$1+E2*$K$2 di F2 disalin ke F3. Hasilnya menjadi …",["=D2*$K$2+E2*$K$1","=D3*K1+E3*K2","=D3*$K$1+E3*$K$2","=D2*$K$1+E2*$K$2"],2,"D2 relatif jadi D3; $K$1 absolut tetap."],
+["Grafik yang paling tepat untuk melihat perubahan total sampah dari pekan ke pekan adalah …",["grafik lingkaran","grafik garis","tabel tanpa grafik","tidak perlu grafik"],1,"Garis menunjukkan tren waktu."],
+["Agar tampilan laporan tidak berubah di HP atau komputer mana pun, simpan dalam format …",[".xlsx",".csv",".pptx",".pdf"],3,"PDF menjaga tampilan tetap."],
+["Kalimat interpretasi data yang paling baik adalah …",["Grafiknya naik.","Saldo Citra paling tinggi karena dia paling pintar.","Total koran naik dari 21 kg menjadi 30 kg dalam tiga pekan, menunjukkan kebiasaan memilah makin kuat, sehingga jadwal Sabtu perlu dipertahankan.","Botol plastik lebih bagus daripada koran."],2,"Ada fakta, makna, dan saran (4B)."],
+["Ciri slide presentasi yang baik adalah …",["satu ide per slide, judul berupa pesan, teks ringkas","slide penuh paragraf agar lengkap","banyak warna mencolok agar menarik","grafik ditempel tanpa judul agar hemat tempat"],0,"Satu ide, judul pesan, ringkas."],
+["Fungsi =AVERAGE(D2:D19) pada data setoran menghasilkan …",["jumlah seluruh berat koran","rata-rata berat koran per setoran","berat koran terbesar","banyaknya setoran"],1,"AVERAGE = rata-rata."],
+["Mengunduh gambar dari internet tanpa mencantumkan sumber lalu mengaku sebagai karya sendiri melanggar …",["privasi data pribadi","keamanan jaringan","hak cipta dan etika digital","format berkas"],2,"Karya orang lain perlu sumber dan izin/lisensi."]];
+let qdone=0,qscore=0;
+function quiz(){qdone=0;qscore=0;$("quiz-score").style.display="none";const box=$("quiz");box.innerHTML="";
+  QZ.forEach((q,i)=>{const d=document.createElement("div");d.className="qbox";d.innerHTML=`<div class="q">${i+1}. ${esc(q[0])}</div>`;
+    q[1].forEach((o,j)=>{const b=document.createElement("button");b.className="opt";b.textContent="ABCD"[j]+".  "+o;b.onclick=()=>{d.querySelectorAll("button").forEach((x,k)=>{x.disabled=true;if(k===q[2])x.classList.add("right");});if(j===q[2])qscore++;else b.classList.add("wrong");qdone++;d.insertAdjacentHTML("beforeend",`<div class="fb ${j===q[2]?"ok":"no"}">${j===q[2]?"Benar! ":"Kurang tepat. "}${esc(q[3])}</div>`);
+      if(qdone===QZ.length){const s=$("quiz-score");s.style.display="block";s.innerHTML=`<b class="t">Skor kamu: ${qscore*10} / 100</b>${qscore>=9?"Luar biasa, kamu jagoan digital!":qscore>=7?"Bagus! Tinjau lagi bagian yang masih salah.":"Ayo ulangi materi di atas, lalu coba lagi."}`;s.scrollIntoView({behavior:"smooth",block:"center"});}};d.appendChild(b);});box.appendChild(d);});}
+$("quiz-reset").onclick=quiz;quiz();
+
+build3();
+</script>
+</body>
+</html>

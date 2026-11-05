@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sandi Kuat, Akun Aman | Informatika IX</title>
+<style>
+:root{--navy:#14284B;--teal:#0E9AA7;--coral:#FF6B5E;--amber:#FFB703;--green:#1E9E6A;--bg:#F6F8FB;--card:#fff;--ink:#1d2b3f;--mute:#5b6b80;--line:#dde5ee;--tealL:#E3F6F7;--coralL:#FFE9E6;--amberL:#FFF4D6;--greenL:#E2F5EC}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1a2e;--card:#18284a;--ink:#e8eef7;--mute:#9fb0c7;--line:#2b3f66;--tealL:#10383f;--coralL:#4a2530;--amberL:#4a3b12;--greenL:#123d2e}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 Calibri,"Segoe UI",system-ui,sans-serif}
+h1,h2,h3{font-family:Cambria,Georgia,serif;line-height:1.25}
+header{background:var(--navy);color:#fff;padding:28px 16px 36px;text-align:center}
+header h1{margin:8px 0;font-size:2.2rem}header h1 span{color:var(--amber)}
+header img{max-width:760px;width:100%;border-radius:14px;margin-top:14px}
+.tag{font-size:.8rem;letter-spacing:.08em;color:#9fd8de}
+nav{position:sticky;top:0;background:var(--card);border-bottom:1px solid var(--line);padding:8px 12px;overflow-x:auto;white-space:nowrap;z-index:5}
+nav a{color:var(--teal);text-decoration:none;margin-right:14px;font-size:.9rem;font-weight:600}
+main{max-width:860px;margin:0 auto;padding:8px 16px 60px}
+section{margin:36px 0}
+h2{color:var(--teal);border-bottom:3px solid var(--amber);display:inline-block;padding-bottom:2px}
+figure{margin:16px 0;text-align:center}figure img{max-width:100%;border-radius:12px;border:1px solid var(--line)}
+figcaption{font-size:.85rem;color:var(--mute);margin-top:4px}
+.box{border-left:6px solid var(--teal);background:var(--tealL);padding:12px 16px;border-radius:10px;margin:16px 0}
+.box.warn{border-color:var(--coral);background:var(--coralL)}.box.note{border-color:var(--amber);background:var(--amberL)}.box.ok{border-color:var(--green);background:var(--greenL)}
+.box b.t{display:block;margin-bottom:4px}
+table{border-collapse:collapse;width:100%;font-size:.95rem;margin:12px 0}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:var(--navy);color:#fff}
+code,.mono{font-family:Consolas,monospace;background:var(--card);border:1px solid var(--line);padding:1px 6px;border-radius:5px}
+button{background:var(--teal);color:#fff;border:0;border-radius:8px;padding:9px 16px;font:inherit;font-weight:600;cursor:pointer}
+button.alt{background:var(--navy)}button:disabled{opacity:.5}
+input[type=text],input[type=number],select{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);width:100%}
+.game{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:16px 0}
+.game h3{margin-top:0;color:var(--coral)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:8px 0}.row>*{flex:1 1 140px}
+.meter{display:flex;gap:4px;margin:10px 0}.meter i{flex:1;height:14px;border-radius:4px;background:var(--line)}
+.big{font-size:1.4rem;font-weight:700}
+.chk label{display:block;padding:4px 0}
+.opt{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);border:2px solid var(--line);margin:6px 0}
+.opt.right{border-color:var(--green);background:var(--greenL)}.opt.wrong{border-color:var(--coral);background:var(--coralL)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pair button{background:var(--card);color:var(--ink);border:2px solid var(--line);text-align:left;font-weight:500}
+.pair button.sel{border-color:var(--amber);background:var(--amberL)}.pair button.done{border-color:var(--green);background:var(--greenL);opacity:.8}
+.pair button.bad{border-color:var(--coral);background:var(--coralL)}
+footer{text-align:center;color:var(--mute);font-size:.85rem;padding:20px 16px 40px}
+@media(max-width:560px){.pair{grid-template-columns:1fr}header h1{font-size:1.7rem}}
+</style>
+</head>
+<body>
+<header>
+<div class="tag">BAB IV KEAMANAN DIGITAL • KELAS IX • INFORMATIKA</div>
+<h1>Sandi Kuat, <span>Akun Aman</span></h1>
+<div>Yuk belajar membuat dan menjaga kata sandi yang aman dan kuat!</div>
+<img src="images/01_cover_sandi_kuat.png" alt="Gembok besar dengan kunci dan ikon aplikasi">
+</header>
+<nav>
+<a href="#awal">Pemanasan</a><a href="#kasus">Kasus</a><a href="#serangan">Serangan</a><a href="#tebakan">Ruang tebakan</a><a href="#kunci">KUNCI</a><a href="#teknik">Teknik</a><a href="#skor">Skor</a><a href="#jaga">JAGA</a><a href="#rangkum">Rangkuman</a><a href="#kuis">Kuis</a><a href="#refleksi">Refleksi</a>
+</nav>
+<main>
+
+<div class="box warn"><b class="t">Aturan Brankas Aman</b>
+Di sini <b>jangan pernah mengetik sandi aslimu</b> atau kode OTP. Semua latihan memakai sandi latihan untuk akun latihan. Kalkulator di halaman ini jalan di perangkatmu saja dan tidak mengirim apa pun ke mana-mana, tetapi tetap pakai sandi latihan, ya.</div>
+
+<div class="box"><b class="t">Setelah belajar ini, kamu bisa:</b>
+Menjelaskan 4 cara peretas menebak sandi • menilai kekuatan sandi dengan Skor KUNCI • membuat sandi kuat yang gampang diingat • menjaga sandi dengan kebiasaan JAGA.</div>
+
+<section id="awal">
+<h2>1. Berapa akun yang kamu punya?</h2>
+<p>Email, game online, media sosial, akun belajar, dompet digital, toko online... Banyak, kan? Setiap akun itu seperti <b>satu pintu</b>, dan kata sandi adalah <b>kuncinya</b>. Kalau kuncinya gampang ditiru, siapa saja bisa masuk.</p>
+<figure><img src="images/18_berapa_akunmu.png" alt="Ilustrasi berbagai akun di sekeliling satu orang"><figcaption>Setiap akun adalah satu pintu yang butuh kunci</figcaption></figure>
+</section>
+
+<section id="kasus">
+<h2>2. Cerita: Akun Bintang Dibajak</h2>
+<p>Cerita rekaan, tetapi bisa terjadi pada siapa saja. Bintang memakai sandi <code>bintang2010</code> di semua akunnya. Situs game kecil diretas, daftar sandinya bocor, lalu peretas mencoba sandi yang sama di email dan akun belajar Bintang. Cocok! Teman-teman Bintang pun dapat pesan penipuan dari akun Bintang.</p>
+<figure><img src="images/03_kasus_akun_bintang.png" alt="Empat panel kasus akun Bintang"><figcaption>Dari satu sandi lemah jadi masalah beruntun</figcaption></figure>
+<figure><img src="images/02_satu_kunci_banyak_pintu.png" alt="Satu kunci membuka banyak pintu itu berbahaya"><figcaption>Satu kunci untuk semua pintu? Jangan!</figcaption></figure>
+<div class="box note"><b class="t">Think dulu</b>Apa kesalahan Bintang? Sebutkan minimal dua. Kalau kamu Bintang, apa yang kamu ubah?</div>
+</section>
+
+<section id="serangan">
+<h2>3. Empat cara peretas menebak sandi</h2>
+<figure><img src="images/04_empat_serangan_sandi.png" alt="Brute force, dictionary attack, credential stuffing, keylogger"><figcaption>Empat cara menebak sandi</figcaption></figure>
+<table>
+<tr><th>Serangan</th><th>Cara kerja</th></tr>
+<tr><td>Brute force</td><td>Mencoba SEMUA kombinasi satu per satu</td></tr>
+<tr><td>Dictionary attack</td><td>Mencoba kata umum dan hal tentang pemilik akun (hobi, klub bola, nama hewan)</td></tr>
+<tr><td>Credential stuffing</td><td>Sandi bocor dari satu akun dicoba di akun lain</td></tr>
+<tr><td>Keylogger</td><td>Program jahat yang merekam ketikan keyboard</td></tr>
+</table>
+
+<div class="game" id="pair1"><h3>Mini game: Pasangkan!</h3>
+<p>Klik satu serangan di kiri, lalu pasangannya di kanan.</p>
+<div class="pair"><div id="pl"></div><div id="pr"></div></div>
+<p id="pmsg" class="big"></p></div>
+
+<h3>Detektif Tebak Sandi</h3>
+<p>Lihat profil publik rekaan "Alya". Dari postingannya, kamu bisa menebak sandinya, lho!</p>
+<figure><img src="images/05_detektif_tebak_sandi.png" alt="Profil rekaan Alya dengan petunjuk nama, hewan, klub, tanggal lahir"><figcaption>Nama, hewan, klub, dan tanggal lahir adalah bahan tebakan</figcaption></figure>
+<div class="box ok"><b class="t">Pelajaran</b>Info pribadi jangan dijadikan sandi. Itulah huruf <b>N</b> di resep KUNCI nanti.</div>
+</section>
+
+<section id="tebakan">
+<h2>4. Ruang tebakan: pilihan ^ panjang</h2>
+<p>Bayangkan sandi sebagai deretan kotak. Tiap kotak bisa diisi beberapa pilihan karakter. Jumlah kemungkinan = <b>pilihan ^ panjang</b>.</p>
+<figure><img src="images/06_ruang_tebakan.png" alt="Ilustrasi pilihan dikalikan sebanyak posisi"><figcaption>Pilihan dikalikan sebanyak posisi</figcaption></figure>
+
+<div class="game"><h3>Kalkulator ruang tebakan</h3>
+<div class="row"><div><label>Jenis karakter</label><select id="cPil">
+<option value="10">Angka saja (10)</option><option value="26" selected>Huruf kecil (26)</option><option value="52">Huruf besar + kecil (52)</option><option value="62">Huruf + angka (62)</option><option value="94">Semua jenis (94)</option></select></div>
+<div><label>Panjang sandi</label><input type="number" id="cLen" min="1" max="30" value="8"></div></div>
+<p>Ruang tebakan: <span class="big" id="cRes"></span></p>
+<p>Waktu coba semua kemungkinan (model belajar: 10 miliar tebakan/detik, sandi acak): <b id="cTime"></b></p>
+<small>Angka ini hanya model belajar. Sandi berpola (nama, tanggal lahir, kata umum) ditebak jauh lebih cepat.</small></div>
+
+<figure><img src="images/07_waktu_bobol_sandi.png" alt="Grafik perkiraan waktu bobol sandi"><figcaption>Perkiraan waktu bobol (model belajar, sandi acak)</figcaption></figure>
+<div class="box note"><b class="t">Fakta seru</b>12 huruf kecil acak (26^12) lebih lama dibobol daripada 8 karakter beragam (94^8). <b>Panjang itu kuat!</b></div>
+</section>
+
+<section id="kunci">
+<h2>5. Resep KUNCI: membuat sandi kuat</h2>
+<figure><img src="images/08_resep_kunci.png" alt="Resep K U N C I"><figcaption>K-U-N-C-I</figcaption></figure>
+<table>
+<tr><th>Huruf</th><th>Artinya</th><th>Tips</th></tr>
+<tr><td><b>K</b></td><td>Kepanjangan</td><td>Minimal 12 karakter.</td></tr>
+<tr><td><b>U</b></td><td>Unik</td><td>Satu akun, satu sandi.</td></tr>
+<tr><td><b>N</b></td><td>Nol info pribadi</td><td>Tanpa nama, tanggal lahir, nomor HP, nama hewan.</td></tr>
+<tr><td><b>C</b></td><td>Campur karakter</td><td>Huruf besar, kecil, angka, simbol.</td></tr>
+<tr><td><b>I</b></td><td>Ide frasa</td><td>Gabungan kata acak atau kalimat karanganmu.</td></tr>
+</table>
+<small>KUNCI dan JAGA adalah singkatan buatan guru agar mudah diingat, bukan istilah resmi.</small>
+</section>
+
+<section id="teknik">
+<h2>6. Tiga teknik sandi yang gampang diingat</h2>
+<figure><img src="images/09_tiga_teknik_sandi.png" alt="Tiga teknik membuat sandi"><figcaption>Tiga teknik</figcaption></figure>
+<ol>
+<li><b>Gabung kata acak.</b> Contoh: <code>Bekantan-Layang7-Mangrove-Sepeda!</code></li>
+<li><b>Kalimat jadi sandi.</b> "Dua Kucing Biru Naik Roket ke Bulan Jam 7 Pagi Hari!" jadi <code>DKBNRkBJ7PH!</code></li>
+<li><b>Perkuat dengan variasi.</b> <code>pantaisenjamangrove</code> jadi <code>pantAi.senja#27mangrove</code></li>
+</ol>
+<div class="box warn">Contoh di atas hanya untuk belajar. Jangan dipakai di akun aslimu.</div>
+<figure><img src="images/10_bedah_sandi_kuat.png" alt="Bedah sandi DKBNRkBJ7PH!"><figcaption>Bedah sandi DKBNRkBJ7PH!</figcaption></figure>
+
+<div class="game"><h3>Pembuat sandi dari kalimat</h3>
+<p>Karang kalimat unik (bukan tentang dirimu!), lalu lihat hasil huruf pertamanya. Tambahkan angka dan tanda baca di kalimat supaya ikut terambil.</p>
+<input type="text" id="gIn" placeholder="Contoh: Tiga Bola Merah Jatuh ke Laut Biru Jam 5 Sore Hari!" autocomplete="off">
+<p>Hasil: <span class="mono big" id="gOut">-</span> <span id="gLen"></span></p></div>
+</section>
+
+<section id="skor">
+<h2>7. Skor KUNCI: seberapa kuat sandimu?</h2>
+<p>Setiap cek yang terpenuhi = 1 poin. 0-1 sangat lemah, 2 lemah, 3 sedang, 4 kuat, 5 sangat kuat.</p>
+<figure><img src="images/11_skor_kunci_sandi.png" alt="Contoh penilaian Skor KUNCI"><figcaption>Contoh penilaian Skor KUNCI</figcaption></figure>
+
+<div class="game"><h3>Simulator Skor KUNCI</h3>
+<div class="box warn" style="margin-top:0"><b>Jangan masukkan sandi aslimu.</b> Pakai sandi latihan saja. Penilaian berjalan di perangkatmu dan tidak disimpan.</div>
+<input type="text" id="sIn" placeholder="Ketik sandi latihan" autocomplete="off" spellcheck="false">
+<div class="chk">
+<div>K (otomatis): <b id="sK"></b></div>
+<div>C (otomatis): <b id="sC"></b></div>
+<label><input type="checkbox" id="sU"> U: sandi ini hanya untuk satu akun</label>
+<label><input type="checkbox" id="sN"> N: tidak memuat nama, tanggal lahir, nomor HP, atau info pribadiku</label>
+<label><input type="checkbox" id="sI"> I: berasal dari kalimat atau gabungan kata acak</label></div>
+<div class="meter" id="sMeter"><i></i><i></i><i></i><i></i><i></i></div>
+<p class="big" id="sRes"></p></div>
+<small>Skor KUNCI adalah alat belajar buatan guru, bukan standar resmi.</small>
+</section>
+
+<section id="jaga">
+<h2>8. Resep JAGA: menjaga sandi</h2>
+<p>Sandi sekuat apa pun bisa bocor kalau kebiasaannya salah.</p>
+<figure><img src="images/12_resep_jaga.png" alt="Resep J A G A"><figcaption>J-A-G-A</figcaption></figure>
+<table>
+<tr><th>Huruf</th><th>Tindakan</th><th>Contoh</th></tr>
+<tr><td><b>J</b></td><td>Jangan bagikan</td><td>Tidak memberi sandi atau OTP ke siapa pun. Logout di komputer umum.</td></tr>
+<tr><td><b>A</b></td><td>Aktifkan 2FA</td><td>Setelah sandi, ada kode kedua (OTP, aplikasi autentikator, sidik jari).</td></tr>
+<tr><td><b>G</b></td><td>Ganti bila bocor</td><td>Ada login aneh? Ganti segera, juga di akun lain yang memakai sandi sama.</td></tr>
+<tr><td><b>A</b></td><td>Amankan simpanan</td><td>Pakai manajer kata sandi tepercaya, bukan kertas di monitor.</td></tr>
+</table>
+<figure><img src="images/13_cara_kerja_2fa.png" alt="Cara kerja autentikasi dua faktor"><figcaption>Cara kerja 2FA</figcaption></figure>
+<p><b>2FA vs MFA:</b> 2FA memakai dua faktor, MFA lebih dari dua. Faktor: sesuatu yang kamu <b>tahu</b> (sandi), <b>punya</b> (HP), atau <b>adalah</b> (sidik jari).</p>
+<figure><img src="images/14_manajer_kata_sandi.png" alt="Manajer kata sandi"><figcaption>Manajer kata sandi: satu kunci induk, banyak sandi unik</figcaption></figure>
+<figure><img src="images/15_kebiasaan_berisiko_vs_aman.png" alt="Kebiasaan berisiko dan aman"><figcaption>Kamu yang mana?</figcaption></figure>
+</section>
+
+<section id="rangkum">
+<h2>9. Rangkuman</h2>
+<figure><img src="images/17_peta_konsep_sandi.png" alt="Peta konsep sandi aman dan kuat"><figcaption>Peta konsep</figcaption></figure>
+<figure><img src="images/16_alur_ctl_120_menit.png" alt="Alur pembelajaran"><figcaption>Alur belajar hari ini</figcaption></figure>
+</section>
+
+<section id="kuis">
+<h2>10. Kuis kilat</h2>
+<div class="game" id="quiz"></div>
+</section>
+
+<section id="refleksi">
+<h2>11. Refleksi dan komitmen 24 jam</h2>
+<p>Apa hal paling mengejutkan yang kamu pelajari? Centang aksi yang akan kamu lakukan dalam 24 jam:</p>
+<div class="game chk" id="komit">
+<label><input type="checkbox"> Mengganti sandi email dengan sandi baru yang kuat</label>
+<label><input type="checkbox"> Mengaktifkan 2FA di satu akun penting</label>
+<label><input type="checkbox"> Berhenti memakai satu sandi untuk banyak akun</label>
+<label><input type="checkbox"> Tidak membagikan sandi dan OTP ke siapa pun</label>
+<label><input type="checkbox"> Logout setelah memakai komputer umum</label>
+<p class="big" id="kMsg"></p></div>
+</section>
+</main>
+<footer>Sumber: Buku Siswa Informatika Kelas IX (Edisi Revisi), Bab IV. Kasus dan nama bersifat rekaan. SMP Negeri 14 Tarakan.</footer>
+
+<script>
+// Pasangkan
+(function(){
+const L=["Brute force","Dictionary attack","Credential stuffing","Keylogger"];
+const R=["Mencoba semua kombinasi satu per satu","Mencoba kata umum dan hal tentang pemilik akun","Memakai sandi bocor dari satu akun untuk akun lain","Merekam ketikan keyboard diam-diam"];
+const pl=document.getElementById('pl'),pr=document.getElementById('pr'),msg=document.getElementById('pmsg');
+let sel=null,done=0;
+const order=[2,0,3,1];
+L.forEach((t,i)=>{const b=document.createElement('button');b.textContent=t;b.dataset.i=i;b.style.margin='4px 0';b.style.width='100%';b.onclick=()=>{if(b.classList.contains('done'))return;[...pl.children].forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=i};pl.appendChild(b)});
+order.forEach(k=>{const b=document.createElement('button');b.textContent=R[k];b.style.margin='4px 0';b.style.width='100%';b.onclick=()=>{
+ if(sel===null||b.classList.contains('done'))return;
+ if(sel===k){b.classList.add('done');pl.children[sel].classList.remove('sel');pl.children[sel].classList.add('done');sel=null;done++;if(done==4)msg.textContent='Mantap! Semua cocok 🎉'}
+ else{b.classList.add('bad');setTimeout(()=>b.classList.remove('bad'),500)}};pr.appendChild(b)});
+})();
+// Kalkulator
+(function(){
+const p=document.getElementById('cPil'),l=document.getElementById('cLen'),r=document.getElementById('cRes'),t=document.getElementById('cTime');
+function fmt(s){
+ if(s<1)return 'kurang dari 1 detik';
+ const u=[['tahun',31557600],['hari',86400],['jam',3600],['menit',60],['detik',1]];
+ if(s>4.35e17)return 'lebih lama dari umur alam semesta';
+ for(const [n,v] of u){if(s>=v){const x=s/v;return '± '+(x>=1e6?x.toExponential(1).replace('e+',' × 10^'):Math.round(x).toLocaleString('id-ID'))+' '+n}}
+}
+function upd(){
+ const n=Math.max(1,Math.min(30,parseInt(l.value)||1)),b=+p.value,sp=Math.pow(b,n);
+ r.textContent=sp<1e15?Math.round(sp).toLocaleString('id-ID'):sp.toExponential(2).replace('e+',' × 10^');
+ t.textContent=fmt(sp/1e10);
+}
+p.onchange=upd;l.oninput=upd;upd();
+})();
+// Generator
+(function(){
+const i=document.getElementById('gIn'),o=document.getElementById('gOut'),n=document.getElementById('gLen');
+i.oninput=()=>{const w=i.value.trim().split(/\s+/).filter(Boolean);
+ let s=w.map(x=>{const m=x.match(/^[^A-Za-z0-9]*([A-Za-z0-9])/);const tail=x.match(/[^A-Za-z0-9]+$/);return (m?m[1]:'')+(tail&&w.indexOf(x)===w.length-1?tail[0]:'')}).join('');
+ o.textContent=s||'-';n.textContent=s?'('+s.length+' karakter'+(s.length>=12?', memenuhi K)':', kurang dari 12, tambah kata)'):''}
+})();
+// Skor
+(function(){
+const i=document.getElementById('sIn'),K=document.getElementById('sK'),C=document.getElementById('sC'),
+ U=document.getElementById('sU'),N=document.getElementById('sN'),I=document.getElementById('sI'),
+ m=[...document.querySelectorAll('#sMeter i')],res=document.getElementById('sRes');
+const lv=['Sangat lemah','Sangat lemah','Lemah','Sedang','Kuat','Sangat kuat'],col=['#FF6B5E','#FF6B5E','#FF9A3C','#FFB703','#7CC96B','#1E9E6A'];
+function upd(){const v=i.value;const k=v.length>=12;
+ const kinds=[/[A-Z]/,/[a-z]/,/[0-9]/,/[^A-Za-z0-9]/].filter(r=>r.test(v)).length;const c=kinds==4;
+ K.textContent=(k?'✔ ':'✘ ')+v.length+' karakter';C.textContent=(c?'✔ ':'✘ ')+kinds+' dari 4 jenis karakter';
+ const sc=(v?(k?1:0)+(c?1:0):0)+(U.checked?1:0)+(N.checked?1:0)+(I.checked?1:0);
+ m.forEach((e,x)=>e.style.background=x<sc?col[sc]:'');res.textContent=v||sc?'Skor '+sc+'/5: '+lv[sc]:'';}
+[i,U,N,I].forEach(e=>e.oninput=upd);upd();
+})();
+// Kuis
+(function(){
+const Q=[
+["Mengapa memakai satu sandi untuk banyak akun berbahaya?",["Sandi jadi terlalu panjang","Kalau satu akun bocor, akun lain ikut dicoba (credential stuffing)","Akun jadi lambat","Tidak ada bahayanya"],1],
+["Mana sandi acak yang lebih lama dibobol?",["8 karakter campuran","12 huruf kecil","Sama saja","Tidak bisa dibandingkan"],1],
+["Huruf N pada KUNCI berarti ...",["Nama lengkap","Nol info pribadi","Nomor urut","Nyaring"],1],
+["Kode OTP boleh diberikan kepada ...",["Teman dekat","Guru","Petugas yang mengaku dari aplikasi","Tidak boleh ke siapa pun"],3],
+["Sandi sudah kuat, tetapi ingin perlindungan tambahan. Tindakan JAGA yang tepat?",["Aktifkan 2FA","Tempel di monitor","Pakai sandi sama di semua akun","Bagikan ke teman"],0]];
+const box=document.getElementById('quiz');let idx=0,score=0;
+function show(){
+ if(idx>=Q.length){box.innerHTML='<h3>Selesai!</h3><p class="big">Skormu: '+score+' / '+Q.length+'</p><button onclick="location.hash=\'#refleksi\'">Lanjut ke refleksi</button>';return}
+ const q=Q[idx];box.innerHTML='<h3>Soal '+(idx+1)+' dari '+Q.length+'</h3><p><b>'+q[0]+'</b></p>';
+ q[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent=String.fromCharCode(65+j)+'. '+o;
+  b.onclick=()=>{[...box.querySelectorAll('.opt')].forEach((x,y)=>{x.disabled=true;if(y===q[2])x.classList.add('right')});
+   if(j===q[2])score++;else b.classList.add('wrong');
+   const nx=document.createElement('button');nx.className='alt';nx.textContent=idx==Q.length-1?'Lihat skor':'Soal berikutnya';nx.onclick=()=>{idx++;show()};box.appendChild(nx)};
+  box.appendChild(b)});
+}
+show();
+})();
+// Komitmen
+(function(){
+const c=[...document.querySelectorAll('#komit input')],m=document.getElementById('kMsg');
+c.forEach(x=>x.onchange=()=>{const n=c.filter(y=>y.checked).length;m.textContent=n>=3?'Keren! '+n+' aksi dipilih. Lakukan dalam 24 jam ya 💪':n?n+' aksi. Tambah sampai 3!':''});
+})();
+</script>
+</body>
+</html>

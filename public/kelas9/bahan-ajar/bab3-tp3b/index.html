@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Level Up: Dokumen Pintar dan Terhubung - Informatika IX TP3 Pertemuan 2</title>
+<style>
+:root{--navy:#12355B;--teal:#0E7C86;--mint:#2A9D8F;--sea:#BFE6EA;--sand:#F6E7C8;--coral:#E76F51;--orange:#F4A261;--yel:#F9C74F;--bg:#F7FBFC;--ink:#1F2D3D;--grey:#6B7C8F;--line:#E1EBEF;--card:#fff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:Calibri,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;font-size:17px}
+header.hero{background:var(--navy);color:#fff;padding:48px 20px 56px}
+.wrap{max-width:980px;margin:0 auto;padding:0 18px}
+.hero .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;align-items:center}
+.tag{display:inline-block;background:var(--yel);color:var(--navy);font-weight:700;border-radius:99px;padding:3px 14px;font-size:14px}
+h1{font-family:Cambria,Georgia,serif;font-size:2.5rem;line-height:1.15;margin:14px 0}
+.hero p{color:var(--sea);margin:6px 0}
+.hero img{width:100%;border-radius:16px;background:#fff}
+nav{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap}
+nav a{display:inline-block;padding:11px 13px;color:var(--navy);text-decoration:none;font-weight:600;font-size:14px}
+nav a:hover,nav a.on{color:var(--teal);background:#EEF7F8}
+section{padding:36px 0 8px}
+h2{font-family:Cambria,Georgia,serif;color:var(--navy);font-size:1.8rem;margin:0 0 6px}
+h3{color:var(--teal);margin:22px 0 6px}
+.step{display:inline-block;background:var(--teal);color:#fff;border-radius:8px;padding:1px 10px;font-size:13px;font-weight:700;margin-bottom:6px}
+figure{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;text-align:center}
+figure img{max-width:100%;height:auto;border-radius:8px}
+figcaption{font-size:14px;color:var(--grey);margin-top:6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+.note{border-left:0;border:1.5px solid var(--orange);background:#FFF6EC;border-radius:14px;padding:12px 16px;margin:14px 0}
+.tip{border:1.5px solid var(--sea);background:#EEF7F8;border-radius:14px;padding:12px 16px;margin:14px 0}
+.warn{border:1.5px solid var(--coral);background:#FFF3EF;border-radius:14px;padding:12px 16px;margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+table{border-collapse:collapse;width:100%;background:#fff;font-size:15px}
+th{background:var(--navy);color:#fff;padding:8px}td{border:1px solid var(--line);padding:7px 9px}
+button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:8px 14px;background:var(--teal);color:#fff;font-weight:700}
+button.alt{background:#fff;color:var(--teal);border:2px solid var(--teal)}
+button:hover{filter:brightness(1.1)}button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--yel);outline-offset:2px}
+.lab{border:2px dashed var(--teal);border-radius:16px;padding:16px;margin:18px 0;background:#fff}
+.lab h3{margin-top:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.chip{background:#fff;border:2px solid var(--sea);color:var(--navy);border-radius:10px;padding:8px 12px;font-weight:600}
+.chip.sel{border-color:var(--teal);background:#EEF7F8}
+.ok{color:#1b7f5c;font-weight:700}.bad{color:var(--coral);font-weight:700}
+.match-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;margin:6px 0}
+select{font:inherit;padding:7px;border-radius:8px;border:2px solid var(--sea);width:100%}
+.bars{display:flex;align-items:flex-end;gap:14px;height:150px;border-bottom:2px solid var(--grey);padding:0 10px;margin:20px 0 40px}
+.bar{flex:1;background:var(--mint);border-radius:6px 6px 0 0;position:relative;transition:height .4s;min-width:30px}
+.bar b{position:absolute;top:-22px;left:0;right:0;text-align:center;font-size:14px}
+.bar span{position:absolute;bottom:-24px;left:0;right:0;text-align:center;font-size:13px}
+.dual{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sortlist{list-style:none;padding:0}
+.sortlist li{display:flex;gap:8px;align-items:center;background:#fff;border:2px solid var(--sea);border-radius:10px;padding:8px 10px;margin:6px 0}
+.sortlist li span{flex:1}
+.sortlist button{padding:3px 9px}
+.qopt{display:block;width:100%;text-align:left;background:#fff;color:var(--ink);border:2px solid var(--sea);margin:6px 0;font-weight:500}
+.qopt.right{border-color:#2fa37a;background:#E7F7F0}.qopt.wrong{border-color:var(--coral);background:#FFF0EC}
+.prog{height:10px;background:var(--line);border-radius:99px;overflow:hidden}.prog>div{height:100%;background:var(--teal);width:0;transition:width .3s}
+.resdemo{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
+.checklist label{display:block;padding:6px 0;cursor:pointer}
+footer{background:var(--navy);color:var(--sea);padding:28px 0;margin-top:40px;text-align:center;font-size:14px}
+@media(max-width:700px){.hero .wrap{grid-template-columns:1fr}h1{font-size:2rem}.dual,.match-row{grid-template-columns:1fr}}
+
+.rec{background:#fff;border:2px solid var(--sea);border-radius:12px;padding:12px;margin:8px 0}
+.paper{background:#fff;border:3px double var(--orange);border-radius:10px;padding:18px;text-align:center;margin:10px 0}
+.paper h4{font-family:Cambria,serif;font-size:1.5rem;margin:4px 0;color:var(--navy)}
+.paper .nm{font-size:1.6rem;font-weight:700;color:var(--coral)}
+.toc li{list-style:none}.toc .h2{margin-left:22px;font-size:.95em}
+.docp{padding:6px 8px;border-bottom:1px dashed var(--line);display:flex;gap:8px;align-items:center}
+.docp select{width:150px;flex:none}.docp span{flex:1}
+.docp.h1 span{font-family:Cambria,serif;font-weight:700;font-size:1.25rem}.docp.h2 span{font-weight:700;color:var(--teal)}
+input[type=number],input[type=text],textarea{font:inherit;padding:7px;border-radius:8px;border:2px solid var(--sea)}
+textarea{width:100%}
+</style></head><body>
+<header class="hero"><div class="wrap"><div>
+<span class="tag">Bab III | TP 3 | Pertemuan 2</span>
+<h1>Level Up: Dokumen Pintar &amp; Terhubung</h1>
+<p>Naik level dari salin-tempel ke dokumen yang <b>terhubung, otomatis, dan profesional</b>.</p>
+<p>Informatika | Project-Based Learning | SMP Negeri 14 Tarakan</p></div>
+<img src="images/t01_hero_levelup.png" alt="Tangga level integrasi konten dari salin-tempel menuju otomatis"></div></header>
+<nav id="nav"><div class="wrap"><a href="#misi">Misi</a><a href="#mm">1 Mail Merge</a><a href="#doc">2 Dokumen</a><a href="#tautan">3 Tautan</a><a href="#pipe">4 Pipeline</a><a href="#mutu">5 Mutu &amp; Etika</a><a href="#kuis">Kuis</a><a href="#rangkum">Rangkuman</a></div></nav>
+<main class="wrap">
+
+<section id="misi"><span class="step">Misi</span><h2>Misi dari Ketua OSIS</h2>
+<p>Bulan depan ada aksi bersih pantai selama 4 pekan. Tim OSIS butuh <b>20 piagam relawan</b>, <b>laporan profesional</b>, <b>tabel dan grafik yang bisa diperbarui</b>, serta paket gambar yang <b>etis</b>. Mengetik satu per satu pasti lama. Yuk naik level!</p>
+<figure><img src="images/t03_misi_proyek.png" alt="Empat produk yang dikerjakan tim OSIS" loading="lazy"><figcaption>Empat produk yang dikerjakan tim OSIS</figcaption></figure>
+<figure><img src="images/t02_tangga_level.png" alt="Tangga level: Level 1 salin-tempel, Level 2 terhubung dan terstruktur, Level 3 otomatis dan profesional" loading="lazy"><figcaption>Tangga level: Level 1 salin-tempel, Level 2 terhubung dan terstruktur, Level 3 otomatis dan profesional</figcaption></figure>
+<div class="card"><b>Tujuan:</b><ol><li>Membedakan objek tertanam (embedded) dan tertaut (linked), serta mengelola tautan (memperbarui, mengubah sumber, memutus) melalui percobaan.</li><li>Menghasilkan banyak dokumen personal dari satu templat dan satu sumber data dengan fitur surat massal (mail merge).</li><li>Menyusun dokumen panjang yang profesional dengan gaya (style), daftar isi otomatis, keterangan (caption) otomatis, dan nomor halaman.</li><li>Merancang alur data otomatis (formulir, lembar kerja, grafik, laporan) dan menjelaskan cara data mengalir antaraplikasi.</li><li>Mengevaluasi mutu dan etika dokumen terintegrasi: aksesibilitas (alt text), format dan resolusi gambar, lisensi, atribusi, serta kolaborasi.</li></ol></div></section>
+
+<section id="mm"><span class="step">Stasiun 1</span><h2>Surat Sakti: Mail Merge</h2>
+<p>Mail merge = <b>templat</b> (teks tetap + merge field) + <b>sumber data</b> (satu baris satu penerima) = banyak dokumen unik.</p>
+<figure><img src="images/t10_mailmerge_konsep.png" alt="Konsep mail merge" loading="lazy"><figcaption>Konsep mail merge</figcaption></figure>
+<div class="lab"><h3>Lab: Simulator Mail Merge</h3>
+<p>Data: 20 relawan (contoh fiktif). Pilih filter, lalu lihat Preview.</p>
+<div class="dual"><div><label>Filter Kategori: <select id="mmF"><option value="">Semua</option><option>Teladan</option><option>Aktif</option><option>Peserta</option></select></label>
+<p><label><input type="checkbox" id="mmManual"> Nama <b>diketik manual</b> di templat (bug!)</label></p>
+<p><label><input type="checkbox" id="mmIf" checked> Aktifkan aturan IF predikat</label></p>
+<div><button class="alt" id="mmP">&laquo; Sebelumnya</button> <button id="mmN">Berikutnya &raquo;</button></div>
+<p id="mmInfo"></p></div>
+<div class="paper" id="mmPaper"></div></div>
+<div class="tip" id="mmRes"></div></div>
+<div class="note"><b>Coba temukan:</b> berapa penerima ke-3 saat filter Teladan? Berapa halaman hasil Finish &amp; Merge? Centang bug nama manual: apa yang terjadi?</div>
+<figure><img src="images/t11_mailmerge_langkah.png" alt="Langkah di tab Mailings" loading="lazy"><figcaption>Langkah di tab Mailings</figcaption></figure>
+</section>
+
+<section id="doc"><span class="step">Stasiun 2</span><h2>Dokumen Rapi Otomatis</h2>
+<p>Daftar isi otomatis hanya mengenali <b>Heading</b> (Style), bukan teks yang sekadar ditebalkan.</p>
+<figure><img src="images/t14_styles_konsep.png" alt="Format manual versus Style" loading="lazy"><figcaption>Format manual versus Style</figcaption></figure>
+<div class="lab"><h3>Lab: Heading &rarr; Daftar Isi</h3>
+<p>Tentukan gaya tiap baris naskah, lalu tekan <b>Update Table</b>.</p>
+<div id="docList"></div>
+<p>Warna Heading 1: <input type="color" id="h1c" value="#12355b"> (Modify Style: semua Heading 1 berubah serentak)</p>
+<button id="tocUp">Update Table</button> <button class="alt" id="tocAuto">Jawaban contoh</button>
+<div class="card toc" id="toc"><i>Daftar isi belum dibuat.</i></div><p id="tocMsg"></p></div>
+<figure><img src="images/t15_heading_toc.png" alt="Heading membentuk daftar isi" loading="lazy"><figcaption>Heading membentuk daftar isi</figcaption></figure>
+<figure><img src="images/t16_caption_crossref.png" alt="Caption dan cross-reference otomatis" loading="lazy"><figcaption>Caption dan cross-reference otomatis</figcaption></figure>
+<figure><img src="images/t17_halaman_profesional.png" alt="Elemen halaman profesional" loading="lazy"><figcaption>Elemen halaman profesional</figcaption></figure>
+</section>
+
+<section id="tautan"><span class="step">Stasiun 3</span><h2>Jalur Data: Tertanam vs Tertaut</h2>
+<figure><img src="images/t05_tertanam_vs_tertaut.png" alt="Tertanam versus tertaut" loading="lazy"><figcaption>Tertanam versus tertaut</figcaption></figure>
+<div class="lab"><h3>Lab: Simulator Tautan</h3>
+<div class="dual"><div class="rec"><b>Excel: Rekap_Pekan.xlsx</b><p>Botol Pekan 4: <input type="number" id="botol" value="40" style="width:80px"> <button id="chg">Ubah</button></p><p>Total Pekan 4: <b id="xTot">104</b> kg &nbsp; Total semua: <b id="xAll">352</b> kg</p><p>Status file: <b id="fileSt">Rekap_Pekan.xlsx</b></p><button class="alt" id="ren">Ganti nama file</button> <button class="alt" id="ren2">Kembalikan nama</button></div>
+<div><div class="rec"><b>Word (tertanam)</b><p>Total Pekan 4: <b id="wE">104</b>, semua: <b id="wEa">352</b></p></div>
+<div class="rec"><b>Word (tertaut)</b><p>Total Pekan 4: <b id="wL">104</b>, semua: <b id="wLa">352</b></p><button id="upd">Update Link</button> <button class="alt" id="brk">Break Link</button></div></div></div>
+<div class="tip" id="linkMsg">Ubah angka botol di Excel, lalu bandingkan dua tabel Word.</div></div>
+<figure><img src="images/t06_anatomi_tautan.png" alt="Anatomi tautan dan Edit Links" loading="lazy"><figcaption>Anatomi tautan dan Edit Links</figcaption></figure>
+<figure><img src="images/t07_tautan_putus.png" alt="Penyebab tautan putus dan solusinya" loading="lazy"><figcaption>Penyebab tautan putus dan solusinya</figcaption></figure>
+</section>
+
+<section id="pipe"><span class="step">Alur Data</span><h2>Pipeline Data</h2>
+<figure><img src="images/t08_pipeline_data.png" alt="Pipeline dari formulir ke laporan" loading="lazy"><figcaption>Pipeline dari formulir ke laporan</figcaption></figure>
+<div class="lab"><h3>Lab: Urutkan Pipeline</h3><p>Susun urutan yang benar dengan tombol naik/turun.</p><ul class="sortlist" id="sl"></ul><button id="slc">Periksa</button> <span id="slm"></span></div>
+<figure><img src="images/t09_importrange.png" alt="IMPORTRANGE antar-Sheets" loading="lazy"><figcaption>IMPORTRANGE antar-Sheets</figcaption></figure><figure><img src="images/t32_peta_keputusan.png" alt="Peta keputusan cara integrasi" loading="lazy"><figcaption>Peta keputusan cara integrasi</figcaption></figure>
+</section>
+
+<section id="mutu"><span class="step">Stasiun 4</span><h2>Cek Mutu &amp; Etika</h2>
+<figure><img src="images/t18_alt_text.png" alt="Alt text" loading="lazy"><figcaption>Alt text</figcaption></figure>
+<div class="lab"><h3>Lab 1: Penguji Alt Text</h3><p>Tulis alt text untuk foto relawan yang memungut sampah plastik di pantai.</p><textarea id="alt" rows="2" placeholder="Tulis alt text..."></textarea><button id="altb">Periksa</button><div id="altm"></div></div>
+<figure><img src="images/t19_format_gambar.png" alt="Memilih format gambar" loading="lazy"><figcaption>Memilih format gambar</figcaption></figure>
+<figure><img src="images/t20_resolusi_piksel.png" alt="Resolusi dan ukuran cetak" loading="lazy"><figcaption>Resolusi dan ukuran cetak</figcaption></figure>
+<div class="lab"><h3>Lab 2: Kalkulator Resolusi</h3>
+<p>Piksel minimal = lebar cetak (cm) / 2,54 x dpi.</p>
+<p>Lebar cetak <input type="number" id="cm" value="17" style="width:80px"> cm, <input type="number" id="dpi" value="300" style="width:80px"> dpi &rarr; <b id="px"></b> piksel</p>
+<p>Foto <input type="number" id="pxf" value="4000" style="width:90px"> px pada <span id="dpi2">300</span> dpi &rarr; lebar cetak maksimal <b id="cmx"></b> cm</p></div>
+<figure><img src="images/t21_lisensi_cc.png" alt="Lisensi Creative Commons" loading="lazy"><figcaption>Lisensi Creative Commons</figcaption></figure>
+<div class="lab"><h3>Lab 3: Boleh Tidak?</h3>
+<p>Lisensi: <select id="lic" style="width:auto"><option>CC BY</option><option>CC BY-SA</option><option>CC BY-NC</option><option>CC BY-ND</option><option>CC0</option></select>
+Penggunaan: <select id="use" style="width:auto"><option value="com">Brosur penjualan</option><option value="mod">Mengubah warna / memotong</option><option value="sch">Poster sekolah (non-komersial)</option></select> <button id="licb">Cek</button></p><div id="licm"></div></div>
+<figure><img src="images/t22_atribusi_tasl.png" alt="Atribusi TASL" loading="lazy"><figcaption>Atribusi TASL</figcaption></figure>
+<figure><img src="images/t23_kolaborasi_izin.png" alt="Hak akses dan riwayat versi" loading="lazy"><figcaption>Hak akses dan riwayat versi</figcaption></figure>
+</section>
+
+<section id="kuis"><span class="step">Uji Diri</span><h2>Kuis 10 Soal</h2><div class="prog"><div id="prog"></div></div><div id="quiz" class="card"></div></section>
+
+<section id="rangkum"><span class="step">Rangkuman</span><h2>Yang Sudah Kita Temukan</h2>
+<figure><img src="images/t26_peta_konsep2.png" alt="Peta konsep pertemuan 2" loading="lazy"><figcaption>Peta konsep pertemuan 2</figcaption></figure>
+<div class="card"><ul>
+<li>Tertanam membawa salinan data; tertaut menunjuk file sumber, bisa diperbarui, tetapi bisa putus.</li>
+<li>Mail merge = templat + data. Selalu Preview sebelum Finish &amp; Merge.</li>
+<li>Style dan Heading membentuk struktur; daftar isi dan caption harus di-update.</li>
+<li>Pipeline: ubah di satu sumber, laporan mengikuti.</li>
+<li>Mutu dan etika: alt text, format dan resolusi, lisensi CC, atribusi TASL, hak akses.</li></ul></div></section>
+</main>
+<footer><div class="wrap">Informatika Kelas IX | Bab III TP 3 Pertemuan 2 | SMP Negeri 14 Tarakan. Data relawan hanya contoh fiktif.</div></footer>
+<script>
+const D={"pg":[{"q":"Perbedaan utama objek tertaut dan objek tertanam adalah...","o":["objek tertaut selalu berukuran lebih besar","objek tertanam tidak dapat dibuka sama sekali","objek tertaut tetap terhubung ke file sumber sehingga dapat diperbarui","objek tertaut hanya dapat berupa gambar"],"a":2,"e":"Tertaut menyimpan penunjuk ke file sumber; tertanam menyimpan salinan data di dalam dokumen."},{"q":"File Word dengan tabel tertaut dipindahkan ke flashdisk teman tanpa file Excelnya. Yang terjadi pada tabel itu adalah...","o":["tabel otomatis berubah menjadi grafik","tetap tampil data terakhir tersimpan tetapi tidak dapat diperbarui","tabel hilang seluruhnya dari dokumen","tabel otomatis diperbarui lewat internet"],"a":1,"e":"Tampilan terakhir disimpan di dokumen, tetapi jalur ke sumber putus sehingga pembaruan gagal."},{"q":"Fitur yang dipakai untuk mengarahkan ulang tautan ke file sumber yang telah dipindah adalah...","o":["Insert > Page Number","Review > Spelling","Layout > Margins","Edit Links to Files > Change Source"],"a":3,"e":"Change Source mengganti jalur sumber tautan."},{"q":"Dua komponen utama surat massal (mail merge) adalah...","o":["dokumen utama (templat) dan sumber data","header dan footer","gambar dan tabel","daftar isi dan caption"],"a":0,"e":"Templat berisi teks tetap + merge field; sumber data berisi nilai tiap penerima."},{"q":"Penanda «Nama» pada templat surat massal disebut...","o":["hyperlink","watermark","merge field","bookmark gambar"],"a":2,"e":"Merge field adalah tempat nilai dari kolom data akan disisipkan."},{"q":"Judul bab sebaiknya diberi style Heading 1 karena...","o":["agar file menjadi lebih kecil","dapat dibaca otomatis menjadi daftar isi dan diformat seragam","agar judul tidak dapat dihapus","agar gambar otomatis muncul"],"a":1,"e":"Style Heading membentuk struktur dokumen dan format seragam."},{"q":"Keuntungan caption otomatis dibanding mengetik 'Gambar 2' manual adalah...","o":["gambar menjadi lebih tajam","tidak perlu memberi judul gambar","file otomatis diekspor ke PDF","nomor ikut menyesuaikan saat ada gambar disisipkan atau dihapus"],"a":3,"e":"Caption memakai field penomoran yang dapat diperbarui, juga dapat dijadikan cross-reference."},{"q":"Alt text pada gambar berguna untuk...","o":["membantu pengguna pembaca layar memahami isi gambar","mengubah gambar menjadi hitam putih","menghindari hak cipta","memperkecil ukuran file otomatis"],"a":0,"e":"Alt text adalah deskripsi teks alternatif untuk aksesibilitas."},{"q":"Foto 4000 x 3000 piksel (4 MB) akan dikirim lewat surel untuk laporan layar. Tindakan paling tepat adalah...","o":["mengubahnya menjadi teks","menyimpannya sebagai PNG agar lebih besar","memperkecil resolusi (misalnya 1600 piksel) dan menyimpan sebagai JPG","memperbesar menjadi 8000 piksel"],"a":2,"e":"Untuk layar, 1600 px sudah memadai; ukuran file menjadi jauh lebih kecil."},{"q":"Karya berlisensi CC BY-SA boleh dipakai dan diubah dengan syarat...","o":["tidak perlu menyebut pencipta","mencantumkan pencipta dan membagikan hasil ubahan dengan lisensi yang sama","hanya boleh dipakai di sekolah","hanya boleh dicetak hitam putih"],"a":1,"e":"BY = atribusi; SA = berbagi serupa."}],"L":["A","B","C","D"],"rel":[{"n":"Aisyah Putri","k":"IX-A","s":"Dokumentasi","kg":5,"c":"Teladan"},{"n":"Bima Saputra","k":"IX-A","s":"Data","kg":4,"c":"Aktif"},{"n":"Citra Lestari","k":"IX-A","s":"Teks","kg":3,"c":"Aktif"},{"n":"Dimas Pratama","k":"IX-A","s":"Pemilah","kg":3,"c":"Aktif"},{"n":"Eka Wulandari","k":"IX-A","s":"Dokumentasi","kg":3,"c":"Aktif"},{"n":"Fajar Ramadhan","k":"IX-B","s":"Data","kg":6,"c":"Teladan"},{"n":"Gita Permata","k":"IX-B","s":"Teks","kg":5,"c":"Teladan"},{"n":"Hendra Wijaya","k":"IX-B","s":"Pemilah","kg":4,"c":"Aktif"},{"n":"Indah Sari","k":"IX-B","s":"Dokumentasi","kg":4,"c":"Aktif"},{"n":"Joko Santoso","k":"IX-B","s":"Data","kg":3,"c":"Aktif"},{"n":"Kirana Dewi","k":"IX-B","s":"Teks","kg":3,"c":"Aktif"},{"n":"Laras Ayu","k":"IX-C","s":"Pemilah","kg":5,"c":"Teladan"},{"n":"Maulana Yusuf","k":"IX-C","s":"Dokumentasi","kg":4,"c":"Aktif"},{"n":"Nadia Rahma","k":"IX-C","s":"Data","kg":3,"c":"Aktif"},{"n":"Oka Mahendra","k":"IX-D","s":"Teks","kg":5,"c":"Teladan"},{"n":"Putri Amelia","k":"IX-D","s":"Pemilah","kg":4,"c":"Aktif"},{"n":"Rizky Hidayat","k":"IX-D","s":"Dokumentasi","kg":3,"c":"Aktif"},{"n":"Salsa Anggraini","k":"IX-D","s":"Data","kg":3,"c":"Aktif"},{"n":"Tegar Budiman","k":"IX-D","s":"Teks","kg":3,"c":"Aktif"},{"n":"Umaira Zahra","k":"IX-D","s":"Pemilah","kg":2,"c":"Peserta"}]};
+const $=id=>document.getElementById(id);
+// mail merge
+let mi=0;
+function mmList(){const f=$("mmF").value;return D.rel.filter(r=>!f||r.c===f)}
+function pred(r){return r.kg>=5?"Teladan":r.kg>=3?"Aktif":"Peserta"}
+function mmShow(){const l=mmList();if(mi>=l.length)mi=l.length-1;if(mi<0)mi=0;const r=l[mi];
+const nm=$("mmManual").checked?"Aisyah Putri":r.n;
+$("mmInfo").textContent="Penerima "+(mi+1)+" dari "+l.length;
+$("mmPaper").innerHTML="<small>PIAGAM RELAWAN</small><h4>Aksi Bersih Pantai</h4><div class='nm'>"+nm+"</div><p>Kelas "+r.k+" | Seksi "+r.s+"<br>Mengumpulkan "+r.kg+" kg sampah</p><b>"+($("mmIf").checked?"Predikat: "+r.c:"")+"</b>";
+$("mmRes").innerHTML="Finish &amp; Merge menghasilkan <b>"+l.length+" halaman</b>"+($("mmManual").checked?" <span class='bad'>- tetapi semua bertuliskan nama yang sama!</span>":"")}
+["mmF","mmIf","mmManual"].forEach(i=>$(i).onchange=()=>{mi=0;mmShow()});
+$("mmP").onclick=()=>{mi--;mmShow()};$("mmN").onclick=()=>{mi=Math.min(mi+1,mmList().length-1);mmShow()};mmShow();
+// doc builder
+const naskah=[["Pendahuluan",1],["Latar Belakang",2],["Tujuan",2],["Pelaksanaan",1],["Persiapan",2],["Kegiatan Inti",2],["Hasil",1],["Data Pekan",2],["Grafik",2],["Pembahasan",1],["Kesimpulan",2],["Penutup",1]];
+// 5 H1 + 7 H2 => rebuild consistent mapping
+const nk=[["Pendahuluan",1],["Latar Belakang",2],["Tujuan",2],["Pelaksanaan",1],["Persiapan",2],["Kegiatan",2],["Hasil",1],["Data Pekan",2],["Grafik",2],["Pembahasan",1],["Kesimpulan",2],["Penutup",1]];
+let st=nk.map(()=>0);
+function dl(){const el=$("docList");el.innerHTML="";nk.forEach((p,i)=>{const d=document.createElement("div");d.className="docp "+(st[i]==1?"h1":st[i]==2?"h2":"");d.innerHTML="<select><option value=0>Teks biasa</option><option value=1>Heading 1</option><option value=2>Heading 2</option></select><span>"+p[0]+"</span>";const s=d.querySelector("select");s.value=st[i];s.onchange=()=>{st[i]=+s.value;dl()};if(st[i]==1)d.querySelector("span").style.color=$("h1c").value;el.appendChild(d)})}
+$("h1c").oninput=dl;dl();
+$("tocUp").onclick=()=>{const it=nk.map((p,i)=>[p[0],st[i]]).filter(x=>x[1]);$("toc").innerHTML=it.length?"<ul style='padding:0'>"+it.map((x,i)=>"<li class='"+(x[1]==2?"h2":"")+"'>"+x[0]+" ........ "+(i+1)+"</li>").join("")+"</ul>":"<i>Belum ada Heading, daftar isi kosong.</i>";const ok=nk.every((p,i)=>st[i]===p[1]);$("tocMsg").innerHTML=ok?"<b class='ok'>Tepat! 12 entri (5 Heading 1 + 7 Heading 2).</b>":"<b class='bad'>"+it.length+" entri. Targetnya 5 Heading 1 dan 7 Heading 2.</b>"};
+$("tocAuto").onclick=()=>{st=nk.map(p=>p[1]);dl();$("tocUp").click()};
+// links
+let base=40,wLink=null,linked=true,renamed=false;
+const tp=b=>30+22+15+8,calc=()=>({p:[40===0?0:0]});
+function tot(b){const p4=b+30+20+14;return[p4,75+82+91+p4]}
+function xs(){const t=tot(base);$("xTot").textContent=t[0];$("xAll").textContent=t[1]}
+let wl=tot(40);
+$("chg").onclick=()=>{base=+$("botol").value||0;xs();$("linkMsg").textContent="Excel berubah. Word tertanam tetap lama. Word tertaut belum berubah sampai Update Link."};
+$("upd").onclick=()=>{if(!linked){$("linkMsg").innerHTML="<b class='bad'>Tautan sudah diputus (Break Link). Tidak ada yang bisa diperbarui.</b>";return}
+if(renamed){$("linkMsg").innerHTML="<b class='bad'>Gagal: file sumber tidak ditemukan. Gunakan Edit Links &gt; Change Source.</b>";return}
+wl=tot(base);$("wL").textContent=wl[0];$("wLa").textContent=wl[1];$("linkMsg").innerHTML="<b class='ok'>Tabel tertaut diperbarui: "+wl[0]+" dan "+wl[1]+".</b>"};
+$("brk").onclick=()=>{linked=false;$("linkMsg").textContent="Break Link: tabel menjadi tabel biasa, tidak lagi terhubung."};
+$("ren").onclick=()=>{renamed=true;$("fileSt").textContent="Rekap_BARU.xlsx";$("linkMsg").textContent="Nama file diganti. Coba Update Link."};
+$("ren2").onclick=()=>{renamed=false;$("fileSt").textContent="Rekap_Pekan.xlsx";$("linkMsg").textContent="Change Source: tautan ditunjuk ulang ke file yang benar."};
+// pipeline
+const pipe=["Formulir (input data)","Lembar kerja (kumpul data)","Rumus dan grafik","Laporan / slide tertaut","Ekspor PDF dan distribusi"];
+let po=[2,4,0,3,1];
+function sl(){const u=$("sl");u.innerHTML="";po.forEach((x,i)=>{const li=document.createElement("li");li.innerHTML="<span>"+pipe[x]+"</span>";const a=document.createElement("button");a.textContent="\u2191";a.onclick=()=>{if(i){[po[i-1],po[i]]=[po[i],po[i-1]];sl()}};const b=document.createElement("button");b.textContent="\u2193";b.onclick=()=>{if(i<4){[po[i+1],po[i]]=[po[i],po[i+1]];sl()}};li.append(a,b);u.appendChild(li)})}
+sl();$("slc").onclick=()=>{const ok=po.every((x,i)=>x===i);$("slm").innerHTML=ok?"<b class='ok'>Benar!</b>":"<b class='bad'>Belum tepat, coba lagi.</b>"};
+// alt text
+$("altb").onclick=()=>{const t=$("alt").value.trim(),m=[];if(!t)m.push(["bad","Alt text masih kosong."]);else{
+/^(gambar|foto|image|picture)/i.test(t)?m.push(["bad","Jangan mulai dengan 'gambar/foto'; pembaca layar sudah menyebutnya."]):m.push(["ok","Awal kalimat baik."]);
+t.length>125?m.push(["bad","Terlalu panjang ("+t.length+" karakter). Targetnya sekitar 125."]):m.push(["ok","Panjang sesuai ("+t.length+" karakter)."]);
+/relawan|siswa|anak|orang/i.test(t)&&/sampah|plastik|botol/i.test(t)?m.push(["ok","Menyebut siapa dan apa yang dilakukan."]):m.push(["bad","Sebutkan siapa (relawan) dan apa yang dilakukan (memungut sampah)."]);
+/pantai/i.test(t)?m.push(["ok","Menyebut tempat."]):m.push(["bad","Tambahkan tempat (pantai)."])}
+$("altm").innerHTML=m.map(x=>"<p class='"+x[0]+"'>"+(x[0]=="ok"?"\u2714 ":"\u2716 ")+x[1]+"</p>").join("")};
+// resolution
+function rs(){const cm=+$("cm").value,d=+$("dpi").value,p=+$("pxf").value;$("px").textContent=Math.round(cm/2.54*d);$("dpi2").textContent=d;$("cmx").textContent=(p/d*2.54).toFixed(1)}
+["cm","dpi","pxf"].forEach(i=>$(i).oninput=rs);rs();
+// license
+$("licb").onclick=()=>{const l=$("lic").value,u=$("use").value;let ok=true,why="Boleh, dengan atribusi (TASL).";
+if(l==="CC0")why="Boleh tanpa syarat; tetap sopan mencantumkan sumber.";
+else if(u==="com"&&l.includes("NC")){ok=false;why="Tidak boleh: NC melarang penggunaan komersial."}
+else if(u==="mod"&&l.includes("ND")){ok=false;why="Tidak boleh: ND melarang pengubahan."}
+else if(u==="mod"&&l.includes("SA"))why="Boleh diubah, tetapi hasilnya harus dibagikan dengan lisensi sama (SA) dan beri atribusi.";
+$("licm").innerHTML="<p class='"+(ok?"ok":"bad")+"'>"+why+"</p>"};
+// quiz
+let qi=0,score=0,locked=false;const qz=$("quiz"),pg=$("prog");
+function showQ(){locked=false;pg.style.width=(qi/D.pg.length*100)+"%";if(qi>=D.pg.length){const n=score*10;qz.innerHTML="<h3>Skor kamu: "+score+" / "+D.pg.length+" ("+n+")</h3><p>"+(n>=80?"Keren! Kamu sudah naik level.":n>=60?"Lumayan. Ulangi bagian yang masih ragu.":"Yuk baca ulang materi, lalu coba lagi.")+"</p><button id='again'>Ulangi kuis</button>";$("again").onclick=()=>{qi=0;score=0;showQ()};return}
+const q=D.pg[qi];qz.innerHTML="<b>Soal "+(qi+1)+" dari "+D.pg.length+"</b><p>"+q.q+"</p>";
+q.o.forEach((o,j)=>{const b=document.createElement("button");b.className="qopt";b.textContent=D.L[j]+". "+o;b.onclick=()=>{if(locked)return;locked=true;const ok=j===q.a;if(ok)score++;b.classList.add(ok?"right":"wrong");qz.querySelectorAll(".qopt")[q.a].classList.add("right");const e=document.createElement("div");e.className=ok?"tip":"warn";e.innerHTML=(ok?"<b class='ok'>Benar!</b> ":"<b class='bad'>Belum tepat.</b> ")+q.e;const n=document.createElement("button");n.textContent=qi===D.pg.length-1?"Lihat skor":"Soal berikutnya";n.style.marginTop="8px";n.onclick=()=>{qi++;showQ()};qz.append(e,n)};qz.appendChild(b)})}
+showQ();
+</script></body></html>

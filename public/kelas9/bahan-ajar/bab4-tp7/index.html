@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Materi Siswa TP7 — Dampak & Risiko Ruang Publik Digital</title>
+<style>
+:root{--navy:#14284b;--teal:#0e9aa7;--coral:#ff6b5e;--amber:#ffb703;--green:#1e9e6a;--ink:#1f2937;--mute:#5b6b80;--bg:#f3f7fb;--card:#fff;--tealL:#ddf3f5;--coralL:#ffe6e3;--amberL:#fff3d1;--greenL:#e3f6ec}
+@media (prefers-color-scheme:dark){:root{--ink:#e6edf6;--mute:#a9b8cc;--bg:#0f1a30;--card:#16264a;--tealL:#10424a;--coralL:#4a2a2a;--amberL:#4a3d12;--greenL:#12402e;--navy:#cadcfc}}
+*{box-sizing:border-box}
+body{margin:0;font-family:Calibri,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;font-size:17px}
+header.hero{background:linear-gradient(135deg,#14284b,#0e6f86);color:#fff;padding:2.2rem 1rem 2.6rem;text-align:center}
+header.hero .tag{display:inline-block;background:var(--coral);padding:.2rem .9rem;border-radius:99px;font-weight:700;font-size:.8rem;letter-spacing:.04em}
+header.hero h1{font-family:Cambria,Georgia,serif;font-size:clamp(1.7rem,5vw,2.6rem);margin:.8rem auto .4rem;max-width:760px;line-height:1.2}
+header.hero p{max-width:640px;margin:.4rem auto;color:#cadcfc}
+header.hero img{width:min(560px,92%);border-radius:14px;margin-top:1.2rem;box-shadow:0 8px 28px rgba(0,0,0,.35)}
+nav.toc{position:sticky;top:0;z-index:5;background:var(--card);box-shadow:0 2px 8px rgba(0,0,0,.12);display:flex;gap:.3rem;overflow-x:auto;padding:.5rem .6rem;white-space:nowrap}
+nav.toc a{color:var(--teal);text-decoration:none;font-weight:700;font-size:.88rem;padding:.3rem .7rem;border-radius:99px}
+nav.toc a:hover{background:var(--tealL)}
+main{max-width:860px;margin:0 auto;padding:1rem}
+section{background:var(--card);border-radius:16px;padding:1.3rem 1.2rem;margin:1.2rem 0;box-shadow:0 2px 10px rgba(20,40,75,.08)}
+h2{font-family:Cambria,Georgia,serif;color:var(--navy);margin:.1rem 0 .6rem;font-size:1.55rem}
+h3{color:var(--teal);margin:1.2rem 0 .3rem}
+figure{margin:1rem 0}
+figure img{width:100%;height:auto;border-radius:12px;border:1px solid rgba(120,140,170,.35);display:block}
+figcaption{font-size:.85rem;color:var(--mute);text-align:center;margin-top:.35rem;font-style:italic}
+.box{border-left:6px solid var(--teal);background:var(--tealL);padding:.8rem 1rem;border-radius:10px;margin:1rem 0}
+.box.coral{border-color:var(--coral);background:var(--coralL)}
+.box.amber{border-color:var(--amber);background:var(--amberL)}
+.box.green{border-color:var(--green);background:var(--greenL)}
+.box b.t{display:block;margin-bottom:.2rem}
+table{width:100%;border-collapse:collapse;margin:.8rem 0;font-size:.95rem}
+th,td{border:1px solid rgba(120,140,170,.4);padding:.5rem .6rem;text-align:left;vertical-align:top}
+th{background:var(--navy);color:#fff}
+@media (prefers-color-scheme:dark){th{background:#0e6f86}}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem}
+.cardx{background:var(--bg);border-radius:12px;padding:.8rem;border:1px solid rgba(120,140,170,.3)}
+details{background:var(--bg);border-radius:12px;margin:.7rem 0;border:1px solid rgba(120,140,170,.3)}
+details summary{cursor:pointer;padding:.75rem 1rem;font-weight:700;color:var(--navy)}
+details .in{padding:0 1rem 1rem}
+button{font:inherit;cursor:pointer}
+.btn{background:var(--teal);color:#fff;border:0;border-radius:10px;padding:.55rem 1.1rem;font-weight:700}
+.btn.alt{background:var(--coral)}
+.opt{display:block;width:100%;text-align:left;background:var(--bg);border:2px solid rgba(120,140,170,.4);border-radius:10px;padding:.6rem .8rem;margin:.35rem 0;color:var(--ink)}
+.opt.ok{border-color:var(--green);background:var(--greenL)}
+.opt.no{border-color:var(--coral);background:var(--coralL)}
+.q{padding:.6rem 0;border-bottom:1px dashed rgba(120,140,170,.5)}
+.fb{font-size:.92rem;margin:.3rem 0;min-height:1.2em}
+.think label{display:flex;gap:.6rem;align-items:flex-start;padding:.4rem .2rem;cursor:pointer}
+.think input{width:1.2rem;height:1.2rem;margin-top:.3rem}
+#thinkres{font-weight:700;padding:.5rem .8rem;border-radius:10px;margin-top:.5rem;background:var(--amberL)}
+.pill{display:inline-block;background:var(--tealL);padding:.05rem .6rem;border-radius:99px;font-weight:700;font-size:.85rem}
+.matchrow{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;align-items:center;margin:.4rem 0}
+select{font:inherit;padding:.4rem;border-radius:8px;border:2px solid rgba(120,140,170,.5);background:var(--card);color:var(--ink);width:100%}
+@media(max-width:560px){.matchrow{grid-template-columns:1fr}}
+footer{text-align:center;color:var(--mute);font-size:.85rem;padding:1.5rem 1rem 2.5rem}
+</style>
+</head>
+<body>
+<header class="hero">
+  <span class="tag">BAB IV • KEAMANAN DIGITAL • TP7</span>
+  <h1>Dampak & Risiko Ruang Publik Digital</h1>
+  <p>Informatika Kelas IX • SMP Negeri 14 Tarakan • Belajar dengan cara menyelidiki (Inquiry Learning)</p>
+  <img src="images/13_cover_jejak_digital.png" alt="Ilustrasi jejak digital">
+</header>
+<nav class="toc">
+  <a href="#mulai">Mulai</a><a href="#ruang">Ruang Digital</a><a href="#sifat">4 Sifat</a><a href="#dampak">Dampak</a><a href="#risiko">5 Risiko</a><a href="#peta">Peta Risiko</a><a href="#jurus">Jurus Aman</a><a href="#rangkum">Rangkuman</a><a href="#kuis">Kuis</a>
+</nav>
+<main>
+
+<section id="mulai">
+  <h2>Halo, Detektif Digital!</h2>
+  <p>Pernah nggak, kamu nge-post sesuatu lalu merasa, “Eh, kok yang lihat banyak banget?” Atau dapat pesan berantai yang bikin panik, ternyata cuma hoaks? Hari ini kita <b>menyelidiki</b> kenapa hal-hal seperti itu bisa terjadi, dan apa yang bisa kita lakukan supaya tetap aman.</p>
+  <div class="box amber"><b class="t">Tujuan belajar</b>
+    <ul>
+      <li>Menyebutkan contoh <b>ruang publik digital</b> dan 4 sifatnya.</li>
+      <li>Menjelaskan <b>dampak positif dan negatif</b> beraktivitas di sana.</li>
+      <li>Menganalisis risiko <b>cyberbullying, hoaks, data pribadi, Wi-Fi publik, kecanduan layar</b>.</li>
+      <li>Memilih <b>tindakan aman</b> (THINK, SARING, S-B-L-C).</li>
+    </ul>
+  </div>
+  <figure><img src="images/11_alur_inquiry_6_fase.png" alt="Alur inquiry 6 fase"><figcaption>Peta belajar: kita belajar dengan menyelidiki (inquiry)</figcaption></figure>
+</section>
+
+<section id="ruang">
+  <h2>1. Ruang publik digital itu apa sih?</h2>
+  <figure><img src="images/01_ruang_publik_digital.png" alt="Ruang publik digital"></figure>
+  <p>Bayangkan alun-alun kota atau pasar. Ramai, kan? Siapa saja boleh datang, melihat, dan ngobrol. Di dunia maya ada tempat yang mirip: <b>ruang publik digital</b>, yaitu tempat atau jaringan online yang bisa diakses dan dilihat banyak orang. Contohnya media sosial, kolom komentar, grup chat besar, game online, marketplace, platform video, bahkan <b>Wi-Fi umum</b> di kafe atau mal.</p>
+  <p>Buku Informatika Kelas IX menegaskan bahwa ruang publik di era digital bukan hanya tempat fisik, tetapi juga <b>jaringan yang terhubung secara digital</b>, dan jaringan di ruang publik lebih mudah disalahgunakan.</p>
+  <div class="box"><b class="t">Coba cek dirimu</b>Dalam sehari, kamu “mampir” ke berapa tempat dari gambar di atas? Tulis di bukumu. Biasanya lebih banyak dari yang kamu kira!</div>
+</section>
+
+<section id="sifat">
+  <h2>2. Empat sifat ruang digital (P-T-M-M)</h2>
+  <p>Kenapa satu unggahan kecil bisa jadi heboh? Karena ruang digital punya empat sifat:</p>
+  <figure><img src="images/02_empat_sifat_ruang_digital.png" alt="Empat sifat ruang digital"></figure>
+  <table>
+    <tr><th>Sifat</th><th>Artinya</th><th>Contoh</th></tr>
+    <tr><td><b>Permanen</b></td><td>Bisa tersimpan lama, walau sudah dihapus.</td><td>Unggahan kelas VII muncul lagi saat daftar OSIS.</td></tr>
+    <tr><td><b>Tersalin</b></td><td>Bisa di-screenshot, diunduh, diteruskan dalam hitungan detik.</td><td>Komentarmu di-screenshot dan dikirim ke grup lain.</td></tr>
+    <tr><td><b>Menjangkau luas</b></td><td>Yang lihat bukan cuma temanmu.</td><td>Videomu ditonton orang di kota lain.</td></tr>
+    <tr><td><b>Mudah dicari</b></td><td>Nama dan fotomu bisa ditemukan lewat pencarian.</td><td>Orang asing mengetik namamu dan menemukan sekolahmu.</td></tr>
+  </table>
+  <figure><img src="images/03_satu_unggahan_banyak_jejak.png" alt="Satu unggahan banyak jejak"><figcaption>Setelah kamu tekan “Kirim”, unggahanmu bisa menyebar ke mana-mana</figcaption></figure>
+
+  <h3>Mini game: pasangkan sifat dan situasi</h3>
+  <div id="match"></div>
+  <button class="btn" onclick="cekMatch()">Periksa</button>
+  <div class="fb" id="matchfb"></div>
+</section>
+
+<section id="dampak">
+  <h2>3. Dua sisi: manfaat dan risiko</h2>
+  <figure><img src="images/04_dua_sisi_ruang_digital.png" alt="Dua sisi ruang digital"></figure>
+  <p>Ruang digital itu seperti pisau dapur: membantu masak, tapi bisa melukai kalau dipakai sembarangan.</p>
+  <table>
+    <tr><th>Dampak positif</th><th>Dampak negatif</th></tr>
+    <tr><td><ul><li>Menambah wawasan</li><li>Menjalin relasi positif</li><li>Menyalurkan kreativitas</li><li>Mendukung karier atau pendidikan</li></ul></td>
+        <td><ul><li>Cyberbullying</li><li>Membagikan terlalu banyak info pribadi</li><li>Kecanduan digital</li><li>Penyebaran hoaks</li></ul></td></tr>
+  </table>
+  <p>Bukan berarti kita harus menjauh dari dunia digital. Kuncinya: tahu risikonya, lalu pintar mengendalikannya.</p>
+</section>
+
+<section id="risiko">
+  <h2>4. Misi Detektif: kenali 5 risikonya</h2>
+  <p>Klik tiap risiko untuk membuka penjelasannya.</p>
+
+  <details open><summary>Risiko 1 — Cyberbullying</summary><div class="in">
+    <figure><img src="images/05_cyberbullying_tiga_peran.png" alt="Cyberbullying tiga peran"></figure>
+    <p><b>Apa itu?</b> Perundungan lewat dunia digital: hinaan, ejekan, menyebar foto atau stiker yang mempermalukan, mengucilkan dari grup.</p>
+    <p><b>Kenapa berbahaya?</b> Terjadi 24 jam, ditonton banyak orang, pelaku bisa bersembunyi di akun palsu. Korban bisa malu, cemas, susah tidur, malas sekolah. Ada tiga peran: pelaku, korban, dan <b>saksi</b>. Kalau saksi diam atau ikut menertawakan, pelaku makin berani.</p>
+    <p><b>Yang bisa kamu lakukan:</b> <b>S</b>impan bukti, <b>B</b>lokir, <b>L</b>aporkan, <b>C</b>erita ke orang dewasa tepercaya. Jangan membalas dengan hinaan dan jangan ikut menyebarkan.</p>
+  </div></details>
+
+  <details><summary>Risiko 2 — Hoaks dan pesan berantai</summary><div class="in">
+    <figure><img src="images/06_hoaks_berantai.png" alt="Hoaks berantai"></figure>
+    <p><b>Apa itu?</b> Informasi palsu atau menyesatkan yang dikemas seolah-olah benar.</p>
+    <p><b>Cirinya:</b> bikin takut atau marah, HURUF BESAR, tanpa sumber dan tanggal, menyuruh “TERUSKAN!”. Kalau kamu meneruskan, kamu ikut jadi rantai penyebarnya.</p>
+    <p><b>SARING dulu sebelum SHARING:</b> Siapa sumbernya? Kapan dan di mana kejadiannya? Ada di media resmi? Cek di situs cek fakta (cekfakta.com, turnbackhoax.id). Ragu? <b>Jangan teruskan.</b> Terlanjur? Hapus dan kirim klarifikasi di grup yang sama.</p>
+  </div></details>
+
+  <details><summary>Risiko 3 — Data pribadi dan jejak digital</summary><div class="in">
+    <figure><img src="images/08_detektif_foto_oversharing.png" alt="Detektif foto oversharing"></figure>
+    <p><b>Apa itu?</b> <i>Oversharing</i>: membagikan alamat, seragam, jadwal, nomor rumah, lokasi langsung. Semua yang diunggah meninggalkan <b>jejak digital</b> (aktif: yang sengaja dibagikan; pasif: terkumpul otomatis).</p>
+    <p><b>Kenapa berbahaya?</b> Dari satu foto, orang asing bisa menebak sekolah, rumah, dan kapan kamu sendirian. Bisa berujung penipuan, peretasan, penyalahgunaan data. Jejak lama juga bisa muncul lagi saat kamu butuh reputasi baik.</p>
+    <p><b>Yang bisa kamu lakukan:</b> akun privat, terima pertemanan dari yang dikenal, hindari lokasi langsung dan nomor rumah, periksa lagi foto dan caption sebelum unggah.</p>
+    <div class="box"><b class="t">Detektif Foto</b>Lihat gambar di atas: berapa petunjuk yang bisa kamu temukan dalam 1 menit?</div>
+  </div></details>
+
+  <details><summary>Risiko 4 — Wi-Fi publik</summary><div class="in">
+    <figure><img src="images/07_wifi_publik_berisiko.png" alt="Wi-Fi publik berisiko"></figure>
+    <p><b>Apa itu?</b> Internet gratis di kafe, mal, terminal, atau taman yang dipakai banyak orang.</p>
+    <p><b>Tiga risiko (Buku Siswa):</b> <b>pencurian data pribadi</b>, <b>penyadapan</b>, dan <b>penyebaran malware</b>. Waspadai Wi-Fi palsu bernama mirip, misalnya “Kafe_Grat1s” untuk menipu “Kafe_Gratis”.</p>
+    <p><b>Yang bisa kamu lakukan:</b> tanya nama dan sandi resmi ke petugas; jangan login akun penting atau transaksi (pakai data seluler); jangan unduh aplikasi dari pop-up “gratis”; aktifkan 2FA, lalu log out dan lupakan jaringan setelah selesai.</p>
+  </div></details>
+
+  <details><summary>Risiko 5 — Kecanduan layar</summary><div class="in">
+    <figure><img src="images/14_kecanduan_layar.png" alt="Kecanduan layar"></figure>
+    <p><b>Apa itu?</b> Terlalu lama memakai gawai sampai belajar dan bergaul di dunia nyata terganggu.</p>
+    <p><b>Tandanya:</b> susah lepas dari HP, tugas tertunda karena “sebentar lagi”, tidur larut, mudah marah saat kuota habis.</p>
+    <p><b>Yang bisa kamu lakukan:</b> atur batas waktu layar, matikan notifikasi saat belajar/tidur, jadwalkan aktivitas di luar dan ngobrol langsung.</p>
+  </div></details>
+</section>
+
+<section id="peta">
+  <h2>5. Peta risiko: semuanya nyambung</h2>
+  <figure><img src="images/12_peta_risiko.png" alt="Peta risiko"></figure>
+  <p>Lihat polanya? <b>Sumber → Risiko → Dampak.</b> Kalau bisa membaca pola ini, kamu bisa menebak risiko dari situasi baru.</p>
+</section>
+
+<section id="jurus">
+  <h2>6. Jurus aman: THINK dan S-B-L-C</h2>
+  <figure><img src="images/09_think_sebelum_kirim.png" alt="THINK sebelum kirim"></figure>
+  <h3>Cek THINK-mu</h3>
+  <p>Bayangkan kamu mau mengirim komentar. Centang yang benar:</p>
+  <div class="think box amber">
+    <label><input type="checkbox" class="tk"><span><b>T</b>rue — benarkah?</span></label>
+    <label><input type="checkbox" class="tk"><span><b>H</b>elpful — bermanfaat?</span></label>
+    <label><input type="checkbox" class="tk"><span><b>I</b>nspiring — menginspirasi?</span></label>
+    <label><input type="checkbox" class="tk"><span><b>N</b>ecessary — perlu?</span></label>
+    <label><input type="checkbox" class="tk"><span><b>K</b>ind — baik dan sopan?</span></label>
+    <div id="thinkres">Centang semuanya untuk mengetes.</div>
+  </div>
+  <figure><img src="images/10_sblc_langkah_aman.png" alt="Langkah S-B-L-C"></figure>
+  <p>Kalau kamu atau temanmu jadi korban: <b>Simpan bukti – Blokir – Laporkan – Cerita</b>. Kamu juga bisa menghubungi <b>SAPA 129</b> (WhatsApp 08111-129-129) milik Kementerian PPPA; siapa pun boleh melapor.</p>
+  <div class="box coral"><b class="t">Pegang tiga ini</b>THINK untuk saringan sebelum mengirim • SARING untuk memeriksa informasi • S-B-L-C untuk bertindak saat ada masalah.</div>
+</section>
+
+<section id="rangkum">
+  <h2>7. Rangkuman</h2>
+  <ol>
+    <li>Ruang publik digital = tempat/jaringan online yang bisa diakses dan dilihat banyak orang (termasuk Wi-Fi umum).</li>
+    <li>Empat sifat: <b>permanen, tersalin, menjangkau luas, mudah dicari</b>.</li>
+    <li>Ada dampak positif dan negatif; hasilnya tergantung perilaku kita.</li>
+    <li>Risiko: cyberbullying, hoaks, data pribadi/jejak digital, Wi-Fi publik, kecanduan layar.</li>
+    <li>Jurus aman: <b>THINK, SARING, S-B-L-C</b>.</li>
+  </ol>
+  <h3>Kosakata penting</h3>
+  <table>
+    <tr><th>Istilah</th><th>Artinya</th></tr>
+    <tr><td>Jejak digital</td><td>Rekam aktivitasmu di internet, sengaja dibagikan maupun terkumpul otomatis.</td></tr>
+    <tr><td>Oversharing</td><td>Membagikan terlalu banyak informasi pribadi.</td></tr>
+    <tr><td>Hoaks</td><td>Informasi palsu atau menyesatkan yang dikemas seolah benar.</td></tr>
+    <tr><td>Malware</td><td>Program berbahaya yang merusak perangkat atau mencuri data.</td></tr>
+    <tr><td>Hotspot palsu</td><td>Wi-Fi tiruan bernama mirip untuk menjebak pengguna.</td></tr>
+    <tr><td>2FA</td><td>Autentikasi dua faktor: verifikasi login dengan langkah tambahan.</td></tr>
+  </table>
+</section>
+
+<section id="kuis">
+  <h2>8. Kuis cepat</h2>
+  <div id="quiz"></div>
+  <p><button class="btn alt" onclick="resetQuiz()">Ulangi kuis</button> <span class="pill" id="score">Skor: 0/5</span></p>
+  <div class="box green"><b class="t">Tantangan 3 hari</b>
+    Hari 1: periksa pengaturan privasi salah satu akunmu. Hari 2: periksa unggahan lama dan info di bio, hapus yang terlalu pribadi. Hari 3: ceritakan hasilnya ke orang tua atau temanmu dan ajak mereka melakukan hal yang sama.</div>
+</section>
+</main>
+<footer>Sumber: Buku Siswa Informatika Kelas IX (Edisi Revisi) Bab IV, Kemendikdasmen, hlm. 211–213 dan 226–234; boyd (2010) untuk istilah empat sifat.<br>Materi Siswa TP7 • Informatika Kelas IX • SMP Negeri 14 Tarakan</footer>
+
+<script>
+// ---- Mini game pasangkan ----
+const M=[["Permanen","C","Unggahan saat kelas VII muncul lagi ketika mendaftar OSIS"],["Tersalin","A","Komentarmu di-screenshot lalu dikirim ke grup lain"],["Menjangkau luas","D","Video candaanmu ditonton ribuan orang di kota lain"],["Mudah dicari","B","Orang asing mengetik namamu dan menemukan akun serta sekolahmu"]];
+const opts=[["A","Komentarmu di-screenshot lalu dikirim ke grup lain tanpa izin"],["B","Orang asing mengetik namamu dan menemukan akun serta sekolahmu"],["C","Unggahan saat kelas VII muncul lagi saat mendaftar OSIS"],["D","Video candaanmu ditonton ribuan orang di kota lain"]];
+const mEl=document.getElementById('match');
+M.forEach((m,i)=>{const r=document.createElement('div');r.className='matchrow';
+ r.innerHTML='<b>'+(i+1)+'. '+m[0]+'</b><select id="m'+i+'"><option value="">— pilih —</option>'+opts.map(o=>'<option value="'+o[0]+'">'+o[0]+'. '+o[1]+'</option>').join('')+'</select>';mEl.appendChild(r);});
+function cekMatch(){let ok=0;M.forEach((m,i)=>{const s=document.getElementById('m'+i);const good=s.value===m[1];if(good)ok++;s.style.borderColor=s.value===''?'':(good?'#1e9e6a':'#ff6b5e');});
+ document.getElementById('matchfb').textContent=ok===4?'Mantap! Semua benar (1-C, 2-A, 3-D, 4-B).':'Benar '+ok+' dari 4. Coba perbaiki yang berwarna merah.';}
+// ---- THINK ----
+const tk=[...document.querySelectorAll('.tk')];
+tk.forEach(c=>c.addEventListener('change',()=>{const n=tk.filter(x=>x.checked).length;
+ document.getElementById('thinkres').textContent=n===5?'Lolos 5 saringan: aman untuk dikirim!':'Baru '+n+' dari 5 lolos. Kalau ada yang “tidak”, tahan jarimu dan pikir ulang.';}));
+// ---- Kuis ----
+const Q=[
+ ["Unggahan yang sudah dihapus masih bisa beredar karena sifat ruang digital yang …",["permanen dan tersalin","terbatas dan rahasia","otomatis hilang","hanya dilihat teman"],0],
+ ["Pesan berantai tanpa sumber yang menyuruh “TERUSKAN!” sebaiknya …",["langsung diteruskan","dicek sumbernya dulu","dikirim ke grup keluarga","diabaikan sambil disebar"],1],
+ ["Foto berseragam dengan nomor rumah dan lokasi langsung berisiko karena …",["fotonya buram","orang asing bisa tahu sekolah, alamat, dan posisimu","like berkurang","kuota habis"],1],
+ ["Paling aman saat harus membuka aplikasi bank di taman kota adalah …",["pakai Wi-Fi taman","pakai Wi-Fi tetangga","pakai data seluler pribadi","pakai Wi-Fi tanpa sandi"],2],
+ ["Temanmu dihina terus di komentar. Langkah awal: simpan bukti lalu …",["ikut tertawa","laporkan dan beri tahu orang dewasa tepercaya","balas dengan hinaan","hapus akunnya"],1]];
+let sc=0,done=0;
+function renderQuiz(){sc=0;done=0;const el=document.getElementById('quiz');el.innerHTML='';
+ Q.forEach((q,i)=>{const d=document.createElement('div');d.className='q';d.innerHTML='<b>'+(i+1)+'. '+q[0]+'</b>';
+  q[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent='ABCD'[j]+'. '+o;
+   b.onclick=()=>{if(d.dataset.done)return;d.dataset.done=1;done++;
+    const bs=d.querySelectorAll('.opt');bs[q[2]].classList.add('ok');
+    if(j===q[2]){sc++;fb.textContent='Betul!';}else{b.classList.add('no');fb.textContent='Belum tepat. Jawaban benar: '+'ABCD'[q[2]]+'.';}
+    document.getElementById('score').textContent='Skor: '+sc+'/5';};
+   d.appendChild(b);});
+  const fb=document.createElement('div');fb.className='fb';d.appendChild(fb);el.appendChild(d);});
+ document.getElementById('score').textContent='Skor: 0/5';}
+function resetQuiz(){renderQuiz();}
+renderQuiz();
+</script>
+</body>
+</html>

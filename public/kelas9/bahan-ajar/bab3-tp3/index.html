@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Satu Laporan, Banyak Aplikasi - Informatika IX TP3</title>
+<style>
+:root{--navy:#12355B;--teal:#0E7C86;--mint:#2A9D8F;--sea:#BFE6EA;--sand:#F6E7C8;--coral:#E76F51;--orange:#F4A261;--yel:#F9C74F;--bg:#F7FBFC;--ink:#1F2D3D;--grey:#6B7C8F;--line:#E1EBEF;--card:#fff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:Calibri,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;font-size:17px}
+header.hero{background:var(--navy);color:#fff;padding:48px 20px 56px}
+.wrap{max-width:980px;margin:0 auto;padding:0 18px}
+.hero .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;align-items:center}
+.tag{display:inline-block;background:var(--yel);color:var(--navy);font-weight:700;border-radius:99px;padding:3px 14px;font-size:14px}
+h1{font-family:Cambria,Georgia,serif;font-size:2.5rem;line-height:1.15;margin:14px 0}
+.hero p{color:var(--sea);margin:6px 0}
+.hero img{width:100%;border-radius:16px;background:#fff}
+nav{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap}
+nav a{display:inline-block;padding:11px 13px;color:var(--navy);text-decoration:none;font-weight:600;font-size:14px}
+nav a:hover,nav a.on{color:var(--teal);background:#EEF7F8}
+section{padding:36px 0 8px}
+h2{font-family:Cambria,Georgia,serif;color:var(--navy);font-size:1.8rem;margin:0 0 6px}
+h3{color:var(--teal);margin:22px 0 6px}
+.step{display:inline-block;background:var(--teal);color:#fff;border-radius:8px;padding:1px 10px;font-size:13px;font-weight:700;margin-bottom:6px}
+figure{margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;text-align:center}
+figure img{max-width:100%;height:auto;border-radius:8px}
+figcaption{font-size:14px;color:var(--grey);margin-top:6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+.note{border-left:0;border:1.5px solid var(--orange);background:#FFF6EC;border-radius:14px;padding:12px 16px;margin:14px 0}
+.tip{border:1.5px solid var(--sea);background:#EEF7F8;border-radius:14px;padding:12px 16px;margin:14px 0}
+.warn{border:1.5px solid var(--coral);background:#FFF3EF;border-radius:14px;padding:12px 16px;margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+table{border-collapse:collapse;width:100%;background:#fff;font-size:15px}
+th{background:var(--navy);color:#fff;padding:8px}td{border:1px solid var(--line);padding:7px 9px}
+button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:8px 14px;background:var(--teal);color:#fff;font-weight:700}
+button.alt{background:#fff;color:var(--teal);border:2px solid var(--teal)}
+button:hover{filter:brightness(1.1)}button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--yel);outline-offset:2px}
+.lab{border:2px dashed var(--teal);border-radius:16px;padding:16px;margin:18px 0;background:#fff}
+.lab h3{margin-top:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.chip{background:#fff;border:2px solid var(--sea);color:var(--navy);border-radius:10px;padding:8px 12px;font-weight:600}
+.chip.sel{border-color:var(--teal);background:#EEF7F8}
+.ok{color:#1b7f5c;font-weight:700}.bad{color:var(--coral);font-weight:700}
+.match-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;margin:6px 0}
+select{font:inherit;padding:7px;border-radius:8px;border:2px solid var(--sea);width:100%}
+.bars{display:flex;align-items:flex-end;gap:14px;height:150px;border-bottom:2px solid var(--grey);padding:0 10px;margin:20px 0 40px}
+.bar{flex:1;background:var(--mint);border-radius:6px 6px 0 0;position:relative;transition:height .4s;min-width:30px}
+.bar b{position:absolute;top:-22px;left:0;right:0;text-align:center;font-size:14px}
+.bar span{position:absolute;bottom:-24px;left:0;right:0;text-align:center;font-size:13px}
+.dual{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sortlist{list-style:none;padding:0}
+.sortlist li{display:flex;gap:8px;align-items:center;background:#fff;border:2px solid var(--sea);border-radius:10px;padding:8px 10px;margin:6px 0}
+.sortlist li span{flex:1}
+.sortlist button{padding:3px 9px}
+.qopt{display:block;width:100%;text-align:left;background:#fff;color:var(--ink);border:2px solid var(--sea);margin:6px 0;font-weight:500}
+.qopt.right{border-color:#2fa37a;background:#E7F7F0}.qopt.wrong{border-color:var(--coral);background:#FFF0EC}
+.prog{height:10px;background:var(--line);border-radius:99px;overflow:hidden}.prog>div{height:100%;background:var(--teal);width:0;transition:width .3s}
+.resdemo{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
+.checklist label{display:block;padding:6px 0;cursor:pointer}
+footer{background:var(--navy);color:var(--sea);padding:28px 0;margin-top:40px;text-align:center;font-size:14px}
+@media(max-width:700px){.hero .wrap{grid-template-columns:1fr}h1{font-size:2rem}.dual,.match-row{grid-template-columns:1fr}}
+</style></head><body>
+<header class="hero"><div class="wrap"><div>
+<span class="tag">Bab III | TP 3 | Kelas IX</span>
+<h1>Satu Laporan, Banyak Aplikasi</h1>
+<p>Cari tahu sendiri cara menggabungkan <b>teks, data, dan gambar</b> dari berbagai aplikasi jadi satu karya yang rapi!</p>
+<p>Informatika | Discovery Learning | SMP Negeri 14 Tarakan</p></div>
+<img src="images/img01_hero_integrasi.png" alt="Ilustrasi integrasi teks, data, dan gambar menjadi satu laporan"></div></header>
+<nav id="nav"><div class="wrap"><a href="#mulai">Mulai</a><a href="#masalah">Masalah</a><a href="#konsep">Konsep</a><a href="#alur">Alur</a><a href="#lab">Lab Eksperimen</a><a href="#etika">Etika</a><a href="#masalahumum">Masalah Umum</a><a href="#laporan">Laporan</a><a href="#rangkum">Rangkuman</a><a href="#kuis">Kuis</a></div></nav>
+<main class="wrap">
+
+<section id="mulai"><span class="step">Tujuan</span><h2>Hari ini kamu bakal bisa...</h2>
+<div class="card"><ol><li>Menjelaskan konsep integrasi konten antarperangkat lunak dengan bahasa sendiri.</li><li>Mengidentifikasi jenis konten (teks, data, gambar) dan perangkat lunak yang tepat untuk mengolah masing-masing.</li><li>Membedakan cara memindahkan konten (salin-tempel dengan beragam opsi tempel, sisipkan, dan tempel tautan) melalui percobaan.</li><li>Menyusun langkah integrasi menjadi laporan satu halaman yang rapi, lengkap dengan keterangan dan sumber gambar.</li><li>Mendeskripsikan manfaat integrasi konten serta masalah umum dan etikanya.</li></ol></div>
+<figure><img src="images/img20_discovery_6langkah.png" alt="Kita belajar dengan cara menemukan sendiri (Discovery Learning)" loading="lazy"><figcaption>Kita belajar dengan cara menemukan sendiri (Discovery Learning)</figcaption></figure>
+</section>
+
+<section id="stimulasi"><span class="step">1. Stimulasi</span><h2>Kisah Aksi Bersih Pantai</h2>
+<figure><img src="images/img15_ilustrasi_pantai.png" alt="Ilustrasi: Aksi Bersih Pantai OSIS SMPN 14 Tarakan (cerita contoh)" loading="lazy"><figcaption>Ilustrasi: Aksi Bersih Pantai OSIS SMPN 14 Tarakan (cerita contoh)</figcaption></figure>
+<p>OSIS bersama kelas IX mengadakan <b>Aksi Bersih Pantai</b>. Ada tiga seksi: <b>Seksi Teks</b> menulis narasi kegiatan, <b>Seksi Data</b> mencatat berat sampah, dan <b>Seksi Dokumentasi</b> mengumpulkan foto. Mereka bekerja di aplikasi yang <i>berbeda-beda</i>. Ketua OSIS minta: <b>"Gabungkan jadi SATU laporan yang utuh dan rapi!"</b></p>
+<figure><img src="images/img02_sebelum_sesudah.png" alt="Laporan acak-acakan vs laporan terintegrasi" loading="lazy"><figcaption>Laporan acak-acakan vs laporan terintegrasi</figcaption></figure>
+<div class="tip"><b>Coba amati:</b> apa 3 perbedaan laporan kiri dan kanan? Menurutmu laporan kanan dibuat pakai satu aplikasi saja?</div>
+</section>
+
+<section id="masalah"><span class="step">2. Identifikasi masalah</span><h2>Tiga Pertanyaan Kunci</h2>
+<div class="grid"><div class="card"><b style="color:var(--teal)">PK1</b><br>Aplikasi apa yang tepat untuk teks, data, dan gambar?</div><div class="card"><b style="color:var(--teal)">PK2</b><br>Bagaimana cara memindahkan konten antar aplikasi, dan apa bedanya?</div><div class="card"><b style="color:var(--teal)">PK3</b><br>Masalah apa yang mungkin muncul, dan bagaimana mencegahnya?</div></div>
+<div class="note">Tulis <b>dugaanmu</b> dulu (hipotesis). Contoh: "Semua cara tempel hasilnya sama." Nanti kita buktikan benar atau tidak!</div>
+</section>
+
+<section id="konsep"><span class="step">3. Pengumpulan data</span><h2>Konsep Dasar</h2>
+<div class="card"><b>Integrasi konten</b> = menyatukan <b>teks, data, dan gambar</b> dari berbagai aplikasi menjadi satu dokumen, laporan, atau presentasi yang utuh.</div>
+<figure><img src="images/img03_tiga_jenis_konten.png" alt="Tiga jenis konten: teks, data, gambar" loading="lazy"><figcaption>Tiga jenis konten: teks, data, gambar</figcaption></figure>
+<h3>Gunting atau pisau?</h3>
+<p>Buka bungkus keripik lebih gampang pakai <b>gunting</b> daripada pisau dapur, kan? Aplikasi juga begitu: pilih yang <i>sesuai bahan</i>-nya (Buku Siswa hlm. 164).</p>
+<figure><img src="images/img04_alat_tepat.png" alt="Alat yang tepat membuat pekerjaan mudah dan rapi" loading="lazy"><figcaption>Alat yang tepat membuat pekerjaan mudah dan rapi</figcaption></figure>
+<figure><img src="images/img05_peta_aplikasi.png" alt="Peta aplikasi menurut jenis konten" loading="lazy"><figcaption>Peta aplikasi menurut jenis konten</figcaption></figure>
+<div class="lab"><h3>Mini-game 1: Jodohkan konten dengan aplikasinya</h3>
+<div id="match"></div><button id="matchCheck">Periksa</button> <span id="matchRes"></span></div>
+</section>
+
+<section id="alur"><span class="step">3. Pengumpulan data</span><h2>Alur Kerja 6 Langkah</h2>
+<figure><img src="images/img06_alur_integrasi.png" alt="Enam langkah integrasi konten" loading="lazy"><figcaption>Enam langkah integrasi konten</figcaption></figure>
+<div class="lab"><h3>Mini-game 2: Urutkan 6 langkahnya</h3><p>Gunakan tombol naik/turun supaya urutannya benar.</p>
+<ul class="sortlist" id="sort"></ul><button id="sortCheck">Periksa urutan</button> <span id="sortRes"></span></div>
+</section>
+
+<section id="lab"><span class="step">3-4. Pengumpulan &amp; pengolahan data</span><h2>Lab Eksperimen</h2>
+<div class="card"><b>Data contoh (bukan data sebenarnya)</b> berat sampah plastik (kg):
+<table><tr><th>Kelas</th><th>Botol</th><th>Kantong</th><th>Kemasan</th><th>Lainnya</th><th>Total</th></tr>
+<tr><td>IX-A</td><td>8</td><td>5</td><td>3</td><td>2</td><td><b>18</b></td></tr><tr><td>IX-B</td><td>10</td><td>8</td><td>5</td><td>2</td><td><b>25</b></td></tr><tr><td>IX-C</td><td>5</td><td>3</td><td>3</td><td>1</td><td><b>12</b></td></tr><tr><td>IX-D</td><td>7</td><td>6</td><td>4</td><td>3</td><td><b>20</b></td></tr>
+<tr><td><b>Total</b></td><td><b>30</b></td><td><b>22</b></td><td><b>15</b></td><td><b>8</b></td><td><b>75</b></td></tr></table></div>
+
+<h3>Eksperimen 1: Tabel Excel ke Word</h3>
+<figure><img src="images/img09_excel_ke_word.png" alt="Menyalin tabel dari Excel ke Word" loading="lazy"><figcaption>Menyalin tabel dari Excel ke Word</figcaption></figure>
+<div class="lab"><h3>Simulator Opsi Tempel</h3><p>Klik satu opsi untuk melihat hasilnya.</p>
+<div class="chips" id="opsiBtns"></div><div id="opsiOut" class="card"></div></div>
+<figure><img src="images/img07_opsi_tempel.png" alt="Empat opsi tempel dan hasilnya" loading="lazy"><figcaption>Empat opsi tempel dan hasilnya</figcaption></figure>
+
+<h3>Eksperimen 2: Grafik, gambar atau tautan?</h3>
+<figure><img src="images/img10_grafik_ke_slide.png" alt="Menempel grafik ke slide" loading="lazy"><figcaption>Menempel grafik ke slide</figcaption></figure>
+<div class="lab"><h3>Simulator Data Berubah</h3>
+<p>Data IX-C awalnya <b>12 kg</b>. Ubah jadi 22 kg, lalu lihat grafik mana yang ikut berubah.</p>
+<div class="dual"><div><b>Sumber (Excel)</b><div class="bars" id="barSrc"></div></div><div></div></div>
+<button id="chg">Ubah data IX-C: 12 menjadi 22</button> <button class="alt" id="upd" disabled>Perbarui tautan</button> <button class="alt" id="rst">Ulangi</button>
+<div class="dual" style="margin-top:34px"><div><b>Word - tempel sebagai GAMBAR</b><div class="bars" id="barImg"></div></div><div><b>Word - tempel TAUTAN</b><div class="bars" id="barLnk"></div></div></div>
+<p id="linkMsg" class="tip">Tekan tombol ubah data untuk memulai.</p></div>
+<figure><img src="images/img08_embed_vs_link.png" alt="Salinan statis vs tautan" loading="lazy"><figcaption>Salinan statis vs tautan</figcaption></figure>
+
+<h3>Eksperimen 3: Menyisipkan gambar</h3>
+<figure><img src="images/img11_sisip_gambar.png" alt="Menyisipkan, mengubah ukuran, dan memberi keterangan gambar" loading="lazy"><figcaption>Menyisipkan, mengubah ukuran, dan memberi keterangan gambar</figcaption></figure>
+<div class="lab"><h3>Simulator Ubah Ukuran Gambar</h3>
+<p>Geser untuk melebarkan saja (seperti menarik dari sisi tengah) lalu bandingkan dengan menarik dari sudut.</p>
+<label>Lebar: <input type="range" id="rw" min="40" max="200" value="100"> <span id="rwv">100%</span></label><br>
+<label>Tinggi: <input type="range" id="rh" min="40" max="200" value="100"> <span id="rhv">100%</span></label>
+<div class="resdemo"><div style="width:260px;height:200px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#EEF7F8;border-radius:8px">
+<img id="rimg" src="images/img15_ilustrasi_pantai.png" alt="Gambar yang diubah ukurannya" style="width:200px;height:130px;object-fit:fill"></div>
+<div><button class="alt" id="corner">Tarik dari sudut (proporsional)</button><p id="rmsg" class="tip">Tarik dari <b>sudut</b> supaya gambar tidak gepeng.</p></div></div></div>
+</section>
+
+<section id="etika"><span class="step">5. Pembuktian</span><h2>Etika: Cantumkan Sumber</h2>
+<figure><img src="images/img22_sumber_gambar.png" alt="Salah: asal ambil. Benar: cantumkan sumber dan lisensi" loading="lazy"><figcaption>Salah: asal ambil. Benar: cantumkan sumber dan lisensi</figcaption></figure>
+<div class="warn">Memakai gambar orang lain tanpa sumber = melanggar hak cipta dan etika digital. Pakai foto sendiri atau berlisensi bebas, lalu <b>cantumkan pembuat dan sumbernya</b>.</div>
+</section>
+
+<section id="masalahumum"><span class="step">5. Pembuktian</span><h2>Masalah yang Sering Muncul</h2>
+<figure><img src="images/img17_masalah_umum.png" alt="Masalah umum dan solusinya" loading="lazy"><figcaption>Masalah umum dan solusinya</figcaption></figure>
+<div class="grid"><div class="card"><b>Format berantakan</b><br><small>Huruf, warna, dan lebar tabel berbeda setelah ditempel.</small><br><span class="ok">Solusi:</span> Pilih opsi tempel yang tepat (Use Destination Styles), lalu samakan gaya paragraf.</div><div class="card"><b>Gambar pecah / buram</b><br><small>Gambar beresolusi kecil diperbesar, atau memakai tangkapan layar yang kecil.</small><br><span class="ok">Solusi:</span> Pakai gambar beresolusi cukup; ubah ukuran dari sudut agar proporsi terjaga.</div><div class="card"><b>Data tidak mutakhir</b><br><small>Grafik hasil tempel gambar tidak ikut berubah ketika data sumber berubah.</small><br><span class="ok">Solusi:</span> Gunakan tempel tautan lalu perbarui, atau tempel ulang grafik terbaru.</div><div class="card"><b>Tautan putus</b><br><small>File sumber dipindah, diganti namanya, atau dihapus.</small><br><span class="ok">Solusi:</span> Simpan semua file dalam satu folder; ubah menjadi gambar/PDF sebelum dikirim.</div><div class="card"><b>Ukuran file membengkak</b><br><small>Banyak gambar beresolusi sangat besar.</small><br><span class="ok">Solusi:</span> Kompres gambar; ekspor ke PDF; gunakan ukuran gambar secukupnya.</div></div>
+<figure><img src="images/img18_format_file.png" alt="Format berkas dan ekspor" loading="lazy"><figcaption>Format berkas dan ekspor</figcaption></figure>
+<figure><img src="images/img19_kolaborasi_cloud.png" alt="Kolaborasi daring dan peran integrator" loading="lazy"><figcaption>Kolaborasi daring dan peran integrator</figcaption></figure>
+</section>
+
+<section id="laporan"><span class="step">5. Pembuktian</span><h2>Laporan Satu Halaman</h2>
+<figure><img src="images/img21_laporan_final.png" alt="Contoh laporan akhir" loading="lazy"><figcaption>Contoh laporan akhir</figcaption></figure>
+<div class="lab checklist"><h3>Checklist laporanmu</h3><div id="chk"></div><div id="chkRes" class="tip"></div></div>
+</section>
+
+<section id="rangkum"><span class="step">6. Generalisasi</span><h2>Rangkuman</h2>
+<figure><img src="images/img23_peta_konsep.png" alt="Peta konsep integrasi konten" loading="lazy"><figcaption>Peta konsep integrasi konten</figcaption></figure>
+<div class="card"><ol><li>Integrasi konten = menyatukan teks, data, dan gambar dari berbagai aplikasi menjadi satu produk yang utuh.</li><li>Pilih aplikasi sesuai jenis konten: pengolah kata untuk teks, lembar kerja untuk data, editor gambar untuk visual, presentasi untuk menyajikan.</li><li>Cara memindahkan: salin-tempel (pilih opsi tempel), sisipkan, atau tempel tautan agar bisa diperbarui.</li><li>Rapikan dan beri keterangan: judul tabel, caption gambar, serta sumber. Hormati hak cipta.</li><li>Periksa ulang lalu simpan atau ekspor (PDF) agar tampilan tidak bergeser.</li></ol></div>
+</section>
+
+<section id="kuis"><span class="step">Uji diri</span><h2>Kuis 10 Soal</h2>
+<div class="prog"><div id="prog"></div></div>
+<div id="quiz" class="card"></div></section>
+</main>
+<footer><div class="wrap">Informatika Kelas IX | SMP Negeri 14 Tarakan | Data dan cerita Aksi Bersih Pantai adalah contoh untuk latihan.</div></footer>
+<script>
+const D={"pg":[{"q":"Integrasi konten antarperangkat lunak berarti...","o":["memindahkan semua file ke flashdisk","menginstal banyak aplikasi sekaligus","menggabungkan teks, data, dan gambar dari berbagai aplikasi menjadi satu dokumen, laporan, atau presentasi yang utuh","mengubah ukuran huruf seluruh dokumen"],"a":2,"e":"Integrasi konten adalah menyatukan konten dari berbagai aplikasi menjadi satu produk yang utuh."},{"q":"Pasangan jenis konten dan aplikasi yang paling tepat adalah...","o":["tabel dengan perhitungan otomatis dan grafik - lembar kerja","narasi laporan - lembar kerja","data angka dan rumus - pengolah kata","tabel penghitung nilai - editor gambar"],"a":0,"e":"Perhitungan otomatis dan grafik adalah kekuatan lembar kerja (spreadsheet)."},{"q":"Bungkus keripik lebih mudah dibuka dengan gunting daripada pisau. Prinsip ini sejalan dengan pemilihan perangkat lunak karena...","o":["gunting lebih mahal daripada pisau","pisau berbahaya jika dipakai di komputer","semua aplikasi pasti memberi hasil yang sama","alat yang sesuai dengan bahan dan kebutuhan membuat pekerjaan lebih mudah dan hasil lebih maksimal"],"a":3,"e":"Pilih perangkat lunak berdasarkan jenis data dan kebutuhan, sama seperti memilih alat potong yang sesuai."},{"q":"Langkah pertama dalam alur integrasi konten adalah...","o":["langsung menempel semua konten ke satu dokumen","menganalisis kebutuhan: produk akhir, tujuan, dan jenis konten","mengekspor dokumen ke PDF","memilih warna latar dokumen"],"a":1,"e":"Analisis kebutuhan dilakukan lebih dulu agar pemilihan aplikasi dan cara integrasi tepat sasaran."},{"q":"Tabel dari Excel ditempel ke Word dan harus tampil sama seperti di Excel namun tetap dapat diedit. Opsi tempel yang tepat adalah...","o":["Picture (Gambar)","Keep Source Formatting (Pertahankan format sumber)","Keep Text Only (Hanya teks)","Link & Use Destination Styles"],"a":1,"e":"Keep Source Formatting mempertahankan tampilan tabel asli dan tetap berupa tabel yang dapat diedit."},{"q":"Opsi tempel Picture (Gambar) menghasilkan...","o":["tabel yang selalu diperbarui otomatis","teks tanpa format","gambar statis yang tidak dapat diubah isinya dan tidak ikut berubah bila data sumber berubah","file baru berformat PDF"],"a":2,"e":"Picture adalah salinan berbentuk gambar: tidak dapat diedit dan tidak mengikuti perubahan sumber."},{"q":"Grafik di Slides ditempel dengan pilihan \"Tautkan ke spreadsheet\". Jika data di Sheets diubah, yang terjadi adalah...","o":["grafik di Slides langsung terhapus","data di Sheets ikut terhapus","grafik berubah menjadi teks","grafik di Slides dapat diperbarui agar sesuai data terbaru"],"a":3,"e":"Grafik tertaut menyediakan tombol Perbarui sehingga angka di Slides dapat mengikuti data sumber."},{"q":"Foto tampak pecah setelah ditarik menjadi besar. Penyebab dan tindakan yang tepat adalah...","o":["resolusi gambar kecil; gunakan gambar beresolusi lebih tinggi dan ubah ukuran dari sudut","kertas printer kurang bagus; ganti kertas","salah memilih jenis huruf; ganti font","file Excel rusak; instal ulang"],"a":0,"e":"Gambar beresolusi kecil yang diperbesar akan pecah. Ubah ukuran dari sudut agar proporsi tetap."},{"q":"Alasan utama mencantumkan sumber gambar adalah...","o":["agar halaman terlihat penuh","agar gambar tampak lebih terang","menghargai karya pembuat serta menaati hak cipta dan etika digital","agar ukuran file menjadi lebih kecil"],"a":2,"e":"Mencantumkan sumber menunjukkan kejujuran dan penghargaan terhadap karya orang lain."},{"q":"Agar tampilan laporan tidak bergeser ketika dibuka di perangkat lain, sebaiknya laporan akhir...","o":["dikirim dalam format .xlsx","diekspor atau disimpan ke format PDF","diperkecil seluruh hurufnya","dihapus semua gambarnya"],"a":1,"e":"PDF menampilkan isi yang sama di semua perangkat sehingga cocok untuk hasil akhir."}],"L":["A","B","C","D"],"alur":[["Analisis kebutuhan","Tentukan produk akhir, tujuan, pembaca, dan jenis konten yang dibutuhkan."],["Pilih aplikasi","Cocokkan tiap jenis konten dengan aplikasi yang paling sesuai."],["Siapkan konten","Olah konten di aplikasi asalnya: tulis naskah, hitung data, siapkan foto."],["Integrasikan","Pindahkan dengan salin-tempel (pilih opsi tempel), sisipkan, atau tempel tautan."],["Rapikan","Samakan gaya huruf, ukuran, posisi; beri judul tabel, keterangan gambar, dan sumber."],["Periksa & simpan","Baca ulang, cek angka dan tautan, simpan, lalu ekspor ke PDF bila perlu."]],"opsi":[["Pertahankan format sumber","Keep Source Formatting (K)","Tabel tampil sama seperti di Excel dan masih dapat diedit.","Laporan yang ingin mempertahankan tampilan tabel asli."],["Ikuti gaya dokumen tujuan","Use Destination Styles (S)","Tabel menyesuaikan gaya dokumen Word; tetap dapat diedit.","Dokumen yang harus seragam gayanya."],["Gambar","Picture (U)","Tabel menjadi gambar; angka tidak dapat diedit dan tidak ikut berubah.","Hasil final / PDF yang tidak akan diubah lagi."],["Hanya teks","Keep Text Only (T)","Format tabel hilang, hanya tersisa deretan teks.","Saat hanya butuh teks mentah untuk diolah lagi."],["Tautan (link)","Link & Keep Source Formatting (F) / Link & Use Destination Styles (L)","Tabel/grafik terhubung ke file sumber dan dapat diperbarui.","Data yang masih sering berubah; file sumber tetap di tempat."]],"masalah":[["Format berantakan","Huruf, warna, dan lebar tabel berbeda setelah ditempel.","Pilih opsi tempel yang tepat (Use Destination Styles), lalu samakan gaya paragraf."],["Gambar pecah / buram","Gambar beresolusi kecil diperbesar, atau memakai tangkapan layar yang kecil.","Pakai gambar beresolusi cukup; ubah ukuran dari sudut agar proporsi terjaga."],["Data tidak mutakhir","Grafik hasil tempel gambar tidak ikut berubah ketika data sumber berubah.","Gunakan tempel tautan lalu perbarui, atau tempel ulang grafik terbaru."],["Tautan putus","File sumber dipindah, diganti namanya, atau dihapus.","Simpan semua file dalam satu folder; ubah menjadi gambar/PDF sebelum dikirim."],["Ukuran file membengkak","Banyak gambar beresolusi sangat besar.","Kompres gambar; ekspor ke PDF; gunakan ukuran gambar secukupnya."]]};
+// nav highlight
+const links=[...document.querySelectorAll("nav a")];
+addEventListener("scroll",()=>{let cur=links[0];links.forEach(a=>{const s=document.querySelector(a.getAttribute("href"));if(s&&s.getBoundingClientRect().top<120)cur=a});links.forEach(a=>a.classList.toggle("on",a===cur))});
+// match
+const M=[["Menulis narasi laporan","Pengolah kata"],["Menghitung dan membuat grafik","Lembar kerja"],["Mengedit foto / membuat poster","Editor gambar / desain"],["Menayangkan hasil di depan kelas","Aplikasi presentasi"]];
+const opts=["Pengolah kata","Lembar kerja","Editor gambar / desain","Aplikasi presentasi"];
+const mt=document.getElementById("match");
+M.forEach((m,i)=>{const r=document.createElement("div");r.className="match-row";r.innerHTML="<div><b>"+(i+1)+".</b> "+m[0]+"</div><select data-i='"+i+"' aria-label='Pasangan "+m[0]+"'><option value=''>-- pilih --</option>"+[...opts].sort((a,b)=>a.length-b.length).map(o=>"<option>"+o+"</option>").join("")+"</select>";mt.appendChild(r)});
+document.getElementById("matchCheck").onclick=()=>{let ok=0;mt.querySelectorAll("select").forEach(s=>{const good=s.value===M[s.dataset.i][1];if(good)ok++;s.style.borderColor=s.value===""?"":(good?"#2fa37a":"#E76F51")});document.getElementById("matchRes").innerHTML=ok===4?"<span class='ok'>Mantap, benar semua!</span>":"<span class='bad'>Benar "+ok+" dari 4. Coba lagi!</span>"};
+// sort
+let order=D.alur.map((_,i)=>i).sort(()=>Math.random()-.5);if(order.every((v,i)=>v===i))order.reverse();
+const sl=document.getElementById("sort");
+function drawSort(){sl.innerHTML="";order.forEach((v,pos)=>{const li=document.createElement("li");li.innerHTML="<span>"+D.alur[v][0]+"</span>";const up=document.createElement("button");up.textContent="\u25B2";up.setAttribute("aria-label","naik");up.onclick=()=>{if(pos>0){[order[pos-1],order[pos]]=[order[pos],order[pos-1]];drawSort()}};const dn=document.createElement("button");dn.textContent="\u25BC";dn.setAttribute("aria-label","turun");dn.onclick=()=>{if(pos<order.length-1){[order[pos+1],order[pos]]=[order[pos],order[pos+1]];drawSort()}};li.append(up,dn);sl.appendChild(li)})}
+drawSort();
+document.getElementById("sortCheck").onclick=()=>{const ok=order.every((v,i)=>v===i);document.getElementById("sortRes").innerHTML=ok?"<span class='ok'>Urutan benar!</span>":"<span class='bad'>Belum tepat, coba cek langkah pertama dan terakhir.</span>"};
+// opsi tempel
+const ob=document.getElementById("opsiBtns"),oo=document.getElementById("opsiOut");
+D.opsi.forEach((o,i)=>{const b=document.createElement("button");b.className="chip";b.textContent=o[0];b.onclick=()=>{ob.querySelectorAll("button").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");oo.innerHTML="<b>"+o[1]+"</b><br>Hasil: "+o[2]+"<br><span class='ok'>Cocok untuk:</span> "+o[3]};ob.appendChild(b)});
+oo.textContent="Pilih salah satu opsi di atas.";
+// bars
+const base=[18,25,12,20],nm=["IX-A","IX-B","IX-C","IX-D"];
+function bars(id,vals){const el=document.getElementById(id);el.innerHTML="";vals.forEach((v,i)=>{const b=document.createElement("div");b.className="bar";b.style.height=(v/30*130)+"px";if(i===2)b.style.background="#F4A261";b.innerHTML="<b>"+v+"</b><span>"+nm[i]+"</span>";el.appendChild(b)})}
+let src=[...base],lnk=[...base],img=[...base];
+function drawBars(){bars("barSrc",src);bars("barImg",img);bars("barLnk",lnk)}
+drawBars();
+const chg=document.getElementById("chg"),upd=document.getElementById("upd"),msg=document.getElementById("linkMsg");
+chg.onclick=()=>{src[2]=22;drawBars();upd.disabled=false;chg.disabled=true;msg.innerHTML="Sumber sudah <b>22</b>. Grafik <b>gambar</b> tetap 12 (salinan statis). Grafik <b>tautan</b> belum berubah sampai kamu klik <b>Perbarui</b>."};
+upd.onclick=()=>{lnk[2]=22;drawBars();upd.disabled=true;msg.innerHTML="<span class='ok'>Tautan diperbarui jadi 22.</span> Grafik gambar tetap 12. Kesimpulan: hanya <b>tautan</b> yang dapat diperbarui; gambar harus ditempel ulang."};
+document.getElementById("rst").onclick=()=>{src=[...base];lnk=[...base];img=[...base];chg.disabled=false;upd.disabled=true;drawBars();msg.textContent="Tekan tombol ubah data untuk memulai."};
+// resize
+const rw=document.getElementById("rw"),rh=document.getElementById("rh"),ri=document.getElementById("rimg"),rm=document.getElementById("rmsg");
+function rs(){ri.style.width=(200*rw.value/100)+"px";ri.style.height=(130*rh.value/100)+"px";document.getElementById("rwv").textContent=rw.value+"%";document.getElementById("rhv").textContent=rh.value+"%";const d=Math.abs(rw.value-rh.value);rm.innerHTML=d>8?"<span class='bad'>Gambarnya gepeng/melar karena lebar dan tinggi tidak sama!</span> Tarik dari sudut.":"<span class='ok'>Proporsi terjaga.</span>"}
+rw.oninput=rs;rh.oninput=rs;
+document.getElementById("corner").onclick=()=>{const v=Math.round((+rw.value));rh.value=v;rs()};
+// checklist
+const items=["Judul dan identitas jelas","Teks dirapikan (font dan spasi seragam)","Tabel rapi dengan judul tabel","Grafik sesuai data dan berjudul","Gambar jelas + keterangan + sumber","Ukuran dan posisi seragam","Dibaca ulang, disimpan, diekspor PDF"];
+const ch=document.getElementById("chk");
+items.forEach((t,i)=>{const l=document.createElement("label");l.innerHTML="<input type='checkbox'> "+t;l.firstChild.onchange=cc;ch.appendChild(l)});
+function cc(){const n=ch.querySelectorAll("input:checked").length;document.getElementById("chkRes").textContent=n+" dari "+items.length+" terpenuhi"+(n===items.length?". Laporanmu siap dikirim!":".")}
+cc();
+// quiz
+let qi=0,score=0,locked=false;const qz=document.getElementById("quiz"),pg=document.getElementById("prog");
+function showQ(){locked=false;pg.style.width=(qi/D.pg.length*100)+"%";if(qi>=D.pg.length){const n=score*10;qz.innerHTML="<h3>Skor kamu: "+score+" / "+D.pg.length+" ("+n+")</h3><p>"+(n>=80?"Keren! Kamu sudah paham integrasi konten.":n>=60?"Lumayan. Ulangi bagian yang masih ragu.":"Yuk baca ulang materi, lalu coba lagi.")+"</p><button id='again'>Ulangi kuis</button>";document.getElementById("again").onclick=()=>{qi=0;score=0;showQ()};return}
+const q=D.pg[qi];qz.innerHTML="<b>Soal "+(qi+1)+" dari "+D.pg.length+"</b><p>"+q.q+"</p>";
+q.o.forEach((o,j)=>{const b=document.createElement("button");b.className="qopt";b.textContent=D.L[j]+". "+o;b.onclick=()=>{if(locked)return;locked=true;const ok=j===q.a;if(ok)score++;b.classList.add(ok?"right":"wrong");qz.querySelectorAll(".qopt")[q.a].classList.add("right");const e=document.createElement("div");e.className=ok?"tip":"warn";e.innerHTML=(ok?"<b class='ok'>Benar!</b> ":"<b class='bad'>Belum tepat.</b> ")+q.e;const n=document.createElement("button");n.textContent=qi===D.pg.length-1?"Lihat skor":"Soal berikutnya";n.style.marginTop="8px";n.onclick=()=>{qi++;showQ()};qz.append(e,n)};qz.appendChild(b)})}
+showQ();
+</script></body></html>

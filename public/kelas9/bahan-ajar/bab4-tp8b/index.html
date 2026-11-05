@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Benteng Sandi | Informatika IX</title>
+<style>
+:root{--navy:#14284B;--teal:#0E9AA7;--coral:#FF6B5E;--amber:#FFB703;--green:#1E9E6A;--bg:#F6F8FB;--card:#fff;--ink:#1d2b3f;--mute:#5b6b80;--line:#dde5ee;--tealL:#E3F6F7;--coralL:#FFE9E6;--amberL:#FFF4D6;--greenL:#E2F5EC}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1a2e;--card:#18284a;--ink:#e8eef7;--mute:#9fb0c7;--line:#2b3f66;--tealL:#10383f;--coralL:#4a2530;--amberL:#4a3b12;--greenL:#123d2e}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 Calibri,"Segoe UI",system-ui,sans-serif}
+h1,h2,h3{font-family:Cambria,Georgia,serif;line-height:1.25}
+header{background:var(--navy);color:#fff;padding:28px 16px 36px;text-align:center}
+header h1{margin:8px 0;font-size:2.2rem}header h1 span{color:var(--amber)}
+header img{max-width:760px;width:100%;border-radius:14px;margin-top:14px}
+.tag{font-size:.8rem;letter-spacing:.08em;color:#9fd8de}
+nav{position:sticky;top:0;background:var(--card);border-bottom:1px solid var(--line);padding:8px 12px;overflow-x:auto;white-space:nowrap;z-index:5}
+nav a{color:var(--teal);text-decoration:none;margin-right:14px;font-size:.9rem;font-weight:600}
+main{max-width:860px;margin:0 auto;padding:8px 16px 60px}
+section{margin:36px 0}
+h2{color:var(--teal);border-bottom:3px solid var(--amber);display:inline-block;padding-bottom:2px}
+figure{margin:16px 0;text-align:center}figure img{max-width:100%;border-radius:12px;border:1px solid var(--line)}
+figcaption{font-size:.85rem;color:var(--mute);margin-top:4px}
+.box{border-left:6px solid var(--teal);background:var(--tealL);padding:12px 16px;border-radius:10px;margin:16px 0}
+.box.warn{border-color:var(--coral);background:var(--coralL)}.box.note{border-color:var(--amber);background:var(--amberL)}.box.ok{border-color:var(--green);background:var(--greenL)}
+.box b.t{display:block;margin-bottom:4px}
+table{border-collapse:collapse;width:100%;font-size:.95rem;margin:12px 0}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:var(--navy);color:#fff}
+code,.mono{font-family:Consolas,monospace;background:var(--card);border:1px solid var(--line);padding:1px 6px;border-radius:5px}
+button{background:var(--teal);color:#fff;border:0;border-radius:8px;padding:9px 16px;font:inherit;font-weight:600;cursor:pointer}
+button.alt{background:var(--navy)}button:disabled{opacity:.5}
+input[type=text],input[type=number],select{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);width:100%}
+.game{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:16px 0}
+.game h3{margin-top:0;color:var(--coral)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:8px 0}.row>*{flex:1 1 140px}
+.meter{display:flex;gap:4px;margin:10px 0}.meter i{flex:1;height:14px;border-radius:4px;background:var(--line)}
+.big{font-size:1.4rem;font-weight:700}
+.chk label{display:block;padding:4px 0}
+.opt{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);border:2px solid var(--line);margin:6px 0}
+.opt.right{border-color:var(--green);background:var(--greenL)}.opt.wrong{border-color:var(--coral);background:var(--coralL)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pair button{background:var(--card);color:var(--ink);border:2px solid var(--line);text-align:left;font-weight:500}
+.pair button.sel{border-color:var(--amber);background:var(--amberL)}.pair button.done{border-color:var(--green);background:var(--greenL);opacity:.8}
+.pair button.bad{border-color:var(--coral);background:var(--coralL)}
+footer{text-align:center;color:var(--mute);font-size:.85rem;padding:20px 16px 40px}
+@media(max-width:560px){.pair{grid-template-columns:1fr}header h1{font-size:1.7rem}}
+</style>
+</head><body>
+<header><div class="tag">BAB IV KEAMANAN DIGITAL • KELAS IX • PERTEMUAN 2</div>
+<h1>Benteng <span>Sandi</span></h1><div>Jadi Tim Audit: selidiki, hitung, dan rancang kebijakan sandi sekolah!</div>
+<img src="images/01_cover_benteng_sandi.png" alt="Benteng dengan gembok"></header>
+<nav><a href="#misi">Misi</a><a href="#bit">Bit</a><a href="#hash">Hash</a><a href="#log">Log</a><a href="#alamat">Alamat</a><a href="#2fa">2FA</a><a href="#lapis">LAPIS</a><a href="#kuis">Kuis</a><a href="#refleksi">Refleksi</a></nav>
+<main>
+<div class="box warn"><b class="t">Aturan Brankas Aman</b>Jangan mengetik sandi aslimu atau kode OTP di mana pun. Semua latihan memakai sandi latihan dan kasus rekaan. Kita belajar serangan untuk BERTAHAN, bukan menyerang akun siapa pun. Semua perhitungan berjalan di perangkatmu dan tidak dikirim ke mana-mana.</div>
+
+<section id="misi"><h2>1. Misi: Pekan Gaduh SIPINTAR</h2>
+<p>SMP Bahari (rekaan) punya portal SIPINTAR. Dalam satu minggu terjadi lima insiden. Kamu dan timmu diminta Pak Rudi (admin TI, rekaan) mencari penyebabnya dan menulis Kebijakan Sandi baru.</p>
+<figure><img src="images/02_insiden_sipintar.png" alt="Lima insiden"><figcaption>Lima hari, lima temuan (T1-T5)</figcaption></figure>
+<div class="box"><b class="t">Tugas Tim Audit</b>Selidiki dengan 4 senjata: bit, hash dan salt, baca log dan alamat, 2FA dan pemulihan. Lalu susun kebijakan LAPIS.</div>
+<figure><img src="images/15_alur_pbl_120_menit.png" alt="Alur 120 menit"><figcaption>Alur belajar hari ini</figcaption></figure></section>
+
+<section id="bit"><h2>2. Senjata 1: Bit</h2>
+<p><b>bit = panjang × log2(pilihan)</b>. Tambah 1 bit, ruang tebakan jadi <b>2 kali lipat</b>.</p>
+<figure><img src="images/03_tangga_bit.png" alt="Tangga bit"><figcaption>Tangga bit dan waktu bobol model</figcaption></figure>
+<div class="game"><h3>Kalkulator bit</h3>
+<div class="row"><div><label>Jenis karakter</label><select id="bP"><option value="10">Angka (10)</option><option value="26" selected>Huruf kecil (26)</option><option value="52">Huruf besar+kecil (52)</option><option value="62">Huruf+angka (62)</option><option value="94">Semua jenis (94)</option></select></div>
+<div><label>Panjang</label><input type="number" id="bL" min="1" max="40" value="12"></div></div>
+<p>Bit: <span class="big" id="bR"></span></p><p>Waktu coba semua (model 10 miliar tebakan/detik, sandi acak): <b id="bT"></b></p>
+<p id="bCmp"></p></div>
+<div class="box note"><b class="t">Fakta seru</b>12 huruf kecil acak (±56 bit) lebih kuat daripada 8 karakter semua jenis (±52 bit): selisih 4 bit = 16 kali lipat. Panjang sering mengalahkan variasi.</div>
+<div class="box warn"><b class="t">Awas: bit semu vs bit nyata</b>"Bintang2010!" tampak 12 × 6,55 ≈ 79 bit. Tetapi penyerang mencoba pola nama + tahun + simbol. Jika polanya 10 juta (10^7) kemungkinan, bit nyatanya hanya sekitar 23 bit. Bit hanya jujur untuk sandi ACAK.</div>
+<h3>Passphrase dari dadu</h3>
+<figure><img src="images/04_passphrase_dadu.png" alt="Passphrase dari dadu"><figcaption>Dadu memilih kata</figcaption></figure>
+<div class="game"><h3>Pembuat passphrase latihan (daftar 36 kata)</h3>
+<div class="row"><div><label>Jumlah kata</label><input type="number" id="pN" min="2" max="12" value="4"></div><div><button id="pB" style="margin-top:22px">Lempar dadu</button></div></div>
+<p class="mono big" id="pO">-</p><p id="pI"></p>
+<small>Hanya latihan. Daftar 36 kata hanya ±5,2 bit per kata; daftar sungguhan 7.776 kata memberi ±12,9 bit per kata. Jangan pakai hasil ini untuk akun aslimu.</small></div></section>
+
+<section id="hash"><h2>3. Senjata 2: Hash dan Salt</h2>
+<p>Server tidak menyimpan sandimu. Ia menyimpan <b>hash</b>, sidik jari satu arah. Saat login, server membuat hash dari yang kamu ketik lalu membandingkannya.</p>
+<figure><img src="images/05_hash_satu_arah.png" alt="Hash satu arah"><figcaption>Hash sebagai sidik jari</figcaption></figure>
+<figure><img src="images/06_salt_garam.png" alt="Salt"><figcaption>Tanpa salt hash sama; dengan salt hash berbeda</figcaption></figure>
+<figure><img src="images/07_mesin_hash_kertas.png" alt="Hash Mini"><figcaption>Aturan Hash Mini</figcaption></figure>
+<div class="game"><h3>Mesin Hash Mini (mainan belajar)</h3>
+<p>Aturan: huruf → angka (a=1..z=26), kali nomor posisi, jumlahkan, sisa bagi 50. Hanya huruf kecil a-z.</p>
+<div class="row"><div><label>Salt (opsional, huruf kecil)</label><input type="text" id="hS" placeholder="contoh: ab" autocomplete="off"></div><div><label>Kata latihan</label><input type="text" id="hW" placeholder="contoh: kopi" autocomplete="off"></div></div>
+<p>Langkah: <span class="mono" id="hStep">-</span></p><p>Hash Mini: <span class="big" id="hR">-</span></p>
+<p id="hMsg"></p>
+<small>Coba: kopi = 25; bola dan pena sama-sama 22 (tabrakan); ab+kopi = 32; xy+kopi = 1. Hash Mini cuma mainan; hash sungguhan jauh lebih panjang dan sengaja lambat.</small></div></section>
+
+<section id="log"><h2>4. Senjata 3: Detektif Log</h2>
+<figure><img src="images/08_brute_vs_spraying.png" alt="Brute force vs spraying"><figcaption>Brute force: satu akun. Spraying: satu sandi</figcaption></figure>
+<div class="game"><h3>Mini game: klasifikasikan pola log</h3><p>Log rekaan (alamat memakai blok dokumentasi). Pilih pola untuk tiap kelompok baris.</p><div id="lg"></div><p id="lgM" class="big"></p></div></section>
+
+<section id="alamat"><h2>5. Senjata 3b: Baca Alamat</h2>
+<figure><img src="images/09_anatomi_url_phishing.png" alt="Anatomi alamat"><figcaption>Baca dari KANAN sampai garis miring pertama; abaikan sebelum @</figcaption></figure>
+<div class="game"><h3>Mini game: asli atau palsu?</h3><p>Situs asli SIPINTAR ada di domain <code>smpbahari.sch.id</code> (rekaan).</p><div id="ul"></div><p id="ulM" class="big"></p></div></section>
+
+<section id="2fa"><h2>6. Senjata 4: 2FA dan Pemulihan</h2>
+<figure><img src="images/10_tangga_2fa.png" alt="Tangga 2FA"><figcaption>Tiga tingkat 2FA</figcaption></figure>
+<figure><img src="images/11_cara_kerja_totp.png" alt="TOTP"><figcaption>Kode autentikator dari rahasia bersama dan waktu</figcaption></figure>
+<figure><img src="images/12_pemulihan_akun.png" alt="Pemulihan akun"><figcaption>Pintu belakang yang harus dijaga</figcaption></figure>
+<div class="game"><h3>Pilih 2FA yang pas</h3><div id="fa"></div></div></section>
+
+<section id="lapis"><h2>7. Membangun benteng: LAPIS</h2>
+<figure><img src="images/13_pertahanan_berlapis.png" alt="Pertahanan berlapis"><figcaption>Lubang tidak boleh sejajar</figcaption></figure>
+<figure><img src="images/14_aturan_lama_vs_baru.png" alt="Aturan lama vs baru"><figcaption>Mengacu pedoman modern; guru akan memeriksa</figcaption></figure>
+<figure><img src="images/17_kebijakan_lapis.png" alt="LAPIS"><figcaption>Lima pasal LAPIS (singkatan buatan guru)</figcaption></figure>
+<table><tr><th>Pasal</th><th>Isi</th></tr>
+<tr><td><b>L</b> Larang sandi lemah</td><td>Panjang minimal, tolak sandi umum atau bocor, sandi awal acak (bukan NIS).</td></tr><tr><td><b>A</b> Amankan simpanan server</td><td>Simpan sebagai hash dengan salt, bukan teks biasa. Izinkan manajer kata sandi.</td></tr><tr><td><b>P</b> Pagari percobaan</td><td>Batasi percobaan per akun DAN per sumber, pantau pola janggal.</td></tr><tr><td><b>I</b> Identitas berlapis</td><td>2FA, utamakan aplikasi autentikator atau kunci keamanan untuk akun penting.</td></tr><tr><td><b>S</b> Selamatkan dan pulihkan</td><td>Jalur pemulihan yang aman dan rencana tanggap saat sandi bocor.</td></tr></table>
+<figure><img src="images/16_peta_konsep_benteng.png" alt="Peta konsep"><figcaption>Peta konsep</figcaption></figure></section>
+
+<section id="kuis"><h2>8. Kuis kilat</h2><div class="game" id="quiz"></div></section>
+<section id="refleksi"><h2>9. Refleksi dan komitmen 24 jam</h2>
+<div class="game chk" id="komit"><label><input type="checkbox"> Mengaktifkan 2FA di satu akun penting</label><label><input type="checkbox"> Mengganti pertanyaan keamanan dengan kode cadangan</label><label><input type="checkbox"> Membuat satu passphrase acak baru</label><label><input type="checkbox"> Mengajak keluarga memeriksa sandi bersama</label><label><input type="checkbox"> Tidak membagikan sandi dan OTP ke siapa pun</label><p class="big" id="kMsg"></p></div></section>
+</main>
+<footer>Sumber: Buku Siswa Informatika Kelas IX (Edisi Revisi), Bab IV. Kasus dan nama rekaan. KUNCI, JAGA, LAPIS, Hash Mini adalah alat bantu buatan guru. SMP Negeri 14 Tarakan.</footer>
+<script>
+const WORDS=["apel", "bukit", "cincin", "dermaga", "elang", "fajar", "gelas", "hutan", "ikan", "jembatan", "kapal", "layang", "mangga", "nanas", "ombak", "pantai", "perahu", "roket", "sapu", "tikar", "ubur", "vas", "warung", "yoyo", "zebra", "awan", "bambu", "cumi", "damar", "enau", "foto", "gitar", "hujan", "irama", "jagung", "kelapa"];
+const URLS=[["a", "https://sipintar.smpbahari.sch.id.verifikasi-akun.co/masuk", false, "Domain sebenarnya: verifikasi-akun.co (bagian kanan sebelum garis miring pertama). \"sipintar.smpbahari.sch.id\" hanya subdomain palsu."], ["b", "https://sipintar.smpbahari.sch.id/masuk", true, "Domain sebenarnya smpbahari.sch.id, sesuai situs resmi."], ["c", "https://sipintar.smpbahari-sch.id/masuk", false, "Tanda hubung mengubah domain menjadi smpbahari-sch.id, bukan smpbahari.sch.id."], ["d", "https://sipintar.smpbahari.sch.id@pendaftaran-hadiah.net/", false, "Teks sebelum tanda @ diabaikan. Tujuan sebenarnya: pendaftaran-hadiah.net."], ["e", "https://sipintar.smpbahari.sch.id/masuk?kelas=9A", true, "Domain tetap smpbahari.sch.id; bagian setelah ? hanya parameter."]];
+const $=id=>document.getElementById(id);
+// kalkulator bit
+(function(){
+ function fmt(s){if(s<1)return 'kurang dari 1 detik';if(s>4.35e17)return 'lebih lama dari umur alam semesta';
+  const u=[['tahun',31557600],['hari',86400],['jam',3600],['menit',60],['detik',1]];
+  for(const [n,v] of u)if(s>=v){const x=s/v;return '± '+(x>=1e6?x.toExponential(1).replace('e+',' × 10^'):Math.round(x).toLocaleString('id-ID'))+' '+n}}
+ function upd(){const p=+$('bP').value,n=Math.max(1,Math.min(40,parseInt($('bL').value)||1)),b=n*Math.log2(p);
+  $('bR').textContent=b.toFixed(1)+' bit';$('bT').textContent=fmt(Math.pow(2,b)/1e10);
+  $('bCmp').textContent='Tambah 1 karakter = +'+Math.log2(p).toFixed(2)+' bit (ruang tebakan × '+p+').';}
+ $('bP').onchange=upd;$('bL').oninput=upd;upd();})();
+// passphrase
+(function(){
+ function roll(){const a=new Uint32Array(1);crypto.getRandomValues(a);return a[0]%6}
+ $('pB').onclick=()=>{const n=Math.max(2,Math.min(12,parseInt($('pN').value)||4));const w=[];
+  for(let i=0;i<n;i++)w.push(WORDS[roll()*6+roll()]);
+  $('pO').textContent=w.join('-');$('pI').textContent=n+' kata × 5,17 bit ≈ '+(n*Math.log2(36)).toFixed(1)+' bit (daftar 36 kata). Dengan daftar 7.776 kata: ≈ '+(n*Math.log2(7776)).toFixed(1)+' bit.'};})();
+// hash mini
+(function(){
+ function hm(w){let t=0;const st=[];for(let i=0;i<w.length;i++){const v=w.charCodeAt(i)-96;t+=(i+1)*v;st.push((i+1)+'×'+v)}return [t%50,t,st.join(' + ')]}
+ function upd(){const s=($('hS').value+$('hW').value).toLowerCase().replace(/[^a-z]/g,'');
+  if(!s){$('hStep').textContent='-';$('hR').textContent='-';$('hMsg').textContent='';return}
+  const [h,t,st]=hm(s);$('hStep').textContent=st+' = '+t+' → '+t+' mod 50';$('hR').textContent=h;
+  $('hMsg').textContent=($('hS').value?'Dengan salt "'+$('hS').value.toLowerCase()+'" ':'Tanpa salt ')+'hash tersimpan = '+h+'.';}
+ $('hS').oninput=upd;$('hW').oninput=upd;})();
+// log game
+(function(){
+ const G=[['Baris 1-2','Satu kali gagal, lalu berhasil dari alamat yang sama (s1001).',0],
+  ['Baris 3-8','Satu alamat, akun s1005-s1010 berbeda, tiap akun hanya sekali gagal, satu berhasil.',1],
+  ['Baris 9-13','Satu alamat menembak akun guru-sari berulang sampai akun dikunci.',2],
+  ['Baris 14-15','Akun s1031 berhasil login dari dua alamat berbeda dalam 2 menit.',3]];
+ const O=['Salah ketik biasa','Password spraying','Brute force online','Login ganda mencurigakan'];let ok=0;
+ G.forEach(g=>{const d=document.createElement('div');d.className='game';d.style.margin='8px 0';d.innerHTML='<b>'+g[0]+'</b><br>'+g[1];
+  const s=document.createElement('select');s.innerHTML='<option value="">Pilih pola...</option>'+O.map((o,i)=>'<option value="'+i+'">'+o+'</option>').join('');
+  const m=document.createElement('div');s.onchange=()=>{if(s.value==='')return;if(+s.value===g[2]){if(!d.dataset.d){d.dataset.d=1;ok++}m.textContent='Tepat!';m.style.color='var(--green)'}else{m.textContent='Belum tepat, coba lagi.';m.style.color='var(--coral)'}
+   $('lgM').textContent=ok===4?'Semua benar! Pengunci per akun tidak menghentikan spraying; perlu batas per sumber, sandi umum ditolak, 2FA.':''};
+  d.appendChild(s);d.appendChild(m);$('lg').appendChild(d)});})();
+// url game
+(function(){
+ let ok=0;URLS.forEach(u=>{const d=document.createElement('div');d.className='game';d.style.margin='8px 0';d.innerHTML='<code style="word-break:break-all">'+u[1]+'</code><div class="row"></div>';
+  const row=d.querySelector('.row');const m=document.createElement('div');m.style.flex='2 1 260px';
+  [['Asli',true],['Palsu',false]].forEach(([t,v])=>{const b=document.createElement('button');b.textContent=t;b.className=v?'':'alt';b.onclick=()=>{if(v===u[2]){if(!d.dataset.d){d.dataset.d=1;ok++}m.innerHTML='<b style="color:var(--green)">Benar.</b> '+u[3]}else{m.innerHTML='<b style="color:var(--coral)">Belum tepat.</b> Baca dari kanan sampai garis miring pertama.'}
+   $('ulM').textContent=ok===URLS.length?'Semua benar! Jangan klik tautan dari pesan berantai.':''};row.appendChild(b)});
+  row.appendChild(m);$('ul').appendChild(d)});})();
+// 2FA
+(function(){
+ const K=[['Bu Sari, wali kelas, akses nilai seluruh siswa','Kunci keamanan/passkey atau aplikasi autentikator. SMS saja kurang cukup (nomor bisa dialihkan).'],
+  ['Dito, belum punya HP sendiri','Kode cadangan cetak yang disimpan di rumah, atau autentikator di HP orang tua dengan izin.'],
+  ['Nia, sinyal sering hilang','Aplikasi autentikator: kode dihitung dari waktu, jalan tanpa sinyal. SMS tidak bisa masuk.']];
+ K.forEach(k=>{const d=document.createElement('div');d.style.margin='8px 0';const b=document.createElement('button');b.className='alt';b.textContent='Lihat saran: '+k[0];const p=document.createElement('p');p.style.display='none';p.textContent=k[1];b.onclick=()=>{p.style.display='block'};d.appendChild(b);d.appendChild(p);$('fa').appendChild(d)});})();
+// kuis
+(function(){
+ const Q=[['Satu bit tambahan membuat ruang tebakan menjadi ...',['Setengah','Dua kali lipat','Sepuluh kali','Tetap'],1],
+ ['Mengapa server menyimpan hash, bukan sandi asli?',['Agar sandi tidak langsung terbaca jika arsip bocor','Agar sandi pasti tak bisa ditebak','Agar login lebih cepat','Agar tak perlu salt'],0],
+ ['Satu alamat mencoba satu sandi umum ke 400 akun berbeda. Ini ...',['Brute force pada satu akun','Password spraying','Keylogger','Salah ketik'],1],
+ ['Domain sebenarnya dari https://sipintar.smpbahari.sch.id.verifikasi-akun.co/masuk adalah ...',['smpbahari.sch.id','sipintar.smpbahari.sch.id','verifikasi-akun.co','masuk'],2],
+ ['2FA yang paling tahan phishing adalah ...',['Kode SMS','Pertanyaan keamanan','Kunci keamanan atau passkey','Sandi kedua'],2]];
+ const box=$('quiz');let i=0,sc=0;
+ function show(){if(i>=Q.length){box.innerHTML='<h3>Selesai!</h3><p class="big">Skormu: '+sc+' / '+Q.length+'</p>';return}
+  const q=Q[i];box.innerHTML='<h3>Soal '+(i+1)+' dari '+Q.length+'</h3><p><b>'+q[0]+'</b></p>';
+  q[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent=String.fromCharCode(65+j)+'. '+o;
+   b.onclick=()=>{[...box.querySelectorAll('.opt')].forEach((x,y)=>{x.disabled=true;if(y===q[2])x.classList.add('right')});if(j===q[2])sc++;else b.classList.add('wrong');
+    const n=document.createElement('button');n.className='alt';n.textContent=i==Q.length-1?'Lihat skor':'Soal berikutnya';n.onclick=()=>{i++;show()};box.appendChild(n)};box.appendChild(b)})}
+ show();})();
+// komitmen
+(function(){const c=[...document.querySelectorAll('#komit input')];c.forEach(x=>x.onchange=()=>{const n=c.filter(y=>y.checked).length;$('kMsg').textContent=n>=3?'Keren! '+n+' aksi dipilih. Lakukan dalam 24 jam ya.':n?n+' aksi. Tambah sampai 3!':''})})();
+</script></body></html>

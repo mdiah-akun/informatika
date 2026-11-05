@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Level Up Data · Materi Siswa Pertemuan 2</title>
+<style>
+:root{--teal:#0f766e;--teal2:#14b8a6;--tealL:#ccfbf1;--navy:#1e3a5f;--orange:#f59e0b;--orangeL:#fef3c7;--blue:#3b82f6;--blueL:#dbeafe;--green:#16a34a;--greenL:#dcfce7;--red:#dc2626;--redL:#fee2e2;--purple:#7c3aed;--purpleL:#ede9fe;--gray:#64748b;--bg:#f5f3ff;--ink:#0f172a}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;font-size:17px}
+img{max-width:100%;height:auto;border-radius:14px;display:block;margin:0 auto}
+header.hero{background:linear-gradient(135deg,#0f766e,#14b8a6);color:#fff;padding:34px 20px 26px;text-align:center}
+header.hero h1{margin:.2em 0 .1em;font-size:clamp(26px,5vw,42px);line-height:1.2}
+header.hero p{margin:.3em auto;max-width:720px;color:#ccfbf1}
+header.hero img{max-width:760px;margin-top:18px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid #cbd5e1;overflow-x:auto;white-space:nowrap;padding:8px 12px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+nav a{display:inline-block;padding:6px 12px;margin:2px;border-radius:999px;text-decoration:none;color:var(--teal);font-size:14px;font-weight:600;background:var(--tealL)}
+nav a:hover{background:var(--teal);color:#fff}
+main{max-width:980px;margin:0 auto;padding:10px 16px 60px}
+section{background:#fff;border-radius:20px;padding:22px 22px 26px;margin:22px 0;box-shadow:0 2px 12px rgba(15,118,110,.08)}
+h2{color:var(--teal);margin:.1em 0 .5em;font-size:clamp(22px,3.5vw,30px)}
+h3{color:var(--navy);margin:1.2em 0 .3em}
+.badge{display:inline-block;background:var(--orange);color:#1f2937;font-weight:700;border-radius:999px;padding:2px 12px;font-size:13px;margin-bottom:6px}
+.callout{border-left:6px solid var(--teal);background:var(--tealL);border-radius:10px;padding:12px 16px;margin:14px 0}
+.callout.o{border-color:var(--orange);background:var(--orangeL)}.callout.g{border-color:var(--green);background:var(--greenL)}.callout.r{border-color:var(--red);background:var(--redL)}.callout.p{border-color:var(--purple);background:var(--purpleL)}.callout.b{border-color:var(--blue);background:var(--blueL)}
+.callout b.t{display:block;margin-bottom:2px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.card{border:2px solid #e2e8f0;border-radius:14px;padding:12px 14px;background:#fff}
+.card h4{margin:.1em 0 .3em}
+figure{margin:14px 0}figcaption{text-align:center;color:var(--gray);font-size:14px;margin-top:6px}
+table{border-collapse:collapse;width:100%;font-size:15px;margin:10px 0}
+th{background:var(--teal);color:#fff;padding:7px 8px;text-align:left}td{border:1px solid #cbd5e1;padding:6px 8px}
+tr:nth-child(even) td{background:#f8fafc}
+code{background:#0f172a;color:#99f6e4;padding:1px 7px;border-radius:6px;font-family:Consolas,monospace;font-size:.92em}
+button{font:inherit;cursor:pointer;border:none;border-radius:10px;padding:8px 14px;background:var(--teal);color:#fff;font-weight:600}
+button:hover{filter:brightness(1.1)}button.alt{background:#e2e8f0;color:var(--navy)}button.alt.sel{background:var(--purple);color:#fff}
+button:disabled{opacity:.5;cursor:not-allowed}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+.lab{border:3px dashed var(--teal2);border-radius:18px;padding:16px;margin:18px 0;background:#f8fffe}
+.lab>.badge{background:var(--purple);color:#fff}
+.fb{margin-top:8px;font-weight:600;min-height:1.4em}.ok{color:var(--green)}.no{color:var(--red)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.task{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;border:1px solid #e2e8f0;border-radius:12px;padding:8px 12px;margin:8px 0}
+.task .opts{display:flex;gap:6px;flex-wrap:wrap}.task .opts button{padding:5px 10px;font-size:14px}
+.task.good{background:var(--greenL);border-color:var(--green)}.task.bad{background:var(--redL);border-color:var(--red)}
+.chip{display:inline-block;margin:4px;padding:8px 12px;border-radius:12px;background:var(--blueL);border:2px solid var(--blue);cursor:pointer;font-weight:600;color:var(--navy)}
+.chip.used{opacity:.35;pointer-events:none}
+ol.seq{padding-left:22px}ol.seq li{background:var(--greenL);border-radius:8px;margin:5px 0;padding:6px 10px;list-style-position:inside}
+.sheet{overflow:auto;max-height:420px;border:1px solid #cbd5e1;border-radius:10px}
+.sheet table{margin:0;min-width:520px}.sheet th{position:sticky;top:0}
+.sheet input{width:64px;padding:4px;border:2px solid #bae6fd;border-radius:6px;font:inherit;text-align:center}
+.price input{width:90px;padding:4px;border:2px solid var(--orange);border-radius:6px;font:inherit;text-align:center;background:var(--orangeL)}
+.stats{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:12px 0}
+.stat{background:var(--tealL);border-radius:12px;padding:10px;text-align:center}.stat b{display:block;font-size:22px;color:var(--teal)}.stat span{font-size:13px;color:var(--navy)}
+select{font:inherit;padding:7px;border-radius:8px;border:2px solid #cbd5e1;max-width:100%}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;background:#f1f5f9;color:var(--ink);font-weight:500}.opt:hover{background:#e2e8f0}
+.opt.right{background:var(--greenL);outline:2px solid var(--green)}.opt.wrong{background:var(--redL);outline:2px solid var(--red)}
+.qbox{border:2px solid #e2e8f0;border-radius:14px;padding:12px 14px;margin:12px 0}.q{font-weight:700}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+svg text{font-family:inherit}
+.bar{cursor:pointer;transition:opacity .15s}.bar:hover{opacity:.8}
+footer{text-align:center;color:var(--gray);padding:22px;font-size:14px}
+@media(max-width:560px){body{font-size:16px}section{padding:16px 14px}.sheet input{width:52px}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="badge">Informatika Kelas IX · Bab III · TP 13 · Pertemuan 2</div>
+  <h1>Level Up! Dari Data Menjadi Cerita</h1>
+  <p>Kamu sekarang Tim Analis Data. Bersihkan data, pakai rumus level up, buat grafik yang jujur, lalu ceritakan insight untuk Kepala Sekolah.</p>
+  <img src="images/00_banner_bab3_tp2b.png" alt="Banner Pertemuan 2: Dari Data Menjadi Cerita">
+</header>
+<nav aria-label="Navigasi bagian">
+  <a href="#misi">Misi</a><a href="#bersih">Bersihkan</a><a href="#rumus">Rumus</a><a href="#statistik">Statistik</a><a href="#grafik">Grafik Jujur</a><a href="#insight">Insight</a><a href="#proyek">Proyek</a><a href="#kuis">Kuis</a>
+</nav>
+<main>
+
+<section id="misi">
+  <span class="badge">Mulai dari misi</span>
+  <h2>Surat dari Kepala Sekolah</h2>
+  <figure><img src="images/01_misi_kepala_sekolah.png" alt="Surat Kepala Sekolah berisi empat pertanyaan tentang Bank Sampah"></figure>
+  <div class="callout p"><b class="t">Pertanyaan esensial</b>Apakah program Bank Sampah Kelas IX layak dilanjutkan, dan apa yang perlu diperbaiki? Buktikan dengan data!</div>
+  <figure><img src="images/03_alur_pjbl.png" alt="Enam langkah proyek PjBL"><figcaption>Enam langkah proyek hari ini</figcaption></figure>
+  <h3>Data kita</h3>
+  <p>3 kelas (IX-A, IX-B, IX-C) × 4 jenis sampah × 6 pekan = <b>72 catatan</b>. Harga bisa kamu ubah di Lab 3 dan seluruh hasil ikut berubah.</p>
+  <figure><img src="images/02_piramida_dikw.png" alt="Piramida data, informasi, insight, aksi"><figcaption>Spreadsheet membantu sampai informasi. Insight dan aksi datang dari kamu.</figcaption></figure>
+</section>
+
+<section id="bersih">
+  <span class="badge">Konsep 1</span>
+  <h2>Bersihkan Data Dulu: Misi Detektif</h2>
+  <figure><img src="images/04_data_kotor_4_masalah.png" alt="Empat jenis data kotor: outlier, kosong, duplikat, tidak konsisten"></figure>
+  <div class="lab" id="lab1">
+    <span class="badge">Lab 1 · Detektif Data</span>
+    <p>Tentukan masalah tiap catatan, lalu pilih tindakannya.</p>
+    <div id="lab1-list"></div>
+    <div class="row"><button id="lab1-reset" class="alt">Ulangi</button><span id="lab1-score" class="fb"></span></div>
+  </div>
+  <figure><img src="images/09_mean_vs_median.png" alt="Rata-rata bergeser karena outlier sedangkan median tetap"><figcaption>Satu salah ketik menggeser rata-rata, median tetap.</figcaption></figure>
+  <div class="callout g"><b class="t">Tips pro: Data Validation</b>Pasang aturan di spreadsheet: berat hanya 0–30 kg, jenis dan kelas dari daftar pilihan. Salah ketik jadi ditolak sejak awal.</div>
+</section>
+
+<section id="rumus">
+  <span class="badge">Konsep 2</span>
+  <h2>Rumus Level Up</h2>
+  <h3>VLOOKUP: harga otomatis</h3>
+  <figure><img src="images/05_vlookup_anatomi.png" alt="Anatomi rumus VLOOKUP"></figure>
+  <h3>IF bertingkat dan SUMIFS</h3>
+  <div class="grid"><figure><img src="images/07_if_bertingkat.png" alt="Alur IF bertingkat"></figure><figure><img src="images/06_sumifs_anatomi.png" alt="Anatomi SUMIFS dan fungsi bersyarat"></figure></div>
+
+  <div class="lab" id="lab3">
+    <span class="badge">Lab 3 · Spreadsheet Harga Dinamis</span>
+    <p>Ubah harga di tabel Harga (seperti sheet Harga + VLOOKUP). Semua nilai langsung dihitung ulang di bawah, termasuk peta panas.</p>
+    <div class="price row" id="prices"></div>
+    <div class="row" style="margin-top:8px"><button id="p-kaleng" class="alt">Kaleng jadi Rp4.000</button><button id="p-reset" class="alt">Harga awal</button></div>
+    <div class="stats" id="kpi"></div>
+    <h3>Nilai kelas × pekan (Rp ribu) dengan warna otomatis</h3>
+    <div class="sheet"><table id="mx"></table></div>
+    <h3>Per jenis sampah</h3>
+    <div class="sheet"><table id="jn"></table></div>
+  </div>
+
+  <div class="lab" id="lab4">
+    <span class="badge">Lab 4 · Pembuat SUMIFS</span>
+    <p>Pilih syarat. Lihat rumus yang terbentuk dan hasilnya.</p>
+    <div class="row"><label>Kelas <select id="s-k"><option value="*">semua</option><option>IX-A</option><option>IX-B</option><option>IX-C</option></select></label>
+    <label>Pekan <select id="s-p"><option value="*">semua</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label>
+    <label>Jenis <select id="s-j"><option value="*">semua</option><option>Koran</option><option>Botol</option><option>Kardus</option><option>Kaleng</option></select></label>
+    <label>Yang dijumlah <select id="s-v"><option value="nilai">Nilai (Rp)</option><option value="kg">Berat (kg)</option></select></label></div>
+    <p><code id="s-f"></code></p>
+    <div class="stats"><div class="stat"><b id="s-r">-</b><span>hasil</span></div><div class="stat"><b id="s-c">-</b><span>banyak catatan (COUNTIFS)</span></div></div>
+  </div>
+
+  <div class="lab" id="lab5">
+    <span class="badge">Lab 5 · IF Bertingkat</span>
+    <p>Geser nilai catatan, lihat kategorinya. Ubah batas bila mau.</p>
+    <div class="row"><label>Nilai: <b id="if-v">20000</b> <input id="if-s" type="range" min="0" max="60000" step="500" value="20000"></label></div>
+    <div class="row"><label>Batas Tinggi <input id="if-t" type="number" value="30000" step="1000" style="width:100px"></label><label>Batas Sedang <input id="if-m" type="number" value="15000" step="1000" style="width:100px"></label></div>
+    <p><code id="if-f"></code></p>
+    <div class="stats"><div class="stat"><b id="if-r">-</b><span>kategori</span></div><div class="stat"><b id="if-n">-</b><span>dari 72 catatan: Tinggi / Sedang / Rendah</span></div></div>
+  </div>
+</section>
+
+<section id="statistik">
+  <span class="badge">Konsep 3</span>
+  <h2>Persen Pertumbuhan dan Median</h2>
+  <figure><img src="images/08_rumus_persen_median.png" alt="Rumus persen pertumbuhan dan median"></figure>
+  <div class="lab" id="lab6">
+    <span class="badge">Lab 6 · Pertumbuhan dan Median</span>
+    <div class="row"><label>Kelas <select id="g-k"><option>IX-A</option><option selected>IX-B</option><option>IX-C</option></select></label></div>
+    <p><code id="g-f"></code></p>
+    <div class="stats"><div class="stat"><b id="g-r">-</b><span>pertumbuhan pekan 1 ke 6</span></div><div class="stat"><b id="g-md">-</b><span>median nilai per pekan (semua kelas)</span></div><div class="stat"><b id="g-av">-</b><span>rata-rata nilai per pekan</span></div></div>
+    <h3>Efek outlier pada berat kaleng (18 catatan)</h3>
+    <label style="cursor:pointer"><input type="checkbox" id="o-t"> Ada salah ketik: kaleng IX-B pekan 3 tertulis 20 kg (harusnya 2)</label>
+    <div class="stats"><div class="stat"><b id="o-a">-</b><span>rata-rata (kg)</span></div><div class="stat"><b id="o-m">-</b><span>median (kg)</span></div></div>
+    <div class="fb" id="o-fb"></div>
+  </div>
+</section>
+
+<section id="grafik">
+  <span class="badge">Konsep 4</span>
+  <h2>Grafik Jujur dan Peta Panas</h2>
+  <figure><img src="images/11_heatmap_kelas_pekan.png" alt="Peta panas nilai setoran kelas per pekan"></figure>
+  <figure><img src="images/12_grafik_garis_3kelas.png" alt="Garis tiga kelas dan total"><figcaption>Total terlihat mendatar, tetapi tiga kelas bercerita lain.</figcaption></figure>
+
+  <div class="lab" id="lab7">
+    <span class="badge">Lab 7 · Total yang Menipu</span>
+    <p>Nyalakan atau matikan garis untuk melihat cerita di balik angka.</p>
+    <div class="tabs" id="l7t"></div>
+    <div id="l7c"></div>
+    <div class="fb" id="l7fb"></div>
+  </div>
+
+  <figure><img src="images/13_grafik_bertumpuk.png" alt="Batang bertumpuk komposisi jenis sampah per kelas"></figure>
+  <div class="callout p"><b class="t">Si kaleng</b>Kaleng hanya 48 kg (8,0% berat) tetapi bernilai Rp288.000 (17,3% nilai) karena harganya tinggi.</div>
+
+  <div class="lab" id="lab8">
+    <span class="badge">Lab 8 · Sumbu Dipotong</span>
+    <p>Geser awal sumbu y. Lihat betapa mudahnya grafik membuat kesan berbeda dari data yang sama (total nilai 6 pekan).</p>
+    <div class="row"><label>Sumbu mulai dari: <b id="ax-v">0</b> (Rp ribu) <input id="ax-s" type="range" min="0" max="440" step="20" value="0"></label></div>
+    <div id="ax-c"></div>
+    <div class="fb" id="ax-fb"></div>
+  </div>
+  <figure><img src="images/14_grafik_menyesatkan.png" alt="Perbandingan grafik menyesatkan dan jujur"></figure>
+</section>
+
+<section id="insight">
+  <span class="badge">Konsep 5</span>
+  <h2>Insight, Korelasi, dan Audiens</h2>
+  <figure><img src="images/17_headline_insight.png" alt="Rumus judul insight"></figure>
+  <div class="lab" id="lab9">
+    <span class="badge">Lab 9 · Susun Judul Insight IX-B</span>
+    <p>Pilih satu bagian terbaik untuk setiap unsur, lalu klik Susun.</p>
+    <div id="l9"></div>
+    <div class="row"><button id="l9b">Susun dan periksa</button><button id="l9r" class="alt">Ulangi</button></div>
+    <div class="callout b" id="l9o" style="display:none"></div>
+  </div>
+  <figure><img src="images/15_korelasi_kausalitas.png" alt="Ilustrasi korelasi dan faktor tersembunyi"></figure>
+  <div class="lab" id="lab10">
+    <span class="badge">Lab 10 · Korelasi atau Sebab-Akibat?</span>
+    <div id="l10"></div>
+    <span class="fb" id="l10s"></span>
+  </div>
+  <figure><img src="images/21_audiens.png" alt="Menyesuaikan cerita dengan audiens"></figure>
+  <figure><img src="images/20_etika_data.png" alt="Empat tanggung jawab etika data"></figure>
+</section>
+
+<section id="proyek">
+  <span class="badge">Proyek</span>
+  <h2>Dasbor dan Pitch 3 Slide</h2>
+  <figure><img src="images/16_dashboard_mockup.png" alt="Contoh dasbor satu halaman"></figure>
+  <figure><img src="images/24_tiga_slide_pitch.png" alt="Rancangan pitch 3 slide"></figure>
+  <div class="grid"><figure><img src="images/18_peran_jigsaw.png" alt="Tiga peran jigsaw"></figure><figure><img src="images/19_gallery_walk.png" alt="Gallery Walk"></figure></div>
+  <div class="callout o"><b class="t">Checklist dasbor</b>☐ 3–5 angka kunci · ☐ 2 grafik jujur · ☐ peta panas/tabel berwarna · ☐ judul insight · ☐ sumber · ☐ inisial/kode, bukan nama lengkap</div>
+</section>
+
+<section id="kuis">
+  <span class="badge">Kuis Akhir</span>
+  <h2>KUDA: Uji Pemahamanmu</h2>
+  <figure><img src="images/23_kuda_banner.png" alt="Banner KUDA kuis dadakan"></figure>
+  <div id="quiz"></div>
+  <div class="row"><button id="quiz-reset" class="alt">Ulangi kuis</button></div>
+  <div class="callout g" id="quiz-score" style="display:none"></div>
+</section>
+</main>
+<footer>SMP Negeri 14 Tarakan · Informatika Kelas IX · Bab III TP2 Pertemuan 2 · Data bank sampah adalah data latihan.</footer>
+<script>
+const DATA={"rows": [{"no": 1, "pekan": 1, "kelas": "IX-A", "jenis": "Koran", "kg": 12, "harga": 3000, "nilai": 36000}, {"no": 2, "pekan": 1, "kelas": "IX-A", "jenis": "Botol", "kg": 10, "harga": 2000, "nilai": 20000}, {"no": 3, "pekan": 1, "kelas": "IX-A", "jenis": "Kardus", "kg": 6, "harga": 2500, "nilai": 15000}, {"no": 4, "pekan": 1, "kelas": "IX-A", "jenis": "Kaleng", "kg": 2, "harga": 6000, "nilai": 12000}, {"no": 5, "pekan": 1, "kelas": "IX-B", "jenis": "Koran", "kg": 8, "harga": 3000, "nilai": 24000}, {"no": 6, "pekan": 1, "kelas": "IX-B", "jenis": "Botol", "kg": 12, "harga": 2000, "nilai": 24000}, {"no": 7, "pekan": 1, "kelas": "IX-B", "jenis": "Kardus", "kg": 5, "harga": 2500, "nilai": 12500}, {"no": 8, "pekan": 1, "kelas": "IX-B", "jenis": "Kaleng", "kg": 1, "harga": 6000, "nilai": 6000}, {"no": 9, "pekan": 1, "kelas": "IX-C", "jenis": "Koran", "kg": 10, "harga": 3000, "nilai": 30000}, {"no": 10, "pekan": 1, "kelas": "IX-C", "jenis": "Botol", "kg": 14, "harga": 2000, "nilai": 28000}, {"no": 11, "pekan": 1, "kelas": "IX-C", "jenis": "Kardus", "kg": 7, "harga": 2500, "nilai": 17500}, {"no": 12, "pekan": 1, "kelas": "IX-C", "jenis": "Kaleng", "kg": 3, "harga": 6000, "nilai": 18000}, {"no": 13, "pekan": 2, "kelas": "IX-A", "jenis": "Koran", "kg": 14, "harga": 3000, "nilai": 42000}, {"no": 14, "pekan": 2, "kelas": "IX-A", "jenis": "Botol", "kg": 9, "harga": 2000, "nilai": 18000}, {"no": 15, "pekan": 2, "kelas": "IX-A", "jenis": "Kardus", "kg": 7, "harga": 2500, "nilai": 17500}, {"no": 16, "pekan": 2, "kelas": "IX-A", "jenis": "Kaleng", "kg": 3, "harga": 6000, "nilai": 18000}, {"no": 17, "pekan": 2, "kelas": "IX-B", "jenis": "Koran", "kg": 9, "harga": 3000, "nilai": 27000}, {"no": 18, "pekan": 2, "kelas": "IX-B", "jenis": "Botol", "kg": 13, "harga": 2000, "nilai": 26000}, {"no": 19, "pekan": 2, "kelas": "IX-B", "jenis": "Kardus", "kg": 6, "harga": 2500, "nilai": 15000}, {"no": 20, "pekan": 2, "kelas": "IX-B", "jenis": "Kaleng", "kg": 2, "harga": 6000, "nilai": 12000}, {"no": 21, "pekan": 2, "kelas": "IX-C", "jenis": "Koran", "kg": 11, "harga": 3000, "nilai": 33000}, {"no": 22, "pekan": 2, "kelas": "IX-C", "jenis": "Botol", "kg": 15, "harga": 2000, "nilai": 30000}, {"no": 23, "pekan": 2, "kelas": "IX-C", "jenis": "Kardus", "kg": 8, "harga": 2500, "nilai": 20000}, {"no": 24, "pekan": 2, "kelas": "IX-C", "jenis": "Kaleng", "kg": 3, "harga": 6000, "nilai": 18000}, {"no": 25, "pekan": 3, "kelas": "IX-A", "jenis": "Koran", "kg": 15, "harga": 3000, "nilai": 45000}, {"no": 26, "pekan": 3, "kelas": "IX-A", "jenis": "Botol", "kg": 11, "harga": 2000, "nilai": 22000}, {"no": 27, "pekan": 3, "kelas": "IX-A", "jenis": "Kardus", "kg": 6, "harga": 2500, "nilai": 15000}, {"no": 28, "pekan": 3, "kelas": "IX-A", "jenis": "Kaleng", "kg": 2, "harga": 6000, "nilai": 12000}, {"no": 29, "pekan": 3, "kelas": "IX-B", "jenis": "Koran", "kg": 11, "harga": 3000, "nilai": 33000}, {"no": 30, "pekan": 3, "kelas": "IX-B", "jenis": "Botol", "kg": 12, "harga": 2000, "nilai": 24000}, {"no": 31, "pekan": 3, "kelas": "IX-B", "jenis": "Kardus", "kg": 7, "harga": 2500, "nilai": 17500}, {"no": 32, "pekan": 3, "kelas": "IX-B", "jenis": "Kaleng", "kg": 2, "harga": 6000, "nilai": 12000}, {"no": 33, "pekan": 3, "kelas": "IX-C", "jenis": "Koran", "kg": 12, "harga": 3000, "nilai": 36000}, {"no": 34, "pekan": 3, "kelas": "IX-C", "jenis": "Botol", "kg": 13, "harga": 2000, "nilai": 26000}, {"no": 35, "pekan": 3, "kelas": "IX-C", "jenis": "Kardus", "kg": 8, "harga": 2500, "nilai": 20000}, {"no": 36, "pekan": 3, "kelas": "IX-C", "jenis": "Kaleng", "kg": 4, "harga": 6000, "nilai": 24000}, {"no": 37, "pekan": 4, "kelas": "IX-A", "jenis": "Koran", "kg": 16, "harga": 3000, "nilai": 48000}, {"no": 38, "pekan": 4, "kelas": "IX-A", "jenis": "Botol", "kg": 10, "harga": 2000, "nilai": 20000}, {"no": 39, "pekan": 4, "kelas": "IX-A", "jenis": "Kardus", "kg": 8, "harga": 2500, "nilai": 20000}, {"no": 40, "pekan": 4, "kelas": "IX-A", "jenis": "Kaleng", "kg": 3, "harga": 6000, "nilai": 18000}, {"no": 41, "pekan": 4, "kelas": "IX-B", "jenis": "Koran", "kg": 13, "harga": 3000, "nilai": 39000}, {"no": 42, "pekan": 4, "kelas": "IX-B", "jenis": "Botol", "kg": 14, "harga": 2000, "nilai": 28000}, {"no": 43, "pekan": 4, "kelas": "IX-B", "jenis": "Kardus", "kg": 8, "harga": 2500, "nilai": 20000}, {"no": 44, "pekan": 4, "kelas": "IX-B", "jenis": "Kaleng", "kg": 3, "harga": 6000, "nilai": 18000}, {"no": 45, "pekan": 4, "kelas": "IX-C", "jenis": "Koran", "kg": 9, "harga": 3000, "nilai": 27000}, {"no": 46, "pekan": 4, "kelas": "IX-C", "jenis": "Botol", "kg": 10, "harga": 2000, "nilai": 20000}, {"no": 47, "pekan": 4, "kelas": "IX-C", "jenis": "Kardus", "kg": 6, "harga": 2500, "nilai": 15000}, {"no": 48, "pekan": 4, "kelas": "IX-C", "jenis": "Kaleng", "kg": 2, "harga": 6000, "nilai": 12000}, {"no": 49, "pekan": 5, "kelas": "IX-A", "jenis": "Koran", "kg": 15, "harga": 3000, "nilai": 45000}, {"no": 50, "pekan": 5, "kelas": "IX-A", "jenis": "Botol", "kg": 12, "harga": 2000, "nilai": 24000}, {"no": 51, "pekan": 5, "kelas": "IX-A", "jenis": "Kardus", "kg": 7, "harga": 2500, "nilai": 17500}, {"no": 52, "pekan": 5, "kelas": "IX-A", "jenis": "Kaleng", "kg": 3, "harga": 6000, "nilai": 18000}, {"no": 53, "pekan": 5, "kelas": "IX-B", "jenis": "Koran", "kg": 14, "harga": 3000, "nilai": 42000}, {"no": 54, "pekan": 5, "kelas": "IX-B", "jenis": "Botol", "kg": 15, "harga": 2000, "nilai": 30000}, {"no": 55, "pekan": 5, "kelas": "IX-B", "jenis": "Kardus", "kg": 9, "harga": 2500, "nilai": 22500}, {"no": 56, "pekan": 5, "kelas": "IX-B", "jenis": "Kaleng", "kg": 4, "harga": 6000, "nilai": 24000}, {"no": 57, "pekan": 5, "kelas": "IX-C", "jenis": "Koran", "kg": 7, "harga": 3000, "nilai": 21000}, {"no": 58, "pekan": 5, "kelas": "IX-C", "jenis": "Botol", "kg": 8, "harga": 2000, "nilai": 16000}, {"no": 59, "pekan": 5, "kelas": "IX-C", "jenis": "Kardus", "kg": 4, "harga": 2500, "nilai": 10000}, {"no": 60, "pekan": 5, "kelas": "IX-C", "jenis": "Kaleng", "kg": 1, "harga": 6000, "nilai": 6000}, {"no": 61, "pekan": 6, "kelas": "IX-A", "jenis": "Koran", "kg": 17, "harga": 3000, "nilai": 51000}, {"no": 62, "pekan": 6, "kelas": "IX-A", "jenis": "Botol", "kg": 11, "harga": 2000, "nilai": 22000}, {"no": 63, "pekan": 6, "kelas": "IX-A", "jenis": "Kardus", "kg": 9, "harga": 2500, "nilai": 22500}, {"no": 64, "pekan": 6, "kelas": "IX-A", "jenis": "Kaleng", "kg": 4, "harga": 6000, "nilai": 24000}, {"no": 65, "pekan": 6, "kelas": "IX-B", "jenis": "Koran", "kg": 16, "harga": 3000, "nilai": 48000}, {"no": 66, "pekan": 6, "kelas": "IX-B", "jenis": "Botol", "kg": 16, "harga": 2000, "nilai": 32000}, {"no": 67, "pekan": 6, "kelas": "IX-B", "jenis": "Kardus", "kg": 10, "harga": 2500, "nilai": 25000}, {"no": 68, "pekan": 6, "kelas": "IX-B", "jenis": "Kaleng", "kg": 5, "harga": 6000, "nilai": 30000}, {"no": 69, "pekan": 6, "kelas": "IX-C", "jenis": "Koran", "kg": 6, "harga": 3000, "nilai": 18000}, {"no": 70, "pekan": 6, "kelas": "IX-C", "jenis": "Botol", "kg": 7, "harga": 2000, "nilai": 14000}, {"no": 71, "pekan": 6, "kelas": "IX-C", "jenis": "Kardus", "kg": 3, "harga": 2500, "nilai": 7500}, {"no": 72, "pekan": 6, "kelas": "IX-C", "jenis": "Kaleng", "kg": 1, "harga": 6000, "nilai": 6000}], "H": {"Koran": 3000, "Botol": 2000, "Kardus": 2500, "Kaleng": 6000}};
+const ROWS=DATA.rows;
+const rp=n=>"Rp"+Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,".");
+const dec=(n,d=2)=>(Math.round(n*Math.pow(10,d))/Math.pow(10,d)).toString().replace(".",",");
+const pct=n=>(n>0?"+":n<0?"−":"")+dec(Math.abs(n),1)+"%";
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const KEL=["IX-A","IX-B","IX-C"],JEN=["Koran","Botol","Kardus","Kaleng"];
+const CK={"IX-A":"#3b82f6","IX-B":"#0f766e","IX-C":"#f59e0b"};
+let H=Object.assign({},DATA.H);const H0=Object.assign({},DATA.H);
+const val=r=>r.kg*H[r.jenis];
+
+/* Lab 1 */
+const L1=[["Pekan 3, IX-B, Kaleng, 20 kg (lainnya 1–5 kg)","Outlier"],["Pekan 2, IX-C, Koran, (kosong)","Data kosong"],["Pekan 4, IX-A, Botol, 10 kg (muncul 2 kali berurutan)","Duplikat"],["Pekan 5, IX-A, “koran ” (ada spasi), 15 kg","Tidak konsisten"],["Pekan 1, IX-A, Koran, 12 kg","Bersih"]];
+const L1O=["Outlier","Data kosong","Duplikat","Tidak konsisten","Bersih"];
+const L1A={"Outlier":"Cek nota asli, lalu koreksi.","Data kosong":"Lengkapi dari nota, jangan isi 0.","Duplikat":"Hapus salah satu baris.","Tidak konsisten":"Seragamkan penulisan.","Bersih":"Tidak perlu tindakan."};
+let l1ok=0,l1n=0;
+function lab1(){const box=$("lab1-list");box.innerHTML="";l1ok=0;l1n=0;$("lab1-score").textContent="";
+  L1.forEach((t,i)=>{const d=document.createElement("div");d.className="task";d.innerHTML=`<span>${i+1}. ${esc(t[0])}</span><span class="opts"></span>`;
+    L1O.forEach(k=>{const b=document.createElement("button");b.className="alt";b.textContent=k;b.onclick=()=>{const ok=k===t[1];d.className="task "+(ok?"good":"bad");d.querySelectorAll("button").forEach(x=>x.disabled=true);d.querySelector(".opts").insertAdjacentHTML("beforeend",`<b class="${ok?"ok":"no"}">${ok?"Benar! ":"Jawaban: "+t[1]+". "}${L1A[t[1]]}</b>`);if(ok)l1ok++;l1n++;$("lab1-score").textContent=l1n===L1.length?`Skor: ${l1ok} dari ${L1.length}`:`Terjawab ${l1n}/${L1.length}`;};d.querySelector(".opts").appendChild(b);});box.appendChild(d);});}
+$("lab1-reset").onclick=lab1;lab1();
+
+/* Lab 3 */
+function buildPrices(){const p=$("prices");p.innerHTML="";JEN.forEach(j=>{const l=document.createElement("label");l.innerHTML=`${j} (Rp/kg): <input type="number" min="0" step="500" value="${H[j]}" aria-label="Harga ${j}">`;l.querySelector("input").oninput=e=>{H[j]=Math.max(0,+e.target.value||0);upd3();};p.appendChild(l);});}
+function heat(v,mn,mx){const t=(v-mn)/(mx-mn||1);const r=t<.5?[254,202,202]:[134,239,172];const w=[255,255,255];const k=Math.abs(t-.5)*2;return `rgb(${Math.round(w[0]+(r[0]-w[0])*k)},${Math.round(w[1]+(r[1]-w[1])*k)},${Math.round(w[2]+(r[2]-w[2])*k)})`;}
+function sumBy(f,key){return ROWS.filter(f).reduce((a,r)=>a+(key==="kg"?r.kg:val(r)),0);}
+function upd3(){const tk=sumBy(()=>true,"kg"),tn=sumBy(()=>true,"nilai");
+  const hi=ROWS.filter(r=>val(r)>=30000).length;
+  $("kpi").innerHTML=[[tk+" kg","Total sampah"],[rp(tn),"Total nilai"],[hi,"Catatan Tinggi (≥ Rp30.000)"]].map(x=>`<div class="stat"><b>${x[0]}</b><span>${x[1]}</span></div>`).join("");
+  const M=KEL.map(k=>[1,2,3,4,5,6].map(p=>sumBy(r=>r.kelas===k&&r.pekan===p,"nilai")));const all=M.flat();const mn=Math.min(...all),mx=Math.max(...all);
+  let h="<thead><tr><th>Kelas</th>"+[1,2,3,4,5,6].map(p=>`<th>Pkn ${p}</th>`).join("")+"<th>Total</th></tr></thead><tbody>";
+  M.forEach((row,i)=>{h+=`<tr><td><b>${KEL[i]}</b></td>`+row.map(v=>`<td style="background:${heat(v,mn,mx)};text-align:center">${dec(v/1000,1)}</td>`).join("")+`<td><b>${dec(row.reduce((a,b)=>a+b,0)/1000,1)}</b></td></tr>`;});
+  h+="<tr><td><b>Total</b></td>"+[0,1,2,3,4,5].map(c=>`<td style="text-align:center"><b>${dec(M.reduce((a,r)=>a+r[c],0)/1000,1)}</b></td>`).join("")+`<td><b>${dec(tn/1000,1)}</b></td></tr></tbody>`;$("mx").innerHTML=h;
+  $("jn").innerHTML="<thead><tr><th>Jenis</th><th>Harga/kg</th><th>Total kg</th><th>Total nilai</th><th>% nilai</th></tr></thead><tbody>"+JEN.map(j=>{const k=sumBy(r=>r.jenis===j,"kg"),n=sumBy(r=>r.jenis===j,"nilai");return `<tr><td>${j}</td><td>${rp(H[j])}</td><td>${k}</td><td>${rp(n)}</td><td>${tn?dec(n/tn*100,1):0}%</td></tr>`;}).join("")+"</tbody>";
+  upd4();upd5();upd6();l7();ax();}
+$("p-kaleng").onclick=()=>{H.Kaleng=4000;buildPrices();upd3();};
+$("p-reset").onclick=()=>{H=Object.assign({},H0);buildPrices();upd3();};
+
+/* Lab 4 */
+function upd4(){const k=$("s-k").value,p=$("s-p").value,j=$("s-j").value,v=$("s-v").value;
+  const f=r=>(k==="*"||r.kelas===k)&&(p==="*"||String(r.pekan)===p)&&(j==="*"||r.jenis===j);
+  const col=v==="nilai"?"Nilai":"Berat";let c=[];if(k!=="*")c.push(`Kelas,"${k}"`);if(p!=="*")c.push(`Pekan,${p}`);if(j!=="*")c.push(`Jenis,"${j}"`);
+  $("s-f").textContent=c.length?`=SUMIFS(${col},${c.join(",")})`:`=SUM(${col})`;
+  const r=sumBy(f,v);$("s-r").textContent=v==="nilai"?rp(r):r+" kg";$("s-c").textContent=ROWS.filter(f).length;}
+["s-k","s-p","s-j","s-v"].forEach(i=>$(i).onchange=upd4);
+
+/* Lab 5 */
+function upd5(){const v=+$("if-s").value,t=+$("if-t").value,m=+$("if-m").value;$("if-v").textContent=rp(v);
+  const cat=x=>x>=t?"Tinggi":x>=m?"Sedang":"Rendah";$("if-r").textContent=cat(v);
+  $("if-f").textContent=`=IF(G2>=${t},"Tinggi",IF(G2>=${m},"Sedang","Rendah"))`;
+  const c={Tinggi:0,Sedang:0,Rendah:0};ROWS.forEach(r=>c[cat(val(r))]++);$("if-n").textContent=`${c.Tinggi} / ${c.Sedang} / ${c.Rendah}`;}
+["if-s","if-t","if-m"].forEach(i=>$(i).oninput=upd5);
+
+/* Lab 6 */
+function median(a){const s=[...a].sort((x,y)=>x-y);const n=s.length;return n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2;}
+function upd6(){const k=$("g-k").value;const a=sumBy(r=>r.kelas===k&&r.pekan===1,"nilai"),b=sumBy(r=>r.kelas===k&&r.pekan===6,"nilai");
+  $("g-f").textContent=`=(${Math.round(b)}-${Math.round(a)})/${Math.round(a)}`;$("g-r").textContent=pct((b-a)/a*100);
+  const w=[1,2,3,4,5,6].map(p=>sumBy(r=>r.pekan===p,"nilai"));$("g-md").textContent=rp(median(w));$("g-av").textContent=rp(w.reduce((x,y)=>x+y,0)/6);
+  const ka=ROWS.filter(r=>r.jenis==="Kaleng").map(r=>(r.pekan===3&&r.kelas==="IX-B"&&$("o-t").checked)?20:r.kg);
+  $("o-a").textContent=dec(ka.reduce((x,y)=>x+y,0)/ka.length);$("o-m").textContent=dec(median(ka),0);
+  $("o-fb").className="fb "+($("o-t").checked?"no":"ok");$("o-fb").textContent=$("o-t").checked?"Rata-rata naik karena satu salah ketik, median tetap. Tetap cek nota dan koreksi!":"Data bersih: rata-rata 2,67 kg dan median 3 kg.";}
+$("g-k").onchange=upd6;$("o-t").onchange=upd6;
+
+/* Lab 7 */
+const sel7={"IX-A":true,"IX-B":true,"IX-C":true,"Total":false};
+function l7(){const tb=$("l7t");if(!tb.children.length){Object.keys(sel7).forEach(k=>{const b=document.createElement("button");b.className="alt"+(sel7[k]?" sel":"");b.textContent=(sel7[k]?"✔ ":"")+k;b.onclick=()=>{sel7[k]=!sel7[k];[...tb.children].forEach(x=>{const n=x.dataset.k;x.className="alt"+(sel7[n]?" sel":"");x.textContent=(sel7[n]?"✔ ":"")+n;});l7();};b.dataset.k=k;tb.appendChild(b);});}
+  const W=640,Hh=300,m={l:48,r:70,t:20,b:40};const series={};KEL.forEach(k=>series[k]=[1,2,3,4,5,6].map(p=>sumBy(r=>r.kelas===k&&r.pekan===p,"nilai")/1000));series.Total=[0,1,2,3,4,5].map(i=>KEL.reduce((a,k)=>a+series[k][i],0));
+  const mx=Math.max(...series.Total,1)*1.1;const px=i=>m.l+(W-m.l-m.r)*i/5,py=v=>Hh-m.b-(Hh-m.t-m.b)*v/mx;
+  let s=`<svg viewBox="0 0 ${W} ${Hh}" width="100%" role="img" aria-label="Grafik garis nilai per kelas per pekan">`;
+  for(let i=0;i<=4;i++){const y=Hh-m.b-(Hh-m.t-m.b)*i/4;s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y}" y2="${y}" stroke="#e2e8f0"/><text x="${m.l-6}" y="${y+4}" text-anchor="end" font-size="11" fill="#64748b">${Math.round(mx*i/4)}</text>`;}
+  [1,2,3,4,5,6].forEach((p,i)=>s+=`<text x="${px(i)}" y="${Hh-m.b+18}" text-anchor="middle" font-size="12">Pkn ${p}</text>`);
+  Object.keys(series).forEach(k=>{if(!sel7[k])return;const c=k==="Total"?"#64748b":CK[k];s+=`<polyline fill="none" stroke="${c}" stroke-width="${k==="Total"?3:4}" ${k==="Total"?'stroke-dasharray="8 5"':""} points="${series[k].map((v,i)=>px(i)+","+py(v)).join(" ")}"/>`;series[k].forEach((v,i)=>s+=`<circle cx="${px(i)}" cy="${py(v)}" r="4.5" fill="${c}"/>`);s+=`<text x="${px(5)+8}" y="${py(series[k][5])+4}" font-size="12" font-weight="700" fill="${c}">${k} ${dec(series[k][5],1)}</text>`;});
+  $("l7c").innerHTML=s+"</svg>";
+  const fb=$("l7fb");const on=Object.keys(sel7).filter(k=>sel7[k]);
+  fb.className="fb";fb.textContent=(on.length===1&&on[0]==="Total")?"Hanya total: tampak naik tipis dan aman. Nyalakan garis kelas untuk melihat cerita sebenarnya!":(sel7["IX-C"]&&sel7["IX-B"])?"IX-B menanjak, IX-C turun sejak pekan 4. Total menyembunyikan dua cerita berlawanan.":"";}
+
+/* Lab 8 */
+function ax(){const lo=+$("ax-s").value;$("ax-v").textContent=lo;const tot=KEL.map(k=>sumBy(r=>r.kelas===k,"nilai")/1000);const W=640,Hh=300,m={l:50,r:10,t:20,b:34};const mx=Math.max(...tot)*1.08;const bw=(W-m.l-m.r)/3;
+  let s=`<svg viewBox="0 0 ${W} ${Hh}" width="100%" role="img" aria-label="Total nilai per kelas dengan sumbu mulai dari ${lo}">`;
+  for(let i=0;i<=4;i++){const v=lo+(mx-lo)*i/4;const y=Hh-m.b-(Hh-m.t-m.b)*i/4;s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y}" y2="${y}" stroke="#e2e8f0"/><text x="${m.l-6}" y="${y+4}" text-anchor="end" font-size="11" fill="#64748b">${Math.round(v)}</text>`;}
+  tot.forEach((v,i)=>{const h=Math.max(0,(Hh-m.t-m.b)*(v-lo)/(mx-lo));const x=m.l+i*bw+bw*.2;s+=`<rect x="${x}" y="${Hh-m.b-h}" width="${bw*.6}" height="${h}" fill="${CK[KEL[i]]}" rx="4"/><text x="${x+bw*.3}" y="${Hh-m.b-h-6}" text-anchor="middle" font-size="13" font-weight="700">${dec(v,1)}</text><text x="${x+bw*.3}" y="${Hh-m.b+18}" text-anchor="middle" font-size="12">${KEL[i]}</text>`;});
+  $("ax-c").innerHTML=s+"</svg>";const fb=$("ax-fb");fb.className="fb "+(lo===0?"ok":"no");
+  fb.textContent=lo===0?"Sumbu dari 0: selisih terlihat apa adanya (IX-C memang lebih rendah, tetapi tidak sejauh yang dibayangkan).":"Sumbu dipotong: selisih tampak jauh lebih besar daripada kenyataan. Waspada!";}
+$("ax-s").oninput=ax;
+
+/* Lab 9 */
+const L9=[["Fakta",["Grafik IX-B naik","IX-B","Semua kelas hebat"],1],["Perubahan",["naik terus","naik lumayan","naik 103% dalam 6 pekan (Rp66.500 → Rp135.000)"],2],["Dugaan",["pasti karena anggotanya paling pintar","diduga karena jadwal setoran teratur","karena kelas lain malas"],1],["Aksi",["tiru caranya di kelas lain","biarkan saja","hapus data kelas lain"],0]];
+function lab9(){const b=$("l9");b.innerHTML="";$("l9o").style.display="none";L9.forEach((q,i)=>{b.insertAdjacentHTML("beforeend",`<div class="qbox"><div class="q">${q[0]}</div>${q[1].map((o,j)=>`<label style="display:block;margin:4px 0"><input type="radio" name="l9-${i}" value="${j}"> ${esc(o)}</label>`).join("")}</div>`);});}
+$("l9r").onclick=lab9;
+$("l9b").onclick=()=>{const o=$("l9o");let ok=0,an=0,parts=[];L9.forEach((q,i)=>{const c=document.querySelector(`input[name=l9-${i}]:checked`);if(c){an++;parts.push(q[1][+c.value]);if(+c.value===q[2])ok++;}});o.style.display="block";
+  if(an<4){o.className="callout o";o.innerHTML="<b class='t'>Lengkapi dulu</b>Pilih satu bagian untuk keempat unsur.";return;}
+  o.className="callout "+(ok===4?"g":"r");o.innerHTML=`<b class="t">Judulmu</b>“${esc(parts[0])} ${esc(parts[1])}, ${esc(parts[2])}; ${esc(parts[3])}.”<br><b>${ok===4?"Mantap! Ada fakta, angka, dugaan (bukan tuduhan), dan aksi.":`Benar ${ok} dari 4. Periksa lagi: butuh angka spesifik, dugaan yang wajar, dan aksi yang konstruktif.`}</b>`;};
+lab9();
+
+/* Lab 10 */
+const L10=[["Es teh laris dan berat botol plastik sama-sama naik. Kesimpulan paling tepat?",["Es teh menyebabkan botol bertambah","Keduanya berkorelasi; faktor lain (misal cuaca panas) bisa menjadi penyebabnya","Keduanya pasti tidak berhubungan"],1],["IX-C turun 51,3%. Tindakan terbaik?",["Mengumumkan bahwa IX-C malas","Mencari penyebab (jadwal, ujian, petugas) lalu membantu","Menghapus data IX-C"],1]];
+let l10ok=0,l10n=0;
+function lab10(){const b=$("l10");b.innerHTML="";l10ok=0;l10n=0;$("l10s").textContent="";L10.forEach((q,i)=>{const d=document.createElement("div");d.className="qbox";d.innerHTML=`<div class="q">${i+1}. ${esc(q[0])}</div>`;q[1].forEach((o,j)=>{const x=document.createElement("button");x.className="opt";x.textContent=o;x.onclick=()=>{d.querySelectorAll("button").forEach((y,k)=>{y.disabled=true;if(k===q[2])y.classList.add("right");});if(j!==q[2])x.classList.add("wrong");else l10ok++;l10n++;$("l10s").textContent=l10n===L10.length?`Skor: ${l10ok} dari ${L10.length}`:"";};d.appendChild(x);});b.appendChild(d);});}
+lab10();
+
+/* Kuis */
+const QZ=[
+["Pada =VLOOKUP(D2,Harga!$A$2:$B$5,2,FALSE), angka 2 berarti …",["mencari 2 kali","mengambil data dari kolom ke-2 tabel Harga","menambah 2 ke hasil","mengulang 2 baris"],1,"Nomor kolom hasil dihitung dari kolom pertama rentang tabel."],
+["Hasil =SUMIFS(Nilai,Kelas,\"IX-B\",Pekan,6) dengan data kita adalah …",["Rp591.500","Rp118.500","Rp135.000","Rp45.500"],2,"IX-B pada pekan 6 bernilai Rp135.000."],
+["Jika G2 = 15.000, rumus =IF(G2>=30000,\"Tinggi\",IF(G2>=15000,\"Sedang\",\"Rendah\")) menghasilkan …",["Tinggi","Rendah","Sedang","Galat"],2,"15.000 memenuhi syarat ≥ 15.000 tetapi tidak ≥ 30.000."],
+["Persen pertumbuhan IX-B dari Rp66.500 menjadi Rp135.000 sekitar …",["51%","68,5%","203%","103%"],3,"(135.000 − 66.500) ÷ 66.500 = 1,03 = 103%."],
+["Baris yang persis sama muncul dua kali. Tindakan tepat …",["hapus salah satu","biarkan","jumlahkan","jadikan 0"],0,"Duplikat membuat total terhitung dua kali."],
+["Data berat: 2, 3, 3, 4, 18. Median adalah …",["3","4","6","18"],0,"Nilai tengah setelah diurutkan = 3 (rata-rata 6)."],
+["Fungsi pemformatan bersyarat (peta panas) adalah …",["mengunci sel","mewarnai sel otomatis menurut nilainya","menghapus data","mengubah angka jadi huruf"],1,"Warna membuat pola langsung terlihat."],
+["Ciri grafik batang yang menyesatkan adalah …",["sumbu y tidak mulai dari nol","judul jelas","label lengkap","ada sumber"],0,"Sumbu dipotong membesarkan selisih."],
+["Dua hal naik bersamaan belum tentu saling menyebabkan karena …",["selalu kebetulan","mungkin ada faktor tersembunyi yang memengaruhi keduanya","data pasti salah","grafik pasti salah"],1,"Korelasi tidak sama dengan sebab-akibat."],
+["Judul insight terbaik adalah …",["Grafik IX-B naik.","IX-C kurang rajin.","Total naik.","IX-B naik 103% dalam 6 pekan, diduga karena jadwal setoran teratur; tiru di kelas lain."],3,"Memuat fakta, perubahan angka, dugaan, dan aksi."]];
+let qdone=0,qscore=0;
+function quiz(){qdone=0;qscore=0;$("quiz-score").style.display="none";const box=$("quiz");box.innerHTML="";
+  QZ.forEach((q,i)=>{const d=document.createElement("div");d.className="qbox";d.innerHTML=`<div class="q">${i+1}. ${esc(q[0])}</div>`;
+    q[1].forEach((o,j)=>{const b=document.createElement("button");b.className="opt";b.textContent="ABCD"[j]+".  "+o;b.onclick=()=>{d.querySelectorAll("button").forEach((x,k)=>{x.disabled=true;if(k===q[2])x.classList.add("right");});if(j===q[2])qscore++;else b.classList.add("wrong");qdone++;d.insertAdjacentHTML("beforeend",`<div class="fb ${j===q[2]?"ok":"no"}">${j===q[2]?"Benar! ":"Kurang tepat. "}${esc(q[3])}</div>`);
+      if(qdone===QZ.length){const s=$("quiz-score");s.style.display="block";s.innerHTML=`<b class="t">Skor kamu: ${qscore*10} / 100</b>${qscore>=9?"Luar biasa, kamu Analis Data andal!":qscore>=7?"Bagus! Tinjau lagi yang masih salah.":"Ayo ulangi materinya, lalu coba lagi."}`;s.scrollIntoView({behavior:"smooth",block:"center"});}};d.appendChild(b);});box.appendChild(d);});}
+$("quiz-reset").onclick=quiz;quiz();
+
+buildPrices();upd3();
+</script>
+</body>
+</html>
