@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { GraduationCap, BookOpen, Library, Users, IdCard, CalendarDays, BookText, Home, ListChecks, ClipboardList, Target, Link2, NotebookPen, ClipboardCheck, BarChart3, Smile, ThumbsUp, ThumbsDown, Award, AlertTriangle, SquarePen, Table, FileCheck2, FileCheck, School, Upload, Settings2, ScrollText, QrCode } from "lucide-react";
+import { GraduationCap, BookOpen, Library, Users, IdCard, CalendarDays, BookText, Home, ListChecks, ClipboardList, Target, Link2, NotebookPen, ClipboardCheck, BarChart3, Smile, ThumbsUp, ThumbsDown, Award, AlertTriangle, SquarePen, Table, FileCheck2, FileCheck, School, Upload, Settings2, ScrollText, QrCode, Activity } from "lucide-react";
 
 export default function SidebarNav({
   role,
@@ -15,6 +15,7 @@ export default function SidebarNav({
   const isActiveHome = pathname === "/";
   const isActiveMateri = pathname.startsWith("/materi");
   const isActiveAdminMateri = pathname.startsWith("/admin/materi") && !pathname.startsWith("/admin/materi-guru");
+  const isActiveAdminAkses = pathname.startsWith("/admin/akses-pengguna");
   const isActiveAdminUsers = pathname.startsWith("/admin/users");
   const isActiveAdminSiswa = pathname.startsWith("/admin/siswa");
   const isActiveAdminJadwal = pathname.startsWith("/admin/jadwal");
@@ -107,6 +108,10 @@ export default function SidebarNav({
             <Link href="/admin/users" title="Kelola User" className={linkClass(isActiveAdminUsers)}>
               <Users className="h-4 w-4 shrink-0" />
               {!collapsed && "Kelola User"}
+            </Link>
+            <Link href="/admin/akses-pengguna" title="Akses Pengguna" className={linkClass(isActiveAdminAkses)}>
+              <Activity className="h-4 w-4 shrink-0" />
+              {!collapsed && "Akses Pengguna"}
             </Link>
             <Link href="/admin/ebook" title="E-book" className={linkClass(isActiveAdminEbook)}>
               <BookText className="h-4 w-4 shrink-0" />

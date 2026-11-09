@@ -18,13 +18,21 @@ export default function LoginPage() {
     setLoading(true);
 
     const supabase = createClient();
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
     setLoading(false);
 
     if (error) {
       setError("Email atau kata sandi salah. Silakan coba lagi.");
       return;
+    }
+
+    // Catat login untuk menu Akses Pengguna; gagal mencatat tidak boleh menghalangi login.
+    if (data.user) {
+      await supabase.from("akses_log").insert({ user_id: data.user.id, jenis: "login" }).then(
+        () => undefined,
+        () => undefined
+      );
     }
 
     router.push("/");

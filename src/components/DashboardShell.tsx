@@ -3,6 +3,7 @@
 import { useState } from "react";
 import SidebarNav from "@/components/SidebarNav";
 import TopBar from "@/components/TopBar";
+import AksesTracker from "@/components/AksesTracker";
 import { PageHeaderProvider } from "@/lib/page-header-context";
 
 export default function DashboardShell({
@@ -18,6 +19,7 @@ export default function DashboardShell({
 
   return (
     <PageHeaderProvider>
+      <AksesTracker />
       <div className="h-screen overflow-hidden bg-slate-50 dark:bg-slate-900 flex">
         <SidebarNav role={role} collapsed={collapsed} />
         <div className="flex-1 min-w-0 h-full flex flex-col">
