@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 import { getPageNumbers } from "@/lib/pagination";
 import { TINGKAT_LIST, buildRombel, parseRombel, compareRombel, type Tingkat } from "@/lib/rombel";
 import type { Siswa } from "@/types/siswa";
-import { Plus, Pencil, Trash2, Loader2, Search, X, Check, Upload, FileSpreadsheet } from "lucide-react";
+import { Plus, Pencil, Trash2, Loader2, Search, X, Check, Upload, FileSpreadsheet, KeyRound } from "lucide-react";
 
 const PAGE_SIZE_OPTIONS = [10, 25, 50, 100];
 
@@ -377,6 +377,7 @@ export default function AdminSiswaClient({ siswaAwal }: { siswaAwal: Siswa[] }) 
   const [deleteTarget, setDeleteTarget] = useState<Siswa | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
 
   async function handleDelete() {
     if (!deleteTarget) return;
@@ -391,6 +392,30 @@ export default function AdminSiswaClient({ siswaAwal }: { siswaAwal: Siswa[] }) 
     }
     setSiswaList((prev) => prev.filter((s) => s.id !== deleteTarget.id));
     setDeleteTarget(null);
+  }
+
+  async function handleResetPassword(s: Siswa) {
+    if (!s.nisn) {
+      setNotice(null);
+      setError(`${s.nama} belum punya NISN, jadi password tidak bisa direset.`);
+      return;
+    }
+    if (!confirm(`Reset password ${s.nama} menjadi NISN (${s.nisn})?`)) return;
+    setBusyId(s.id);
+    setError(null);
+    setNotice(null);
+    const res = await fetch("/api/admin/siswa/reset-password", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nisn: s.nisn }),
+    });
+    const json = await res.json().catch(() => ({}));
+    setBusyId(null);
+    if (!res.ok) {
+      setError(json.error ?? "Gagal mereset password.");
+      return;
+    }
+    setNotice(`Password ${s.nama} sudah direset menjadi NISN (${s.nisn}).`);
   }
 
   const kelasOptions = [...new Set(siswaList.map((s) => s.kelas))].sort(compareRombel);
@@ -433,6 +458,12 @@ export default function AdminSiswaClient({ siswaAwal }: { siswaAwal: Siswa[] }) 
           </button>
         </div>
       </div>
+
+      {notice && (
+        <p className="text-sm text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 rounded-lg px-3 py-2 mb-4">
+          {notice}
+        </p>
+      )}
 
       {error && (
         <p className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 rounded-lg px-3 py-2 mb-4">
@@ -532,6 +563,14 @@ export default function AdminSiswaClient({ siswaAwal }: { siswaAwal: Siswa[] }) 
                           className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 hover:text-indigo-600 dark:hover:text-indigo-400"
                         >
                           <Pencil className="h-4 w-4" />
+                        </button>
+                        <button
+                          onClick={() => handleResetPassword(s)}
+                          disabled={busyId === s.id}
+                          title="Reset password (jadi NISN)"
+                          className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-amber-50 dark:hover:bg-amber-500/10 hover:text-amber-600 dark:hover:text-amber-400"
+                        >
+                          <KeyRound className="h-4 w-4" />
                         </button>
                         <button
                           onClick={() => setDeleteTarget(s)}
