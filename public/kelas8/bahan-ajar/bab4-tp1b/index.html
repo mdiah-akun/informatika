@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Media Sosial dan Cek Fakta - Materi Siswa Informatika VIII (P2)</title>
+<meta name="description" content="Materi siswa pertemuan 2 Bab IV TP 1: media sosial, hoaks dan cek fakta, privasi dan risiko. SMP Negeri 14 Tarakan.">
+<style>
+:root{--navy:#0B3C5D;--teal:#168AAD;--coral:#FF6B4A;--sun:#FFC145;--mint:#52B788;--ink:#12263A;--bg:#F4F9FB;--card:#fff;--grey:#5B6F82;--line:#D7E6EE}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 "Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif}
+header.top{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;display:flex;align-items:center;gap:14px;padding:10px 20px;box-shadow:0 2px 10px rgba(0,0,0,.2);flex-wrap:wrap}
+header.top b{font-size:17px}
+#bar{position:absolute;left:0;bottom:0;height:4px;background:var(--sun);width:0}
+.layout{max-width:1180px;margin:0 auto;padding:20px;display:grid;grid-template-columns:260px 1fr;gap:28px}
+nav#toc{position:sticky;top:76px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:14.5px}
+nav#toc ol{list-style:none;margin:0;padding:0}nav#toc a{display:block;padding:5px 8px;border-radius:8px;color:var(--ink);text-decoration:none}nav#toc a:hover,nav#toc a.on{background:#E3F1F7;color:var(--navy);font-weight:600}
+main{min-width:0}
+.hero{background:linear-gradient(135deg,var(--navy),var(--teal));color:#fff;border-radius:20px;padding:28px 30px;margin-bottom:22px}
+.hero small{letter-spacing:.12em;color:var(--sun);font-weight:700}.hero h1{margin:6px 0 8px;font-size:clamp(28px,5vw,44px);line-height:1.15}.hero p{margin:0;opacity:.92}
+.hero img{width:100%;border-radius:14px;margin-top:18px;display:block}
+h2.sec{font-size:26px;color:var(--navy);margin:44px 0 12px;padding-bottom:8px;border-bottom:3px solid var(--coral)}
+p{margin:0 0 12px}ul,ol{margin:0 0 14px;padding-left:24px}li{margin:4px 0}
+figure{margin:18px 0;text-align:center}figure img{max-width:100%;height:auto;border-radius:14px;box-shadow:0 6px 22px rgba(11,60,93,.15);cursor:zoom-in;background:#fff}
+figcaption{font-size:14px;color:var(--grey);margin-top:8px}
+.note{border-radius:14px;padding:12px 16px;margin:16px 0;border:2px solid}.note p{margin:4px 0}.note .nt{font-weight:700;margin-bottom:2px}
+.note.warn{background:#FFE9E3;border-color:var(--coral)}.note.try,.note.kuda{background:#FFF3D6;border-color:#E0A100}.note.info{background:#E1F1F7;border-color:var(--teal)}
+.note textarea{width:100%;font:inherit;border:2px solid var(--line);border-radius:10px;padding:8px;margin-top:6px}
+.tw{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;background:#fff;border-radius:12px;overflow:hidden;font-size:15.5px}
+th{background:var(--navy);color:#fff;text-align:left;padding:9px 12px}td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
+.pg{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 6px 22px rgba(11,60,93,.08);margin:14px 0}
+.btn{background:var(--coral);color:#fff;border:0;border-radius:10px;padding:10px 18px;font:inherit;font-weight:700;cursor:pointer}.btn:hover{filter:brightness(1.06)}.btn.ghost{background:#E3F1F7;color:var(--navy)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.msg{font-weight:600}.ok{color:#1F6B45}.err{color:#B0361A}
+.kuda{background:linear-gradient(135deg,#0E4A6B,#168AAD);color:#fff;border-radius:18px;padding:18px 20px;margin:18px 0}
+.kuda h3{margin:0 0 6px;color:var(--sun);font-size:20px}.kuda .opt{display:block;width:100%;text-align:left;margin:6px 0;padding:10px 14px;border-radius:10px;border:2px solid transparent;background:#fff;color:var(--ink);font:inherit;cursor:pointer}
+.kuda .opt:hover{border-color:var(--sun)}.kuda .opt.good{background:#D7F3E3;border-color:var(--mint)}.kuda .opt.bad{background:#FFE0D8;border-color:var(--coral)}
+.kuda .fb{margin-top:10px;font-weight:600}.kuda textarea{width:100%;border-radius:10px;border:0;padding:10px;font:inherit}
+.kuda .btn{background:var(--sun);color:var(--navy)}
+.pair{display:flex;gap:10px;align-items:center;background:#fff;color:var(--ink);border-radius:10px;padding:8px 12px;margin:6px 0;flex-wrap:wrap}.pair span{flex:1;min-width:200px}
+.pair button{border:2px solid var(--line);background:#fff;border-radius:8px;padding:4px 12px;font:inherit;cursor:pointer;font-weight:700}.pair button.sel{background:var(--teal);color:#fff;border-color:var(--teal)}
+.pair.good{background:#D7F3E3}.pair.bad{background:#FFE0D8}
+form#quiz fieldset{border:2px solid var(--line);background:#fff;border-radius:14px;margin:0 0 14px;padding:12px 16px}legend{font-weight:700;padding:0 6px;color:var(--navy)}
+form#quiz label{display:block;padding:4px 0;cursor:pointer}.fb2{margin-top:6px;font-size:15px}
+.sg{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:10px 0}.sg .card{flex:1;min-width:220px;background:#F0F7FA;border-radius:12px;padding:12px}.sg .card p{margin:0 0 8px}
+.chk label{display:block;padding:4px 0}
+#lb{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:50;cursor:zoom-out}#lb img{max-width:95vw;max-height:92vh;border-radius:12px}
+footer{text-align:center;color:var(--grey);font-size:14px;padding:30px 0}
+@media(max-width:860px){.layout{grid-template-columns:1fr}nav#toc{display:none}}
+@media print{header.top,nav#toc{display:none}.layout{display:block}}
+
+select.sl{font:inherit;padding:6px 8px;border-radius:8px;border:2px solid var(--line);background:#fff;color:var(--ink)}
+.kuda select.sl{min-width:150px}
+.cases .cs{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:12px 0}
+.cases .cs h4{margin:0 0 6px;color:var(--navy)}.cases .chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.cases .chips button{border:2px solid var(--line);background:#F0F7FA;border-radius:999px;padding:5px 12px;font:inherit;cursor:pointer}
+.cases .chips button:hover{border-color:var(--teal)}.cases .chips button.good{background:#D7F3E3;border-color:var(--mint)}.cases .chips button.bad{background:#FFE0D8;border-color:var(--coral)}
+.cases .why{font-size:15px;margin-top:4px}
+.risk td select{width:70px}.risk td.sk{font-weight:700;text-align:center}
+.lv-9{background:#FFB8A0}.lv-6{background:#FFD9A8}.lv-4,.lv-3{background:#FFF3D6}.lv-2,.lv-1{background:#E3F4EC}
+</style></head><body>
+<header class="top"><b>Informatika VIII · Bab IV</b><span>Media Sosial & Cek Fakta (P2)</span><div id="bar"></div></header>
+<div class="layout">
+<nav id="toc"><b>Daftar isi</b><ol><li><a href="#pemanasan">1. Pemanasan: Pesan Berantai</a></li><li><a href="#medsos">2. Apa Sih Media Sosial Itu?</a></li><li><a href="#balik-layar">3. Jejak Pasif yang Lebih Dalam</a></li><li><a href="#hoaks">4. Hoaks, Opini, atau Penipuan?</a></li><li><a href="#audit">5. Audit Akun dan Hitung Risikonya</a></li><li><a href="#etika">6. Sebelum Men-share, Cek Dulu!</a></li><li><a href="#proyek">7. Proyek: Poster Panduan untuk Kelas VII</a></li><li><a href="#rangkuman">8. Rangkuman</a></li><li><a href="#kuis">9. Kuis 10 Soal</a></li></ol></nav>
+<main>
+<div class="hero"><small>BAB IV · JEJAK BERMEDIA DIGITAL · PERTEMUAN 2</small><h1>Jadi Tim Cek Fakta dan Jejak Digital!</h1><p>Naik level: kamu menjadi detektif informasi, auditor akun, dan pembuat panduan untuk adik kelas.</p><img src="images/01_cover_p2.png" alt="Sampul materi pertemuan 2"></div>
+<section id="pemanasan"><h2 class="sec">1. Pemanasan: Pesan Berantai</h2>
+<p>Bayangkan ada pesan masuk ke grup kelasmu seperti ini. Pesannya heboh, ada hadiah, dan harus cepat-cepat disebar.</p>
+<figure><img src="images/02_pesan_viral.png" alt="Pesan di atas fiktif. Jangan diteruskan ke mana pun, ya." loading="lazy"><figcaption>Pesan di atas fiktif. Jangan diteruskan ke mana pun, ya.</figcaption></figure>
+<div class="note try"><div class="nt">🤔 Coba Pikir!</div><p>Apa yang kamu rasakan? Tanda apa yang bikin kamu curiga? Kalau kamu ikut menyebarkannya, apa yang terjadi pada jejak digitalmu?</p><textarea class='mine' rows='3' placeholder='Tulis dugaanmu di sini (tidak disimpan, hanya untukmu)…'></textarea></div>
+<p>Hari ini kamu dan timmu mengerjakan <b>proyek</b> dengan tiga misi: <b>A. Investigasi</b>, <b>B. Audit akun</b>, dan <b>C. Poster</b> untuk adik kelas VII.</p>
+<figure><img src="images/17_siklus_pjbl.png" alt="Alur proyek kita: dari pertanyaan sampai produk nyata." loading="lazy"><figcaption>Alur proyek kita: dari pertanyaan sampai produk nyata.</figcaption></figure>
+<div id="kuda1"></div></section>
+<section id="medsos"><h2 class="sec">2. Apa Sih Media Sosial Itu?</h2>
+<p><b>Media sosial</b> adalah media interaktif berbasis internet. Di sana kamu bisa <b>membuat</b> dan <b>membagikan</b> konten (teks, foto, video, animasi, komentar) dan terhubung dengan orang atau grup tertentu lewat profil. Ia termasuk produk Web 2.0.</p>
+<figure><img src="images/03_ciri_medsos.png" alt="Tiga ciri media sosial." loading="lazy"><figcaption>Tiga ciri media sosial.</figcaption></figure>
+<p>Beda dengan TV atau radio: kita tidak hanya menonton, tetapi juga bisa membalas dan membuat konten sendiri.</p>
+<figure><img src="images/04_satu_vs_banyak.png" alt="Media tradisional satu arah, media sosial banyak arah." loading="lazy"><figcaption>Media tradisional satu arah, media sosial banyak arah.</figcaption></figure>
+<div class="note info"><div class="nt">💡 Tahukah kamu?</div><p>Riset 2022 yang dikutip Buku Siswa menyebut rata-rata orang memakai media sosial sekitar <b>2,5 jam per hari</b>. Kira-kira berapa jam kamu?</p></div>
+<h3>Delapan tipe media sosial</h3>
+<figure><img src="images/05_klasifikasi_medsos.png" alt="Satu platform kadang punya beberapa fitur, jadi tipenya bisa tumpang tindih." loading="lazy"><figcaption>Satu platform kadang punya beberapa fitur, jadi tipenya bisa tumpang tindih.</figcaption></figure>
+<div id="kuda2"></div>
+<h3>Dampak media sosial</h3>
+<figure><img src="images/06_dampak_medsos.png" alt="Ada sisi terang dan sisi gelapnya." loading="lazy"><figcaption>Ada sisi terang dan sisi gelapnya.</figcaption></figure>
+<div class="tw"><table><thead><tr><th>Dampak</th><th>Contohnya</th></tr></thead><tbody>
+<tr><td><b>👍 Positif</b></td><td>Kedekatan sosial dan berbagi konten berguna; komunikasi lebih mudah; rekam jejak terlihat saat rekrutmen; bukti pelanggaran bisa ditindaklanjuti; muncul platform dan lapangan kerja baru.</td></tr>
+<tr><td><b>👎 Negatif</b></td><td>Emosi terganggu (iri, ketagihan, cyberbullying); berita bohong dan ujaran kebencian cepat viral; data profil dicuri atau dipakai untuk membuat akun palsu.</td></tr></tbody></table></div></section>
+<section id="balik-layar"><h2 class="sec">3. Jejak Pasif yang Lebih Dalam</h2>
+<p>Di pertemuan 1 kamu kenal jejak pasif. Sekarang kita intip tiga contohnya.</p>
+<h3>a. Metadata: data tentang data</h3>
+<p>Setiap foto membawa “catatan kecil”: kapan diambil, dari perangkat apa, dan (kalau lokasi aktif) di mana. Beberapa platform menghapusnya saat unggah, tetapi kalau kamu mengirim <b>berkas asli</b>, metadata bisa ikut terkirim.</p>
+<figure><img src="images/07_data_di_balik_foto.png" alt="Foto biasa, tapi membawa banyak data." loading="lazy"><figcaption>Foto biasa, tapi membawa banyak data.</figcaption></figure>
+<h3>b. Cookies dan iklan yang “mengikutimu”</h3>
+<p>Habis cari sepatu, tiba-tiba iklan sepatu muncul di mana-mana? Situs menyimpan <b>cookies</b> untuk mencatat kebiasaanmu, lalu data itu dipakai untuk menebak minatmu.</p>
+<figure><img src="images/08_cookies_iklan.png" alt="Dari pencarian sampai iklan." loading="lazy"><figcaption>Dari pencarian sampai iklan.</figcaption></figure>
+<h3>c. Algoritma: kenapa berandamu beda?</h3>
+<p>Aplikasi menampilkan konten berdasarkan apa yang kamu sukai dan tonton. Karena jejak tiap orang berbeda, <b>beranda temanmu bisa sangat berbeda</b> dari berandamu.</p>
+<figure><img src="images/09_algoritma_beranda.png" alt="Jejak berbeda, beranda berbeda." loading="lazy"><figcaption>Jejak berbeda, beranda berbeda.</figcaption></figure>
+<div class="note warn"><div class="nt">⚠️ Ingat!</div><p>Algoritma tidak tahu mana yang benar. Konten yang sering muncul atau banyak dibagikan <b>belum tentu benar</b>.</p></div></section>
+<section id="hoaks"><h2 class="sec">4. Hoaks, Opini, atau Penipuan?</h2>
+<p><b>Hoaks</b> adalah informasi yang secara fakta tidak benar dan menyesatkan. Tapi tidak semua yang “aneh” itu hoaks. Kenali dulu jenisnya:</p>
+<figure><img src="images/10_spektrum_informasi.png" alt="Lima jenis informasi." loading="lazy"><figcaption>Lima jenis informasi.</figcaption></figure>
+<h3>Enam langkah Tim Cek Fakta</h3>
+<figure><img src="images/11_enam_langkah_cek_fakta.png" alt="TENANG – SUMBER – SILANG – GAMBAR – AKAL SEHAT – WASPADA AI." loading="lazy"><figcaption>TENANG – SUMBER – SILANG – GAMBAR – AKAL SEHAT – WASPADA AI.</figcaption></figure>
+<ol><li><b>Tenang.</b> Hoaks sering memancing emosi. Berhenti sebentar dan tanya: kenapa cerita ini dibuat?</li>
+<li><b>Sumber.</b> Lihat alamat webnya. Domain resmi: go.id, sch.id, ac.id, co.id. Hati-hati salah ketik nama lembaga.</li>
+<li><b>Silang.</b> Bandingkan dengan media lain atau situs pengecek fakta seperti turnbackhoax.id.</li>
+<li><b>Gambar.</b> Cari asal foto lewat pencarian gambar dan lihat kemunculannya yang paling awal.</li>
+<li><b>Akal sehat.</b> Hadiah tanpa ikut undian? Gratis untuk semua? Curigai!</li>
+<li><b>Waspada AI.</b> Foto, video, dan suara bisa direkayasa. Periksa ke sumber yang berwenang.</li></ol>
+<figure><img src="images/12_cek_domain_gambar.png" alt="Dua kebiasaan sederhana: cek alamat web dan cek asal gambar." loading="lazy"><figcaption>Dua kebiasaan sederhana: cek alamat web dan cek asal gambar.</figcaption></figure>
+<div class="note info"><div class="nt">🔎 Tips mesin pencari</div><p>Hasil pencarian tetap harus <b>kamu tafsirkan sendiri</b>. Pakai kata kunci yang spesifik (nama, tempat, tanggal, kutipan inti), tambahkan kata “hoaks” atau “cek fakta”, lalu bandingkan beberapa sumber.</p></div>
+<h3>Deepfake: waspada konten buatan AI</h3>
+<p><b>Deepfake</b> adalah foto, video, atau suara yang direkayasa teknologi AI supaya mirip aslinya. Perhatikan petunjuk visual berikut, tetapi ingat: <b>tidak ada satu tanda yang pasti</b>.</p>
+<figure><img src="images/13_deepfake.png" alt="Enam petunjuk visual deepfake." loading="lazy"><figcaption>Enam petunjuk visual deepfake.</figcaption></figure>
+<div class="pg"><b>🕵️ Game detektif: Misi A.</b> Baca kartu, pilih jenis informasinya, lalu lihat penjelasannya. (Semua kartu fiktif.)<div id="cases" class="cases"></div></div>
+<div id="kuda3"></div></section>
+<section id="audit"><h2 class="sec">5. Audit Akun dan Hitung Risikonya</h2>
+<p>Sekarang kamu jadi auditor. Pakai <b>daftar periksa privasi</b> ini untuk memeriksa akun (hanya akun fiktif atau akunmu sendiri, bukan akun teman!).</p>
+<figure><img src="images/15_checklist_privasi.png" alt="Daftar periksa privasi 8 poin." loading="lazy"><figcaption>Daftar periksa privasi 8 poin.</figcaption></figure>
+<h3>Matriks risiko</h3>
+<p><b>Skor risiko = kemungkinan × dampak</b>. Kemungkinan: 1 jarang, 2 mungkin, 3 sering. Dampak: 1 rendah, 2 sedang, 3 tinggi.</p>
+<figure><img src="images/14_matriks_risiko.png" alt="Perbaiki yang skornya paling tinggi dulu." loading="lazy"><figcaption>Perbaiki yang skornya paling tinggi dulu.</figcaption></figure>
+<div class="note info"><div class="nt">🧮 Contoh hitungan</div><p>Temuan: “Profil memuat tanggal lahir dan nomor HP”. Kemungkinan dilihat orang asing = 3 (akun publik). Dampak = 3. Skor = 3 × 3 = <b>9</b> (sangat tinggi), jadi diperbaiki paling awal.</p></div>
+<h3>Latihan: akun @nadia.putri_ (fiktif)</h3>
+<figure><img src="images/16_audit_akun.png" alt="Semua data di akun ini fiktif." loading="lazy"><figcaption>Semua data di akun ini fiktif.</figcaption></figure>
+<div class="pg"><b>🧮 Game audit: Misi B.</b> Pilih K dan D tiap temuan, lalu klik <b>Periksa</b>. Skor dan prioritas tampil otomatis.<div id="audit"></div></div></section>
+<section id="etika"><h2 class="sec">6. Sebelum Men-share, Cek Dulu!</h2>
+<p>Meneruskan pesan juga meninggalkan jejak digital. Namamu tercatat sebagai salah satu penyebarnya. Jadi tanyakan empat hal ini dulu:</p>
+<figure><img src="images/22_etika_meneruskan.png" alt="Kalau ada satu jawaban “belum”, jangan bagikan dulu." loading="lazy"><figcaption>Kalau ada satu jawaban “belum”, jangan bagikan dulu.</figcaption></figure>
+<div class="note warn"><div class="nt">💬 “Aku cuma meneruskan!”</div><p>Kalimat ini tidak menghapus tanggung jawabmu. Kalau isinya bohong, kamu tetap ikut membantu menyebarkan. Menyebarkan informasi bohong yang merugikan orang lain juga bisa berakibat serius.</p></div>
+<div class="pg"><b>Coba sendiri:</b> centang pertanyaan yang jawabannya “ya” untuk pesan yang ingin kamu teruskan.<div id="tes4"></div></div>
+<div id="kuda4"></div></section>
+<section id="proyek"><h2 class="sec">7. Proyek: Poster Panduan untuk Kelas VII</h2>
+<p>Misi C: buat poster/infografis dengan judul ajakan, minimal <b>3 pesan inti</b> (dari hasil Misi A dan B), 1 ilustrasi, contoh nyata (fiktif), slogan, dan nama tim.</p>
+<figure><img src="images/18_contoh_poster.png" alt="Contoh kerangka. Kamu boleh memilih gaya sendiri!" loading="lazy"><figcaption>Contoh kerangka. Kamu boleh memilih gaya sendiri!</figcaption></figure>
+<ul><li><b>Teks besar dan singkat.</b> Satu kotak, satu pesan.</li><li><b>Maksimal 3 warna.</b></li><li><b>Hindari data pribadi asli.</b> Pakai contoh fiktif.</li><li><b>Gunakan bahasa adik kelas</b>: santai dan dekat dengan keseharian mereka.</li></ul></section>
+<section id="rangkuman"><h2 class="sec">8. Rangkuman</h2>
+<figure><img src="images/19_peta_konsep_p2.png" alt="Peta konsep pertemuan 2." loading="lazy"><figcaption>Peta konsep pertemuan 2.</figcaption></figure>
+<ul><li>Media sosial = interaktif, pengguna membuat konten, ada profil dan jaringan; banyak sumber ke banyak penerima.</li>
+<li>Jejak pasif lebih dalam: <b>metadata, cookies, algoritma</b>.</li>
+<li>Cek fakta: <b>Tenang – Sumber – Silang – Gambar – Akal sehat – Waspada AI</b>.</li>
+<li>Audit privasi: daftar periksa 8 poin dan <b>skor risiko = kemungkinan × dampak</b>.</li>
+<li>Sebelum meneruskan: <b>Tenang? Terverifikasi? Tidak merugikan? Perlu?</b></li></ul></section>
+<section id="kuis"><h2 class="sec">9. Kuis 10 Soal</h2><p>Pilih jawabanmu, lalu klik <b>Periksa</b>.</p><form id="quiz"></form>
+<div class="row"><button class="btn" id="chk" type="button">Periksa jawaban</button><button class="btn ghost" id="rst" type="button">Ulangi</button><span id="score" class="msg"></span></div></section>
+<footer>SMP Negeri 14 Tarakan · Informatika Kelas VIII · Sumber: Buku Siswa Informatika SMP/MTs Kelas VIII (Edisi Revisi), Bab IV</footer>
+</main></div>
+<div id="lb"><img alt=""></div>
+<script>
+const D={"kuda":[{"no":1,"tipe":"Pilihan Ganda","posisi":"Awal (mengingat kembali pertemuan 1)","q":"Berikut ini yang termasuk jejak digital PASIF adalah …","opts":["Mengunggah video ke YouTube","Menulis komentar di Instagram","Lokasi GPS yang tercatat oleh aplikasi peta","Mengisi formulir pendaftaran online"],"ans":"C","why":"Jejak pasif tercatat tanpa disadari pengguna (lokasi, riwayat pencarian, alamat IP, cookies). Tiga pilihan lain sengaja dibagikan sehingga termasuk jejak aktif."},{"no":2,"tipe":"Mencocokkan","posisi":"Tengah (sesudah klasifikasi media sosial)","q":"Cocokkan tipe media sosial (1–6) dengan contohnya (A–F)!","left":["Blog","Video sharing","Forum","Photo sharing","Social network","Social bookmarking"],"right":["Instagram","Pinterest","WordPress","Stack Overflow","YouTube","Flickr"],"map":["C","E","D","F","A","B"],"why":"Contoh mengikuti tabel klasifikasi pada Buku Siswa. Satu platform kadang punya beberapa fitur sehingga klasifikasinya bisa tumpang tindih."},{"no":3,"tipe":"Essay Singkat","posisi":"Tengah (sesudah 6 langkah cek fakta)","q":"Pesan berantai: “Hadiah 1 juta! Klik http://hadiah-pelajar.xyz lalu kirim kode OTP. Sebarkan ke 10 grup sebelum 1 jam!” Sebutkan 3 tanda bahwa pesan ini kemungkinan hoaks/penipuan!","ans":"Contoh jawaban (cukup 3): (1) meminta kode OTP; (2) mendesak harus cepat/ada batas waktu; (3) menyuruh menyebarkan ke banyak grup; (4) alamat web tidak resmi (.xyz, bukan go.id/co.id/sch.id); (5) hadiah tanpa ikut apa pun (tidak masuk akal); (6) tidak ada sumber resmi.","why":"Hoaks sering memancing emosi dan mendesak kita bertindak cepat. Berhenti sejenak dan periksa dulu adalah langkah pertama."},{"no":4,"tipe":"Pilihan Ganda","posisi":"Akhir (sebelum penutup)","q":"Kamu menerima video heboh yang membuatmu marah dan ingin cepat membagikannya. Langkah PERTAMA yang paling tepat adalah …","opts":["Langsung membagikan agar teman-teman waspada","Tenang dulu, periksa sumbernya, lalu bandingkan dengan sumber lain sebelum membagikan","Menulis komentar marah di bawah video itu","Menghapus pesannya dan melupakan begitu saja"],"ans":"B","why":"Hoaks dirancang memancing emosi. Tenang dan memeriksa sumber (Tenang–Sumber–Silang) mencegah kita ikut menyebarkan informasi yang salah dan meninggalkan jejak buruk."}],"pg":[{"q":"Berikut ini yang merupakan ciri media sosial adalah …","o":["Informasi hanya mengalir satu arah dari satu sumber","Pengguna dapat membuat konten dan berinteraksi dengan pengguna lain","Hanya bisa diakses lewat televisi","Isinya selalu dibuat oleh wartawan profesional"],"a":"B","p":"Media sosial bersifat interaktif, berbasis internet, dan memungkinkan pengguna menciptakan konten (user-generated content)."},{"q":"Perbedaan terpenting antara media sosial dan media tradisional adalah …","o":["Media sosial tidak memerlukan perangkat","Media tradisional lebih interaktif","Media sosial bersifat banyak sumber ke banyak penerima dan interaktif","Media sosial hanya berisi berita"],"a":"C","p":"Di media sosial kita dapat berdialog dan membalas, sedangkan media tradisional umumnya satu sumber ke banyak penerima."},{"q":"YouTube, Vidio, dan TikTok termasuk tipe media sosial …","o":["Forum","Social bookmarking","Blog","Video sharing"],"a":"D","p":"Menurut klasifikasi Buku Siswa, platform tersebut termasuk video sharing."},{"q":"Berikut ini yang termasuk dampak POSITIF media sosial adalah …","o":["Memudahkan komunikasi, misalnya untuk layanan atau pemasaran","Munculnya perasaan iri dan tidak puas diri","Tersebarnya ujaran kebencian","Data profil yang dicuri"],"a":"A","p":"Kemudahan komunikasi adalah dampak positif; tiga pilihan lain adalah dampak negatif."},{"q":"Data profil dan aktivitas yang terekam di server lalu dipakai untuk membuat akun palsu adalah contoh dampak negatif berupa …","o":["Kecanduan","Cyberbullying","Pencurian data","Penurunan kuota"],"a":"C","p":"Data pengguna yang disalahgunakan, termasuk untuk membuat akun palsu, termasuk pencurian data."},{"q":"Informasi yang secara fakta tidak benar dan menyesatkan disebut …","o":["Opini","Hoaks","Satire yang selalu benar","Berita utama"],"a":"B","p":"Hoaks adalah informasi yang secara fakta tidak benar dan menyesatkan; opini bukan hoaks."},{"q":"Saat membaca berita yang membuatmu sangat marah, langkah pertama yang tepat adalah …","o":["Langsung membagikannya","Membalas dengan kata kasar","Tenang dan berpikir kritis sebelum mempercayai atau membagikan","Menghapus akun"],"a":"C","p":"Hoaks sering dirancang memancing emosi. Berpikir kritis adalah langkah awal cek fakta."},{"q":"Domain yang umumnya dipakai lembaga pendidikan sekolah di Indonesia adalah …","o":[".xyz",".sch.id",".blogspot",".tk"],"a":"B","p":"Domain resmi lembaga di Indonesia antara lain go.id, sch.id, ac.id, dan co.id."},{"q":"Cara yang tepat untuk mengetahui asal-usul sebuah gambar yang dicurigai adalah …","o":["Memperbesar gambar lalu menebak","Menanyakan ke pembuat unggahan saja","Menggunakan pencarian gambar (misalnya Google Images) untuk melihat kemunculan paling awal","Menghitung jumlah like"],"a":"C","p":"Pencarian gambar membantu melacak sumber pertama dan konteks asli gambar."},{"q":"Berikut ini yang dapat menjadi petunjuk konten deepfake adalah …","o":["Kedipan mata yang tidak wajar atau kilau kacamata yang tidak konsisten","Resolusi video yang tinggi","Jumlah penonton yang banyak","Durasi video yang pendek"],"a":"A","p":"Deepfake sering gagal meniru kedipan, bayangan mata/alis, dan pantulan kacamata secara alami."}],"kasus":[{"kode":"A","judul":"Pesan beasiswa berantai","teks":"Pesan di grup kelas: “BEASISWA 5 JUTA untuk SEMUA pelajar! Klik http://beasiswa-pelajar-gratis.xyz, isi data dan kode OTP. Sebarkan ke 10 grup sebelum 1 jam!”","jenis":"Hoaks / penipuan","tanda":"Minta kode OTP; mendesak waktu; menyuruh disebar; alamat web .xyz tidak resmi; hadiah untuk “semua” tanpa seleksi.","tindakan":"Jangan klik, jangan isi OTP, jangan sebarkan; laporkan ke guru/admin grup; bila perlu laporkan pesan ke platform.","cat":"Hoaks/penipuan"},{"kode":"B","judul":"Foto banjir “hari ini”","teks":"Akun anonim memposting foto banjir besar dengan teks “Banjir di kota kita hari ini! Sebarkan!”. Hasil pencarian gambar menunjukkan foto yang sama pernah dimuat di berita dua tahun lalu di kota lain.","jenis":"Konteks salah (gambar asli, peristiwa berbeda)","tanda":"Akun anonim; tidak ada keterangan waktu/lokasi resmi; hasil pencarian gambar menunjukkan kemunculan lebih awal di tempat lain.","tindakan":"Jangan sebarkan; cek informasi dari sumber resmi (pemerintah daerah/BPBD, media terpercaya); sampaikan ke teman bahwa fotonya lama.","cat":"Konteks salah"},{"kode":"C","judul":"Akun komedi: libur setahun","teks":"Akun hiburan menulis: “BREAKING: Pemerintah umumkan sekolah libur 1 tahun karena PR siswa sudah selesai semua.” Di profil tertulis: “akun parodi dan hiburan”.","jenis":"Satire (sindiran/lelucon)","tanda":"Profil menyebut akun parodi; isinya tidak masuk akal; tidak ada sumber resmi; tidak ada media lain yang memberitakan.","tindakan":"Boleh dinikmati sebagai hiburan, tetapi jangan disebar seolah-olah berita sungguhan; beri keterangan jika dibagikan.","cat":"Satire"},{"kode":"D","judul":"Pengumuman jadwal ujian","teks":"Akun resmi sekolah memposting jadwal ujian. Tautan mengarah ke https://smpn14tarakan.sch.id/pengumuman dan informasi yang sama ada di papan pengumuman sekolah.","jenis":"Valid / dapat dipercaya","tanda":"Akun resmi; domain sch.id; informasi sama di sumber lain (papan pengumuman); isi masuk akal.","tindakan":"Boleh dibagikan; sertakan sumber resmi.","cat":"Valid"},{"kode":"E","judul":"Video “kepala sekolah” minta transfer","teks":"Video pendek memperlihatkan seseorang yang mirip kepala sekolah meminta orang tua mentransfer uang ke rekening pribadi. Gerak bibirnya kaku, kedipan jarang, dan kilau kacamatanya tidak berubah saat kepala bergerak.","jenis":"Penipuan dengan kemungkinan deepfake","tanda":"Meminta uang ke rekening pribadi; ciri visual tidak alami (bibir, kedipan, kacamata); tidak ada pengumuman resmi sekolah.","tindakan":"Jangan transfer; konfirmasi langsung ke sekolah lewat nomor resmi; laporkan dan peringatkan orang lain tanpa menyebarkan videonya berulang.","cat":"Hoaks/penipuan"},{"kode":"F","judul":"Opini game favorit","teks":"Seorang siswa menulis: “Menurutku game A lebih seru daripada game B.”","jenis":"Opini (bukan hoaks)","tanda":"Pernyataan pribadi/pendapat, bukan klaim fakta yang bisa dibuktikan benar atau salah.","tindakan":"Boleh ditanggapi dengan santun; tidak perlu dicap hoaks.","cat":"Opini"}],"audit":[{"no":1,"temuan":"Akun publik: siapa saja dapat melihat unggahan","K":3,"D":2,"rek":"Ubah menjadi akun pribadi/terbatas; atur siapa yang dapat melihat unggahan lama."},{"no":2,"temuan":"Profil memuat nama lengkap, tanggal lahir, sekolah/kelas, dan nomor HP","K":3,"D":3,"rek":"Hapus tanggal lahir, nomor HP, dan detail sekolah; pakai nama panggilan."},{"no":3,"temuan":"Foto berseragam dengan lokasi langsung di depan rumah","K":3,"D":3,"rek":"Hapus/arsipkan unggahan; matikan lokasi; jangan menandai tempat rumah."},{"no":4,"temuan":"1,2 ribu pengikut, banyak akun tak dikenal","K":3,"D":2,"rek":"Tinjau daftar pengikut; blokir/hapus akun tak dikenal; terima hanya yang dikenal."},{"no":5,"temuan":"Kata sandi sama di semua akun (disebut di story)","K":2,"D":3,"rek":"Hapus story; ganti dengan kata sandi berbeda dan kuat untuk tiap akun."},{"no":6,"temuan":"Aplikasi kuis pihak ketiga mendapat izin kontak dan lokasi","K":2,"D":2,"rek":"Cabut izin yang tidak perlu; hapus aplikasi yang tidak dipakai."},{"no":7,"temuan":"Akun lama (2019) tidak dipakai tetapi masih aktif","K":2,"D":2,"rek":"Hapus atau nonaktifkan akun lama setelah menyimpan data penting."},{"no":8,"temuan":"Komentar kasar lama di forum game","K":2,"D":3,"rek":"Hapus komentar bila bisa, minta maaf bila perlu, dan ubah kebiasaan berkomentar."}]};
+const $=(s,r=document)=>r.querySelector(s);
+const links=[...document.querySelectorAll('#toc a')];
+addEventListener('scroll',()=>{const h=document.documentElement;$('#bar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';let cur=null;document.querySelectorAll('section').forEach(s=>{if(s.getBoundingClientRect().top<120)cur=s.id});links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur))});
+document.addEventListener('click',e=>{if(e.target.matches('figure img')){$('#lb img').src=e.target.src;$('#lb').style.display='flex'}else if(e.target.closest('#lb')){$('#lb').style.display='none'}});
+// KUDA mandiri
+function kudaBox(k,host){
+  const box=document.createElement('div');box.className='kuda';
+  let h='<h3>⚡ KUDA Mandiri '+k.no+' · '+k.tipe+'</h3><p>'+k.q+'</p>';
+  if(k.opts){h+=k.opts.map((o,i)=>'<button class="opt" data-i="'+i+'">'+'ABCD'[i]+'. '+o+'</button>').join('')+'<div class="fb"></div>';box.innerHTML=h;
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const ok='ABCD'[+b.dataset.i]===k.ans;box.querySelectorAll('.opt').forEach((x,i)=>{x.classList.toggle('good','ABCD'[i]===k.ans);if(x===b&&!ok)x.classList.add('bad')});box.querySelector('.fb').textContent=(ok?'Benar! ':'Belum tepat. Jawaban: '+k.ans+'. ')+k.why});}
+  else if(k.left){h+='<p><small>Pilihan: '+k.right.map((r,i)=>'ABCDEF'[i]+'. '+r).join(' · ')+'</small></p>'+k.left.map((l,i)=>'<div class="pair" data-i="'+i+'"><span>'+(i+1)+'. '+l+'</span><select class="sl"><option value="">Pilih…</option>'+k.right.map((r,j)=>'<option value="'+'ABCDEF'[j]+'">'+'ABCDEF'[j]+'. '+r+'</option>').join('')+'</select></div>').join('')+'<div class="row"><button class="btn" type="button">Periksa</button></div><div class="fb"></div>';box.innerHTML=h;
+    box.querySelector('.btn').onclick=()=>{let n=0;box.querySelectorAll('.pair').forEach((r,i)=>{const ok=r.querySelector('select').value===k.map[i];r.classList.remove('good','bad');r.classList.add(ok?'good':'bad');if(ok)n++});box.querySelector('.fb').textContent='Skor: '+n+'/'+k.left.length+'. '+k.why};}
+  else{h+='<textarea rows="3" placeholder="Tulis jawabanmu…"></textarea><div class="row"><button class="btn" type="button">Lihat contoh jawaban</button></div><div class="fb" hidden></div>';box.innerHTML=h;
+    box.querySelector('.btn').onclick=()=>{const f=box.querySelector('.fb');f.hidden=false;f.textContent=k.ans+' '+k.why}}
+  host.appendChild(box);
+}
+kudaBox(D.kuda[0],$('#kuda1'));kudaBox(D.kuda[1],$('#kuda2'));kudaBox(D.kuda[2],$('#kuda3'));kudaBox(D.kuda[3],$('#kuda4'));
+// game detektif (Misi A)
+(function(){const J=['Valid','Opini','Satire','Konteks salah','Hoaks/penipuan'];const host=$('#cases');
+host.innerHTML=D.kasus.map((k,i)=>'<div class="cs" data-i="'+i+'"><h4>Kartu '+k.kode+' · '+k.judul+'</h4><p>'+k.teks+'</p><div class="chips">'+J.map(j=>'<button type="button" data-j="'+j+'">'+j+'</button>').join('')+'</div><div class="why" hidden></div></div>').join('');
+host.querySelectorAll('.cs').forEach(c=>{const k=D.kasus[+c.dataset.i];c.querySelectorAll('.chips button').forEach(b=>b.onclick=()=>{const ok=b.dataset.j===k.cat;c.querySelectorAll('.chips button').forEach(x=>x.classList.remove('good','bad'));b.classList.add(ok?'good':'bad');const w=c.querySelector('.why');w.hidden=false;w.innerHTML=(ok?'<b class="ok">Tepat!</b> ':'<b class="err">Belum tepat.</b> Jenisnya: <b>'+k.cat+'</b>. ')+'<br><b>Tanda-tanda:</b> '+k.tanda+'<br><b>Tindakan:</b> '+k.tindakan})})})();
+// game audit (Misi B)
+(function(){const host=$('#audit');const opt=n=>'<select class="sl">'+'<option value="">–</option><option>1</option><option>2</option><option>3</option></select>';
+host.innerHTML='<div class="tw risk"><table><thead><tr><th>No</th><th>Temuan</th><th>K</th><th>D</th><th>Skor</th></tr></thead><tbody>'+D.audit.map((a,i)=>'<tr data-i="'+i+'"><td>'+a.no+'</td><td>'+a.temuan+'<div class="rek" hidden></div></td><td>'+opt()+'</td><td>'+opt()+'</td><td class="sk">–</td></tr>').join('')+'</tbody></table></div><div class="row"><button class="btn" id="aud" type="button">Periksa</button><button class="btn ghost" id="audr" type="button">Ulangi</button><span class="msg" id="audm"></span></div><div class="msg" id="audp"></div>';
+$('#aud').onclick=()=>{let n=0,done=0;host.querySelectorAll('tbody tr').forEach(r=>{const a=D.audit[+r.dataset.i];const s=r.querySelectorAll('select');const K=+s[0].value,Dd=+s[1].value;const sk=r.querySelector('.sk');const rek=r.querySelector('.rek');rek.hidden=false;rek.innerHTML='<small>Saran: '+a.rek+'</small>';if(K&&Dd){done++;const v=K*Dd;sk.textContent=v;sk.className='sk lv-'+v;if(K===a.K&&Dd===a.D)n++}else{sk.textContent='–';sk.className='sk'}});
+$('#audm').className='msg '+(n>=6?'ok':'err');$('#audm').textContent='Cocok dengan contoh kunci: '+n+'/8 (terisi '+done+'/8)';
+const top=D.audit.map(a=>({no:a.no,v:a.K*a.D})).sort((x,y)=>y.v-x.v).slice(0,3);$('#audp').textContent='Contoh prioritas: temuan '+top.map(t=>t.no+' (skor '+t.v+')').join(', ')+'. Pilihan lain boleh jika alasanmu logis.'};
+$('#audr').onclick=()=>{host.querySelectorAll('select').forEach(s=>s.value='');host.querySelectorAll('.sk').forEach(s=>{s.textContent='–';s.className='sk'});host.querySelectorAll('.rek').forEach(r=>r.hidden=true);$('#audm').textContent='';$('#audp').textContent=''}})();
+// tes 4
+(function(){const q=['Tenang? (aku tidak sedang terpancing emosi)','Terverifikasi? (sudah cek sumber dan liputan lain)','Tidak merugikan? (tidak mencemarkan atau menyakiti orang)','Perlu? (manfaatnya jelas untuk penerima)'];const h=$('#tes4');h.className='chk';h.innerHTML=q.map((t,i)=>'<label><input type="checkbox" data-i="'+i+'"> '+t+'</label>').join('')+'<p class="msg" id="t4m"></p>';
+h.addEventListener('change',()=>{const n=h.querySelectorAll('input:checked').length;const m=$('#t4m');m.className='msg '+(n===4?'ok':'err');m.textContent=n===4?'Lolos tes! Boleh dibagikan 👍':'Baru '+n+'/4 “ya”. Jangan bagikan dulu ✋'})})();
+// kuis 10
+(function(){const f=$('#quiz');f.innerHTML=D.pg.map((s,i)=>'<fieldset data-i="'+i+'"><legend>Soal '+(i+1)+'</legend><p>'+s.q+'</p>'+s.o.map((o,j)=>'<label><input type="radio" name="q'+i+'" value="'+'ABCD'[j]+'"> '+'ABCD'[j]+'. '+o+'</label>').join('')+'<div class="fb2"></div></fieldset>').join('');
+$('#chk').onclick=()=>{let n=0;D.pg.forEach((s,i)=>{const sel=f.querySelector('input[name=q'+i+']:checked');const fb=f.querySelector('fieldset[data-i="'+i+'"] .fb2');const ok=sel&&sel.value===s.a;if(ok)n++;fb.className='fb2 '+(ok?'ok':'err');fb.textContent=(ok?'✔ Benar. ':'✘ Jawaban: '+s.a+'. ')+s.p});$('#score').textContent='Skormu: '+n+'/10 → nilai '+(n*10);$('#score').className='msg '+(n>=8?'ok':'err')};
+$('#rst').onclick=()=>{f.reset();f.querySelectorAll('.fb2').forEach(x=>x.textContent='');$('#score').textContent=''}})();
+</script></body></html>

@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yuk, Jadi Kreator Digital! — Informatika VIII Bab V</title>
+<meta name="description" content="Materi siswa Informatika Kelas VIII Bab V: media digital untuk produksi dan diseminasi konten.">
+<style>
+:root{--navy:#17294D;--teal:#0E9AA7;--tealL:#D3F1F0;--coral:#FF6B5B;--coralL:#FFE2DD;--sun:#FFC93C;--sunL:#FFF1C4;--purple:#7A5CC7;--purpleL:#E6DFF7;--green:#2FB26E;--greenL:#D9F5E6;--blueL:#DCE9FF;--gray:#5F6F86;--bg:#F6FBFB;--line:#C9D6E2}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--navy);background:var(--bg);line-height:1.65;font-size:17px}
+#bar{position:fixed;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--teal),var(--coral));z-index:50}
+header.hero{background:linear-gradient(135deg,#0E9AA7 0%,#17294D 100%);color:#fff;padding:36px 20px 28px}
+.hero-in{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1.1fr 1fr;gap:24px;align-items:center}
+.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.1;margin:8px 0 10px}
+.hero p{margin:0 0 14px;opacity:.92}
+.tag{display:inline-block;background:var(--coral);padding:4px 14px;border-radius:99px;font-weight:700;font-size:14px}
+.hero img{width:100%;border-radius:20px;box-shadow:0 12px 30px rgba(0,0,0,.3)}
+nav{position:sticky;top:0;z-index:40;background:#fff;box-shadow:0 2px 10px rgba(23,41,77,.12);overflow-x:auto;white-space:nowrap;padding:10px 12px;scrollbar-width:thin}
+nav a{display:inline-block;margin-right:8px;padding:6px 12px;border-radius:99px;background:var(--tealL);color:var(--navy);text-decoration:none;font-size:14px;font-weight:600}
+nav a:hover,nav a.on{background:var(--teal);color:#fff}
+main{max-width:900px;margin:0 auto;padding:22px 16px 80px}
+.card{background:#fff;border-radius:22px;padding:24px 26px;margin:0 0 22px;box-shadow:0 6px 20px rgba(23,41,77,.09)}
+.sh{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.num{flex:none;width:38px;height:38px;border-radius:50%;background:var(--coral);color:#fff;font-weight:800;display:grid;place-items:center}
+h2{font-size:clamp(21px,3.4vw,28px);margin:0;line-height:1.2}h3{color:var(--teal);margin:20px 0 6px}
+.em{font-size:1.1em}
+p{margin:.55em 0}
+figure{margin:16px 0}figure img{width:100%;height:auto;border-radius:16px;border:1px solid var(--line);display:block;background:#fff}
+figcaption{font-size:14px;color:var(--gray);text-align:center;margin-top:6px;font-style:italic}
+ul,ol{padding-left:22px}li{margin:.3em 0}
+.tw{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;min-width:520px;font-size:15.5px}
+th{background:var(--navy);color:#fff;text-align:left;padding:9px 12px}td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}tr:nth-child(even) td{background:#F3F8FB}td.f{font-weight:700}
+.box{border-radius:16px;padding:14px 18px;margin:18px 0 4px;border-left:8px solid}
+.box .bh{font-weight:800;margin-bottom:4px}.box ul{margin:4px 0;padding-left:20px}
+.b-tanya{background:var(--purpleL);border-color:var(--purple)}.b-fakta{background:var(--blueL);border-color:#3B82F6}.b-tips{background:var(--sunL);border-color:var(--sun)}.b-coba{background:var(--greenL);border-color:var(--green)}
+.goals label{display:flex;gap:10px;align-items:flex-start;padding:8px 12px;margin:6px 0;border-radius:12px;background:var(--tealL);cursor:pointer}
+.goals input{width:20px;height:20px;margin-top:3px;accent-color:var(--coral)}
+.goals input:checked+span{text-decoration:line-through;opacity:.65}
+.q{border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin:14px 0}
+.q .qt{font-weight:800;margin-bottom:8px}
+.opt{display:block;width:100%;text-align:left;font:inherit;padding:9px 14px;margin:6px 0;border-radius:12px;border:2px solid var(--line);background:#fff;cursor:pointer;color:var(--navy)}
+.opt:hover{border-color:var(--teal)}.opt.ok{background:var(--greenL);border-color:var(--green)}.opt.no{background:var(--coralL);border-color:var(--coral)}
+.fb{display:none;margin-top:8px;padding:8px 12px;border-radius:10px;background:var(--sunL);font-size:15.5px}
+.score{font-size:20px;font-weight:800;margin-top:12px}
+dl{display:grid;grid-template-columns:max-content 1fr;gap:6px 18px}dt{font-weight:800;color:var(--teal)}dd{margin:0}
+textarea{width:100%;min-height:70px;border:2px solid var(--line);border-radius:12px;padding:10px;font:inherit;margin:4px 0 12px}
+button.btn{background:var(--coral);color:#fff;border:0;border-radius:99px;padding:10px 20px;font:inherit;font-weight:700;cursor:pointer}
+#top{position:fixed;right:16px;bottom:16px;width:46px;height:46px;border-radius:50%;border:0;background:var(--navy);color:#fff;font-size:20px;cursor:pointer;display:none;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+footer{text-align:center;color:var(--gray);padding:20px;font-size:14px}
+@media(max-width:720px){.hero-in{grid-template-columns:1fr}.card{padding:18px 16px}body{font-size:16.5px}dl{grid-template-columns:1fr}}
+@media print{nav,#bar,#top,button{display:none}.card{box-shadow:none;border:1px solid var(--line);break-inside:avoid-page}header.hero{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<header class="hero"><div class="hero-in">
+  <div><span class="tag">Informatika • Kelas VIII • Bab V</span>
+  <h1>Yuk, Jadi Kreator Digital!</h1>
+  <p>Media Digital untuk Produksi &amp; Diseminasi Konten  •  Informatika Kelas VIII  •  Bab V</p>
+  <p>Kamu akan belajar membuat dan membagikan konten digital, lalu langsung praktik membuat karya bersama kelompokmu. Siap? Gulir ke bawah!</p></div>
+  <img src="images/img01_cover_media_digital.png" alt="Laptop menampilkan poster digital dan ponsel dengan ikon konten digital">
+</div></header>
+<nav aria-label="Navigasi bagian"><a href="#pemanasan">🔥 Pemanasan</a><a href="#konsep">💡 Media Digital &amp; Konten Digital</a><a href="#bentuk">🎨 6 Bentuk Konten Digital</a><a href="#alur">🛤️ Dari Ide sampai Dibagikan</a><a href="#kanal">📣 Mau Dibagikan ke Mana</a><a href="#aplikasi">🧰 Kenalan dengan Perkakasmu</a><a href="#format">🗂️ Format File</a><a href="#salin">✂️ Jurus Salin–Tempel</a><a href="#layar">📸 Jurus Tangkap Layar</a><a href="#desain">✨ Biar Karyamu Enak Dilihat</a><a href="#etika">🛡️ Cek Etika</a><a href="#proyek">🚀 Saatnya Proyek!</a><a href="#kuis">🎯 Kuis</a><a href="#rangkuman">⭐ Rangkuman</a></nav>
+<main>
+<section class="card" id="tujuan">
+  <div class="sh"><span class="num">🎯</span><h2>Hari Ini Aku Bisa …</h2></div>
+  <p>Centang kalau kamu sudah merasa bisa di akhir pelajaran (centangmu tersimpan di peramban ini).</p>
+  <div class="goals"><label><input type="checkbox" data-i="0"><span>Menyebut 6 bentuk konten digital dan memberi contohnya</span></label><label><input type="checkbox" data-i="1"><span>Menjelaskan beda produksi dan diseminasi konten</span></label><label><input type="checkbox" data-i="2"><span>Memilih aplikasi, fitur, dan format file yang pas</span></label><label><input type="checkbox" data-i="3"><span>Membuat satu produk digital bersama kelompok</span></label><label><input type="checkbox" data-i="4"><span>Membagikan karya dengan aman, benar, dan santun</span></label></div>
+</section>
+
+<section id="pemanasan" class="card">
+  <div class="sh"><span class="num">1</span><h2><span class="em">🔥</span> Pemanasan: Kamu Lihat Apa Hari Ini?</h2></div>
+  <p>Coba ingat-ingat: tadi pagi sebelum berangkat sekolah, kamu sudah lihat apa saja di ponsel? Mungkin video lucu, poster info lomba, status teman, atau artikel berita. <strong>Semua itu dibuat oleh seseorang</strong>, lalu dibagikan sampai nyangkut di layarmu.</p><p>Nah, hari ini giliran kamu! Kamu akan belajar cara <strong>membuat</strong> konten digital dan <strong>menyebarkannya</strong> ke orang lain, lalu langsung praktik bikin karya bersama kelompok.</p>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <aside class="box b-tanya"><div class="bh"><span>💬</span> Coba jawab dulu (lisan)</div><ul><li>Konten apa yang paling sering kamu tonton atau baca? </li><li>Siapa yang membuatnya, dan lewat apa ia sampai ke ponselmu?</li></ul></aside>
+</section>
+
+<section id="konsep" class="card">
+  <div class="sh"><span class="num">2</span><h2><span class="em">💡</span> Apa Sih Media Digital &amp; Konten Digital?</h2></div>
+  <p><strong>Media digital</strong> adalah sarana untuk membuat, menyimpan, mengirim, dan menampilkan informasi dalam bentuk data digital. Contohnya laptop, ponsel, kamera, mikrofon, dan internet.</p><p><strong>Konten digital</strong> adalah isi atau informasi yang dibuat dan dibagikan lewat media digital. Anggap saja media itu “piringnya”, kontennya “makanannya”.</p><p>Internet itu seperti perpustakaan raksasa. Isinya macam-macam berkas: halaman web (html), pdf, dokumen, video, sampai suara.</p>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <aside class="box b-fakta"><div class="bh"><span>📌</span> Istilah penting</div><ul><li><strong>Media digital</strong> = alat/sarana digitalnya</li><li><strong>Konten digital</strong> = isi yang dibuat &amp; dibagikan</li><li><strong>Multimedia</strong> = gabungan beberapa bentuk konten sekaligus</li></ul></aside>
+</section>
+
+<section id="bentuk" class="card">
+  <div class="sh"><span class="num">3</span><h2><span class="em">🎨</span> 6 Bentuk Konten Digital</h2></div>
+  <p>Konten digital punya enam bentuk: <strong>teks, gambar, suara, animasi, video, dan interaktivitas</strong>. Satu karya bisa memakai beberapa bentuk sekaligus, lho. Itulah yang disebut <strong>multimedia</strong>.</p><p>Contoh multimedia yang populer: podcast video, tayangan slide yang ada suaranya, pertunjukan animasi, dan film.</p>
+  <figure><img src="images/img02_jenis_konten.png" alt="Enam bentuk konten digital: teks, gambar, suara, animasi, video, interaktivitas" loading="lazy"><figcaption>Enam bentuk konten digital: teks, gambar, suara, animasi, video, interaktivitas</figcaption></figure>
+  <ul><li>Poster = gambar + teks</li><li>Video tutorial = gambar + suara + teks</li><li>Kuis online = teks + gambar + interaktivitas</li></ul>
+  
+  
+  
+  
+  
+  
+  
+  <aside class="box b-tips"><div class="bh"><span>💡</span> Tips memilih bentuk</div><ul><li>Pesan singkat dan cepat dipahami? Pilih <strong>poster</strong>.</li><li>Mau menjelaskan data? Pilih <strong>infografis</strong>.</li><li>Mau menunjukkan cara kerja? Pilih <strong>video</strong>.</li></ul></aside>
+</section>
+
+<section id="alur" class="card">
+  <div class="sh"><span class="num">4</span><h2><span class="em">🛤️</span> Dari Ide sampai Dibagikan</h2></div>
+  <p>Bikin konten itu ada alurnya. Garis besarnya dibagi dua:</p><p><strong>Produksi</strong> = proses <em>membuat</em> konten (langkah 1–4).</p><p><strong>Diseminasi</strong> = proses <em>menyebarkan</em> konten ke audiens (langkah 5–6).</p>
+  <figure><img src="images/img03_alur_produksi.png" alt="Enam langkah: ide, rancang, produksi, sunting, publikasi, evaluasi" loading="lazy"><figcaption>Enam langkah: ide, rancang, produksi, sunting, publikasi, evaluasi</figcaption></figure>
+  
+  
+  <div class="tw"><table><thead><tr><th>Langkah</th><th>Pertanyaan kuncinya</th><th>Contoh: Poster “Jaga Mangrove”</th></tr></thead><tbody><tr><td class="f">1. Ide &amp; tujuan</td><td>Untuk siapa? Pesan apa?</td><td>Teman satu sekolah; pesan: mangrove melindungi pantai</td></tr><tr><td class="f">2. Rancang</td><td>Tata letaknya bagaimana?</td><td>Sketsa poster di kertas</td></tr><tr><td class="f">3. Produksi</td><td>Pakai aplikasi apa?</td><td>Menyusun poster di PowerPoint</td></tr><tr><td class="f">4. Sunting</td><td>Sudah benar dan rapi?</td><td>Cek salah ketik, kontras warna, sumber gambar</td></tr><tr><td class="f">5. Publikasi</td><td>Lewat kanal apa?</td><td>Simpan jadi PDF/JPG, kirim ke grup kelas</td></tr><tr><td class="f">6. Evaluasi</td><td>Bagaimana tanggapan audiens?</td><td>Baca komentar &amp; kartu umpan balik</td></tr></tbody></table></div>
+  
+  
+  
+  
+  
+  <aside class="box b-fakta"><div class="bh"><span>📌</span> Kenapa harus didiseminasikan?</div><ul><li>Karya sebagus apa pun kalau tidak dibagikan, pesannya berhenti di perangkatmu.</li><li>Tanggapan audiens membantu karyamu jadi lebih baik.</li></ul></aside>
+</section>
+
+<section id="kanal" class="card">
+  <div class="sh"><span class="num">5</span><h2><span class="em">📣</span> Mau Dibagikan ke Mana?</h2></div>
+  <p>Kanal itu “jalan” yang dilewati kontenmu untuk sampai ke audiens. Pilih kanal yang tepat supaya karyamu benar-benar dibaca.</p>
+  <figure><img src="images/img04_diseminasi_kanal.png" alt="Satu konten dapat dibagikan ke banyak kanal" loading="lazy"><figcaption>Satu konten dapat dibagikan ke banyak kanal</figcaption></figure>
+  
+  
+  <div class="tw"><table><thead><tr><th>Kanal</th><th>Kelebihan</th><th>Hati-hati</th></tr></thead><tbody><tr><td class="f">Grup chat kelas</td><td>Cepat &amp; langsung</td><td>Ukuran file terbatas, mudah tertimbun</td></tr><tr><td class="f">Media sosial sekolah</td><td>Jangkauan luas</td><td>Privasi &amp; jejak digital; perlu izin sekolah</td></tr><tr><td class="f">Blog / web sekolah</td><td>Arsip rapi</td><td>Perlu admin yang mengelola</td></tr><tr><td class="f">Kanal video</td><td>Cocok untuk video</td><td>Durasi &amp; hak cipta musik</td></tr><tr><td class="f">Mading digital / cetak</td><td>Menjangkau semua orang, tanpa kuota</td><td>Tempatnya terbatas</td></tr></tbody></table></div>
+  
+  
+  
+  
+  
+  <aside class="box b-tips"><div class="bh"><span>💡</span> Tiga pertanyaan sebelum memilih kanal</div><ul><li>Siapa audiensku, dan mereka biasa memakai apa?</li><li>Format filenya cocok dengan kanal itu?</li><li>Aman dan sesuai aturan sekolah?</li></ul></aside>
+</section>
+
+<section id="aplikasi" class="card">
+  <div class="sh"><span class="num">6</span><h2><span class="em">🧰</span> Kenalan dengan Perkakasmu</h2></div>
+  <p>Pakai aplikasi itu seperti mengendarai sepeda: kamu perlu <strong>kenal sepedanya</strong>, <strong>tahu cara mengendarainya</strong>, dan <strong>punya tujuan</strong> mau ke mana. Setiap aplikasi punya <strong>objek utama</strong> yang dikelola:</p>
+  <figure><img src="images/img05_aplikasi_perkantoran.png" alt="Tiga aplikasi perkantoran, objek utama, dan format berkas" loading="lazy"><figcaption>Tiga aplikasi perkantoran, objek utama, dan format berkas</figcaption></figure>
+  <ul><li><strong>Pengolah kata</strong> → dokumen (halaman, paragraf, kata)</li><li><strong>Pengolah lembar kerja</strong> → worksheet (sel berisi angka, teks, rumus)</li><li><strong>Pengolah presentasi</strong> → kumpulan slide (teks, gambar, dll.)</li></ul>
+  
+  
+  <figure><img src="images/img09_hierarki_objek.png" alt="Hierarki objek pada pengolah kata: file, halaman, paragraf, baris, kata, karakter" loading="lazy"><figcaption>Hierarki objek pada pengolah kata: file, halaman, paragraf, baris, kata, karakter</figcaption></figure>
+  <p>Layanan yang disediakan aplikasi disebut <strong>fitur</strong> (Open, Save, Save As, Print, dan lain-lain). Aplikasi yang “sekeluarga” biasanya tampilannya mirip, jadi kalau sudah bisa satu, yang lain lebih gampang. Satu fitur pun bisa dipanggil dengan banyak cara: lewat menu, klik kanan, atau pintasan keyboard. <strong>Pilih cara yang paling cepat buatmu!</strong></p><p>Di pengolah kata, objek tersusun seperti tangga: <strong>file → halaman → paragraf → baris → kata → karakter</strong>. Tiap objek punya ciri yang bisa diubah, misalnya karakter punya jenis huruf, ukuran, dan warna.</p>
+  
+  
+  
+  
+</section>
+
+<section id="format" class="card">
+  <div class="sh"><span class="num">7</span><h2><span class="em">🗂️</span> Format File: Kenali Ekstensinya</h2></div>
+  <p>Lihat nama file di akhir: .docx, .xlsx, .pptx, .png, .pdf? Itu namanya <strong>ekstensi</strong>. Ekstensi memberi tahu jenis file dan aplikasi yang bisa membukanya.</p><p>Mau mengubah format? Pakai <strong>Save As</strong> (atau Export). Mengganti ekstensi secara manual, misalnya .docx jadi .xlsx, <strong>bukan</strong> konversi: file-nya tetap tidak bisa dibuka karena isinya tidak ikut berubah.</p>
+  <figure><img src="images/img06_format_file.png" alt="Peta format berkas berdasarkan ekstensi" loading="lazy"><figcaption>Peta format berkas berdasarkan ekstensi</figcaption></figure>
+  <ul><li><strong>.pdf</strong> → bisa dibuka di perangkat apa pun tanpa berubah tampilan, cocok untuk dibagikan</li><li><strong>.jpg / .png</strong> → gambar bitmap (tersusun dari titik/piksel); jpg ukurannya lebih kecil karena dikompresi</li><li><strong>.svg</strong> → gambar vektor, tetap tajam walau diperbesar</li><li><strong>.csv / .txt</strong> → teks polos; csv memisahkan nilai dengan koma</li></ul>
+  
+  
+  
+  
+  
+  
+  
+  <aside class="box b-coba"><div class="bh"><span>🧪</span> Coba sendiri (mini-lab)</div><ul><li>Simpan satu file .docx menjadi .pdf dan .rtf, lalu buka keduanya.</li><li>Ganti nama file .docx menjadi .xlsx, lalu coba buka di Excel. Apa yang terjadi? Kenapa?</li></ul></aside>
+</section>
+
+<section id="salin" class="card">
+  <div class="sh"><span class="num">8</span><h2><span class="em">✂️</span> Jurus Salin–Tempel</h2></div>
+  <p>Perintah <strong>cut–copy–paste</strong> terinspirasi dari zaman dulu, saat orang menyunting naskah ketikan dengan <strong>gunting dan lem</strong>. Di komputer, perantaranya adalah <strong>clipboard</strong>: tempat penampungan sementara.</p><p>Karena banyak aplikasi mengenal clipboard, kamu bisa memindahkan teks, tabel, dan gambar dari satu aplikasi ke aplikasi lain.</p>
+  <figure><img src="images/img07_cut_copy_paste.png" alt="Cut, copy, dan paste lewat clipboard" loading="lazy"><figcaption>Cut, copy, dan paste lewat clipboard</figcaption></figure>
+  <ul><li><strong>Cut</strong> (Ctrl + X) → memindahkan; aslinya hilang dari tempat semula</li><li><strong>Copy</strong> (Ctrl + C) → menggandakan; aslinya tetap ada</li><li><strong>Paste</strong> (Ctrl + V) → menempelkan isi clipboard</li></ul>
+  
+  
+  
+  
+  
+  
+  
+  <aside class="box b-tips"><div class="bh"><span>💡</span> Hasil tempel kok beda?</div><ul><li>Kadang tabel dari Excel jadi berubah tampilannya di Word atau PowerPoint. Itu wajar! Coba opsi tempel: <strong>Keep Source Formatting</strong>, <strong>Merge Formatting</strong>, <strong>Picture</strong>, atau <strong>Keep Text Only</strong>.</li></ul></aside>
+</section>
+
+<section id="layar" class="card">
+  <div class="sh"><span class="num">9</span><h2><span class="em">📸</span> Jurus Tangkap Layar</h2></div>
+  <p>Kadang kamu perlu “memotret” layar: peta, tampilan aplikasi, atau bukti kerja. Ada dua cara di Windows:</p>
+  <figure><img src="images/img08_screenshot.png" alt="Tangkap layar penuh dengan PrtScr dan sebagian dengan Win+Shift+S" loading="lazy"><figcaption>Tangkap layar penuh dengan PrtScr dan sebagian dengan Win+Shift+S</figcaption></figure>
+  <ul><li><strong>PrtScr</strong> → menangkap seluruh layar, lalu tempel dengan Ctrl + V</li><li><strong>Win + Shift + S</strong> → membuka Snipping Tool untuk menangkap sebagian layar</li><li>Bagian yang tidak perlu bisa dipotong dengan fitur <strong>crop</strong></li></ul>
+  
+  
+  
+  
+  
+  
+  
+  <aside class="box b-fakta"><div class="bh"><span>📌</span> Di ponsel?</div><ul><li>Umumnya tekan tombol daya + volume bawah bersamaan (bisa berbeda tiap merek).</li></ul></aside>
+</section>
+
+<section id="desain" class="card">
+  <div class="sh"><span class="num">10</span><h2><span class="em">✨</span> Biar Karyamu Enak Dilihat</h2></div>
+  <p>Karya yang bagus bukan yang paling ramai, tapi yang <strong>pesannya paling jelas</strong>. Ingat 4 jurus desain ini:</p>
+  <figure><img src="images/img10_prinsip_desain.png" alt="Empat prinsip desain: kontras, rata, pengulangan, kedekatan" loading="lazy"><figcaption>Empat prinsip desain: kontras, rata, pengulangan, kedekatan</figcaption></figure>
+  <ul><li><strong>Kontras</strong> → bedakan yang penting (judul besar, warna terang di latar gelap)</li><li><strong>Rata (alignment)</strong> → susun teks dan gambar pada satu garis</li><li><strong>Pengulangan</strong> → pakai warna dan gaya huruf yang konsisten</li><li><strong>Kedekatan</strong> → kelompokkan hal yang berhubungan</li></ul>
+  
+  
+  <figure><img src="images/img11_anatomi_poster.png" alt="Anatomi poster digital dengan lima bagian" loading="lazy"><figcaption>Anatomi poster digital dengan lima bagian</figcaption></figure>
+  <p>Poster yang baik punya lima bagian: <strong>judul</strong>, <strong>gambar utama</strong>, <strong>teks penjelas</strong>, <strong>ajakan (CTA)</strong>, dan <strong>sumber/kredit</strong>. Gunakan maksimal 2–3 jenis huruf dan sisakan ruang kosong biar napas.</p>
+  
+  
+  
+  <aside class="box b-tips"><div class="bh"><span>💡</span> Uji 2 meter</div><ul><li>Berdiri 2 meter dari layar. Kalau judul dan pesan utama masih terbaca, desainmu aman!</li></ul></aside>
+</section>
+
+<section id="etika" class="card">
+  <div class="sh"><span class="num">11</span><h2><span class="em">🛡️</span> Cek Dulu Sebelum Klik “Publikasikan”</h2></div>
+  <p>Sekali dibagikan, karyamu bisa dilihat banyak orang dan <strong>menjadi jejak digitalmu</strong>. Jadi tanyakan lima hal ini:</p>
+  <figure><img src="images/img12_checklist_publikasi.png" alt="Lima pertanyaan sebelum mempublikasikan konten" loading="lazy"><figcaption>Lima pertanyaan sebelum mempublikasikan konten</figcaption></figure>
+  <ul><li><strong>Hak cipta</strong> → pakai karya sendiri, karya berlisensi terbuka, atau minta izin. Selalu cantumkan sumber.</li><li><strong>Fakta</strong> → data sudah dicek ke sumber tepercaya? Bukan hoaks?</li><li><strong>Privasi</strong> → wajah dan data pribadi orang lain butuh izin.</li><li><strong>Santun</strong> → tidak mengejek, tidak menyinggung SARA, tidak merundung.</li><li><strong>Jejak digital</strong> → apakah kamu bangga dengan karya ini nanti?</li></ul>
+  
+  
+  
+  
+  
+  
+  
+  <aside class="box b-fakta"><div class="bh"><span>📌</span> Tahukah kamu?</div><ul><li>Karya orang lain dilindungi hukum (UU No. 28 Tahun 2014 tentang Hak Cipta). Menaruh sumber adalah bentuk menghargai pembuatnya.</li></ul></aside>
+</section>
+
+<section id="proyek" class="card">
+  <div class="sh"><span class="num">12</span><h2><span class="em">🚀</span> Saatnya Proyek!</h2></div>
+  <p><strong>Tantangan:</strong> bagaimana kita membuat dan menyebarkan konten yang mengajak teman-teman sekolah <strong>peduli lingkungan</strong> (misalnya sampah plastik, hemat air, atau mangrove di Tarakan)?</p><p>Dalam kelompok 4 orang, pilih <strong>satu produk</strong>, bagi peran, lalu kerjakan dalam 30 menit.</p>
+  <figure><img src="images/img15_pilihan_produk.png" alt="Empat pilihan produk: poster digital, infografis, video pendek, artikel blog" loading="lazy"><figcaption>Empat pilihan produk: poster digital, infografis, video pendek, artikel blog</figcaption></figure>
+  <ul><li><strong>Ketua</strong> → mengatur waktu, memastikan semua terlibat</li><li><strong>Penulis/Peneliti</strong> → naskah, data, dan sumber</li><li><strong>Desainer</strong> → tata letak dan prinsip desain</li><li><strong>Publikator</strong> → menyimpan file dan membagikan ke kanal</li></ul>
+  
+  
+  <figure><img src="images/img17_kerja_tim.png" alt="Tiga siswa berbagi peran mengerjakan poster" loading="lazy"><figcaption>Tiga siswa berbagi peran mengerjakan poster</figcaption></figure>
+  
+  <h3>Langkah kerja proyek</h3><ol><li><strong>Rencanakan (8 menit):</strong> isi lembar perencanaan di LKPD.</li><li><strong>Draf (10 menit):</strong> buat kerangka dan kumpulkan bahan.</li><li><strong>Produksi (15 menit):</strong> buat karya dengan aplikasi pilihanmu.</li><li><strong>Sunting (5 menit):</strong> cek desain, sumber, dan izin.</li><li><strong>Diseminasi:</strong> pajang di galeri karya, beri dan terima kartu “2 Bintang 1 Harapan”, lalu bagikan ke kanal kelas.</li></ol>
+  <figure><img src="images/img16_storyboard.png" alt="Storyboard enam adegan untuk membuat video" loading="lazy"><figcaption>Storyboard enam adegan untuk membuat video</figcaption></figure>
+  <p><strong>Pilih video?</strong> Buat dulu <strong>storyboard</strong> (sketsa adegan) supaya rekamanmu tidak berantakan. Total 30–60 detik sudah cukup.</p>
+  <aside class="box b-tips"><div class="bh"><span>💡</span> Beri nama file dengan rapi</div><ul><li>Contoh: <strong>Kelompok3_PosterMangrove.pdf</strong> — nomor kelompok + jenis produk.</li></ul></aside>
+</section>
+<section class="card" id="kuis">
+  <div class="sh"><span class="num">🎯</span><h2>Cek Pemahaman: Mini Kuis</h2></div>
+  <p>Pilih jawabanmu. Jawaban benar akan berwarna hijau.</p>
+  <div id="quiz"></div>
+  <div class="score" id="score"></div>
+</section>
+<section class="card" id="rangkuman">
+  <div class="sh"><span class="num">⭐</span><h2>Rangkuman</h2></div>
+  <ul><li>Konten digital punya 6 bentuk; multimedia menggabungkannya.</li><li>Produksi = membuat konten; diseminasi = menyebarkannya ke audiens.</li><li>Kenali aplikasi, objek, fitur, dan format file; Save As untuk konversi.</li><li>Salin–tempel dan tangkap layar membantu memadukan konten antar aplikasi.</li><li>Cek hak cipta, fakta, privasi, kesantunan sebelum mempublikasikan.</li></ul>
+  <h3>Kosakata Penting</h3>
+  <dl><dt>Media digital</dt><dd>Sarana membuat, menyimpan, mengirim, dan menampilkan informasi digital.</dd><dt>Konten digital</dt><dd>Isi atau informasi yang dibuat dan dibagikan lewat media digital.</dd><dt>Multimedia</dt><dd>Gabungan beberapa bentuk konten dalam satu penyajian.</dd><dt>Produksi</dt><dd>Proses membuat konten.</dd><dt>Diseminasi</dt><dd>Proses menyebarkan konten ke audiens.</dd><dt>Kanal</dt><dd>Saluran untuk membagikan konten (grup chat, blog, mading, dll.).</dd><dt>Ekstensi</dt><dd>Akhiran nama berkas yang menunjukkan jenis berkas.</dd><dt>Clipboard</dt><dd>Penyimpanan sementara untuk cut, copy, dan paste.</dd><dt>Fitur</dt><dd>Layanan/ciri yang disediakan sebuah aplikasi.</dd><dt>Storyboard</dt><dd>Sketsa urutan adegan sebelum merekam video.</dd></dl>
+  <h3>Refleksi</h3>
+  <label for="r0"><strong>1. Bagian mana yang paling mudah buatku? Paling sulit?</strong></label><textarea id="r0" placeholder="Tulis jawabanmu di sini …"></textarea><label for="r1"><strong>2. Kalau membuat karya lagi, apa yang akan kuubah?</strong></label><textarea id="r1" placeholder="Tulis jawabanmu di sini …"></textarea><label for="r2"><strong>3. Pesan apa yang ingin kusampaikan lewat karyaku?</strong></label><textarea id="r2" placeholder="Tulis jawabanmu di sini …"></textarea>
+  <p><em>Jawaban refleksi tidak disimpan di server; salin ke buku tugas atau LKPD-mu.</em></p>
+</section>
+</main>
+<footer>© SMP Negeri 14 Tarakan • Informatika Kelas VIII • Bab V Pemanfaatan Perangkat Digital<br>Sumber materi: Buku Siswa Informatika Kelas VIII (Edisi Revisi), Kemendikbudristek 2024</footer>
+<button id="top" aria-label="Kembali ke atas">↑</button>
+<script>
+const QUIZ=[{"q":"Gabungan teks, gambar, suara, dan video dalam satu penyajian disebut …","o":["Hiperteks","Multimedia","Telemedia","Mikromedia"],"k":1,"p":"Multimedia menggabungkan beberapa bentuk konten sekaligus."},{"q":"Kamu mengirim poster buatanmu ke grup kelas. Kegiatan ini termasuk …","o":["Rancang","Sunting","Diseminasi","Konversi"],"k":2,"p":"Menyebarkan konten ke audiens lewat kanal = diseminasi."},{"q":"Pintasan untuk MEMINDAHKAN teks (aslinya hilang) adalah …","o":["Ctrl + C","Ctrl + X","Ctrl + V","Ctrl + P"],"k":1,"p":"Cut = Ctrl+X memindahkan; Copy = Ctrl+C menggandakan."},{"q":"Agar laporan tampil sama di perangkat apa pun, simpan sebagai …","o":[".pdf",".docx",".csv",".txt"],"k":0,"p":"PDF tidak bergantung pada aplikasi, perangkat keras, atau sistem operasi."},{"q":"Sebelum mempublikasikan karya, hal yang perlu dicek adalah …","o":["Hanya warna latar","Hak cipta, fakta, privasi, dan kesantunan","Jumlah huruf","Ukuran layar"],"k":1,"p":"Karya yang aman, benar, dan santun adalah tanggung jawab pembuatnya."}];
+const qz=document.getElementById('quiz');let done=0,right=0;
+QUIZ.forEach((q,qi)=>{const d=document.createElement('div');d.className='q';
+ d.innerHTML='<div class="qt">'+(qi+1)+'. '+q.q+'</div>';
+ q.o.forEach((o,oi)=>{const b=document.createElement('button');b.className='opt';b.type='button';b.textContent='ABCD'[oi]+'. '+o;
+  b.onclick=()=>{if(d.dataset.done)return;d.dataset.done=1;done++;
+   const bs=d.querySelectorAll('.opt');bs[q.k].classList.add('ok');
+   if(oi===q.k){right++}else{b.classList.add('no')}
+   const f=d.querySelector('.fb');f.style.display='block';f.textContent=(oi===q.k?'Benar! ':'Belum tepat. ')+q.p;
+   if(done===QUIZ.length){document.getElementById('score').textContent='Skormu: '+right+' dari '+QUIZ.length+(right===QUIZ.length?' — Keren, kamu siap jadi kreator! 🎉':' — Baca lagi bagian yang kurang, ya 💪')}};
+  d.appendChild(b)});
+ const fb=document.createElement('div');fb.className='fb';d.appendChild(fb);qz.appendChild(d)});
+// checklist persist
+const KEY='bab5tp4-goals';let saved=[];try{saved=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){}
+document.querySelectorAll('.goals input').forEach(c=>{c.checked=saved.includes(+c.dataset.i);
+ c.onchange=()=>{const a=[...document.querySelectorAll('.goals input')].filter(x=>x.checked).map(x=>+x.dataset.i);try{localStorage.setItem(KEY,JSON.stringify(a))}catch(e){}}});
+// progress + top + nav highlight
+const bar=document.getElementById('bar'),topBtn=document.getElementById('top');
+const links=[...document.querySelectorAll('nav a')];const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+addEventListener('scroll',()=>{const h=document.documentElement;const p=h.scrollTop/(h.scrollHeight-h.clientHeight);bar.style.width=(p*100)+'%';topBtn.style.display=h.scrollTop>600?'block':'none';
+ let cur=0;secs.forEach((s,i)=>{if(s&&s.getBoundingClientRect().top<120)cur=i});links.forEach((a,i)=>a.classList.toggle('on',i===cur))},{passive:true});
+topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});
+</script>
+</body>
+</html>

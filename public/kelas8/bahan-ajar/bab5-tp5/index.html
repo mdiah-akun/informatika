@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Intip Dapur Komputer – Informatika Kelas VIII</title>
+<style>
+:root{--navy:#1F3A5F;--teal:#0FA3B1;--orange:#F77F00;--yel:#FCBF49;--green:#43AA8B;--red:#D62828;--purple:#7B5EA7;--bg:#F4F8FB;--card:#fff;--ink:#263238;--mut:#5A6B7F;--line:#DCE6EE}
+@media (prefers-color-scheme:dark){:root{--bg:#0F1B2D;--card:#16273F;--ink:#E8EEF5;--mut:#9FB1C6;--line:#2A4263}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
+header.hero{background:linear-gradient(135deg,#1F3A5F,#0FA3B1);color:#fff;padding:40px 20px 56px;text-align:center}
+.hero small{letter-spacing:.12em;font-weight:700;color:var(--yel)}
+.hero h1{margin:.3em 0;font-size:clamp(28px,5vw,44px);line-height:1.15}
+.hero p{max-width:620px;margin:0 auto 18px;opacity:.95}
+nav{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line);display:flex;gap:4px;overflow-x:auto;padding:8px 12px;scrollbar-width:none}
+nav a{white-space:nowrap;text-decoration:none;color:var(--ink);padding:6px 12px;border-radius:999px;font-size:14px;font-weight:600}
+nav a:hover{background:var(--teal);color:#fff}
+main{max-width:860px;margin:0 auto;padding:20px 16px 60px}
+section{margin:28px 0}
+h2{font-size:28px;color:var(--navy);margin:0 0 6px}
+@media (prefers-color-scheme:dark){h2{color:#CADCFC}}
+h2 .n{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--orange);color:#fff;font-size:20px;margin-right:10px}
+h3{color:var(--teal);margin:22px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:14px 0;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+figure{margin:16px 0;text-align:center}
+figure img{max-width:100%;height:auto;border-radius:12px;border:1px solid var(--line);background:#fff}
+figcaption{font-size:14px;color:var(--mut);margin-top:6px;font-style:italic}
+.tip,.warn,.try{border-left:6px solid;border-radius:10px;padding:12px 16px;margin:14px 0}
+.tip{background:rgba(15,163,177,.12);border-color:var(--teal)}
+.warn{background:rgba(214,40,40,.1);border-color:var(--red)}
+.try{background:rgba(247,127,0,.12);border-color:var(--orange)}
+.tip b.t,.warn b.t,.try b.t{display:block;margin-bottom:2px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:15.5px}
+th{background:var(--navy);color:#fff;padding:8px;text-align:left}
+td{padding:8px;border-bottom:1px solid var(--line)}
+tr:nth-child(even) td{background:rgba(120,150,180,.08)}
+code,.mono{font-family:Consolas,monospace;background:rgba(120,150,180,.18);padding:1px 6px;border-radius:6px}
+.formula{text-align:center;font-size:20px;font-weight:700;padding:14px;background:rgba(252,191,73,.25);border:2px dashed var(--yel);border-radius:12px;margin:14px 0}
+/* widgets */
+.w{background:var(--card);border:2px solid var(--teal);border-radius:16px;padding:16px;margin:16px 0}
+.w h4{margin:0 0 8px;color:var(--teal)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+button,select,input{font:inherit}
+button.tg{border:0;border-radius:12px;padding:10px 18px;font-weight:700;cursor:pointer;background:#90A4AE;color:#fff;min-width:96px}
+button.tg.on{background:var(--green)}
+button.btn{border:0;border-radius:10px;padding:8px 16px;font-weight:700;cursor:pointer;background:var(--orange);color:#fff}
+input[type=text]{padding:8px 10px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);width:110px;font-family:Consolas,monospace}
+.lamp{width:54px;height:54px;border-radius:50%;background:#CFD8DC;border:3px solid #90A4AE;display:inline-block;transition:.2s}
+.lamp.on{background:var(--yel);border-color:#B08900;box-shadow:0 0 22px 8px rgba(252,191,73,.7)}
+.gates{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-top:12px;text-align:center}
+.gates div{padding:10px;border-radius:12px;background:var(--bg);border:1px solid var(--line)}
+.res{margin-top:10px;padding:10px;border-radius:10px;background:rgba(67,170,139,.15);font-family:Consolas,monospace;word-break:break-word}
+.bits{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.bit{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;color:var(--mut)}
+.bit button{width:42px;height:42px;border-radius:10px;border:0;font-weight:800;font-size:18px;cursor:pointer;background:#90A4AE;color:#fff}
+.bit button.on{background:var(--orange)}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:8px 0}
+summary{cursor:pointer;font-weight:700}
+.q{margin:16px 0}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;padding:10px 14px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.opt.ok{border-color:var(--green);background:rgba(67,170,139,.2)}
+.opt.no{border-color:var(--red);background:rgba(214,40,40,.15)}
+.fb{font-size:15px;margin-top:4px}
+footer{text-align:center;color:var(--mut);font-size:14px;padding:30px 16px}
+@media(max-width:560px){body{font-size:16px}h2{font-size:24px}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <small>BAB V • PEMANFAATAN PERANGKAT DIGITAL</small>
+  <h1>Intip Dapur Komputer</h1>
+  <p>Bagaimana komputer menyimpan dan mengolah data? Yuk jadi detektif: amati, coba, dan temukan sendiri jawabannya!</p>
+  <img src="images/14_analogi_dapur.png" alt="Analogi dapur restoran sebagai komputer" style="max-width:min(560px,92%);border-radius:14px;background:#fff">
+</header>
+<nav>
+  <a href="#alur">1 Alur Komputer</a><a href="#bit">2 Bit &amp; Byte</a><a href="#ram">3 RAM vs Storage</a>
+  <a href="#alamat">4 Alamat Memori</a><a href="#cpu">5 CPU</a><a href="#gerbang">6 Gerbang Logika</a><a href="#kuis">7 Kuis</a>
+</nav>
+<main>
+<section class="card" style="border-color:var(--orange)">
+  <h3 style="margin-top:0;color:var(--orange)">Misi hari ini</h3>
+  <p>Rani mengetik tugas 2 jam, lalu listrik padam. Tugasnya <b>hilang</b>, tapi foto di HP-nya <b>aman</b>. Kenapa bisa begitu? Temukan jawabannya sambil menyelesaikan 6 bagian ini.</p>
+</section>
+
+<section id="alur">
+  <h2><span class="n">1</span>Komputer = Dapur Restoran</h2>
+  <p>Di restoran: pelanggan memesan, koki memasak, bahan disimpan di gudang, hidangan diantar. Komputer bekerja mirip:</p>
+  <table><tr><th>Restoran</th><th>Komputer</th><th>Contoh</th></tr>
+  <tr><td>Pelanggan memesan</td><td><b>Input</b></td><td>keyboard, mouse, scanner, mikrofon</td></tr>
+  <tr><td>Koki</td><td><b>Proses (CPU)</b></td><td>processor di motherboard</td></tr>
+  <tr><td>Meja kerja koki</td><td><b>RAM</b></td><td>tempat data yang sedang dipakai</td></tr>
+  <tr><td>Gudang bahan</td><td><b>Storage</b></td><td>SSD, HDD, flashdisk</td></tr>
+  <tr><td>Hidangan</td><td><b>Output</b></td><td>monitor, printer, speaker, proyektor</td></tr></table>
+  <figure><img src="images/01_alur_sistem_komputer.png" alt="Alur kerja sistem komputer"><figcaption>Alur kerja sistem komputer: input → proses → penyimpanan → output</figcaption></figure>
+  <div class="try"><b class="t">Coba dulu!</b>Kamu menekan huruf “A” di keyboard dan huruf itu muncul di layar. Urutkan perjalanannya: keyboard → … → … → monitor.</div>
+</section>
+
+<section id="bit">
+  <h2><span class="n">2</span>Semua Data = 0 dan 1</h2>
+  <p>Komputer hanya mengenal dua keadaan: ada arus (<b>1</b>) atau tidak (<b>0</b>). Satu angka disebut <b>bit</b>, dan <b>8 bit = 1 byte</b>. Foto, lagu, video, sampai game semuanya adalah deretan 0 dan 1.</p>
+  <figure><img src="images/12_bit_byte.png" alt="Satu byte menyimpan huruf A"><figcaption>01000001 = 64 + 1 = 65 = huruf “A”</figcaption></figure>
+  <div class="w"><h4>Mainkan: Lampu Bit</h4>
+    <p>Klik tombol bit untuk menyalakan/mematikan. Lihat nilai desimalnya!</p>
+    <div class="bits" id="bits"></div>
+    <div class="res" id="bitres"></div>
+  </div>
+</section>
+
+<section id="ram">
+  <h2><span class="n">3</span>RAM vs Storage</h2>
+  <figure><img src="images/03_ram_vs_storage.png" alt="Perbandingan RAM dan storage"><figcaption>RAM = meja belajar, storage = lemari buku</figcaption></figure>
+  <table><tr><th></th><th>RAM</th><th>Storage</th></tr>
+  <tr><td>Tugas</td><td>Tempat kerja sementara</td><td>Simpan file selamanya</td></tr>
+  <tr><td>Listrik mati</td><td><b>Hilang</b></td><td><b>Tetap ada</b></td></tr>
+  <tr><td>Kecepatan</td><td>Sangat cepat</td><td>Lebih lambat</td></tr>
+  <tr><td>Kapasitas</td><td>4–16 GB</td><td>256 GB–2 TB</td></tr></table>
+  <div class="tip"><b class="t">Jawaban misi Rani</b>Tugas yang belum di-<b>Save</b> masih berada di RAM, jadi hilang saat listrik padam. Foto di galeri sudah ada di storage, jadi aman.</div>
+  <div class="w"><h4>Simulasi: Mengetik tanpa Save</h4>
+    <div class="row"><button class="btn" id="bType">1. Ketik tugas</button><button class="btn" id="bSave">2. Save</button><button class="btn" style="background:var(--red)" id="bOff">3. Listrik padam!</button><button class="btn" style="background:var(--mut)" id="bReset">Ulangi</button></div>
+    <div class="gates" style="grid-template-columns:1fr 1fr"><div><b>RAM</b><br><span id="ramv">kosong</span></div><div><b>Storage</b><br><span id="stov">kosong</span></div></div>
+  </div>
+  <figure><img src="images/04_hdd_vs_ssd.png" alt="HDD dan SSD"><figcaption>HDD punya piringan berputar, SSD memakai chip flash</figcaption></figure>
+  <figure><img src="images/02_tingkatan_penyimpanan.png" alt="Tingkatan penyimpanan"><figcaption>Makin ke atas: makin cepat, mahal, dan sedikit muatnya</figcaption></figure>
+  <details><summary>Urutan saat membuka, mengedit, dan menyimpan file</summary><ol><li>Buka file: disalin dari storage ke RAM.</li><li>CPU mengolah isi RAM saat kamu mengedit.</li><li>Tekan Save: isi RAM ditulis ke storage.</li><li>Listrik mati: file di storage tetap aman.</li></ol></details>
+</section>
+
+<section id="alamat">
+  <h2><span class="n">4</span>Alamat Memori</h2>
+  <p>Setiap data punya alamat, ditulis dalam bilangan <b>heksadesimal</b> (basis 16): simbol 0–9 lalu <b>A=10, B=11, C=12, D=13, E=14, F=15</b>.</p>
+  <figure><img src="images/06_heksadesimal.png" alt="Heksadesimal"><figcaption>Cara mengubah desimal ke heksadesimal dan sebaliknya</figcaption></figure>
+  <div class="w"><h4>Konverter Desimal ↔ Heksa</h4>
+    <div class="row"><label>Desimal <input type="text" id="dec" value="175"></label><label>Heksa <input type="text" id="hex" value="AF"></label></div>
+    <div class="res" id="hexres"></div></div>
+  <p>Alamat memori ditulis <b>segmen:offset</b> (segmen = baris, offset = kolom). Alamat fisiknya:</p>
+  <div class="formula">Alamat fisik = Segmen + Offset (heksadesimal)</div>
+  <figure><img src="images/05_alamat_memori.png" alt="Alamat memori ke alamat fisik"><figcaption>0001:000B → 0001 + 000B = 000C</figcaption></figure>
+  <div class="w"><h4>Kalkulator Alamat Fisik</h4>
+    <div class="row"><label>Segmen <input type="text" id="seg" value="0002"></label><label>Offset <input type="text" id="off" value="000F"></label><button class="btn" id="bAddr">Hitung</button></div>
+    <div class="res" id="addrres"></div></div>
+  <div class="warn"><b class="t">Awas jebakan!</b>Jangan disambung jadi 0002000F. Harus dijumlahkan. Dan F + 1 = <b>10</b> (heksa), bukan “G”.</div>
+  <div class="try"><b class="t">Pikirkan!</b>Coba hitung 0000:000B dan 0001:000A. Apa yang kamu temukan? Apa akibatnya jika dua data berbeda disimpan di sana?</div>
+</section>
+
+<section id="cpu">
+  <h2><span class="n">5</span>CPU: Otak Komputer</h2>
+  <figure><img src="images/07_komponen_cpu.png" alt="Komponen CPU"><figcaption>Control Unit, ALU, dan register di dalam CPU</figcaption></figure>
+  <ul><li><b>Control Unit</b>: mengatur dan menerjemahkan instruksi.</li><li><b>ALU</b>: menghitung dan melakukan operasi logika.</li><li><b>Register</b>: memori super cepat di dalam CPU.</li></ul>
+  <figure><img src="images/08_siklus_instruksi.png" alt="Siklus instruksi"><figcaption>CPU mengulang siklus ini miliaran kali per detik</figcaption></figure>
+</section>
+
+<section id="gerbang">
+  <h2><span class="n">6</span>Gerbang Logika</h2>
+  <figure><img src="images/09_gerbang_logika.png" alt="Gerbang AND OR NOT"><figcaption>AND, OR, dan NOT</figcaption></figure>
+  <figure><img src="images/10_saklar_lampu.png" alt="Saklar seri dan paralel"><figcaption>Saklar seri = AND, saklar paralel = OR</figcaption></figure>
+  <div class="w"><h4>Simulator Gerbang</h4>
+    <div class="row"><button class="tg" id="tA">A = 0</button><button class="tg" id="tB">B = 0</button></div>
+    <div class="gates">
+      <div>AND<br><span class="lamp" id="lAND"></span><br><b id="vAND">0</b></div>
+      <div>OR<br><span class="lamp" id="lOR"></span><br><b id="vOR">0</b></div>
+      <div>NOT A<br><span class="lamp" id="lNOT"></span><br><b id="vNOT">1</b></div>
+      <div>XOR<br><span class="lamp" id="lXOR"></span><br><b id="vXOR">0</b></div>
+    </div>
+    <div class="res" id="addres"></div>
+  </div>
+  <h3>Gerbang bisa menjumlah!</h3>
+  <p>Gabungkan XOR (jumlah) dan AND (simpanan). Coba semua kombinasi A dan B di simulator, lalu baca <b>Y X</b> sebagai bilangan biner.</p>
+  <figure><img src="images/11_sirkuit_penjumlah.png" alt="Sirkuit penjumlah"><figcaption>Sirkuit penjumlah sederhana (half adder)</figcaption></figure>
+</section>
+
+<section id="kuis">
+  <h2><span class="n">7</span>Kuis Cepat</h2>
+  <div id="quiz"></div>
+  <div class="res" id="score" style="display:none"></div>
+</section>
+
+<section class="card">
+  <h3 style="margin-top:0">Rangkuman</h3>
+  <ul>
+    <li>Alur: input → proses (CPU) → penyimpanan → output.</li>
+    <li>Data = bit (0/1); 8 bit = 1 byte.</li>
+    <li>RAM: sementara &amp; cepat. Storage: permanen &amp; besar.</li>
+    <li>Alamat fisik = segmen + offset (heksadesimal).</li>
+    <li>CPU = Control Unit + ALU + register.</li>
+    <li>Gerbang AND, OR, NOT menyusun sirkuit yang bisa menjumlahkan.</li>
+  </ul>
+</section>
+</main>
+<footer>Informatika Kelas VIII • Bab V Pemanfaatan Perangkat Digital • SMP Negeri 14 Tarakan</footer>
+<script>
+// --- bit lamps
+(function(){
+  const vals=[128,64,32,16,8,4,2,1],st=[0,1,0,0,0,0,0,1],box=document.getElementById('bits');
+  function render(){
+    box.innerHTML='';
+    vals.forEach((v,i)=>{const d=document.createElement('div');d.className='bit';
+      const b=document.createElement('button');b.textContent=st[i];b.className=st[i]?'on':'';
+      b.onclick=()=>{st[i]^=1;render();};d.appendChild(b);d.appendChild(document.createTextNode(v));box.appendChild(d);});
+    const parts=vals.filter((v,i)=>st[i]),sum=parts.reduce((a,b)=>a+b,0);
+    const ch=sum>=32&&sum<127?' → karakter “'+String.fromCharCode(sum)+'” (ASCII)':'';
+    document.getElementById('bitres').textContent=st.join('')+' = '+(parts.length?parts.join(' + '):'0')+' = '+sum+ch;
+  }
+  render();
+})();
+// --- RAM sim
+(function(){
+  const r=document.getElementById('ramv'),s=document.getElementById('stov');
+  let ram='',sto='';const show=()=>{r.textContent=ram||'kosong';s.textContent=sto||'kosong';};
+  document.getElementById('bType').onclick=()=>{ram='tugas.docx (belum disimpan)';show();};
+  document.getElementById('bSave').onclick=()=>{if(ram){sto='tugas.docx (tersimpan)';ram='tugas.docx (tersimpan)';}show();};
+  document.getElementById('bOff').onclick=()=>{ram='';show();};
+  document.getElementById('bReset').onclick=()=>{ram='';sto='';show();};
+})();
+// --- hex converter
+(function(){
+  const d=document.getElementById('dec'),h=document.getElementById('hex'),o=document.getElementById('hexres');
+  function steps(n){if(n===0)return '0';let t=[],x=n;while(x>0){const q=Math.floor(x/16),r=x%16;t.push(x+' ÷ 16 = '+q+' sisa '+r+(r>9?' ('+r.toString(16).toUpperCase()+')':''));x=q;}return t.join('<br>');}
+  d.oninput=()=>{const n=parseInt(d.value,10);if(isNaN(n)||n<0){o.textContent='Masukkan bilangan bulat ≥ 0';return;}h.value=n.toString(16).toUpperCase();o.innerHTML=steps(n)+'<br><b>'+n+' = '+h.value+'</b>';};
+  h.oninput=()=>{const n=parseInt(h.value,16);if(isNaN(n)){o.textContent='Pakai 0–9 dan A–F';return;}d.value=n;o.innerHTML='<b>'+h.value.toUpperCase()+'₁₆ = '+n+'</b>';};
+  d.oninput();
+})();
+// --- address calc
+(function(){
+  const o=document.getElementById('addrres');
+  function calc(){const a=document.getElementById('seg').value.trim(),b=document.getElementById('off').value.trim();
+    const x=parseInt(a,16),y=parseInt(b,16);
+    if(isNaN(x)||isNaN(y)){o.textContent='Isi dengan bilangan heksadesimal (0–9, A–F).';return;}
+    const z=(x+y).toString(16).toUpperCase().padStart(4,'0');
+    o.innerHTML=a.toUpperCase()+' + '+b.toUpperCase()+' = '+x+' + '+y+' = '+(x+y)+'<br><b>Alamat fisik = '+z+'</b>';}
+  document.getElementById('bAddr').onclick=calc;calc();
+})();
+// --- gate sim
+(function(){
+  let A=0,B=0;
+  const set=(id,v)=>{document.getElementById('l'+id).classList.toggle('on',!!v);document.getElementById('v'+id).textContent=v;};
+  function upd(){
+    const tA=document.getElementById('tA'),tB=document.getElementById('tB');
+    tA.textContent='A = '+A;tB.textContent='B = '+B;tA.classList.toggle('on',!!A);tB.classList.toggle('on',!!B);
+    set('AND',A&B);set('OR',A|B);set('NOT',A?0:1);set('XOR',A^B);
+    document.getElementById('addres').innerHTML='Penjumlah: X = A XOR B = '+(A^B)+', Y = A AND B = '+(A&B)+' → YX = <b>'+(A&B)+''+(A^B)+'</b> (biner) = <b>'+(A+B)+'</b> = '+A+' + '+B;
+  }
+  document.getElementById('tA').onclick=()=>{A^=1;upd();};
+  document.getElementById('tB').onclick=()=>{B^=1;upd();};
+  upd();
+})();
+// --- quiz
+(function(){
+  const Q=[
+   ['Data yang belum di-Save saat listrik padam hilang karena masih berada di …',['Storage','RAM','ROM','Flashdisk'],1,'Data kerja berada di RAM yang bersifat sementara.'],
+   ['Perbedaan utama SSD dan HDD: …',['SSD memakai piringan berputar','HDD tanpa bagian bergerak','SSD memakai chip flash sehingga lebih cepat','SSD sementara, HDD permanen'],2,'SSD tidak memiliki bagian bergerak sehingga lebih cepat.'],
+   ['Alamat fisik dari 0001:000C adalah …',['000C','000D','0010','0011'],1,'1 + C(12) = 13 = D → 000D.'],
+   ['Heksadesimal 3B sama dengan desimal …',['38','49','59','63'],2,'3×16 + 11 = 59.'],
+   ['Gerbang yang keluarannya 1 hanya jika semua input 1 adalah …',['OR','AND','NOT','XOR'],1,'Itulah sifat gerbang AND.'],
+  ];
+  const box=document.getElementById('quiz'),sc=document.getElementById('score');let done=0,ok=0;
+  Q.forEach((q,i)=>{
+    const d=document.createElement('div');d.className='q card';
+    d.innerHTML='<b>'+(i+1)+'. '+q[0]+'</b>';
+    const fb=document.createElement('div');fb.className='fb';
+    q[1].forEach((t,j)=>{const b=document.createElement('button');b.className='opt';b.textContent=String.fromCharCode(65+j)+'. '+t;
+      b.onclick=()=>{if(d.dataset.d)return;d.dataset.d=1;done++;
+        const bs=d.querySelectorAll('.opt');bs[q[2]].classList.add('ok');
+        if(j===q[2]){ok++;fb.textContent='Benar! '+q[3];}else{b.classList.add('no');fb.textContent='Belum tepat. '+q[3];}
+        if(done===Q.length){sc.style.display='block';sc.textContent='Skormu: '+ok+' / '+Q.length+(ok===Q.length?' — Hebat!':' — Baca lagi bagian yang masih keliru, lalu coba lagi.');}};
+      d.appendChild(b);});
+    d.appendChild(fb);box.appendChild(d);
+  });
+})();
+</script>
+</body>
+</html>

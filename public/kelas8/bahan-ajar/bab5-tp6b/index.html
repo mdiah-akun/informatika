@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Detektif Jaringan | Informatika VIII Pertemuan 2</title><style>
+:root{--navy:#1b2a4a;--teal:#0fa3a3;--amber:#f59e0b;--bg:#f5f8fb;--card:#fff;--ink:#1f2937;--mute:#5b667a;--ok:#16a34a;--bad:#dc2626}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65}
+header{background:linear-gradient(135deg,var(--navy),#27406e);color:#fff;padding:28px 16px 22px;text-align:center}
+header small{color:#7fe3e3;font-weight:700;letter-spacing:.06em}
+header h1{margin:6px 0 4px;font-size:clamp(1.6rem,5vw,2.4rem)}
+header p{margin:0;color:#cfd8e6}
+nav{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid #dde4ee;display:flex;gap:4px;overflow-x:auto;padding:6px 10px;scrollbar-width:thin}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-size:.88rem;padding:6px 11px;border-radius:99px;font-weight:600}
+nav a:hover{background:#e6f6f5}
+main{max-width:860px;margin:0 auto;padding:16px}
+section{background:var(--card);border-radius:16px;padding:20px 18px;margin:16px 0;box-shadow:0 1px 6px rgba(27,42,74,.08)}
+h2{color:var(--navy);margin:.1em 0 .5em;font-size:1.45rem}
+h3{color:var(--teal);margin:1.2em 0 .3em}
+img{max-width:100%;height:auto;display:block;margin:12px auto 4px;border-radius:10px}
+figcaption{text-align:center;color:var(--mute);font-size:.88rem;font-style:italic;margin-bottom:8px}
+figure{margin:0}
+.call{border-left:5px solid var(--teal);background:#e6f6f5;padding:10px 14px;border-radius:8px;margin:12px 0}
+.call.y{border-color:var(--amber);background:#fff4dc}
+.call b:first-child{color:var(--navy)}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.95rem}
+th{background:var(--navy);color:#fff;text-align:left}
+th,td{padding:8px 10px;border:1px solid #cfd8e6;vertical-align:top}
+tr:nth-child(even) td{background:#f2f7fb}
+.tblwrap{overflow-x:auto}
+button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:9px 14px;background:var(--teal);color:#fff;font-weight:700}
+button:hover{filter:brightness(1.08)}
+button.alt{background:#e8edf5;color:var(--navy)}
+.lab{background:#f7fbff;border:2px dashed #b5c7e0;border-radius:12px;padding:14px;margin:14px 0}
+.lab h4{margin:0 0 8px;color:var(--navy)}
+.opts{display:grid;gap:8px;margin:8px 0}
+.opt{text-align:left;background:#fff;color:var(--ink);border:2px solid #cfd8e6;font-weight:500}
+.opt.right{border-color:var(--ok);background:#e8f8ee}
+.opt.wrong{border-color:var(--bad);background:#fdecec}
+.fb{margin:8px 0;padding:8px 12px;border-radius:8px;background:#eef2f8}
+.bars{display:flex;gap:6px;align-items:flex-end;height:70px;margin:10px 0}
+.bars i{display:block;width:22px;background:#d3dbe8;border-radius:4px}
+.bars i.on{background:var(--teal)}
+input[type=range]{width:100%}
+.sticky-foot{text-align:center;color:var(--mute);font-size:.85rem;padding:20px}
+details{margin:8px 0}summary{cursor:pointer;font-weight:700;color:var(--navy)}
+code{background:#eef2f8;padding:1px 6px;border-radius:5px}
+
+input[type=number],input[type=text],select{font:inherit;padding:7px 10px;border:2px solid #cfd8e6;border-radius:8px;max-width:100%}.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:8px 0}.mono{font-family:ui-monospace,Consolas,monospace;background:#101828;color:#7cf2a6;padding:10px 12px;border-radius:10px;white-space:pre-wrap;font-size:.9rem}
+</style></head><body>
+<header><small>MATERI SISWA • INFORMATIKA KELAS VIII • PERTEMUAN 2</small><h1>Detektif Jaringan</h1>
+<p>Kenapa internetnya lambat? Selidiki buktinya seperti teknisi jaringan!</p>
+<img src="images/p2_01_cover.png" alt="Detektif Jaringan" style="width:100%;max-width:640px;margin-top:14px"></header>
+<nav><a href="#kasus">Kasus</a><a href="#web">Alamat Web</a><a href="#ip">Alamat IP</a><a href="#kinerja">Kinerja</a><a href="#ping">Ping</a><a href="#seluler">Seluler</a><a href="#aman">Aman</a><a href="#rangkum">Rangkuman</a><a href="#kuis">Kuis</a></nav>
+<main>
+<section id="kasus"><h2>1. Kasus: Lab yang Lemot</h2>
+<div class="call y"><b>Cerita singkat</b><p>Senin pagi, Pak Budi menjadwalkan asesmen daring di Lab Informatika SMP Negeri 14 Tarakan. Ada 30 PC yang membuka aplikasi bank soal pada saat yang sama. Hasilnya: halaman soal baru terbuka setelah lebih dari dua menit, beberapa PC menampilkan tulisan “tidak ada internet”, dan ada PC yang kadang bisa kadang tidak. Anehnya, siswa yang membuka bank soal lewat HP dengan data seluler justru lancar. (Kasus ini fiktif, disusun untuk latihan.)</p></div>
+<p>Pertemuan lalu kamu tahu data dipecah jadi paket dan lewat router. Sekarang: <b>kalau ada yang macet, di mana letak masalahnya dan bagaimana memperbaikinya?</b> Kamu jadi teknisi jaringan!</p>
+<figure><img src="images/p2_12_peta_kasus.png" alt="Peta jaringan lab pada kasus."><figcaption>Peta jaringan lab pada kasus.</figcaption></figure>
+<p>Yang akan kamu selidiki:</p><ol><li>Mengapa halaman bank soal sangat lambat saat 30 PC membukanya bersamaan?</li><li>Mengapa ada PC yang “tidak ada internet” dan ada yang putus-nyambung?</li><li>Mengapa HP dengan data seluler lancar padahal Wi-Fi/LAN lab bermasalah?</li></ol>
+<figure><img src="images/p2_15_langkah_pbl.png" alt="Langkah belajar hari ini (Problem-Based Learning)."><figcaption>Langkah belajar hari ini (Problem-Based Learning).</figcaption></figure></section>
+
+<section id="web"><h2>2. Apa yang Terjadi Saat Kamu Menekan Enter?</h2>
+<p>Komputer nggak ngerti nama seperti www.sekolah.id. Dia cuma ngerti <b>alamat IP</b>. Jadi ada empat langkah:</p>
+<figure><img src="images/p2_02_url_journey.png" alt="Empat langkah dari mengetik alamat sampai halaman tampil."><figcaption>Empat langkah dari mengetik alamat sampai halaman tampil.</figcaption></figure>
+<h3>2.1 DNS: Buku Telepon Internet</h3>
+<p><b>DNS</b> menerjemahkan nama domain jadi alamat IP. Kamu hafal nama teman, telepon butuh nomor. DNS itu buku teleponnya.</p>
+<figure><img src="images/p2_03_dns.png" alt="DNS menerjemahkan nama jadi angka."><figcaption>DNS menerjemahkan nama jadi angka.</figcaption></figure>
+<div class="call"><b>Petunjuk detektif:</b> ping ke <b>angka IP berhasil</b> tapi ping ke <b>nama gagal</b> artinya jaringan sehat, DNS yang rusak.</div></section>
+
+<section id="ip"><h2>3. Alamat IP: Bedah Lebih Dalam</h2>
+<p>IPv4 terdiri atas <b>4 oktet</b> (0 sampai 255), total 32 bit. <b>Subnet mask</b> menunjukkan bagian jaringan dan bagian perangkat.</p>
+<figure><img src="images/p2_04_ipv4.png" alt="Pada mask 255.255.255.0, tiga oktet pertama adalah jaringan."><figcaption>Pada mask 255.255.255.0, tiga oktet pertama adalah jaringan.</figcaption></figure>
+<ul><li><b>Satu jaringan?</b> Bandingkan bagian jaringannya.</li><li><b>Jumlah perangkat:</b> 2^8 - 2 = <b>254</b> alamat.</li><li><b>Gateway</b> = alamat router, pintu keluar jaringan.</li>
+<li><b>DHCP</b> membagi IP otomatis. IP <b>169.254.x.x</b> = gagal dapat IP.</li><li><b>Konflik IP</b> = dua perangkat memakai IP sama.</li></ul>
+<div class="lab"><h4>🧪 Coba Sendiri: Satu jaringan atau bukan?</h4>
+<div class="row"><input id="ipa" type="text" value="192.168.10.45" size="15" aria-label="IP pertama"><input id="ipb" type="text" value="192.168.10.200" size="15" aria-label="IP kedua">
+<select id="mask" aria-label="Subnet mask"><option>255.255.255.0</option><option>255.255.255.128</option><option>255.255.0.0</option></select><button id="ipgo">Periksa</button></div>
+<div class="fb" id="ipfb">Isi dua alamat lalu tekan Periksa.</div></div>
+<h3>3.1 IP Privat, IP Publik, dan NAT</h3>
+<figure><img src="images/p2_05_nat.png" alt="Banyak perangkat di dalam berbagi satu IP publik."><figcaption>Banyak perangkat di dalam berbagi satu IP publik.</figcaption></figure>
+<p><b>IP privat</b> (10.x.x.x, 172.16 sampai 172.31, 192.168.x.x) hanya di jaringan lokal. <b>IP publik</b> unik di internet. Router memakai <b>NAT</b> untuk mengganti IP privat dengan IP publik saat data keluar.</p>
+<div class="lab"><h4>🧪 Coba Sendiri: Privat atau publik?</h4>
+<div class="row"><input id="priv" type="text" value="172.40.1.1" size="15" aria-label="IP"><button id="privgo">Cek</button></div><div class="fb" id="privfb">Masukkan satu alamat IP. Coba 172.20.1.1 dan 172.40.1.1.</div></div></section>
+
+<section id="kinerja"><h2>4. Seberapa Cepat? Bandwidth, Latency, Packet Loss</h2>
+<figure><img src="images/p2_06_tol.png" alt="Analogi jalan tol."><figcaption>Analogi jalan tol.</figcaption></figure>
+<div class="tblwrap"><table><tr><th>Istilah</th><th>Artinya</th><th>Satuan</th></tr><tr><td><b>Bandwidth</b></td><td>Kapasitas data per detik (lebar jalan)</td><td>Mbps</td></tr>
+<tr><td><b>Latency</b></td><td>Waktu paket pergi dan kembali</td><td>ms</td></tr><tr><td><b>Packet loss</b></td><td>Persentase paket hilang</td><td>%</td></tr></table></div>
+<div class="call"><b>Rumus:</b> waktu (detik) = ukuran (MB) x 8 / kecepatan (Mbps). 1 byte = 8 bit. Bandwidth dibagi pengguna yang aktif bersamaan.</div>
+<div class="lab"><h4>🧪 Coba Sendiri: Kalkulator waktu unduh</h4>
+<div class="row"><label>Ukuran (MB) <input id="mb" type="number" value="60" min="1" style="width:90px"></label><label>Bandwidth (Mbps) <input id="mbps" type="number" value="100" min="1" style="width:90px"></label><label>Pengguna bersamaan <input id="usr" type="number" value="30" min="1" style="width:80px"></label></div>
+<div class="fb" id="calc"></div></div></section>
+
+<section id="ping"><h2>5. Ping dan Cara Mendiagnosis</h2>
+<figure><img src="images/p2_07_ping.png" alt="Ping mengukur waktu balasan dan paket hilang."><figcaption>Ping mengukur waktu balasan dan paket hilang.</figcaption></figure>
+<p>Teknisi memeriksa dari yang <b>paling dekat</b> ke yang <b>paling jauh</b>. Masalah ada tepat setelah langkah terakhir yang berhasil.</p>
+<figure><img src="images/p2_08_alur_diagnosis.png" alt="Enam langkah diagnosis."><figcaption>Enam langkah diagnosis.</figcaption></figure>
+<div class="lab"><h4>🧪 Coba Sendiri: Jadi teknisi</h4><p>Pilih PC, lihat hasil ping-nya, lalu tentukan diagnosisnya.</p>
+<div class="row"><select id="pcsel" aria-label="Pilih PC"></select></div><div class="mono" id="pcout"></div>
+<div class="opts" id="dxopts"></div><div class="fb" id="dxfb">Pilih diagnosismu.</div></div></section>
+
+<section id="seluler"><h2>6. Sinyal Ponsel: Lebih dari Sekadar Bar</h2>
+<p>Kenapa 4 bar tapi lemot? Bar hanya mengukur kekuatan sinyal radio.</p>
+<h3>6.1 Generasi 2G sampai 5G</h3><figure><img src="images/p2_09_generasi.png" alt="Makin tinggi generasi, makin besar kemampuan datanya."><figcaption>Makin tinggi generasi, makin besar kemampuan datanya.</figcaption></figure>
+<h3>6.2 Frekuensi: Selalu Ada Kompromi</h3><figure><img src="images/p2_10_frekuensi.png" alt="Frekuensi rendah: jauh. Frekuensi tinggi: kapasitas besar tapi mudah terhalang."><figcaption>Frekuensi rendah: jauh. Frekuensi tinggi: kapasitas besar tapi mudah terhalang.</figcaption></figure>
+<p>Wi-Fi juga begitu: 2,4 GHz lebih jauh jangkauannya, 5 GHz lebih cepat tapi lebih mudah terhalang.</p>
+<h3>6.3 Sel, Handover, dan Kapasitas</h3><figure><img src="images/p2_11_handover.png" alt="Wilayah dibagi jadi sel. HP pindah BTS tanpa putus."><figcaption>Wilayah dibagi jadi sel. HP pindah BTS tanpa putus.</figcaption></figure>
+<ul><li><b>Handover</b>: pindah BTS tanpa memutus telepon atau data.</li><li><b>Kapasitas sel terbatas</b>: sel ramai, kecepatan tiap orang turun walau sinyal penuh.</li></ul></section>
+
+<section id="aman"><h2>7. Aman di Internet: Naik Level</h2>
+<figure><img src="images/p2_14_https.png" alt="HTTP seperti kartu pos, HTTPS seperti surat bergembok."><figcaption>HTTP seperti kartu pos, HTTPS seperti surat bergembok.</figcaption></figure>
+<ul><li><b>HTTPS</b> mengacak data antara browser dan server. Gembok perlu, tapi <b>belum cukup</b>. Cek nama domain!</li><li><b>Wi-Fi gratis</b> bisa disadap atau palsu.</li>
+<li><b>Password</b>: 8 huruf kecil punya sekitar 208,827,064,576 kombinasi, 8 karakter campuran sekitar 6,095,689,385,410,816.</li><li><b>Verifikasi dua langkah</b> menambah pengaman kedua.</li></ul></section>
+
+<section id="rangkum"><h2>8. Rangkuman Kilat</h2>
+<div class="tblwrap"><table><tr><th>Topik</th><th>Intinya</th></tr><tr><td><b>DNS</b></td><td>Menerjemahkan nama domain jadi alamat IP.</td></tr>
+<tr><td><b>IPv4</b></td><td>4 oktet; mask memisahkan jaringan dan perangkat; privat vs publik; DHCP; NAT; gateway.</td></tr>
+<tr><td><b>Kinerja</b></td><td>Bandwidth, latency, packet loss. Waktu = MB x 8 / Mbps.</td></tr><tr><td><b>Ping</b></td><td>Cek dari terdekat: gateway, IP internet, nama domain.</td></tr>
+<tr><td><b>Seluler</b></td><td>Generasi, frekuensi, sel, handover, kapasitas. Bar sinyal bukan kecepatan.</td></tr><tr><td><b>Aman</b></td><td>HTTPS perlu tapi belum cukup; waspada Wi-Fi publik; aktifkan 2FA.</td></tr></table></div></section>
+
+<section id="kuis"><h2>9. Kuis Mini</h2><p>Jawab tiap soal, pembahasan langsung muncul.</p><div id="quiz"></div></section>
+</main><div class="sticky-foot">Informatika Kelas VIII • Bab V TP6 Pertemuan 2 • SMP Negeri 14 Tarakan</div>
+<script>
+const $=id=>document.getElementById(id);
+function mk(p,t,c,f){const b=document.createElement('button');b.className='opt '+(c||'');b.textContent=t;b.onclick=f;p.appendChild(b);return b}
+function toInt(ip){const p=ip.trim().split('.');if(p.length!==4)return null;let v=0;for(const x of p){if(!/^\d+$/.test(x)||+x>255)return null;v=v*256+(+x)}return v}
+// satu jaringan
+$('ipgo').onclick=()=>{const a=toInt($('ipa').value),b=toInt($('ipb').value),m=toInt($('mask').value);const f=$('ipfb');
+ if(a===null||b===null){f.textContent='Alamat tidak valid. Pakai 4 angka 0-255 dipisah titik.';return}
+ const na=(a&m)>>>0,nb=(b&m)>>>0,same=na===nb;
+ const hosts=Math.pow(2,32-m.toString(2).replace(/0/g,'').length)-2;
+ f.innerHTML=(same?'✅ <b>Satu jaringan</b>':'🔀 <b>Beda jaringan</b>')+'. Bagian jaringan A dan B '+(same?'sama':'berbeda')+' pada mask '+$('mask').value+'. Perangkat yang bisa dipakai di jaringan itu: <b>'+hosts+'</b>.'};
+$('privgo').onclick=()=>{const v=toInt($('priv').value),f=$('privfb');if(v===null){f.textContent='Alamat tidak valid.';return}
+ const o=$('priv').value.trim().split('.').map(Number);const p=o[0]===10||(o[0]===172&&o[1]>=16&&o[1]<=31)||(o[0]===192&&o[1]===168);
+ f.innerHTML=p?'🏠 <b>IP privat</b>: hanya dipakai di jaringan lokal.':'🌐 <b>IP publik</b>: unik di internet.'+(o[0]===172?' (Awas: hanya 172.16-172.31 yang privat.)':'')};
+// kalkulator
+function calc(){const mb=+$('mb').value,mbps=+$('mbps').value,u=Math.max(1,+$('usr').value);if(!(mb>0&&mbps>0)){$('calc').textContent='Isi angka lebih dari 0.';return}
+ const per=mbps/u,t=mb*8/per;$('calc').innerHTML=mb+' MB x 8 = <b>'+(mb*8)+' Mb</b>. Tiap pengguna kebagian <b>'+per.toFixed(2).replace('.',',')+' Mbps</b>. Waktu = '+(mb*8)+' / '+per.toFixed(2).replace('.',',')+' = <b>'+(t<10?t.toFixed(1):Math.round(t)).toString().replace('.',',')+' detik</b>.'}
+['mb','mbps','usr'].forEach(i=>$(i).oninput=calc);calc();
+// ping
+(function(){const D=[{"pc": "PC-05", "gw": "2 ms, hilang 0%", "ip": "38 ms, hilang 0%", "nm": "GAGAL: “could not find host”", "dx": "DNS bermasalah (IP internet bisa, nama gagal)"}, {"pc": "PC-12", "gw": "GAGAL: timed out, hilang 100%", "ip": "GAGAL: timed out", "nm": "GAGAL", "dx": "Masalah di LAN: tidak sampai ke gateway (kabel/DHCP)"}, {"pc": "PC-20", "gw": "3 ms, hilang 0%", "ip": "185 ms, hilang 12%", "nm": "190 ms, hilang 12%", "dx": "LAN sehat, jalur ke internet padat (latency tinggi, paket hilang)"}, {"pc": "PC-27", "gw": "2 ms, hilang 0%", "ip": "36 ms, hilang 0%", "nm": "37 ms, hilang 0%", "dx": "Normal (pembanding)"}];const sel=$('pcsel');D.forEach((d,i)=>{const o=document.createElement('option');o.value=i;o.textContent=d.pc;sel.appendChild(o)});
+ const opts=['DNS bermasalah','Masalah di LAN (tidak sampai gateway)','Jalur internet padat','Normal'];
+ const key=d=>d.dx.startsWith('DNS')?0:d.dx.startsWith('Masalah di LAN')?1:d.dx.startsWith('LAN sehat')?2:3;
+ function show(){const d=D[+sel.value];$('pcout').textContent=d.pc+'\nping gateway 192.168.10.1 : '+d.gw+'\nping 8.8.8.8            : '+d.ip+'\nping www.google.com     : '+d.nm;
+  const b=$('dxopts');b.innerHTML='';$('dxfb').textContent='Pilih diagnosismu.';
+  opts.forEach((t,j)=>mk(b,t,'',function(){[...b.children].forEach((x,k)=>{if(k===key(d))x.classList.add('right')});if(j!==key(d))this.classList.add('wrong');
+   $('dxfb').innerHTML=(j===key(d)?'✅ Tepat! ':'❌ Belum tepat. ')+d.dx+'.'}))}
+ sel.onchange=show;show()})();
+// kuis
+(function(){const Q=[{"q": "Fungsi utama DNS ketika kamu membuka sebuah website adalah ...", "o": ["mengenkripsi data antara browser dan server", "menerjemahkan nama domain menjadi alamat IP", "membagi bandwidth sama rata ke semua perangkat", "memilih jalur terpendek antar router"], "k": 1, "p": "DNS ibarat buku telepon internet: mengubah nama domain (mudah diingat) menjadi alamat IP (dipakai komputer)."}, {"q": "Hasil pemeriksaan sebuah PC: ping ke gateway berhasil (2 ms), ping ke 8.8.8.8 berhasil (38 ms), tetapi ping ke www.google.com menampilkan “could not find host”. Penyebab yang paling mungkin adalah ...", "o": ["kabel jaringan putus", "bandwidth internet habis", "pengaturan DNS bermasalah", "terjadi konflik alamat IP"], "k": 2, "p": "Koneksi ke IP berhasil berarti jalur jaringan sehat. Yang gagal hanya penerjemahan nama, jadi DNS."}, {"q": "Sebuah PC memiliki alamat IP 169.254.8.21. Hal ini menandakan bahwa ...", "o": ["PC terhubung ke internet dengan normal", "PC memakai IP publik", "router sekolah sedang rusak total", "PC gagal memperoleh alamat IP dari DHCP"], "k": 3, "p": "Alamat 169.254.x.x diberikan sendiri oleh sistem (APIPA) ketika perangkat tidak mendapat IP dari server DHCP."}, {"q": "Sebuah PC beralamat 192.168.10.45 dengan subnet mask 255.255.255.0. Perangkat yang berada dalam jaringan yang sama adalah ...", "o": ["192.168.10.200", "192.168.11.45", "192.169.10.45", "10.168.10.45"], "k": 0, "p": "Mask 255.255.255.0 berarti tiga oktet pertama (192.168.10) adalah bagian jaringan. Hanya 192.168.10.200 yang cocok."}, {"q": "Sebuah file 150 MB diunduh melalui koneksi 100 Mbps yang dipakai sendiri. Waktu unduh minimum adalah ... (1 byte = 8 bit)", "o": ["1,5 detik", "15 detik", "12 detik", "120 detik"], "k": 2, "p": "150 MB x 8 = 1.200 Mb. Waktu = 1.200 / 100 = 12 detik."}, {"q": "Alamat IP berikut yang termasuk IP privat adalah ...", "o": ["8.8.8.8", "172.40.4.3", "103.28.4.9", "172.20.4.3"], "k": 3, "p": "Rentang privat: 10.0.0.0/8, 172.16.0.0 sampai 172.31.255.255, dan 192.168.0.0/16. Jadi 172.20.4.3 privat, 172.40.4.3 sudah publik."}, {"q": "Dalam analogi jalan tol, latency paling tepat digambarkan sebagai ...", "o": ["jumlah lajur jalan", "waktu tempuh mobil dari asal ke tujuan", "banyaknya mobil yang tiba di tujuan", "panjang total jalan tol"], "k": 1, "p": "Bandwidth = lebar jalan (jumlah lajur), latency = lama tempuh, packet loss = mobil yang tidak sampai."}, {"q": "Dibandingkan frekuensi rendah, frekuensi tinggi pada jaringan seluler umumnya memiliki ciri ...", "o": ["kapasitas data besar tetapi jangkauan pendek dan mudah terhalang", "jangkauan lebih luas dan mudah menembus tembok", "kapasitas data kecil dan jangkauan pendek", "tidak terpengaruh oleh dinding dan cuaca"], "k": 0, "p": "Frekuensi tinggi: kapasitas besar, tetapi jangkauan pendek dan mudah terhalang. Frekuensi rendah sebaliknya."}, {"q": "Handover pada jaringan seluler adalah proses ketika ...", "o": ["HP mengganti kartu SIM secara otomatis", "BTS menambah kapasitas saat ramai", "HP berpindah dilayani BTS lain tanpa memutus komunikasi", "data dipecah menjadi paket-paket kecil"], "k": 2, "p": "Saat pengguna bergerak antar sel, layanan dipindahkan ke BTS berikutnya tanpa terputus."}, {"q": "Pernyataan yang benar tentang ikon gembok dan https adalah ...", "o": ["situs dengan gembok pasti bukan phishing", "https membuat isi situs pasti jujur", "gembok menandakan situs dibuat oleh pemerintah", "gembok berarti data antara browser dan server terenkripsi, tetapi alamat situs tetap harus diperiksa"], "k": 3, "p": "HTTPS mengenkripsi jalur data. Situs penipu pun bisa memakai https, jadi periksa domainnya."}];let sc=0,dn=0;const box=$('quiz');
+ Q.forEach((q,qi)=>{const d=document.createElement('div');d.className='lab';d.innerHTML='<b>'+(qi+1)+'. '+q.q+'</b>';const o=document.createElement('div');o.className='opts';d.appendChild(o);
+  const fb=document.createElement('div');fb.className='fb';fb.style.display='none';d.appendChild(fb);let a=false;
+  q.o.forEach((t,j)=>mk(o,'ABCD'[j]+'.  '+t,'',function(){if(a)return;a=true;dn++;const ok=j===q.k;if(ok)sc++;
+   [...o.children].forEach((b,x)=>{if(x===q.k)b.classList.add('right')});if(!ok)this.classList.add('wrong');fb.style.display='block';fb.innerHTML=(ok?'✅ Benar! ':'❌ Belum tepat. ')+q.p;
+   if(dn===Q.length)$('score').innerHTML='🎉 Skor kamu: <b>'+sc+' / '+Q.length+'</b>'}));box.appendChild(d)});
+ const s=document.createElement('div');s.id='score';s.className='call';s.textContent='Selesaikan semua soal untuk melihat skormu.';box.appendChild(s)})();
+</script></body></html>

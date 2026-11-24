@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laporan dan Presentasi yang Kompak — Informatika VIII</title>
+<meta name="description" content="Materi siswa Informatika Kelas VIII Bab V TP 7: memanfaatkan perkakas digital untuk laporan dan presentasi dengan integrasi konten antar aplikasi.">
+<style>
+:root{--ink:#1f2a37;--mute:#5b6b7a;--bg:#f0fdfa;--card:#fff;--teal:#0f766e;--tealD:#134e4a;--tealL:#ccfbf1;--sun:#fbbf24;--sunL:#fef3c7;--coral:#ea580c;--line:#d5e3e0;--word:#2563eb;--sheet:#15803d;--rose:#e11d48;--violet:#7c3aed}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e6edf3;--mute:#9fb0bf;--bg:#0c1f1d;--card:#12302d;--line:#245450;--tealL:#164e49;--sunL:#3b2f0a;--tealD:#99f6e4}}
+:root[data-theme="dark"]{--ink:#e6edf3;--mute:#9fb0bf;--bg:#0c1f1d;--card:#12302d;--line:#245450;--tealL:#164e49;--sunL:#3b2f0a;--tealD:#99f6e4}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;font-family:Poppins,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;font-size:17px}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--teal)}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+header.hero{background:#134e4a;color:#fff}
+header.hero img{width:100%;max-width:1100px;margin:0 auto}
+nav{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+nav .wrap{display:flex;gap:4px;overflow-x:auto;padding:8px 16px;align-items:center}
+nav a{white-space:nowrap;text-decoration:none;color:var(--ink);font-size:14px;font-weight:600;padding:6px 12px;border-radius:999px}
+nav a:hover,nav a.on{background:var(--teal);color:#fff}
+nav button{margin-left:auto;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer;font-size:14px}
+#bar{position:fixed;top:0;left:0;height:4px;background:var(--sun);width:0;z-index:20}
+section{padding:36px 0 8px}
+h2{font-size:28px;line-height:1.25;margin:0 0 12px;color:var(--tealD)}
+h2 .n{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--sun);color:#134e4a;font-size:20px;margin-right:10px;vertical-align:middle}
+h3{font-size:20px;margin:24px 0 8px;color:var(--teal)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;margin:16px 0}
+.card.sun{background:var(--sunL);border-color:var(--sun)}
+.card.teal{background:var(--tealL);border-color:var(--teal)}
+figure{margin:18px 0;text-align:center}
+figure img{margin:0 auto;border-radius:14px;border:1px solid var(--line);background:#fff}
+figcaption{font-size:14px;color:var(--mute);margin-top:6px}
+ul,ol{padding-left:22px}li{margin:4px 0}
+kbd{background:var(--card);border:1px solid var(--line);border-bottom-width:3px;border-radius:6px;padding:1px 8px;font-family:inherit;font-size:.9em;font-weight:600}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:15.5px;background:var(--card);border-radius:12px;overflow:hidden}
+th{background:var(--teal);color:#fff;text-align:left;padding:10px}td{padding:10px;border-top:1px solid var(--line);vertical-align:top}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.grid .card{margin:0}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.tabs button{border:2px solid var(--teal);background:var(--card);color:var(--ink);padding:8px 14px;border-radius:999px;font:inherit;font-size:15px;font-weight:600;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--teal);color:#fff}
+.panel{display:none}.panel.on{display:block}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 16px;margin:8px 0}
+summary{cursor:pointer;font-weight:600}
+.quiz .q{margin:18px 0}.quiz .opts{display:grid;gap:8px;margin-top:8px}
+.quiz button.o{text-align:left;border:2px solid var(--line);background:var(--card);color:var(--ink);padding:10px 14px;border-radius:12px;font:inherit;font-size:16px;cursor:pointer}
+.quiz button.o:hover{border-color:var(--teal)}
+.quiz button.o.ok{background:#dcfce7;border-color:#15803d;color:#14532d}
+.quiz button.o.no{background:#ffe4e6;border-color:#e11d48;color:#7f1d1d}
+.fb{font-size:15px;margin-top:6px;color:var(--mute)}
+.score{font-size:20px;font-weight:700;color:var(--teal)}
+.check label{display:flex;gap:10px;align-items:flex-start;padding:6px 0;cursor:pointer}
+.check input{width:20px;height:20px;margin-top:5px;accent-color:#0f766e}
+.btn{display:inline-block;background:var(--coral);color:#fff;text-decoration:none;padding:10px 18px;border-radius:999px;font-weight:700;margin:6px 6px 6px 0}
+.btn.alt{background:var(--teal)}
+footer{margin-top:40px;padding:28px 0;background:#134e4a;color:#d7f0ec;text-align:center;font-size:14px}
+@media (max-width:600px){body{font-size:16px}h2{font-size:23px}table{font-size:14px}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<header class="hero"><img src="images/01-banner.png" alt="Banner: Laporan dan Presentasi yang Kompak" width="1200" height="520"></header>
+<nav aria-label="Navigasi bagian"><div class="wrap">
+<a href="#tujuan">Tujuan</a><a href="#tantangan">Tantangan</a><a href="#aplikasi">Aplikasi</a><a href="#konten">Konten</a><a href="#jurus">Jurus</a><a href="#laporan">Laporan</a><a href="#presentasi">Presentasi</a><a href="#etika">Etika</a><a href="#tim">Tim</a><a href="#cek">Cek Paham</a>
+<button id="theme" type="button" aria-label="Ganti tema">🌓</button></div></nav>
+
+<main class="wrap">
+<section id="tujuan">
+<h2><span class="n">1</span>Halo! Apa yang kita pelajari?</h2>
+<p>Pernah bikin tugas yang isinya bukan cuma tulisan? Ada tabel dari Excel, grafik, foto, bahkan peta? Hari ini kita belajar <strong>menggabungkan semuanya</strong> menjadi laporan dan presentasi yang rapi, benar, dan keren — lewat <strong>proyek bareng kelompok</strong>.</p>
+<div class="card teal"><strong>Setelah belajar ini, kamu bisa:</strong>
+<ul><li>Menjelaskan fungsi pengolah kata, lembar kerja, dan pengolah presentasi.</li><li>Memindahkan konten antar aplikasi dengan salin–tempel, tangkapan layar, dan menu Sisipkan.</li><li>Menyusun laporan 2 halaman dan 3 slide presentasi.</li><li>Menjaga etika: sumber dan hak cipta.</li></ul></div>
+<figure><img src="images/10-alur-pjbl.png" alt="Alur belajar 120 menit dalam enam fase" loading="lazy"><figcaption>Perjalanan belajar kita (120 menit)</figcaption></figure>
+</section>
+
+<section id="tantangan">
+<h2><span class="n">2</span>Tantangan: Olimpiade Berpikir Komputasi</h2>
+<p>Kamu pengurus OSIS. Olimpiade online sudah selesai: tiap kelas VIII (10 kelas) mengirim 2 wakil terbaik, dan juri memberikan hasil dalam <strong>file lembar kerja</strong>. Kepala Sekolah meminta <strong>laporan maksimal 2 halaman</strong> dan <strong>presentasi 3 slide</strong>.</p>
+<div class="card sun"><strong>🤔 Pertanyaan besar:</strong> Bagaimana menyatukan teks, tabel, grafik, peta, dan foto dari beberapa aplikasi menjadi satu laporan dan presentasi yang rapi, benar, dan menarik?</div>
+<figure><img src="images/09-grafik-olimpiade.png" alt="Grafik batang rata-rata skor olimpiade per kelas" loading="lazy"><figcaption>Contoh hasil olimpiade (data latihan)</figcaption></figure>
+<a class="btn" href="data_olimpiade.xlsx" download>⬇ Unduh data_olimpiade.xlsx</a>
+</section>
+
+<section id="aplikasi">
+<h2><span class="n">3</span>Tiga aplikasi andalan</h2>
+<p>Tiga sahabat dengan kekuatan super berbeda. Kalau digabung, hasilnya mantap!</p>
+<figure><img src="images/02-tiga-aplikasi.png" alt="Pengolah kata, lembar kerja, dan pengolah presentasi beserta kegunaannya" loading="lazy"></figure>
+<div class="card sun"><strong>💡 Eh, tau gak?</strong> Kalau tidak ada Microsoft Office, pakai <strong>LibreOffice</strong>, <strong>WPS Office</strong>, atau <strong>Google Dokumen / Spreadsheet / Slide</strong>. Nama menunya mirip.</div>
+</section>
+
+<section id="konten">
+<h2><span class="n">4</span>Konten digital & multimedia</h2>
+<p><strong>Multimedia</strong> menggabungkan teks, suara, gambar, animasi, atau video dalam satu penyajian (contoh: podcast video, film, tayangan slide beraudio).</p>
+<figure><img src="images/04-jenis-konten.png" alt="Enam bentuk konten digital" loading="lazy"></figure>
+<p>Setiap file punya “nama belakang” (ekstensi) yang menunjukkan jenisnya. Ganti format lewat <strong>Simpan Sebagai (Save As)</strong>.</p>
+<figure><img src="images/14-format-file.png" alt="Format file docx xlsx pptx pdf png csv" loading="lazy"></figure>
+</section>
+
+<section id="jurus">
+<h2><span class="n">5</span>Empat jurus memindahkan konten</h2>
+<div class="tabs" role="tablist">
+<button role="tab" aria-selected="true" data-p="p1">1. Salin–Tempel</button>
+<button role="tab" aria-selected="false" data-p="p2">2. Opsi Tempel</button>
+<button role="tab" aria-selected="false" data-p="p3">3. Tangkapan Layar</button>
+<button role="tab" aria-selected="false" data-p="p4">4. Menu Sisipkan</button></div>
+<div class="panel on" id="p1">
+<figure><img src="images/05-salin-tempel.png" alt="Salin Ctrl+C, Potong Ctrl+X, Tempel Ctrl+V" loading="lazy"></figure>
+<ul><li><kbd>Ctrl</kbd>+<kbd>C</kbd> menyalin — aslinya tetap ada.</li><li><kbd>Ctrl</kbd>+<kbd>X</kbd> memotong — aslinya pindah/hilang.</li><li><kbd>Ctrl</kbd>+<kbd>V</kbd> menempel di tempat baru.</li><li>Salah? <kbd>Ctrl</kbd>+<kbd>Z</kbd> membatalkan.</li></ul></div>
+<div class="panel" id="p2">
+<figure><img src="images/06-opsi-tempel.png" alt="Empat opsi tempel" loading="lazy"></figure>
+<table><tr><th>Kalau ingin…</th><th>Pilih…</th></tr>
+<tr><td>Tabel sama persis seperti di Excel</td><td><strong>Pertahankan Format Sumber</strong></td></tr>
+<tr><td>Tabel mengikuti gaya dokumen</td><td><strong>Gabungkan Format</strong></td></tr>
+<tr><td>Grafik tidak bergeser/berubah</td><td><strong>Gambar</strong></td></tr>
+<tr><td>Hanya tulisan polos</td><td><strong>Pertahankan Teks Saja</strong></td></tr></table></div>
+<div class="panel" id="p3">
+<figure><img src="images/07-tangkapan-layar.png" alt="Tangkapan layar tiga langkah" loading="lazy"></figure>
+<div class="card teal"><strong>Cara cepat:</strong> <kbd>Win</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> → tarik area peta → <kbd>Ctrl</kbd>+<kbd>V</kbd> di dokumen. Di HP: tombol daya + volume bawah.</div>
+<figure><img src="images/15-peta-sekolah.png" alt="Peta ilustrasi sekolah untuk latihan" loading="lazy" style="max-width:480px"><figcaption>Tidak ada internet? Pakai peta ilustrasi ini untuk latihan.</figcaption></figure></div>
+<div class="panel" id="p4">
+<figure><img src="images/18-menu-sisipkan.png" alt="Menu Sisipkan: tabel, gambar, tangkapan layar, bagan, nomor halaman" loading="lazy"></figure>
+<p>Nomor halaman: <strong>Sisipkan → Nomor Halaman → Bawah Halaman</strong>.</p></div>
+<figure><img src="images/03-alur-integrasi.png" alt="Alur integrasi dari lembar kerja, peta, dan foto ke laporan lalu slide" loading="lazy"><figcaption>Gambaran besar: banyak sumber → satu laporan → slide ringkas</figcaption></figure>
+</section>
+
+<section id="laporan">
+<h2><span class="n">6</span>Membuat laporan yang keren</h2>
+<figure><img src="images/08-layout-laporan.png" alt="Anatomi laporan dua halaman dengan tujuh label" loading="lazy"></figure>
+<ol><li><strong>Judul</strong> “Laporan Hasil Olimpiade Berpikir Komputasi”.</li><li><strong>Nama sekolah</strong>.</li><li><strong>Alamat + peta</strong> (tangkapan layar).</li><li><strong>Narasi ringkas</strong>: tujuan, waktu, mekanisme, peserta, juri, pemenang — pakai numbering atau tabel tanpa tepi.</li><li><strong>Statistik</strong>: tabel + grafik dari lembar kerja.</li><li><strong>Nomor halaman</strong> di footer; kertas A4.</li></ol>
+<h3>Tabel & grafik dari lembar kerja</h3>
+<ol><li>Buka <code>data_olimpiade.xlsx</code> (jangan ubah rumus).</li><li>Blok tabel → <kbd>Ctrl</kbd>+<kbd>C</kbd> → Word → <kbd>Ctrl</kbd>+<kbd>V</kbd> → pilih opsi tempel.</li><li>Salin grafik → tempel sebagai <strong>Gambar</strong>.</li><li>Tambah keterangan dan <strong>sumber data</strong>.</li></ol>
+</section>
+
+<section id="presentasi">
+<h2><span class="n">7</span>Presentasi: singkat, padat, memikat</h2>
+<figure><img src="images/11-slide-baik-buruk.png" alt="Perbandingan slide bertele-tele dan slide efektif" loading="lazy"></figure>
+<figure><img src="images/20-contoh-slide-hasil.png" alt="Kerangka tiga slide: profil, statistik, kesimpulan" loading="lazy"></figure>
+<figure><img src="images/16-tips-presentasi.png" alt="Lima jurus presentasi" loading="lazy"></figure>
+</section>
+
+<section id="etika">
+<h2><span class="n">8</span>Etika: cek dulu sebelum tempel</h2>
+<figure><img src="images/19-cek-sebelum-tempel.png" alt="Lima pemeriksaan: relevan, rapi, sumber, hak cipta, akurat" loading="lazy"></figure>
+<p>Foto dan tulisan orang lain ada pemiliknya. Cantumkan sumber, dan pakai <strong>Salin</strong> (bukan Potong) untuk data asli.</p>
+</section>
+
+<section id="tim">
+<h2><span class="n">9</span>Kerja tim: empat peran</h2>
+<figure><img src="images/12-peran-kelompok.png" alt="Analis Data, Penata Visual, Penulis Laporan, Integrator dan Juru Bicara" loading="lazy"></figure>
+<figure><img src="images/13-peta-konsep.png" alt="Peta konsep materi" loading="lazy"><figcaption>Peta konsep materi hari ini</figcaption></figure>
+<details><summary>Istilah penting</summary><table><tr><th>Istilah</th><th>Artinya</th></tr>
+<tr><td>Integrasi konten</td><td>Menggabungkan konten dari banyak aplikasi menjadi satu</td></tr>
+<tr><td>Clipboard</td><td>Memori sementara hasil salin/potong</td></tr>
+<tr><td>Tangkapan layar</td><td>Gambar tampilan layar (screenshot)</td></tr>
+<tr><td>Footer</td><td>Bagian bawah halaman, tempat nomor halaman</td></tr>
+<tr><td>Ekstensi file</td><td>Nama belakang file: .docx, .xlsx, .pptx</td></tr></table></details>
+</section>
+
+<section id="cek">
+<h2><span class="n">10</span>Cek paham (kuis mini)</h2>
+<div class="card quiz" id="quiz"></div>
+<h3>Refleksi: aku sudah bisa…</h3>
+<div class="card check" id="chk"></div>
+<div class="card sun"><strong>🚀 Tantangan di rumah:</strong> pilih satu topik (vaksinasi, transportasi massal, atau pertanian pintar). Tandai hal penting dari bacaan digital dengan tangkapan layar, lalu jawab di Word: Apa itu? Mengapa penting? Bagaimana cara kerjanya?</div>
+</section>
+</main>
+<footer><div class="wrap">Informatika Kelas VIII • Bab V Pemanfaatan Perangkat Digital • TP 7 • SMP Negeri 14 Tarakan</div></footer>
+
+<script>
+(function(){
+var Q=[
+{q:'Aplikasi paling tepat untuk menghitung rata-rata skor 10 kelas dan membuat grafiknya?',o:['Pengolah kata','Lembar kerja','Pengolah presentasi','Pemutar video'],a:1,f:'Lembar kerja unggul dalam rumus dan grafik.'},
+{q:'Tabel dari Excel ingin tampil sama persis di Word. Opsi tempel yang dipilih?',o:['Pertahankan Format Sumber','Teks Saja','Potong','Simpan Sebagai .txt'],a:0,f:'Pertahankan Format Sumber menjaga warna, garis, dan format sel.'},
+{q:'Cara paling praktis memasukkan peta dari peramban ke laporan?',o:['Mengetik ulang peta','Simpan halaman sebagai .xlsx','Tangkapan layar lalu Ctrl+V','Tekan Ctrl+X pada peta'],a:2,f:'Peta berupa gambar, jadi ambil tangkapan layar (Win+Shift+S).'},
+{q:'Menu untuk menambahkan nomor halaman otomatis di bawah dokumen?',o:['Beranda → Salin','Tinjau → Ejaan','Tampilan → Zoom','Sisipkan → Nomor Halaman → Bawah Halaman'],a:3,f:'Nomor halaman ada di menu Sisipkan.'},
+{q:'Yang BUKAN pemeriksaan sebelum menempel konten dari internet?',o:['Sumber jelas','Hak cipta / izin','Kerapian tampilan','Jumlah pengikut pembuat konten'],a:3,f:'Yang dicek: relevansi, kerapian, sumber, hak cipta, akurasi.'}];
+var box=document.getElementById('quiz'),done=0,ok=0;
+Q.forEach(function(it,i){
+ var d=document.createElement('div');d.className='q';
+ d.innerHTML='<strong>'+(i+1)+'. '+it.q+'</strong><div class="opts"></div><div class="fb" aria-live="polite"></div>';
+ var op=d.querySelector('.opts'),fb=d.querySelector('.fb');
+ it.o.forEach(function(t,j){var b=document.createElement('button');b.type='button';b.className='o';b.textContent='ABCD'[j]+'. '+t;
+  b.onclick=function(){ if(d.dataset.done)return; d.dataset.done=1;done++;
+   var all=op.children;
+   if(j===it.a){b.classList.add('ok');ok++;fb.textContent='✅ Benar! '+it.f;}
+   else{b.classList.add('no');all[it.a].classList.add('ok');fb.textContent='❌ Belum tepat. Jawaban: '+'ABCD'[it.a]+'. '+it.f;}
+   if(done===Q.length)sc.innerHTML='Skormu: '+ok+' / '+Q.length+(ok===Q.length?' — Mantap! 🎉':ok>=3?' — Bagus, ulangi bagian yang masih keliru.':' — Yuk baca ulang materinya.');
+  };op.appendChild(b);});
+ box.appendChild(d);});
+var sc=document.createElement('div');sc.className='score';sc.setAttribute('aria-live','polite');box.appendChild(sc);
+var R=['Menyebut fungsi tiga aplikasi utama','Menyalin tabel/grafik antar aplikasi dengan opsi tempel yang tepat','Mengambil tangkapan layar dan menempelnya','Menyisipkan nomor halaman','Menyusun 3 slide yang ringkas','Mencantumkan sumber dan menghargai hak cipta'];
+var c=document.getElementById('chk'),saved={};
+try{saved=JSON.parse(localStorage.getItem('tp7chk')||'{}')}catch(e){}
+R.forEach(function(t,i){var l=document.createElement('label');var x=document.createElement('input');x.type='checkbox';x.checked=!!saved[i];
+ x.onchange=function(){saved[i]=x.checked;try{localStorage.setItem('tp7chk',JSON.stringify(saved))}catch(e){}};
+ l.appendChild(x);l.appendChild(document.createTextNode(t));c.appendChild(l);});
+// tabs
+var tabs=document.querySelectorAll('.tabs button');
+tabs.forEach(function(b){b.onclick=function(){tabs.forEach(function(o){o.setAttribute('aria-selected',o===b)});
+ document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('on',p.id===b.dataset.p)});};});
+// progress + active nav
+var bar=document.getElementById('bar'),links=document.querySelectorAll('nav a');
+function upd(){var h=document.documentElement;bar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+ var cur='';document.querySelectorAll('main section').forEach(function(s){if(s.getBoundingClientRect().top<120)cur=s.id});
+ links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+cur)});}
+addEventListener('scroll',upd,{passive:true});upd();
+// tema
+var tb=document.getElementById('theme');
+tb.onclick=function(){var r=document.documentElement;var dark=(r.dataset.theme==='dark')||(!r.dataset.theme&&matchMedia('(prefers-color-scheme:dark)').matches);r.dataset.theme=dark?'light':'dark';};
+})();
+</script>
+</body>
+</html>

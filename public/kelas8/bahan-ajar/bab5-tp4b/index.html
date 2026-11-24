@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studio Kampanye Digital: Dari Data ke Dampak — Informatika VIII Bab V Pertemuan 2</title>
+<meta name="description" content="Materi siswa Informatika Kelas VIII Bab V pertemuan 2: strategi, data, fakta, lisensi, dan teknis media untuk kampanye digital.">
+<style>
+:root{--navy:#17294D;--teal:#0E9AA7;--tealL:#D3F1F0;--coral:#FF6B5B;--coralL:#FFE2DD;--sun:#FFC93C;--sunL:#FFF1C4;--purple:#7A5CC7;--purpleL:#E6DFF7;--green:#2FB26E;--greenL:#D9F5E6;--blueL:#DCE9FF;--gray:#5F6F86;--bg:#F6FBFB;--line:#C9D6E2}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--navy);background:var(--bg);line-height:1.65;font-size:17px}
+#bar{position:fixed;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--teal),var(--coral));z-index:50}
+header.hero{background:linear-gradient(135deg,#0E9AA7 0%,#17294D 100%);color:#fff;padding:36px 20px 28px}
+.hero-in{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1.1fr 1fr;gap:24px;align-items:center}
+.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.1;margin:8px 0 10px}
+.hero p{margin:0 0 14px;opacity:.92}
+.tag{display:inline-block;background:var(--coral);padding:4px 14px;border-radius:99px;font-weight:700;font-size:14px}
+.hero img{width:100%;border-radius:20px;box-shadow:0 12px 30px rgba(0,0,0,.3)}
+nav{position:sticky;top:0;z-index:40;background:#fff;box-shadow:0 2px 10px rgba(23,41,77,.12);overflow-x:auto;white-space:nowrap;padding:10px 12px;scrollbar-width:thin}
+nav a{display:inline-block;margin-right:8px;padding:6px 12px;border-radius:99px;background:var(--tealL);color:var(--navy);text-decoration:none;font-size:14px;font-weight:600}
+nav a:hover,nav a.on{background:var(--teal);color:#fff}
+main{max-width:900px;margin:0 auto;padding:22px 16px 80px}
+.card{background:#fff;border-radius:22px;padding:24px 26px;margin:0 0 22px;box-shadow:0 6px 20px rgba(23,41,77,.09)}
+.sh{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.num{flex:none;width:38px;height:38px;border-radius:50%;background:var(--coral);color:#fff;font-weight:800;display:grid;place-items:center}
+h2{font-size:clamp(21px,3.4vw,28px);margin:0;line-height:1.2}h3{color:var(--teal);margin:20px 0 6px}
+.em{font-size:1.1em}
+p{margin:.55em 0}
+figure{margin:16px 0}figure img{width:100%;height:auto;border-radius:16px;border:1px solid var(--line);display:block;background:#fff}
+figcaption{font-size:14px;color:var(--gray);text-align:center;margin-top:6px;font-style:italic}
+ul,ol{padding-left:22px}li{margin:.3em 0}
+.tw{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;min-width:520px;font-size:15.5px}
+th{background:var(--navy);color:#fff;text-align:left;padding:9px 12px}td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}tr:nth-child(even) td{background:#F3F8FB}td.f{font-weight:700}
+.box{border-radius:16px;padding:14px 18px;margin:18px 0 4px;border-left:8px solid}
+.box .bh{font-weight:800;margin-bottom:4px}.box ul{margin:4px 0;padding-left:20px}
+.b-tanya{background:var(--purpleL);border-color:var(--purple)}.b-fakta{background:var(--blueL);border-color:#3B82F6}.b-tips{background:var(--sunL);border-color:var(--sun)}.b-coba{background:var(--greenL);border-color:var(--green)}
+.goals label{display:flex;gap:10px;align-items:flex-start;padding:8px 12px;margin:6px 0;border-radius:12px;background:var(--tealL);cursor:pointer}
+.goals input{width:20px;height:20px;margin-top:3px;accent-color:var(--coral)}
+.goals input:checked+span{text-decoration:line-through;opacity:.65}
+.q{border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin:14px 0}
+.q .qt{font-weight:800;margin-bottom:8px}
+.opt{display:block;width:100%;text-align:left;font:inherit;padding:9px 14px;margin:6px 0;border-radius:12px;border:2px solid var(--line);background:#fff;cursor:pointer;color:var(--navy)}
+.opt:hover{border-color:var(--teal)}.opt.ok{background:var(--greenL);border-color:var(--green)}.opt.no{background:var(--coralL);border-color:var(--coral)}
+.fb{display:none;margin-top:8px;padding:8px 12px;border-radius:10px;background:var(--sunL);font-size:15.5px}
+.score{font-size:20px;font-weight:800;margin-top:12px}
+dl{display:grid;grid-template-columns:max-content 1fr;gap:6px 18px}dt{font-weight:800;color:var(--teal)}dd{margin:0}
+textarea{width:100%;min-height:70px;border:2px solid var(--line);border-radius:12px;padding:10px;font:inherit;margin:4px 0 12px}
+button.btn{background:var(--coral);color:#fff;border:0;border-radius:99px;padding:10px 20px;font:inherit;font-weight:700;cursor:pointer}
+#top{position:fixed;right:16px;bottom:16px;width:46px;height:46px;border-radius:50%;border:0;background:var(--navy);color:#fff;font-size:20px;cursor:pointer;display:none;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+footer{text-align:center;color:var(--gray);padding:20px;font-size:14px}
+@media(max-width:720px){.hero-in{grid-template-columns:1fr}.card{padding:18px 16px}body{font-size:16.5px}dl{grid-template-columns:1fr}}
+@media print{nav,#bar,#top,button{display:none}.card{box-shadow:none;border:1px solid var(--line);break-inside:avoid-page}header.hero{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<header class="hero"><div class="hero-in">
+  <div><span class="tag">Informatika • Kelas VIII • Bab V</span>
+  <h1>Studio Kampanye Digital: Dari Data ke Dampak</h1>
+  <p>Pertemuan 2  •  Media Digital untuk Produksi &amp; Diseminasi Konten  •  Informatika Kelas VIII  •  Bab V</p>
+  <p>Naikkan levelmu: dari pembuat konten menjadi perancang kampanye yang jujur, aman, dan terukur. Belajar di 4 stasiun, lalu perbaiki karyamu. Siap? Gulir ke bawah!</p></div>
+  <img src="images/p2_img01_cover.png" alt="Sampul Studio Kampanye Digital">
+</div></header>
+<nav aria-label="Navigasi bagian"><a href="#pemanasan">🔥 Pemanasan</a><a href="#strategi">🧭 Naik Level #1</a><a href="#metrik">📊 Naik Level #2</a><a href="#iterasi">🔁 Naik Level #3</a><a href="#stasiun">🚪 Misi 4 Stasiun</a><a href="#data">📈 Stasiun A</a><a href="#fakta">🕵️ Stasiun B</a><a href="#lisensi">©️ Stasiun C</a><a href="#teknis">🎛️ Stasiun D</a><a href="#paket">📦 Misi Akhir</a><a href="#galeri">🖼️ Galeri Karya dan Uji 5 Detik</a><a href="#kuis">🎯 Kuis</a><a href="#rangkuman">⭐ Rangkuman</a></nav>
+<main>
+<section class="card" id="tujuan">
+  <div class="sh"><span class="num">🎯</span><h2>Hari Ini Aku Bisa …</h2></div>
+  <p>Centang kalau kamu sudah merasa bisa di akhir pelajaran (centangmu tersimpan di peramban ini).</p>
+  <div class="goals"><label><input type="checkbox" data-i="0"><span>Merancang strategi konten dengan A-P-K-F (audiens, pesan, kanal, format)</span></label><label><input type="checkbox" data-i="1"><span>Mengukur dampak konten dengan metrik sederhana</span></label><label><input type="checkbox" data-i="2"><span>Menyajikan data dalam grafik yang jujur dan mudah dibaca</span></label><label><input type="checkbox" data-i="3"><span>Mengecek kebenaran informasi dengan SIFT dan memakai karya orang lain sesuai lisensi</span></label><label><input type="checkbox" data-i="4"><span>Memilih format, rasio, dan ukuran file sesuai kanal, lalu memperbaiki karya menjadi Paket Kampanye v2</span></label></div>
+</section>
+
+<section id="pemanasan" class="card">
+  <div class="sh"><span class="num">1</span><h2><span class="em">🔥</span> Kampanyemu Sepi? Yuk Cari Tahu Kenapa</h2></div>
+  <p>Di pertemuan pertama kamu sudah membuat poster, infografis, atau video. Keren! Tapi bayangkan ini: posternya sudah dibagikan ke grup kelas, <strong>hanya 20 orang yang lihat</strong>, dan hampir tidak ada yang ikut kerja bakti. Lho, kenapa?</p><p>Mungkin pesannya kurang jelas. Mungkin kanalnya salah. Mungkin angka di grafiknya bikin bingung, atau fotonya dipakai tanpa izin. Hari ini kamu naik level: dari <strong>pembuat konten</strong> menjadi <strong>perancang kampanye</strong> yang bisa membuktikan karyanya berdampak.</p>
+  <figure><img src="images/p2_img01_cover.png" alt="Studio Kampanye Digital: dari data ke dampak" loading="lazy"><figcaption>Studio Kampanye Digital: dari data ke dampak</figcaption></figure>
+  
+  
+  
+  
+  
+  
+  
+  
+  <aside class="box b-tanya"><div class="bh"><span>💬</span> Diskusi 2 menit</div><ul><li>Pernahkah kamu melihat poster atau video kampanye yang menarik tapi tidak membuatmu bertindak? Apa penyebabnya?</li><li>Kalau kamu jadi pembuatnya, apa yang akan kamu ubah?</li></ul></aside>
+</section>
+
+<section id="strategi" class="card">
+  <div class="sh"><span class="num">2</span><h2><span class="em">🧭</span> Naik Level #1: Pikirkan A-P-K-F Dulu</h2></div>
+  <p>Sebelum membuka aplikasi, jawab empat pertanyaan ini. Singkatannya <strong>A-P-K-F</strong>:</p>
+  <figure><img src="images/p2_img03_strategi_apkf.png" alt="Empat pertanyaan A-P-K-F dan rumus AIDA" loading="lazy"><figcaption>Empat pertanyaan A-P-K-F dan rumus AIDA</figcaption></figure>
+  <ul><li><strong>Audiens</strong> → siapa yang mau kamu ajak? (misalnya siswa kelas 7–9)</li><li><strong>Pesan</strong> → satu hal yang harus mereka ingat (misalnya “bawa botol minum sendiri”)</li><li><strong>Kanal</strong> → di mana mereka biasa melihatnya? (grup kelas, mading, akun sekolah)</li><li><strong>Format</strong> → bentuk, rasio, dan ukuran file yang cocok dengan kanal itu</li></ul>
+  
+  
+  
+  <p>Lalu tulis captionnya dengan rumus <strong>AIDA</strong>: <strong>A</strong>ttention (judul yang menarik), <strong>I</strong>nterest (fakta atau data singkat), <strong>D</strong>esire (alasan kenapa mereka perlu peduli), dan <strong>A</strong>ction (ajakan yang jelas, misalnya “Daftar ke Ketua OSIS sebelum Jumat”).</p>
+  
+  
+  
+  <aside class="box b-tips"><div class="bh"><span>💡</span> Satu poster, satu pesan</div><ul><li>Kalau kamu ingin menyampaikan lima pesan sekaligus, hasilnya sering tidak ada satu pun yang diingat. Pilih satu pesan utama!</li></ul></aside>
+</section>
+
+<section id="metrik" class="card">
+  <div class="sh"><span class="num">3</span><h2><span class="em">📊</span> Naik Level #2: Ukur Dampaknya</h2></div>
+  <p>Bagaimana tahu kampanyemu berhasil? Jawabannya: <strong>angka</strong>. Ada empat angka yang perlu kamu kenal:</p>
+  <figure><img src="images/p2_img04_metrik.png" alt="Jangkauan, impresi, interaksi, konversi, dan rumus engagement rate" loading="lazy"><figcaption>Jangkauan, impresi, interaksi, konversi, dan rumus engagement rate</figcaption></figure>
+  
+  
+  <div class="tw"><table><thead><tr><th>Istilah</th><th>Artinya</th><th>Contoh</th></tr></thead><tbody><tr><td class="f">Jangkauan (reach)</td><td>Jumlah orang berbeda yang melihat kontenmu</td><td>1.000 orang</td></tr><tr><td class="f">Impresi</td><td>Total berapa kali konten tampil (satu orang bisa melihat lebih dari sekali)</td><td>1.600 tampilan</td></tr><tr><td class="f">Interaksi</td><td>Suka + komentar + dibagikan</td><td>90 interaksi</td></tr><tr><td class="f">Konversi</td><td>Orang yang benar-benar melakukan ajakanmu</td><td>25 orang mendaftar</td></tr></tbody></table></div>
+  
+  <p>Rumus favorit para kreator: <strong>Engagement rate = interaksi ÷ jangkauan × 100%</strong>. Dari contoh: 90 ÷ 1.000 × 100% = <strong>9%</strong>. Tingkat konversinya: 25 ÷ 1.000 × 100% = <strong>2,5%</strong>.</p>
+  
+  
+  
+  <aside class="box b-fakta"><div class="bh"><span>📌</span> Jangan tertipu angka besar</div><ul><li>Video yang ditonton 1.000 kali tapi tidak ada yang ikut kerja bakti belum tentu lebih efektif daripada video yang ditonton 200 kali tetapi membuat 30 orang bergerak. Selalu cocokkan angka dengan <strong>tujuan</strong>.</li></ul></aside>
+</section>
+
+<section id="iterasi" class="card">
+  <div class="sh"><span class="num">4</span><h2><span class="em">🔁</span> Naik Level #3: Uji A/B dan Siklus Perbaikan</h2></div>
+  <p>Kreator hebat jarang puas pada percobaan pertama. Mereka mengulang siklus <strong>Buat → Ukur → Pelajari → Perbaiki</strong>. Salah satu caranya adalah <strong>uji A/B</strong>: membuat dua versi yang hanya berbeda <strong>satu hal</strong> (misalnya judulnya), lalu melihat versi mana yang hasilnya lebih baik.</p><p>Kenapa hanya satu hal? Karena kalau kamu mengubah judul, warna, dan gambar sekaligus, kamu tidak akan tahu <strong>mana</strong> yang membuat hasilnya lebih baik.</p>
+  <figure><img src="images/p2_img13_iterasi_ab.png" alt="Siklus buat, ukur, pelajari, perbaiki dan contoh uji A/B" loading="lazy"><figcaption>Siklus buat, ukur, pelajari, perbaiki dan contoh uji A/B</figcaption></figure>
+  
+  
+  
+  
+  
+  
+  
+  
+  <aside class="box b-coba"><div class="bh"><span>🧪</span> Coba bayangkan</div><ul><li>Versi A berjudul “Kurangi Plastik” (engagement 2%). Versi B berjudul “Yuk, Bawa Botolmu!” (engagement 9%). Judul mana yang kamu pakai, dan hal apa lagi yang akan kamu uji berikutnya?</li></ul></aside>
+</section>
+
+<section id="stasiun" class="card">
+  <div class="sh"><span class="num">5</span><h2><span class="em">🚪</span> Misi 4 Stasiun</h2></div>
+  <p>Kelompokmu akan berputar ke <strong>empat stasiun</strong>, 11 menit tiap stasiun. Di setiap stasiun ada kartu tugas dan kamu harus memecahkan misi bersama.</p>
+  <figure><img src="images/p2_img11_empat_stasiun.png" alt="Empat stasiun belajar: data, fakta, lisensi, rancang" loading="lazy"><figcaption>Empat stasiun belajar: data, fakta, lisensi, rancang</figcaption></figure>
+  
+  
+  <div class="tw"><table><thead><tr><th>Stasiun</th><th>Misimu</th><th>Hasil yang dikumpulkan</th></tr></thead><tbody><tr><td class="f">A. Studio Data</td><td>Mengubah data menjadi grafik yang jujur</td><td>Grafik + judul berpesan</td></tr><tr><td class="f">B. Detektif Fakta</td><td>Menguji 3 klaim dengan SIFT</td><td>Tabel vonis + alasan</td></tr><tr><td class="f">C. Lisensi &amp; Atribusi</td><td>Memutuskan boleh/tidak dan menulis atribusi</td><td>Keputusan + kalimat T-A-S-L</td></tr><tr><td class="f">D. Studio Rancang</td><td>Menghitung ukuran file, memilih rasio, merancang storyboard</td><td>Hitungan + rancangan</td></tr></tbody></table></div>
+  
+  
+  
+  
+  
+  <aside class="box b-tips"><div class="bh"><span>💡</span> Aturan stasiun</div><ul><li>Bagi peran: pembaca kartu, pencatat, penjawab, dan pewaktu. Bergantian tiap stasiun.</li><li>Kalau selesai lebih cepat, kerjakan “Tantangan Bintang” di kartu.</li></ul></aside>
+</section>
+
+<section id="data" class="card">
+  <div class="sh"><span class="num">6</span><h2><span class="em">📈</span> Stasiun A: Data yang Jujur</h2></div>
+  <p>Grafik membuat data mudah dipahami, tapi grafik juga bisa <strong>menipu</strong>. Lihat dua grafik di atas: datanya sama (92 dan 95), tetapi grafik kiri memulai sumbu dari 90 sehingga batang B tampak 2,5 kali lebih tinggi padahal selisihnya hanya sekitar 3%.</p>
+  <figure><img src="images/p2_img05_grafik_jujur.png" alt="Perbandingan grafik menyesatkan dan grafik jujur" loading="lazy"><figcaption>Perbandingan grafik menyesatkan dan grafik jujur</figcaption></figure>
+  <ul><li><strong>Sumbu mulai dari 0</strong> untuk grafik batang.</li><li><strong>Judul berpesan</strong>, bukan sekadar “Grafik Sampah”. Contoh: “Sampah botol kelas VIII turun 61% dalam 5 hari”.</li><li><strong>Satuan dan label</strong> jelas, <strong>sumber data</strong> dicantumkan.</li><li><strong>Pilih jenis grafik sesuai tujuan</strong>: batang untuk membandingkan, garis untuk perubahan dari waktu ke waktu, lingkaran untuk bagian dari keseluruhan (sedikit kategori).</li></ul>
+  
+  
+  
+  <p>Cara menghitung penurunan: (18 − 7) ÷ 18 × 100% = <strong>61%</strong>. Data contoh pada kartu stasiun bersifat fiktif untuk latihan.</p>
+  
+  
+  
+  <aside class="box b-tips"><div class="bh"><span>💡</span> Tiga detik uji grafik</div><ul><li>Tutup judulnya. Masih jelas apa yang dibandingkan? Kalau tidak, tambahkan label.</li></ul></aside>
+</section>
+
+<section id="fakta" class="card">
+  <div class="sh"><span class="num">7</span><h2><span class="em">🕵️</span> Stasiun B: Detektif Fakta dengan SIFT</h2></div>
+  <p>Informasi menyebar cepat, termasuk yang salah. Kamu bisa menjadi “detektif” dengan <strong>SIFT</strong>:</p>
+  <figure><img src="images/p2_img06_sift.png" alt="Empat langkah SIFT: Stop, Investigate, Find, Trace" loading="lazy"><figcaption>Empat langkah SIFT: Stop, Investigate, Find, Trace</figcaption></figure>
+  <ul><li><strong>S – Stop</strong>: berhenti sejenak. Jangan langsung percaya atau membagikan, terutama jika pesannya membuatmu kaget atau marah.</li><li><strong>I – Investigate</strong>: selidiki sumbernya. Siapa pembuatnya? Apakah ia ahli di bidangnya?</li><li><strong>F – Find</strong>: cari liputan lain yang lebih tepercaya tentang klaim yang sama.</li><li><strong>T – Trace</strong>: telusuri asal klaim, tanggal, konteks, dan foto atau datanya yang asli.</li></ul>
+  
+  
+  
+  
+  
+  
+  
+  <aside class="box b-fakta"><div class="bh"><span>📌</span> Tanda-tanda hoaks</div><ul><li>Judul huruf besar semua dan berlebihan.</li><li>Tidak ada sumber, tanggal, atau nama pembuat.</li><li>Memancing emosi dan menyuruh “sebarkan segera!”.</li></ul></aside>
+</section>
+
+<section id="lisensi" class="card">
+  <div class="sh"><span class="num">8</span><h2><span class="em">©️</span> Stasiun C: Lisensi dan Atribusi</h2></div>
+  <p>Di pertemuan 1 kamu belajar bahwa karya orang lain dilindungi hak cipta (UU No. 28 Tahun 2014). Naik level: <strong>Creative Commons (CC)</strong> adalah lisensi yang memberi izin lebih dulu, asalkan kamu mengikuti syaratnya.</p>
+  <figure><img src="images/p2_img07_lisensi_cc.png" alt="Enam jenis lisensi Creative Commons" loading="lazy"><figcaption>Enam jenis lisensi Creative Commons</figcaption></figure>
+  
+  
+  <div class="tw"><table><thead><tr><th>Lisensi</th><th>Boleh?</th><th>Syarat</th></tr></thead><tbody><tr><td class="f">CC0</td><td>Pakai bebas</td><td>Tidak ada syarat</td></tr><tr><td class="f">BY</td><td>Pakai dan ubah</td><td>Sebut pembuat (atribusi)</td></tr><tr><td class="f">BY-SA</td><td>Pakai dan ubah</td><td>Atribusi + hasil ubahan berlisensi sama</td></tr><tr><td class="f">BY-NC</td><td>Pakai nonkomersial</td><td>Atribusi, tidak untuk mencari untung</td></tr><tr><td class="f">BY-ND</td><td>Pakai apa adanya</td><td>Atribusi, tidak boleh diubah</td></tr></tbody></table></div>
+  <figure><img src="images/p2_img08_atribusi_tasl.png" alt="Atribusi T-A-S-L: judul, pembuat, sumber, lisensi" loading="lazy"><figcaption>Atribusi T-A-S-L: judul, pembuat, sumber, lisensi</figcaption></figure>
+  <p>Cara menulis atribusi yang mudah diingat: <strong>T-A-S-L</strong> (<strong>T</strong>itle, <strong>A</strong>uthor, <strong>S</strong>ource, <strong>L</strong>icense). Contoh: “Hutan Mangrove Senja” oleh Sari W., contoh.id/foto/123, lisensi CC BY 4.0 (contoh fiktif).</p>
+  
+  
+  
+  <aside class="box b-tips"><div class="bh"><span>💡</span> Kalau ragu</div><ul><li>Pakai karya buatanmu sendiri, atau cari yang jelas berlisensi terbuka. Selalu baca ketentuan di halaman sumbernya.</li></ul></aside>
+</section>
+
+<section id="teknis" class="card">
+  <div class="sh"><span class="num">9</span><h2><span class="em">🎛️</span> Stasiun D: Ukuran File, Rasio, dan Aksesibilitas</h2></div>
+  <p>Pernah file-mu ditolak karena terlalu besar? Kamu bisa <strong>menghitung</strong> ukurannya sebelum mengirim:</p>
+  <figure><img src="images/p2_img09_ukuran_file.png" alt="Cara menghitung ukuran gambar dan video; lossy dan lossless" loading="lazy"><figcaption>Cara menghitung ukuran gambar dan video; lossy dan lossless</figcaption></figure>
+  <ul><li><strong>Gambar bitmap tanpa kompresi</strong>: lebar × tinggi × 3 byte. Contoh 1920 × 1080 × 3 ≈ 6,2 MB.</li><li><strong>Video</strong>: ukuran (MB) ≈ bitrate (Mbps) × detik ÷ 8. Contoh 8 × 30 ÷ 8 = 30 MB.</li><li><strong>Lossy</strong> (JPG, MP3, MP4) mengecilkan ukuran dengan mengurangi detail; <strong>lossless</strong> (PNG, WAV) menjaga data asli tapi ukurannya lebih besar.</li></ul>
+  
+  
+  <figure><img src="images/p2_img10_rasio_layar.png" alt="Rasio layar 9:16, 1:1, 4:5, dan 16:9" loading="lazy"><figcaption>Rasio layar 9:16, 1:1, 4:5, dan 16:9</figcaption></figure>
+  <p>Pilih <strong>rasio</strong> sesuai tempat tayang: 9:16 untuk video vertikal, 1:1 atau 4:5 untuk unggahan gambar, dan 16:9 untuk layar kelas atau slide. Satu karya bisa dibuat dalam dua ukuran.</p>
+  
+  <figure><img src="images/p2_img15_aksesibilitas.png" alt="Alt text, subtitle, kontras, dan bahasa jelas" loading="lazy"><figcaption>Alt text, subtitle, kontras, dan bahasa jelas</figcaption></figure>
+  <p>Terakhir, buat karyamu <strong>bisa dinikmati semua orang</strong>: tambahkan <strong>teks alternatif</strong> pada gambar, <strong>subtitle</strong> pada video, kontras huruf yang tegas, dan bahasa yang jelas.</p>
+  <aside class="box b-coba"><div class="bh"><span>🧪</span> Hitung sendiri</div><ul><li>Video 40 detik, bitrate 6 Mbps. Berapa MB? Muatkah di lampiran 16 MB? (Jawab: 30 MB, tidak muat; bitrate maksimum ≈ 3,2 Mbps.)</li></ul></aside>
+</section>
+
+<section id="paket" class="card">
+  <div class="sh"><span class="num">10</span><h2><span class="em">📦</span> Misi Akhir: Paket Kampanye v2</h2></div>
+  <p>Sekarang gabungkan semua temuan stasiun untuk <strong>memperbaiki karya dari pertemuan 1</strong> menjadi Paket Kampanye v2. Waktu kerja 16 menit.</p>
+  <figure><img src="images/p2_img14_paket_kampanye.png" alt="Lima komponen Paket Kampanye v2" loading="lazy"><figcaption>Lima komponen Paket Kampanye v2</figcaption></figure>
+  
+  
+  
+  
+  
+  <h3>Langkah kerja proyek</h3><ol><li><strong>Produk v2:</strong> perbaiki poster/infografis/video (grafik jujur, atribusi, kontras).</li><li><strong>Caption AIDA:</strong> tulis maksimal 40 kata dengan ajakan yang jelas.</li><li><strong>Rencana sebar:</strong> pilih 2 kanal, rasio, format file, dan jadwal.</li><li><strong>Target metrik:</strong> misalnya engagement 10% atau 5 orang mendaftar.</li><li><strong>Kartu etika:</strong> centang lisensi, fakta, privasi, alt text.</li></ol>
+  
+  
+  <aside class="box b-tips"><div class="bh"><span>💡</span> Hemat waktu</div><ul><li>Bagi tugas: satu orang memperbaiki produk, satu menulis caption, satu menghitung ukuran dan rasio, satu mengisi kartu etika dan rencana sebar.</li></ul></aside>
+</section>
+
+<section id="galeri" class="card">
+  <div class="sh"><span class="num">11</span><h2><span class="em">🖼️</span> Galeri Karya dan Uji 5 Detik</h2></div>
+  <p>Di galeri, kamu berkeliling melihat karya kelompok lain. Ada dua tugas:</p>
+  <figure><img src="images/p2_img12_galeri_fds.png" alt="Uji 5 detik dan kartu umpan balik Fakta-Dampak-Saran" loading="lazy"><figcaption>Uji 5 detik dan kartu umpan balik Fakta-Dampak-Saran</figcaption></figure>
+  <ul><li><strong>Uji 5 detik</strong>: lihat karya selama 5 detik, lalu tulis pesan yang kamu ingat. Kalau pesannya tidak sama dengan niat pembuat, berarti karya perlu diperbaiki.</li><li><strong>Kartu F-D-S</strong>: tulis <strong>Fakta</strong> (apa yang kulihat), <strong>Dampak</strong> (apa efeknya bagi pembaca), dan <strong>Saran</strong> (apa yang bisa ditingkatkan).</li></ul>
+  
+  
+  
+  
+  
+  
+  
+  <aside class="box b-fakta"><div class="bh"><span>📌</span> Contoh F-D-S yang baik</div><ul><li>Fakta: “Judul besar dan berwarna kontras.” Dampak: “Pesan utama terbaca dari jauh.” Saran: “Tambahkan sumber data di bagian bawah.”</li></ul></aside>
+</section>
+<section class="card" id="kuis">
+  <div class="sh"><span class="num">🎯</span><h2>Cek Pemahaman: Mini Kuis</h2></div>
+  <p>Pilih jawabanmu. Jawaban benar akan berwarna hijau.</p>
+  <div id="quiz"></div>
+  <div class="score" id="score"></div>
+</section>
+<section class="card" id="rangkuman">
+  <div class="sh"><span class="num">⭐</span><h2>Rangkuman</h2></div>
+  <ul><li>Rancang konten dengan A-P-K-F, tulis caption dengan AIDA.</li><li>Ukur dampak: jangkauan, impresi, interaksi, konversi; engagement rate = interaksi ÷ jangkauan × 100%.</li><li>Grafik jujur: sumbu mulai dari 0, judul berpesan, label dan sumber jelas.</li><li>SIFT: Stop, Investigate, Find, Trace; lisensi CC menentukan apa yang boleh dilakukan; atribusi T-A-S-L.</li><li>Ukuran video ≈ bitrate × detik ÷ 8; pilih rasio dan format sesuai kanal; tambahkan alt text dan subtitle.</li><li>Karya hebat lahir dari siklus Buat → Ukur → Pelajari → Perbaiki.</li></ul>
+  <h3>Kosakata Penting</h3>
+  <dl><dt>A-P-K-F</dt><dd>Audiens, Pesan, Kanal, Format: empat pertanyaan perancang konten.</dd><dt>AIDA</dt><dd>Attention, Interest, Desire, Action: rumus menulis caption/poster.</dd><dt>Jangkauan</dt><dd>Jumlah orang berbeda yang melihat konten.</dd><dt>Impresi</dt><dd>Total tampilan konten, termasuk yang berulang.</dd><dt>Engagement rate</dt><dd>Interaksi ÷ jangkauan × 100%.</dd><dt>Konversi</dt><dd>Orang yang melakukan aksi yang diajakkan.</dd><dt>Uji A/B</dt><dd>Membandingkan dua versi yang hanya beda satu hal.</dd><dt>SIFT</dt><dd>Stop, Investigate, Find, Trace: cara mengecek informasi.</dd><dt>Creative Commons</dt><dd>Keluarga lisensi yang memberi izin pemakaian karya dengan syarat tertentu.</dd><dt>Atribusi (T-A-S-L)</dt><dd>Mencantumkan judul, pembuat, sumber, dan lisensi karya.</dd><dt>Bitrate</dt><dd>Jumlah data per detik pada audio/video (mis. Mbps).</dd><dt>Alt text</dt><dd>Deskripsi teks pengganti gambar untuk pembaca layar.</dd></dl>
+  <h3>Refleksi</h3>
+  <label for="r0"><strong>1. Temuan stasiun mana yang paling mengubah cara pandangku membuat konten?</strong></label><textarea id="r0" placeholder="Tulis jawabanmu di sini …"></textarea><label for="r1"><strong>2. Bagian mana dari karya v1 yang kuperbaiki, dan apa buktinya bahwa v2 lebih baik?</strong></label><textarea id="r1" placeholder="Tulis jawabanmu di sini …"></textarea><label for="r2"><strong>3. Pesan apa yang ingin kusampaikan, dan lewat kanal apa?</strong></label><textarea id="r2" placeholder="Tulis jawabanmu di sini …"></textarea>
+  <p><em>Jawaban refleksi tidak disimpan di server; salin ke buku tugas atau LKPD-mu.</em></p>
+</section>
+</main>
+<footer>© SMP Negeri 14 Tarakan • Informatika Kelas VIII • Bab V Pemanfaatan Perangkat Digital<br>Sumber materi: Buku Siswa Informatika Kelas VIII (Edisi Revisi), Kemendikbudristek 2024</footer>
+<button id="top" aria-label="Kembali ke atas">↑</button>
+<script>
+const QUIZ=[{"q":"Video A: jangkauan 800, interaksi 16. Engagement rate-nya adalah …","o":["0,2%","2%","16%","20%"],"k":1,"p":"16 ÷ 800 × 100% = 2%."},{"q":"Grafik batang dengan sumbu-Y dimulai dari 90 membuat selisih tampak …","o":["Lebih kecil","Lebih besar dari sebenarnya","Sama","Tidak terlihat"],"k":1,"p":"Sumbu yang dipotong melebih-lebihkan perbedaan."},{"q":"Langkah pertama SIFT ketika menerima pesan yang mengagetkan adalah …","o":["Membagikan","Stop: berhenti sejenak","Menghapus akun","Membalas dengan marah"],"k":1,"p":"Stop: jangan bereaksi atau membagikan sebelum mengecek."},{"q":"Foto berlisensi CC BY-ND boleh kamu …","o":["Ubah warnanya","Pakai apa adanya dengan menyebut pembuat","Klaim sebagai milikmu","Pakai tanpa atribusi"],"k":1,"p":"ND = tanpa turunan: tidak boleh diubah, wajib atribusi."},{"q":"Video 20 detik, bitrate 8 Mbps berukuran sekitar …","o":["8 MB","16 MB","20 MB","160 MB"],"k":2,"p":"8 × 20 ÷ 8 = 20 MB."}];
+const qz=document.getElementById('quiz');let done=0,right=0;
+QUIZ.forEach((q,qi)=>{const d=document.createElement('div');d.className='q';
+ d.innerHTML='<div class="qt">'+(qi+1)+'. '+q.q+'</div>';
+ q.o.forEach((o,oi)=>{const b=document.createElement('button');b.className='opt';b.type='button';b.textContent='ABCD'[oi]+'. '+o;
+  b.onclick=()=>{if(d.dataset.done)return;d.dataset.done=1;done++;
+   const bs=d.querySelectorAll('.opt');bs[q.k].classList.add('ok');
+   if(oi===q.k){right++}else{b.classList.add('no')}
+   const f=d.querySelector('.fb');f.style.display='block';f.textContent=(oi===q.k?'Benar! ':'Belum tepat. ')+q.p;
+   if(done===QUIZ.length){document.getElementById('score').textContent='Skormu: '+right+' dari '+QUIZ.length+(right===QUIZ.length?' — Keren, kamu siap jadi kreator! 🎉':' — Baca lagi bagian yang kurang, ya 💪')}};
+  d.appendChild(b)});
+ const fb=document.createElement('div');fb.className='fb';d.appendChild(fb);qz.appendChild(d)});
+// checklist persist
+const KEY='bab5tp4b-goals';let saved=[];try{saved=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){}
+document.querySelectorAll('.goals input').forEach(c=>{c.checked=saved.includes(+c.dataset.i);
+ c.onchange=()=>{const a=[...document.querySelectorAll('.goals input')].filter(x=>x.checked).map(x=>+x.dataset.i);try{localStorage.setItem(KEY,JSON.stringify(a))}catch(e){}}});
+// progress + top + nav highlight
+const bar=document.getElementById('bar'),topBtn=document.getElementById('top');
+const links=[...document.querySelectorAll('nav a')];const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+addEventListener('scroll',()=>{const h=document.documentElement;const p=h.scrollTop/(h.scrollHeight-h.clientHeight);bar.style.width=(p*100)+'%';topBtn.style.display=h.scrollTop>600?'block':'none';
+ let cur=0;secs.forEach((s,i)=>{if(s&&s.getBoundingClientRect().top<120)cur=i});links.forEach((a,i)=>a.classList.toggle('on',i===cur))},{passive:true});
+topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});
+</script>
+</body>
+</html>

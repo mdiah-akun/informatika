@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Materi Siswa: Dampak Perundungan Digital</title>
+<meta name="description" content="Materi siswa Informatika Kelas VIII Bab IV: Dampak Perundungan Digital (Cyberbullying)">
+<style>
+:root{--indigo:#1F2A5C;--purple:#4B3FA8;--coral:#E5484D;--teal:#0F9D8F;--yellow:#FFC857;--bg:#F4F6FF;--card:#fff;--ink:#1f2937;--muted:#6b7280;--line:#e5e7eb}
+@media (prefers-color-scheme:dark){:root{--bg:#10142b;--card:#1a2040;--ink:#e8eaf6;--muted:#a3a9c9;--line:#2c3563}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 "Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif}
+.hero{background:linear-gradient(135deg,#1F2A5C,#4B3FA8);color:#fff;padding:28px 16px 36px}
+.hero .in{max-width:980px;margin:auto;display:grid;gap:20px;grid-template-columns:1.1fr 1fr;align-items:center}
+.hero small{letter-spacing:.08em;color:var(--yellow);font-weight:700}
+.hero h1{font-size:clamp(28px,5vw,46px);line-height:1.1;margin:8px 0}
+.hero p{margin:6px 0;color:#e6e8ff}
+.hero img{width:100%;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+@media(max-width:760px){.hero .in{grid-template-columns:1fr}}
+nav{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--line);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+nav .chips{max-width:980px;margin:auto;display:flex;gap:8px;overflow-x:auto;padding:10px 16px;scrollbar-width:thin}
+nav a{white-space:nowrap;text-decoration:none;color:var(--indigo);background:#E4E7F7;padding:6px 14px;border-radius:999px;font-size:14px;font-weight:600}
+@media(prefers-color-scheme:dark){nav a{background:#2c3563;color:#e8eaf6}}
+nav a.on{background:var(--indigo);color:#fff}
+#bar{height:4px;background:var(--coral);width:0}
+main{max-width:980px;margin:22px auto;padding:0 16px}
+.card{background:var(--card);border-radius:20px;padding:24px 26px;margin:0 0 22px;box-shadow:0 4px 18px rgba(31,42,92,.08)}
+h2{color:var(--indigo);font-size:28px;margin:0 0 10px}@media(prefers-color-scheme:dark){h2{color:#c9d0ff}}
+h3{color:var(--purple);font-size:20px;margin:22px 0 6px}@media(prefers-color-scheme:dark){h3{color:#b7aefc}}
+figure{margin:16px 0}figure img{width:100%;height:auto;border-radius:14px;border:1px solid var(--line);cursor:zoom-in;display:block}
+figcaption{font-size:14px;color:var(--muted);text-align:center;margin-top:6px}.zoom{opacity:.7}
+ul,ol{padding-left:24px}li{margin:6px 0}
+.callout{border-radius:14px;padding:14px 18px;margin:16px 0}.callout p{margin:4px 0}
+.callout.indigo{background:#E4E7F7;color:#1F2A5C}.callout.yellow{background:#FFF2D1;color:#5a4300}.callout.coral{background:#FFE3E3;color:#7a1f1f}.callout.teal{background:#DDF5F1;color:#0B6B60}.callout.grey{background:#F3F4F6;color:#374151}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%}th,td{border:1px solid var(--line);padding:8px 12px;text-align:left}thead th{background:var(--indigo);color:#fff}tbody th{background:#E4E7F7;color:#1F2A5C;width:34%}
+.small{font-size:14px;color:var(--muted)}
+.btn{font:inherit;border:0;border-radius:12px;padding:10px 16px;font-weight:700;cursor:pointer;background:var(--indigo);color:#fff;margin:4px 6px 4px 0}
+.btn.c{background:var(--teal)}.btn.p{background:var(--coral)}.btn:disabled{opacity:.5;cursor:default}
+.q{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:12px 0}
+.opt{display:block;width:100%;text-align:left;font:inherit;border:2px solid var(--line);background:transparent;color:inherit;border-radius:10px;padding:9px 12px;margin:6px 0;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--purple)}.opt.ok{border-color:var(--teal);background:#DDF5F1;color:#0B6B60}.opt.no{border-color:var(--coral);background:#FFE3E3;color:#7a1f1f}
+.fb{margin-top:8px;font-size:15px}.score{font-size:20px;font-weight:800;color:var(--teal)}
+.lb{position:fixed;inset:0;background:rgba(10,14,40,.88);display:none;align-items:center;justify-content:center;z-index:50;padding:16px;cursor:zoom-out}.lb.on{display:flex}.lb img{max-width:100%;max-height:100%;border-radius:12px}
+footer{max-width:980px;margin:0 auto 40px;padding:0 16px;color:var(--muted);font-size:14px;text-align:center}
+@media print{nav,#bar,.btn,.zoom{display:none}.card{box-shadow:none;break-inside:avoid-page}body{background:#fff}}
+</style></head><body>
+<div id="bar"></div>
+<header class="hero"><div class="in"><div><small>INFORMATIKA KELAS VIII • BAB IV JEJAK BERMEDIA DIGITAL</small><h1>Dampak Perundungan Digital (Cyberbullying)</h1><p>Materi siswa untuk Tujuan Pembelajaran 3. Baca, selidiki bersama kelompok, lalu cek pemahamanmu.</p><p><strong>SMP Negeri 14 Tarakan</strong></p></div><img src="images/01_cover.png" alt="Sampul: siswa menerima pesan perundungan di ponsel"></div></header>
+<nav><div class="chips" id="chips"><a href="#halo">Halo!</a><a href="#misi">Misi</a><a href="#apaitu">Apa itu?</a><a href="#bentuk">Bentuk</a><a href="#beda">Bedanya</a><a href="#candaan">Bercanda?</a><a href="#dampak">Dampak</a><a href="#saksi">Saksi</a><a href="#korban">Korban</a><a href="#lapor">Lapor</a><a href="#cegah">Cegah</a><a href="#kasus">Kasus</a><a href="#rangkum">Rangkuman</a><a href="#game">Main &amp; Kuis</a><a href="#renung">Renungkan</a><a href="#kata">Istilah</a></div></nav>
+<main>
+<section id="halo" class="card"><h2>Halo, Teman-teman!</h2>
+<p>Pernah nggak, kamu lagi asyik scroll HP, terus lihat foto temanmu diedit jadi lucu-lucuan dan disebar ke banyak grup? Mungkin kamu ikut ketawa. Tapi... gimana ya perasaan temanmu yang ada di foto itu?</p>
+<p>Hari ini kita akan belajar tentang <strong>cyberbullying</strong> atau <strong>perundungan digital</strong>. Bukan buat menakut-nakuti, tapi supaya kita sama-sama paham dampaknya dan tahu apa yang harus dilakukan. Yuk mulai!</p>
+<aside class="callout indigo"><strong>Setelah belajar ini, kamu bisa:</strong><p>✔ Menjelaskan apa itu cyberbullying dan ciri-cirinya</p><p>✔ Mengenali bentuk-bentuknya</p><p>✔ Membedakan bercanda dan perundungan</p><p>✔ Menjelaskan dampaknya bagi korban, pelaku, dan saksi</p><p>✔ Tahu langkah menghadapi dan mencegahnya</p></aside>
+</section>
+<section id="misi" class="card"><h2>Misi Kita Hari Ini</h2>
+<p>Kita belajar dengan cara <strong>Problem Based Learning</strong>. Artinya, kamu dan kelompokmu jadi <strong>detektif</strong>: membaca kasus, mencari tahu masalahnya, lalu menyusun solusi. Waktu belajar kita 120 menit, dibagi dalam lima tahap.</p>
+<figure><img src="images/06_alur_pbl.png" alt="Alur belajar lima fase" tabindex="0"><figcaption>Alur belajar kita hari ini <span class="zoom">(klik gambar untuk memperbesar)</span></figcaption></figure>
+</section>
+<section id="apaitu" class="card"><h2>Apa Itu Cyberbullying?</h2>
+<p><strong>Cyber</strong> artinya dunia maya (digital). <strong>Bullying</strong> artinya perundungan. Jadi <strong>cyberbullying adalah perundungan di dunia maya</strong> lewat media digital, misalnya media sosial, aplikasi chat, game online, dan kolom komentar.</p>
+<figure><img src="images/02_apa_itu.png" alt="Pengertian dan tiga ciri cyberbullying" tabindex="0"><figcaption>Cyber + Bullying = Cyberbullying <span class="zoom">(klik gambar untuk memperbesar)</span></figcaption></figure>
+<p>Supaya bisa disebut perundungan, biasanya ada <strong>tiga ciri</strong>:</p>
+<ul><li><strong>Agresif:</strong> sengaja menyakiti, menakuti, atau mempermalukan orang lain.</li><li><strong>Berulang:</strong> terjadi terus-menerus dalam waktu lama, bukan sekali iseng.</li><li><strong>Tidak seimbang:</strong> korban sulit melawan karena pelaku lebih kuat (bisa fisik, jumlah, atau mental).</li></ul>
+<aside class="callout yellow"><strong>Fakta penting</strong><p>Di dunia maya, perundungan <strong>selalu meninggalkan jejak digital</strong> (pesan, komentar, tangkapan layar). Jejak itu bisa jadi <strong>bukti</strong> saat melapor.</p></aside>
+</section>
+<section id="bentuk" class="card"><h2>Bentuk-bentuknya</h2>
+<p>Cyberbullying nggak cuma soal kata-kata kasar. Ini bentuk-bentuk yang sering terjadi:</p>
+<figure><img src="images/03_bentuk.png" alt="Delapan bentuk cyberbullying" tabindex="0"><figcaption>Delapan bentuk cyberbullying <span class="zoom">(klik gambar untuk memperbesar)</span></figcaption></figure>
+<ul><li><strong>Komentar jahat:</strong> ejekan dan hinaan di kolom komentar atau chat.</li><li><strong>Akun palsu:</strong> memakai akun palsu atau akun orang lain untuk mengirim pesan jahat.</li><li><strong>Trolling:</strong> mengirim pesan menjengkelkan atau mengancam di media sosial, ruang obrolan, atau game.</li><li><strong>Pengucilan:</strong> sengaja mengeluarkan seseorang dari game, grup, atau kegiatan.</li><li><strong>Sebar aib atau foto memalukan:</strong> menyebar kebohongan atau foto memalukan, atau bikin grup untuk menjelekkan orang.</li><li><strong>Meme dan edit foto:</strong> mengedit gambar orang atau membuat meme untuk mengolok-olok.</li><li><strong>Ancaman dan teror:</strong> menakut-nakuti, mengintimidasi, atau menghasut orang lain ikut mempermalukan.</li><li><strong>Membocorkan data pribadi:</strong> menyebar atau membuka data dan file pribadi orang lain tanpa izin.</li></ul>
+<aside class="callout grey"><strong>Bentuk lain</strong><p>Flaming (perang kata-kata di dunia maya) dan cyber stalking (menguntit di dunia maya) juga termasuk cyberbullying.</p></aside>
+</section>
+<section id="beda" class="card"><h2>Bullying vs Cyberbullying</h2>
+<p>Dua-duanya sama-sama menyakitkan. Tapi di dunia maya, korbannya sering merasa <strong>lebih berat</strong>. Kenapa? Lihat perbandingannya:</p>
+<figure><img src="images/04_beda.png" alt="Perbedaan bullying dan cyberbullying" tabindex="0"><figcaption>Perbedaan bullying dan cyberbullying <span class="zoom">(klik gambar untuk memperbesar)</span></figcaption></figure>
+<figure><img src="images/13_jejak_menyebar.png" alt="Konten perundungan cepat menyebar dan sulit dihapus" tabindex="0"><figcaption>Sekali unggah, bisa menyebar ke mana-mana <span class="zoom">(klik gambar untuk memperbesar)</span></figcaption></figure>
+<p>Bayangkan: di dunia nyata, korban masih bisa pulang ke rumah dan merasa aman. Di dunia maya, serangan bisa datang <strong>sampai ke kamar sendiri</strong>, 24 jam, dari banyak orang, bahkan dari akun yang nggak dikenal.</p>
+</section>
+<section id="candaan" class="card"><h2>Bercanda atau Perundungan?</h2>
+<p>Teman-teman pasti suka bercanda, apalagi di chat. Tapi candaan bisa <strong>kelewatan</strong>. Cek dengan <strong>tes 3 pertanyaan</strong> ini:</p>
+<figure><img src="images/08_bercanda_atau_bukan.png" alt="Tes tiga pertanyaan" tabindex="0"><figcaption>Tes 3 pertanyaan <span class="zoom">(klik gambar untuk memperbesar)</span></figcaption></figure>
+<ol><li>Apakah <strong>semua orang</strong> ikut tertawa?</li><li>Apakah ada yang <strong>tersakiti</strong> atau jadi bahan tertawaan?</li><li>Sudah diminta <strong>berhenti</strong>, tapi masih diteruskan?</li></ol>
+<aside class="callout coral"><strong>Kalau salah satu jawabannya "YA"</strong><p>Berarti itu sudah bukan candaan lagi, tapi <strong>perundungan</strong>. Segera berhenti. Kita harus menghormati semua orang, di dunia maya maupun dunia nyata.</p></aside>
+</section>
+<section id="dampak" class="card"><h2>Dampaknya Buat Siapa Saja?</h2>
+<figure><img src="images/05_dampak.png" alt="Dampak bagi korban, pelaku, dan saksi" tabindex="0"><figcaption>Korban, pelaku, dan saksi sama-sama terdampak <span class="zoom">(klik gambar untuk memperbesar)</span></figcaption></figure>
+<h3>Bagi korban</h3>
+<ul><li><strong>Mental dan emosional:</strong> merasa malu, kesal, marah, khawatir berlebihan, susah percaya orang lain, hilang minat pada hal yang disukai, dan sulit fokus belajar.</li><li><strong>Fisik:</strong> mudah lelah, sakit perut atau sakit kepala, dan bisa muncul gejala depresi.</li></ul>
+<aside class="callout teal"><strong>Kalau kamu merasa sangat tertekan</strong><p>Jangan dipendam sendirian. Cerita ke orang tua, wali kelas, atau guru BK. Meminta bantuan itu <strong>berani</strong>, bukan lemah.</p></aside>
+<h3>Bagi pelaku</h3>
+<ul><li>Jadi cenderung agresif, impulsif, dan mudah marah.</li><li>Ingin mendominasi dan kurang menghormati orang lain.</li><li>Dijauhi teman-temannya.</li></ul>
+<h3>Bagi saksi</h3>
+<ul><li>Kalau perundungan dibiarkan, orang jadi mengira itu hal yang wajar. Bisa muncul pelaku baru.</li><li>Ada yang ikut-ikutan jadi perundung karena takut jadi korban berikutnya.</li></ul>
+</section>
+<section id="saksi" class="card"><h2>Kamu Penonton atau Pembela?</h2>
+<p>Kalau kamu melihat temanmu dirundung, kamu adalah <strong>saksi</strong>. Pilihanmu menentukan banyak hal.</p>
+<figure><img src="images/09_saksi_upstander.png" alt="Penonton atau pembela" tabindex="0"><figcaption>Bystander (penonton) vs Upstander (pembela) <span class="zoom">(klik gambar untuk memperbesar)</span></figcaption></figure>
+<ul><li><strong>Jangan</strong> ikut membagikan, menekan "suka", atau menertawakan.</li><li><strong>Temani dan dukung</strong> korban dengan pesan yang baik.</li><li><strong>Tegur dengan sopan</strong> kalau aman dilakukan.</li><li><strong>Laporkan</strong> ke guru atau orang tua.</li></ul>
+</section>
+<section id="korban" class="card"><h2>Kalau Aku atau Temanku Jadi Korban</h2>
+<figure><img src="images/07_langkah_korban.png" alt="Lima langkah penanganan" tabindex="0"><figcaption>Lima langkah: Tenang, Simpan bukti, Blokir, Lapor, Cerita <span class="zoom">(klik gambar untuk memperbesar)</span></figcaption></figure>
+<ol><li><strong>Tenang.</strong> Jangan dibalas. Tarik napas dulu.</li><li><strong>Simpan bukti.</strong> Screenshot pesan, nama akun, dan tanggalnya.</li><li><strong>Blokir.</strong> Blokir pelaku, un-tag dari foto, dan hapus unggahan jahat di akunmu.</li><li><strong>Lapor.</strong> Pakai fitur "Report" di aplikasi, lalu lapor ke guru atau sekolah.</li><li><strong>Cerita.</strong> Ceritakan ke orang tua, guru, atau konselor yang kamu percaya.</li></ol>
+<aside class="callout teal"><strong>Perlu berhenti pakai internet?</strong><p>Menurut UNICEF, menghapus aplikasi sebentar boleh, tapi <strong>berhenti pakai internet dalam waktu lama bukan solusi</strong>. Kamu nggak salah, jadi kenapa harus dirugikan? Yang penting adalah <strong>melaporkan</strong>.</p></aside>
+</section>
+<section id="lapor" class="card"><h2>Ke Mana Aku Bisa Melapor?</h2>
+<figure><img src="images/11_jalur_lapor.png" alt="Jalur pelaporan" tabindex="0"><figcaption>Kamu nggak sendirian <span class="zoom">(klik gambar untuk memperbesar)</span></figcaption></figure>
+<ul><li><strong>Orang tua atau wali</strong> di rumah.</li><li><strong>Guru BK dan wali kelas</strong> di sekolah.</li><li><strong>Tim TPPK sekolah</strong> (Tim Pencegahan dan Penanganan Kekerasan).</li><li><strong>Fitur "Laporkan" (Report)</strong> di aplikasi media sosial dan game.</li><li><strong>SAPA 129</strong> (layanan KemenPPPA): telepon 129.</li></ul>
+<aside class="callout yellow"><strong>Ingat</strong><p>Melapor bukan "mengadu". Melapor itu cara melindungi diri sendiri dan teman.</p></aside>
+</section>
+<section id="cegah" class="card"><h2>Biar Nggak Jadi Perundung atau Korban</h2>
+<ul><li><strong>Jaga data pribadi.</strong> Jangan kasih alamat rinci, nomor telepon, atau nama sekolah ke orang yang tidak dikenal.</li><li><strong>Pikir sebelum kirim.</strong> Tanya dirimu: ini bikin sakit hati orang lain nggak?</li><li><strong>Jangan teruskan</strong> pesan atau foto yang merendahkan orang.</li><li><strong>Kalau ada unggahan menyakitkan di halamanmu,</strong> hapus dan jangan dibalas. Kalau ada ancaman, laporkan dan blokir.</li><li><strong>Baik di dunia maya, baik juga di dunia nyata.</strong></li></ul>
+<aside class="callout indigo"><strong>4 pertanyaan sebelum menekan "Kirim"</strong><p>1. Benarkah ini?  2. Baikkah untuk orang lain?  3. Perlukah dikirim?  4. Kalau aku yang ada di foto itu, aku mau diperlakukan begini?</p></aside>
+</section>
+<section id="kasus" class="card"><h2>Ayo Selidiki: Studi Kasus</h2>
+<p>Sekarang giliran kamu dan kelompokmu! Baca kasus Dika (fiktif), lalu kerjakan <strong>LKPD</strong> bersama teman-teman.</p>
+<figure><img src="images/10_kasus_dika.png" alt="Ilustrasi kasus Dika" tabindex="0"><figcaption>Kasus Dika di Grup Kelas 8B <span class="zoom">(klik gambar untuk memperbesar)</span></figcaption></figure>
+<aside class="callout indigo"><strong>Pertanyaan detektif</strong><p>1. Bentuk cyberbullying apa saja yang terjadi?</p><p>2. Siapa korban, pelaku, dan saksi?</p><p>3. Apa dampaknya untuk masing-masing?</p><p>4. Ini bercanda atau perundungan? Buktikan dengan tes 3 pertanyaan.</p><p>5. Kalau kamu salah satu saksi, apa yang akan kamu lakukan?</p></aside>
+</section>
+<section id="rangkum" class="card"><h2>Rangkuman</h2>
+<figure><img src="images/12_peta_konsep.png" alt="Peta konsep cyberbullying" tabindex="0"><figcaption>Peta konsep cyberbullying <span class="zoom">(klik gambar untuk memperbesar)</span></figcaption></figure>
+<ul><li>Cyberbullying = perundungan di dunia maya: <strong>agresif, berulang, tidak seimbang</strong>.</li><li>Bentuknya banyak: komentar jahat, akun palsu, trolling, pengucilan, sebar aib, meme, ancaman, bocor data.</li><li>Dampaknya dirasakan <strong>korban, pelaku, dan saksi</strong>.</li><li>Korban: <strong>tenang, simpan bukti, blokir, lapor, cerita</strong>.</li><li>Kita bisa memilih menjadi <strong>pembela</strong>, bukan penonton.</li></ul>
+</section>
+<section id="game" class="card"><h2>Main &amp; Uji Pemahaman</h2>
+<h3>Mini game: Bercanda atau Perundungan?</h3>
+<p>Baca situasinya, lalu pilih. Ingat tes 3 pertanyaan!</p>
+<div id="gameBox"></div>
+<h3>Kuis cepat (5 soal)</h3>
+<div id="quizBox"></div></section>
+<section id="renung" class="card"><h2>Ayo, Renungkan!</h2>
+<p>Tulis jawabanmu di kertas pribadi. Jawabannya cukup untuk dirimu sendiri, tidak perlu dibacakan.</p>
+<ol><li>Apakah aku sudah paham dampak positif dan negatif media sosial?</li><li>Pernahkah aku meneruskan pesan atau foto tanpa memikirkan perasaan orang lain?</li><li>Pernahkah aku, tanpa sadar, membuat temanku sakit hati lewat chat atau komentar?</li><li>Apakah aku tahu apa yang harus dilakukan kalau aku atau temanku jadi korban?</li><li>Kepada siapa aku akan bercerita kalau aku butuh bantuan?</li></ol>
+</section>
+<section id="kata" class="card"><h2>Kata-Kata Penting</h2>
+<div class="tw"><table><thead><tr><th>Istilah</th><th>Artinya</th></tr></thead><tbody><tr><th scope="row">Cyberbullying</th><td>Perundungan di dunia maya melalui media digital</td></tr><tr><th scope="row">Perundung</th><td>Orang yang melakukan perundungan</td></tr><tr><th scope="row">Korban</th><td>Orang yang menjadi sasaran perundungan</td></tr><tr><th scope="row">Saksi</th><td>Orang yang melihat atau mengetahui perundungan</td></tr><tr><th scope="row">Trolling</th><td>Pesan menjengkelkan atau mengancam untuk memancing emosi</td></tr><tr><th scope="row">Anonim</th><td>Tidak diketahui identitasnya</td></tr><tr><th scope="row">Jejak digital</th><td>Rekam aktivitas kita di internet</td></tr><tr><th scope="row">Blokir</th><td>Membuat akun tertentu tidak bisa menghubungi kita</td></tr><tr><th scope="row">Report</th><td>Fitur untuk melaporkan akun atau konten ke aplikasi</td></tr></tbody></table></div>
+<p class="small"><em>Sumber: Buku Siswa dan Buku Panduan Guru Informatika SMP/MTs Kelas VIII (Edisi Revisi) Bab IV; UNICEF; Permendikbudristek No. 46 Tahun 2023. Semua kasus dan tokoh dalam materi ini fiktif.</em></p>
+</section>
+
+</main>
+<footer>Sumber: Buku Siswa dan Buku Panduan Guru Informatika SMP/MTs Kelas VIII (Edisi Revisi) Bab IV • UNICEF • Permendikbudristek No. 46/2023. Semua tokoh dan kasus fiktif.</footer>
+<div class="lb" id="lb"><img alt="" id="lbi"></div>
+<script>
+const GAME=[{"t":"Kamu menulis \"Selamat ulang tahun, makin tua ya wkwk\" ke sahabatmu. Dia membalas dengan tertawa dan stiker lucu.","a":"candaan","e":"Semua nyaman dan ikut tertawa. Tetap perhatikan: kalau sahabatmu berhenti tertawa, kamu juga harus berhenti."},{"t":"Foto temanmu diedit jadi meme lalu disebar. Dia menulis \"Tolong dihapus ya\", tapi kamu menjawab \"Santai aja, cuma bercanda!\".","a":"perundungan","e":"Ada yang tersakiti dan sudah diminta berhenti, tetapi tetap diteruskan."},{"t":"Dua temanmu saling ledek lucu-lucuan di chat. Keduanya tertawa lalu lanjut main game bareng.","a":"candaan","e":"Keduanya nyaman dan tidak ada yang tersakiti. Kalau salah satu mulai terlihat tidak nyaman, hentikan."},{"t":"Sebuah akun anonim terus-menerus menulis hinaan di setiap unggahan seorang siswa selama berminggu-minggu.","a":"perundungan","e":"Agresif, berulang, dan korban sulit melawan karena pelaku anonim."},{"t":"Kamu sengaja mengeluarkan seorang teman dari grup game karena tidak suka padanya, lalu membuat grup baru tanpa dia.","a":"perundungan","e":"Itu pengucilan, salah satu bentuk cyberbullying."}];const QUIZ=[{"q":"Pernyataan yang paling tepat tentang cyberbullying adalah ...","o":["Candaan sesekali antar teman di grup chat","Perdebatan pendapat yang sopan di kolom komentar","Perilaku agresif yang dilakukan berulang melalui media digital terhadap korban yang sulit melawan","Kritik membangun terhadap hasil karya teman"],"a":2,"e":"Cyberbullying = perundungan di dunia maya: agresif, berulang, dan ada ketidakseimbangan kekuatan."},{"q":"Hal yang membedakan cyberbullying dengan bullying di dunia nyata adalah ...","o":["Pelaku dapat anonim dan serangan bisa terjadi 24 jam sehari","Pelaku selalu berhadapan langsung dengan korban","Hanya terjadi di lokasi tertentu","Korban selalu dapat pergi ke tempat aman"],"a":0,"e":"Pada cyberbullying pelaku bisa anonim, tidak terbatas tempat dan waktu, dan korban sulit melarikan diri."},{"q":"Dampak cyberbullying terhadap mental dan emosional korban adalah ...","o":["Menjadi lebih percaya diri","Merasa malu, cemas, dan sulit fokus pada pelajaran","Nilai pelajaran meningkat","Makin aktif di media sosial"],"a":1,"e":"Korban dapat merasa malu, kesal, marah, khawatir berlebihan, tidak percaya orang lain, dan kehilangan minat."},{"q":"Saksi yang hanya diam saat melihat perundungan dapat menyebabkan ...","o":["Perundungan dianggap wajar dan bisa muncul pelaku baru","Perundungan berhenti dengan sendirinya","Korban menjadi tenang","Pelaku menjadi jera"],"a":0,"e":"Pembiaran membentuk pemahaman bahwa perundungan dapat diterima secara sosial."},{"q":"Rina mengirim meme wajah Sari ke grup. Sari sudah meminta berhenti dan merasa sakit hati, tetapi Rina terus mengirimnya sambil berkata \"Cuma bercanda!\". Tindakan Rina merupakan ...","o":["Perundungan, karena ada yang tersakiti dan terus dilakukan walau sudah diminta berhenti","Candaan biasa, karena niatnya hanya bercanda","Kritik membangun","Hal wajar yang tidak perlu dipermasalahkan"],"a":0,"e":"Candaan berubah menjadi perundungan bila ada orang yang tersakiti dan perilaku tetap diteruskan setelah diminta berhenti."}];
+const $=s=>document.querySelector(s);
+// progress bar + nav highlight
+const secs=[...document.querySelectorAll('main section')];const chips=[...document.querySelectorAll('#chips a')];
+function onScroll(){const h=document.documentElement;$('#bar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';let cur=0;secs.forEach((s,i)=>{if(s.getBoundingClientRect().top<120)cur=i});chips.forEach((c,i)=>c.classList.toggle('on',i===cur))}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+// lightbox
+document.querySelectorAll('figure img').forEach(i=>{const f=()=>{$('#lbi').src=i.src;$('#lb').classList.add('on')};i.addEventListener('click',f);i.addEventListener('keydown',e=>{if(e.key==='Enter')f()})});
+$('#lb').addEventListener('click',()=>$('#lb').classList.remove('on'));addEventListener('keydown',e=>{if(e.key==='Escape')$('#lb').classList.remove('on')});
+// game
+(function(){let i=0,s=0;const box=$('#gameBox');
+function show(){if(i>=GAME.length){box.innerHTML='<p class="score">Skormu: '+s+' / '+GAME.length+'</p><p>Ingat: kalau ada yang tersakiti atau sudah diminta berhenti, itu bukan candaan lagi.</p><button class="btn" id="again">Main lagi</button>';$('#again').onclick=()=>{i=0;s=0;show()};return}
+const g=GAME[i];box.innerHTML='<div class="q"><p><strong>Situasi '+(i+1)+' dari '+GAME.length+'</strong></p><p>'+g.t+'</p><button class="btn c" data-a="candaan">Candaan</button><button class="btn p" data-a="perundungan">Perundungan</button><div class="fb" id="gfb"></div></div>';
+box.querySelectorAll('button[data-a]').forEach(b=>b.onclick=()=>{const ok=b.dataset.a===g.a;if(ok)s++;box.querySelectorAll('button[data-a]').forEach(x=>x.disabled=true);$('#gfb').innerHTML=(ok?'<strong style="color:#0F9D8F">Tepat!</strong> ':'<strong style="color:#E5484D">Belum tepat.</strong> ')+g.e+'<br><button class="btn" id="nx">Lanjut</button>';$('#nx').onclick=()=>{i++;show()}})}
+show()})();
+// quiz
+(function(){let s=0,done=0;const box=$('#quizBox');
+box.innerHTML=QUIZ.map((q,qi)=>'<div class="q" data-i="'+qi+'"><p><strong>'+(qi+1)+'. '+q.q+'</strong></p>'+q.o.map((o,k)=>'<button class="opt" data-k="'+k+'">'+'ABCD'[k]+'. '+o+'</button>').join('')+'<div class="fb"></div></div>').join('')+'<p id="qs" class="score"></p>';
+box.querySelectorAll('.q').forEach(el=>{const q=QUIZ[+el.dataset.i];el.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const k=+b.dataset.k;el.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(+x.dataset.k===q.a)x.classList.add('ok')});if(k===q.a)s++;else b.classList.add('no');el.querySelector('.fb').textContent=(k===q.a?'Benar! ':'Kurang tepat. ')+q.e;done++;if(done===QUIZ.length)$('#qs').textContent='Skormu: '+s+' / '+QUIZ.length+(s===QUIZ.length?' — Keren!':' — Baca ulang bagian yang masih kurang paham, ya.')})})})();
+</script></body></html>

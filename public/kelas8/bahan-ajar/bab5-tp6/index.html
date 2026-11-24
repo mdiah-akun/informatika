@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kemana Perginya Pesanmu? | Informatika VIII</title>
+<style>
+:root{--navy:#1b2a4a;--teal:#0fa3a3;--amber:#f59e0b;--bg:#f5f8fb;--card:#fff;--ink:#1f2937;--mute:#5b667a;--ok:#16a34a;--bad:#dc2626}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65}
+header{background:linear-gradient(135deg,var(--navy),#27406e);color:#fff;padding:28px 16px 22px;text-align:center}
+header small{color:#7fe3e3;font-weight:700;letter-spacing:.06em}
+header h1{margin:6px 0 4px;font-size:clamp(1.6rem,5vw,2.4rem)}
+header p{margin:0;color:#cfd8e6}
+nav{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid #dde4ee;display:flex;gap:4px;overflow-x:auto;padding:6px 10px;scrollbar-width:thin}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-size:.88rem;padding:6px 11px;border-radius:99px;font-weight:600}
+nav a:hover{background:#e6f6f5}
+main{max-width:860px;margin:0 auto;padding:16px}
+section{background:var(--card);border-radius:16px;padding:20px 18px;margin:16px 0;box-shadow:0 1px 6px rgba(27,42,74,.08)}
+h2{color:var(--navy);margin:.1em 0 .5em;font-size:1.45rem}
+h3{color:var(--teal);margin:1.2em 0 .3em}
+img{max-width:100%;height:auto;display:block;margin:12px auto 4px;border-radius:10px}
+figcaption{text-align:center;color:var(--mute);font-size:.88rem;font-style:italic;margin-bottom:8px}
+figure{margin:0}
+.call{border-left:5px solid var(--teal);background:#e6f6f5;padding:10px 14px;border-radius:8px;margin:12px 0}
+.call.y{border-color:var(--amber);background:#fff4dc}
+.call b:first-child{color:var(--navy)}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.95rem}
+th{background:var(--navy);color:#fff;text-align:left}
+th,td{padding:8px 10px;border:1px solid #cfd8e6;vertical-align:top}
+tr:nth-child(even) td{background:#f2f7fb}
+.tblwrap{overflow-x:auto}
+button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:9px 14px;background:var(--teal);color:#fff;font-weight:700}
+button:hover{filter:brightness(1.08)}
+button.alt{background:#e8edf5;color:var(--navy)}
+.lab{background:#f7fbff;border:2px dashed #b5c7e0;border-radius:12px;padding:14px;margin:14px 0}
+.lab h4{margin:0 0 8px;color:var(--navy)}
+.opts{display:grid;gap:8px;margin:8px 0}
+.opt{text-align:left;background:#fff;color:var(--ink);border:2px solid #cfd8e6;font-weight:500}
+.opt.right{border-color:var(--ok);background:#e8f8ee}
+.opt.wrong{border-color:var(--bad);background:#fdecec}
+.fb{margin:8px 0;padding:8px 12px;border-radius:8px;background:#eef2f8}
+.bars{display:flex;gap:6px;align-items:flex-end;height:70px;margin:10px 0}
+.bars i{display:block;width:22px;background:#d3dbe8;border-radius:4px}
+.bars i.on{background:var(--teal)}
+input[type=range]{width:100%}
+.sticky-foot{text-align:center;color:var(--mute);font-size:.85rem;padding:20px}
+details{margin:8px 0}summary{cursor:pointer;font-weight:700;color:var(--navy)}
+code{background:#eef2f8;padding:1px 6px;border-radius:5px}
+</style></head><body>
+<header><small>MATERI SISWA • INFORMATIKA KELAS VIII</small>
+<h1>Kemana Perginya Pesanmu?</h1>
+<p>Bab V Pemanfaatan Perangkat Digital: cara data dikirim lewat internet dan ponsel</p>
+<img src="images/img00_cover.png" alt="Ilustrasi perjalanan data" style="width:100%;max-width:640px;margin-top:14px"></header>
+<nav><a href="#cerita">Cerita</a><a href="#analogi">Analogi</a><a href="#jaringan">Jaringan</a><a href="#routing">Routing</a><a href="#paket">Paket</a><a href="#ponsel">Ponsel &amp; BTS</a><a href="#aman">Aman Online</a><a href="#rangkum">Rangkuman</a><a href="#kuis">Kuis</a></nav>
+<main>
+
+<section id="cerita"><h2>1. Yuk, Mulai dari Cerita Dulu!</h2>
+<div class="call y"><b>Pernah ngalamin ini?</b><ul>
+<li>Kirim foto ke grup kelas, centang satu lamaaa banget.</li>
+<li>Lagi seru video call, eh tiba-tiba patah-patah.</li>
+<li>Masuk ke basement mal, sinyal HP langsung hilang.</li>
+<li>Dapat pesan “Kamu menang hadiah! Klik link ini!” dari nomor nggak dikenal.</li></ul></div>
+<p>Semua kejadian itu berhubungan dengan satu hal: <b>bagaimana data berpindah dari satu perangkat ke perangkat lain</b>. Hari ini kamu jadi “detektif data”. Kita cari tahu:</p>
+<ol><li>Bagaimana data dikirim lewat jaringan dan internet?</li><li>Kenapa kekuatan sinyal HP bisa berubah-ubah?</li><li>Bagaimana caranya tetap aman saat online?</li></ol>
+<figure><img src="images/img01_perjalanan_data.png" alt="Perjalanan data dari HP ke HP"><figcaption>Perjalanan data dari HP pengirim sampai HP penerima.</figcaption></figure>
+<figure><img src="images/img10_langkah_inquiry.png" alt="Langkah inquiry"><figcaption>Langkah belajar kita hari ini (inquiry).</figcaption></figure>
+</section>
+
+<section id="analogi"><h2>2. Analogi Gampang: Kirim Paket Pos</h2>
+<p>Bayangkan kamu kirim paket dari Tarakan ke teman di kota lain. Paketmu nggak langsung terbang ke rumahnya, kan? Dia singgah di kantor pos, dipilah di pusat sortir, dibawa kurir, baru sampai. Data internet juga begitu!</p>
+<figure><img src="images/img12_analogi_pos.png" alt="Analogi pos dan data"><figcaption>Kirim paket pos mirip dengan kirim data. Perhatikan pasangan perangkatnya.</figcaption></figure>
+</section>
+
+<section id="jaringan"><h2>3. Jaringan Komputer</h2>
+<p><b>Jaringan komputer</b> adalah dua atau lebih komputer yang terhubung untuk berbagi data. Tiap perangkat punya “nomor identitas” unik namanya <b>alamat IP</b>, mirip alamat rumah supaya data nggak nyasar.</p>
+<h3>3.1 Jaringan Lokal (LAN) dan Internet</h3>
+<div class="tblwrap"><table><tr><th></th><th>Jaringan lokal (LAN)</th><th>Internet</th></tr>
+<tr><td><b>Jangkauan</b></td><td>Kecil: rumah, sekolah, kantor</td><td>Luas banget: antar negara, seluruh dunia</td></tr>
+<tr><td><b>Contoh</b></td><td>Jaringan lab komputer di sekolah</td><td>Jaringan yang menghubungkan HP dan server di mana-mana</td></tr>
+<tr><td><b>Singkatnya</b></td><td>Jaringan satu area</td><td>Jaringan antar jaringan (inter-network)</td></tr></table></div>
+<figure><img src="images/img02_jaringan_lokal.png" alt="Contoh LAN"><figcaption>Contoh LAN: komputer, laptop, dan HP tersambung ke switch lalu router.</figcaption></figure>
+<h3>3.2 Switch vs Router</h3>
+<ul><li><b>Switch</b>: menghubungkan perangkat di jaringan yang sama. Contoh: 192.168.10.1 dan 192.168.10.2.</li>
+<li><b>Router</b>: menghubungkan dua jaringan yang berbeda. Contoh: 192.168.10.1 dengan 192.168.20.2.</li>
+<li><b>Protokol</b>: aturan agar dua perangkat bisa “nyambung”. Internet memakai TCP/IP.</li></ul>
+<div class="lab"><h4>🧪 Coba Sendiri: Satu jaringan atau beda jaringan?</h4>
+<p>Perangkat A beralamat <code>192.168.10.7</code>. Pilih alamat perangkat lain, lalu lihat butuh switch atau router!</p>
+<div class="opts" id="ipOpts"></div><div class="fb" id="ipFb">Pilih salah satu alamat di atas.</div></div>
+<h3>3.3 Node dan Link</h3>
+<p>Biar gampang dipelajari, jaringan digambar sederhana: perangkat jadi <b>titik (node)</b>, jalur penghubung jadi <b>garis (link/edge)</b>. Switch jadi titik yang punya banyak garis.</p>
+<figure><img src="images/img03_node_link.png" alt="Node dan link"><figcaption>Jaringan asli (kiri) disederhanakan menjadi graf node dan link (kanan).</figcaption></figure>
+</section>
+
+<section id="routing"><h2>3.4 Routing: Memilih Jalan Terbaik</h2>
+<p><b>Routing</b> adalah proses menentukan jalur data dari asal ke tujuan. Router seperti aplikasi peta: dia memilih <b>jalur terpendek</b>. Kalau ada jalur yang sama pendek, router memilih salah satunya secara acak.</p>
+<figure><img src="images/img04_routing.png" alt="Tiga jalur B ke D"><figcaption>Dari B ke D ada 3 jalur. Yang dipilih: jalur biru (3 lompatan).</figcaption></figure>
+<div class="lab"><h4>🧪 Coba Sendiri: Router pilih jalur yang mana?</h4>
+<p>Kirim data dari <b>B</b> ke <b>D</b>. Pilih jalur yang akan dipakai router:</p>
+<div class="opts" id="rtOpts"></div><div class="fb" id="rtFb">Klik salah satu jalur.</div>
+<p><label><input type="checkbox" id="cut"> Putuskan kabel R1–R4 (bagaimana sekarang?)</label></p></div>
+<figure><img src="images/img14_topologi_putus.png" alt="Topologi dengan link putus"><figcaption>Kalau satu link putus, router mencari jalur lain yang masih ada.</figcaption></figure>
+</section>
+
+<section id="paket"><h2>3.5 Data Dipecah Jadi Paket</h2>
+<p>Foto yang besar nggak dikirim utuh. Dia <b>dipecah jadi paket-paket kecil</b>. Tiap paket bawa: alamat asal, alamat tujuan, nomor urut, dan sepotong data. Paket boleh lewat jalur berbeda, lalu <b>disusun ulang</b> di tujuan sesuai nomor urut. Kalau ada paket hilang, cukup paket itu saja yang dikirim lagi.</p>
+<figure><img src="images/img05_paket_data.png" alt="Paket data"><figcaption>Dipecah, dikirim lewat jalur berbeda, lalu disusun ulang.</figcaption></figure>
+</section>
+
+<section id="ponsel"><h2>4. Data di Ponsel: Ada BTS di Tengah-tengahnya</h2>
+<p>Waktu kamu kirim pesan, telepon, atau buka internet lewat HP, HP-mu berkomunikasi dengan <b>BTS (Base Transceiver Station)</b>, menara pemancar dan penerima sinyal. Di satu kota ada banyak BTS, dan HP-mu dilayani <b>BTS terdekat</b>. Kalau kamu bergerak, HP pindah BTS otomatis. Makanya disebut mobile phone!</p>
+<figure><img src="images/img06_bts_terdekat.png" alt="HP dan BTS terdekat"><figcaption>HP selalu mengambil sinyal dari BTS terdekat (BTS A).</figcaption></figure>
+<h3>4.1 Kenapa Sinyal HP Berubah-ubah?</h3>
+<div class="tblwrap"><table><tr><th>Faktor</th><th>Penjelasan singkat</th></tr>
+<tr><td><b>1. Jarak dari BTS</b></td><td>Makin dekat, makin kuat. Makin jauh, makin lemah.</td></tr>
+<tr><td><b>2. Material bangunan</b></td><td>Beton dan baja menahan sinyal, makanya di basement sinyal hilang.</td></tr>
+<tr><td><b>3. Halangan</b></td><td>Tembok, besi, atau gedung di antara HP dan BTS melemahkan sinyal.</td></tr>
+<tr><td><b>4. Cuaca</b></td><td>Hujan dan kabut bisa mengganggu gelombang radio.</td></tr>
+<tr><td><b>5. Pengguna lain</b></td><td>Satu BTS punya batas koneksi. Kalau ramai, jadi lemot.</td></tr></table></div>
+<figure><img src="images/img07_faktor_sinyal.png" alt="Lima faktor sinyal"><figcaption>Lima hal yang memengaruhi sinyal HP.</figcaption></figure>
+<div class="lab"><h4>🧪 Coba Sendiri: Geser jarak HP ke BTS</h4>
+<p>Anggap ruang terbuka tanpa halangan. Jarak &lt; 3 m = sinyal kuat (aturan di LKPD).</p>
+<input type="range" id="dist" min="0.5" max="6" step="0.1" value="2"><p>Jarak: <b id="dv">2.0</b> m</p>
+<div class="bars" id="bars"></div><div class="fb" id="sigFb"></div></div>
+<h3>4.2 Baca Bar Sinyal di HP-mu</h3>
+<p>Di ruang terbuka, 1 bar berarti BTS terdekat jauh, 4 bar berarti dekat. Coba pindah-pindah tempat dan lihat bar-nya!</p>
+<figure><img src="images/img08_indikator_sinyal.png" alt="Indikator sinyal"><figcaption>Makin banyak bar, makin dekat BTS terdekat (di ruang terbuka).</figcaption></figure>
+<figure><img src="images/img11a_peta_bts.png" alt="Peta BTS latihan"><figcaption>Latihan: tentukan BTS terdekat tiap HP (seperti di LKPD).</figcaption></figure>
+</section>
+
+<section id="aman"><h2>5. Online dengan Aman</h2>
+<p>Datamu berharga: password, nomor HP, foto. Kenali dulu bahayanya.</p>
+<ul><li><b>Internet Positif</b>: program pemerintah Indonesia yang memblokir website berbahaya (hoaks, SARA, pornografi, situs pencuri data).</li>
+<li><b>Phishing</b>: penipuan dengan halaman palsu yang mirip aslinya supaya kamu mengisi username dan password. Data kamu dicuri!</li></ul>
+<figure><img src="images/img09_phishing.png" alt="Phishing"><figcaption>Halaman kiri palsu (phishing). Halaman kanan asli.</figcaption></figure>
+<h3>5.1 Cara Ngecek Website Aman</h3>
+<ol><li><b>Cek ejaan alamat (URL).</b> Penipu membuat alamat yang mirip tapi beda satu huruf atau ditambah kata aneh.</li>
+<li><b>Cari ikon gembok dan https.</b> Gembok artinya sambungan terenkripsi. Tapi gembok saja belum cukup. Tetap cek alamatnya!</li>
+<li><b>Jangan asal klik link</b> dari orang tak dikenal, apalagi yang menjanjikan hadiah.</li>
+<li><b>Cek lewat Google Safe Browsing</b> (transparencyreport.google.com/safe-browsing/search).</li></ol>
+<div class="lab"><h4>🧪 Coba Sendiri: Aman atau bahaya?</h4>
+<p id="phQ"></p><div class="opts" id="phOpts"></div><div class="fb" id="phFb">Pilih penilaianmu.</div>
+<button class="alt" id="phNext">Alamat berikutnya ›</button></div>
+<h3>5.2 Atur Keamanan di Chrome</h3>
+<ol><li>Buka Chrome.</li><li>Klik titik tiga di kanan atas, pilih <b>Settings</b>.</li><li>Pilih <b>Privacy and security</b>.</li>
+<li>Atur <b>setelan situs</b> atau <b>hapus data penjelajahan</b> (riwayat, cookie, sandi tersimpan).</li>
+<li>Browser akan memberi peringatan kalau kamu membuka situs berbahaya.</li></ol>
+<p><i>Catatan: tampilan menu bisa berbeda tergantung versi browser.</i></p>
+</section>
+
+<section id="rangkum"><h2>6. Rangkuman Kilat</h2>
+<div class="tblwrap"><table><tr><th>Topik</th><th>Intinya</th></tr>
+<tr><td><b>Jaringan</b></td><td>Perangkat terhubung dan punya alamat IP. LAN = area kecil, internet = jaringan antar jaringan.</td></tr>
+<tr><td><b>Switch &amp; router</b></td><td>Switch di dalam satu jaringan, router antar jaringan.</td></tr>
+<tr><td><b>Routing</b></td><td>Router memilih jalur terpendek (lompatan paling sedikit).</td></tr>
+<tr><td><b>Paket data</b></td><td>Data dipecah, dikirim lewat jalur berbeda, disusun ulang di tujuan.</td></tr>
+<tr><td><b>BTS &amp; sinyal</b></td><td>HP dilayani BTS terdekat. Sinyal dipengaruhi jarak, material, halangan, cuaca, dan jumlah pengguna.</td></tr>
+<tr><td><b>Aman online</b></td><td>Cek URL, gembok/https, jangan klik link asing, waspada phishing.</td></tr></table></div>
+<details><summary>Istilah penting</summary><div class="tblwrap"><table>
+<tr><td><b>Alamat IP</b></td><td>Nomor identitas unik perangkat di jaringan</td></tr>
+<tr><td><b>LAN</b></td><td>Jaringan lokal di area terbatas</td></tr>
+<tr><td><b>Internet</b></td><td>Jaringan antar jaringan komputer yang luas</td></tr>
+<tr><td><b>Switch</b></td><td>Penghubung perangkat dalam jaringan yang sama</td></tr>
+<tr><td><b>Router</b></td><td>Penghubung dua jaringan berbeda dan penentu jalur</td></tr>
+<tr><td><b>Node / Link</b></td><td>Titik (perangkat) / garis (jalur) pada gambar jaringan</td></tr>
+<tr><td><b>Routing</b></td><td>Proses menentukan jalur data</td></tr>
+<tr><td><b>Paket data</b></td><td>Potongan kecil data yang dikirim lewat jaringan</td></tr>
+<tr><td><b>BTS</b></td><td>Menara pemancar dan penerima sinyal seluler</td></tr>
+<tr><td><b>Phishing</b></td><td>Penipuan memakai halaman palsu untuk mencuri data</td></tr></table></div></details>
+</section>
+
+<section id="kuis"><h2>7. Kuis Mini</h2>
+<p>Jawab tiap soal, nanti langsung ada pembahasannya.</p>
+<div id="quiz"></div>
+</section>
+</main>
+<div class="sticky-foot">Informatika Kelas VIII • Bab V TP6 • SMP Negeri 14 Tarakan</div>
+<script>
+const $=id=>document.getElementById(id);
+function mk(parent,text,cls,fn){const b=document.createElement('button');b.className='opt '+(cls||'');b.textContent=text;b.onclick=fn;parent.appendChild(b);return b}
+
+// IP lab
+(function(){
+ const L=[["192.168.10.25",true],["192.168.20.7",false],["192.169.10.7",false],["10.168.10.7",false]];
+ const box=$('ipOpts');
+ L.forEach(([ip,same])=>mk(box,ip,'',()=>{
+  $('ipFb').innerHTML= same?'✅ <b>'+ip+'</b> satu jaringan dengan A (sama-sama 192.168.10.x). Cukup pakai <b>switch</b>.':'🔀 <b>'+ip+'</b> beda jaringan dengan A. Butuh <b>router</b> untuk menghubungkan.';
+ }));
+})();
+
+// Routing lab
+(function(){
+ const paths=[["B - R1 - R2 - R3 - R4 - D",5],["B - R1 - R3 - R4 - D",4],["B - R1 - R4 - D",3]];
+ const cutPaths=[["B - R1 - R2 - R3 - R4 - D",5],["B - R1 - R3 - R4 - D",4]];
+ const box=$('rtOpts');
+ function draw(){
+  box.innerHTML='';
+  const cut=$('cut').checked, P=cut?cutPaths:paths, best=Math.min(...P.map(p=>p[1]));
+  $('rtFb').textContent=cut?'Kabel R1–R4 putus. Pilih jalur tercepat yang masih tersedia.':'Klik salah satu jalur.';
+  P.forEach(([t,n])=>mk(box,t+'  (panjang '+n+')','',function(){
+   const ok=n===best;
+   this.classList.add(ok?'right':'wrong');
+   $('rtFb').innerHTML=ok?'✅ Benar! Router memilih jalur terpendek: <b>'+n+' lompatan</b>.':'❌ Masih ada jalur yang lebih pendek ('+best+' lompatan). Coba lagi.';
+  }));
+ }
+ $('cut').onchange=draw;draw();
+})();
+
+// Signal lab
+(function(){
+ const s=$('dist'),bars=$('bars');
+ for(let i=1;i<=4;i++){const e=document.createElement('i');e.style.height=(i*22)+'%';bars.appendChild(e)}
+ function up(){
+  const d=+s.value;$('dv').textContent=d.toFixed(1);
+  const n=d<1?4:d<2?3:d<3?2:d<4.5?1:0;
+  [...bars.children].forEach((e,i)=>e.classList.toggle('on',i<n));
+  $('sigFb').innerHTML=d<3?'📶 Jarak '+d.toFixed(1)+' m (&lt; 3 m): sinyal <b>kuat</b>.':'📉 Jarak '+d.toFixed(1)+' m (≥ 3 m): sinyal <b>lemah</b>. Dekatkan HP ke BTS!';
+ }
+ s.oninput=up;up();
+})();
+
+// Phishing lab
+(function(){
+ const D=[["https://www.kemdikbud.go.id",0,"Alamat resmi pemerintah dengan https. Aman."],
+ ["http://sekolahku-login.xyz",2,"Tanpa https dan memakai domain .xyz yang mencurigakan. Berbahaya."],
+ ["https://sekolahku.id.login-akun.com",2,"Nama domain sebenarnya adalah login-akun.com, bukan sekolahku.id. Gembok tidak menjamin aman. Berbahaya."],
+ ["http://sekolahku.id",1,"Alamat benar tapi tanpa https. Hati-hati, jangan isi password."]];
+ const lab=["Aman","Hati-hati","Berbahaya"];let i=0;
+ function show(){
+  const [u,k,why]=D[i];$('phQ').innerHTML='Alamat: <code>'+u+'</code>';
+  const box=$('phOpts');box.innerHTML='';$('phFb').textContent='Pilih penilaianmu.';
+  lab.forEach((t,j)=>mk(box,t,'',function(){
+   [...box.children].forEach((b,x)=>{if(x===k)b.classList.add('right')});
+   if(j!==k)this.classList.add('wrong');
+   $('phFb').innerHTML=(j===k?'✅ Tepat! ':'❌ Belum tepat. Jawaban: <b>'+lab[k]+'</b>. ')+why;
+  }));
+ }
+ $('phNext').onclick=()=>{i=(i+1)%D.length;show()};show();
+})();
+
+// Quiz
+(function(){
+ const Q=[{"q": "Perangkat A memiliki alamat IP 192.168.10.7. Perangkat berikut yang berada pada jaringan yang sama dengan A adalah ...", "o": ["192.168.20.7", "192.169.10.7", "192.168.10.25", "10.168.10.7"], "k": 2, "p": "Dua perangkat satu jaringan jika kelompok alamatnya sama: 192.168.10.x. Hanya 192.168.10.25 yang cocok."}, {"q": "Perangkat jaringan yang dapat menghubungkan dua jaringan dengan kelompok alamat IP berbeda adalah ...", "o": ["Switch", "Router", "Kabel UTP", "Modem suara"], "k": 1, "p": "Switch hanya menghubungkan perangkat dalam jaringan yang sama, sedangkan router menghubungkan jaringan yang berbeda."}, {"q": "Dalam abstraksi jaringan komputer, jalur penghubung antar perangkat digambarkan sebagai ...", "o": ["Node", "Server", "Protokol", "Link (edge)"], "k": 3, "p": "Perangkat = node, jalur penghubung = link atau edge."}, {"q": "Proses menentukan jalur yang dilalui paket data dari perangkat asal ke perangkat tujuan disebut ...", "o": ["Routing", "Browsing", "Streaming", "Booting"], "k": 0, "p": "Routing adalah mekanisme menentukan jalur paket data; dilakukan oleh router berdasarkan tabel routing."}, {"q": "Jaringan: B-R1, R1-R2, R2-R3, R3-R4, R1-R3, R1-R4, R4-D (tiap link 1 m). Jalur terpendek dari B ke D adalah ...", "o": ["B-R1-R2-R3-R4-D", "B-R1-R3-R4-D", "B-R1-R4-D", "B-R1-R2-R3-R1-R4-D"], "k": 2, "p": "Jalur B-R1-R4-D hanya 3 lompatan (3 m), lebih pendek dari 4 m dan 5 m pada jalur lain."}, {"q": "Alasan utama sebuah file besar dipecah menjadi paket-paket data sebelum dikirim melalui internet adalah ...", "o": ["Agar file tidak perlu alamat tujuan", "Agar tiap paket dapat melewati jalur yang lancar dan disusun ulang di tujuan", "Agar ukuran file berkurang permanen", "Agar hanya satu jalur yang dipakai"], "k": 1, "p": "Paket dikirim lewat jalur yang tersedia, lalu disusun kembali berdasarkan nomor urut di perangkat tujuan."}, {"q": "Infrastruktur telekomunikasi yang memancarkan dan menerima sinyal dari ponsel disebut ...", "o": ["BTS", "Switch", "Server", "Hub kabel"], "k": 0, "p": "BTS (Base Transceiver Station) adalah menara pemancar dan penerima sinyal seluler."}, {"q": "Rina berada di basement sebuah mal dan sinyal ponselnya hilang walaupun BTS tidak jauh. Penyebab paling mungkin adalah ...", "o": ["Baterai ponsel penuh", "Layar ponsel terlalu terang", "Ponsel sedang diisi daya", "Dinding beton dan baja menghalangi sinyal"], "k": 3, "p": "Material beton dan baja menahan gelombang radio sehingga sinyal melemah."}, {"q": "Penipuan online dengan membuat halaman palsu yang mirip situs resmi untuk mencuri username dan password disebut ...", "o": ["Streaming", "Phishing", "Browsing", "Downloading"], "k": 1, "p": "Itulah definisi phishing."}, {"q": "Langkah terbaik sebelum memasukkan password di sebuah situs adalah ...", "o": ["Langsung mengisi karena tampilannya mirip situs asli", "Menanyakan password kepada teman", "Memeriksa ejaan alamat URL dan ikon gembok/https", "Mematikan peringatan browser"], "k": 2, "p": "Periksa URL (ejaan domain) dan ikon gembok/https. Jangan hanya melihat tampilan."}];let score=0,done=0;const box=$('quiz');
+ Q.forEach((q,qi)=>{
+  const d=document.createElement('div');d.className='lab';
+  d.innerHTML='<b>'+(qi+1)+'. '+q.q+'</b>';
+  const o=document.createElement('div');o.className='opts';d.appendChild(o);
+  const fb=document.createElement('div');fb.className='fb';fb.style.display='none';d.appendChild(fb);
+  let answered=false;
+  q.o.forEach((t,j)=>mk(o,'ABCD'[j]+'.  '+t,'',function(){
+   if(answered)return;answered=true;done++;
+   const ok=j===q.k;if(ok)score++;
+   [...o.children].forEach((b,x)=>{if(x===q.k)b.classList.add('right')});
+   if(!ok)this.classList.add('wrong');
+   fb.style.display='block';fb.innerHTML=(ok?'✅ Benar! ':'❌ Belum tepat. ')+q.p;
+   if(done===Q.length)$('score').innerHTML='🎉 Skor kamu: <b>'+score+' / '+Q.length+'</b>';
+  }));
+  box.appendChild(d);
+ });
+ const s=document.createElement('div');s.id='score';s.className='call';s.innerHTML='Selesaikan semua soal untuk melihat skormu.';box.appendChild(s);
+})();
+</script></body></html>

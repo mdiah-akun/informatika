@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Misi Teknisi Muda – Informatika Kelas VIII</title>
+<style>
+:root{--navy:#1F3A5F;--teal:#0FA3B1;--orange:#F77F00;--yel:#FCBF49;--green:#43AA8B;--red:#D62828;--purple:#7B5EA7;--bg:#F4F8FB;--card:#fff;--ink:#263238;--mut:#5A6B7F;--line:#DCE6EE}
+@media (prefers-color-scheme:dark){:root{--bg:#0F1B2D;--card:#16273F;--ink:#E8EEF5;--mut:#9FB1C6;--line:#2A4263}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
+header.hero{background:linear-gradient(135deg,#1F3A5F,#0FA3B1);color:#fff;padding:40px 20px 56px;text-align:center}
+.hero small{letter-spacing:.12em;font-weight:700;color:var(--yel)}
+.hero h1{margin:.3em 0;font-size:clamp(28px,5vw,44px);line-height:1.15}
+.hero p{max-width:620px;margin:0 auto 18px;opacity:.95}
+nav{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line);display:flex;gap:4px;overflow-x:auto;padding:8px 12px;scrollbar-width:none}
+nav a{white-space:nowrap;text-decoration:none;color:var(--ink);padding:6px 12px;border-radius:999px;font-size:14px;font-weight:600}
+nav a:hover{background:var(--teal);color:#fff}
+main{max-width:860px;margin:0 auto;padding:20px 16px 60px}
+section{margin:28px 0}
+h2{font-size:28px;color:var(--navy);margin:0 0 6px}
+@media (prefers-color-scheme:dark){h2{color:#CADCFC}}
+h2 .n{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--orange);color:#fff;font-size:20px;margin-right:10px}
+h3{color:var(--teal);margin:22px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:14px 0;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+figure{margin:16px 0;text-align:center}
+figure img{max-width:100%;height:auto;border-radius:12px;border:1px solid var(--line);background:#fff}
+figcaption{font-size:14px;color:var(--mut);margin-top:6px;font-style:italic}
+.tip,.warn,.try{border-left:6px solid;border-radius:10px;padding:12px 16px;margin:14px 0}
+.tip{background:rgba(15,163,177,.12);border-color:var(--teal)}
+.warn{background:rgba(214,40,40,.1);border-color:var(--red)}
+.try{background:rgba(247,127,0,.12);border-color:var(--orange)}
+.tip b.t,.warn b.t,.try b.t{display:block;margin-bottom:2px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:15.5px}
+th{background:var(--navy);color:#fff;padding:8px;text-align:left}
+td{padding:8px;border-bottom:1px solid var(--line)}
+tr:nth-child(even) td{background:rgba(120,150,180,.08)}
+code,.mono{font-family:Consolas,monospace;background:rgba(120,150,180,.18);padding:1px 6px;border-radius:6px}
+.formula{text-align:center;font-size:20px;font-weight:700;padding:14px;background:rgba(252,191,73,.25);border:2px dashed var(--yel);border-radius:12px;margin:14px 0}
+/* widgets */
+.w{background:var(--card);border:2px solid var(--teal);border-radius:16px;padding:16px;margin:16px 0}
+.w h4{margin:0 0 8px;color:var(--teal)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+button,select,input{font:inherit}
+button.tg{border:0;border-radius:12px;padding:10px 18px;font-weight:700;cursor:pointer;background:#90A4AE;color:#fff;min-width:96px}
+button.tg.on{background:var(--green)}
+button.btn{border:0;border-radius:10px;padding:8px 16px;font-weight:700;cursor:pointer;background:var(--orange);color:#fff}
+input[type=text]{padding:8px 10px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);width:110px;font-family:Consolas,monospace}
+.lamp{width:54px;height:54px;border-radius:50%;background:#CFD8DC;border:3px solid #90A4AE;display:inline-block;transition:.2s}
+.lamp.on{background:var(--yel);border-color:#B08900;box-shadow:0 0 22px 8px rgba(252,191,73,.7)}
+.gates{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-top:12px;text-align:center}
+.gates div{padding:10px;border-radius:12px;background:var(--bg);border:1px solid var(--line)}
+.res{margin-top:10px;padding:10px;border-radius:10px;background:rgba(67,170,139,.15);font-family:Consolas,monospace;word-break:break-word}
+.bits{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.bit{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;color:var(--mut)}
+.bit button{width:42px;height:42px;border-radius:10px;border:0;font-weight:800;font-size:18px;cursor:pointer;background:#90A4AE;color:#fff}
+.bit button.on{background:var(--orange)}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:8px 0}
+summary{cursor:pointer;font-weight:700}
+.q{margin:16px 0}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;padding:10px 14px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.opt.ok{border-color:var(--green);background:rgba(67,170,139,.2)}
+.opt.no{border-color:var(--red);background:rgba(214,40,40,.15)}
+.fb{font-size:15px;margin-top:4px}
+footer{text-align:center;color:var(--mut);font-size:14px;padding:30px 16px}
+@media(max-width:560px){body{font-size:16px}h2{font-size:24px}}
+</style>
+</head>
+<body>
+<header class="hero"><small>BAB V • PERTEMUAN 2</small><h1>Misi Teknisi Muda</h1><p>Data, CPU Mini, dan sirkuit logika — naik level dari Pertemuan 1. Siap jadi teknisi?</p></header>
+<nav><a href="#m0">Misi</a><a href="#m1">1 Data</a><a href="#m2">2 CPU Mini</a><a href="#m3">3 Logika</a><a href="#q">Kuis</a></nav>
+<main>
+<section id="m0"><h2><span class="n">★</span>Misi kita</h2>
+<div class="card">SMPN 14 Tarakan dapat laptop hibah untuk menyimpan arsip foto &amp; video kegiatan. Tim Teknisi Muda harus menjawab: <b>(1)</b> kapasitas apa yang dibutuhkan, <b>(2)</b> apakah kamu benar-benar paham cara CPU bekerja, <b>(3)</b> bisakah gerbang logika merancang alarm dan menjumlah?</div>
+<figure><img src="images/23_pbl_alur.png" alt="Alur PBL"><figcaption>Lima langkah kerja tim.</figcaption></figure></section>
+
+<section id="m1"><h2><span class="n">1</span>Misi 1: Data</h2>
+<figure><img src="images/15_satuan_data.png" alt="Tangga satuan data"></figure>
+<div class="formula">Naik satu tingkat satuan = × 1.024</div>
+<div class="warn"><b class="t">Kenapa “1 TB” jadi ± 931 GB?</b>Produsen menghitung 1 TB = 10¹² byte, sedangkan komputer menghitung 1 GB = 1.073.741.824 byte. 10¹² ÷ 1.073.741.824 ≈ 931 GB. Flashdisk 64 GB tampil ± 59,6 GB.</div>
+<figure><img src="images/25_waktu_salin.png" alt="Waktu salin"></figure>
+<div class="formula">waktu = ukuran ÷ kecepatan</div>
+<div class="w"><h4>Konverter satuan</h4><div class="row"><input type="text" id="cv" value="3" style="width:80px"><select id="cu"><option value="1">byte</option><option value="1024" selected>KB</option><option value="1048576">MB</option><option value="1073741824">GB</option></select><button class="btn" id="cb">Hitung</button></div><div class="res" id="cr">Tekan Hitung.</div></div>
+<figure><img src="images/16_biner_heksa.png" alt="Biner dan heksa"></figure>
+<div class="w"><h4>Biner ↔ Heksa (4 bit = 1 digit)</h4><div class="row"><label>Biner: <input type="text" id="bb" value="10101111" style="width:150px"></label><button class="btn" id="b2h">→ Heksa</button><label>Heksa: <input type="text" id="hh" value="3C"></label><button class="btn" id="h2b">→ Biner</button></div><div class="res" id="hr">…</div></div>
+<figure><img src="images/17_ruang_alamat.png" alt="Ruang alamat"></figure>
+<div class="tip"><b class="t">Ingat</b>n bit alamat → 2ⁿ lokasi. 16 bit (0000–FFFF) → 65.536 lokasi = 64 KB.</div></section>
+
+<section id="m2"><h2><span class="n">2</span>Misi 2: CPU Mini (CPU Kertas)</h2>
+<figure><img src="images/18_mini_cpu.png" alt="CPU mini"></figure>
+<figure><img src="images/19_format_instruksi.png" alt="Format instruksi"></figure>
+<table><tr><th>Kode</th><th>Perintah</th><th>Arti</th></tr><tr><td>1x</td><td>LOAD x</td><td>A ← M[x]</td></tr><tr><td>2x</td><td>ADD x</td><td>A ← A + M[x]</td></tr><tr><td>3x</td><td>SUB x</td><td>A ← A − M[x]</td></tr><tr><td>4x</td><td>STORE x</td><td>M[x] ← A</td></tr><tr><td>00</td><td>HALT</td><td>berhenti</td></tr></table>
+<figure><img src="images/20_trace_program.png" alt="Trace program"></figure>
+<div class="w"><h4>Simulator CPU Mini</h4>
+<p style="margin:0 0 6px">Isi memori (heksa 2 digit). Awal: program 7 + 5 − 2 → hasil di alamat B.</p>
+<div id="mem" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(86px,1fr));gap:6px"></div>
+<div class="row" style="margin-top:10px"><button class="btn" id="st">Langkah ▶</button><button class="btn" id="rn" style="background:var(--teal)">Jalankan semua</button><button class="btn" id="rs" style="background:#78909C">Reset</button></div>
+<div class="res" id="cpu"></div></div>
+<div class="try"><b class="t">Tantangan</b>Tulis program 6 + 4 + 3 dengan hasil di alamat C. Ubah isi memori di simulator lalu jalankan. Hasil benar = 0D.</div></section>
+
+<section id="m3"><h2><span class="n">3</span>Misi 3: Gerbang Logika Lanjutan</h2>
+<figure><img src="images/21_gerbang_lanjut.png" alt="NAND NOR XNOR"></figure>
+<div class="tip"><b class="t">NAND universal</b>A NAND A = NOT A, jadi semua gerbang bisa disusun dari NAND.</div>
+<figure><img src="images/24_sirkuit_alarm.png" alt="Alarm"></figure>
+<div class="w"><h4>Penguji alarm Y = (P AND M) OR D</h4><div class="row"><button class="tg" data-k="P">P: 0</button><button class="tg" data-k="M">M: 0</button><button class="tg" data-k="D">D: 0</button><span class="lamp" id="lm"></span></div><div class="res" id="ar"></div></div>
+<figure><img src="images/22_full_adder.png" alt="Full adder"></figure>
+<div class="w"><h4>Penjumlah penuh</h4><div class="row"><button class="tg" data-f="A">A: 0</button><button class="tg" data-f="B">B: 0</button><button class="tg" data-f="C">Cin: 0</button></div><div class="res" id="fa"></div></div>
+<figure><img src="images/11_sirkuit_penjumlah.png" alt="Dari gerbang ke CPU"><figcaption>Rangkaian penjumlah menjadi bagian ALU di CPU.</figcaption></figure></section>
+
+<section id="q"><h2><span class="n">?</span>Kuis cepat</h2><div id="quiz"></div><div class="res" id="qs">Skor: 0</div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+// konverter
+$('cb').onclick=()=>{const v=parseFloat($('cv').value.replace(',','.'));if(isNaN(v)){$('cr').textContent='Masukkan angka.';return}
+ const b=v*$('cu').value;const f=n=>n.toLocaleString('id-ID',{maximumFractionDigits:4});
+ $('cr').innerHTML=`${f(b)} byte<br>${f(b/1024)} KB<br>${f(b/1048576)} MB<br>${f(b/1073741824)} GB`};
+// nibble
+$('b2h').onclick=()=>{let b=$('bb').value.replace(/\s/g,'');if(!/^[01]+$/.test(b)){$('hr').textContent='Biner hanya 0 dan 1.';return}
+ while(b.length%4)b='0'+b;let g=b.match(/.{4}/g);$('hr').textContent=g.join(' ')+'₂ = '+g.map(x=>parseInt(x,2).toString(16).toUpperCase()).join('')+'₁₆ = '+parseInt(b,2)+' (desimal)'};
+$('h2b').onclick=()=>{const h=$('hh').value.replace(/\s/g,'');if(!/^[0-9a-fA-F]+$/.test(h)){$('hr').textContent='Heksa: 0-9, A-F.';return}
+ $('hr').textContent=h.toUpperCase()+'₁₆ = '+[...h].map(c=>parseInt(c,16).toString(2).padStart(4,'0')).join(' ')+'₂ = '+parseInt(h,16)+' (desimal)'};
+$('b2h').click();
+// CPU mini
+const init=['18','29','3A','4B','00','00','00','00','07','05','02','00','00','00','00','00'];
+const names={1:'LOAD',2:'ADD',3:'SUB',4:'STORE'};
+let mem,pc,ir,A,halt,log;
+const cells=[];
+for(let i=0;i<16;i++){const d=document.createElement('div');d.style.cssText='border:1px solid var(--line);border-radius:10px;padding:4px;text-align:center;font-size:12px';
+ d.innerHTML=`${i.toString(16).toUpperCase()}<br>`;const inp=document.createElement('input');inp.type='text';inp.maxLength=2;inp.style.width='52px';inp.value=init[i];d.appendChild(inp);$('mem').appendChild(d);cells.push(inp)}
+const hx=n=>(n&255).toString(16).toUpperCase().padStart(2,'0');
+function reset(){mem=cells.map(c=>{const v=parseInt(c.value,16);return isNaN(v)?0:v&255});pc=0;ir=null;A=0;halt=false;log=[];show('Siap. PC = 0.')}
+function show(msg){cells.forEach((c,i)=>{c.value=hx(mem[i])});$('cpu').innerHTML=`PC = ${pc.toString(16).toUpperCase()} &nbsp; IR = ${ir===null?'--':hx(ir)} &nbsp; A = ${hx(A)} (${A})<br>${msg}`+(log.length?'<br><small>'+log.slice(-4).join('<br>')+'</small>':'')}
+function step(){if(halt){show('Program sudah selesai (HALT). Tekan Reset.');return false}
+ if(pc>15){halt=true;show('PC melewati alamat F: berhenti.');return false}
+ ir=mem[pc];const op=ir>>4,ad=ir&15;let t;
+ if(ir===0){halt=true;t='HALT → selesai'}
+ else if(op===1){A=mem[ad];t=`LOAD ${ad.toString(16).toUpperCase()} → A = ${hx(A)}`}
+ else if(op===2){A=(A+mem[ad])&255;t=`ADD ${ad.toString(16).toUpperCase()} → A = ${hx(A)}`}
+ else if(op===3){A=(A-mem[ad])&255;t=`SUB ${ad.toString(16).toUpperCase()} → A = ${hx(A)}`}
+ else if(op===4){mem[ad]=A;t=`STORE ${ad.toString(16).toUpperCase()} → M[${ad.toString(16).toUpperCase()}] = ${hx(A)}`}
+ else{halt=true;t='Opcode tidak dikenal → berhenti'}
+ log.push(`alamat ${pc.toString(16).toUpperCase()}: ${hx(ir)} = ${t}`);if(!halt)pc++;show(t);return !halt}
+$('st').onclick=()=>{if(!mem||pc===0&&ir===null)reset();else syncMem();step()};
+function syncMem(){/* keep user edits of non-executed cells */}
+$('rn').onclick=()=>{reset();let n=0;while(n++<200&&step());};
+$('rs').onclick=()=>{cells.forEach((c,i)=>c.value=init[i]);reset()};
+reset();
+// alarm
+const al={P:0,M:0,D:0};
+document.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{const k=b.dataset.k;al[k]^=1;b.textContent=k+': '+al[k];b.classList.toggle('on',!!al[k]);ala()});
+function ala(){const y=(al.P&al.M)|al.D;$('lm').classList.toggle('on',!!y);$('ar').textContent=`Y = (${al.P} AND ${al.M}) OR ${al.D} = ${(al.P&al.M)} OR ${al.D} = ${y} → alarm ${y?'BUNYI':'diam'}`}ala();
+// full adder
+const fa={A:0,B:0,C:0};
+document.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{const k=b.dataset.f;fa[k]^=1;b.textContent=(k==='C'?'Cin':k)+': '+fa[k];b.classList.toggle('on',!!fa[k]);fu()});
+function fu(){const n=fa.A+fa.B+fa.C;$('fa').textContent=`${fa.A} + ${fa.B} + ${fa.C} = ${n} → Sum = ${n%2}, Cout = ${n>=2?1:0}  (hasil ${n>=2?1:0}${n%2}₂ = ${n})`}fu();
+// kuis
+const Q=[
+['Alamat fisik dari 0002:000E adalah …',['000E','0010','0011','0020'],1],
+['1 TB pada label tampil sekitar … di komputer.',['1.000 GB','1.024 GB','931 GB','512 GB'],2],
+['1010 1111 (biner) sama dengan … heksa.',['AF','FA','1F','A1'],0],
+['Alamat 16 bit menjangkau … lokasi.',['256','4.096','65.536','1.024'],2],
+['Pada CPU Mini, instruksi 29 berarti …',['LOAD 9','ADD 9','SUB 2','STORE 9'],1],
+['Register yang menyimpan alamat instruksi berikutnya adalah …',['IR','A','ALU','PC'],3],
+['NAND bernilai 0 hanya jika …',['semua input 0','kedua input 1','salah satu input 1','input berbeda'],1],
+['Penjumlah penuh dengan A=1, B=1, Cin=1 menghasilkan …',['Sum 0, Cout 0','Sum 0, Cout 1','Sum 1, Cout 0','Sum 1, Cout 1'],3]];
+let sc=0,ans=0;
+Q.forEach((q,i)=>{const d=document.createElement('div');d.className='card';d.innerHTML=`<b>${i+1}. ${q[0]}</b><div class="row" style="margin-top:8px"></div>`;
+ q[1].forEach((o,j)=>{const b=document.createElement('button');b.className='tg';b.textContent=o;b.onclick=()=>{if(d.dataset.d)return;d.dataset.d=1;ans++;if(j===q[2]){sc++;b.classList.add('on')}else{b.style.background='var(--red)';d.querySelectorAll('button')[q[2]].classList.add('on')}$('qs').textContent=`Skor: ${sc} / ${Q.length}`+(ans===Q.length?(sc>=7?' — Teknisi Muda sejati!':' — ayo ulangi materinya!'):'')};d.querySelector('.row').appendChild(b)});$('quiz').appendChild(d)});
+$('qs').textContent='Skor: 0 / '+Q.length;
+</script>
+</body></html>

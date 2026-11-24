@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jejak Digital - Materi Siswa Informatika VIII</title>
+<meta name="description" content="Materi siswa Bab IV TP 1: memahami pentingnya menjaga rekam jejak digital. SMP Negeri 14 Tarakan.">
+<style>
+:root{--navy:#0B3C5D;--teal:#168AAD;--coral:#FF6B4A;--sun:#FFC145;--mint:#52B788;--ink:#12263A;--bg:#F4F9FB;--card:#fff;--grey:#5B6F82;--line:#D7E6EE}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 "Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif}
+header.top{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;display:flex;align-items:center;gap:14px;padding:10px 20px;box-shadow:0 2px 10px rgba(0,0,0,.2);flex-wrap:wrap}
+header.top b{font-size:17px}
+#bar{position:absolute;left:0;bottom:0;height:4px;background:var(--sun);width:0}
+.layout{max-width:1180px;margin:0 auto;padding:20px;display:grid;grid-template-columns:260px 1fr;gap:28px}
+nav#toc{position:sticky;top:76px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:14.5px}
+nav#toc ol{list-style:none;margin:0;padding:0}nav#toc a{display:block;padding:5px 8px;border-radius:8px;color:var(--ink);text-decoration:none}nav#toc a:hover,nav#toc a.on{background:#E3F1F7;color:var(--navy);font-weight:600}
+main{min-width:0}
+.hero{background:linear-gradient(135deg,var(--navy),var(--teal));color:#fff;border-radius:20px;padding:28px 30px;margin-bottom:22px}
+.hero small{letter-spacing:.12em;color:var(--sun);font-weight:700}.hero h1{margin:6px 0 8px;font-size:clamp(28px,5vw,44px);line-height:1.15}.hero p{margin:0;opacity:.92}
+.hero img{width:100%;border-radius:14px;margin-top:18px;display:block}
+h2.sec{font-size:26px;color:var(--navy);margin:44px 0 12px;padding-bottom:8px;border-bottom:3px solid var(--coral)}
+p{margin:0 0 12px}ul,ol{margin:0 0 14px;padding-left:24px}li{margin:4px 0}
+figure{margin:18px 0;text-align:center}figure img{max-width:100%;height:auto;border-radius:14px;box-shadow:0 6px 22px rgba(11,60,93,.15);cursor:zoom-in;background:#fff}
+figcaption{font-size:14px;color:var(--grey);margin-top:8px}
+.note{border-radius:14px;padding:12px 16px;margin:16px 0;border:2px solid}.note p{margin:4px 0}.note .nt{font-weight:700;margin-bottom:2px}
+.note.warn{background:#FFE9E3;border-color:var(--coral)}.note.try,.note.kuda{background:#FFF3D6;border-color:#E0A100}.note.info{background:#E1F1F7;border-color:var(--teal)}
+.note textarea{width:100%;font:inherit;border:2px solid var(--line);border-radius:10px;padding:8px;margin-top:6px}
+.tw{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;background:#fff;border-radius:12px;overflow:hidden;font-size:15.5px}
+th{background:var(--navy);color:#fff;text-align:left;padding:9px 12px}td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
+.pg{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 6px 22px rgba(11,60,93,.08);margin:14px 0}
+.btn{background:var(--coral);color:#fff;border:0;border-radius:10px;padding:10px 18px;font:inherit;font-weight:700;cursor:pointer}.btn:hover{filter:brightness(1.06)}.btn.ghost{background:#E3F1F7;color:var(--navy)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.msg{font-weight:600}.ok{color:#1F6B45}.err{color:#B0361A}
+.kuda{background:linear-gradient(135deg,#0E4A6B,#168AAD);color:#fff;border-radius:18px;padding:18px 20px;margin:18px 0}
+.kuda h3{margin:0 0 6px;color:var(--sun);font-size:20px}.kuda .opt{display:block;width:100%;text-align:left;margin:6px 0;padding:10px 14px;border-radius:10px;border:2px solid transparent;background:#fff;color:var(--ink);font:inherit;cursor:pointer}
+.kuda .opt:hover{border-color:var(--sun)}.kuda .opt.good{background:#D7F3E3;border-color:var(--mint)}.kuda .opt.bad{background:#FFE0D8;border-color:var(--coral)}
+.kuda .fb{margin-top:10px;font-weight:600}.kuda textarea{width:100%;border-radius:10px;border:0;padding:10px;font:inherit}
+.kuda .btn{background:var(--sun);color:var(--navy)}
+.pair{display:flex;gap:10px;align-items:center;background:#fff;color:var(--ink);border-radius:10px;padding:8px 12px;margin:6px 0;flex-wrap:wrap}.pair span{flex:1;min-width:200px}
+.pair button{border:2px solid var(--line);background:#fff;border-radius:8px;padding:4px 12px;font:inherit;cursor:pointer;font-weight:700}.pair button.sel{background:var(--teal);color:#fff;border-color:var(--teal)}
+.pair.good{background:#D7F3E3}.pair.bad{background:#FFE0D8}
+form#quiz fieldset{border:2px solid var(--line);background:#fff;border-radius:14px;margin:0 0 14px;padding:12px 16px}legend{font-weight:700;padding:0 6px;color:var(--navy)}
+form#quiz label{display:block;padding:4px 0;cursor:pointer}.fb2{margin-top:6px;font-size:15px}
+.sg{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:10px 0}.sg .card{flex:1;min-width:220px;background:#F0F7FA;border-radius:12px;padding:12px}.sg .card p{margin:0 0 8px}
+.chk label{display:block;padding:4px 0}
+#lb{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:50;cursor:zoom-out}#lb img{max-width:95vw;max-height:92vh;border-radius:12px}
+footer{text-align:center;color:var(--grey);font-size:14px;padding:30px 0}
+@media(max-width:860px){.layout{grid-template-columns:1fr}nav#toc{display:none}}
+@media print{header.top,nav#toc{display:none}.layout{display:block}}
+</style></head><body>
+<header class="top"><b>Informatika VIII · Bab IV</b><span>Jejak Digital</span><div id="bar"></div></header>
+<div class="layout">
+<nav id="toc"><b>Daftar isi</b><ol><li><a href="#pemanasan">1. Pemanasan: Pernah Nggak Sih…?</a></li><li><a href="#kasus">2. Studi Kasus: Dua Siswa, Dua Jejak</a></li><li><a href="#apa-itu">3. Apa Itu Jejak Digital?</a></li><li><a href="#jenis">4. Dua Jenis Jejak Digital</a></li><li><a href="#tersebar">5. Sekali Unggah, Sulit Ditarik Kembali</a></li><li><a href="#alasan">6. Kenapa Jejak Digital Harus Dijaga?</a></li><li><a href="#dampak">7. Jejak Positif vs Jejak Negatif</a></li><li><a href="#oversharing">8. Awas Oversharing!</a></li><li><a href="#cara">9. Cara Menjaga Jejak Digitalmu</a></li><li><a href="#tes5">10. Tes 5 Pertanyaan Sebelum Klik KIRIM</a></li><li><a href="#rangkuman">11. Rangkuman</a></li><li><a href="#kuis">12. Kuis 10 Soal</a></li></ol></nav>
+<main>
+<div class="hero"><small>BAB IV · JEJAK BERMEDIA DIGITAL · TP 1</small><h1>Jejak Digital: Kenapa Harus Dijaga?</h1><p>Kamu tidak hanya membaca, tetapi menemukan sendiri jawabannya lewat kasus, kuis, dan game kecil.</p><img src="images/01_cover.png" alt="Sampul materi jejak digital"></div>
+<section id="pemanasan"><h2 class="sec">1. Pemanasan: Pernah Nggak Sih…?</h2>
+<p>Coba jawab dalam hati ya:</p>
+<ul><li>Pernah <b>menghapus postingan</b> karena malu? Menurutmu, apakah postingan itu benar-benar hilang?</li>
+<li>Pernah <b>mengetik namamu sendiri</b> di Google? Apa yang muncul?</li>
+<li>Kenapa <b>iklan di HP</b> kadang pas banget dengan barang yang baru kamu cari?</li></ul>
+<p>Semua itu berhubungan dengan satu hal: <b>jejak digital</b>. Yuk, kita temukan jawabannya!</p>
+<figure><img src="images/12_sintaks_discovery.png" alt="Hari ini kamu belajar seperti detektif: mengamati, menduga, mengumpulkan data, lalu menyimpulkan." loading="lazy"><figcaption>Hari ini kamu belajar seperti detektif: mengamati, menduga, mengumpulkan data, lalu menyimpulkan.</figcaption></figure></section>
+<section id="kasus"><h2 class="sec">2. Studi Kasus: Dua Siswa, Dua Jejak</h2>
+<p>Baca cerita fiktif ini, lalu simpan dugaanmu.</p>
+<figure><img src="images/11_komik_dua_siswa.png" alt="Raka dan Salsa adalah tokoh fiktif." loading="lazy"><figcaption>Raka dan Salsa adalah tokoh fiktif.</figcaption></figure>
+<div class="note try"><div class="nt">🤔 Coba Pikir!</div><p>Kalau kamu jadi panitia seleksi, apa yang kamu temukan saat mengetik nama Raka? Nama Salsa? Siapa yang lebih dipercaya? Kenapa?</p><textarea class='mine' rows='3' placeholder='Tulis dugaanmu di sini (tidak disimpan, hanya untukmu)…'></textarea></div></section>
+<section id="apa-itu"><h2 class="sec">3. Apa Itu Jejak Digital?</h2>
+<p><b>Jejak digital</b> adalah jejak data yang tertinggal ketika kita memakai internet. Semua aktivitas dan informasi yang kita tinggalkan secara online termasuk jejak digital, <b>disadari maupun tidak</b>.</p>
+<p>Contohnya: memposting di media sosial, menulis komentar, membuat status WhatsApp, riwayat pencarian, mengirim pesan atau email, dan belanja online.</p>
+<figure><img src="images/02_apa_itu_jejak_digital.png" alt="Kegiatan online meninggalkan jejak data." loading="lazy"><figcaption>Kegiatan online meninggalkan jejak data.</figcaption></figure>
+<div class="note info"><div class="nt">💡 Tahukah kamu?</div><p>Jejak digital bisa dipakai untuk <b>melacak aktivitas maupun perangkat</b> seseorang di internet. Itu sebabnya kita harus ekstra hati-hati.</p></div></section>
+<section id="jenis"><h2 class="sec">4. Dua Jenis Jejak Digital</h2>
+<div class="tw"><table><thead><tr><th></th><th>Jejak AKTIF ✋</th><th>Jejak PASIF 🕵️</th></tr></thead><tbody>
+<tr><td><b>Artinya</b></td><td>Kamu <b>sengaja</b> membagikan data</td><td>Data <b>tercatat tanpa kamu sadari</b></td></tr>
+<tr><td><b>Contoh</b></td><td>Posting foto/video, komentar, status WA, isi formulir online</td><td>Riwayat pencarian, lokasi GPS, alamat IP, cookies, video yang ditonton</td></tr>
+<tr><td><b>Gampang diingat</b></td><td>“Aku yang kasih”</td><td>“Sistem yang catat”</td></tr></tbody></table></div>
+<figure><img src="images/03_aktif_vs_pasif.png" alt="Aktif = sengaja. Pasif = tanpa sadar." loading="lazy"><figcaption>Aktif = sengaja. Pasif = tanpa sadar.</figcaption></figure>
+<figure><img src="images/18_pasif_tercatat.png" alt="Diam-diam, ini yang bisa tercatat saat kamu membuka sebuah situs." loading="lazy"><figcaption>Diam-diam, ini yang bisa tercatat saat kamu membuka sebuah situs.</figcaption></figure>
+<figure><img src="images/04_gunung_es.png" alt="Yang kamu lihat hanya puncak gunung es." loading="lazy"><figcaption>Yang kamu lihat hanya puncak gunung es.</figcaption></figure>
+<div id="kuda1"></div></section>
+<section id="tersebar"><h2 class="sec">5. Sekali Unggah, Sulit Ditarik Kembali</h2>
+<p>Bayangkan kamu mengunggah satu foto. Dalam hitungan detik, temanmu bisa melihat, men-screenshot, lalu membagikannya ke grup lain. Setelah itu, <b>menghapus postingan tidak otomatis menghapus semua salinannya</b>.</p>
+<figure><img src="images/05_perjalanan_postingan.png" alt="Perjalanan sebuah postingan." loading="lazy"><figcaption>Perjalanan sebuah postingan.</figcaption></figure>
+<figure><img src="images/20_waktu_hapus.png" alt="Mitos vs fakta tombol hapus." loading="lazy"><figcaption>Mitos vs fakta tombol hapus.</figcaption></figure>
+<div id="kuda3"></div></section>
+<section id="alasan"><h2 class="sec">6. Kenapa Jejak Digital Harus Dijaga?</h2>
+<figure><img src="images/06_empat_alasan.png" alt="Empat alasan penting." loading="lazy"><figcaption>Empat alasan penting.</figcaption></figure>
+<ol><li><b>Data bisa dicuri atau disalahgunakan.</b> Setelah diunggah, kamu tidak bisa mengontrol siapa yang memakainya.</li>
+<li><b>Menentukan reputasi digital.</b> Reputasi di dunia maya sama pentingnya dengan di dunia nyata.</li>
+<li><b>Bisa disalahartikan atau diubah.</b> Kata, foto, dan video bisa dipotong atau diedit lalu tersebar dengan makna lain.</li>
+<li><b>Konten pribadi bisa menyebar luas.</b> Yang tadinya untuk teman dekat bisa sampai ke orang asing.</li></ol>
+<figure><img src="images/14_siapa_yang_melihat.png" alt="Siapa saja yang bisa melihat jejakmu?" loading="lazy"><figcaption>Siapa saja yang bisa melihat jejakmu?</figcaption></figure></section>
+<section id="dampak"><h2 class="sec">7. Jejak Positif vs Jejak Negatif</h2>
+<p>Jejak digital itu seperti pisau: bisa berguna, bisa juga melukai. Semua tergantung apa yang kamu tinggalkan.</p>
+<figure><img src="images/07_positif_negatif.png" alt="Sama-sama bertahan lama, tetapi dampaknya berbeda jauh." loading="lazy"><figcaption>Sama-sama bertahan lama, tetapi dampaknya berbeda jauh.</figcaption></figure>
+<div class="pg"><b>Game kilat: positif atau negatif?</b> Klik untuk menjawab.<div id="sortgame"></div></div></section>
+<section id="oversharing"><h2 class="sec">8. Awas Oversharing!</h2>
+<p><b>Oversharing</b> artinya membagikan terlalu banyak informasi. Satu foto biasa bisa membocorkan nama lengkap, sekolah, tanggal lahir, lokasi, bahkan jam pulangmu.</p>
+<figure><img src="images/16_oversharing.png" alt="Contoh unggahan fiktif yang membocorkan banyak informasi." loading="lazy"><figcaption>Contoh unggahan fiktif yang membocorkan banyak informasi.</figcaption></figure></section>
+<section id="cara"><h2 class="sec">9. Cara Menjaga Jejak Digitalmu</h2>
+<figure><img src="images/08_tujuh_cara.png" alt="Tujuh cara menjaga jejak digital." loading="lazy"><figcaption>Tujuh cara menjaga jejak digital.</figcaption></figure>
+<ol><li><b>Cek namamu</b> di mesin pencari. Lihat juga tab Gambar dan Video.</li>
+<li><b>Jangan berbagi berlebihan.</b> Pikir dua kali sebelum membagikan informasi pribadi.</li>
+<li><b>Hapus atau nonaktifkan akun lama</b> yang jarang dipakai.</li>
+<li><b>Jangan klik tautan mencurigakan</b> (hadiah gratis, undian, pesan berantai).</li>
+<li><b>Pilih situs aman:</b> alamat berawalan https:// dan ada gembok.</li>
+<li><b>Bangun citra diri positif.</b> Pakai internet untuk belajar dan berkarya.</li>
+<li><b>Bijak sebelum menulis konten</b> yang akan disebarkan.</li></ol>
+<figure><img src="images/09_http_https.png" alt="https:// dan gembok menandakan data dikirim terenkripsi." loading="lazy"><figcaption>https:// dan gembok menandakan data dikirim terenkripsi.</figcaption></figure>
+<figure><img src="images/15_cek_jejak_diri.png" alt="Langkah memeriksa jejak digitalmu sendiri." loading="lazy"><figcaption>Langkah memeriksa jejak digitalmu sendiri.</figcaption></figure>
+<div class="note warn"><div class="nt">🔐 Ingat privasi</div><p>Periksa jejak digital <b>milikmu sendiri</b>. Jangan mencari-cari atau menyebarkan data pribadi temanmu, ya.</p></div>
+<div id="kuda4"></div></section>
+<section id="tes5"><h2 class="sec">10. Tes 5 Pertanyaan Sebelum Klik KIRIM</h2>
+<figure><img src="images/10_tes_lima_pertanyaan.png" alt="Kalau ada satu jawaban “tidak”, tahan dulu jarimu." loading="lazy"><figcaption>Kalau ada satu jawaban “tidak”, tahan dulu jarimu.</figcaption></figure>
+<div class="pg"><b>Coba sendiri:</b> centang pertanyaan yang jawabannya “ya” untuk unggahan yang ingin kamu kirim.
+<div id="tes5"></div></div></section>
+<section id="rangkuman"><h2 class="sec">11. Rangkuman</h2>
+<figure><img src="images/17_peta_konsep.png" alt="Peta konsep." loading="lazy"><figcaption>Peta konsep.</figcaption></figure>
+<ul><li>Jejak digital = jejak data yang tertinggal saat kita memakai internet.</li>
+<li>Jenisnya: <b>aktif</b> (sengaja) dan <b>pasif</b> (tanpa sadar).</li>
+<li>Dampaknya bisa <b>positif</b> atau <b>negatif</b>, dan sulit dihapus total.</li>
+<li>Dijaga agar data aman, reputasi baik, tidak salah tafsir, dan tidak menyebar.</li>
+<li>Caranya: cek nama, batasi berbagi, pilih situs aman, pikir dulu sebelum kirim.</li></ul></section>
+<section id="kuis"><h2 class="sec">12. Kuis 10 Soal</h2><p>Pilih jawabanmu, lalu klik <b>Periksa</b>.</p><form id="quiz"></form>
+<div class="row"><button class="btn" id="chk" type="button">Periksa jawaban</button><button class="btn ghost" id="rst" type="button">Ulangi</button><span id="score" class="msg"></span></div></section>
+<footer>SMP Negeri 14 Tarakan · Informatika Kelas VIII · Sumber: Buku Siswa Informatika SMP/MTs Kelas VIII (Edisi Revisi), Bab IV</footer>
+</main></div>
+<div id="lb"><img alt=""></div>
+<script>
+const D={"kuda":[{"no":1,"tipe":"Pilihan Ganda","posisi":"Awal (sesudah stimulus)","q":"Manakah di bawah ini yang BUKAN termasuk jejak digital?","opts":["Komentar yang kamu tulis di TikTok","Riwayat pencarian di Google","Catatan tulisan tangan di buku tulis yang tidak pernah difoto atau diunggah","Status WhatsApp yang kamu buat kemarin"],"ans":"C","why":"Jejak digital adalah jejak data yang tertinggal saat kita memakai internet/perangkat digital. Catatan tulisan tangan yang tidak pernah didigitalkan tidak meninggalkan data apa pun."},{"no":2,"tipe":"Mencocokkan","posisi":"Tengah (sesudah jenis jejak)","q":"Cocokkan setiap aktivitas dengan jenis jejak digitalnya: AKTIF (A) atau PASIF (P).","pairs":[["Mengunggah foto ke Instagram","A"],["Lokasi GPS ponsel tercatat saat memakai aplikasi peta","P"],["Menulis komentar di YouTube","A"],["Riwayat pencarian Google tersimpan","P"],["Mengisi formulir pendaftaran online","A"],["Alamat IP perangkat dicatat oleh server situs","P"]],"why":"Aktif = sengaja dibagikan oleh pengguna. Pasif = tercatat tanpa disadari pengguna (riwayat, lokasi, IP, cookies)."},{"no":3,"tipe":"Essay Singkat","posisi":"Tengah (sesudah perjalanan postingan)","q":"Raka sudah menghapus komentar kasarnya setelah seminggu, tetapi komentar itu masih bisa ditemukan orang lain. Sebutkan 2 alasan mengapa hal itu bisa terjadi!","ans":"Contoh jawaban (cukup 2): (1) sudah di-screenshot orang lain; (2) sudah disalin/diunduh/diteruskan ke grup lain; (3) tersimpan di arsip web atau cache mesin pencari; (4) server platform masih menyimpan cadangan.","why":"Menghapus postingan tidak otomatis menghapus semua salinannya. Karena itu: pikir dulu sebelum mengunggah."},{"no":4,"tipe":"Pilihan Ganda","posisi":"Akhir (sebelum penutup)","q":"Dina ingin mengunggah foto berseragam sekolah dengan nama lengkap dan lokasi langsung saat sendirian di jalan. Tindakan yang PALING tepat adalah …","opts":["Tetap mengunggah, toh yang melihat hanya teman-temannya","Mengunggah dulu, nanti dihapus jika ada yang protes","Menunda unggahan, mematikan lokasi, serta tidak menampilkan nama lengkap dan seragam","Meminta semua temannya berjanji tidak men-screenshot"],"ans":"C","why":"Pilihan C mengurangi data pribadi yang bocor (lokasi, identitas, sekolah) sebelum diunggah. Pilihan lain tidak bisa dijamin: teman bisa saja meneruskan, dan hapus ≠ hilang."}],"pg":[{"q":"Jejak digital adalah …","o":["Foto yang dicetak dan ditempel di mading sekolah","Jejak data yang tertinggal ketika seseorang menggunakan internet","Kabel yang menghubungkan komputer ke jaringan","Aplikasi untuk menghapus riwayat pencarian"],"a":"B","p":"Jejak digital = jejak data yang tertinggal saat kita memakai internet, baik disadari maupun tidak."},{"q":"Berikut ini yang termasuk jejak digital AKTIF adalah …","o":["Alamat IP yang dicatat server","Lokasi ponsel yang direkam otomatis","Mengunggah video ke YouTube","Cookies yang tersimpan di browser"],"a":"C","p":"Jejak aktif dibuat dengan sengaja oleh pengguna, misalnya mengunggah video. Pilihan lain tercatat tanpa disadari (pasif)."},{"q":"Riwayat pencarian di mesin pencari yang tersimpan tanpa kita sadari termasuk jejak digital …","o":["Pasif","Aktif","Publik","Fisik"],"a":"A","p":"Riwayat pencarian tercatat otomatis oleh sistem sehingga termasuk jejak digital pasif."},{"q":"Berikut ini yang BUKAN alasan jejak digital penting untuk dijaga adalah …","o":["Data pribadi dapat disalahgunakan orang lain","Reputasi digital kita dinilai orang lain","Unggahan dapat disalahartikan atau diubah","Agar jumlah pengikut cepat bertambah"],"a":"D","p":"Menambah pengikut bukan alasan menjaga jejak digital. Tiga alasan lainnya sesuai dengan bahaya jejak digital pada materi."},{"q":"Rani menghapus fotonya 10 menit setelah diunggah, tetapi foto itu masih beredar. Penyebab yang paling mungkin adalah …","o":["Internet sedang bermasalah","Foto itu terlalu berukuran kecil","Foto itu sudah di-screenshot atau diunduh orang lain","Akun Rani otomatis dihapus"],"a":"C","p":"Setelah diunggah, salinan bisa dibuat dalam hitungan detik. Menghapus unggahan tidak menghapus salinan orang lain."},{"q":"Cara yang tepat untuk memeriksa ketersediaan informasi pribadi kita di internet adalah …","o":["Menghapus semua aplikasi di ponsel","Mengetik nama sendiri di mesin pencari lalu memeriksa hasilnya","Mengganti kata sandi tiap jam","Menutup layar ponsel saat berselancar"],"a":"B","p":"Mesin pencari dapat dipakai untuk memeriksa apa yang orang lain temukan tentang kita."},{"q":"Situs yang lebih aman untuk mengisi data pribadi ditandai dengan …","o":["Banyak iklan berwarna","Alamat berawalan http:// tanpa gembok","Tulisan “Hadiah gratis” besar-besar","Alamat berawalan https:// dan ikon gembok"],"a":"D","p":"https:// (dengan “s”) berarti data dienkripsi saat dikirim. Tetap waspada karena https belum menjamin situs jujur."},{"q":"Berikut ini contoh jejak digital POSITIF adalah …","o":["Mengunggah video tutorial belajar yang bermanfaat","Menyebarkan gosip teman di grup","Mengomentari foto orang dengan kata kasar","Membagikan nomor HP ke situs yang tidak dikenal"],"a":"A","p":"Karya dan komentar yang baik membangun citra diri positif. Pilihan lain merugikan diri sendiri atau orang lain."},{"q":"Sebelum menekan tombol KIRIM, sikap yang paling bijak adalah …","o":["Menunggu jumlah teman online banyak","Memastikan isinya benar, baik, aman, dan perlu dibagikan","Memastikan unggahan tampak keren","Meminta teman lain mengunggah lebih dulu"],"a":"B","p":"Bijak sebelum menulis konten adalah salah satu cara menjaga jejak digital."},{"q":"Akun media sosial lama yang sudah tidak dipakai sebaiknya …","o":["Dibiarkan saja karena tidak ada yang melihat","Dibagikan ke teman sebagai cadangan","Dihapus atau dinonaktifkan agar jejak lamanya tidak tersebar","Diisi data pribadi supaya tidak terlupa"],"a":"C","p":"Menghapus atau menonaktifkan akun yang jarang dipakai mengurangi jejak digital yang tertinggal."}]};
+const $=(s,r=document)=>r.querySelector(s);
+// progress & toc highlight
+const links=[...document.querySelectorAll('#toc a')];
+addEventListener('scroll',()=>{const h=document.documentElement;$('#bar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';let cur=null;document.querySelectorAll('section').forEach(s=>{if(s.getBoundingClientRect().top<120)cur=s.id});links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur))});
+// lightbox
+document.addEventListener('click',e=>{if(e.target.matches('figure img')){$('#lb img').src=e.target.src;$('#lb').style.display='flex'}else if(e.target.closest('#lb')){$('#lb').style.display='none'}});
+// KUDA mandiri
+function kudaBox(k,host){
+  const box=document.createElement('div');box.className='kuda';
+  let h='<h3>⚡ KUDA Mandiri '+k.no+' · '+k.tipe+'</h3><p>'+k.q+'</p>';
+  if(k.opts){h+=k.opts.map((o,i)=>'<button class="opt" data-i="'+i+'">'+'ABCD'[i]+'. '+o+'</button>').join('')+'<div class="fb"></div>';box.innerHTML=h;
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const ok='ABCD'[+b.dataset.i]===k.ans;box.querySelectorAll('.opt').forEach((x,i)=>{x.classList.toggle('good','ABCD'[i]===k.ans);if(x===b&&!ok)x.classList.add('bad')});box.querySelector('.fb').textContent=(ok?'Benar! ':'Belum tepat. Jawaban: '+k.ans+'. ')+k.why});}
+  else if(k.pairs){h+=k.pairs.map((p,i)=>'<div class="pair" data-i="'+i+'"><span>'+(i+1)+'. '+p[0]+'</span><button data-v="A">Aktif</button><button data-v="P">Pasif</button></div>').join('')+'<div class="row"><button class="btn" type="button">Periksa</button></div><div class="fb"></div>';box.innerHTML=h;
+    box.querySelectorAll('.pair button').forEach(b=>b.onclick=()=>{b.parentNode.querySelectorAll('button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel')});
+    box.querySelector('.btn').onclick=()=>{let n=0;box.querySelectorAll('.pair').forEach((r,i)=>{const s=r.querySelector('.sel');const ok=s&&s.dataset.v===k.pairs[i][1];r.classList.remove('good','bad');r.classList.add(ok?'good':'bad');if(ok)n++});box.querySelector('.fb').textContent='Skor: '+n+'/'+k.pairs.length+'. '+k.why};}
+  else{h+='<textarea rows="3" placeholder="Tulis jawabanmu…"></textarea><div class="row"><button class="btn" type="button">Lihat contoh jawaban</button></div><div class="fb" hidden></div>';box.innerHTML=h;
+    box.querySelector('.btn').onclick=()=>{const f=box.querySelector('.fb');f.hidden=false;f.textContent=k.ans+' '+k.why}}
+  host.appendChild(box);
+}
+kudaBox(D.kuda[0],$('#kuda1'));kudaBox(D.kuda[1],$('#kuda1'));kudaBox(D.kuda[2],$('#kuda3'));kudaBox(D.kuda[3],$('#kuda4'));
+// game sortir
+(function(){const items=[['Mengunggah foto piagam lomba dengan keterangan sopan','p'],['Menulis komentar kasar di foto teman','n'],['Membuat kanal tutorial belajar untuk adik kelas','p'],['Meneruskan pesan berantai “klik tautan, hadiah gratis”','n'],['Mengunggah foto seragam + lokasi langsung','n'],['Menulis komentar yang menyemangati teman','p']];let i=0,sc=0;const host=$('#sortgame');
+function show(){if(i>=items.length){host.innerHTML='<p class="msg ok">Selesai! Skormu '+sc+'/'+items.length+'.</p><button class="btn ghost" type="button" id="again">Main lagi</button>';$('#again').onclick=()=>{i=0;sc=0;show()};return}
+host.innerHTML='<div class="sg"><div class="card"><p><b>'+(i+1)+'/'+items.length+'.</b> '+items[i][0]+'</p><button class="btn" data-a="p" type="button">👍 Positif</button> <button class="btn ghost" data-a="n" type="button">👎 Negatif</button></div></div><div class="msg" id="sgm"></div>';
+host.querySelectorAll('button[data-a]').forEach(b=>b.onclick=()=>{const ok=b.dataset.a===items[i][1];if(ok)sc++;$('#sgm').className='msg '+(ok?'ok':'err');$('#sgm').textContent=ok?'Tepat!':'Kurang tepat. Jejak ini '+(items[i][1]==='p'?'positif':'negatif')+'.';host.querySelectorAll('button[data-a]').forEach(x=>x.disabled=true);setTimeout(()=>{i++;show()},1100)})}
+show()})();
+// tes 5
+(function(){const q=['Benar? (bukan hoaks)','Baik? (tidak menyakiti orang lain)','Aman? (tanpa data pribadi/lokasi)','Perlu? (memang penting dibagikan)','Siap? (rela dibaca guru, orang tua, calon pemberi kerja)'];const h=$('#tes5');h.className='chk';h.innerHTML=q.map((t,i)=>'<label><input type="checkbox" data-i="'+i+'"> '+t+'</label>').join('')+'<p class="msg" id="t5m"></p>';
+h.addEventListener('change',()=>{const n=h.querySelectorAll('input:checked').length;const m=$('#t5m');m.className='msg '+(n===5?'ok':'err');m.textContent=n===5?'Lolos tes! Boleh klik KIRIM 👍':'Baru '+n+'/5 “ya”. Tahan dulu jarimu ✋'})})();
+// kuis 10
+(function(){const f=$('#quiz');f.innerHTML=D.pg.map((s,i)=>'<fieldset data-i="'+i+'"><legend>Soal '+(i+1)+'</legend><p>'+s.q+'</p>'+s.o.map((o,j)=>'<label><input type="radio" name="q'+i+'" value="'+'ABCD'[j]+'"> '+'ABCD'[j]+'. '+o+'</label>').join('')+'<div class="fb2"></div></fieldset>').join('');
+$('#chk').onclick=()=>{let n=0;D.pg.forEach((s,i)=>{const sel=f.querySelector('input[name=q'+i+']:checked');const fb=f.querySelector('fieldset[data-i="'+i+'"] .fb2');const ok=sel&&sel.value===s.a;if(ok)n++;fb.className='fb2 '+(ok?'ok':'err');fb.textContent=(ok?'✔ Benar. ':'✘ Jawaban: '+s.a+'. ')+s.p});$('#score').textContent='Skormu: '+n+'/10 → nilai '+(n*10);$('#score').className='msg '+(n>=8?'ok':'err')};
+$('#rst').onclick=()=>{f.reset();f.querySelectorAll('.fb2').forEach(x=>x.textContent='');$('#score').textContent=''}})();
+</script></body></html>
